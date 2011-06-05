@@ -28,6 +28,7 @@ pkg_check_modules(GTK REQUIRED gtk+-2.0)
 pkg_check_modules(CAIRO REQUIRED cairo) 
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(X11 REQUIRED x11)
+pkg_check_modules(INDICATOR REQUIRED appindicator-0.1)
 
 set(CFLAGS
 	${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
@@ -40,6 +41,7 @@ set(LIBS
 	${GTK_LIBRARIES}
 	${CAIRO_LIBRARIES}
 	${GEE_LIBRARIES}
+	${INDICATOR_LIBRARIES}
 )
 link_libraries(${LIBS})
 
@@ -47,6 +49,8 @@ set(LIB_PATHS
 	${GTK_LIBRARY_DIRS}
 	${CAIRO_LIBRARY_DIRS}
 	${GEE_LIBRARY_DIRS}
+	${INDICATOR_LIBRARY_DIRS}
+	/usr/include/libappindicator-0.1/
 )
 link_directories(${LIB_PATHS})
 
@@ -73,4 +77,6 @@ message( "  CAIRO_LIBRARIES = ${CAIRO_LIBRARIES}" )
 message( "  CAIRO_LIBRARY_DIRS = ${CAIRO_LIBRARY_DIRS}" )
 message( "  GEE_LIBRARIES = ${GEE_LIBRARIES}" )
 message( "  GEE_LIBRARY_DIRS = ${GEE_LIBRARY_DIRS}" )
+message( "  INDICATOR_LIBRARIES = ${INDICATOR_LIBRARIES}" )
+message( "  INDICATOR_LIBRARY_DIRS = ${INDICATOR_LIBRARY_DIRS}" )
 message( "" )

@@ -10,6 +10,7 @@ vala_precompile(
     VALA_C
         ${VALA_SRC} 
     PACKAGES 
+        appindicator-0.1
         gtk+-2.0 
         gdk-2.0 
         gdk-x11-2.0 

@@ -20,6 +20,7 @@ namespace GnomePie {
     public class Deamon : GLib.Object {
     
         private KeybindingManager keys_;
+        private AppIndicator.Indicator _indicator;
         
         private Ring ring_;
         
@@ -37,6 +38,26 @@ namespace GnomePie {
             ring_ = new Ring();
             keys_ = new KeybindingManager();
             keys_.bind("<Alt>V", showRing);
+            
+            _indicator = new AppIndicator.Indicator("Gnome-Pie", "indicator-messages", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            
+            var menu = new Gtk.Menu();
+
+            var item = new Gtk.MenuItem.with_label("Preferences...");
+            item.activate.connect(() => {
+                    _indicator.set_status(AppIndicator.IndicatorStatus.ATTENTION);
+            });
+            item.show();
+            menu.append(item);
+
+            item = new Gtk.MenuItem.with_label("About...");
+            item.show();
+            item.activate.connect(() => {
+                    _indicator.set_status(AppIndicator.IndicatorStatus.ATTENTION);
+            });
+            menu.append(item);
+
+            _indicator.set_menu(menu);
         }
         
         public void run() {

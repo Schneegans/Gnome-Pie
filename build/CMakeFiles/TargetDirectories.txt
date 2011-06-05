@@ -1,1 +1,0 @@
-/home/simon/Projekte/Programmierung/Vala/gnome-pie/build/src/CMakeFiles/gnome-pie.dir

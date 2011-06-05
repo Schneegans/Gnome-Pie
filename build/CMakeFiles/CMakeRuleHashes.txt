@@ -1,2 +1,0 @@
-# Hashes of file build rules.
-dedf78b93cc4b713ce626d3d6ff57da6 src/ring.c

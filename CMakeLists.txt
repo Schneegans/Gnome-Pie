@@ -50,9 +50,16 @@ set(LIB_PATHS
 	${CAIRO_LIBRARY_DIRS}
 	${GEE_LIBRARY_DIRS}
 	${INDICATOR_LIBRARY_DIRS}
-	/usr/include/libappindicator-0.1/
 )
 link_directories(${LIB_PATHS})
+
+set(INCLUDE_PATHS
+	${GTK_INCLUDE_DIRS}
+	${CAIRO_INCLUDE_DIRS}
+	${GEE_INCLUDE_DIRS}
+	${INDICATOR_INCLUDE_DIRS}
+)
+include_directories(${INCLUDE_PATHS})
 
 ################################################################
 # Add executable
@@ -72,11 +79,7 @@ message( "  EXECUTABLE_OUTPUT_PATH = ${EXECUTABLE_OUTPUT_PATH}" )
 message( "  VALA_EXECUTABLE = ${VALA_EXECUTABLE}" )
 message( "Libs:" )
 message( "  GTK_LIBRARIES = ${GTK_LIBRARIES}" )
-message( "  GTK_LIBRARY_DIRS = ${GTK_LIBRARY_DIRS}" )
 message( "  CAIRO_LIBRARIES = ${CAIRO_LIBRARIES}" )
-message( "  CAIRO_LIBRARY_DIRS = ${CAIRO_LIBRARY_DIRS}" )
 message( "  GEE_LIBRARIES = ${GEE_LIBRARIES}" )
-message( "  GEE_LIBRARY_DIRS = ${GEE_LIBRARY_DIRS}" )
 message( "  INDICATOR_LIBRARIES = ${INDICATOR_LIBRARIES}" )
-message( "  INDICATOR_LIBRARY_DIRS = ${INDICATOR_LIBRARY_DIRS}" )
 message( "" )

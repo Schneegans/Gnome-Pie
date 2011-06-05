@@ -39,13 +39,15 @@ namespace GnomePie {
             keys_ = new KeybindingManager();
             keys_.bind("<Alt>V", showRing);
             
-            _indicator = new AppIndicator.Indicator("Gnome-Pie", "indicator-messages", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            _indicator = new AppIndicator.Indicator("Gnome-Pie", "gnome-do-icon", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            
+            _indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
             
             var menu = new Gtk.Menu();
 
             var item = new Gtk.MenuItem.with_label("Preferences...");
             item.activate.connect(() => {
-                    _indicator.set_status(AppIndicator.IndicatorStatus.ATTENTION);
+                    debug("Preferences...");
             });
             item.show();
             menu.append(item);
@@ -53,7 +55,7 @@ namespace GnomePie {
             item = new Gtk.MenuItem.with_label("About...");
             item.show();
             item.activate.connect(() => {
-                    _indicator.set_status(AppIndicator.IndicatorStatus.ATTENTION);
+                    debug("About...");
             });
             menu.append(item);
 

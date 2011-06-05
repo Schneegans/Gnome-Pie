@@ -45,18 +45,35 @@ namespace GnomePie {
             
             var menu = new Gtk.Menu();
 
-            var item = new Gtk.MenuItem.with_label("Preferences...");
+            var item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.PREFERENCES, null);
             item.activate.connect(() => {
-                    debug("Preferences...");
+                   /* var prefs = new PreferencesWindow();
+                    prefs.show ();
+                    uint32 timestamp = Gtk.get_current_event_time ();
+                    prefs.deiconify ();
+                    prefs.present_with_time (timestamp);
+                    prefs.get_window ().raise ();
+                    prefs.get_window ().focus (timestamp);*/
             });
             item.show();
             menu.append(item);
 
-            item = new Gtk.MenuItem.with_label("About...");
+            item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.ABOUT, null);
             item.show();
             item.activate.connect(() => {
-                    debug("About...");
+                    var about = new GnomePieAboutDialog();
+                    about.run();
+                    about.destroy();
             });
+            menu.append(item);
+            
+            var sepa = new Gtk.SeparatorMenuItem();
+            sepa.show();
+            menu.append(sepa);
+
+            item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.QUIT, null);
+            item.activate.connect(Gtk.main_quit);
+            item.show();
             menu.append(item);
 
             _indicator.set_menu(menu);

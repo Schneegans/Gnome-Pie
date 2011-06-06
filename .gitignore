@@ -1,0 +1,5 @@
+*.c
+*.h
+make.sh
+build/*
+gnome-pie

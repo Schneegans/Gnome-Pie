@@ -1,0 +1,94 @@
+/* 
+Copyright (c) 2011 by Simon Schneegans
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>. 
+*/
+
+using GLib.Math;
+
+namespace GnomePie {
+
+    public class Center {
+    
+        private Cairo.ImageSurface imgRing_;
+	    private Cairo.ImageSurface imgGlow_;
+	    private Cairo.ImageSurface imgArrow_;
+	    private Ring               _parent;
+	
+	    private double rot_= 0.0;
+	    private double baseRot_ = 0.0;
+    
+        public Center(Ring parent) {
+            _parent = parent;
+            imgRing_ = new Cairo.ImageSurface.from_png("data/ring.png");
+		    imgGlow_ = new Cairo.ImageSurface.from_png("data/glow.png");
+		    imgArrow_ = new Cairo.ImageSurface.from_png("data/arrow.png");
+        }
+        
+        public void draw(Cairo.Context ctx, double angle, double distance) {
+            int win_middle = 0;
+            _parent.get_size(out win_middle, null);
+            win_middle /= 2;
+ 
+		    baseRot_ += 0.5/Settings.refresh_rate;
+		
+		    ctx.set_operator(Cairo.Operator.DEST_OVER);
+		    ctx.set_source_rgb(1, 1, 1);
+		
+		    if (distance > 45) {
+		        double diff = angle-rot_;
+			    if (fabs(diff) > 0.15 && fabs(diff) < PI) {
+				    if ((diff > 0 && diff < PI) || diff < -PI) rot_ += 8.0/Settings.refresh_rate;
+				    else		                               rot_ -= 8.0/Settings.refresh_rate;
+			    }
+			    else rot_ = angle;
+		
+			    rot_ = fmod(rot_+2*PI, 2*PI);
+		    
+			    ctx.translate(win_middle, win_middle);
+			    ctx.rotate(rot_);
+			    
+			    double alpha = distance > 65 ? 1.0 : 1.0 - 0.05*(65-distance);
+			
+			    ctx.set_source_surface(imgArrow_, -75, -75);
+			    ctx.paint_with_alpha(alpha);
+			
+			    ctx.identity_matrix();
+		    }
+		    
+            ctx.translate(win_middle, win_middle);
+			ctx.rotate(baseRot_);
+			
+		    ctx.set_source_surface(imgRing_, -75, -75);
+		    ctx.paint();
+
+		    ctx.set_source_surface(imgGlow_, -75, -75);
+		    ctx.paint_with_alpha(0.7);
+		    
+		    ctx.set_operator(Cairo.Operator.ATOP);
+		    
+		    if (distance > 45)
+    		    ctx.set_source_rgb(_parent.active_color().r, _parent.active_color().g, _parent.active_color().b);
+	   	    else
+		        ctx.set_source_rgb(0.5, 0.5, 0.5);
+		        
+            ctx.rectangle(-win_middle, -win_middle, win_middle*2, win_middle*2);
+            ctx.fill();
+            ctx.stroke();
+            
+            ctx.set_operator(Cairo.Operator.OVER);
+        }
+    }
+
+}

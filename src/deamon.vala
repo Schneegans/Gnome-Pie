@@ -19,65 +19,33 @@ namespace GnomePie {
 	
     public class Deamon : GLib.Object {
     
-        private KeybindingManager keys_;
-        private AppIndicator.Indicator _indicator;
+        private KeybindingManager _keys;
+        private Indicator _indicator;
+        private Ring _ring;
         
-        private Ring ring_;
-        
-        private void showRing() {
-            ring_.show();
-            Utils.present_window(ring_);
-
-	        Timeout.add ((uint)(1000.0/Utils.refresh_rate), () => {
-	            ring_.queue_draw ();
+        private void show_ring() {
+            _ring.show();
+            
+	        Timeout.add ((uint)(1000.0/Settings.refresh_rate), () => {
+	            _ring.queue_draw();
 	            return true;
 	        });
         }
 
         public Deamon() {
-            ring_ = new Ring();
-            keys_ = new KeybindingManager();
-            keys_.bind("<Alt>V", showRing);
+            _ring = new Ring();
+            _indicator = new Indicator();
+            _keys = new KeybindingManager();
+            _keys.bind("<Alt>V", show_ring);
             
-            _indicator = new AppIndicator.Indicator("Gnome-Pie", "gnome-do-icon", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
-            
-            _indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
-            
-            var menu = new Gtk.Menu();
-
-            var item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.PREFERENCES, null);
-            item.activate.connect(() => {
-                   /* var prefs = new PreferencesWindow();
-                    prefs.show ();
-                    uint32 timestamp = Gtk.get_current_event_time ();
-                    prefs.deiconify ();
-                    prefs.present_with_time (timestamp);
-                    prefs.get_window ().raise ();
-                    prefs.get_window ().focus (timestamp);*/
-            });
-            item.show();
-            menu.append(item);
-
-            item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.ABOUT, null);
-            item.show();
-            item.activate.connect(() => {
-                    var about = new GnomePieAboutDialog();
-                    about.run();
-                    about.destroy();
-            });
-            menu.append(item);
-            
-            var sepa = new Gtk.SeparatorMenuItem();
-            sepa.show();
-            menu.append(sepa);
-
-            item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.QUIT, null);
-            item.activate.connect(Gtk.main_quit);
-            item.show();
-            menu.append(item);
-
-            _indicator.set_menu(menu);
+            Posix.signal(Posix.SIGINT, sig_handler);
+			Posix.signal(Posix.SIGTERM, sig_handler);
         }
+        
+        private static void sig_handler(int sig) {
+			stdout.printf("\nCaught signal (%d), bye!\n", sig);
+			Gtk.main_quit();
+		}
         
         public void run() {
             Gtk.main();

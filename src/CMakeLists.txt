@@ -18,6 +18,7 @@ vala_precompile(
         gee-1.0
         x11
         gio-unix-2.0
+        posix
 )
 
 add_executable(gnome-pie ${VALA_C})

@@ -21,68 +21,58 @@ namespace GnomePie {
 
     public class Slice : GLib.Object {
 
-	    private Cairo.ImageSurface _img;	
-	    private string _command;
+	    private Action _action;
+	    private Ring   _parent;
+	    private int    _position;
 	    
-	    public Color color {get; private set;}
-	    public bool active {get; private set; default=false;}
+	    public bool active{get; private set; default=false;}
 
-	    public Slice(string command, string icon) {
-	        _command = command;
-	
-            var icon_theme = Gtk.IconTheme.get_default();
-            var file = icon_theme.lookup_icon(icon, 48, Gtk.IconLookupFlags.NO_SVG);
-                
-            debug(file.get_filename());
-            
-	        _img = new Cairo.ImageSurface.from_png(file.get_filename());
-	        //img_active = _img;
-		
-		    Utils.get_icon_color(_img, out _color);
+	    public Slice(string command, string icon, Ring parent) {
+	        _parent = parent;
+	        _position = _parent.slice_count();
+	        _action = new Action(command, icon);
 	    }
 	
-	    public void mousePressed() {
-	        if (_active) {
-	            try{
-	                GLib.DesktopAppInfo item = new GLib.DesktopAppInfo(_command);
-                	item.launch (null, new AppLaunchContext());
-                	debug("launched " + _command);
-            	} catch (Error e) {
-			        warning (e.message);
-		        }
-		    }
+	    public void activate() {
+	        _action.execute();
         }
 
-	    public void draw(Cairo.Context ctx, double mouse_dir, int position, int total) {
+	    public void draw(Cairo.Context ctx, double angle, double distance) {
+    	    
 		    double maxZoom = 1.3;
 		    double affected = 0.3;
-		    double distance = 110;
-		    double direction = 2.0*PI*position/total;
+		    double mean_distance = 110;
+		    double direction = 2.0*PI*_position/_parent.slice_count();
 		    double scale = 1;
+		    
+		    int win_size = 0;
+            _parent.get_size(out win_size, null);
+            win_size /= 2;
 		
-		    // if mouse is not inside ring
-		    if (mouse_dir > 0) {
-		        double diff = fabs(mouse_dir-direction);
+		    // if mouse is outside of inner ring
+		    if (distance >= 45) {
+		        double diff = fabs(angle-direction);
 		        if (diff > PI)
 			        diff = 2*PI - diff;
 		
 		        if (diff < 2*PI*affected)
 			        scale = maxZoom/(diff*(maxZoom-1)/(2*PI*affected)+1);
 			
-		        if (diff < PI/total) _active = true;
-		        else				 _active = false;
+		        if (diff < PI/_parent.slice_count()) _active = true;
+		        else				                 _active = false;
 		        
 		    } else {
 		        _active = false;
 		    }
 		
 		    ctx.scale(scale, scale);
-		    ctx.translate(cos(direction)*distance, sin(direction)*distance);
-		
-		    //if (_active) ctx.set_source_surface(img_active, -0.5*_img.get_width(), -0.5*_img.get_height());
-		    /*else*/         ctx.set_source_surface(_img,       -0.5*_img.get_width(), -0.5*_img.get_height());
-		
+		    ctx.translate(cos(direction)*mean_distance, sin(direction)*mean_distance);
+            ctx.set_source_surface(_action.icon, -0.5*_action.icon.get_width(), -0.5*_action.icon.get_height());
 		    ctx.paint();
+	    }
+	    
+	    public Color color() {
+	        return _action.color;
 	    }
     }
 

@@ -19,12 +19,67 @@ using GLib.Math;
 
 namespace GnomePie {
 
-    public class Color : GLib.Object {
+    public class Color: GLib.Object {
     
         private float _r;
         private float _g;
         private float _b;
         private float _a;
+        
+        public Color() {
+            Color.from_rgb(1.0f, 1.0f, 1.0f);
+        }
+
+        public Color.from_rgb(float red, float green, float blue) {
+            Color.from_rgba(red, green, blue, 1.0f);
+        }
+        
+        public Color.from_rgba(float red, float green, float blue, float alpha) {
+            _r = red;
+            _g = green;
+            _b = blue;
+            _a = alpha;
+        }
+        
+        // Code from Unity
+        public Color.from_icon(Cairo.ImageSurface icon) {
+            unowned uchar[] data = icon.get_data();
+        
+            uint width = icon.get_width();
+            uint height = icon.get_height();
+            uint row_bytes = icon.get_stride();
+
+            double total = 0.0;
+            double rtotal = 0.0;
+            double gtotal = 0.0;
+            double btotal = 0.0; 
+
+            for (uint i = 0; i < width; ++i) {
+                for (uint j = 0; j < height; ++j) {
+                    uint pixel = j * row_bytes + i * 4;
+                    double b = data[pixel + 0]/255.0;
+                    double g = data[pixel + 1]/255.0;
+                    double r = data[pixel + 2]/255.0;
+                    double a = data[pixel + 3]/255.0;
+
+                    double saturation = (fmax (r, fmax (g, b)) - fmin (r, fmin (g, b)));
+                    double relevance = 0.1 + 0.9 * a * saturation;
+
+                    rtotal +=  (r * relevance);
+                    gtotal +=  (g * relevance);
+                    btotal +=  (b * relevance);
+
+                    total += relevance;
+                }
+            }
+
+            Color.from_rgb((float)(rtotal/total), (float)(gtotal/total), (float)(btotal/total));
+
+            if (s > 0.15f)
+                s = 0.65f;
+
+            v = 1.0f;
+        }
     
         public float r {
             get {
@@ -112,23 +167,10 @@ namespace GnomePie {
                 else setHSV(h, s, value);
             }
         }
-
-        public Color() {
-            _r = 1.0f;
-            _g = 1.0f;
-            _b = 1.0f;
-            _a = 1.0f;
-        }
-
-        public Color.from_rgb(float red, float green, float blue) {
-            Color.from_rgba(red, green, blue, 1.0f);
-        }
         
-        public Color.from_rgba(float red, float green, float blue, float alpha) {
-            _r = red;
-            _g = green;
-            _b = blue;
-            _a = alpha;
+        public void invert() {
+            h += 180.0f;
+            v = 1.0f - v;
         }
 
         private void setHSV(float hue, float saturation, float val) {
@@ -175,11 +217,6 @@ namespace GnomePie {
 			        _b = val * (1.0f - saturation * f);
 			        break;
 	        }
-        }
-
-        public void invert() {
-            h += 180.0f;
-            v = 1.0f - v;
         }
 
     }

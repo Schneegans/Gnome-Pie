@@ -22,15 +22,6 @@ namespace GnomePie {
         private KeybindingManager _keys;
         private Indicator _indicator;
         private Ring _ring;
-        
-        private void show_ring() {
-            _ring.show();
-            
-	        Timeout.add ((uint)(1000.0/Settings.refresh_rate), () => {
-	            _ring.queue_draw();
-	            return true;
-	        });
-        }
 
         public Deamon() {
             _ring = new Ring();
@@ -42,14 +33,23 @@ namespace GnomePie {
 			Posix.signal(Posix.SIGTERM, sig_handler);
         }
         
+        public void run() {
+            Gtk.main();
+        }
+        
+        private void show_ring() {
+            _ring.show();
+            
+	        Timeout.add ((uint)(1000.0/Settings.refresh_rate), () => {
+	            _ring.queue_draw();
+	            return true;
+	        });
+        }
+        
         private static void sig_handler(int sig) {
 			stdout.printf("\nCaught signal (%d), bye!\n", sig);
 			Gtk.main_quit();
 		}
-        
-        public void run() {
-            Gtk.main();
-        }
 
     }
 

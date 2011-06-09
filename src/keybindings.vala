@@ -1,9 +1,25 @@
+/* 
+Copyright (c) 2011 by Simon Schneegans
+
+This program is free software: you can redistribute it and/or modify it
+under the terms of the GNU General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+this program.  If not, see <http://www.gnu.org/licenses/>. 
+*/
 
 namespace GnomePie {
 
     public class KeybindingManager : GLib.Object {
 
-        private Gee.List<Keybinding> bindings = new Gee.ArrayList<Keybinding>();
+        private Gee.List<Keybinding> _bindings = new Gee.ArrayList<Keybinding>();
      
         // Locked modifiers used to grab all keys whatever lock key is pressed.
         private static uint[] lock_modifiers = {
@@ -74,7 +90,7 @@ namespace GnomePie {
      
                 // store binding
                 Keybinding binding = new Keybinding(accelerator, keycode, modifiers, handler);
-                bindings.add(binding);
+                _bindings.add(binding);
      
                 debug("Successfully bound key " + accelerator);
             }
@@ -90,7 +106,7 @@ namespace GnomePie {
      
             // unbind all keys with given accelerator
             Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
-            foreach(Keybinding binding in bindings) {
+            foreach(Keybinding binding in _bindings) {
                 if(str_equal(accelerator, binding.accelerator)) {
                     foreach(uint lock_modifier in lock_modifiers) {
                         display.ungrab_key(binding.keycode, binding.modifiers, xid);
@@ -100,7 +116,7 @@ namespace GnomePie {
             }
      
             // remove unbinded keys
-            bindings.remove_all(remove_bindings);
+            _bindings.remove_all(remove_bindings);
         }
      
         // Event filter method needed to fetch X.Events
@@ -111,7 +127,7 @@ namespace GnomePie {
             X.Event* xevent = (X.Event*) pointer;
      
              if(xevent->type == X.EventType.KeyPress) {
-                foreach(Keybinding binding in bindings) {
+                foreach(Keybinding binding in _bindings) {
                     // remove NumLock, CapsLock and ScrollLock from key state
                     uint event_mods = xevent.xkey.state & ~ (lock_modifiers[7]);
                     if(xevent->xkey.keycode == binding.keycode && event_mods == binding.modifiers) {

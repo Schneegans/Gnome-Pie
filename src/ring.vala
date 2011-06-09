@@ -21,9 +21,22 @@ namespace GnomePie {
 
     public class Ring : RingWindow {
 	    
-	    private Slice[] _slices = null;
-	    private Slice   _activeSlice = null;
-	    private Center  _center = null;
+	    private Slice[] _slices;
+	    private Slice   _activeSlice;
+	    private Center  _center;
+	    
+	    public Ring() {
+            base();
+            
+            _center = new Center(this); 
+		    _slices = new Slice[0];
+		    
+		    add_slice("firefox.desktop", "firefox");
+		    add_slice("eog.desktop", "eog");
+		    add_slice("gnome-terminal.desktop", "terminal");
+		    add_slice("thunderbird.desktop", "thunderbird");
+		    add_slice("blender.desktop", "blender");
+        }
 	    
 	    public Color active_color () {
     	    if (_activeSlice != null) return _activeSlice.color();
@@ -80,21 +93,9 @@ namespace GnomePie {
             return true;
         }
         
-        private void addSlice(string command, string icon) {
+        private void add_slice(string command, string icon) {
             _slices += new Slice(command, icon, this);
         }
-        
-        public Ring() {
-            base();
-            
-            _center = new Center(this); 
-		    _slices = new Slice[0];
-		    
-		    addSlice("firefox.desktop", "firefox");
-		    addSlice("eog.desktop", "eog");
-		    addSlice("gnome-terminal.desktop", "terminal");
-		    addSlice("thunderbird.desktop", "thunderbird");
-		    addSlice("blender.desktop", "blender");
-        }
+  
     }
 }

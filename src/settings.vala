@@ -18,6 +18,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
     namespace Settings {
+    
         public static double refresh_rate = 60.0;
         public static bool   open_centered = true;
     }

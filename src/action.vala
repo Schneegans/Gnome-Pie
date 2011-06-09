@@ -19,7 +19,7 @@ namespace GnomePie {
 
     public class Action : GLib.Object {
 
-	    public Cairo.ImageSurface icon{get; private set;}
+	    public Cairo.ImageSurface icon {get; private set;}
 	    public Color              color{get; private set;}
 	    	
 	    private string _command;
@@ -31,7 +31,6 @@ namespace GnomePie {
             var file = icon_theme.lookup_icon(icon, 48, Gtk.IconLookupFlags.NO_SVG);
             
 	        _icon = new Cairo.ImageSurface.from_png(file.get_filename());
-		
 		    _color = new Color.from_icon(_icon);
 	    }
 

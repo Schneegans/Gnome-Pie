@@ -21,19 +21,19 @@ namespace GnomePie {
 
     public class Center {
     
-        private Cairo.ImageSurface imgRing_;
-	    private Cairo.ImageSurface imgGlow_;
-	    private Cairo.ImageSurface imgArrow_;
+        private Cairo.ImageSurface _imgRing;
+	    private Cairo.ImageSurface _imgGlow;
+	    private Cairo.ImageSurface _imgArrow;
 	    private Ring               _parent;
 	
-	    private double rot_= 0.0;
-	    private double baseRot_ = 0.0;
+	    private double _rot=       0.0;
+	    private double _baserot =  0.0;
     
         public Center(Ring parent) {
             _parent = parent;
-            imgRing_ = new Cairo.ImageSurface.from_png("data/ring.png");
-		    imgGlow_ = new Cairo.ImageSurface.from_png("data/glow.png");
-		    imgArrow_ = new Cairo.ImageSurface.from_png("data/arrow.png");
+            _imgRing =  new Cairo.ImageSurface.from_png("data/ring.png");
+		    _imgGlow =  new Cairo.ImageSurface.from_png("data/glow.png");
+		    _imgArrow = new Cairo.ImageSurface.from_png("data/arrow.png");
         }
         
         public void draw(Cairo.Context ctx, double angle, double distance) {
@@ -41,39 +41,39 @@ namespace GnomePie {
             _parent.get_size(out win_middle, null);
             win_middle /= 2;
  
-		    baseRot_ += 0.5/Settings.refresh_rate;
+		    _baserot += 0.5/Settings.refresh_rate;
 		
 		    ctx.set_operator(Cairo.Operator.DEST_OVER);
 		    ctx.set_source_rgb(1, 1, 1);
 		
 		    if (distance > 45) {
-		        double diff = angle-rot_;
+		        double diff = angle-_rot;
 			    if (fabs(diff) > 0.15 && fabs(diff) < PI) {
-				    if ((diff > 0 && diff < PI) || diff < -PI) rot_ += 8.0/Settings.refresh_rate;
-				    else		                               rot_ -= 8.0/Settings.refresh_rate;
+				    if ((diff > 0 && diff < PI) || diff < -PI) _rot += 8.0/Settings.refresh_rate;
+				    else		                               _rot -= 8.0/Settings.refresh_rate;
 			    }
-			    else rot_ = angle;
+			    else _rot = angle;
 		
-			    rot_ = fmod(rot_+2*PI, 2*PI);
+			    _rot = fmod(_rot+2*PI, 2*PI);
 		    
 			    ctx.translate(win_middle, win_middle);
-			    ctx.rotate(rot_);
+			    ctx.rotate(_rot);
 			    
 			    double alpha = distance > 65 ? 1.0 : 1.0 - 0.05*(65-distance);
 			
-			    ctx.set_source_surface(imgArrow_, -75, -75);
+			    ctx.set_source_surface(_imgArrow, -75, -75);
 			    ctx.paint_with_alpha(alpha);
 			
 			    ctx.identity_matrix();
 		    }
 		    
             ctx.translate(win_middle, win_middle);
-			ctx.rotate(baseRot_);
+			ctx.rotate(_baserot);
 			
-		    ctx.set_source_surface(imgRing_, -75, -75);
+		    ctx.set_source_surface(_imgRing, -75, -75);
 		    ctx.paint();
 
-		    ctx.set_source_surface(imgGlow_, -75, -75);
+		    ctx.set_source_surface(_imgGlow, -75, -75);
 		    ctx.paint_with_alpha(0.7);
 		    
 		    ctx.set_operator(Cairo.Operator.ATOP);

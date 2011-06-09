@@ -44,7 +44,6 @@ namespace GnomePie {
 		    _baserot += 0.5/Settings.refresh_rate;
 		
 		    ctx.set_operator(Cairo.Operator.DEST_OVER);
-		    ctx.set_source_rgb(1, 1, 1);
 		
 		    if (distance > 45) {
 		        double diff = angle-_rot;

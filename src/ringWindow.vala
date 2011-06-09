@@ -23,20 +23,19 @@ namespace GnomePie {
     
         public RingWindow() {
 
-            title = "Gnome-Pie";
+            set_title("Gnome-Pie");
             set_default_size (_size, _size);
             set_skip_taskbar_hint(true);
             set_skip_pager_hint(true);
             set_keep_above(true);
-            set_type_hint(Gdk.WindowTypeHint.NORMAL);
+            set_type_hint(Gdk.WindowTypeHint.UTILITY);
             set_colormap(this.screen.get_rgba_colormap());
+            set_decorated(false);
+            set_app_paintable(true);
             
             if(Settings.open_centered)  position = Gtk.WindowPosition.MOUSE;
             else                        position = Gtk.WindowPosition.CENTER;
                 
-            decorated = false;
-            app_paintable = true;
-            
             add_events(Gdk.EventMask.BUTTON_RELEASE_MASK);
             
             this.button_release_event.connect ((e) => {
@@ -45,7 +44,6 @@ namespace GnomePie {
             });
 
             expose_event.connect(draw);
-
             destroy.connect(Gtk.main_quit);
         }
         

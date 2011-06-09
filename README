@@ -31,13 +31,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 #                        Compiling                                 #
 ####################################################################
 
-first of all, install all dependancies:
+First of all, install all dependancies:
 
 sudo apt-get install libgtk2.0-dev libcairo2-dev libappindicator-dev libgee-dev valac cmake
 
-then build Gnome-Pie
+Then build Gnome-Pie:
 
-cd Gnome-Pie/build
+cd Gnome-Pie
+mkdir build
+cd build
 cmake ..
 cd ..
 ./gnome-pie

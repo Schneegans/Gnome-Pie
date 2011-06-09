@@ -74,7 +74,6 @@ namespace GnomePie {
 
             // clear the window
             ctx.set_operator (Cairo.Operator.CLEAR);
-            ctx.rectangle (0, 0, width_request, height_request);
             ctx.paint();
 
             _center.draw(ctx, angle, distance);

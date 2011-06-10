@@ -64,11 +64,12 @@ namespace GnomePie {
 		    } else {
 		        _active = false;
 		    }
-		
+		    ctx.save();
 		    ctx.scale(scale, scale);
 		    ctx.translate(cos(direction)*mean_distance, sin(direction)*mean_distance);
             ctx.set_source_surface(_action.icon, -0.5*_action.icon.get_width(), -0.5*_action.icon.get_height());
 		    ctx.paint();
+		    ctx.restore();
 	    }
 	    
 	    public Color color() {

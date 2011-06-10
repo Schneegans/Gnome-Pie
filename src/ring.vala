@@ -19,7 +19,7 @@ using GLib.Math;
 
 namespace GnomePie {
 
-    public class Ring : RingWindow {
+    public class Ring : CompositedWindow {
 	    
 	    private Slice[] _slices;
 	    private Slice   _activeSlice;
@@ -70,24 +70,34 @@ namespace GnomePie {
 			    if (mouse_y < 0) angle = 2*PI - angle;
 		    }
 		    
-            var ctx = Gdk.cairo_create(da.window);
+            var back_ctx = new Cairo.Context(_backbuffer);
+            back_ctx.set_operator(Cairo.Operator.DEST_OVER);
 
             // clear the window
-            ctx.set_operator (Cairo.Operator.CLEAR);
-            ctx.paint();
+            back_ctx.save();
+            back_ctx.set_operator (Cairo.Operator.CLEAR);
+            back_ctx.paint();
+            back_ctx.restore();
 
-            _center.draw(ctx, angle, distance);
+            _center.draw(back_ctx, angle, distance);
             
             _activeSlice = null;
-		    
+		    back_ctx.translate(_size*0.5, _size*0.5);
 		    for (int s=0; s<_slices.length; ++s) {
-			    ctx.identity_matrix();
-			    ctx.translate(_size*0.5, _size*0.5);
-			    _slices[s].draw(ctx, angle, distance);
+			    _slices[s].draw(back_ctx, angle, distance);
 			    
 			    if(_slices[s].active)
 			        _activeSlice = _slices[s];
 		    }
+		    
+		    var front_ctx = Gdk.cairo_create(da.window);
+		    // clear the window
+            front_ctx.set_operator (Cairo.Operator.CLEAR);
+            front_ctx.paint();
+            
+            front_ctx.set_operator(Cairo.Operator.DEST_OVER);
+            front_ctx.set_source_surface(_backbuffer, 0, 0);
+            front_ctx.paint();
             
             return true;
         }

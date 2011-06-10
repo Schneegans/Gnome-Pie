@@ -43,7 +43,8 @@ namespace GnomePie {
  
 		    _baserot += 0.5/Settings.refresh_rate;
 		
-		    ctx.set_operator(Cairo.Operator.DEST_OVER);
+		    
+		    ctx.save();
 		
 		    if (distance > 45) {
 		        double diff = angle-_rot;
@@ -86,7 +87,7 @@ namespace GnomePie {
             ctx.fill();
             ctx.stroke();
             
-            ctx.set_operator(Cairo.Operator.OVER);
+            ctx.restore();
         }
     }
 

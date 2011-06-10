@@ -39,11 +39,6 @@ namespace GnomePie {
         
         private void show_ring() {
             _ring.show();
-            
-	        Timeout.add ((uint)(1000.0/Settings.refresh_rate), () => {
-	            _ring.queue_draw();
-	            return true;
-	        });
         }
         
         private static void sig_handler(int sig) {

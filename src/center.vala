@@ -41,9 +41,6 @@ namespace GnomePie {
             _parent.get_size(out win_middle, null);
             win_middle /= 2;
  
-		    _baserot += 0.5/Settings.refresh_rate;
-		
-		    
 		    ctx.save();
 		
 		    if (distance > 45) {
@@ -78,10 +75,13 @@ namespace GnomePie {
 		    
 		    ctx.set_operator(Cairo.Operator.ATOP);
 		    
-		    if (distance > 45)
+		    if (distance > 45) {
+		        _baserot += 1.5/Settings.refresh_rate;
     		    ctx.set_source_rgb(_parent.active_color().r, _parent.active_color().g, _parent.active_color().b);
-	   	    else
+    		} else {
+	   	        _baserot += 0.5/Settings.refresh_rate;
 		        ctx.set_source_rgb(0.5, 0.5, 0.5);
+		    }
 		        
             ctx.rectangle(-win_middle, -win_middle, win_middle*2, win_middle*2);
             ctx.fill();

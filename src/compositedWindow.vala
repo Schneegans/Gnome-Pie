@@ -20,12 +20,11 @@ namespace GnomePie {
     public abstract class CompositedWindow : Gtk.Window {
     
         protected int _size = 400;
-        protected Cairo.ImageSurface _backbuffer;
     
         public CompositedWindow() {
 
             set_title("Gnome-Pie");
-            set_default_size (_size, _size);
+            set_size_request (_size, _size);
             set_skip_taskbar_hint(true);
             set_skip_pager_hint(true);
             set_keep_above(true);
@@ -33,7 +32,7 @@ namespace GnomePie {
             set_colormap(screen.get_rgba_colormap());
             set_decorated(false);
             set_app_paintable(true);
-            //set_double_buffered(false);
+            set_resizable(false);
             
             if(Settings.open_centered)  position = Gtk.WindowPosition.MOUSE;
             else                        position = Gtk.WindowPosition.CENTER;
@@ -47,8 +46,6 @@ namespace GnomePie {
 
             expose_event.connect(draw);
             destroy.connect(Gtk.main_quit);
-            
-            _backbuffer = new Cairo.ImageSurface(Cairo.Format.ARGB32, _size, _size);
         }
         
         public override void show() {

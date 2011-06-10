@@ -20,72 +20,60 @@ using GLib.Math;
 namespace GnomePie {
 
     public class Center {
-    
-        private Cairo.ImageSurface _imgRing;
-	    private Cairo.ImageSurface _imgGlow;
-	    private Cairo.ImageSurface _imgArrow;
-	    private Ring               _parent;
+
+	    private Ring _parent;
 	
-	    private double _rot=       0.0;
-	    private double _baserot =  0.0;
+	    private double _arrow_rotation  = 0.0;
+	    private double _center_activity = 0.0;
+	    private double _center_rotation = 0.0;
     
         public Center(Ring parent) {
             _parent = parent;
-            _imgRing =  new Cairo.ImageSurface.from_png("data/ring.png");
-		    _imgGlow =  new Cairo.ImageSurface.from_png("data/glow.png");
-		    _imgArrow = new Cairo.ImageSurface.from_png("data/arrow.png");
         }
         
         public void draw(Cairo.Context ctx, double angle, double distance) {
-            int win_middle = 0;
-            _parent.get_size(out win_middle, null);
-            win_middle /= 2;
- 
-		    ctx.save();
-		
-		    if (distance > 45) {
-		        double diff = angle-_rot;
-			    if (fabs(diff) > 0.15 && fabs(diff) < PI) {
-				    if ((diff > 0 && diff < PI) || diff < -PI) _rot += 8.0/Settings.refresh_rate;
-				    else		                               _rot -= 8.0/Settings.refresh_rate;
-			    }
-			    else _rot = angle;
-		
-			    _rot = fmod(_rot+2*PI, 2*PI);
-		    
-			    ctx.translate(win_middle, win_middle);
-			    ctx.rotate(_rot);
-			    
-			    double alpha = distance > 65 ? 1.0 : 1.0 - 0.05*(65-distance);
-			
-			    ctx.set_source_surface(_imgArrow, -75, -75);
-			    ctx.paint_with_alpha(alpha);
-			
-			    ctx.identity_matrix();
+
+		    if (distance > Settings.center_diameter) { 
+		        if ((_center_activity += Settings.rot_accel/Settings.refresh_rate) > 1.0)
+                    _center_activity = 1.0;
+		    } else {
+		        if ((_center_activity -= Settings.rot_accel/Settings.refresh_rate) < 0.0)
+                    _center_activity = 0.0;
 		    }
 		    
-            ctx.translate(win_middle, win_middle);
-			ctx.rotate(_baserot);
-			
-		    ctx.set_source_surface(_imgRing, -75, -75);
+		    ctx.save();
+		    double diff  = angle-_arrow_rotation;
+	        if (fabs(diff) > 0.15 && fabs(diff) < PI) {
+			    if ((diff > 0 && diff < PI) || diff < -PI) 
+			        _arrow_rotation += Settings.arrow_speed/Settings.refresh_rate;
+			    else
+			        _arrow_rotation -= Settings.arrow_speed/Settings.refresh_rate;
+		    } else {
+		        _arrow_rotation = angle;
+            }	
+		    _arrow_rotation = fmod(_arrow_rotation+2*PI, 2*PI);
+		    
+		    ctx.save();
+		    ctx.rotate(_arrow_rotation);
+		    ctx.set_source_surface(Theme.arrow, -75, -75);
+		    ctx.paint_with_alpha(_center_activity);
+		    ctx.restore();
+		    
+		    double center_speed = Settings.max_speed*_center_activity + Settings.min_speed*(1.0 - _center_activity);
+		    _center_rotation += center_speed/Settings.refresh_rate;
+		    _center_rotation = fmod(_center_rotation+2*PI, 2*PI);
+		    
+			ctx.rotate(_center_rotation);
+		    ctx.set_source_surface(Theme.ring, -75, -75);
 		    ctx.paint();
-
-		    ctx.set_source_surface(_imgGlow, -75, -75);
-		    ctx.paint_with_alpha(0.7);
+		    
+		    float r = (float) (_parent.active_color.r*_center_activity + Settings.inactive_color.r*(1.0 - _center_activity));
+		    float g = (float) (_parent.active_color.g*_center_activity + Settings.inactive_color.g*(1.0 - _center_activity));
+		    float b = (float) (_parent.active_color.b*_center_activity + Settings.inactive_color.b*(1.0 - _center_activity));
 		    
 		    ctx.set_operator(Cairo.Operator.ATOP);
-		    
-		    if (distance > 45) {
-		        _baserot += 1.5/Settings.refresh_rate;
-    		    ctx.set_source_rgb(_parent.active_color().r, _parent.active_color().g, _parent.active_color().b);
-    		} else {
-	   	        _baserot += 0.5/Settings.refresh_rate;
-		        ctx.set_source_rgb(0.5, 0.5, 0.5);
-		    }
-		        
-            ctx.rectangle(-win_middle, -win_middle, win_middle*2, win_middle*2);
-            ctx.fill();
-            ctx.stroke();
+		    ctx.set_source_rgb(r, g, b);
+            ctx.paint();
             
             ctx.restore();
         }

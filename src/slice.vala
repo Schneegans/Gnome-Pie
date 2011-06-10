@@ -24,6 +24,7 @@ namespace GnomePie {
 	    private Action _action;
 	    private Ring   _parent;
 	    private int    _position;
+	    private double _scale = 1.0;
 	    
 	    public bool active{get; private set; default=false;}
 
@@ -39,24 +40,19 @@ namespace GnomePie {
 
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
-		    double maxZoom = 1.3;
-		    double affected = 0.3;
-		    double mean_distance = 110;
 		    double direction = 2.0*PI*_position/_parent.slice_count();
-		    double scale = 1;
-		    
-		    int win_size = 0;
-            _parent.get_size(out win_size, null);
-            win_size /= 2;
+    	    double max_scale = 1.0;
 		
 		    // if mouse is outside of inner ring
-		    if (distance >= 45) {
+		    if (distance >= Settings.center_diameter) {
 		        double diff = fabs(angle-direction);
 		        if (diff > PI)
 			        diff = 2*PI - diff;
 		
-		        if (diff < 2*PI*affected)
-			        scale = maxZoom/(diff*(maxZoom-1)/(2*PI*affected)+1);
+		        if (diff < 2*PI*Settings.zoom_range) {
+		            max_scale = Settings.max_icon_zoom/(diff*(Settings.max_icon_zoom-1)/(2*PI*Settings.zoom_range)+1);
+    			    
+			    }
 			
 		        if (diff < PI/_parent.slice_count()) _active = true;
 		        else				                 _active = false;
@@ -64,9 +60,13 @@ namespace GnomePie {
 		    } else {
 		        _active = false;
 		    }
+		    
+		    // FIXME This code is not framerate-independant
+		    _scale = _scale*(1.0 - Settings.icon_zoom_speed) + max_scale*Settings.icon_zoom_speed;
+		    
 		    ctx.save();
-		    ctx.scale(scale, scale);
-		    ctx.translate(cos(direction)*mean_distance, sin(direction)*mean_distance);
+		    ctx.scale(_scale, _scale);
+		    ctx.translate(cos(direction)*Settings.ring_diameter, sin(direction)*Settings.ring_diameter);
             ctx.set_source_surface(_action.icon, -0.5*_action.icon.get_width(), -0.5*_action.icon.get_height());
 		    ctx.paint();
 		    ctx.restore();

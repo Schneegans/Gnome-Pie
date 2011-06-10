@@ -17,10 +17,33 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    namespace Settings {
+    public class Settings : GLib.Object {
     
-        public static double refresh_rate = 60.0;
-        public static bool   open_centered = true;
+        // general settings
+        public static double refresh_rate  {get; private set; default = 60.0;}
+        
+        // ring settings
+        public static bool   open_centered {get; private set; default = true;}
+        public static double ring_diameter {get; private set; default = 110.0;}
+        
+        // center settings
+        public static double arrow_speed     {get; private set; default = 10.0;}
+        public static double max_speed       {get; private set; default =  3.0;}
+        public static double min_speed       {get; private set;}
+        public static double rot_accel       {get; private set; default =  4.0;}
+        public static double center_diameter {get; private set; default = 45.0;}
+        public static Color  inactive_color  {get; private set;}
+
+        // slice settings
+        public static double max_icon_zoom   {get; private set; default = 1.2;}
+	    public static double zoom_range      {get; private set; default = 0.2;}
+	    public static double icon_zoom_speed {get; private set; default = 0.7;}
+        
+        public static void load() {
+            _inactive_color = new Color.from_rgb(0.5f, 0.5f, 0.5f);
+            _min_speed      = -0.5;
+        
+        }
     }
     
 }

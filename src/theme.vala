@@ -17,4 +17,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+    public class Theme : GLib.Object {
+        
+            public static Cairo.ImageSurface ring{get; private set;}
+	        public static Cairo.ImageSurface arrow{get; private set;}
+        
+        public static void load () {
+            _ring  = new Cairo.ImageSurface.from_png("data/ring.png");
+		    _arrow = new Cairo.ImageSurface.from_png("data/arrow.png");
+        }
+    
+    }
+
 }

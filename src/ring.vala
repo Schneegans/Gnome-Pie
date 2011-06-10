@@ -22,7 +22,7 @@ namespace GnomePie {
     public class Ring : CompositedWindow {
 	    
 	    private Slice[] _slices;
-	    private Slice   _activeSlice;
+	    private Slice   _active_slice;
 	    private Center  _center;
 	    
 	    public Ring() {
@@ -38,19 +38,16 @@ namespace GnomePie {
 		    add_slice("blender.desktop", "blender");
         }
 	    
-	    public Color active_color () {
-    	    if (_activeSlice != null) return _activeSlice.color();
-    	    else return new Color();
-	    }
+	    public Color active_color{get; private set; default = new Color();}
 	    
-	    public int slice_count () {
+	    public int slice_count() {
 	        return _slices.length;
 	    }
 	    
 	    protected override void mouseReleased(int button, int x, int y) {
         	if (button == 1) {
-        	    if(_activeSlice != null)
-        	        _activeSlice.activate();
+        	    if(_active_slice != null)
+        	        _active_slice.activate();
 	        	hide();
 	        }
         }
@@ -79,15 +76,19 @@ namespace GnomePie {
             ctx.paint();
             ctx.restore();
 
+            ctx.translate(_size*0.5, _size*0.5);
+            
             _center.draw(ctx, angle, distance);
             
-            _activeSlice = null;
-		    ctx.translate(_size*0.5, _size*0.5);
+            _active_slice = null;
+		    
 		    for (int s=0; s<_slices.length; ++s) {
 			    _slices[s].draw(ctx, angle, distance);
 			    
-			    if(_slices[s].active)
-			        _activeSlice = _slices[s];
+			    if(_slices[s].active) {
+			        _active_slice   = _slices[s];
+			        _active_color = _active_slice.color();
+			    }
 		    }
  
             return true;

@@ -24,6 +24,9 @@ namespace GnomePie {
         private Ring _ring;
 
         public Deamon() {
+            Settings.load();
+            Theme.load();
+        
             _ring = new Ring();
             _indicator = new Indicator();
             _keys = new KeybindingManager();

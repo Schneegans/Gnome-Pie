@@ -24,6 +24,9 @@ namespace GnomePie {
 	    private Slice[] _slices;
 	    private Slice   _active_slice;
 	    private Center  _center;
+
+	    public bool   fade_in {get; private set; default = true;}
+	    public double fading  {get; private set; default = 0.0;}
 	    
 	    public Ring() {
             base();
@@ -45,14 +48,28 @@ namespace GnomePie {
 	    }
 	    
 	    protected override void mouseReleased(int button, int x, int y) {
-        	if (button == 1) {
+        	if (button == 1 && _fading == 1.0) {
         	    if(_active_slice != null)
         	        _active_slice.activate();
-	        	hide();
+	        	_fade_in = false;
 	        }
         }
         
         protected override bool draw(Gtk.Widget da, Gdk.EventExpose event) {
+            // fading
+            if (_fade_in) {
+                _fading += 1.0/(Settings.refresh_rate*Settings.fade_in_time);
+                if (_fading > 1.0)
+                    _fading = 1.0;
+            } else {
+                _fading -= 1.0/(Settings.refresh_rate*Settings.fade_out_time);
+                if (_fading < 0.0) {
+                    _fading = 0.0;
+                    _fade_in = true;
+                    hide();
+                }     
+            }
+        
             double mouse_x = 0;
 		    double mouse_y = 0;
 		    get_pointer(out mouse_x, out mouse_y);

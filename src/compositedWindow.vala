@@ -28,7 +28,7 @@ namespace GnomePie {
             set_skip_taskbar_hint(true);
             set_skip_pager_hint(true);
             set_keep_above(true);
-            set_type_hint(Gdk.WindowTypeHint.UTILITY);
+            set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN);
             set_colormap(screen.get_rgba_colormap());
             set_decorated(false);
             set_app_paintable(true);

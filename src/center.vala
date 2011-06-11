@@ -55,8 +55,8 @@ namespace GnomePie {
 		    
 		    ctx.save();
 		    ctx.rotate(_arrow_rotation);
-		    ctx.set_source_surface(Theme.arrow, -75, -75);
-		    ctx.paint_with_alpha(_center_activity);
+		    ctx.set_source_surface(Theme.arrow, -50, -50);
+		    ctx.paint_with_alpha(_center_activity * _parent.fading*_parent.fading);
 		    ctx.restore();
 		    
 		    double center_speed = Settings.max_speed*_center_activity + Settings.min_speed*(1.0 - _center_activity);
@@ -64,8 +64,8 @@ namespace GnomePie {
 		    _center_rotation = fmod(_center_rotation+2*PI, 2*PI);
 		    
 			ctx.rotate(_center_rotation);
-		    ctx.set_source_surface(Theme.ring, -75, -75);
-		    ctx.paint();
+		    ctx.set_source_surface(Theme.ring, -50, -50);
+		    ctx.paint_with_alpha(_parent.fading*_parent.fading);
 		    
 		    float r = (float) (_parent.active_color.r*_center_activity + Settings.inactive_color.r*(1.0 - _center_activity));
 		    float g = (float) (_parent.active_color.g*_center_activity + Settings.inactive_color.g*(1.0 - _center_activity));

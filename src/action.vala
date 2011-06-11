@@ -21,11 +21,13 @@ namespace GnomePie {
 
 	    public Cairo.ImageSurface icon {get; private set;}
 	    public Color              color{get; private set;}
+	    public string              name{get; private set;}
 	    	
 	    private string _command;
 	    
 	    public Action(string command, string icon) {
 	        _command = command;
+	        _name    = icon;
 	
             var icon_theme = Gtk.IconTheme.get_default();
             var file = icon_theme.lookup_icon(icon, 48, Gtk.IconLookupFlags.NO_SVG);

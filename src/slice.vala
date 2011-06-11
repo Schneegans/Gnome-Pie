@@ -40,7 +40,7 @@ namespace GnomePie {
 
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
-		    double direction = 2.0*PI*_position/_parent.slice_count();
+		    double direction = 2.0*PI*_position/_parent.slice_count() + 0.5*(_parent.fade_in ? -1.0 : 1.0)*(1.0-_parent.fading);
     	    double max_scale = 1.0;
 		
 		    // if mouse is outside of inner ring
@@ -61,14 +61,33 @@ namespace GnomePie {
 		        _active = false;
 		    }
 		    
-		    // FIXME This code is not framerate-independant
-		    _scale = _scale*(1.0 - Settings.icon_zoom_speed) + max_scale*Settings.icon_zoom_speed;
+		    // draw caption
+		    if (active) {
+    		    ctx.save();
+		        Cairo.TextExtents extents;
+		        ctx.text_extents(_action.name, out extents);		    
+		        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
+		        ctx.set_font_size(12.0);
+		        ctx.move_to( -extents.width/2 - 1, Settings.center_diameter + extents.height + 30 - 1);
+		        
+		        ctx.set_source_rgb (1, 1, 1);
+                ctx.show_text(_action.name);
+                ctx.move_to( -extents.width/2, Settings.center_diameter + extents.height + 30);
+                ctx.set_source_rgb (0, 0, 0);
+                ctx.show_text(_action.name);
+                
+                
+		        ctx.restore();
+		    }
+		    
+		    // FIXME This code is not frame-rate-independant
+		    _scale = _scale*(1.0 - Settings.icon_zoom_speed) + max_scale*Settings.icon_zoom_speed + 0.2*(1.0 - _parent.fading*_parent.fading);
 		    
 		    ctx.save();
 		    ctx.scale(_scale, _scale);
 		    ctx.translate(cos(direction)*Settings.ring_diameter, sin(direction)*Settings.ring_diameter);
             ctx.set_source_surface(_action.icon, -0.5*_action.icon.get_width(), -0.5*_action.icon.get_height());
-		    ctx.paint();
+		    ctx.paint_with_alpha(_parent.fading*_parent.fading);
 		    ctx.restore();
 	    }
 	    

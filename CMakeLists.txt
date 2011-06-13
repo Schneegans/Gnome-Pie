@@ -29,6 +29,7 @@ pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(X11 REQUIRED x11)
 pkg_check_modules(INDICATOR REQUIRED appindicator-0.1)
+pkg_check_modules(RSVG REQUIRED librsvg-2.0)
 
 set(CFLAGS
 	${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
@@ -42,6 +43,7 @@ set(LIBS
 	${CAIRO_LIBRARIES}
 	${GEE_LIBRARIES}
 	${INDICATOR_LIBRARIES}
+	${RSVG_LIBRARIES}
 )
 link_libraries(${LIBS})
 
@@ -50,6 +52,7 @@ set(LIB_PATHS
 	${CAIRO_LIBRARY_DIRS}
 	${GEE_LIBRARY_DIRS}
 	${INDICATOR_LIBRARY_DIRS}
+	${RSVG_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -58,6 +61,7 @@ set(INCLUDE_PATHS
 	${CAIRO_INCLUDE_DIRS}
 	${GEE_INCLUDE_DIRS}
 	${INDICATOR_INCLUDE_DIRS}
+	${RSVG_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 

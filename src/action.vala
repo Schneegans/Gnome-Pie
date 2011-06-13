@@ -21,7 +21,7 @@ namespace GnomePie {
 
 	    public Cairo.ImageSurface icon {get; private set;}
 	    public Color              color{get; private set;}
-	    public string              name{get; private set;}
+	    public string             name{get; private set;}
 	    	
 	    private string _command;
 	    
@@ -30,9 +30,9 @@ namespace GnomePie {
 	        _name    = icon;
 	
             var icon_theme = Gtk.IconTheme.get_default();
-            var file = icon_theme.lookup_icon(icon, 48, Gtk.IconLookupFlags.NO_SVG);
+            var file = icon_theme.lookup_icon(icon, 256, 0);
             
-	        _icon = new Cairo.ImageSurface.from_png(file.get_filename());
+	        _icon = IconLoader.load(file.get_filename(), (int)(Settings.icon_size*Settings.max_zoom));
 		    _color = new Color.from_icon(_icon);
 	    }
 

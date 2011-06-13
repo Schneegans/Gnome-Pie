@@ -24,6 +24,7 @@ namespace GnomePie {
         private Ring _ring;
 
         public Deamon() {
+            Rsvg.init();
             Settings.load();
             Theme.load();
         

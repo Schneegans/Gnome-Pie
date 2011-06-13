@@ -33,7 +33,7 @@ namespace GnomePie {
         
         public void draw(Cairo.Context ctx, double angle, double distance) {
 
-		    if (distance > Settings.center_diameter) { 
+		    if (distance > Settings.center_radius) { 
 		        if ((_center_activity += Settings.rot_accel/Settings.refresh_rate) > 1.0)
                     _center_activity = 1.0;
 		    } else {

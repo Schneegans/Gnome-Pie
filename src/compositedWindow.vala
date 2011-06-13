@@ -19,12 +19,11 @@ namespace GnomePie {
 
     public abstract class CompositedWindow : Gtk.Window {
     
-        protected int _size = 400;
-    
         public CompositedWindow() {
+            int size = (int)(2*Settings.ring_radius + 2*Settings.icon_size);
 
             set_title("Gnome-Pie");
-            set_size_request (_size, _size);
+            set_size_request (size, size);
             set_skip_taskbar_hint(true);
             set_skip_pager_hint(true);
             set_keep_above(true);

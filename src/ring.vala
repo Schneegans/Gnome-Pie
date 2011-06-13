@@ -74,8 +74,8 @@ namespace GnomePie {
 		    double mouse_y = 0;
 		    get_pointer(out mouse_x, out mouse_y);
 		    
-		    mouse_x -= _size/2;
-		    mouse_y -= _size/2;
+		    mouse_x -= width_request/2;
+		    mouse_y -= height_request/2;
 		    double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
 		    double angle = -1;
 		
@@ -85,7 +85,7 @@ namespace GnomePie {
 		    }
 		    
             var ctx = Gdk.cairo_create(da.window);
-            ctx.set_operator(Cairo.Operator.DEST_OVER);
+            ctx.set_operator(Cairo.Operator.OVER);
 
             // clear the window
             ctx.save();
@@ -93,7 +93,7 @@ namespace GnomePie {
             ctx.paint();
             ctx.restore();
 
-            ctx.translate(_size*0.5, _size*0.5);
+            ctx.translate(width_request*0.5, height_request*0.5);
             
             _center.draw(ctx, angle, distance);
             

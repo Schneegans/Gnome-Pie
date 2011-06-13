@@ -19,12 +19,18 @@ namespace GnomePie {
 
     public class Theme : GLib.Object {
         
-            public static Cairo.ImageSurface ring{get; private set;}
-	        public static Cairo.ImageSurface arrow{get; private set;}
+            public static Cairo.ImageSurface ring     {get; private set;}
+	        public static Cairo.ImageSurface arrow    {get; private set;}
+	        public static Cairo.ImageSurface icon_fg  {get; private set;}
+	        public static Cairo.ImageSurface icon_bg  {get; private set;}
+	        public static Cairo.ImageSurface icon_mask{get; private set;}
         
         public static void load () {
-            _ring  = new Cairo.ImageSurface.from_png("data/ring.png");
-		    _arrow = new Cairo.ImageSurface.from_png("data/arrow.png");
+            ring  =     IconLoader.load("themes/" + Settings.theme + "/ring.svg",     100);
+		    arrow =     IconLoader.load("themes/" + Settings.theme + "/arrow.svg",    100);
+		    icon_fg =   IconLoader.load("themes/" + Settings.theme + "/icon_fg.svg",   (int)(Settings.icon_size*Settings.max_zoom));
+		    icon_bg =   IconLoader.load("themes/" + Settings.theme + "/icon_bg.svg",   (int)(Settings.icon_size*Settings.max_zoom));
+		    icon_mask = IconLoader.load("themes/" + Settings.theme + "/icon_mask.svg", (int)(Settings.icon_size*Settings.max_zoom));
         }
     
     }

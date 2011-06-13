@@ -41,16 +41,16 @@ namespace GnomePie {
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
 		    double direction = 2.0*PI*_position/_parent.slice_count() + 0.5*(_parent.fade_in ? -1.0 : 1.0)*(1.0-_parent.fading);
-    	    double max_scale = 1.0;
+    	    double max_scale = 1.0/Settings.max_zoom;
 		
 		    // if mouse is outside of inner ring
-		    if (distance >= Settings.center_diameter) {
+		    if (distance >= Settings.center_radius) {
 		        double diff = fabs(angle-direction);
 		        if (diff > PI)
 			        diff = 2*PI - diff;
 		
 		        if (diff < 2*PI*Settings.zoom_range) {
-		            max_scale = Settings.max_icon_zoom/(diff*(Settings.max_icon_zoom-1)/(2*PI*Settings.zoom_range)+1);
+		            max_scale = (Settings.max_zoom/(diff*(Settings.max_zoom-1)/(2*PI*Settings.zoom_range)+1))/Settings.max_zoom;
     			    
 			    }
 			
@@ -61,6 +61,43 @@ namespace GnomePie {
 		        _active = false;
 		    }
 		    
+		    // FIXME This code is not frame-rate-independant
+		    _scale = _scale*(1.0 - Settings.zoom_speed) + max_scale*Settings.zoom_speed - 0.1*(1.0 - _parent.fading*_parent.fading);
+		    
+		    ctx.save();
+		    ctx.scale(_scale, _scale);
+		    ctx.translate(cos(direction)*Settings.ring_radius, sin(direction)*Settings.ring_radius);
+		    
+		    if (Theme.icon_bg != null) {
+		        ctx.set_source_surface(Theme.icon_bg, -0.5*Theme.icon_bg.get_width(), -0.5*Theme.icon_bg.get_height());
+		        ctx.paint_with_alpha(_parent.fading*_parent.fading);
+		    }
+		    
+		    ctx.push_group();
+		    
+		        if (Theme.icon_mask != null) {
+		            ctx.set_source_surface(Theme.icon_mask, -0.5*Theme.icon_mask.get_width(), -0.5*Theme.icon_mask.get_height());
+		            ctx.paint();
+		            
+		            ctx.set_operator (Cairo.Operator.IN);
+		        }
+		        
+                ctx.set_source_surface(_action.icon, -0.5*_action.icon.get_width(), -0.5*_action.icon.get_height());
+		        ctx.paint();
+		        
+		        ctx.set_operator (Cairo.Operator.OVER);
+		        
+		        if (Theme.icon_fg != null) {
+		            ctx.set_source_surface(Theme.icon_fg, -0.5*Theme.icon_fg.get_width(), -0.5*Theme.icon_fg.get_height());
+		            ctx.paint();
+		        }
+		    
+		    ctx.pop_group_to_source();
+		    
+		    ctx.paint_with_alpha(_parent.fading*_parent.fading);
+		    
+		    ctx.restore();
+		    
 		    // draw caption
 		    if (active) {
     		    ctx.save();
@@ -68,27 +105,17 @@ namespace GnomePie {
 		        ctx.text_extents(_action.name, out extents);		    
 		        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
 		        ctx.set_font_size(12.0);
-		        ctx.move_to( -extents.width/2 - 1, Settings.center_diameter + extents.height + 30 - 1);
+		        ctx.move_to( -extents.width/2 + 1, Settings.center_radius + extents.height + 30 + 1);
 		        
-		        ctx.set_source_rgb (1, 1, 1);
+		        ctx.set_source_rgb (0, 0, 0);
                 ctx.show_text(_action.name);
-                ctx.move_to( -extents.width/2, Settings.center_diameter + extents.height + 30);
-                ctx.set_source_rgb (0, 0, 0);
+                ctx.move_to( -extents.width/2, Settings.center_radius + extents.height + 30);
+                ctx.set_source_rgb (1, 1, 1);
                 ctx.show_text(_action.name);
                 
                 
 		        ctx.restore();
 		    }
-		    
-		    // FIXME This code is not frame-rate-independant
-		    _scale = _scale*(1.0 - Settings.icon_zoom_speed) + max_scale*Settings.icon_zoom_speed + 0.2*(1.0 - _parent.fading*_parent.fading);
-		    
-		    ctx.save();
-		    ctx.scale(_scale, _scale);
-		    ctx.translate(cos(direction)*Settings.ring_diameter, sin(direction)*Settings.ring_diameter);
-            ctx.set_source_surface(_action.icon, -0.5*_action.icon.get_width(), -0.5*_action.icon.get_height());
-		    ctx.paint_with_alpha(_parent.fading*_parent.fading);
-		    ctx.restore();
 	    }
 	    
 	    public Color color() {

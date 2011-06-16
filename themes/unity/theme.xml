@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="unity" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="110" maxZoom="1.1" zoomRange="0.1" transitionTime="0.3" fadeInTime="0.2" fadeOutTime="0.2">
-        <center radius="200" activeRadius="40">
+    <ring radius="120" maxZoom="1.1" zoomRange="0.1" transitionTime="0.3" fadeInTime="0.2" fadeOutTime="0.2">
+        <center radius="80" activeRadius="55">
             <center_layer file="ring.svg" 
-                          active_scale="1"   active_turnToMouse="false"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"
-                          inactive_scale="1" inactive_turnToMouse="false" inactive_rotationSpeed="0" inactive_colorize="false" inactive_alpha="1.0" />
+                          active_scale="0.8"   active_turnToMouse="false"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"
+                          inactive_scale="0.8" inactive_turnToMouse="false" inactive_rotationSpeed="0" inactive_colorize="false" inactive_alpha="1.0" />
             <center_layer file="arrow.svg" 
-                          active_scale="0.4"     active_turnToMouse="true"   active_rotationSpeed="5.0"    active_colorize="true"    active_alpha="1.0" 
-                          inactive_scale="0.3" inactive_turnToMouse="true" inactive_rotationSpeed="5.0"  inactive_colorize="false" inactive_alpha="0.0" />
+                          active_scale="1.0"     active_turnToMouse="true"   active_rotationSpeed="10.0"    active_colorize="true"    active_alpha="1.0" 
+                          inactive_scale="1.0" inactive_turnToMouse="true" inactive_rotationSpeed="5.0"  inactive_colorize="false" inactive_alpha="0.0" />
         </center>
         <slices radius="26">
             <activeSlice>
@@ -21,7 +21,7 @@
                 <slice_layer type="icon" file="icon_mask.svg" scale="0.9" colorize="false" />
             </inactiveSlice>
         </slices>
-        <caption position="0" size="15" />
+        <caption position="0" size="12" />
     </ring>
 </theme>
 

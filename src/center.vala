@@ -41,18 +41,16 @@ namespace GnomePie {
                 bool   turn_to_mouse      = ((_parent.activity > 0.5) ? layer.active_turn_to_mouse : layer.inactive_turn_to_mouse);
 		        
 		        if (turn_to_mouse) {
-		            double diff  = angle-layer.rotation;
-	                if (fabs(diff) > 0.15 && fabs(diff) < PI) {
-			            if ((diff > 0 && diff < PI) || diff < -PI) 
-			                layer.rotation += max_rotation_speed/Settings.refresh_rate;
-			            else
-			                layer.rotation -= max_rotation_speed/Settings.refresh_rate;
+		            double diff = angle-layer.rotation;
+		            double step =  max_rotation_speed/Settings.refresh_rate;
+		            
+	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step) {
+			            layer.rotation = angle;
 		            } else {
-		                layer.rotation = angle;
+		                if ((diff > 0 && diff < PI) || diff < -PI) layer.rotation += step;
+			            else            		                   layer.rotation -= step;
                     }
-		        } else {
-		            layer.rotation += max_rotation_speed/Settings.refresh_rate;
-		        }
+		        } else layer.rotation += max_rotation_speed/Settings.refresh_rate;
 		        
 		        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 		        

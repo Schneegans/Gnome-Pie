@@ -67,18 +67,6 @@
        fx="50.002552"
        fy="49.744911"
        r="49.750011" />
-    <filter
-       inkscape:collect="always"
-       id="filter3783"
-       x="-0.39861592"
-       width="1.7972318"
-       y="-0.19930796"
-       height="1.3986159">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.5422636"
-         id="feGaussianBlur3785" />
-    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -98,7 +86,7 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="1174"
      inkscape:window-height="737"
-     inkscape:window-x="538"
+     inkscape:window-x="545"
      inkscape:window-y="163"
      inkscape:window-maximized="0">
     <sodipodi:guide
@@ -125,7 +113,7 @@
      transform="translate(0,-952.36218)">
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:none"
-       d="m 759.39679,645.02179 13.13198,0 0,13.13198 z"
+       d="m 759.39679,645.02179 13.13198,0 0,13.13198 c -3.82453,-5.29866 -8.29928,-9.5136 -13.13198,-13.13198 z"
        id="rect2998"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="cccc"

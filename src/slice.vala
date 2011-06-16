@@ -95,7 +95,7 @@ namespace GnomePie {
 	        ctx.restore();
 		    
 		    // draw caption
-		    if (active && Settings.theme.caption == true) {
+		    if (Settings.theme.caption == true && active) {
     		    ctx.save();
     		    
 		        Cairo.TextExtents extents;
@@ -103,7 +103,7 @@ namespace GnomePie {
 		        ctx.text_extents(_action.name, out extents);		    
 		        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
 		        ctx.move_to(-extents.width/2, Settings.theme.caption_position+extents.height/2); 
-                ctx.set_source_rgba(1, 1, 1, _parent.fading*_parent.fading);
+                ctx.set_source_rgba(1, 1, 1, _parent.fading*_parent.fading*_parent.activity);
                 ctx.show_text(_action.name);
                 
 		        ctx.restore();

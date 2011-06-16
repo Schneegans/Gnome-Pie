@@ -24,6 +24,7 @@ namespace GnomePie {
 	    private Action _action;
 	    private Ring   _parent;
 	    private int    _position;
+	    private double _fade = 0.0;
 	    
 	    public bool active{get; private set; default=false;}
 
@@ -51,10 +52,18 @@ namespace GnomePie {
 		    }
 		    
 			if (distance >= Settings.theme.active_radius) {
-		        if (diff < PI/_parent.slice_count()) _active = true;
-		        else				                 _active = false; 
+		        if (diff < PI/_parent.slice_count()) active = true;
+		        else				                 active = false; 
 		    } else {
-		        _active = false;
+		        active = false;
+		    }
+		    
+		    if (active == true) {
+		        if ((_fade += 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) > 1.0)
+                    _fade = 1.0;
+		    } else {
+    		    if ((_fade -= 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) < 0.0)
+                    _fade = 0.0;
 		    }
 		    
 		    double scale = max_scale*_parent.activity + (1.0-_parent.activity)/Settings.theme.max_zoom - 0.1*(1.0 - _parent.fading*_parent.fading);
@@ -64,10 +73,24 @@ namespace GnomePie {
 	        ctx.scale(scale, scale);
 	        ctx.translate(cos(direction)*Settings.theme.radius, sin(direction)*Settings.theme.radius);
 	        
-            if (active) ctx.set_source_surface(_action.active_icon, -0.5*_action.active_icon.get_width(), -0.5*_action.active_icon.get_height());
-            else        ctx.set_source_surface(_action.inactive_icon, -0.5*_action.inactive_icon.get_width(), -0.5*_action.inactive_icon.get_height());
+	        ctx.push_group();
+	        
+	            ctx.set_operator(Cairo.Operator.ADD);
+	        
+	            if (_fade > 0.0) {
+                    ctx.set_source_surface(_action.active_icon, -0.5*_action.active_icon.get_width(), -0.5*_action.active_icon.get_height());
+                    ctx.paint_with_alpha(_parent.fading*_parent.fading*_fade);
+                }
                 
-            ctx.paint_with_alpha(_parent.fading*_parent.fading);
+                if (_fade < 1.0) {
+                    ctx.set_source_surface(_action.inactive_icon, -0.5*_action.inactive_icon.get_width(), -0.5*_action.inactive_icon.get_height());  
+                    ctx.paint_with_alpha(_parent.fading*_parent.fading*(1.0 - _fade));
+                }
+                
+                ctx.set_operator(Cairo.Operator.OVER);
+            
+            ctx.pop_group_to_source();
+            ctx.paint();
 	            
 	        ctx.restore();
 		    

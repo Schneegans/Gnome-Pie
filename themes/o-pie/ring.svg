@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.1 r9760"
-   sodipodi:docname="Neues Dokument 1.2011_06_12_13_55_27.0.svg">
+   sodipodi:docname="ring.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -23,39 +23,39 @@
       <stop
          id="stop3009"
          offset="0"
-         style="stop-color:#ffffff;stop-opacity:0" />
+         style="stop-color:#b4b4b4;stop-opacity:0;" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:0;"
+         style="stop-color:#b4b4b4;stop-opacity:0;"
          offset="0.3680203"
          id="stop3011" />
       <stop
          id="stop3013"
          offset="0.57677984"
-         style="stop-color:#ffffff;stop-opacity:0.66666667;" />
+         style="stop-color:#b4b4b4;stop-opacity:0.66666669;" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:0.45490196;"
+         style="stop-color:#b4b4b4;stop-opacity:0.45490196;"
          offset="0.66058904"
          id="stop3015" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:0.34901961;"
+         style="stop-color:#b4b4b4;stop-opacity:0.34901962;"
          offset="0.70194155"
          id="stop3017" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:0.25490196;"
+         style="stop-color:#b4b4b4;stop-opacity:0.25490195;"
          offset="0.74285865"
          id="stop3019" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:0.1254902;"
+         style="stop-color:#b4b4b4;stop-opacity:0.1254902;"
          offset="0.8251282"
          id="stop3021" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:0.05490196;"
+         style="stop-color:#b4b4b4;stop-opacity:0.05490196;"
          offset="0.90009141"
          id="stop3023" />
       <stop
          id="stop3025"
          offset="1"
-         style="stop-color:#ffffff;stop-opacity:0" />
+         style="stop-color:#b4b4b4;stop-opacity:0;" />
     </linearGradient>
     <linearGradient
        id="linearGradient3767">
@@ -115,7 +115,8 @@
        cy="49.744911"
        fx="50.002552"
        fy="49.744911"
-       r="49.750011" />
+       r="49.750011"
+       gradientTransform="translate(0,952.36218)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -124,20 +125,29 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="57.165456"
-     inkscape:cy="40.350456"
+     inkscape:zoom="4"
+     inkscape:cx="58.115744"
+     inkscape:cy="74.271276"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:showpageshadow="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1174"
-     inkscape:window-height="737"
-     inkscape:window-x="578"
-     inkscape:window-y="161"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1056"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="14.9375,50"
+       id="guide3006" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="50,78.171875"
+       id="guide3008" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -146,7 +156,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -157,13 +167,13 @@
      transform="translate(0,-952.36218)">
     <path
        style="fill:url(#radialGradient3005);fill-opacity:1;stroke:none"
-       d="M 45.75 0.1875 C 20.262461 2.3429508 0.25 23.704878 0.25 49.75 C 0.25 75.795122 20.262461 97.157049 45.75 99.3125 L 50 49.75 L 45.75 0.1875 z M 50 49.75 L 54.25 99.3125 C 79.737539 97.157049 99.75 75.795122 99.75 49.75 C 99.75 23.704878 79.737539 2.3429508 54.25 0.1875 L 50 49.75 z "
-       transform="translate(0,952.36218)"
-       id="path3765" />
+       d="M 45.728643,952.3622 C 20.113026,954.53668 0,976.08716 0,1002.3622 c 0,26.275 20.113026,47.8255 45.728643,50 l 4.271357,-50 -4.271357,-50 z m 4.271357,50 4.271357,50 c 25.615617,-2.1745 45.728643,-23.725 45.728643,-50 0,-26.27504 -20.113026,-47.82552 -45.728643,-50 l -4.271357,50 z"
+       id="path3765"
+       inkscape:connector-curvature="0" />
     <path
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:6;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-       d="M 47.53125 20.8125 C 32.657027 22.070099 20.9375 34.556883 20.9375 49.75 C 20.9375 64.943117 32.657027 77.429898 47.53125 78.6875 L 47.90625 74 C 35.424101 72.943253 25.65625 62.511348 25.65625 49.75 C 25.65625 36.98869 35.424101 26.556746 47.90625 25.5 L 47.53125 20.8125 z M 52.46875 20.8125 L 52.09375 25.5 C 64.575898 26.556746 74.34375 36.98869 74.34375 49.75 C 74.34375 62.511348 64.575898 72.943253 52.09375 74 L 52.46875 78.6875 C 67.342972 77.429898 79.0625 64.943117 79.0625 49.75 C 79.0625 34.556883 67.342972 22.070099 52.46875 20.8125 z "
-       transform="translate(0,952.36218)"
-       id="path19" />
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#a7a7a7;fill-opacity:1;stroke:none;stroke-width:6;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
+       d="M 47.536559,973.36218 C 32.694324,974.6225 21,987.13624 21,1002.3622 c 0,15.2259 11.694324,27.7397 26.536559,29 l 0.374194,-4.6976 c -12.455306,-1.0591 -22.202151,-11.5135 -22.202151,-24.3024 0,-12.7889 9.746845,-23.24337 22.202151,-24.3024 l -0.374194,-4.69762 z m 4.926882,0 -0.374194,4.69762 c 12.455305,1.05903 22.202151,11.5135 22.202151,24.3024 0,12.7889 -9.746846,23.2433 -22.202151,24.3024 l 0.374194,4.6976 C 67.305675,1030.1019 79,1017.5881 79,1002.3622 79,987.13624 67.305675,974.6225 52.463441,973.36218 z"
+       id="path19"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

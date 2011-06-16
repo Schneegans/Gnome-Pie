@@ -60,7 +60,7 @@ namespace GnomePie {
 		        
 		        ctx.rotate(layer.rotation);
 		        ctx.scale(max_scale, max_scale);
-		        ctx.set_source_surface(layer.image, -0.5*layer.image.get_width(), -0.5*layer.image.get_height());
+		        ctx.set_source_surface(layer.image, -0.5*layer.image.get_width()-1, -0.5*layer.image.get_height()-1);
 		        ctx.paint_with_alpha(_parent.fading*_parent.fading*max_alpha);
                 
                 if (colorize > 0.0) {

@@ -14,11 +14,11 @@
             <activeSlice>
                 <slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="true" />
                 <slice_layer type="file" file="gloss.svg"   scale="1"   colorize="false" />
-                <slice_layer type="icon" file="icon_mask.svg" scale="0.9" colorize="false" />
+                <slice_layer type="icon" scale="0.9" colorize="false" />
             </activeSlice>
             <inactiveSlice>
                 <slice_layer type="file" file="gloss.svg"   scale="1"   colorize="false" />
-                <slice_layer type="icon" file="icon_mask.svg" scale="0.9" colorize="false" />
+                <slice_layer type="icon" scale="0.9" colorize="false" />
             </inactiveSlice>
         </slices>
         <caption position="0" size="12" />

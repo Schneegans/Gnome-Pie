@@ -78,12 +78,12 @@ namespace GnomePie {
 	            ctx.set_operator(Cairo.Operator.ADD);
 	        
 	            if (_fade > 0.0) {
-                    ctx.set_source_surface(_action.active_icon, -0.5*_action.active_icon.get_width(), -0.5*_action.active_icon.get_height());
+                    ctx.set_source_surface(_action.active_icon, -0.5*_action.active_icon.get_width()-1, -0.5*_action.active_icon.get_height()-1);
                     ctx.paint_with_alpha(_parent.fading*_parent.fading*_fade);
                 }
                 
                 if (_fade < 1.0) {
-                    ctx.set_source_surface(_action.inactive_icon, -0.5*_action.inactive_icon.get_width(), -0.5*_action.inactive_icon.get_height());  
+                    ctx.set_source_surface(_action.inactive_icon, -0.5*_action.inactive_icon.get_width()-1, -0.5*_action.inactive_icon.get_height()-1);  
                     ctx.paint_with_alpha(_parent.fading*_parent.fading*(1.0 - _fade));
                 }
                 

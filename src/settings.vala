@@ -27,7 +27,7 @@ namespace GnomePie {
         public static bool   open_centered   {get; private set; default = true;}
 
         public static void load() {
-            theme = new Theme("unity");
+            theme = new Theme("gloss");
 
         }
     }

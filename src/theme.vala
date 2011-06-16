@@ -314,8 +314,18 @@ namespace GnomePie {
                             }
                         }
                         
-                        Cairo.ImageSurface image = IconLoader.load("themes/" + directory + "/" + file, 2*(int)((double)slice_radius*scale*max_zoom));
+                        Cairo.ImageSurface image = null;
+                        int size = 2*(int)((double)slice_radius*scale*max_zoom);
                         
+                        if (file == "" && is_icon == true) {
+                            image = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
+                            var ctx  = new Cairo.Context(image);
+                            ctx.set_source_rgb(1, 1, 1);
+                            ctx.paint();
+                        } else {
+                            image = IconLoader.load("themes/" + directory + "/" + file, size);
+                        }
+                            
                         if (image != null) {
                             if (slice->name.down() == "activeslice") {
                                 active_slice_layers.add(new SliceLayer(image, colorize, is_icon));

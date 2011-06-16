@@ -52,7 +52,7 @@ namespace GnomePie {
 		        
 		            if (layer.image != null) {
 		                ctx.push_group();
-		                ctx.set_source_surface(layer.image, -0.5*layer.image.get_width(), -0.5*layer.image.get_height());
+		                ctx.set_source_surface(layer.image, -0.5*layer.image.get_width()-1, -0.5*layer.image.get_height()-1);
 		                ctx.paint();
 		                ctx.set_operator(Cairo.Operator.IN);
 		            }
@@ -60,7 +60,7 @@ namespace GnomePie {
 		            if (layer.image.get_width() != size)
 		                icon = IconLoader.load(filename, layer.image.get_width());
 		            
-		            ctx.set_source_surface(icon, -0.5*icon.get_width(), -0.5*icon.get_height());
+		            ctx.set_source_surface(icon, -0.5*icon.get_width()-1, -0.5*icon.get_height()-1);
 		            ctx.paint();
 
 		            if (layer.image != null) {
@@ -70,7 +70,7 @@ namespace GnomePie {
 		            }
 		            
 		        } else {
-		            ctx.set_source_surface(layer.image, -0.5*layer.image.get_width(), -0.5*layer.image.get_height());
+		            ctx.set_source_surface(layer.image, -0.5*layer.image.get_width()-1, -0.5*layer.image.get_height()-1);
 		            ctx.paint();
 		        }
 		        
@@ -121,7 +121,7 @@ namespace GnomePie {
                  var scaled = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
                  var ctx = new Cairo.Context(scaled);
                  ctx.scale((float)size/(float)surface.get_width(), (float)size/(float)surface.get_height());
-                 ctx.set_source_surface(surface, 0,0);
+                 ctx.set_source_surface(surface, 1.0, 1.0);
                  ctx.paint();
                  return scaled;
             } else {

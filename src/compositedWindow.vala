@@ -15,12 +15,14 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
+using GLib.Math;
+
 namespace GnomePie {
 
     public abstract class CompositedWindow : Gtk.Window {
     
         public CompositedWindow() {
-            int size = (int)(2*Settings.ring_radius + 2*Settings.icon_size);
+            int size = (int)(fmax(2*Settings.theme.radius + 4*Settings.theme.slice_radius, 2*Settings.theme.center_radius));
 
             set_title("Gnome-Pie");
             set_size_request (size, size);

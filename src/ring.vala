@@ -25,8 +25,9 @@ namespace GnomePie {
 	    private Slice   _active_slice;
 	    private Center  _center;
 
-	    public bool   fade_in {get; private set; default = true;}
-	    public double fading  {get; private set; default = 0.0;}
+	    public bool   fade_in  {get; private set; default = true;}
+	    public double fading   {get; private set; default = 0.0;}
+	    public double activity {get; private set; default = 0.0;}
 	    
 	    public Ring() {
             base();
@@ -58,11 +59,11 @@ namespace GnomePie {
         protected override bool draw(Gtk.Widget da, Gdk.EventExpose event) {
             // fading
             if (_fade_in) {
-                _fading += 1.0/(Settings.refresh_rate*Settings.fade_in_time);
+                _fading += 1.0/(Settings.refresh_rate*Settings.theme.fade_in_time);
                 if (_fading > 1.0)
                     _fading = 1.0;
             } else {
-                _fading -= 1.0/(Settings.refresh_rate*Settings.fade_out_time);
+                _fading -= 1.0/(Settings.refresh_rate*Settings.theme.fade_out_time);
                 if (_fading < 0.0) {
                     _fading = 0.0;
                     _fade_in = true;
@@ -77,6 +78,15 @@ namespace GnomePie {
 		    mouse_x -= width_request/2;
 		    mouse_y -= height_request/2;
 		    double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
+		    
+		    if (distance > Settings.theme.active_radius) { 
+		        if ((activity += 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) > 1.0)
+                    activity = 1.0;
+		    } else {
+		        if ((activity -= 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) < 0.0)
+                    activity = 0.0;
+		    }
+		    
 		    double angle = -1;
 		
 		    if (distance > 0) {

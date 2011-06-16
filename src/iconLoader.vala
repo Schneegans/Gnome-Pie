@@ -31,6 +31,63 @@ namespace GnomePie {
             return null;
         }
         
+        public static Cairo.ImageSurface load_themed(string filename, bool active) {
+            int size = (int)(2*Settings.theme.slice_radius*Settings.theme.max_zoom);
+            var icon = IconLoader.load(filename, size);
+            var color = new Color.from_icon(icon);
+            var result = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
+            var ctx  = new Cairo.Context(result);
+            ctx.translate(size/2, size/2);
+            ctx.set_operator(Cairo.Operator.OVER);
+	        
+	        Gee.ArrayList<SliceLayer?> layers;
+		    if (active == true) layers = Settings.theme.active_slice_layers;
+    		else     		    layers = Settings.theme.inactive_slice_layers;
+		    
+		    foreach (var layer in layers) {
+		        if (layer.colorize == true)
+		                ctx.push_group();
+		                
+		        if (layer.is_icon == true) {
+		        
+		            if (layer.image != null) {
+		                ctx.push_group();
+		                ctx.set_source_surface(layer.image, -0.5*layer.image.get_width(), -0.5*layer.image.get_height());
+		                ctx.paint();
+		                ctx.set_operator(Cairo.Operator.IN);
+		            }
+		            
+		            if (layer.image.get_width() != size)
+		                icon = IconLoader.load(filename, layer.image.get_width());
+		            
+		            ctx.set_source_surface(icon, -0.5*icon.get_width(), -0.5*icon.get_height());
+		            ctx.paint();
+
+		            if (layer.image != null) {
+		                ctx.pop_group_to_source();
+		                ctx.paint();
+		                ctx.set_operator(Cairo.Operator.OVER);
+		            }
+		            
+		        } else {
+		            ctx.set_source_surface(layer.image, -0.5*layer.image.get_width(), -0.5*layer.image.get_height());
+		            ctx.paint();
+		        }
+		        
+		        if (layer.colorize == true) {
+                    ctx.set_operator(Cairo.Operator.ATOP);
+                    ctx.set_source_rgb(color.r, color.g, color.b);
+                    ctx.paint();
+                    
+                    ctx.set_operator(Cairo.Operator.OVER);
+                    ctx.pop_group_to_source();
+		            ctx.paint();
+		        }
+		    }
+	        
+            return result;
+        }
+        
         private static Cairo.ImageSurface? load_svg(string filename, int size) {
         
             try {
@@ -72,6 +129,8 @@ namespace GnomePie {
             }
             
         }
+        
+        
     
     }
 

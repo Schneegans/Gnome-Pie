@@ -19,21 +19,23 @@ namespace GnomePie {
 
     public class Action : GLib.Object {
 
-	    public Cairo.ImageSurface icon {get; private set;}
+	    public Cairo.ImageSurface active_icon {get; private set;}
+	    public Cairo.ImageSurface inactive_icon {get; private set;}
 	    public Color              color{get; private set;}
 	    public string             name{get; private set;}
 	    	
 	    private string _command;
 	    
-	    public Action(string command, string icon) {
+	    public Action(string command, string icon_name) {
 	        _command = command;
-	        _name    = icon;
+	        _name    = icon_name;
+	        
+	        var icon_theme = Gtk.IconTheme.get_default();
+            var file = icon_theme.lookup_icon(icon_name, 256, 0).get_filename();
 	
-            var icon_theme = Gtk.IconTheme.get_default();
-            var file = icon_theme.lookup_icon(icon, 256, 0);
-            
-	        _icon = IconLoader.load(file.get_filename(), (int)(Settings.icon_size*Settings.max_zoom));
-		    _color = new Color.from_icon(_icon);
+		    active_icon =   IconLoader.load_themed(file, true);
+		    inactive_icon = IconLoader.load_themed(file, false);
+		    color = new Color.from_icon(active_icon);
 	    }
 
 	    public void execute() {
@@ -45,6 +47,7 @@ namespace GnomePie {
 		        warning (e.message);
 	        }
         }
+        
     }
 
 }

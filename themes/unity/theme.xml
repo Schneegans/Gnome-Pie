@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme name="unity" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
+    <ring radius="120" maxZoom="1.0" zoomRange="0.0" transitionTime="0.1" fadeInTime="0.2" fadeOutTime="0.2">
+        <center radius="200" activeRadius="30">
+            <center_layer file="ring.svg" 
+                          active_scale="1"   active_turnToMouse="false"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"
+                          inactive_scale="1" inactive_turnToMouse="false" inactive_rotationSpeed="0" inactive_colorize="false" inactive_alpha="1.0" />
+            <center_layer file="arrow.svg" 
+                          active_scale="0.4"     active_turnToMouse="true"   active_rotationSpeed="6.0"    active_colorize="true"    active_alpha="1.0" 
+                          inactive_scale="0.2" inactive_turnToMouse="true" inactive_rotationSpeed="6.0"  inactive_colorize="false" inactive_alpha="0.0" />
+        </center>
+        <slices radius="26">
+            <activeSlice>
+                <slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="true" />
+                <slice_layer type="file" file="gloss.svg"   scale="1"   colorize="false" />
+                <slice_layer type="icon" file="icon_mask.svg" scale="0.9" colorize="false" />
+            </activeSlice>
+            <inactiveSlice>
+                <slice_layer type="file" file="gloss.svg"   scale="1"   colorize="false" />
+                <slice_layer type="icon" file="icon_mask.svg" scale="0.9" colorize="false" />
+            </inactiveSlice>
+        </slices>
+        <caption position="0" size="20" />
+    </ring>
+</theme>
+

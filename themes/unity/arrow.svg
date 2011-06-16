@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.1 r9760"
-   sodipodi:docname="ring.svg">
+   sodipodi:docname="arrow.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -67,17 +67,29 @@
        fx="50.002552"
        fy="49.744911"
        r="49.750011" />
+    <filter
+       inkscape:collect="always"
+       id="filter3783"
+       x="-0.39861592"
+       width="1.7972318"
+       y="-0.19930796"
+       height="1.3986159">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="1.5422636"
+         id="feGaussianBlur3785" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#1d1d1d"
      bordercolor="#666666"
      borderopacity="1.0"
-     inkscape:pageopacity="0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="61.209662"
-     inkscape:cy="38.347822"
+     inkscape:zoom="11.2"
+     inkscape:cx="77.449971"
+     inkscape:cy="47.388963"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -86,9 +98,14 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="1174"
      inkscape:window-height="737"
-     inkscape:window-x="531"
+     inkscape:window-x="538"
      inkscape:window-y="163"
-     inkscape:window-maximized="0" />
+     inkscape:window-maximized="0">
+    <sodipodi:guide
+       orientation="0,1"
+       position="111.25,50"
+       id="guide2994" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -97,7 +114,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -107,9 +124,11 @@
      id="layer1"
      transform="translate(0,-952.36218)">
     <path
-       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;baseline-shift:baseline;color:#000000;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate;font-family:Sans;-inkscape-font-specification:Sans"
-       d="m 82.464286,989.51841 -1,0.6875 0,3.125 6.21875,9.03129 -6.21875,8.9062 0,3.125 0.96875,0.6875 8.3125,-11.875 0.59375,-0.8437 -0.59375,-0.875 -8.28125,-11.96879 z"
-       id="path3054"
-       inkscape:connector-curvature="0" />
+       style="fill:#ffffff;fill-opacity:1;stroke:none"
+       d="m 759.39679,645.02179 13.13198,0 0,13.13198 z"
+       id="rect2998"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)" />
   </g>
 </svg>

@@ -30,6 +30,7 @@ pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(X11 REQUIRED x11)
 pkg_check_modules(INDICATOR REQUIRED appindicator-0.1)
 pkg_check_modules(RSVG REQUIRED librsvg-2.0)
+pkg_check_modules(XML REQUIRED libxml-2.0)
 
 set(CFLAGS
 	${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
@@ -44,6 +45,7 @@ set(LIBS
 	${GEE_LIBRARIES}
 	${INDICATOR_LIBRARIES}
 	${RSVG_LIBRARIES}
+	${XML_LIBRARIES}
 )
 link_libraries(${LIBS})
 
@@ -53,6 +55,7 @@ set(LIB_PATHS
 	${GEE_LIBRARY_DIRS}
 	${INDICATOR_LIBRARY_DIRS}
 	${RSVG_LIBRARY_DIRS}
+	${XML_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -62,6 +65,7 @@ set(INCLUDE_PATHS
 	${GEE_INCLUDE_DIRS}
 	${INDICATOR_INCLUDE_DIRS}
 	${RSVG_INCLUDE_DIRS}
+	${XML_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -86,4 +90,6 @@ message( "  GTK_LIBRARIES = ${GTK_LIBRARIES}" )
 message( "  CAIRO_LIBRARIES = ${CAIRO_LIBRARIES}" )
 message( "  GEE_LIBRARIES = ${GEE_LIBRARIES}" )
 message( "  INDICATOR_LIBRARIES = ${INDICATOR_LIBRARIES}" )
+message( "  RSVG_LIBRARIES = ${RSVG_LIBRARIES}" )
+message( "  XML_LIBRARIES = ${XML_LIBRARIES}" )
 message( "" )

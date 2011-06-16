@@ -20,6 +20,7 @@ vala_precompile(
         gio-unix-2.0
         posix
         librsvg-2.0
+        libxml-2.0
 )
 
 add_executable(gnome-pie ${VALA_C})

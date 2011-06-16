@@ -26,7 +26,6 @@ namespace GnomePie {
         public Deamon() {
             Rsvg.init();
             Settings.load();
-            Theme.load();
         
             _ring = new Ring();
             _indicator = new Indicator();

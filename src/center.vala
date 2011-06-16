@@ -22,10 +22,6 @@ namespace GnomePie {
     public class Center {
 
 	    private Ring _parent;
-	
-	    private double _arrow_rotation  = 0.0;
-	    private double _center_activity = 0.0;
-	    private double _center_rotation = 0.0;
     
         public Center(Ring parent) {
             _parent = parent;
@@ -33,49 +29,54 @@ namespace GnomePie {
         
         public void draw(Cairo.Context ctx, double angle, double distance) {
 
-		    if (distance > Settings.center_radius) { 
-		        if ((_center_activity += Settings.rot_accel/Settings.refresh_rate) > 1.0)
-                    _center_activity = 1.0;
-		    } else {
-		        if ((_center_activity -= Settings.rot_accel/Settings.refresh_rate) < 0.0)
-                    _center_activity = 0.0;
-		    }
-		    
-		    ctx.save();
-		    double diff  = angle-_arrow_rotation;
-	        if (fabs(diff) > 0.15 && fabs(diff) < PI) {
-			    if ((diff > 0 && diff < PI) || diff < -PI) 
-			        _arrow_rotation += Settings.arrow_speed/Settings.refresh_rate;
-			    else
-			        _arrow_rotation -= Settings.arrow_speed/Settings.refresh_rate;
-		    } else {
-		        _arrow_rotation = angle;
-            }	
-		    _arrow_rotation = fmod(_arrow_rotation+2*PI, 2*PI);
-		    
-		    ctx.save();
-		    ctx.rotate(_arrow_rotation);
-		    ctx.set_source_surface(Theme.arrow, -50, -50);
-		    ctx.paint_with_alpha(_center_activity * _parent.fading*_parent.fading);
-		    ctx.restore();
-		    
-		    double center_speed = Settings.max_speed*_center_activity + Settings.min_speed*(1.0 - _center_activity);
-		    _center_rotation += center_speed/Settings.refresh_rate;
-		    _center_rotation = fmod(_center_rotation+2*PI, 2*PI);
-		    
-			ctx.rotate(_center_rotation);
-		    ctx.set_source_surface(Theme.ring, -50, -50);
-		    ctx.paint_with_alpha(_parent.fading*_parent.fading);
-		    
-		    float r = (float) (_parent.active_color.r*_center_activity + Settings.inactive_color.r*(1.0 - _center_activity));
-		    float g = (float) (_parent.active_color.g*_center_activity + Settings.inactive_color.g*(1.0 - _center_activity));
-		    float b = (float) (_parent.active_color.b*_center_activity + Settings.inactive_color.b*(1.0 - _center_activity));
-		    
-		    ctx.set_operator(Cairo.Operator.ATOP);
-		    ctx.set_source_rgb(r, g, b);
-            ctx.paint();
-            
-            ctx.restore();
+    	    var layers = Settings.theme.center_layers;
+    	
+		    foreach (var layer in layers) {
+		        ctx.save();
+		        
+		        double max_scale          = layer.active_scale*_parent.activity + layer.inactive_scale*(1.0-_parent.activity);
+                double max_rotation_speed = layer.active_rotation_speed*_parent.activity + layer.inactive_rotation_speed*(1.0-_parent.activity);
+                double max_alpha          = layer.active_alpha*_parent.activity + layer.inactive_alpha*(1.0-_parent.activity);
+                double colorize           = ((layer.active_colorize == true) ? _parent.activity : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - _parent.activity : 0.0);
+                bool   turn_to_mouse      = ((_parent.activity > 0.5) ? layer.active_turn_to_mouse : layer.inactive_turn_to_mouse);
+		        
+		        if (turn_to_mouse) {
+		            double diff  = angle-layer.rotation;
+	                if (fabs(diff) > 0.15 && fabs(diff) < PI) {
+			            if ((diff > 0 && diff < PI) || diff < -PI) 
+			                layer.rotation += max_rotation_speed/Settings.refresh_rate;
+			            else
+			                layer.rotation -= max_rotation_speed/Settings.refresh_rate;
+		            } else {
+		                layer.rotation = angle;
+                    }
+		        } else {
+		            layer.rotation += max_rotation_speed/Settings.refresh_rate;
+		        }
+		        
+		        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
+		        
+
+		        if (colorize > 0.0)
+		            ctx.push_group();
+		        
+		        ctx.rotate(layer.rotation);
+		        ctx.scale(max_scale, max_scale);
+		        ctx.set_source_surface(layer.image, -0.5*layer.image.get_width(), -0.5*layer.image.get_height());
+		        ctx.paint_with_alpha(_parent.fading*_parent.fading*max_alpha);
+                
+                if (colorize > 0.0) {
+                    ctx.set_operator(Cairo.Operator.ATOP);
+                    ctx.set_source_rgb(_parent.active_color.r, _parent.active_color.g, _parent.active_color.b);
+                    ctx.paint_with_alpha(colorize);
+                    
+                    ctx.set_operator(Cairo.Operator.OVER);
+                    ctx.pop_group_to_source();
+		            ctx.paint();
+		        }
+                
+                ctx.restore();
+            }
         }
     }
 

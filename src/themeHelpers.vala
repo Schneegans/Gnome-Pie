@@ -19,7 +19,8 @@ namespace GnomePie {
 
     public class SliceLayer : GLib.Object {
         
-        public Cairo.ImageSurface image {get; set;}
+        public Cairo.ImageSurface image    {get; set;}
+        
         public bool colorize {get; private set; }
         public bool is_icon  {get; private set;}
         
@@ -28,7 +29,6 @@ namespace GnomePie {
             _colorize = colorize;
             _is_icon = is_icon;
         }
-    
     }
     
     public class CenterLayer : GLib.Object {

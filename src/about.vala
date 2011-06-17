@@ -20,14 +20,14 @@ namespace GnomePie {
     public class GnomePieAboutDialog: Gtk.AboutDialog {
     
         public GnomePieAboutDialog () {
-        string[] devs = {"Simon Schneegans <simon.schneegans@uni-weimar.de>"};
-        string[] artists = devs;
-        GLib.Object (artists : artists,
-                     authors : devs,
-                     copyright : "Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>",
-                     program_name: "Gnome-Pie",
-                     logo_icon_name : "gnome-do",
-                     version: "0.1");
+            string[] devs = {"Simon Schneegans <simon.schneegans@uni-weimar.de>"};
+            string[] artists = devs;
+            GLib.Object (artists : artists,
+                         authors : devs,
+                         copyright : "Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>",
+                         program_name: "Gnome-Pie",
+                         logo_icon_name : "gnome-do",
+                         version: "0.1");
         }
     }
 }

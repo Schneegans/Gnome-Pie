@@ -19,18 +19,18 @@ namespace GnomePie {
 	
     public class Deamon : GLib.Object {
     
-        private KeybindingManager _keys;
-        private Indicator _indicator;
-        private Ring _ring;
+        private KeybindingManager keys {private get; private set;}
+        private Indicator indicator    {private get; private set;}
+        private Ring ring              {private get; private set;}            
 
         public Deamon() {
             Rsvg.init();
             Settings.load();
         
-            _ring = new Ring();
-            _indicator = new Indicator();
-            _keys = new KeybindingManager();
-            _keys.bind("<Alt>V", show_ring);
+            ring =      new Ring();
+            indicator = new Indicator();
+            keys =      new KeybindingManager();
+            keys.bind("<Alt>V", show_ring);
             
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);
@@ -41,7 +41,7 @@ namespace GnomePie {
         }
         
         private void show_ring() {
-            _ring.show();
+            ring.show();
         }
         
         private static void sig_handler(int sig) {

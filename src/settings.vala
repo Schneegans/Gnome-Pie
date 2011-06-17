@@ -20,15 +20,14 @@ namespace GnomePie {
     public class Settings : GLib.Object {
     
         // general settings
-        public static Theme  theme           {get; private set;}
-        public static double refresh_rate    {get; private set; default = 60.0;}
+        public static Theme  theme         {get; private set;}
+        public static double refresh_rate  {get; private set; default = 60.0;}
         
         // ring settings
-        public static bool   open_centered   {get; private set; default = true;}
+        public static bool   open_centered {get; private set; default = true;}
 
         public static void load() {
             theme = new Theme("gloss");
-
         }
     }
     

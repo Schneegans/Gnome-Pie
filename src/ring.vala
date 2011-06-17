@@ -22,17 +22,19 @@ namespace GnomePie {
     public class Ring : CompositedWindow {
 	    
 	    private Slice[] _slices;
-	    private Slice   _active_slice;
-	    private Center  _center;
+	    private Slice   active_slice {private get; private set;}
+	    private Center  center       {private get; private set;} 
 
-	    public bool   fade_in  {get; private set; default = true;}
-	    public double fading   {get; private set; default = 0.0;}
-	    public double activity {get; private set; default = 0.0;}
+	    public bool   fade_in      {get; private set; default = true;}
+	    public double fading       {get; private set; default = 0.0;}
+	    public double activity     {get; private set; default = 0.0;}
+	    public Color  active_color {get; private set; default = new Color();}
 	    
 	    public Ring() {
+	    
             base();
             
-            _center = new Center(this); 
+            center = new Center(this); 
 		    _slices = new Slice[0];
 		    
 		    add_slice("firefox.desktop", "firefox");
@@ -42,42 +44,48 @@ namespace GnomePie {
 		    add_slice("blender.desktop", "blender");
         }
 	    
-	    public Color active_color{get; private set; default = new Color();}
-	    
 	    public int slice_count() {
 	        return _slices.length;
 	    }
 	    
 	    protected override void mouseReleased(int button, int x, int y) {
-        	if (button == 1 && _fading == 1.0) {
-        	    if(_active_slice != null)
-        	        _active_slice.activate();
-	        	_fade_in = false;
+        	if (button == 1) {
+        	    if(active_slice != null)
+        	        active_slice.activate();
+	        	fade_in = false;
 	        }
         }
         
         protected override bool draw(Gtk.Widget da, Gdk.EventExpose event) {
-            // fading
-            if (_fade_in) {
-                _fading += 1.0/(Settings.refresh_rate*Settings.theme.fade_in_time);
-                if (_fading > 1.0)
-                    _fading = 1.0;
+            if (fade_in) {
+                fading += 1.0/(Settings.refresh_rate*Settings.theme.fade_in_time);
+                if (fading > 1.0) 
+                    fading = 1.0;
+                
             } else {
-                _fading -= 1.0/(Settings.refresh_rate*Settings.theme.fade_out_time);
-                if (_fading < 0.0) {
-                    _fading = 0.0;
-                    _fade_in = true;
+                fading -= 1.0/(Settings.refresh_rate*Settings.theme.fade_out_time);
+                if (fading < 0.0) {
+                    fading = 0.0;
+                    fade_in = true;
                     hide();
                 }     
             }
         
-            double mouse_x = 0;
-		    double mouse_y = 0;
+            double mouse_x = 0.0;
+		    double mouse_y = 0.0;
 		    get_pointer(out mouse_x, out mouse_y);
 		    
 		    mouse_x -= width_request/2;
 		    mouse_y -= height_request/2;
 		    double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
+		    
+		    double angle = 0.0;
+		
+		    if (distance > 0) {
+		        angle = acos(mouse_x/distance);
+			    if (mouse_y < 0) 
+			        angle = 2*PI - angle;
+		    }
 		    
 		    if (distance > Settings.theme.active_radius) { 
 		        if ((activity += 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) > 1.0)
@@ -86,16 +94,10 @@ namespace GnomePie {
 		        if ((activity -= 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) < 0.0)
                     activity = 0.0;
 		    }
-		    
-		    double angle = -1;
-		
-		    if (distance > 0) {
-		        angle = acos(mouse_x/distance);
-			    if (mouse_y < 0) angle = 2*PI - angle;
-		    }
-		    
+
             var ctx = Gdk.cairo_create(da.window);
             ctx.set_operator(Cairo.Operator.OVER);
+            ctx.translate(width_request*0.5, height_request*0.5);
 
             // clear the window
             ctx.save();
@@ -103,18 +105,16 @@ namespace GnomePie {
             ctx.paint();
             ctx.restore();
 
-            ctx.translate(width_request*0.5, height_request*0.5);
+            center.draw(ctx, angle, distance);
             
-            _center.draw(ctx, angle, distance);
-            
-            _active_slice = null;
+            active_slice = null;
 		    
 		    for (int s=0; s<_slices.length; ++s) {
 			    _slices[s].draw(ctx, angle, distance);
 			    
 			    if(_slices[s].active) {
-			        _active_slice   = _slices[s];
-			        _active_color = _active_slice.color();
+			        active_slice = _slices[s];
+			        active_color = active_slice.color();
 			    }
 		    }
  
@@ -123,7 +123,6 @@ namespace GnomePie {
         
         private void add_slice(string command, string icon) {
             _slices += new Slice(command, icon, this);
-        }
-  
+        } 
     }
 }

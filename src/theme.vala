@@ -21,28 +21,26 @@ namespace GnomePie {
 
     public class Theme : GLib.Object {
         
-        public string directory {get; private set;}
-        public string name      {get; private set;}
-        public string author    {get; private set;}
-        public string email     {get; private set;}
-        public double radius        {get; private set; default=150;}
-        public double max_zoom      {get; private set; default=1.2;}
-        public double zoom_range    {get; private set; default=0.2;}
-        public double transition_time {get; private set; default=0.5;}
-        public double fade_in_time    {get; private set; default=0.2;}
-        public double fade_out_time   {get; private set; default=0.1;}
-        public double center_radius {get; private set; default=90.0;}
-        public double active_radius {get; private set; default=45.0;}
-        public double slice_radius  {get; private set; default=32.0;}
-        
+        public string directory        {get; private set;}
+        public string name             {get; private set;}
+        public string author           {get; private set;}
+        public string email            {get; private set;}
+        public double radius           {get; private set; default=150;}
+        public double max_zoom         {get; private set; default=1.2;}
+        public double zoom_range       {get; private set; default=0.2;}
+        public double transition_time  {get; private set; default=0.5;}
+        public double fade_in_time     {get; private set; default=0.2;}
+        public double fade_out_time    {get; private set; default=0.1;}
+        public double center_radius    {get; private set; default=90.0;}
+        public double active_radius    {get; private set; default=45.0;}
+        public double slice_radius     {get; private set; default=32.0;}
         public bool   caption          {get; private set; default=false;}
         public double font_size        {get; private set; default=12.0;}
         public double caption_position {get; private set; default=0.0;}
         
-        public Gee.ArrayList<CenterLayer?> center_layers   {get; private set;}
-        
-        public Gee.ArrayList<SliceLayer?> active_slice_layers   {get; private set;}
-        public Gee.ArrayList<SliceLayer?> inactive_slice_layers {get; private set;}
+        public Gee.ArrayList<CenterLayer?> center_layers         {get; private set;}
+        public Gee.ArrayList<SliceLayer?>  active_slice_layers   {get; private set;}
+        public Gee.ArrayList<SliceLayer?>  inactive_slice_layers {get; private set;}
         
         public Theme(string dir) {
             Xml.Parser.init();
@@ -56,14 +54,14 @@ namespace GnomePie {
             
             Xml.Doc* themeXML = Xml.Parser.parse_file (path);
             if (themeXML == null) {
-                warning("Error parsing theme: " + path + " not found!");
+                warning("Error parsing theme: \"" + path + "\" not found!");
                 return;
             }
 
             Xml.Node* root = themeXML->get_root_element();
             if (root == null) {
                 delete themeXML;
-                warning("Invalid theme " + directory + ": theme.xml is empty!");
+                warning("Invalid theme \"" + directory + "\": theme.xml is empty!");
                 return;
             }
             
@@ -91,7 +89,7 @@ namespace GnomePie {
                         author = attr_content;
                         break;
                     default:
-                        warning("Invalid attribute " + attr_name + " in <theme> element!");
+                        warning("Invalid attribute \"" + attr_name + "\" in <theme> element!");
                         break;
                 }
             }
@@ -127,7 +125,7 @@ namespace GnomePie {
                         fade_out_time = double.parse(attr_content);
                         break;
                     default:
-                        warning("Invalid attribute " + attr_name + " in <ring> element!");
+                        warning("Invalid attribute \"" + attr_name + "\" in <ring> element!");
                         break;
                 }
             }
@@ -146,7 +144,7 @@ namespace GnomePie {
                             parse_caption(node);
                             break;
                         default:
-                            warning("Invalid child element " + element_name + " in <ring> element!");
+                            warning("Invalid child element \"" + element_name + "\" in <ring> element!");
                             break;
                     }
                 }
@@ -166,7 +164,7 @@ namespace GnomePie {
                         active_radius = double.parse(attr_content);
                         break;
                     default:
-                        warning("Invalid attribute " + attr_name + " in <center> element!");
+                        warning("Invalid attribute \"" + attr_name + "\" in <center> element!");
                         break;
                 }
             }
@@ -177,7 +175,7 @@ namespace GnomePie {
                     if (element_name == "center_layer") {
                         parse_center_layer(node);
                     } else {
-                        warning("Invalid child element " + element_name + " in <center> element!");
+                        warning("Invalid child element \"" + element_name + "\" in <center> element!");
                     }
                 }
             }
@@ -193,7 +191,7 @@ namespace GnomePie {
                         slice_radius = double.parse(attr_content);
                         break;
                     default:
-                        warning("Invalid attribute " + attr_name + " in <slices> element!");
+                        warning("Invalid attribute \"" + attr_name + "\" in <slices> element!");
                         break;
                 }
             }
@@ -204,7 +202,7 @@ namespace GnomePie {
                     if (element_name == "activeslice" || element_name == "inactiveslice") {
                         parse_slice_layers(node);
                     } else {
-                        warning("Invalid child element " + element_name + " in <slices> element!");
+                        warning("Invalid child element \"" + element_name + "\" in <slices> element!");
                     }
                 }
             }
@@ -263,7 +261,7 @@ namespace GnomePie {
                         inactive_colorize = bool.parse(attr_content);
                         break;
                     default:
-                        warning("Invalid attribute " + attr_name + " in <center_layer> element!");
+                        warning("Invalid attribute \"" + attr_name + "\" in <center_layer> element!");
                         break;
                 }
             }
@@ -309,7 +307,7 @@ namespace GnomePie {
                                     colorize = bool.parse(attr_content);
                                     break;
                                 default:
-                                    warning("Invalid attribute " + attr_name + " in <slice_layer> element!");
+                                    warning("Invalid attribute \"" + attr_name + "\" in <slice_layer> element!");
                                     break;
                             }
                         }
@@ -334,7 +332,7 @@ namespace GnomePie {
                             }
                         }
                     } else {
-                        warning("Invalid child element " + element_name + " in <" + slice->name + "> element!");
+                        warning("Invalid child element \"" + element_name + "\" in <" + slice->name + "> element!");
                     }
                 }
             }
@@ -353,7 +351,7 @@ namespace GnomePie {
                         caption_position = double.parse(attr_content);
                         break;
                     default:
-                        warning("Invalid attribute " + attr_name + " in <caption> element!");
+                        warning("Invalid attribute \"" + attr_name + "\" in <caption> element!");
                         break;
                 }
             }

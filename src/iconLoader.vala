@@ -21,34 +21,38 @@ namespace GnomePie {
     
         public static Cairo.ImageSurface? load(string filename, int size) {
             var parts = filename.split(".");
-            string file_type = parts[parts.length-1].up();
-            if (file_type == "SVG")
-                return load_svg(filename, size);
-            else if (file_type == "PNG")
-                return load_png(filename, size);
-
-            warning("Unrecognized image type: " + filename + "!");
-            return null;
+            
+            switch (parts[parts.length-1].up()) {
+                case ("SVG"):
+                    return load_svg(filename, size);
+                case ("PNG"):
+                    return load_png(filename, size);
+                default:
+                    warning("Unrecognized image type: \"" + filename + "\""!");
+                    return null;
+            }
         }
         
         public static Cairo.ImageSurface load_themed(string filename, bool active) {
-            int size = (int)(2*Settings.theme.slice_radius*Settings.theme.max_zoom);
-            var icon = IconLoader.load(filename, size);
-            var color = new Color.from_icon(icon);
+            int size =   (int)(2*Settings.theme.slice_radius*Settings.theme.max_zoom);
+            var icon =   IconLoader.load(filename, size);
+            var color =  new Color.from_icon(icon);
             var result = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-            var ctx  = new Cairo.Context(result);
+            var ctx  =   new Cairo.Context(result);
+            
             ctx.translate(size/2, size/2);
             ctx.set_operator(Cairo.Operator.OVER);
 	        
 	        Gee.ArrayList<SliceLayer?> layers;
-		    if (active == true) layers = Settings.theme.active_slice_layers;
-    		else     		    layers = Settings.theme.inactive_slice_layers;
+		    if (active) layers = Settings.theme.active_slice_layers;
+    		else        layers = Settings.theme.inactive_slice_layers;
 		    
 		    foreach (var layer in layers) {
-		        if (layer.colorize == true)
+		    
+		        if (layer.colorize)
 		                ctx.push_group();
 		                
-		        if (layer.is_icon == true) {
+		        if (layer.is_icon) {
 		        
 		            if (layer.image != null) {
 		                ctx.push_group();
@@ -74,7 +78,7 @@ namespace GnomePie {
 		            ctx.paint();
 		        }
 		        
-		        if (layer.colorize == true) {
+		        if (layer.colorize) {
                     ctx.set_operator(Cairo.Operator.ATOP);
                     ctx.set_source_rgb(color.r, color.g, color.b);
                     ctx.paint();
@@ -84,21 +88,22 @@ namespace GnomePie {
 		            ctx.paint();
 		        }
 		    }
-	        
             return result;
         }
         
         private static Cairo.ImageSurface? load_svg(string filename, int size) {
         
             try {
+            
                 var pixbuf = Rsvg.pixbuf_from_file_at_size(filename, size, size);
+                
                 if (pixbuf == null) {
                     warning("Failed to load " + filename + "!");
                     return null;
                 }
                     
                 var surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, pixbuf.get_width(), pixbuf.get_height());
-                var ctx = new Cairo.Context(surface);
+                var ctx =     new Cairo.Context(surface);
                 Gdk.cairo_set_source_pixbuf(ctx, pixbuf, 1.0, 1.0);
                 ctx.paint();
                 return surface;
@@ -106,12 +111,14 @@ namespace GnomePie {
             } catch (GLib.Error e) {
                 message("Error loading SVG: %s", e.message);
             }
-            
+
             return null;
         }
         
         private static Cairo.ImageSurface? load_png(string filename, int size) {
+        
             var surface = new Cairo.ImageSurface.from_png(filename);
+            
             if (surface == null) {
                 warning("Failed to load " + filename + "!");
                 return null;
@@ -124,14 +131,9 @@ namespace GnomePie {
                  ctx.set_source_surface(surface, 1.0, 1.0);
                  ctx.paint();
                  return scaled;
-            } else {
-                return surface;
-            }
-            
+                 
+            } else return surface;
         }
-        
-        
-    
     }
 
 }

@@ -19,12 +19,11 @@ namespace GnomePie {
 
     public class Indicator : GLib.Object {
     
-        private AppIndicator.Indicator _indicator;
+        private AppIndicator.Indicator indicator {private get; private set;}
         
         public Indicator() {
-            _indicator = new AppIndicator.Indicator("Gnome-Pie", "gnome-do-icon", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
-            
-            _indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
+            indicator = new AppIndicator.Indicator("Gnome-Pie", "gnome-do-icon", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
             
             var menu = new Gtk.Menu();
 
@@ -32,6 +31,7 @@ namespace GnomePie {
             item.activate.connect(() => {
                 debug("CLICK!");
             });
+            
             item.show();
             menu.append(item);
 
@@ -53,8 +53,7 @@ namespace GnomePie {
             item.show();
             menu.append(item);
 
-            _indicator.set_menu(menu);
+            indicator.set_menu(menu);
         }
-    
     }
 }

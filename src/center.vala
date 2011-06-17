@@ -21,7 +21,7 @@ namespace GnomePie {
 
     public class Center {
 
-	    private Ring _parent;
+	    private Ring parent {private get; private set;}
     
         public Center(Ring parent) {
             _parent = parent;
@@ -32,40 +32,41 @@ namespace GnomePie {
     	    var layers = Settings.theme.center_layers;
     	
 		    foreach (var layer in layers) {
+		    
 		        ctx.save();
 		        
-		        double max_scale          = layer.active_scale*_parent.activity + layer.inactive_scale*(1.0-_parent.activity);
-                double max_rotation_speed = layer.active_rotation_speed*_parent.activity + layer.inactive_rotation_speed*(1.0-_parent.activity);
-                double max_alpha          = layer.active_alpha*_parent.activity + layer.inactive_alpha*(1.0-_parent.activity);
-                double colorize           = ((layer.active_colorize == true) ? _parent.activity : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - _parent.activity : 0.0);
-                bool   turn_to_mouse      = ((_parent.activity > 0.5) ? layer.active_turn_to_mouse : layer.inactive_turn_to_mouse);
+		        double max_scale          = layer.active_scale*parent.activity + layer.inactive_scale*(1.0-parent.activity);
+                double max_rotation_speed = layer.active_rotation_speed*parent.activity + layer.inactive_rotation_speed*(1.0-parent.activity);
+                double max_alpha          = layer.active_alpha*parent.activity + layer.inactive_alpha*(1.0-parent.activity);
+                double colorize           = ((layer.active_colorize == true) ? parent.activity : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - parent.activity : 0.0);
+                bool   turn_to_mouse      = ((parent.activity > 0.5) ? layer.active_turn_to_mouse : layer.inactive_turn_to_mouse);
 		        
 		        if (turn_to_mouse) {
 		            double diff = angle-layer.rotation;
-		            double step =  max_rotation_speed/Settings.refresh_rate;
+		            double step = max_rotation_speed/Settings.refresh_rate;
 		            
-	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step) {
+	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 			            layer.rotation = angle;
-		            } else {
+		            else {
 		                if ((diff > 0 && diff < PI) || diff < -PI) layer.rotation += step;
 			            else            		                   layer.rotation -= step;
                     }
+                    
 		        } else layer.rotation += max_rotation_speed/Settings.refresh_rate;
 		        
 		        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 		        
 
-		        if (colorize > 0.0)
-		            ctx.push_group();
+		        if (colorize > 0.0) ctx.push_group();
 		        
 		        ctx.rotate(layer.rotation);
 		        ctx.scale(max_scale, max_scale);
 		        ctx.set_source_surface(layer.image, -0.5*layer.image.get_width()-1, -0.5*layer.image.get_height()-1);
-		        ctx.paint_with_alpha(_parent.fading*_parent.fading*max_alpha);
+		        ctx.paint_with_alpha(parent.fading*parent.fading*max_alpha);
                 
                 if (colorize > 0.0) {
                     ctx.set_operator(Cairo.Operator.ATOP);
-                    ctx.set_source_rgb(_parent.active_color.r, _parent.active_color.g, _parent.active_color.b);
+                    ctx.set_source_rgb(parent.active_color.r, parent.active_color.g, parent.active_color.b);
                     ctx.paint_with_alpha(colorize);
                     
                     ctx.set_operator(Cairo.Operator.OVER);

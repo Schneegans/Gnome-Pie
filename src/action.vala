@@ -19,10 +19,10 @@ namespace GnomePie {
 
     public class Action : GLib.Object {
 
-	    public Cairo.ImageSurface active_icon {get; private set;}
+	    public Cairo.ImageSurface active_icon   {get; private set;}
 	    public Cairo.ImageSurface inactive_icon {get; private set;}
-	    public Color              color{get; private set;}
-	    public string             name{get; private set;}
+	    public Color              color {get; private set;}
+	    public string             name  {get; private set;}
 	    	
 	    private string _command;
 	    

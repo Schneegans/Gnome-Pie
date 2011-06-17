@@ -17,18 +17,27 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    public class Settings : GLib.Object {
+    namespace Settings {
     
-        // general settings
-        public static Theme  theme         {get; private set;}
-        public static double refresh_rate  {get; private set; default = 60.0;}
+        private SettingsInstance instance = null;
+    
+        public SettingsInstance setting() {
+            if (instance == null)
+                instance = new SettingsInstance(); 
+            return instance;
+        }
         
-        // ring settings
-        public static bool   open_centered {get; private set; default = true;}
+        public class SettingsInstance : GLib.Object {
+    
+            public Theme  theme          {get; private set;}
+            public double refresh_rate   {get; private set; default = 60.0;}
+            public bool   show_indicator {get; set; default = true;}
+            public bool   open_at_mouse  {get; set; default = false;}
 
-        public static void load() {
-            theme = new Theme("gloss");
+            public SettingsInstance() {
+                theme = new Theme("gloss");
+            }
         }
     }
-    
+   
 }

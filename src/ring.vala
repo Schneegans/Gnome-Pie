@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
+using GnomePie.Settings;
 using GLib.Math;
 
 namespace GnomePie {
@@ -58,12 +59,12 @@ namespace GnomePie {
         
         protected override bool draw(Gtk.Widget da, Gdk.EventExpose event) {
             if (fade_in) {
-                fading += 1.0/(Settings.refresh_rate*Settings.theme.fade_in_time);
+                fading += 1.0/(setting().refresh_rate*setting().theme.fade_in_time);
                 if (fading > 1.0) 
                     fading = 1.0;
                 
             } else {
-                fading -= 1.0/(Settings.refresh_rate*Settings.theme.fade_out_time);
+                fading -= 1.0/(setting().refresh_rate*setting().theme.fade_out_time);
                 if (fading < 0.0) {
                     fading = 0.0;
                     fade_in = true;
@@ -87,11 +88,11 @@ namespace GnomePie {
 			        angle = 2*PI - angle;
 		    }
 		    
-		    if (distance > Settings.theme.active_radius) { 
-		        if ((activity += 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) > 1.0)
+		    if (distance > setting().theme.active_radius) { 
+		        if ((activity += 1.0/(setting().theme.transition_time*setting().refresh_rate)) > 1.0)
                     activity = 1.0;
 		    } else {
-		        if ((activity -= 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) < 0.0)
+		        if ((activity -= 1.0/(setting().theme.transition_time*setting().refresh_rate)) < 0.0)
                     activity = 0.0;
 		    }
 

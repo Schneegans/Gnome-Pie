@@ -15,20 +15,30 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
+using GnomePie.Settings;
+
 namespace GnomePie {
 	
     public class Deamon : GLib.Object {
     
         private KeybindingManager keys {private get; private set;}
         private Indicator indicator    {private get; private set;}
-        private Ring ring              {private get; private set;}            
+        private Ring ring              {private get; private set;}     
+        private Preferences prefs      {private get; private set;}        
 
         public Deamon() {
             Rsvg.init();
-            Settings.load();
         
+            prefs =     new Preferences();
             ring =      new Ring();
-            indicator = new Indicator();
+            indicator = new Indicator(prefs);
+            
+            setting().notify["show-indicator"].connect((s, p) => {
+                indicator.active = setting().show_indicator;
+            });
+            
+            indicator.active = setting().show_indicator;
+                
             keys =      new KeybindingManager();
             keys.bind("<Alt>V", show_ring);
             

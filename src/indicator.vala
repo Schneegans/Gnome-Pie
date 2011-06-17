@@ -21,15 +21,24 @@ namespace GnomePie {
     
         private AppIndicator.Indicator indicator {private get; private set;}
         
-        public Indicator() {
+        public  bool active {
+            get {
+                return indicator.get_status() == AppIndicator.IndicatorStatus.ACTIVE;
+            }
+            set {
+                if (value) indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
+                else       indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE);
+            }
+        }
+        
+        public Indicator(Gtk.Window prefs) {
             indicator = new AppIndicator.Indicator("Gnome-Pie", "gnome-do-icon", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
-            indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
             
             var menu = new Gtk.Menu();
 
             var item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.PREFERENCES, null);
             item.activate.connect(() => {
-                debug("CLICK!");
+                prefs.show();
             });
             
             item.show();
@@ -38,9 +47,9 @@ namespace GnomePie {
             item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.ABOUT, null);
             item.show();
             item.activate.connect(() => {
-                    var about = new GnomePieAboutDialog();
-                    about.run();
-                    about.destroy();
+                var about = new GnomePieAboutDialog();
+                about.run();
+                about.destroy();
             });
             menu.append(item);
             
@@ -55,5 +64,6 @@ namespace GnomePie {
 
             indicator.set_menu(menu);
         }
+
     }
 }

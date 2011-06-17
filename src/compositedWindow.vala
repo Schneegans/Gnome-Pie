@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
+using GnomePie.Settings;
 using GLib.Math;
 
 namespace GnomePie {
@@ -22,7 +23,7 @@ namespace GnomePie {
     public abstract class CompositedWindow : Gtk.Window {
     
         public CompositedWindow() {
-            int size = (int)(fmax(2*Settings.theme.radius + 4*Settings.theme.slice_radius, 2*Settings.theme.center_radius));
+            int size = (int)(fmax(2*setting().theme.radius + 4*setting().theme.slice_radius, 2*setting().theme.center_radius));
 
             set_title("Gnome-Pie");
             set_size_request (size, size);
@@ -35,7 +36,12 @@ namespace GnomePie {
             set_app_paintable(true);
             set_resizable(false);
             
-            if(Settings.open_centered)  position = Gtk.WindowPosition.MOUSE;
+            setting().notify["open-at-mouse"].connect((s, p) => {
+                if(setting().open_at_mouse) position = Gtk.WindowPosition.MOUSE;
+                else                        position = Gtk.WindowPosition.CENTER;
+            }); 
+            
+            if(setting().open_at_mouse) position = Gtk.WindowPosition.MOUSE;
             else                        position = Gtk.WindowPosition.CENTER;
                 
             add_events(Gdk.EventMask.BUTTON_RELEASE_MASK);
@@ -53,7 +59,7 @@ namespace GnomePie {
             base.show();
             grab_total_focus();
             
-            Timeout.add ((uint)(1000.0/Settings.refresh_rate), () => {
+            Timeout.add ((uint)(1000.0/setting().refresh_rate), () => {
 	            queue_draw();
 	            return visible;
 	        });

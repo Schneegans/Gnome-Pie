@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
+using GnomePie.Settings;
 namespace GnomePie {
 
     public class IconLoader : GLib.Object {
@@ -28,13 +29,13 @@ namespace GnomePie {
                 case ("PNG"):
                     return load_png(filename, size);
                 default:
-                    warning("Unrecognized image type: \"" + filename + "\""!");
+                    warning("Unrecognized image type: \"" + filename + "\"!");
                     return null;
             }
         }
         
         public static Cairo.ImageSurface load_themed(string filename, bool active) {
-            int size =   (int)(2*Settings.theme.slice_radius*Settings.theme.max_zoom);
+            int size =   (int)(2*setting().theme.slice_radius*setting().theme.max_zoom);
             var icon =   IconLoader.load(filename, size);
             var color =  new Color.from_icon(icon);
             var result = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
@@ -44,8 +45,8 @@ namespace GnomePie {
             ctx.set_operator(Cairo.Operator.OVER);
 	        
 	        Gee.ArrayList<SliceLayer?> layers;
-		    if (active) layers = Settings.theme.active_slice_layers;
-    		else        layers = Settings.theme.inactive_slice_layers;
+		    if (active) layers = setting().theme.active_slice_layers;
+    		else        layers = setting().theme.inactive_slice_layers;
 		    
 		    foreach (var layer in layers) {
 		    

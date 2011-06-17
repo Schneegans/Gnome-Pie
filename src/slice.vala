@@ -15,6 +15,7 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
+using GnomePie.Settings;
 using GLib.Math;
 
 namespace GnomePie {
@@ -41,31 +42,31 @@ namespace GnomePie {
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
 		    double direction = 2.0 * PI * position/parent.slice_count() + 0.5 * (parent.fade_in ? -1.0 : 1.0) * (1.0 - parent.fading);
-    	    double max_scale = 1.0/Settings.theme.max_zoom;
+    	    double max_scale = 1.0/setting().theme.max_zoom;
 	        double diff = fabs(angle-direction);
 	        
 	        if (diff > PI)
 		        diff = 2 * PI - diff;
 	
-	        if (diff < 2 * PI * Settings.theme.zoom_range)
-	            max_scale = (Settings.theme.max_zoom/(diff * (Settings.theme.max_zoom - 1)/(2 * PI * Settings.theme.zoom_range) + 1))/Settings.theme.max_zoom;
+	        if (diff < 2 * PI * setting().theme.zoom_range)
+	            max_scale = (setting().theme.max_zoom/(diff * (setting().theme.max_zoom - 1)/(2 * PI * setting().theme.zoom_range) + 1))/setting().theme.max_zoom;
 		    
-		    active = (distance >= Settings.theme.active_radius) && (diff < PI/parent.slice_count());
+		    active = (distance >= setting().theme.active_radius) && (diff < PI/parent.slice_count());
 		    
 		    if (active) {
-		        if ((fade += 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) > 1.0)
+		        if ((fade += 1.0/(setting().theme.transition_time*setting().refresh_rate)) > 1.0)
                     fade = 1.0;
 		    } else {
-    		    if ((fade -= 1.0/(Settings.theme.transition_time*Settings.refresh_rate)) < 0.0)
+    		    if ((fade -= 1.0/(setting().theme.transition_time*setting().refresh_rate)) < 0.0)
                     fade = 0.0;
 		    }
 		    
-		    double scale = max_scale*parent.activity + (1.0 - parent.activity)/Settings.theme.max_zoom - 0.1*(1.0 - parent.fading*parent.fading);
+		    double scale = max_scale*parent.activity + (1.0 - parent.activity)/setting().theme.max_zoom - 0.1*(1.0 - parent.fading*parent.fading);
 
 	        ctx.save();
 	        
 	        ctx.scale(scale, scale);
-	        ctx.translate(cos(direction)*Settings.theme.radius, sin(direction)*Settings.theme.radius);
+	        ctx.translate(cos(direction)*setting().theme.radius, sin(direction)*setting().theme.radius);
 	        
 	        ctx.push_group();
 	        
@@ -89,14 +90,14 @@ namespace GnomePie {
 	        ctx.restore();
 		    
 		    // draw caption
-		    if (Settings.theme.caption && active) {
+		    if (setting().theme.caption && active) {
     		    ctx.save();
     		    
-		        ctx.set_font_size(Settings.theme.font_size);
+		        ctx.set_font_size(setting().theme.font_size);
 		        Cairo.TextExtents extents;
 		        ctx.text_extents(action.name, out extents);		    
 		        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
-		        ctx.move_to(-extents.width/2, Settings.theme.caption_position+extents.height/2); 
+		        ctx.move_to(-extents.width/2, setting().theme.caption_position+extents.height/2); 
                 ctx.set_source_rgba(1, 1, 1, parent.fading*parent.fading*parent.activity);
                 ctx.show_text(action.name);
                 

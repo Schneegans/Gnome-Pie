@@ -32,10 +32,28 @@ namespace GnomePie {
             public Theme  theme          {get; private set;}
             public double refresh_rate   {get; private set; default = 60.0;}
             public bool   show_indicator {get; set; default = true;}
-            public bool   open_at_mouse  {get; set; default = false;}
+            public bool   open_at_mouse  {get; set; default = true;}
+            
+            public Gee.ArrayList<Theme?> themes {get; private set;}
 
             public SettingsInstance() {
-                theme = new Theme("gloss");
+                themes = new Gee.ArrayList<Theme?>();
+                load_themes();
+                theme = themes[2];
+            }
+            
+            private void load_themes() {
+                try {
+                    string name;
+                    var d = Dir.open("themes/");
+                    while ((name = d.read_name()) != null) {
+                        var theme = new Theme(name);
+                        if (theme != null)
+                            themes.add(theme);
+                    }
+                } catch (Error e) {
+		            warning (e.message);
+	            } 
             }
         }
     }

@@ -23,6 +23,7 @@ namespace GnomePie {
         
         public string directory        {get; private set;}
         public string name             {get; private set;}
+        public string description      {get; private set;}
         public string author           {get; private set;}
         public string email            {get; private set;}
         public double radius           {get; private set; default=150;}
@@ -81,6 +82,9 @@ namespace GnomePie {
                 switch (attr_name) {
                     case "name":
                         name = attr_content;
+                        break;
+                    case "description":
+                        description = attr_content;
                         break;
                     case "email":
                         email = attr_content;

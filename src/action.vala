@@ -25,7 +25,7 @@ namespace GnomePie {
 	    public string             name  {get; private set;}
 	    	
 	    private string _command;
-	    
+
 	    public Action(string command, string icon_name) {
 	        _command = command;
 	        _name    = icon_name;

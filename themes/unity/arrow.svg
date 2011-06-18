@@ -86,7 +86,7 @@
      inkscape:guide-bbox="true"
      inkscape:window-width="1174"
      inkscape:window-height="737"
-     inkscape:window-x="545"
+     inkscape:window-x="552"
      inkscape:window-y="163"
      inkscape:window-maximized="0">
     <sodipodi:guide
@@ -113,10 +113,9 @@
      transform="translate(0,-952.36218)">
     <path
        style="fill:#ffffff;fill-opacity:1;stroke:none"
-       d="m 759.39679,645.02179 13.13198,0 0,13.13198 c -3.82453,-5.29866 -8.29928,-9.5136 -13.13198,-13.13198 z"
+       d="m 81.857481,996.8239 5.535712,5.5357 -5.535712,5.5357 c 0.621411,-3.8458 0.51189,-7.5089 0,-11.0714 z"
        id="rect2998"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cccc"
-       transform="matrix(0.70710678,0.70710678,-0.70710678,0.70710678,0,0)" />
+       sodipodi:nodetypes="cccc" />
   </g>
 </svg>

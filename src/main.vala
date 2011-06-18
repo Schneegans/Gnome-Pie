@@ -20,6 +20,6 @@ int main (string[] args) {
 
     var deamon = new GnomePie.Deamon();
     deamon.run();
-    
+     
     return 0;
 }

@@ -15,6 +15,8 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
+using GnomePie.Settings;
+
 namespace GnomePie {
 
     public class Action : GLib.Object {
@@ -29,13 +31,18 @@ namespace GnomePie {
 	    public Action(string command, string icon_name) {
 	        _command = command;
 	        _name    = icon_name;
-	        
-	        var icon_theme = Gtk.IconTheme.get_default();
-            var file = icon_theme.lookup_icon(icon_name, 256, 0).get_filename();
-	
-		    active_icon =   IconLoader.load_themed(file, true);
-		    inactive_icon = IconLoader.load_themed(file, false);
+
+	        int size = (int)(2*setting().theme.slice_radius*setting().theme.max_zoom);
+		    active_icon =   IconLoader.load_themed(icon_name, size, true,  setting().theme);
+		    inactive_icon = IconLoader.load_themed(icon_name, size, false, setting().theme);
 		    color = new Color.from_icon(active_icon);
+		    
+		    setting().notify["theme"].connect((s, p) => {
+                size = (int)(2*setting().theme.slice_radius*setting().theme.max_zoom);
+		        active_icon =   IconLoader.load_themed(icon_name, size, true,  setting().theme);
+		        inactive_icon = IconLoader.load_themed(icon_name, size, false, setting().theme);
+		        color = new Color.from_icon(active_icon);
+            });
 	    }
 
 	    public void execute() {

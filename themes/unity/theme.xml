@@ -7,7 +7,7 @@
                           active_scale="0.8"   active_turnToMouse="false"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"
                           inactive_scale="0.8" inactive_turnToMouse="false" inactive_rotationSpeed="0" inactive_colorize="false" inactive_alpha="1.0" />
             <center_layer file="arrow.svg" 
-                          active_scale="1.0"     active_turnToMouse="true"   active_rotationSpeed="10.0"    active_colorize="true"    active_alpha="1.0" 
+                          active_scale="1.0"     active_turnToMouse="true"   active_rotationSpeed="10.0"    active_colorize="false"    active_alpha="1.0" 
                           inactive_scale="1.0" inactive_turnToMouse="true" inactive_rotationSpeed="5.0"  inactive_colorize="false" inactive_alpha="0.0" />
         </center>
         <slices radius="26">

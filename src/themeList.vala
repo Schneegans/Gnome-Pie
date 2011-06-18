@@ -19,79 +19,59 @@ using GnomePie.Settings;
 
 namespace GnomePie {
 
-    Gdk.Pixbuf open_image (string icon) {
-        try {
-            return new Gdk.Pixbuf.from_file ("/usr/share/pixmaps/" + icon);
-        } catch (Error e) {
-            error ("%s", e.message);
-        }
-    }
-
     class ThemeList : Gtk.TreeView {
+    
+        private Gtk.TreeIter _active;
+    
         public ThemeList() {
             GLib.Object();
             
-            var cells = new Gtk.ListStore(2, typeof (Theme), typeof (string));
-            set_model(cells);
+            var data = new Gtk.ListStore(2, typeof(bool), typeof(string));
+            set_model(data);
             set_headers_visible(false);
+            set_rules_hint(true);
+            set_grid_lines(Gtk.TreeViewGridLines.NONE);
             
-            var renderer = new ThemeCellRenderer();
-            var col = new Gtk.TreeViewColumn ();
-            col.pack_start (renderer, true);
-            col.add_attribute (renderer, "theme", 0);
-
-            Gtk.TreeIter current;
-            append_column (col);
+            var check_column = new Gtk.TreeViewColumn();
+            var check_render = new Gtk.CellRendererToggle();
+            check_render.set_radio(true);
+            check_render.set_activatable(true);
+            check_column.pack_start(check_render, true);
+            
+            check_render.toggled.connect((r, path) => {
+                Gtk.TreeIter toggled;
+                data.get_iter(out toggled, new Gtk.TreePath.from_string(path));
+                
+                if (toggled != _active) {
+                    int index = int.parse(path);
+                    setting().theme = setting().themes[index];
+                    
+                    data.set(_active, 0, false); 
+                    data.set(toggled, 0, true);
+                    
+                    _active = toggled;
+                }
+            });
+            
+            var theme_column = new Gtk.TreeViewColumn();
+            var theme_render = new Gtk.CellRendererText();
+            theme_column.pack_start(theme_render, true);
+            
+            append_column(check_column);
+            append_column(theme_column);
+            
+            check_column.add_attribute(check_render, "active", 0);
+            theme_column.add_attribute(theme_render, "markup", 1);
             
             var themes = setting().themes;
-            
             foreach(var theme in themes) {
-                cells.append(out current);
-                cells.set(current, 0, theme); 
-
-            }
-
-            
-        }
-    }
-
-    class ThemeCellRenderer : Gtk.CellRenderer {
-
-        public Theme theme { get; set; }
-
-        public ThemeCellRenderer () {
-            GLib.Object ();
-        }
-
-        public override void get_size (Gtk.Widget widget, Gdk.Rectangle? cell_area,
-                                       out int x_offset, out int y_offset,
-                                       out int width, out int height)
-        {
-            if (&x_offset != null) x_offset = 0;
-            if (&y_offset != null) y_offset = 0;
-            if (&width != null) width = 50;
-            if (&height != null) height = 50;
-        }
-
-        public override void render (Gdk.Window window, Gtk.Widget widget,
-                                     Gdk.Rectangle background_area,
-                                     Gdk.Rectangle cell_area,
-                                     Gdk.Rectangle expose_area,
-                                     Gtk.CellRendererState flags)
-        {
-            var ctx = Gdk.cairo_create (window);
-            Gdk.cairo_rectangle (ctx, expose_area);
-            ctx.clip ();
-
-            Gdk.cairo_rectangle (ctx, background_area);
-
-            ctx.set_font_size(12);
-	        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.BOLD);
-	        ctx.move_to(30, 30); 
-            ctx.set_source_rgb(0, 0, 0);
-            ctx.show_text(theme.name);
-           
-
+                Gtk.TreeIter current;
+                data.append(out current);
+                data.set(current, 0, theme == setting().theme); 
+                data.set(current, 1, "<big>" + theme.name + "</big>\n<small>" + theme.description + "  -  <i>by " + theme.author + "</i></small>"); 
+                if(theme == setting().theme)
+                    _active = current;
+            }  
         }
     }
 

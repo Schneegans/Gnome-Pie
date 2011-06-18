@@ -29,7 +29,7 @@ namespace GnomePie {
         
         public class SettingsInstance : GLib.Object {
     
-            public Theme  theme          {get; private set;}
+            public Theme  theme          {get; set;}
             public double refresh_rate   {get; private set; default = 60.0;}
             public bool   show_indicator {get; set; default = true;}
             public bool   open_at_mouse  {get; set; default = true;}

@@ -34,8 +34,11 @@ namespace GnomePie {
             }
         }
         
-        public static Cairo.ImageSurface load_themed(string filename, bool active) {
-            int size =   (int)(2*setting().theme.slice_radius*setting().theme.max_zoom);
+        public static Cairo.ImageSurface load_themed(string icon_name, int size, bool active, Theme theme) {
+        
+            var icon_theme = Gtk.IconTheme.get_default();
+            var filename =   icon_theme.lookup_icon(icon_name, size, 0).get_filename();
+        
             var icon =   IconLoader.load(filename, size);
             var color =  new Color.from_icon(icon);
             var result = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
@@ -45,8 +48,8 @@ namespace GnomePie {
             ctx.set_operator(Cairo.Operator.OVER);
 	        
 	        Gee.ArrayList<SliceLayer?> layers;
-		    if (active) layers = setting().theme.active_slice_layers;
-    		else        layers = setting().theme.inactive_slice_layers;
+		    if (active) layers = theme.active_slice_layers;
+    		else        layers = theme.inactive_slice_layers;
 		    
 		    foreach (var layer in layers) {
 		    
@@ -62,8 +65,10 @@ namespace GnomePie {
 		                ctx.set_operator(Cairo.Operator.IN);
 		            }
 		            
-		            if (layer.image.get_width() != size)
+		            if (layer.image.get_width() != size) {
+		                filename =   icon_theme.lookup_icon(icon_name, layer.image.get_width(), 0).get_filename();
 		                icon = IconLoader.load(filename, layer.image.get_width());
+		            }
 		            
 		            ctx.set_source_surface(icon, -0.5*icon.get_width()-1, -0.5*icon.get_height()-1);
 		            ctx.paint();

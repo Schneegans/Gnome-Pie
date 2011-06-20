@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme name="Funky" description="Just testing what these themes can do..." author="Simon Schneegans" email="josi.schneegans@vr-web.de">
+    <ring radius="90" maxZoom="1.3" zoomRange="0.3" transitionTime="0.2" fadeInTime="0.2" fadeOutTime="0.2">
+        <center radius="100" activeRadius="40">
+            <center_layer file="bg.svg" 
+                          active_scale="0.5"     active_turnToMouse="false"   active_rotationSpeed="6"  active_colorize="false"    active_alpha="1.0" 
+                          inactive_scale="0.5" inactive_turnToMouse="false" inactive_rotationSpeed="-6"  inactive_colorize="false" inactive_alpha="1.0" />
+            <center_layer file="star.svg" 
+                          active_scale="1.0"     active_turnToMouse="true"   active_rotationSpeed="5"  active_colorize="false"    active_alpha="1.0" 
+                          inactive_scale="0.3" inactive_turnToMouse="false" inactive_rotationSpeed="1"  inactive_colorize="false" inactive_alpha="0.8" />
+            <center_layer file="red.svg" 
+                          active_scale="1"     active_turnToMouse="false"   active_rotationSpeed="2"  active_colorize="false"    active_alpha="1.0" 
+                          inactive_scale="0.5" inactive_turnToMouse="false" inactive_rotationSpeed="-2"  inactive_colorize="false" inactive_alpha="1.0" />
+            <center_layer file="blue.svg" 
+                          active_scale="0.5"     active_turnToMouse="false"   active_rotationSpeed="-2"  active_colorize="false"    active_alpha="1.0" 
+                          inactive_scale="1.0" inactive_turnToMouse="false" inactive_rotationSpeed="2"  inactive_colorize="false" inactive_alpha="1.0" />
+            <center_layer file="caption.svg" 
+                          active_scale="1.0"     active_turnToMouse="false"   active_rotationSpeed="0"  active_colorize="false"    active_alpha="0.5" 
+                          inactive_scale="1.0" inactive_turnToMouse="false" inactive_rotationSpeed="0"  inactive_colorize="false" inactive_alpha="0.0" />
+        </center>
+        <slices radius="30">
+            <activeSlice>
+                <slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="false" />
+                <slice_layer type="file" file="icon_fg.svg"   scale="1"   colorize="true" />
+                <slice_layer type="icon" scale="0.7"/>
+            </activeSlice>
+            <inactiveSlice>
+                <slice_layer type="file" file="icon_bg.svg"   scale="0.7"   colorize="false" />
+                <slice_layer type="file" file="icon_fg.svg"   scale="0.65"   colorize="false" />
+                <slice_layer type="icon" scale="0.5"/>
+            </inactiveSlice>
+        </slices>
+        <caption position="-38" size="12" />
+    </ring>
+</theme>
+

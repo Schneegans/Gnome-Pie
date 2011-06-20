@@ -58,19 +58,25 @@ namespace GnomePie {
                             var autostart = new Gtk.CheckButton.with_label ("Startup on Login");
                                 //autostart.active = 
                                 autostart.toggled.connect(autostart_toggled);
-                                behavior_vbox.pack_start (autostart, false);
+                                behavior_vbox.pack_start(autostart, false);
 
-                            // Notification icon 
+                            // Indicator icon 
                             var indicator = new Gtk.CheckButton.with_label ("Show Indicator");
                                 indicator.active = setting().show_indicator;
                                 indicator.toggled.connect(indicator_toggled);
-                                behavior_vbox.pack_start (indicator, false);
+                                behavior_vbox.pack_start(indicator, false);
                                 
-                            // Notification icon 
-                            var open_at_mouse = new Gtk.CheckButton.with_label ("Open Rings at Mouse");
+                            // Open Pies at Mouse
+                            var open_at_mouse = new Gtk.CheckButton.with_label ("Open Pies at Mouse");
                                 open_at_mouse.active = setting().open_at_mouse;
                                 open_at_mouse.toggled.connect(open_at_mouse_toggled);
-                                behavior_vbox.pack_start (open_at_mouse, false);
+                                behavior_vbox.pack_start(open_at_mouse, false);
+                                
+                            // Click to activate
+                            var click_to_activate = new Gtk.CheckButton.with_label ("Click to activate a Slice");
+                                click_to_activate.active = setting().click_to_activate;
+                                click_to_activate.toggled.connect(click_to_activate_toggled);
+                                behavior_vbox.pack_start(click_to_activate, false);
 
                         general_tab.pack_start (behavior_frame, false);
                         
@@ -104,7 +110,11 @@ namespace GnomePie {
                     // rings tab
                     var rings_tab = new Gtk.VBox(false, 6);
                         rings_tab.border_width = 12;
-                        tabs.append_page(rings_tab, new Gtk.Label("Rings"));
+                        tabs.append_page(rings_tab, new Gtk.Label("Pies"));
+                        
+                        var nothing_here = new Gtk.Label(null);
+                        nothing_here.set_markup(Markup.printf_escaped("<b>%s</b>", "Well... here is nothing. For now."));
+                        rings_tab.pack_start(nothing_here);
                     
                     main_vbox.pack_start(tabs);
 
@@ -112,7 +122,10 @@ namespace GnomePie {
                 var bbox = new Gtk.HButtonBox ();
                     bbox.set_layout (Gtk.ButtonBoxStyle.END);
                     var close_button = new Gtk.Button.from_stock (Gtk.Stock.CLOSE);
-                    close_button.clicked.connect (() => { hide (); });
+                    close_button.clicked.connect (() => { 
+                        hide();
+                        setting().save();
+                    });
                     bbox.pack_start (close_button);
 
                     main_vbox.pack_start(bbox, false);
@@ -132,6 +145,11 @@ namespace GnomePie {
         private void open_at_mouse_toggled(Gtk.ToggleButton check_box) {
             var check = check_box as Gtk.CheckButton;
             setting().open_at_mouse = check.active;
+        }
+        
+        private void click_to_activate_toggled(Gtk.ToggleButton check_box) {
+            var check = check_box as Gtk.CheckButton;
+            setting().click_to_activate = check.active;
         }
     }
 }

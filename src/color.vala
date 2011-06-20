@@ -35,10 +35,20 @@ namespace GnomePie {
         }
         
         public Color.from_rgba(float red, float green, float blue, float alpha) {
-            _r = red;
-            _g = green;
-            _b = blue;
-            _a = alpha;
+            r = red;
+            g = green;
+            b = blue;
+            a = alpha;
+        }
+        
+        public Color.from_string(string hex_string) {
+            Gdk.Color color;
+            Gdk.Color.parse(hex_string, out color);
+            
+            r = (float)color.red/65535.0f;
+            g = (float)color.green/65535.0f;
+            b = (float)color.blue/65535.0f;
+            a = 1.0f;
         }
         
         // Code from Unity

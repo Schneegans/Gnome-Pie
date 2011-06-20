@@ -3,3 +3,4 @@
 make.sh
 build/*
 gnome-pie
+gnome-pie.conf

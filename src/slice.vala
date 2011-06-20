@@ -98,7 +98,8 @@ namespace GnomePie {
 		        ctx.text_extents(action.name, out extents);		    
 		        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
 		        ctx.move_to(-extents.width/2, setting().theme.caption_position+extents.height/2); 
-                ctx.set_source_rgba(1, 1, 1, parent.fading*parent.fading*parent.activity);
+		        Color color = setting().theme.caption_color;
+                ctx.set_source_rgba(color.r, color.g, color.g, parent.fading*parent.fading*parent.activity);
                 ctx.show_text(action.name);
                 
 		        ctx.restore();

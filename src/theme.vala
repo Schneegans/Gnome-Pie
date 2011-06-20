@@ -38,6 +38,7 @@ namespace GnomePie {
         public bool   caption          {get; private set; default=false;}
         public double font_size        {get; private set; default=12.0;}
         public double caption_position {get; private set; default=0.0;}
+        public Color  caption_color    {get; private set; default=new Color();}
         
         public Gee.ArrayList<CenterLayer?> center_layers         {get; private set;}
         public Gee.ArrayList<SliceLayer?>  active_slice_layers   {get; private set;}
@@ -53,7 +54,7 @@ namespace GnomePie {
             directory = dir;
             string path = "themes/" + directory + "/theme.xml";
             
-            Xml.Doc* themeXML = Xml.Parser.parse_file (path);
+            Xml.Doc* themeXML = Xml.Parser.parse_file(path);
             if (themeXML == null) {
                 warning("Error parsing theme: \"" + path + "\" not found!");
                 return;
@@ -353,6 +354,9 @@ namespace GnomePie {
                         break;
                     case "position":
                         caption_position = double.parse(attr_content);
+                        break;
+                    case "color":
+                        caption_color = new Color.from_string(attr_content);
                         break;
                     default:
                         warning("Invalid attribute \"" + attr_name + "\" in <caption> element!");

@@ -62,7 +62,6 @@ namespace GnomePie {
      
         // Bind accelerator to given handler
         public void bind(string accelerator, KeybindingHandlerFunc handler) {
-            debug("Binding key " + accelerator);
      
             // convert accelerator
             uint keysym;

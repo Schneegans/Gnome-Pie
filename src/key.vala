@@ -24,6 +24,8 @@ namespace GnomePie {
         private static int ctrl_code;
         private static int alt_code;
         private static int super_code;
+
+        private static KeybindingManager bindings;
         
         private static bool need_init = true;
 
@@ -69,6 +71,13 @@ namespace GnomePie {
             //debug("key: %s keysum: %u keycode: %i", accel, keysym, keycode);
         }
         
+        public static void bind(string stroke, KeybindingManager.KeybindingHandlerFunc handler) {
+            
+            if (need_init) init();
+            
+            bindings.bind(stroke, handler);
+        }
+        
         private static void init() {
             display = new X.Display();
             
@@ -76,6 +85,8 @@ namespace GnomePie {
             ctrl_code  = display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
             alt_code  = display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
             super_code  = display.keysym_to_keycode(Gdk.keyval_from_name("Super_L"));
+            
+            bindings = new KeybindingManager();
             
             need_init = false;
         }

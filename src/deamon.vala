@@ -19,37 +19,29 @@ namespace GnomePie {
 	
     public class Deamon : GLib.Object {
     
-        private KeybindingManager keys {private get; private set;}
         private Indicator indicator    {private get; private set;}
-        private Ring ring              {private get; private set;}     
+        private RingWindow ringWindow  {private get; private set;}     
         private Preferences prefs      {private get; private set;}        
 
         public Deamon() {
             Rsvg.init();
         
-            prefs =     new Preferences();
-            ring =      new Ring();
-            indicator = new Indicator(prefs);
+            prefs =      new Preferences();
+            ringWindow = new RingWindow();
+            indicator =  new Indicator(prefs);
             
             Settings.get.notify["show-indicator"].connect((s, p) => {
                 indicator.active = Settings.get.show_indicator;
             });
             
             indicator.active = Settings.get.show_indicator;
-                
-            keys =      new KeybindingManager();
-            keys.bind("<Alt>V", show_ring);
-            
+
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);
         }
         
         public void run() {
             Gtk.main();
-        }
-        
-        private void show_ring() {
-            ring.show();
         }
         
         private static void sig_handler(int sig) {

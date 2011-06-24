@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.1 r9760"
-   sodipodi:docname="gloss.svg">
+   sodipodi:docname="unity_fg.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -90,7 +90,7 @@
        x2="48.214287"
        y2="994.57111"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(0,-952.36218)" />
+       gradientTransform="translate(0,2.9263432e-6)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -99,9 +99,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:zoom="4"
-     inkscape:cx="-99.870026"
-     inkscape:cy="62.091167"
+     inkscape:zoom="2.8"
+     inkscape:cx="-16.038516"
+     inkscape:cy="39.866578"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -119,7 +119,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -129,13 +129,8 @@
      id="layer1"
      transform="translate(0,-952.36218)"
      style="display:inline">
-    <path
-       style="fill:url(#linearGradient3784);fill-opacity:1;stroke:none;opacity:0.72491909"
-       d="M 8.09375 31.78125 C 6.4638438 31.78125 4.9928252 32.769882 3.875 34.375 L 3.875 90.875 C 3.875 93.836 6.22655 96.1875 9.1875 96.1875 L 91 96.1875 C 93.96095 96.1875 96.3125 93.836 96.3125 90.875 L 96.3125 35.28125 C 95.156434 33.140485 93.450449 31.78125 91.53125 31.78125 L 8.09375 31.78125 z M 1.875 40.15625 C 1.8170155 40.70633 1.78125 41.266602 1.78125 41.84375 L 1.78125 87.78125 C 1.78125 88.358398 1.8170155 88.91867 1.875 89.46875 L 1.875 40.15625 z "
-       transform="translate(0,952.36218)"
-       id="rect3780" />
     <rect
-       style="fill:none;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-opacity:0.31007752;stroke-dasharray:none"
+       style="fill:#d8d8d8;stroke:#ffffff;stroke-width:2;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
        id="rect3000"
        width="94.446426"
        height="94.446426"
@@ -143,14 +138,5 @@
        y="955.11957"
        ry="6.3134527"
        rx="6.3134527" />
-    <rect
-       style="fill:url(#radialGradient3778);fill-opacity:1;stroke:none;opacity:0.73139159"
-       id="rect3770"
-       width="96.071426"
-       height="56.071426"
-       x="1.7857143"
-       y="954.32648"
-       rx="6.3134527"
-       ry="6.3134527" />
   </g>
 </svg>

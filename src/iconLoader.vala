@@ -15,7 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-using GnomePie.Settings;
 namespace GnomePie {
 
     public class IconLoader : GLib.Object {
@@ -37,63 +36,75 @@ namespace GnomePie {
         public static Cairo.ImageSurface load_themed(string icon_name, int size, bool active, Theme theme) {
         
             var icon_theme = Gtk.IconTheme.get_default();
-            var filename =   icon_theme.lookup_icon(icon_name, size, 0).get_filename();
-        
-            var icon =   IconLoader.load(filename, size);
-            var color =  new Color.from_icon(icon);
+            var icon_file = icon_theme.lookup_icon(icon_name, size, 0);
             var result = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-            var ctx  =   new Cairo.Context(result);
             
-            ctx.translate(size/2, size/2);
-            ctx.set_operator(Cairo.Operator.OVER);
-	        
-	        Gee.ArrayList<SliceLayer?> layers;
-		    if (active) layers = theme.active_slice_layers;
-    		else        layers = theme.inactive_slice_layers;
-		    
-		    foreach (var layer in layers) {
-		    
-		        if (layer.colorize)
-		                ctx.push_group();
-		                
-		        if (layer.is_icon) {
+            if (icon_file == null) {
+                warning("Icon \"" + icon_name + "\" not found! Using default icon...");
+                icon_name = "application-default-icon";
+                icon_file = icon_theme.lookup_icon(icon_name, size, 0);
+            }
+            
+            if (icon_file != null) {
+                var filename = icon_file.get_filename();
+                var icon =   IconLoader.load(filename, size);
+                var color =  new Color.from_icon(icon);
+                
+                var ctx  =   new Cairo.Context(result);
+                
+                ctx.translate(size/2, size/2);
+                ctx.set_operator(Cairo.Operator.OVER);
+	            
+	            Gee.ArrayList<SliceLayer?> layers;
+		        if (active) layers = theme.active_slice_layers;
+        		else        layers = theme.inactive_slice_layers;
 		        
-		            if (layer.image != null) {
-		                ctx.push_group();
+		        foreach (var layer in layers) {
+		        
+		            if (layer.colorize)
+		                    ctx.push_group();
+		                    
+		            if (layer.is_icon) {
+		            
+		                if (layer.image != null) {
+		                    ctx.push_group();
+		                    ctx.set_source_surface(layer.image, -0.5*layer.image.get_width()-1, -0.5*layer.image.get_height()-1);
+		                    ctx.paint();
+		                    ctx.set_operator(Cairo.Operator.IN);
+		                }
+		                
+		                if (layer.image.get_width() != size) {
+		                    filename =   icon_theme.lookup_icon(icon_name, layer.image.get_width(), 0).get_filename();
+		                    icon = IconLoader.load(filename, layer.image.get_width());
+		                }
+		                
+		                ctx.set_source_surface(icon, -0.5*icon.get_width()-1, -0.5*icon.get_height()-1);
+		                ctx.paint();
+
+		                if (layer.image != null) {
+		                    ctx.pop_group_to_source();
+		                    ctx.paint();
+		                    ctx.set_operator(Cairo.Operator.OVER);
+		                }
+		                
+		            } else {
 		                ctx.set_source_surface(layer.image, -0.5*layer.image.get_width()-1, -0.5*layer.image.get_height()-1);
 		                ctx.paint();
-		                ctx.set_operator(Cairo.Operator.IN);
 		            }
 		            
-		            if (layer.image.get_width() != size) {
-		                filename =   icon_theme.lookup_icon(icon_name, layer.image.get_width(), 0).get_filename();
-		                icon = IconLoader.load(filename, layer.image.get_width());
-		            }
-		            
-		            ctx.set_source_surface(icon, -0.5*icon.get_width()-1, -0.5*icon.get_height()-1);
-		            ctx.paint();
-
-		            if (layer.image != null) {
-		                ctx.pop_group_to_source();
+		            if (layer.colorize) {
+                        ctx.set_operator(Cairo.Operator.ATOP);
+                        ctx.set_source_rgb(color.r, color.g, color.b);
+                        ctx.paint();
+                        
+                        ctx.set_operator(Cairo.Operator.OVER);
+                        ctx.pop_group_to_source();
 		                ctx.paint();
-		                ctx.set_operator(Cairo.Operator.OVER);
 		            }
-		            
-		        } else {
-		            ctx.set_source_surface(layer.image, -0.5*layer.image.get_width()-1, -0.5*layer.image.get_height()-1);
-		            ctx.paint();
 		        }
-		        
-		        if (layer.colorize) {
-                    ctx.set_operator(Cairo.Operator.ATOP);
-                    ctx.set_source_rgb(color.r, color.g, color.b);
-                    ctx.paint();
-                    
-                    ctx.set_operator(Cairo.Operator.OVER);
-                    ctx.pop_group_to_source();
-		            ctx.paint();
-		        }
-		    }
+            } else {
+                warning("Icon \"" + icon_name + "\" not found! Will be ugly...");
+            }
             return result;
         }
         

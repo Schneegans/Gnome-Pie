@@ -45,13 +45,21 @@ namespace GnomePie {
         public Gee.ArrayList<SliceLayer?>  inactive_slice_layers {get; private set;}
         
         public Theme(string dir) {
-            Xml.Parser.init();
-            
             center_layers =         new Gee.ArrayList<CenterLayer?>();
             active_slice_layers =   new Gee.ArrayList<SliceLayer?>();
             inactive_slice_layers = new Gee.ArrayList<SliceLayer?>();
             
             directory = dir;
+            
+            load();
+        }
+        
+        public void load() {
+            center_layers.clear();
+            active_slice_layers.clear();
+            inactive_slice_layers.clear();
+        
+            Xml.Parser.init();
             string path = "themes/" + directory + "/theme.xml";
             
             Xml.Doc* themeXML = Xml.Parser.parse_file(path);

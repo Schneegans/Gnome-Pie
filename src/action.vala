@@ -15,44 +15,34 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-using GnomePie.Settings;
-
 namespace GnomePie {
 
-    public class Action : GLib.Object {
+    public abstract class Action : GLib.Object {
 
 	    public Cairo.ImageSurface active_icon   {get; private set;}
 	    public Cairo.ImageSurface inactive_icon {get; private set;}
 	    public Color              color {get; private set;}
 	    public string             name  {get; private set;}
 	    	
-	    private string _command;
+	    private string _icon_name;
 
-	    public Action(string command, string icon_name) {
-	        _command = command;
-	        _name    = icon_name;
+	    public Action(string name, string icon_name) {
+	        _name      = name;
+	        _icon_name = icon_name;
 
-	        int size = (int)(2*setting().theme.slice_radius*setting().theme.max_zoom);
-		    active_icon =   IconLoader.load_themed(icon_name, size, true,  setting().theme);
-		    inactive_icon = IconLoader.load_themed(icon_name, size, false, setting().theme);
-		    color = new Color.from_icon(active_icon);
+	        reload_icon();
 		    
-		    setting().notify["theme"].connect((s, p) => {
-                size = (int)(2*setting().theme.slice_radius*setting().theme.max_zoom);
-		        active_icon =   IconLoader.load_themed(icon_name, size, true,  setting().theme);
-		        inactive_icon = IconLoader.load_themed(icon_name, size, false, setting().theme);
-		        color = new Color.from_icon(active_icon);
-            });
+		    Settings.get.notify["theme"].connect(reload_icon);
+		    Gtk.IconTheme.get_default().changed.connect(reload_icon);
 	    }
 
-	    public void execute() {
-            try{
-                GLib.DesktopAppInfo item = new GLib.DesktopAppInfo(_command);
-            	item.launch (null, new AppLaunchContext());
-            	debug("launched " + _command);
-        	} catch (Error e) {
-		        warning (e.message);
-	        }
+	    public abstract void execute();
+        
+        private void reload_icon() {
+            int size = (int)(2*Settings.get.theme.slice_radius*Settings.get.theme.max_zoom);
+		    active_icon =   IconLoader.load_themed(_icon_name, size, true,  Settings.get.theme);
+		    inactive_icon = IconLoader.load_themed(_icon_name, size, false, Settings.get.theme);
+		    color = new Color.from_icon(active_icon);
         }
         
     }

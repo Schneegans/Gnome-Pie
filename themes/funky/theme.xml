@@ -10,10 +10,10 @@
                           active_scale="1.0"     active_turnToMouse="true"   active_rotationSpeed="5"  active_colorize="false"    active_alpha="1.0" 
                           inactive_scale="0.3" inactive_turnToMouse="false" inactive_rotationSpeed="1"  inactive_colorize="false" inactive_alpha="0.8" />
             <center_layer file="red.svg" 
-                          active_scale="1"     active_turnToMouse="false"   active_rotationSpeed="2"  active_colorize="false"    active_alpha="1.0" 
+                          active_scale="1"     active_turnToMouse="false"   active_rotationSpeed="-2"  active_colorize="false"    active_alpha="1.0" 
                           inactive_scale="0.5" inactive_turnToMouse="false" inactive_rotationSpeed="-2"  inactive_colorize="false" inactive_alpha="1.0" />
             <center_layer file="blue.svg" 
-                          active_scale="0.5"     active_turnToMouse="false"   active_rotationSpeed="-2"  active_colorize="false"    active_alpha="1.0" 
+                          active_scale="0.5"     active_turnToMouse="false"   active_rotationSpeed="2"  active_colorize="false"    active_alpha="1.0" 
                           inactive_scale="1.0" inactive_turnToMouse="false" inactive_rotationSpeed="2"  inactive_colorize="false" inactive_alpha="1.0" />
             <center_layer file="caption.svg" 
                           active_scale="1.0"     active_turnToMouse="false"   active_rotationSpeed="0"  active_colorize="false"    active_alpha="0.5" 

@@ -15,7 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-using GnomePie.Settings;
 using GLib.Math;
 
 namespace GnomePie {
@@ -30,7 +29,7 @@ namespace GnomePie {
         
         public void draw(Cairo.Context ctx, double angle, double distance) {
 
-    	    var layers = setting().theme.center_layers;
+    	    var layers = Settings.get.theme.center_layers;
     	
 		    foreach (var layer in layers) {
 		    
@@ -44,7 +43,7 @@ namespace GnomePie {
 		        
 		        if (turn_to_mouse) {
 		            double diff = angle-layer.rotation;
-		            double step = max_rotation_speed/setting().refresh_rate;
+		            double step = max_rotation_speed/Settings.get.refresh_rate;
 		            
 	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 			            layer.rotation = angle;
@@ -53,7 +52,7 @@ namespace GnomePie {
 			            else            		                   layer.rotation -= step;
                     }
                     
-		        } else layer.rotation += max_rotation_speed/setting().refresh_rate;
+		        } else layer.rotation += max_rotation_speed/Settings.get.refresh_rate;
 		        
 		        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 		        

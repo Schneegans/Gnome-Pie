@@ -15,8 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-using GnomePie.Settings;
-
 namespace GnomePie {
 
     public class Preferences : Gtk.Window {
@@ -62,19 +60,19 @@ namespace GnomePie {
 
                             // Indicator icon 
                             var indicator = new Gtk.CheckButton.with_label ("Show Indicator");
-                                indicator.active = setting().show_indicator;
+                                indicator.active = Settings.get.show_indicator;
                                 indicator.toggled.connect(indicator_toggled);
                                 behavior_vbox.pack_start(indicator, false);
                                 
                             // Open Pies at Mouse
                             var open_at_mouse = new Gtk.CheckButton.with_label ("Open Pies at Mouse");
-                                open_at_mouse.active = setting().open_at_mouse;
+                                open_at_mouse.active = Settings.get.open_at_mouse;
                                 open_at_mouse.toggled.connect(open_at_mouse_toggled);
                                 behavior_vbox.pack_start(open_at_mouse, false);
                                 
                             // Click to activate
                             var click_to_activate = new Gtk.CheckButton.with_label ("Click to activate a Slice");
-                                click_to_activate.active = setting().click_to_activate;
+                                click_to_activate.active = Settings.get.click_to_activate;
                                 click_to_activate.toggled.connect(click_to_activate_toggled);
                                 behavior_vbox.pack_start(click_to_activate, false);
 
@@ -124,7 +122,7 @@ namespace GnomePie {
                     var close_button = new Gtk.Button.from_stock (Gtk.Stock.CLOSE);
                     close_button.clicked.connect (() => { 
                         hide();
-                        setting().save();
+                        Settings.get.save();
                     });
                     bbox.pack_start (close_button);
 
@@ -139,17 +137,17 @@ namespace GnomePie {
         
         private void indicator_toggled(Gtk.ToggleButton check_box) {
             var check = check_box as Gtk.CheckButton;
-            setting().show_indicator = check.active;
+            Settings.get.show_indicator = check.active;
         }
         
         private void open_at_mouse_toggled(Gtk.ToggleButton check_box) {
             var check = check_box as Gtk.CheckButton;
-            setting().open_at_mouse = check.active;
+            Settings.get.open_at_mouse = check.active;
         }
         
         private void click_to_activate_toggled(Gtk.ToggleButton check_box) {
             var check = check_box as Gtk.CheckButton;
-            setting().click_to_activate = check.active;
+            Settings.get.click_to_activate = check.active;
         }
     }
 }

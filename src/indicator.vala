@@ -32,7 +32,7 @@ namespace GnomePie {
         }
         
         public Indicator(Gtk.Window prefs) {
-            indicator = new AppIndicator.Indicator("Gnome-Pie", "gnome-do-icon", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            indicator = new AppIndicator.Indicator("Gnome-Pie", "indicator-applet", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
             
             var menu = new Gtk.Menu();
 

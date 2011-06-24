@@ -15,8 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-using GnomePie.Settings;
-
 namespace GnomePie {
 
     class ThemeList : Gtk.TreeView {
@@ -44,7 +42,8 @@ namespace GnomePie {
                 
                 if (toggled != _active) {
                     int index = int.parse(path);
-                    setting().theme = setting().themes[index];
+                    Settings.get.theme = Settings.get.themes[index];
+                    Settings.get.theme.load();
                     
                     data.set(_active, 0, false); 
                     data.set(toggled, 0, true);
@@ -63,13 +62,13 @@ namespace GnomePie {
             check_column.add_attribute(check_render, "active", 0);
             theme_column.add_attribute(theme_render, "markup", 1);
             
-            var themes = setting().themes;
+            var themes = Settings.get.themes;
             foreach(var theme in themes) {
                 Gtk.TreeIter current;
                 data.append(out current);
-                data.set(current, 0, theme == setting().theme); 
+                data.set(current, 0, theme == Settings.get.theme); 
                 data.set(current, 1, "<big>" + theme.name + "</big>\n<small>" + theme.description + "  -  <i>by " + theme.author + "</i></small>"); 
-                if(theme == setting().theme)
+                if(theme == Settings.get.theme)
                     _active = current;
             }  
         }

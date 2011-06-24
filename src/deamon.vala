@@ -15,8 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-using GnomePie.Settings;
-
 namespace GnomePie {
 	
     public class Deamon : GLib.Object {
@@ -33,11 +31,11 @@ namespace GnomePie {
             ring =      new Ring();
             indicator = new Indicator(prefs);
             
-            setting().notify["show-indicator"].connect((s, p) => {
-                indicator.active = setting().show_indicator;
+            Settings.get.notify["show-indicator"].connect((s, p) => {
+                indicator.active = Settings.get.show_indicator;
             });
             
-            indicator.active = setting().show_indicator;
+            indicator.active = Settings.get.show_indicator;
                 
             keys =      new KeybindingManager();
             keys.bind("<Alt>V", show_ring);

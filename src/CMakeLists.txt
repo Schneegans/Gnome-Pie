@@ -21,6 +21,9 @@ vala_precompile(
         posix
         librsvg-2.0
         libxml-2.0
+        xtst
+    OPTIONS
+        --vapidir=${CMAKE_SOURCE_DIR}/vapi/
 )
 
 add_executable(gnome-pie ${VALA_C})

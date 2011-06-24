@@ -15,7 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-using GnomePie.Settings;
 using GLib.Math;
 
 namespace GnomePie {
@@ -38,11 +37,14 @@ namespace GnomePie {
             center = new Center(this); 
 		    _slices = new Slice[0];
 		    
-		    add_slice("firefox.desktop", "firefox");
-		    add_slice("eog.desktop", "eog");
-		    add_slice("gnome-terminal.desktop", "terminal");
-		    add_slice("thunderbird.desktop", "thunderbird");
-		    add_slice("blender.desktop", "blender");
+		    add_slice(new AppAction("Firefox", "firefox", "firefox"));
+		    add_slice(new AppAction("Image Viewer", "eog", "eog"));
+		    add_slice(new AppAction("Terminal", "terminal", "gnome-terminal"));
+		    add_slice(new AppAction("Thunderbird", "thunderbird", "thunderbird"));
+		    add_slice(new AppAction("Blender", "blender", "blender"));
+		    
+		    add_slice(new KeyAction("Play/Pause", "media-playback-start", "XF86AudioPlay"));
+
         }
 	    
 	    public int slice_count() {
@@ -51,20 +53,23 @@ namespace GnomePie {
 	    
 	    protected override void mouseReleased(int button, int x, int y) {
         	if (button == 1) {
-        	    if(active_slice != null)
+        	    if(active_slice != null) {
+        	        this.ungrab_total_focus();
+        	        this.has_focus = 0;
         	        active_slice.activate();
+        	    }
 	        	fade_in = false;
 	        }
         }
         
         protected override bool draw(Gtk.Widget da, Gdk.EventExpose event) {
             if (fade_in) {
-                fading += 1.0/(setting().refresh_rate*setting().theme.fade_in_time);
+                fading += 1.0/(Settings.get.refresh_rate*Settings.get.theme.fade_in_time);
                 if (fading > 1.0) 
                     fading = 1.0;
                 
             } else {
-                fading -= 1.0/(setting().refresh_rate*setting().theme.fade_out_time);
+                fading -= 1.0/(Settings.get.refresh_rate*Settings.get.theme.fade_out_time);
                 if (fading < 0.0) {
                     fading = 0.0;
                     fade_in = true;
@@ -88,11 +93,11 @@ namespace GnomePie {
 			        angle = 2*PI - angle;
 		    }
 		    
-		    if (distance > setting().theme.active_radius) { 
-		        if ((activity += 1.0/(setting().theme.transition_time*setting().refresh_rate)) > 1.0)
+		    if (distance > Settings.get.theme.active_radius) { 
+		        if ((activity += 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) > 1.0)
                     activity = 1.0;
 		    } else {
-		        if ((activity -= 1.0/(setting().theme.transition_time*setting().refresh_rate)) < 0.0)
+		        if ((activity -= 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) < 0.0)
                     activity = 0.0;
 		    }
 
@@ -122,8 +127,8 @@ namespace GnomePie {
             return true;
         }
         
-        private void add_slice(string command, string icon) {
-            _slices += new Slice(command, icon, this);
+        public void add_slice(Action action) {
+            _slices += new Slice(action, this);
         } 
     }
 }

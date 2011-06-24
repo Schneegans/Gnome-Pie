@@ -15,12 +15,20 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-int main (string[] args) {
-		
-    Gtk.init (ref args);
+namespace GnomePie {
 
-    var deamon = new GnomePie.Deamon();
-    deamon.run();
+    public class KeyAction : Action {
+	    	
+	    private string _key_stroke;
 
-    return 0;
+	    public KeyAction(string name, string icon_name, string key_stroke) {
+	        base(name, icon_name);
+	        
+	        _key_stroke   = key_stroke;
+	    }
+
+	    public override void execute() {
+	        Key.press(_key_stroke);
+	    }
+    }
 }

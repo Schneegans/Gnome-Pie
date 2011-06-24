@@ -15,12 +15,27 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-int main (string[] args) {
-		
-    Gtk.init (ref args);
+namespace GnomePie {
 
-    var deamon = new GnomePie.Deamon();
-    deamon.run();
+    public class AppAction : Action {
+	    	
+	    private string _command;
 
-    return 0;
+	    public AppAction(string name, string icon_name, string command) {
+	        base(name, icon_name);
+	        
+	        _command   = command;
+	    }
+
+	    public override void execute() {
+	    
+            try{
+                var item = GLib.AppInfo.create_from_commandline(_command, null, GLib.AppInfoCreateFlags.NONE);
+                item.launch(null, null);
+        	} catch (Error e) {
+		        warning (e.message);
+	        }
+        } 
+    }
+
 }

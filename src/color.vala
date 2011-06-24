@@ -41,14 +41,18 @@ namespace GnomePie {
             a = alpha;
         }
         
+        public Color.from_gdk(Gdk.Color color) {
+            Color.from_rgb(
+                (float)color.red/65535.0f,
+                (float)color.green/65535.0f,
+                (float)color.blue/65535.0f
+            );
+        }
+        
         public Color.from_string(string hex_string) {
             Gdk.Color color;
             Gdk.Color.parse(hex_string, out color);
-            
-            r = (float)color.red/65535.0f;
-            g = (float)color.green/65535.0f;
-            b = (float)color.blue/65535.0f;
-            a = 1.0f;
+            Color.from_gdk(color);
         }
         
         // Code from Unity
@@ -85,8 +89,7 @@ namespace GnomePie {
 
             Color.from_rgb((float)(rtotal/total), (float)(gtotal/total), (float)(btotal/total));
 
-            if (s > 0.15f)
-                s = 0.65f;
+            if (s > 0.15f) s = 0.65f;
 
             v = 1.0f;
         }
@@ -185,9 +188,9 @@ namespace GnomePie {
 
         private void setHSV(float hue, float saturation, float val) {
             if(saturation == 0) {
-		        _r = val;
-		        _g = val;
-		        _b = val;
+		        r = val;
+		        g = val;
+		        b = val;
 		        return;
 	        }
             hue = fmodf(hue, 360);
@@ -197,34 +200,34 @@ namespace GnomePie {
 
 	        switch(i) {
 		        case 0:
-			        _r = val;
-			        _g = val * (1.0f - saturation * (1.0f - f));
-			        _b = val * (1.0f - saturation);
+			        r = val;
+			        g = val * (1.0f - saturation * (1.0f - f));
+			        b = val * (1.0f - saturation);
 			        break;
 		        case 1:
-			        _r = val * (1.0f - saturation * f);
-			        _g = val;
-			        _b = val * (1.0f - saturation);
+			        r = val * (1.0f - saturation * f);
+			        g = val;
+			        b = val * (1.0f - saturation);
 			        break;
 		        case 2:
-			        _r = val * (1.0f - saturation);
-			        _g = val;
-			        _b = val * (1.0f - saturation * (1.0f - f));
+			        r = val * (1.0f - saturation);
+			        g = val;
+			        b = val * (1.0f - saturation * (1.0f - f));
 			        break;
 		        case 3:
-			        _r = val * (1.0f - saturation);
-			        _g = val * (1.0f - saturation * f);
-			        _b = val;
+			        r = val * (1.0f - saturation);
+			        g = val * (1.0f - saturation * f);
+			        b = val;
 			        break;
 		        case 4:
-			        _r = val * (1.0f - saturation * (1.0f - f));
-			        _g = val * (1.0f - saturation);
-			        _b = val;
+			        r = val * (1.0f - saturation * (1.0f - f));
+			        g = val * (1.0f - saturation);
+			        b = val;
 			        break;
 		        default:
-			        _r = val;
-			        _g = val * (1.0f - saturation);
-			        _b = val * (1.0f - saturation * f);
+			        r = val;
+			        g = val * (1.0f - saturation);
+			        b = val * (1.0f - saturation * f);
 			        break;
 	        }
         }

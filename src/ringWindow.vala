@@ -25,7 +25,6 @@ namespace GnomePie {
     
         public RingWindow() {
             init();
-            
             create_pies();
         }
         
@@ -81,11 +80,17 @@ namespace GnomePie {
             this.set_decorated(false);
             this.set_app_paintable(true);
             this.set_resizable(false);
+            this.set_accept_focus(false);
             
             Settings.get.notify["open-at-mouse"].connect((s, p) => {
                 if(Settings.get.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
                 else                           this.set_position(Gtk.WindowPosition.CENTER);
             }); 
+            
+            Settings.get.notify["theme"].connect((s, p) => {
+                size = (int)(fmax(2*Settings.get.theme.radius + 4*Settings.get.theme.slice_radius, 2*Settings.get.theme.center_radius));
+                this.set_size_request (size, size);
+            });
             
             if(Settings.get.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
             else                           this.set_position(Gtk.WindowPosition.CENTER);
@@ -114,7 +119,8 @@ namespace GnomePie {
                     for (Xml.Node* node = root->children; node != null; node = node->next) {
                         if (node->type == Xml.ElementType.ELEMENT_NODE) {
                             
-                            string hotkey="";
+                            string hotkey = "";
+                            int    quick_action = -1;
                         
                             for (Xml.Attr* attribute = node->properties; attribute != null; attribute = attribute->next) {
                                 string attr_name = attribute->name.down();
@@ -124,13 +130,16 @@ namespace GnomePie {
                                     case "hotkey":
                                         hotkey = attr_content;
                                         break;
+                                    case "quickaction":
+                                        quick_action = int.parse(attr_content);
+                                        break;
                                     default:
                                         warning("Invalid setting \"" + attr_name + "\" in pies.conf!");
                                         break;
                                 }
                             }
                             
-                            var pie = new Ring(hotkey);
+                            var pie = new Ring(hotkey, quick_action);
                             
                             for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {
                                 if (slice->type == Xml.ElementType.ELEMENT_NODE) {

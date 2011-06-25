@@ -87,26 +87,14 @@ namespace GnomePie {
             ctx.paint();
 	            
 	        ctx.restore();
-		    
-		    // draw caption
-		    if (Settings.get.theme.caption && active) {
-    		    ctx.save();
-    		    
-		        ctx.set_font_size(Settings.get.theme.font_size);
-		        Cairo.TextExtents extents;
-		        ctx.text_extents(action.name, out extents);		    
-		        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
-		        ctx.move_to(-extents.width/2, Settings.get.theme.caption_position+extents.height/2); 
-		        Color color = Settings.get.theme.caption_color;
-                ctx.set_source_rgba(color.r, color.g, color.g, parent.fading*parent.fading*parent.activity);
-                ctx.show_text(action.name);
-                
-		        ctx.restore();
-		    }
 	    }
 	    
 	    public Color color() {
 	        return action.color;
+	    }
+	    
+	    public string name() {
+	        return action.name;
 	    }
     }
 

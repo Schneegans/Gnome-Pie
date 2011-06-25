@@ -77,10 +77,10 @@ namespace GnomePie {
             
             parse_root(root);
             
-            radius *= max_zoom;
-
             delete themeXML;
             Xml.Parser.cleanup();
+            
+            radius *= max_zoom;
         }
         
         private void parse_root(Xml.Node* root) {
@@ -120,7 +120,7 @@ namespace GnomePie {
                 
                 switch (attr_name) {
                     case "radius":
-                        radius = double.parse(attr_content);
+                        radius = double.parse(attr_content) * Settings.get.global_scale;
                         break;
                     case "maxzoom":
                         max_zoom = double.parse(attr_content);
@@ -171,10 +171,10 @@ namespace GnomePie {
                 
                 switch (attr_name) {
                     case "radius":
-                        center_radius = double.parse(attr_content);
+                        center_radius = double.parse(attr_content) * Settings.get.global_scale;
                         break;
                     case "activeradius":
-                        active_radius = double.parse(attr_content);
+                        active_radius = double.parse(attr_content) * Settings.get.global_scale;
                         break;
                     default:
                         warning("Invalid attribute \"" + attr_name + "\" in <center> element!");
@@ -201,7 +201,7 @@ namespace GnomePie {
                 
                 switch (attr_name) {
                      case "radius":
-                        slice_radius = double.parse(attr_content);
+                        slice_radius = double.parse(attr_content) * Settings.get.global_scale;
                         break;
                     default:
                         warning("Invalid attribute \"" + attr_name + "\" in <slices> element!");
@@ -358,10 +358,10 @@ namespace GnomePie {
                 
                 switch (attr_name) {
                     case "size":
-                        font_size = double.parse(attr_content);
+                        font_size = double.parse(attr_content) * Settings.get.global_scale;
                         break;
                     case "position":
-                        caption_position = double.parse(attr_content);
+                        caption_position = double.parse(attr_content) * Settings.get.global_scale;
                         break;
                     case "color":
                         caption_color = new Color.from_string(attr_content);

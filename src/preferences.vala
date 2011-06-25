@@ -23,7 +23,7 @@ namespace GnomePie {
         public Preferences() {
             title = "Gnome-Pie - Settings";
             set_position(Gtk.WindowPosition.CENTER);
-            set_size_request(500, 450);
+            set_size_request(550, 550);
             resizable = false;
             delete_event.connect(hide_on_delete);
             
@@ -75,6 +75,20 @@ namespace GnomePie {
                                 click_to_activate.active = Settings.get.click_to_activate;
                                 click_to_activate.toggled.connect(click_to_activate_toggled);
                                 behavior_vbox.pack_start(click_to_activate, false);
+                                
+                            // Slider
+                            var scale_label = new Gtk.Label("Global Scale");
+                                behavior_vbox.pack_start(scale_label, true, true);
+                            
+                            var scale_slider = new Gtk.HScale.with_range(0.5, 2.0, 0.05);
+                                scale_slider.set_value(Settings.get.global_scale);
+                                scale_slider.value_pos = Gtk.PositionType.RIGHT;
+                               // click_to_activate.active = Settings.get.click_to_activate;
+                                scale_slider.value_changed.connect(() => {
+                                    Settings.get.global_scale = scale_slider.get_value();
+                                    Settings.get.load_themes(Settings.get.theme.name);
+                                });
+                                behavior_vbox.pack_end(scale_slider, false, false);
 
                         general_tab.pack_start (behavior_frame, false);
                         

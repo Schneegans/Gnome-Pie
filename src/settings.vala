@@ -23,8 +23,10 @@ namespace GnomePie {
         
         public static Settings get {
             get {
-                if (_get == null)
+                if (_get == null) {
                     _get = new Settings();
+                    _get.load();
+                }
                 return _get;
             }
             private set {
@@ -34,6 +36,7 @@ namespace GnomePie {
 
         public Theme  theme             {get; set;}
         public double refresh_rate      {get; private set; default = 60.0;}
+        public double global_scale      {get; set; default = 1.0;}
         public bool   show_indicator    {get; set; default = true;}
         public bool   open_at_mouse     {get; set; default = true;}
         public bool   click_to_activate {get; set; default = true;}
@@ -46,6 +49,7 @@ namespace GnomePie {
                 writer.start_element("settings");
                     writer.write_attribute("theme", theme.name);
                     writer.write_attribute("refresh_rate", refresh_rate.to_string());
+                    writer.write_attribute("global_scale", global_scale.to_string());
                     writer.write_attribute("show_indicator", show_indicator ? "true" : "false");
                     writer.write_attribute("open_at_mouse", open_at_mouse ? "true" : "false");
                     writer.write_attribute("click_to_activate", click_to_activate ? "true" : "false");
@@ -53,11 +57,11 @@ namespace GnomePie {
             writer.end_document();
         }
         
-        public void load() {
+        private void load() {
             Xml.Parser.init();
             Xml.Doc* settingsXML = Xml.Parser.parse_file("gnome-pie.conf");
-            string theme_name = "";
             bool   error_occrured = false;
+            string theme_name = "";
             
             if (settingsXML != null) {
 
@@ -74,6 +78,10 @@ namespace GnomePie {
                                 break;
                             case "refresh_rate":
                                 refresh_rate = double.parse(attr_content);
+                                break;
+                            case "global_scale":
+                                global_scale = double.parse(attr_content);
+                                global_scale.clamp(0.5, 2.0);
                                 break;
                             case "show_indicator":
                                 show_indicator = bool.parse(attr_content);
@@ -104,6 +112,12 @@ namespace GnomePie {
                 error_occrured = true;
             }
             
+            load_themes(theme_name);
+
+            if (error_occrured) save();
+        }
+        
+        public void load_themes(string current) {
             themes = new Gee.ArrayList<Theme?>();
             try {
                 string name;
@@ -118,28 +132,23 @@ namespace GnomePie {
             } 
             
             if (themes.size > 0) {
-                if (theme_name == "") {
-                    theme_name = "O-Pie";
+                if (current == "") {
+                    current = "O-Pie";
                     warning("No theme specified! Using default...");
                 }
                 foreach (var t in themes) {
-                    if (t.name == theme_name) {
+                    if (t.name == current) {
                         theme = t;
                         break;
                     }
                 }
                 if (theme == null) {
                     theme = themes[0];
-                    warning("Theme \"" + theme_name + "\" not found! Using fallback...");
+                    warning("Theme \"" + current + "\" not found! Using fallback...");
                 }
             }
             else error("No theme found!");
-            
-            if (error_occrured) save();
         }
         
-        private Settings() {
-            load();
-        }
     }
 }

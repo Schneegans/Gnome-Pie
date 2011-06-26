@@ -27,6 +27,7 @@ namespace GnomePie {
 	    private Ring   parent   {private get; private set;}
 	    private int    position {private get; private set;}
 	    private double fade     {private get; private set; default = 0.0;}
+	    private double scale    {private get; private set; default = 1.0;}
 
 	    public Slice(Action action, Ring parent) {
 	        _parent = parent;
@@ -40,7 +41,7 @@ namespace GnomePie {
 
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
-		    double direction = 2.0 * PI * position/parent.slice_count() + 0.5 * (parent.fade_in ? -1.0 : 1.0) * (1.0 - parent.fading);
+		    double direction = 2.0 * PI * position/parent.slice_count() + 0.9 * (parent.fade_in ? -1.0 : 1.0) * pow(1.0 - parent.fading, 2);
     	    double max_scale = 1.0/Settings.get.theme.max_zoom;
 	        double diff = fabs(angle-direction);
 	        
@@ -49,8 +50,9 @@ namespace GnomePie {
 	
 	        if (diff < 2 * PI * Settings.get.theme.zoom_range)
 	            max_scale = (Settings.get.theme.max_zoom/(diff * (Settings.get.theme.max_zoom - 1)/(2 * PI * Settings.get.theme.zoom_range) + 1))/Settings.get.theme.max_zoom;
+	        
 		    
-		    active = (distance >= Settings.get.theme.active_radius) && (diff < PI/parent.slice_count());
+		    active = (distance >= Settings.get.theme.active_radius || parent.has_quick_action()) && (diff < PI/parent.slice_count());
 		    
 		    if (active) {
 		        if ((fade += 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) > 1.0)
@@ -60,11 +62,20 @@ namespace GnomePie {
                     fade = 0.0;
 		    }
 		    
-		    double scale = max_scale*parent.activity + (1.0 - parent.activity)/Settings.get.theme.max_zoom - 0.1*(1.0 - parent.fading*parent.fading);
+		    max_scale = (parent.has_active_slice ? max_scale : 1.0/Settings.get.theme.max_zoom);
+            double scale_step = max_scale/(Settings.get.theme.transition_time*Settings.get.refresh_rate)*0.2;
+            if (fabs(scale - max_scale) > scale_step) {
+                if (scale < max_scale) {
+                    scale += scale_step;
+                } else {
+                    scale -= scale_step;
+                }
+                
+            } else scale = max_scale;
 
 	        ctx.save();
 	        
-	        ctx.scale(scale, scale);
+	        ctx.scale(scale - 0.5*pow(1.0 - parent.fading, 2), scale - 0.5*pow(1.0 - parent.fading, 2));
 	        ctx.translate(cos(direction)*Settings.get.theme.radius, sin(direction)*Settings.get.theme.radius);
 	        
 	        ctx.push_group();

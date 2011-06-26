@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="Glossy" description="A shiny theme for Gnome-Pie" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="100" maxZoom="1.3" zoomRange="0.2" transitionTime="0.1" fadeInTime="0.2" fadeOutTime="0.2">
+    <ring radius="100" maxZoom="1.3" zoomRange="0.2" transitionTime="0.1" fadeInTime="0.3" fadeOutTime="0.3">
         <center radius="65" activeRadius="40">
             <center_layer file="icon_bg.svg" 
                           active_scale="1"     active_turnToMouse="false"   active_rotationSpeed="0"  active_colorize="false"    active_alpha="1.0" 

@@ -28,9 +28,9 @@ namespace GnomePie {
 
 	    public bool   fade_in      {get; private set; default = true;}
 	    public double fading       {get; private set; default = 0.0;}
-	    public double activity     {get; private set; default = 0.0;}
 	    public Color  active_color {get; private set; default = new Color();}
 	    public string active_name  {get; private set; default = "";}
+	    public bool   has_active_slice {get; private set; default = false;}
 	    
 	    public signal void hide();
 	    public signal void show();
@@ -82,13 +82,7 @@ namespace GnomePie {
 		    if (distance < Settings.get.theme.active_radius && this.has_quick_action())
 		        angle = 2.0*PI*quick_action/(double)slice_count();
 		    
-		    if (distance > Settings.get.theme.active_radius || this.has_quick_action()) { 
-		        if ((activity += 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) > 1.0)
-                    activity = 1.0;
-		    } else {
-		        if ((activity -= 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) < 0.0)
-                    activity = 0.0;
-		    }
+		    has_active_slice = distance > Settings.get.theme.active_radius || this.has_quick_action(); 
 
             // clear the window
             ctx.save();
@@ -123,7 +117,7 @@ namespace GnomePie {
             _slices += new Slice(action, this);
         } 
         
-        private bool has_quick_action() {
+        public bool has_quick_action() {
             return 0 <= quick_action < _slices.length;
         }
     }

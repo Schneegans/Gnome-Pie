@@ -22,6 +22,7 @@ namespace GnomePie {
     public class Center {
 
 	    private Ring parent {private get; private set;}
+	    private double activity {private get; private set; default = 0.0;}
     
         public Center(Ring parent) {
             _parent = parent;
@@ -30,16 +31,24 @@ namespace GnomePie {
         public void draw(Cairo.Context ctx, double angle, double distance) {
 
     	    var layers = Settings.get.theme.center_layers;
+    	    
+    	    if (parent.has_active_slice) { 
+	            if ((activity += 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) > 1.0)
+                    activity = 1.0;
+	        } else {
+	            if ((activity -= 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) < 0.0)
+                    activity = 0.0;
+	        }
     	
 		    foreach (var layer in layers) {
 		    
 		        ctx.save();
-		        
-		        double max_scale          = layer.active_scale*parent.activity + layer.inactive_scale*(1.0-parent.activity);
-                double max_rotation_speed = layer.active_rotation_speed*parent.activity + layer.inactive_rotation_speed*(1.0-parent.activity);
-                double max_alpha          = layer.active_alpha*parent.activity + layer.inactive_alpha*(1.0-parent.activity);
-                double colorize           = ((layer.active_colorize == true) ? parent.activity : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - parent.activity : 0.0);
-                bool   turn_to_mouse      = ((parent.activity > 0.5) ? layer.active_turn_to_mouse : layer.inactive_turn_to_mouse);
+
+		        double max_scale          = layer.active_scale*activity + layer.inactive_scale*(1.0-activity);
+                double max_rotation_speed = layer.active_rotation_speed*activity + layer.inactive_rotation_speed*(1.0-activity);
+                double max_alpha          = layer.active_alpha*activity + layer.inactive_alpha*(1.0-activity);
+                double colorize           = ((layer.active_colorize == true) ? activity : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - activity : 0.0);
+                bool   turn_to_mouse      = ((activity > 0.5) ? layer.active_turn_to_mouse : layer.inactive_turn_to_mouse);
 		        
 		        if (turn_to_mouse) {
 		            double diff = angle-layer.rotation;
@@ -78,7 +87,7 @@ namespace GnomePie {
             }
             
              // draw caption
-		    if (Settings.get.theme.caption && parent.activity > 0.0) {
+		    if (Settings.get.theme.caption && activity > 0.0) {
     		    ctx.save();
     		    
 		        ctx.set_font_size(Settings.get.theme.font_size);
@@ -87,7 +96,7 @@ namespace GnomePie {
 		        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
 		        ctx.move_to(-extents.width/2, Settings.get.theme.caption_position+Settings.get.theme.font_size*0.5); 
 		        Color color = Settings.get.theme.caption_color;
-                ctx.set_source_rgba(color.r, color.g, color.g, parent.fading*parent.fading*parent.activity);
+                ctx.set_source_rgba(color.r, color.g, color.g, parent.fading*parent.fading*activity);
                 ctx.show_text(parent.active_name);
                 
 		        ctx.restore();

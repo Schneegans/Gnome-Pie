@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="Adwaita" description="Made for the default theme of Gnome3" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="120" maxZoom="1.3" zoomRange="0.1" transitionTime="0.1" fadeInTime="0.2" fadeOutTime="0.2">
+    <ring radius="120" maxZoom="1.3" zoomRange="0.1" transitionTime="0.2" fadeInTime="0.3" fadeOutTime="0.3">
         <center radius="100" activeRadius="55">
             <center_layer file="ring.svg" 
                           active_scale="0.8"   active_turnToMouse="false"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"

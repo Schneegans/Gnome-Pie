@@ -15,9 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-//keys =      new KeybindingManager();
-//            keys.bind("<Alt>V", show_ring);
-
 using GLib.Math;
 
 namespace GnomePie {

@@ -32,16 +32,16 @@ namespace GnomePie {
 
 	        reload_icon();
 		    
-		    Settings.get.notify["theme"].connect(reload_icon);
+		    Settings.global.notify["theme"].connect(reload_icon);
 		    Gtk.IconTheme.get_default().changed.connect(reload_icon);
 	    }
 
 	    public abstract void execute();
         
         private void reload_icon() {
-            int size = (int)(2*Settings.get.theme.slice_radius*Settings.get.theme.max_zoom);
-		    active_icon =   IconLoader.load_themed(_icon_name, size, true,  Settings.get.theme);
-		    inactive_icon = IconLoader.load_themed(_icon_name, size, false, Settings.get.theme);
+            int size = (int)(2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom);
+		    active_icon =   IconLoader.load_themed(_icon_name, size, true,  Settings.global.theme);
+		    inactive_icon = IconLoader.load_themed(_icon_name, size, false, Settings.global.theme);
 		    color = new Color.from_icon(active_icon);
         }
         

@@ -42,8 +42,8 @@ namespace GnomePie {
                 
                 if (toggled != _active) {
                     int index = int.parse(path);
-                    Settings.get.theme = Settings.get.themes[index];
-                    Settings.get.theme.load();
+                    Settings.global.theme = Settings.global.themes[index];
+                    Settings.global.theme.load();
                     
                     data.set(_active, 0, false); 
                     data.set(toggled, 0, true);
@@ -62,13 +62,13 @@ namespace GnomePie {
             check_column.add_attribute(check_render, "active", 0);
             theme_column.add_attribute(theme_render, "markup", 1);
             
-            var themes = Settings.get.themes;
+            var themes = Settings.global.themes;
             foreach(var theme in themes) {
                 Gtk.TreeIter current;
                 data.append(out current);
-                data.set(current, 0, theme == Settings.get.theme); 
+                data.set(current, 0, theme == Settings.global.theme); 
                 data.set(current, 1, "<big>" + theme.name + "</big>\n<small>" + theme.description + "  -  <i>by " + theme.author + "</i></small>"); 
-                if(theme == Settings.get.theme)
+                if(theme == Settings.global.theme)
                     _active = current;
             }  
         }

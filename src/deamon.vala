@@ -20,21 +20,21 @@ namespace GnomePie {
     public class Deamon : GLib.Object {
     
         private Indicator indicator    {private get; private set;}
-        private RingWindow ringWindow  {private get; private set;}     
+        private PieWindow pieWindow    {private get; private set;}     
         private Preferences prefs      {private get; private set;}        
 
         public Deamon() {
             Rsvg.init();
         
             prefs =      new Preferences();
-            ringWindow = new RingWindow();
+            pieWindow  = new PieWindow();
             indicator =  new Indicator(prefs);
             
-            Settings.get.notify["show-indicator"].connect((s, p) => {
-                indicator.active = Settings.get.show_indicator;
+            Settings.global.notify["show-indicator"].connect((s, p) => {
+                indicator.active = Settings.global.show_indicator;
             });
             
-            indicator.active = Settings.get.show_indicator;
+            indicator.active = Settings.global.show_indicator;
 
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);

@@ -21,22 +21,22 @@ namespace GnomePie {
 
     public class Center {
 
-	    private Ring parent {private get; private set;}
+	    private Pie parent {private get; private set;}
 	    private double activity {private get; private set; default = 0.0;}
     
-        public Center(Ring parent) {
+        public Center(Pie parent) {
             _parent = parent;
         }
         
         public void draw(Cairo.Context ctx, double angle, double distance) {
 
-    	    var layers = Settings.get.theme.center_layers;
+    	    var layers = Settings.global.theme.center_layers;
     	    
     	    if (parent.has_active_slice) { 
-	            if ((activity += 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) > 1.0)
+	            if ((activity += 1.0/(Settings.global.theme.transition_time*Settings.global.refresh_rate)) > 1.0)
                     activity = 1.0;
 	        } else {
-	            if ((activity -= 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) < 0.0)
+	            if ((activity -= 1.0/(Settings.global.theme.transition_time*Settings.global.refresh_rate)) < 0.0)
                     activity = 0.0;
 	        }
     	
@@ -52,7 +52,7 @@ namespace GnomePie {
 		        
 		        if (turn_to_mouse) {
 		            double diff = angle-layer.rotation;
-		            double step = max_rotation_speed/Settings.get.refresh_rate;
+		            double step = max_rotation_speed/Settings.global.refresh_rate;
 		            
 	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 			            layer.rotation = angle;
@@ -61,7 +61,7 @@ namespace GnomePie {
 			            else            		                   layer.rotation -= step;
                     }
                     
-		        } else layer.rotation += max_rotation_speed/Settings.get.refresh_rate;
+		        } else layer.rotation += max_rotation_speed/Settings.global.refresh_rate;
 		        
 		        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 		        
@@ -87,15 +87,15 @@ namespace GnomePie {
             }
             
              // draw caption
-		    if (Settings.get.theme.caption && activity > 0.0) {
+		    if (Settings.global.theme.caption && activity > 0.0) {
     		    ctx.save();
     		    
-		        ctx.set_font_size(Settings.get.theme.font_size);
+		        ctx.set_font_size(Settings.global.theme.font_size);
 		        Cairo.TextExtents extents;
 		        ctx.text_extents(parent.active_name, out extents);		    
 		        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
-		        ctx.move_to(-extents.width/2, Settings.get.theme.caption_position+Settings.get.theme.font_size*0.5); 
-		        Color color = Settings.get.theme.caption_color;
+		        ctx.move_to(-extents.width/2, Settings.global.theme.caption_position+Settings.global.theme.font_size*0.5); 
+		        Color color = Settings.global.theme.caption_color;
                 ctx.set_source_rgba(color.r, color.g, color.g, parent.fading*parent.fading*activity);
                 ctx.show_text(parent.active_name);
                 

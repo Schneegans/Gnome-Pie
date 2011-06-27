@@ -21,7 +21,7 @@ namespace GnomePie {
     
         private static Settings _get = null;
         
-        public static Settings get {
+        public static Settings global {
             get {
                 if (_get == null) {
                     _get = new Settings();

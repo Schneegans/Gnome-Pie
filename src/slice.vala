@@ -24,12 +24,12 @@ namespace GnomePie {
         public bool active      {get; private set; default = false;}
 
 	    private Action action   {private get; private set;}
-	    private Ring   parent   {private get; private set;}
+	    private Pie    parent   {private get; private set;}
 	    private int    position {private get; private set;}
 	    private double fade     {private get; private set; default = 0.0;}
 	    private double scale    {private get; private set; default = 1.0;}
 
-	    public Slice(Action action, Ring parent) {
+	    public Slice(Action action, Pie parent) {
 	        _parent = parent;
 	        _position = parent.slice_count();
 	        _action = action;
@@ -42,28 +42,28 @@ namespace GnomePie {
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
 		    double direction = 2.0 * PI * position/parent.slice_count() + 0.9 * (parent.fade_in ? -1.0 : 1.0) * pow(1.0 - parent.fading, 2);
-    	    double max_scale = 1.0/Settings.get.theme.max_zoom;
+    	    double max_scale = 1.0/Settings.global.theme.max_zoom;
 	        double diff = fabs(angle-direction);
 	        
 	        if (diff > PI)
 		        diff = 2 * PI - diff;
 	
-	        if (diff < 2 * PI * Settings.get.theme.zoom_range)
-	            max_scale = (Settings.get.theme.max_zoom/(diff * (Settings.get.theme.max_zoom - 1)/(2 * PI * Settings.get.theme.zoom_range) + 1))/Settings.get.theme.max_zoom;
+	        if (diff < 2 * PI * Settings.global.theme.zoom_range)
+	            max_scale = (Settings.global.theme.max_zoom/(diff * (Settings.global.theme.max_zoom - 1)/(2 * PI * Settings.global.theme.zoom_range) + 1))/Settings.global.theme.max_zoom;
 	        
 		    
-		    active = (distance >= Settings.get.theme.active_radius || parent.has_quick_action()) && (diff < PI/parent.slice_count());
+		    active = (distance >= Settings.global.theme.active_radius || parent.has_quick_action()) && (diff < PI/parent.slice_count());
 		    
 		    if (active) {
-		        if ((fade += 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) > 1.0)
+		        if ((fade += 1.0/(Settings.global.theme.transition_time*Settings.global.refresh_rate)) > 1.0)
                     fade = 1.0;
 		    } else {
-    		    if ((fade -= 1.0/(Settings.get.theme.transition_time*Settings.get.refresh_rate)) < 0.0)
+    		    if ((fade -= 1.0/(Settings.global.theme.transition_time*Settings.global.refresh_rate)) < 0.0)
                     fade = 0.0;
 		    }
 		    
-		    max_scale = (parent.has_active_slice ? max_scale : 1.0/Settings.get.theme.max_zoom);
-            double scale_step = max_scale/(Settings.get.theme.transition_time*Settings.get.refresh_rate)*0.2;
+		    max_scale = (parent.has_active_slice ? max_scale : 1.0/Settings.global.theme.max_zoom);
+            double scale_step = max_scale/(Settings.global.theme.transition_time*Settings.global.refresh_rate)*0.2;
             if (fabs(scale - max_scale) > scale_step) {
                 if (scale < max_scale) {
                     scale += scale_step;
@@ -76,7 +76,7 @@ namespace GnomePie {
 	        ctx.save();
 	        
 	        ctx.scale(scale - 0.5*pow(1.0 - parent.fading, 2), scale - 0.5*pow(1.0 - parent.fading, 2));
-	        ctx.translate(cos(direction)*Settings.get.theme.radius, sin(direction)*Settings.get.theme.radius);
+	        ctx.translate(cos(direction)*Settings.global.theme.radius, sin(direction)*Settings.global.theme.radius);
 	        
 	        ctx.push_group();
 	        

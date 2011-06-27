@@ -60,19 +60,19 @@ namespace GnomePie {
 
                             // Indicator icon 
                             var indicator = new Gtk.CheckButton.with_label ("Show Indicator");
-                                indicator.active = Settings.get.show_indicator;
+                                indicator.active = Settings.global.show_indicator;
                                 indicator.toggled.connect(indicator_toggled);
                                 behavior_vbox.pack_start(indicator, false);
                                 
                             // Open Pies at Mouse
                             var open_at_mouse = new Gtk.CheckButton.with_label ("Open Pies at Mouse");
-                                open_at_mouse.active = Settings.get.open_at_mouse;
+                                open_at_mouse.active = Settings.global.open_at_mouse;
                                 open_at_mouse.toggled.connect(open_at_mouse_toggled);
                                 behavior_vbox.pack_start(open_at_mouse, false);
                                 
                             // Click to activate
                             var click_to_activate = new Gtk.CheckButton.with_label ("Click to activate a Slice");
-                                click_to_activate.active = Settings.get.click_to_activate;
+                                click_to_activate.active = Settings.global.click_to_activate;
                                 click_to_activate.toggled.connect(click_to_activate_toggled);
                                 behavior_vbox.pack_start(click_to_activate, false);
                                 
@@ -81,12 +81,12 @@ namespace GnomePie {
                                 behavior_vbox.pack_start(scale_label, true, true);
                             
                             var scale_slider = new Gtk.HScale.with_range(0.5, 2.0, 0.05);
-                                scale_slider.set_value(Settings.get.global_scale);
+                                scale_slider.set_value(Settings.global.global_scale);
                                 scale_slider.value_pos = Gtk.PositionType.RIGHT;
-                               // click_to_activate.active = Settings.get.click_to_activate;
+                               // click_to_activate.active = Settings.global.click_to_activate;
                                 scale_slider.value_changed.connect(() => {
-                                    Settings.get.global_scale = scale_slider.get_value();
-                                    Settings.get.load_themes(Settings.get.theme.name);
+                                    Settings.global.global_scale = scale_slider.get_value();
+                                    Settings.global.load_themes(Settings.global.theme.name);
                                 });
                                 behavior_vbox.pack_end(scale_slider, false, false);
 
@@ -119,14 +119,14 @@ namespace GnomePie {
                     general_tab.pack_start (theme_frame, true, true);
                     tabs.append_page(general_tab, new Gtk.Label("General"));
                     
-                    // rings tab
-                    var rings_tab = new Gtk.VBox(false, 6);
-                        rings_tab.border_width = 12;
-                        tabs.append_page(rings_tab, new Gtk.Label("Pies"));
+                    // pies tab
+                    var pies_tab = new Gtk.VBox(false, 6);
+                        pies_tab.border_width = 12;
+                        tabs.append_page(pies_tab, new Gtk.Label("Pies"));
                         
                         var nothing_here = new Gtk.Label(null);
                         nothing_here.set_markup(Markup.printf_escaped("<b>%s</b>", "Well... here is nothing. For now."));
-                        rings_tab.pack_start(nothing_here);
+                        pies_tab.pack_start(nothing_here);
                     
                     main_vbox.pack_start(tabs);
 
@@ -136,7 +136,7 @@ namespace GnomePie {
                     var close_button = new Gtk.Button.from_stock (Gtk.Stock.CLOSE);
                     close_button.clicked.connect (() => { 
                         hide();
-                        Settings.get.save();
+                        Settings.global.save();
                     });
                     bbox.pack_start (close_button);
 
@@ -151,17 +151,17 @@ namespace GnomePie {
         
         private void indicator_toggled(Gtk.ToggleButton check_box) {
             var check = check_box as Gtk.CheckButton;
-            Settings.get.show_indicator = check.active;
+            Settings.global.show_indicator = check.active;
         }
         
         private void open_at_mouse_toggled(Gtk.ToggleButton check_box) {
             var check = check_box as Gtk.CheckButton;
-            Settings.get.open_at_mouse = check.active;
+            Settings.global.open_at_mouse = check.active;
         }
         
         private void click_to_activate_toggled(Gtk.ToggleButton check_box) {
             var check = check_box as Gtk.CheckButton;
-            Settings.get.click_to_activate = check.active;
+            Settings.global.click_to_activate = check.active;
         }
     }
 }

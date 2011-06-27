@@ -20,14 +20,12 @@ namespace GnomePie {
     public class Deamon : GLib.Object {
     
         private Indicator indicator    {private get; private set;}
-        private PieWindow pieWindow    {private get; private set;}     
         private Preferences prefs      {private get; private set;}        
 
         public Deamon() {
             Rsvg.init();
         
             prefs =      new Preferences();
-            pieWindow  = new PieWindow();
             indicator =  new Indicator(prefs);
             
             Settings.global.notify["show-indicator"].connect((s, p) => {
@@ -35,6 +33,8 @@ namespace GnomePie {
             });
             
             indicator.active = Settings.global.show_indicator;
+            
+            PieWindow.create_all();
 
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);

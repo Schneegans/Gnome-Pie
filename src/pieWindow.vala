@@ -21,27 +21,26 @@ namespace GnomePie {
 
     public class PieWindow : Gtk.Window {
     
-        private Pie active_pie {private get; private set;}
+        private Pie pie {private get; private set;}
     
-        public PieWindow() {
+        public PieWindow(Pie pie) {
             init();
-            create_pies();
+            _pie = pie;
         }
         
         private bool draw(Gtk.Widget da, Gdk.EventExpose event) {
-            if (active_pie != null) {
-                double mouse_x = 0.0;
-		        double mouse_y = 0.0;
-		        get_pointer(out mouse_x, out mouse_y);
-		        mouse_x -= width_request/2;
-		        mouse_y -= height_request/2;
-		        
-		        var ctx = Gdk.cairo_create(window);
-                ctx.set_operator(Cairo.Operator.OVER);
-                ctx.translate(width_request*0.5, height_request*0.5);
-            
-                active_pie.draw(ctx, mouse_x, mouse_y);
-            }
+            double mouse_x = 0.0;
+	        double mouse_y = 0.0;
+	        get_pointer(out mouse_x, out mouse_y);
+	        mouse_x -= width_request/2;
+	        mouse_y -= height_request/2;
+	        
+	        var ctx = Gdk.cairo_create(window);
+            ctx.set_operator(Cairo.Operator.OVER);
+            ctx.translate(width_request*0.5, height_request*0.5);
+        
+            pie.draw(ctx, mouse_x, mouse_y);
+
             return true;
         }
         
@@ -49,17 +48,13 @@ namespace GnomePie {
             if (button == 1) {
     	        WindowUtils.unfix_focus_on(this);
     	        this.has_focus = 0;
-    	         if (active_pie != null) {
-    	            active_pie.activate();
-    	         }
+    	        pie.activate();
 	        }
         }
         
-        public void show_pie(Pie pie) {
+        public override void show() {
             base.show();
             WindowUtils.fix_focus_on(this);
-            
-            active_pie = pie;
 
             Timeout.add ((uint)(1000.0/Settings.global.refresh_rate), () => {
 	            this.queue_draw();
@@ -84,7 +79,7 @@ namespace GnomePie {
             
             Settings.global.notify["open-at-mouse"].connect((s, p) => {
                 if(Settings.global.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
-                else                           this.set_position(Gtk.WindowPosition.CENTER);
+                else                              this.set_position(Gtk.WindowPosition.CENTER);
             }); 
             
             Settings.global.notify["theme"].connect((s, p) => {
@@ -106,7 +101,7 @@ namespace GnomePie {
             this.destroy.connect(Gtk.main_quit);
         }
         
-        private void create_pies() {
+        public static void create_all() {
             
             Xml.Parser.init();
             Xml.Doc* piesXML = Xml.Parser.parse_file("pies.conf");
@@ -189,8 +184,9 @@ namespace GnomePie {
                                 }
                             }
         
-                            pie.show.connect((t) => {show_pie(t);});
-                            pie.hide.connect((t) => {hide();});
+                            var window = new PieWindow(pie);
+                            pie.show.connect((t) => {window.show();});
+                            pie.hide.connect((t) => {window.hide();});
                             
                         }
                     }

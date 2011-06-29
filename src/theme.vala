@@ -36,6 +36,7 @@ namespace GnomePie {
         public double active_radius    {get; private set; default=45.0;}
         public double slice_radius     {get; private set; default=32.0;}
         public bool   caption          {get; private set; default=false;}
+        public double caption_size     {get; private set; default=100.0;}
         public double font_size        {get; private set; default=12.0;}
         public double caption_position {get; private set; default=0.0;}
         public Color  caption_color    {get; private set; default=new Color();}
@@ -232,8 +233,8 @@ namespace GnomePie {
             double inactive_alpha = 1.0;
             bool   active_colorize = false;
             bool   inactive_colorize = false;
-            bool   active_turn_to_mouse = false;
-            bool   inactive_turn_to_mouse = false;
+            CenterLayer.RotationMode active_rotation_mode = CenterLayer.RotationMode.AUTO;
+            CenterLayer.RotationMode inactive_rotation_mode = CenterLayer.RotationMode.AUTO;
             
             for (Xml.Attr* attribute = layer->properties; attribute != null; attribute = attribute->next) {
                 string attr_name = attribute->name.down();
@@ -249,8 +250,21 @@ namespace GnomePie {
                     case "active_alpha":
                         active_alpha = double.parse(attr_content);
                         break;
-                    case "active_turntomouse":
-                        active_turn_to_mouse = bool.parse(attr_content);
+                    case "active_rotationmode":
+                        switch (attr_content.down()) {
+                            case "auto":
+                               active_rotation_mode = CenterLayer.RotationMode.AUTO;
+                               break;
+                            case "turn_to_active":
+                               active_rotation_mode = CenterLayer.RotationMode.TO_ACTIVE;
+                               break; 
+                            case "turn_to_mouse":
+                               active_rotation_mode = CenterLayer.RotationMode.TO_MOUSE;
+                               break; 
+                            default:
+                               warning("Invalid value \"" + attr_content + "\" for attribute \"" + attr_name + "\" in <center_layer> element!");
+                               break;
+                        }
                         break;
                     case "active_rotationspeed":
                         active_rotation_speed = double.parse(attr_content);
@@ -264,8 +278,21 @@ namespace GnomePie {
                     case "inactive_alpha":
                         inactive_alpha = double.parse(attr_content);
                         break;
-                    case "inactive_turntomouse":
-                        inactive_turn_to_mouse = bool.parse(attr_content);
+                    case "inactive_rotationmode":
+                        switch (attr_content.down()) {
+                            case "auto":
+                               inactive_rotation_mode = CenterLayer.RotationMode.AUTO;
+                               break;
+                            case "turn_to_active":
+                               inactive_rotation_mode = CenterLayer.RotationMode.TO_ACTIVE;
+                               break; 
+                            case "turn_to_mouse":
+                               inactive_rotation_mode = CenterLayer.RotationMode.TO_MOUSE;
+                               break; 
+                            default:
+                               warning("Invalid value \"" + attr_content + "\" for attribute \"" + attr_name + "\" in <center_layer> element!");
+                               break;
+                        }
                         break;
                     case "inactive_rotationspeed":
                         inactive_rotation_speed = double.parse(attr_content);
@@ -283,8 +310,8 @@ namespace GnomePie {
             Cairo.ImageSurface image = IconLoader.load("themes/" + directory + "/" + file, 2*(int)((double)center_radius*max_scale));
             
             if (image != null) {
-                center_layers.add(new CenterLayer(image, active_scale/max_scale,   active_rotation_speed,   active_alpha,   active_colorize,   active_turn_to_mouse, 
-                                                         inactive_scale/max_scale, inactive_rotation_speed, inactive_alpha, inactive_colorize, inactive_turn_to_mouse));
+                center_layers.add(new CenterLayer(image, active_scale/max_scale,   active_rotation_speed,   active_alpha,   active_colorize,   active_rotation_mode, 
+                                                         inactive_scale/max_scale, inactive_rotation_speed, inactive_alpha, inactive_colorize, inactive_rotation_mode));
             }
         }
         
@@ -357,8 +384,11 @@ namespace GnomePie {
                 string attr_content = attribute->children->content;
                 
                 switch (attr_name) {
-                    case "size":
+                    case "fontsize":
                         font_size = double.parse(attr_content) * Settings.global.global_scale;
+                        break;
+                    case "maxsize":
+                        caption_size = double.parse(attr_content) * Settings.global.global_scale;
                         break;
                     case "position":
                         caption_position = double.parse(attr_content) * Settings.global.global_scale;

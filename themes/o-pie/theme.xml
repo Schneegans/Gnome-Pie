@@ -4,11 +4,11 @@
     <ring radius="100" maxZoom="1.3" zoomRange="0.2" transitionTime="0.1" fadeInTime="0.3" fadeOutTime="0.3">
         <center radius="70" activeRadius="35">
             <center_layer file="ring.svg" 
-                          active_scale="1.0"   active_turnToMouse="false"   active_rotationSpeed="4"    active_colorize="true"    active_alpha="1.0"
-                          inactive_scale="0.8" inactive_turnToMouse="false" inactive_rotationSpeed="-0.5" inactive_colorize="false" inactive_alpha="1.0" />
+                          active_scale="1.0"   active_rotationMode="auto"   active_rotationSpeed="4"    active_colorize="true"    active_alpha="1.0"
+                          inactive_scale="0.8" inactive_rotationMode="auto" inactive_rotationSpeed="-0.5" inactive_colorize="false" inactive_alpha="1.0" />
             <center_layer file="arrow.svg" 
-                          active_scale="1.0"     active_turnToMouse="true"   active_rotationSpeed="10.0"    active_colorize="true"    active_alpha="1.0" 
-                          inactive_scale="0.8" inactive_turnToMouse="true" inactive_rotationSpeed="5.0"  inactive_colorize="false" inactive_alpha="0.0" />
+                          active_scale="1.0"     active_rotationMode="turn_to_mouse"   active_rotationSpeed="10.0"    active_colorize="true"    active_alpha="1.0" 
+                          inactive_scale="0.8" inactive_rotationMode="turn_to_mouse" inactive_rotationSpeed="5.0"  inactive_colorize="false" inactive_alpha="0.0" />
         </center>
         <slices radius="24">
             <activeSlice>

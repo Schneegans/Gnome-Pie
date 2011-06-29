@@ -113,6 +113,10 @@ namespace GnomePie {
             return true;
         }
         
+        public double activity() {
+            return center.activity;
+        }
+        
         public void add_slice(Action action) {
             _slices += new Slice(action, this);
         } 

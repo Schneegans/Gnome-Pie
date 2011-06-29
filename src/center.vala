@@ -21,8 +21,8 @@ namespace GnomePie {
 
     public class Center {
 
-	    private Pie                parent   {private get; private set;}
-	    private double             activity {private get; private set; default = 0.0;}
+	    private Pie                parent  {private get; private set;}
+	    public double             activity {get; private set; default = 0.0;}
 
         public Center(Pie parent) {
             _parent = parent;
@@ -48,9 +48,9 @@ namespace GnomePie {
                 double max_rotation_speed = layer.active_rotation_speed*activity + layer.inactive_rotation_speed*(1.0-activity);
                 double max_alpha          = layer.active_alpha*activity + layer.inactive_alpha*(1.0-activity);
                 double colorize           = ((layer.active_colorize == true) ? activity : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - activity : 0.0);
-                bool   turn_to_mouse      = ((activity > 0.5) ? layer.active_turn_to_mouse : layer.inactive_turn_to_mouse);
+                CenterLayer.RotationMode rotation_mode = ((activity > 0.5) ? layer.active_rotation_mode : layer.inactive_rotation_mode);
 		        
-		        if (turn_to_mouse) {
+		        if (rotation_mode == CenterLayer.RotationMode.TO_MOUSE) {
 		            double diff = angle-layer.rotation;
 		            double step = max_rotation_speed/Settings.global.refresh_rate;
 		            
@@ -61,6 +61,21 @@ namespace GnomePie {
 			            else            		                   layer.rotation -= step;
                     }
                     
+		        } else if (rotation_mode == CenterLayer.RotationMode.TO_ACTIVE) {
+		            max_rotation_speed *= activity;
+		            
+		            double slice_angle = 2*PI/parent.slice_count();
+		            double direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
+		            double diff = direction-layer.rotation;
+		            double step = max_rotation_speed/Settings.global.refresh_rate;
+		            
+	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
+			            layer.rotation = direction;
+		            else {
+		                if ((diff > 0 && diff < PI) || diff < -PI) layer.rotation += step;
+			            else            		                   layer.rotation -= step;
+                    }
+		            
 		        } else layer.rotation += max_rotation_speed/Settings.global.refresh_rate;
 		        
 		        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);

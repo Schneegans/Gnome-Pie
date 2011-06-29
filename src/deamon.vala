@@ -24,6 +24,8 @@ namespace GnomePie {
 
         public Deamon() {
             Rsvg.init();
+            
+            IconLoader.init();
         
             prefs =      new Preferences();
             indicator =  new Indicator(prefs);

@@ -19,18 +19,44 @@ namespace GnomePie {
 
     public class IconLoader : GLib.Object {
     
-        public static Cairo.ImageSurface? load(string filename, int size) {
-            var parts = filename.split(".");
+        private static Gee.HashMap<string, Cairo.ImageSurface?> _icon_cache;
+        
+        public static void init() {
+            _icon_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
             
-            switch (parts[parts.length-1].up()) {
-                case ("SVG"):
-                    return load_svg(filename, size);
-                case ("PNG"):
-                    return load_png(filename, size);
-                default:
-                    warning("Unrecognized image type: \"" + filename + "\"!");
-                    return null;
+            // load theme icons
+        }
+    
+        public static Cairo.ImageSurface? load(string filename, int size) {
+        
+            Cairo.ImageSurface icon = _icon_cache.get(filename);
+            
+            if(icon == null || icon.get_width() < size) {
+        
+                var parts = filename.split(".");
+                
+                switch (parts[parts.length-1].up()) {
+                    case ("SVG"):
+                        icon = load_svg(filename, size);
+                        break;
+                    case ("PNG"):
+                        icon = load_png(filename, size);
+                        break;
+                    default:
+                        warning("Unrecognized image type: \"" + filename + "\"!");
+                        return null;
+                }
+                _icon_cache.set(filename, icon);
+                
+            } else if (icon.get_width() > size){
+                 var scaled = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
+                 var ctx = new Cairo.Context(scaled);
+                 ctx.scale((float)size/(float)icon.get_width(), (float)size/(float)icon.get_height());
+                 ctx.set_source_surface(icon, 1.0, 1.0);
+                 ctx.paint();
+                 return scaled;
             }
+            return icon;
         }
         
         public static Cairo.ImageSurface load_themed(string icon_name, int size, bool active, Theme theme) {

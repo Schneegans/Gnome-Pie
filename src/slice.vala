@@ -28,11 +28,19 @@ namespace GnomePie {
 	    private int    position {private get; private set;}
 	    private double fade     {private get; private set; default = 0.0;}
 	    private double scale    {private get; private set; default = 1.0;}
+	    private Cairo.ImageSurface caption  {private get; private set;}
 
 	    public Slice(Action action, Pie parent) {
 	        _parent = parent;
 	        _position = parent.slice_count();
 	        _action = action;
+	        
+	        if (Settings.global.theme.caption)
+                this.load_caption();
+                
+            Settings.global.notify["theme"].connect((s, p) => {
+                this.load_caption();
+            });
 	    }
 	
 	    public void activate() {
@@ -98,6 +106,16 @@ namespace GnomePie {
             ctx.paint();
 	            
 	        ctx.restore();
+	        
+	                    
+             // draw caption
+		    if (Settings.global.theme.caption && active) {
+    		    ctx.save();
+		        ctx.move_to(0, Settings.global.theme.caption_position+Settings.global.theme.font_size*0.5); 
+		        ctx.set_source_surface(caption, (int)(-caption.get_width()*0.5), (int)(-caption.get_height()*0.5));
+		        ctx.paint_with_alpha(parent.fading*parent.fading);
+		        ctx.restore();
+		    }
 	    }
 	    
 	    public Color color() {
@@ -107,6 +125,25 @@ namespace GnomePie {
 	    public string name() {
 	        return action.name;
 	    }
+	    
+	    private void load_caption() {
+	        caption = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);
+            var ctx = new Cairo.Context(caption);
+            ctx.set_font_size(Settings.global.theme.font_size);
+	        Cairo.TextExtents extents;
+	        ctx.text_extents(action.name, out extents);	
+	        
+	        
+	        caption = new Cairo.ImageSurface(Cairo.Format.ARGB32, (int)extents.width+5, (int)extents.height+5);
+	        ctx = new Cairo.Context(caption);
+	        
+	        ctx.set_font_size(Settings.global.theme.font_size);
+            ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
+	        ctx.move_to(0, extents.height); 
+	        Color color = Settings.global.theme.caption_color;
+            ctx.set_source_rgb(color.r, color.g, color.g);
+            ctx.show_text(action.name);
+        }
     }
 
 }

@@ -20,28 +20,25 @@ using GLib.Math;
 namespace GnomePie {
 
     public class Pie : GLib.Object {
-	    
-	    private Slice[] _slices;
-	    private int     quick_action {private get; private set;}
-	    private Slice   active_slice {private get; private set;}
-	    private Center  center       {private get; private set;} 
 
-	    public bool   fade_in      {get; private set; default = true;}
-	    public double fading       {get; private set; default = 0.0;}
-	    public Color  active_color {get; private set; default = new Color();}
-	    public string active_name  {get; private set; default = "";}
-	    public bool   has_active_slice {get; private set; default = false;}
+	    public bool               fade_in          {get; private set; default = true;}
+	    public double             fading           {get; private set; default = 0.0;}
+	    public Color              active_color     {get; private set; default = new Color();}
+	    public Cairo.ImageSurface active_caption   {get; private set;}
+	    public bool               has_active_slice {get; private set; default = false;}
 	    
-	    public signal void hide();
-	    public signal void show();
+	    public signal void on_hide();
 	    
-	    public Pie(string keystroke, int quick_action) {
+	    private Slice[]    slices       {private get; private set;}
+	    private int        quick_action {private get; private set;}
+	    private Slice      active_slice {private get; private set;}
+	    private Center     center       {private get; private set;}
+	    
+	    public Pie(int quick_action) {
             base();
-            center = new Center(this); 
-		    _slices = new Slice[0];
-		    _quick_action = quick_action;
-		    
-		    Key.bind(keystroke, () => {show();});
+            this.center = new Center(this); 
+		    this.slices = new Slice[0];
+		    this.quick_action = quick_action;
         }
 	    
 	    public int slice_count() {
@@ -49,11 +46,17 @@ namespace GnomePie {
 	    }
 	    
 	    public void activate() {
-    	    if(active_slice != null)
-    	        active_slice.activate();
-    	    else if (this.has_quick_action())
-    	        _slices[quick_action].activate();
-        	fade_in = false;
+	        if(fade_in && fading > 0.0) {
+        	    if(active_slice != null)
+        	        active_slice.activate();
+        	    else if (this.has_quick_action())
+        	        _slices[quick_action].activate();
+            	hide();
+        	}
+        }
+        
+        public void hide() {
+            if (fading > 0) fade_in = false;
         }
         
         public bool draw(Cairo.Context ctx, double mouse_x, double mouse_y) {
@@ -67,7 +70,7 @@ namespace GnomePie {
                 if (fading < 0.0) {
                     fading = 0.0;
                     fade_in = true;
-                    hide();
+                    on_hide();
                 }     
             }
         
@@ -100,14 +103,14 @@ namespace GnomePie {
 			    if(_slices[s].active) {
 			        active_slice = _slices[s];
 			        active_color = active_slice.color();
-			        active_name  = active_slice.name();
+			        active_caption = active_slice.caption;
 			    }
 		    }
 		    
 		    if (active_slice == null && this.has_quick_action()) {
 			    active_slice = _slices[quick_action];
 			    active_color = active_slice.color();
-			    active_name  = active_slice.name();
+			    active_caption = active_slice.caption;
 			}
  
             return true;

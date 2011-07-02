@@ -44,15 +44,21 @@ namespace GnomePie {
 		    
 		        ctx.save();
 
+
+                double active_speed       = (layer.active_rotation_mode == CenterLayer.RotationMode.AUTO) ? layer.active_rotation_speed : 0.0;
+                double inactive_speed     = (layer.inactive_rotation_mode == CenterLayer.RotationMode.AUTO) ? layer.inactive_rotation_speed : 0.0;
 		        double max_scale          = layer.active_scale*activity + layer.inactive_scale*(1.0-activity);
-                double max_rotation_speed = layer.active_rotation_speed*activity + layer.inactive_rotation_speed*(1.0-activity);
                 double max_alpha          = layer.active_alpha*activity + layer.inactive_alpha*(1.0-activity);
                 double colorize           = ((layer.active_colorize == true) ? activity : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - activity : 0.0);
+                double max_rotation_speed = active_speed*activity + inactive_speed*(1.0-activity);
                 CenterLayer.RotationMode rotation_mode = ((activity > 0.5) ? layer.active_rotation_mode : layer.inactive_rotation_mode);
+
 		        
 		        if (rotation_mode == CenterLayer.RotationMode.TO_MOUSE) {
 		            double diff = angle-layer.rotation;
-		            double step = max_rotation_speed/Settings.global.refresh_rate;
+		            max_rotation_speed = layer.active_rotation_speed*activity + layer.inactive_rotation_speed*(1.0-activity);
+		            double smoothy = fabs(diff) < 0.9 ? fabs(diff) + 0.1 : 1.0; 
+		            double step = max_rotation_speed/Settings.global.refresh_rate*smoothy;
 		            
 	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 			            layer.rotation = angle;
@@ -99,6 +105,17 @@ namespace GnomePie {
 		        }
                 
                 ctx.restore();
+                
+                 // draw caption
+		        if (Settings.global.theme.caption && parent.active_caption != null && activity > 0) {
+        		    ctx.save();
+        		    ctx.identity_matrix();
+        		    int pos = (int)((fmax(2*Settings.global.theme.radius + 4*Settings.global.theme.slice_radius, 2*Settings.global.theme.center_radius))/2);
+		            ctx.translate(pos, (int)Settings.global.theme.caption_position + pos); 
+		            ctx.set_source_surface(parent.active_caption, (int)(-parent.active_caption.get_width()*0.5), (int)(-parent.active_caption.get_height()*0.5));
+		            ctx.paint_with_alpha(parent.fading*parent.fading*activity);
+		            ctx.restore();
+		        }
             }
 
         }

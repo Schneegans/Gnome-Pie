@@ -22,13 +22,14 @@ namespace GnomePie {
     public class Slice : GLib.Object {
     
         public bool active      {get; private set; default = false;}
-
+        public Cairo.ImageSurface caption  {get; private set;}
+        
 	    private Action action   {private get; private set;}
 	    private Pie    parent   {private get; private set;}
 	    private int    position {private get; private set;}
 	    private double fade     {private get; private set; default = 0.0;}
 	    private double scale    {private get; private set; default = 1.0;}
-	    private Cairo.ImageSurface caption  {private get; private set;}
+	    
 
 	    public Slice(Action action, Pie parent) {
 	        _parent = parent;
@@ -110,16 +111,6 @@ namespace GnomePie {
             ctx.paint();
 	            
 	        ctx.restore();
-	        
-	                    
-             // draw caption
-		    if (Settings.global.theme.caption && active) {
-    		    ctx.save();
-		        ctx.translate(0, Settings.global.theme.caption_position); 
-		        ctx.set_source_surface(caption, (int)(-caption.get_width()*0.5), (int)(-caption.get_height()*0.5));
-		        ctx.paint_with_alpha(parent.fading*parent.fading*parent.activity());
-		        ctx.restore();
-		    }
 	    }
 	    
 	    public Color color() {
@@ -135,7 +126,7 @@ namespace GnomePie {
 	        caption = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
             var ctx = new Cairo.Context(caption);
             
-            ctx.set_font_size(Settings.global.theme.font_size);
+            ctx.set_font_size((int)Settings.global.theme.font_size);
 	        Cairo.TextExtents extents;
 	        string text = action.name;
 	        ctx.text_extents(text, out extents);

@@ -23,8 +23,6 @@ namespace GnomePie {
         
         public static void init() {
             _icon_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-            
-            // load theme icons
         }
     
         public static Cairo.ImageSurface? load(string filename, int size) {
@@ -32,7 +30,6 @@ namespace GnomePie {
             Cairo.ImageSurface icon = _icon_cache.get(filename);
             
             if(icon == null || icon.get_width() < size) {
-        
                 var parts = filename.split(".");
                 
                 switch (parts[parts.length-1].up()) {
@@ -60,9 +57,19 @@ namespace GnomePie {
         }
         
         public static Cairo.ImageSurface load_themed(string icon_name, int size, bool active, Theme theme) {
+            
+            Gee.ArrayList<SliceLayer?> layers;
+	        if (active) layers = theme.active_slice_layers;
+    		else        layers = theme.inactive_slice_layers;
+            
+            // get size of icon layer
+            int icon_size = size;
+            foreach (var layer in layers) {
+                if (layer.is_icon) icon_size = layer.image.get_width();
+            }
         
             var icon_theme = Gtk.IconTheme.get_default();
-            var icon_file = icon_theme.lookup_icon(icon_name, size, 0);
+            var icon_file = icon_theme.lookup_icon(icon_name, icon_size, 0);
             var result = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
             
             if (icon_file == null) {
@@ -73,7 +80,7 @@ namespace GnomePie {
             
             if (icon_file != null) {
                 var filename = icon_file.get_filename();
-                var icon =   IconLoader.load(filename, size);
+                var icon =   IconLoader.load(filename, icon_size);
                 var color =  new Color.from_icon(icon);
                 
                 var ctx  =   new Cairo.Context(result);
@@ -81,10 +88,6 @@ namespace GnomePie {
                 ctx.translate(size/2, size/2);
                 ctx.set_operator(Cairo.Operator.OVER);
 	            
-	            Gee.ArrayList<SliceLayer?> layers;
-		        if (active) layers = theme.active_slice_layers;
-        		else        layers = theme.inactive_slice_layers;
-		        
 		        foreach (var layer in layers) {
 		        
 		            if (layer.colorize)
@@ -99,7 +102,8 @@ namespace GnomePie {
 		                    ctx.set_operator(Cairo.Operator.IN);
 		                }
 		                
-		                if (layer.image.get_width() != size) {
+		                if (layer.image.get_width() != icon_size) {
+		                    debug("%i : %i", layer.image.get_width(), icon_size);
 		                    filename =   icon_theme.lookup_icon(icon_name, layer.image.get_width(), 0).get_filename();
 		                    icon = IconLoader.load(filename, layer.image.get_width());
 		                }

@@ -24,8 +24,6 @@ namespace GnomePie {
         private static int ctrl_code;
         private static int alt_code;
         private static int super_code;
-
-        private static KeybindingManager bindings;
         
         private static bool need_init = true;
 
@@ -37,56 +35,48 @@ namespace GnomePie {
             Gdk.ModifierType modifiers;
             Gtk.accelerator_parse(stroke, out keysym, out modifiers);
             int keycode = display.keysym_to_keycode(keysym);
+            
+            Gdk.ModifierType current_modifiers = get_modifiers();
 
-            if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0)
-                X.Test.fake_key_event(display, ctrl_code, true, 0);
-                
-            if ((modifiers & Gdk.ModifierType.SHIFT_MASK) > 0)
-                X.Test.fake_key_event(display, shift_code, true, 0);
-                
-            if ((modifiers & Gdk.ModifierType.MOD1_MASK) > 0)
-                X.Test.fake_key_event(display, alt_code, true, 0);
-                
-            if ((modifiers & Gdk.ModifierType.SUPER_MASK) > 0)
-                X.Test.fake_key_event(display, super_code, true, 0);
+            press_modifiers(current_modifiers, false);
+            press_modifiers(modifiers, true);
 
-	        X.Test.fake_key_event(display, keycode, true, 0);
-	        X.Test.fake_key_event(display, keycode, false, 0);
+            X.Test.fake_key_event(display, keycode, true, 0);
+            X.Test.fake_key_event(display, keycode, false, 0);
 	
-	        if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0)
-                X.Test.fake_key_event(display, ctrl_code, false, 0);
-	
-	        if ((modifiers & Gdk.ModifierType.SHIFT_MASK) > 0)
-                X.Test.fake_key_event(display, shift_code, false, 0);
-                
-            if ((modifiers & Gdk.ModifierType.MOD1_MASK) > 0)
-                X.Test.fake_key_event(display, alt_code, false, 0);
-	
-	        if ((modifiers & Gdk.ModifierType.SUPER_MASK) > 0)
-                X.Test.fake_key_event(display, super_code, false, 0);
+	        press_modifiers(modifiers, false);
+	        press_modifiers(current_modifiers, true);
 
 	        display.flush();
+        }
+        
+        private static Gdk.ModifierType get_modifiers() {
+            Gdk.ModifierType modifiers;
+            Gdk.Display.get_default().get_pointer(null, null, null, out modifiers);
+            return modifiers;
+        }
+        
+        private static void press_modifiers(Gdk.ModifierType modifiers, bool down) {
+            if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0)
+                X.Test.fake_key_event(display, ctrl_code, down, 0);
 	
-	        //string accel = Gtk.accelerator_get_label (keysym, modifiers);
-            //debug("key: %s keysum: %u keycode: %i", accel, keysym, keycode);
+	        if ((modifiers & Gdk.ModifierType.SHIFT_MASK) > 0)
+                X.Test.fake_key_event(display, shift_code, down, 0);
+                
+            if ((modifiers & Gdk.ModifierType.MOD1_MASK) > 0)
+                X.Test.fake_key_event(display, alt_code, down, 0);
+	
+	        if ((modifiers & Gdk.ModifierType.SUPER_MASK) > 0)
+                X.Test.fake_key_event(display, super_code, down, 0);
         }
-        
-        public static void bind(string stroke, KeybindingManager.KeybindingHandlerFunc handler) {
-            
-            if (need_init) init();
-            
-            bindings.bind(stroke, handler);
-        }
-        
+
         private static void init() {
             display = new X.Display();
             
-            shift_code = display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
-            ctrl_code  = display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
-            alt_code  = display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
+            shift_code =  display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
+            ctrl_code  =  display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
+            alt_code  =   display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
             super_code  = display.keysym_to_keycode(Gdk.keyval_from_name("Super_L"));
-            
-            bindings = new KeybindingManager();
             
             need_init = false;
         }

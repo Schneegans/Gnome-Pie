@@ -37,7 +37,7 @@ set(CFLAGS
 	${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
 	${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
 	${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
-	-O2 -s
+	-O3 -s
 	#-g
 )
 add_definitions(${CFLAGS})

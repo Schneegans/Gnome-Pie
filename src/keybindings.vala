@@ -137,8 +137,6 @@ namespace GnomePie {
             if(keycode != 0) {
                 Keybinding binding = new Keybinding(accelerator, keycode, modifiers, down, handler);
                 _local_bindings.add(binding);
-     
-                //debug("Successfully bound local key " + accelerator);
             }
         }
         
@@ -150,8 +148,14 @@ namespace GnomePie {
             foreach(Keybinding binding in _local_bindings) {
                 // remove NumLock, CapsLock and ScrollLock from key state
                 uint event_mods = modifiers & ~ (lock_modifiers[7]);
-                if(binding.down == down && keycode == binding.keycode && event_mods == binding.modifiers) {
-                    binding.handler();
+                if(down) {
+                    if(binding.down == true && keycode == binding.keycode && event_mods == binding.modifiers) {
+                        binding.handler();
+                    }
+                } else {
+                    if(binding.down == false && (keycode == binding.keycode || ((event_mods | binding.modifiers) > 0))) {
+                        binding.handler();
+                    }
                 }
             }
         }

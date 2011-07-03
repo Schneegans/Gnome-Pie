@@ -61,12 +61,12 @@ namespace GnomePie {
         
         public bool draw(Cairo.Context ctx, double mouse_x, double mouse_y) {
             if (fade_in) {
-                fading += 1.0/(Settings.global.refresh_rate*Settings.global.theme.fade_in_time);
+                fading += Settings.global.frame_time/Settings.global.theme.fade_in_time;
                 if (fading > 1.0) 
                     fading = 1.0;
                 
             } else {
-                fading -= 1.0/(Settings.global.refresh_rate*Settings.global.theme.fade_out_time);
+                fading -= Settings.global.frame_time/Settings.global.theme.fade_out_time;
                 if (fading < 0.0) {
                     fading = 0.0;
                     fade_in = true;

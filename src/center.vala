@@ -33,10 +33,10 @@ namespace GnomePie {
     	    var layers = Settings.global.theme.center_layers;
     	    
     	    if (parent.has_active_slice) { 
-	            if ((activity += 1.0/(Settings.global.theme.transition_time*Settings.global.refresh_rate)) > 1.0)
+	            if ((activity += Settings.global.frame_time/(Settings.global.theme.transition_time)) > 1.0)
                     activity = 1.0;
 	        } else {
-	            if ((activity -= 1.0/(Settings.global.theme.transition_time*Settings.global.refresh_rate)) < 0.0)
+	            if ((activity -= Settings.global.frame_time/(Settings.global.theme.transition_time)) < 0.0)
                     activity = 0.0;
 	        }
     	
@@ -58,7 +58,7 @@ namespace GnomePie {
 		            double diff = angle-layer.rotation;
 		            max_rotation_speed = layer.active_rotation_speed*activity + layer.inactive_rotation_speed*(1.0-activity);
 		            double smoothy = fabs(diff) < 0.9 ? fabs(diff) + 0.1 : 1.0; 
-		            double step = max_rotation_speed/Settings.global.refresh_rate*smoothy;
+		            double step = max_rotation_speed*Settings.global.frame_time*smoothy;
 		            
 	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 			            layer.rotation = angle;
@@ -73,7 +73,7 @@ namespace GnomePie {
 		            double slice_angle = 2*PI/parent.slice_count();
 		            double direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
 		            double diff = direction-layer.rotation;
-		            double step = max_rotation_speed/Settings.global.refresh_rate;
+		            double step = max_rotation_speed*Settings.global.frame_time;
 		            
 	                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 			            layer.rotation = direction;
@@ -82,7 +82,7 @@ namespace GnomePie {
 			            else            		                   layer.rotation -= step;
                     }
 		            
-		        } else layer.rotation += max_rotation_speed/Settings.global.refresh_rate;
+		        } else layer.rotation += max_rotation_speed*Settings.global.frame_time;
 		        
 		        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 		        

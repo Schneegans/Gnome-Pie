@@ -68,15 +68,15 @@ namespace GnomePie {
 		    active = (distance >= Settings.global.theme.active_radius || parent.has_quick_action()) && (diff < PI/parent.slice_count());
 		    
 		    if (active) {
-		        if ((fade += 1.0/(Settings.global.theme.transition_time*Settings.global.refresh_rate)) > 1.0)
+		        if ((fade += Settings.global.frame_time/Settings.global.theme.transition_time) > 1.0)
                     fade = 1.0;
 		    } else {
-    		    if ((fade -= 1.0/(Settings.global.theme.transition_time*Settings.global.refresh_rate)) < 0.0)
+    		    if ((fade -= Settings.global.frame_time/Settings.global.theme.transition_time) < 0.0)
                     fade = 0.0;
 		    }
 		    
 		    max_scale = (parent.has_active_slice ? max_scale : 1.0/Settings.global.theme.max_zoom);
-            double scale_step = max_scale/(Settings.global.theme.transition_time*Settings.global.refresh_rate)*0.2;
+            double scale_step = max_scale/Settings.global.theme.transition_time*0.2*Settings.global.frame_time;
             if (fabs(scale - max_scale) > scale_step) {
                 if (scale < max_scale) {
                     scale += scale_step;

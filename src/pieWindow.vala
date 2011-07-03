@@ -85,9 +85,27 @@ namespace GnomePie {
         public override void show() {
             base.show();
             WindowUtils.fix_focus_on(this);
+            
+            
+            int frame_count = 0;
+            uint wait = (uint)(1000.0/Settings.global.refresh_rate);
+            var timer = new GLib.Timer();
+            timer.start();
 
-            Timeout.add ((uint)(1000.0/Settings.global.refresh_rate), () => {
+            Timeout.add (wait, () => {
+                if(++frame_count % (int)Settings.global.refresh_rate == 0) {
+                    debug("FPS: %f", 1.0/Settings.global.frame_time);
+                    frame_count = 0;
+                }
+            
 	            this.queue_draw();
+	            
+	            Settings.global.frame_time = timer.elapsed();
+	            timer.reset();
+	            
+	            int time_diff = (int)(1000.0/Settings.global.refresh_rate) - (int)(1000.0*Settings.global.frame_time);
+	            wait =  (time_diff < 1) ? 1 : (uint) time_diff;
+
 	            return visible;
 	        });
         }
@@ -132,20 +150,16 @@ namespace GnomePie {
             });
             
             this.key_release_event.connect ((e) => {
-                if(e.is_modifier == 0) {
-                    bindings.on_key_release(e.keyval, e.state);
-                }
+                bindings.on_key_release(e.keyval, e.state);
                 return true;
             });
             
             this.key_press_event.connect ((e) => {
-                if(e.is_modifier == 0) {
-                    bindings.on_key_press(e.keyval, e.state);
-                }
+                bindings.on_key_press(e.keyval, e.state);
                 return true;
             });
 
-            this.expose_event.connect(this.draw);
+            this.expose_event.connect(draw);
             this.destroy.connect(Gtk.main_quit);
         }
         

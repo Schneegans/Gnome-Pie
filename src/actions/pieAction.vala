@@ -19,16 +19,15 @@ namespace GnomePie {
 
     public class PieAction : Action {
 	    	
-	    private Pie pie;
+	    private Pie pie {private get; private set;};
 
 	    public PieAction(string name, string icon_name, Pie pie) {
 	        base(name, icon_name);
-	        
 	        this.pie = pie;
 	    }
 
 	    public override void execute() {
-            this.pie.show();
+            this.pie.on_activate();
         } 
     }
 

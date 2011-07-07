@@ -40,7 +40,7 @@ namespace GnomePie {
         
         private void reload_icon() {
             int size = (int)(2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom);
-		    active_icon =   IconLoader.load_themed(this.icon_name, size, true,  Settings.global.theme);
+		    this.active_icon =   IconLoader.load_themed(this.icon_name, size, true,  Settings.global.theme);
 		    this.inactive_icon = IconLoader.load_themed(this.icon_name, size, false, Settings.global.theme);
 		    this.color = new Color.from_icon(this.active_icon);
         }

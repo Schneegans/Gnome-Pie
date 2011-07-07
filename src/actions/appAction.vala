@@ -19,18 +19,16 @@ namespace GnomePie {
 
     public class AppAction : Action {
 	    	
-	    private string _command;
+	    private string command {private get; private set;}
 
 	    public AppAction(string name, string icon_name, string command) {
 	        base(name, icon_name);
-	        
-	        _command   = command;
+	        this.command = command;
 	    }
 
 	    public override void execute() {
-	    
             try{
-                var item = GLib.AppInfo.create_from_commandline(_command, null, GLib.AppInfoCreateFlags.NONE);
+                var item = GLib.AppInfo.create_from_commandline(this.command, null, GLib.AppInfoCreateFlags.NONE);
                 item.launch(null, null);
         	} catch (Error e) {
 		        warning (e.message);

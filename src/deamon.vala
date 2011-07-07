@@ -19,14 +19,18 @@ namespace GnomePie {
 	
     public class Deamon : GLib.Object {
     
-        private Indicator indicator    {private get; private set;}
-        private Preferences prefs      {private get; private set;}        
+        public static int main(string[] args) {
+            Gtk.init (ref args);
 
-        public Deamon() {
-            IconLoader.init();
+            var deamon = new GnomePie.Deamon();
+            deamon.run();
+        }
         
-            prefs =      new Preferences();
-            indicator =  new Indicator(prefs);
+        // TODO: may be not neccesary to be private member?
+        private Indicator indicator {private get; private set;}       
+
+        public Deamon() {        
+            indicator = new Indicator();
             
             Settings.global.notify["show-indicator"].connect((s, p) => {
                 indicator.active = Settings.global.show_indicator;
@@ -38,6 +42,8 @@ namespace GnomePie {
 
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);
+			
+			stdout.printf("\nStarted happily...\n");
         }
         
         public void run() {

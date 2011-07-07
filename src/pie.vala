@@ -33,12 +33,13 @@ namespace GnomePie {
 	    private int        quick_action {private get; private set;}
 	    private Slice      active_slice {private get; private set;}
 	    private Center     center       {private get; private set;}
+	    private PieWindow  window       {private get; private set;}
 	    
-	    public Pie(int quick_action) {
-            base();
+	    public Pie(string hotkey, int quick_action = -1) {
             this.center = new Center(this); 
 		    this.slices = new Slice[0];
 		    this.quick_action = quick_action;
+		    this.window = new PieWindow(this, hotkey);
         }
 	    
 	    public int slice_count() {
@@ -47,6 +48,7 @@ namespace GnomePie {
 	    
 	    public void activate() {
 	        if(fade_in && fading > 0.0) {
+	        
         	    if(active_slice != null)
         	        active_slice.activate();
         	    else if (this.has_quick_action())
@@ -57,6 +59,10 @@ namespace GnomePie {
         
         public void hide() {
             if (fading > 0) fade_in = false;
+        }
+        
+        public void show() {
+            window.show();
         }
         
         public bool draw(Cairo.Context ctx, double mouse_x, double mouse_y) {

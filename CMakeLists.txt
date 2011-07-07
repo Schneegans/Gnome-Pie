@@ -29,16 +29,17 @@ pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(X11 REQUIRED x11)
 pkg_check_modules(INDICATOR REQUIRED appindicator-0.1)
-pkg_check_modules(RSVG REQUIRED librsvg-2.0)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
+pkg_check_modules(GMENU REQUIRED libgnome-menu)
 
 set(CFLAGS
 	${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
 	${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
 	${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
-	-O3 -s
-	#-g
+	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
+	#-O3 -s
+	-g
 )
 add_definitions(${CFLAGS})
 
@@ -49,9 +50,9 @@ set(LIBS
 	${CAIRO_LIBRARIES}
 	${GEE_LIBRARIES}
 	${INDICATOR_LIBRARIES}
-	${RSVG_LIBRARIES}
 	${XML_LIBRARIES}
 	${XTST_LIBRARIES}
+	${GMENU_LIBRARIES}
 )
 link_libraries(${LIBS})
 
@@ -60,9 +61,9 @@ set(LIB_PATHS
 	${CAIRO_LIBRARY_DIRS}
 	${GEE_LIBRARY_DIRS}
 	${INDICATOR_LIBRARY_DIRS}
-	${RSVG_LIBRARY_DIRS}
 	${XML_LIBRARY_DIRS}
 	${XTST_LIBRARY_DIRS}
+	${GMENU_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -71,9 +72,9 @@ set(INCLUDE_PATHS
 	${CAIRO_INCLUDE_DIRS}
 	${GEE_INCLUDE_DIRS}
 	${INDICATOR_INCLUDE_DIRS}
-	${RSVG_INCLUDE_DIRS}
 	${XML_INCLUDE_DIRS}
 	${XTST_INCLUDE_DIRS}
+	${GMENU_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -98,7 +99,7 @@ message( "  GTK_LIBRARIES = ${GTK_LIBRARIES}" )
 message( "  CAIRO_LIBRARIES = ${CAIRO_LIBRARIES}" )
 message( "  GEE_LIBRARIES = ${GEE_LIBRARIES}" )
 message( "  INDICATOR_LIBRARIES = ${INDICATOR_LIBRARIES}" )
-message( "  RSVG_LIBRARIES = ${RSVG_LIBRARIES}" )
 message( "  XML_LIBRARIES = ${XML_LIBRARIES}" )
 message( "  XTST_LIBRARIES = ${XTST_LIBRARIES}" )
+message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )
 message( "" )

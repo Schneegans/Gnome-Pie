@@ -23,8 +23,6 @@ namespace GnomePie {
         private Preferences prefs      {private get; private set;}        
 
         public Deamon() {
-            Rsvg.init();
-            
             IconLoader.init();
         
             prefs =      new Preferences();
@@ -36,7 +34,7 @@ namespace GnomePie {
             
             indicator.active = Settings.global.show_indicator;
             
-            PieWindow.create_all();
+            PieParser.parse();
 
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);

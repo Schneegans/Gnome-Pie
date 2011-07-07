@@ -30,19 +30,7 @@ namespace GnomePie {
             Cairo.ImageSurface icon = _icon_cache.get(filename);
             
             if(icon == null || icon.get_width() < size) {
-                var parts = filename.split(".");
-                
-                switch (parts[parts.length-1].up()) {
-                    case ("SVG"):
-                        icon = load_svg(filename, size);
-                        break;
-                    case ("PNG"):
-                        icon = load_png(filename, size);
-                        break;
-                    default:
-                        warning("Unrecognized image type: \"" + filename + "\"!");
-                        return null;
-                }
+                icon = load_file(filename, size);
                 _icon_cache.set(filename, icon);
                 
             } else if (icon.get_width() > size){
@@ -68,19 +56,28 @@ namespace GnomePie {
                 if (layer.is_icon) icon_size = layer.image.get_width();
             }
         
-            var icon_theme = Gtk.IconTheme.get_default();
-            var icon_file = icon_theme.lookup_icon(icon_name, icon_size, 0);
-            var result = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-            
-            if (icon_file == null) {
-                warning("Icon \"" + icon_name + "\" not found! Using default icon...");
-                icon_name = "application-default-icon";
-                icon_file = icon_theme.lookup_icon(icon_name, size, 0);
+            string icon_file = "";
+        
+            if (icon_name.contains("/")) {
+                icon_file = icon_name;
+            } else {
+                var icon_theme = Gtk.IconTheme.get_default();
+                var file = icon_theme.lookup_icon(icon_name, icon_size, 0);
+                if (file != null) icon_file = file.get_filename();
             }
             
-            if (icon_file != null) {
-                var filename = icon_file.get_filename();
-                var icon =   IconLoader.load(filename, icon_size);
+            var result = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
+            
+            if (icon_file == "") {
+                warning("Icon \"" + icon_name + "\" not found! Using default icon...");
+                icon_name = "application-default-icon";
+                var icon_theme = Gtk.IconTheme.get_default();
+                var file = icon_theme.lookup_icon(icon_name, size, 0);
+                if (file != null) icon_file = file.get_filename();
+            }
+            
+            if (icon_file != "") {
+                var icon =   IconLoader.load(icon_file, icon_size);
                 var color =  new Color.from_icon(icon);
                 
                 var ctx  =   new Cairo.Context(result);
@@ -103,9 +100,9 @@ namespace GnomePie {
 		                }
 		                
 		                if (layer.image.get_width() != icon_size) {
-		                    debug("%i : %i", layer.image.get_width(), icon_size);
-		                    filename =   icon_theme.lookup_icon(icon_name, layer.image.get_width(), 0).get_filename();
-		                    icon = IconLoader.load(filename, layer.image.get_width());
+		                    var icon_theme = Gtk.IconTheme.get_default();
+		                    icon_file = icon_theme.lookup_icon(icon_name, layer.image.get_width(), 0).get_filename();
+		                    icon = IconLoader.load(icon_file, layer.image.get_width());
 		                }
 		                
 		                ctx.set_source_surface(icon, -0.5*icon.get_width()-1, -0.5*icon.get_height()-1);
@@ -138,11 +135,11 @@ namespace GnomePie {
             return result;
         }
         
-        private static Cairo.ImageSurface? load_svg(string filename, int size) {
+        private static Cairo.ImageSurface? load_file(string filename, int size) {
         
             try {
             
-                var pixbuf = Rsvg.pixbuf_from_file_at_size(filename, size, size);
+                var pixbuf = new Gdk.Pixbuf.from_file_at_size(filename, size, size);
                 
                 if (pixbuf == null) {
                     warning("Failed to load " + filename + "!");
@@ -156,30 +153,10 @@ namespace GnomePie {
                 return surface;
                 
             } catch (GLib.Error e) {
-                message("Error loading SVG: %s", e.message);
+                message("Error loading image: %s", e.message);
             }
 
             return null;
-        }
-        
-        private static Cairo.ImageSurface? load_png(string filename, int size) {
-        
-            var surface = new Cairo.ImageSurface.from_png(filename);
-            
-            if (surface == null) {
-                warning("Failed to load " + filename + "!");
-                return null;
-            }
-            
-            if (surface.get_width() != size) {
-                 var scaled = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-                 var ctx = new Cairo.Context(scaled);
-                 ctx.scale((float)size/(float)surface.get_width(), (float)size/(float)surface.get_height());
-                 ctx.set_source_surface(surface, 1.0, 1.0);
-                 ctx.paint();
-                 return scaled;
-                 
-            } else return surface;
         }
     }
 

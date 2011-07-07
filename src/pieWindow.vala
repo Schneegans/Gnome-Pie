@@ -26,21 +26,27 @@ namespace GnomePie {
     
         public PieWindow(Pie pie, string stroke) {
             init();
-            _pie = pie;
+            this.pie = pie;
             
-            bindings.bind_global_press(stroke, () => {
-                this.show();
+            this.pie.on_hide.connect((t) => {
+                this.hide();
             });
-		    
-		    bindings.bind_local_release(stroke, () => {
-		        if (!Settings.global.click_to_activate)
-		            activate_pie();
-		    });
-		    
-		    bindings.bind_local_press(stroke, () => {
-		        if (Settings.global.click_to_activate) 
-		            this.pie.hide();
-		    });
+            
+            if (stroke != "") {
+                bindings.bind_global_press(stroke, () => {
+                    this.show();
+                });
+		        
+		        bindings.bind_local_release(stroke, () => {
+		            if (!Settings.global.click_to_activate)
+		                activate_pie();
+		        });
+		        
+		        bindings.bind_local_press(stroke, () => {
+		            if (Settings.global.click_to_activate) 
+		                this.pie.hide();
+		        });
+		    }
 		    
 		    bindings.bind_local_press("Escape", () => { 
 		        this.pie.hide();
@@ -88,26 +94,33 @@ namespace GnomePie {
             
             
             int frame_count = 0;
+            double time_count = 0.0;
             uint wait = (uint)(1000.0/Settings.global.refresh_rate);
             var timer = new GLib.Timer();
             timer.start();
 
             Timeout.add (wait, () => {
-                if(++frame_count % (int)Settings.global.refresh_rate == 0) {
-                    debug("FPS: %f", 1.0/Settings.global.frame_time);
+            
+                this.queue_draw();
+            
+                Settings.global.frame_time = timer.elapsed();
+                timer.reset();
+                
+                time_count += Settings.global.frame_time;
+                frame_count++;
+                
+                if(frame_count == (int)Settings.global.refresh_rate) {
+                    //debug("FPS: %f", (double)frame_count/time_count);
                     frame_count = 0;
+                    time_count = 0.0;
                 }
             
-	            this.queue_draw();
-	            
-	            Settings.global.frame_time = timer.elapsed();
-	            timer.reset();
-	            
-	            int time_diff = (int)(1000.0/Settings.global.refresh_rate) - (int)(1000.0*Settings.global.frame_time);
-	            wait =  (time_diff < 1) ? 1 : (uint) time_diff;
+               // TODO: reduce wait time if drawing takes to much time
+	           // int time_diff = (int)(1000.0/Settings.global.refresh_rate) - (int)(1000.0*Settings.global.frame_time);
+	           // wait =  (time_diff < 1) ? 1 : (uint) time_diff;
 
 	            return visible;
-	        });
+	        }); 
         }
         
         private void init() {
@@ -161,110 +174,6 @@ namespace GnomePie {
 
             this.expose_event.connect(draw);
             this.destroy.connect(Gtk.main_quit);
-        }
-        
-        public static void create_all() {
-            
-            Xml.Parser.init();
-            Xml.Doc* piesXML = Xml.Parser.parse_file("pies.conf");
-            bool   error_occrured = false;
-            
-            if (piesXML != null) {
-
-                Xml.Node* root = piesXML->get_root_element();
-                if (root != null) {
-                    for (Xml.Node* node = root->children; node != null; node = node->next) {
-                        if (node->type == Xml.ElementType.ELEMENT_NODE) {
-                            
-                            string hotkey = "";
-                            int    quick_action = -1;
-                        
-                            for (Xml.Attr* attribute = node->properties; attribute != null; attribute = attribute->next) {
-                                string attr_name = attribute->name.down();
-                                string attr_content = attribute->children->content;
-                                
-                                switch (attr_name) {
-                                    case "hotkey":
-                                        hotkey = attr_content;
-                                        break;
-                                    case "quickaction":
-                                        quick_action = int.parse(attr_content);
-                                        break;
-                                    default:
-                                        warning("Invalid setting \"" + attr_name + "\" in pies.conf!");
-                                        break;
-                                }
-                            }
-                            
-                            var pie = new Pie(quick_action);
-                            
-                            for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {
-                                if (slice->type == Xml.ElementType.ELEMENT_NODE) {
-                                    string name="";
-                                    string icon="";
-                                    string command="";
-                                    string type="";
-                                    
-                                    for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
-                                        string attr_name = attribute->name.down();
-                                        string attr_content = attribute->children->content;
-
-                                        switch (attr_name) {
-                                            case "name":
-                                                name = attr_content;
-                                                break;
-                                            case "icon":
-                                                icon = attr_content;
-                                                break;
-                                            case "command":
-                                                command = attr_content;
-                                                break;
-                                            case "type":
-                                                type = attr_content;
-                                                break;
-                                            default:
-                                                warning("Invalid setting \"" + attr_name + "\" in pies.conf!");
-                                                break;
-                                        }
-                                    }
-                                    
-                                    Action action=null;
-                                    
-                                    switch (type) {
-                                        case "app":
-                                            action = new AppAction(name, icon, command);
-                                            break;
-                                        case "key":
-                                            action = new KeyAction(name, icon, command);
-                                            break;
-                                        default:
-                                            warning("Invalid type \"" + type + "\" in pies.conf!");
-                                            break;
-                                    }
-                                    
-                                    if (action != null) pie.add_slice(action);
-                                }
-                            }
-        
-                            var window = new PieWindow(pie, hotkey);
-                            pie.on_hide.connect((t) => {window.hide();});
-                            
-                        }
-                    }
-                   
-                    Xml.Parser.cleanup();
-                    
-                } else {
-                    warning("Error loading pies: pies.conf is empty! The cake is a lie...");
-                    error_occrured = true;
-                }
-                
-                delete piesXML;
-                
-            } else {
-                warning("Error loading pies: pies.conf not found! The cake is a lie...");
-                error_occrured = true;
-            }
         }
     }
 }

@@ -19,9 +19,9 @@ vala_precompile(
         x11
         gio-unix-2.0
         posix
-        librsvg-2.0
         libxml-2.0
         xtst
+        libgnome-menu
     OPTIONS
         --vapidir=${CMAKE_SOURCE_DIR}/vapi/
 )

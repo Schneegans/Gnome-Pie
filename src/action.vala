@@ -21,28 +21,28 @@ namespace GnomePie {
 
 	    public Cairo.ImageSurface active_icon   {get; private set;}
 	    public Cairo.ImageSurface inactive_icon {get; private set;}
-	    public Color              color {get; private set;}
-	    public string             name  {get; private set;}
+	    public Color              color         {get; private set;}
+	    public string             name          {get; private set;}
 	    	
-	    private string _icon_name;
+	    private string icon_name                {private get; private set;}
 
 	    public Action(string name, string icon_name) {
-	        _name      = name;
-	        _icon_name = icon_name;
+	        this.name      = name;
+	        this.icon_name = icon_name;
 
-	        reload_icon();
+	        this.reload_icon();
 		    
-		    Settings.global.notify["theme"].connect(reload_icon);
-		    Gtk.IconTheme.get_default().changed.connect(reload_icon);
+		    Settings.global.notify["theme"].connect(this.reload_icon);
+		    Gtk.IconTheme.get_default().changed.connect(this.reload_icon);
 	    }
 
 	    public abstract void execute();
         
         private void reload_icon() {
             int size = (int)(2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom);
-		    active_icon =   IconLoader.load_themed(_icon_name, size, true,  Settings.global.theme);
-		    inactive_icon = IconLoader.load_themed(_icon_name, size, false, Settings.global.theme);
-		    color = new Color.from_icon(active_icon);
+		    active_icon =   IconLoader.load_themed(this.icon_name, size, true,  Settings.global.theme);
+		    this.inactive_icon = IconLoader.load_themed(this.icon_name, size, false, Settings.global.theme);
+		    this.color = new Color.from_icon(this.active_icon);
         }
         
     }

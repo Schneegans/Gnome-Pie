@@ -21,7 +21,7 @@ namespace GnomePie {
 
     public class Window : Gtk.Window {
     
-        private KeybindingManager keys {private get; private set;}
+        private Key.BindingManager keys {private get; private set;}
     
         public Window(string stroke) {
             base.set_title("Gnome-Pie");

@@ -22,7 +22,7 @@ namespace GnomePie {
         public class BindingManager : GLib.Object {
         
             // Keybinding func needed to bind key to handler
-            public delegate void KeybindingHandlerFunc();
+            public delegate void HandlerFunc();
             
             // stores bindings, which are invoked even if Gnome-Pie doesn't have the current focus
             private Gee.List<Keybinding> _global_bindings = new Gee.ArrayList<Keybinding>();
@@ -45,7 +45,7 @@ namespace GnomePie {
             // Helper class to store keybinding
             private class Keybinding {
             
-                public Keybinding(string accelerator, int keycode, Gdk.ModifierType modifiers, bool down, KeybindingHandlerFunc handler) {
+                public Keybinding(string accelerator, int keycode, Gdk.ModifierType modifiers, bool down, HandlerFunc handler) {
                     this.accelerator = accelerator;
                     this.keycode = keycode;
                     this.modifiers = modifiers;
@@ -57,7 +57,7 @@ namespace GnomePie {
                 public int keycode { get; set; }
                 public Gdk.ModifierType modifiers { get; set; }
                 public bool down { get; set; }
-                public KeybindingHandlerFunc handler { get; set; }
+                public HandlerFunc handler { get; set; }
             }
          
             // c'tor
@@ -70,19 +70,19 @@ namespace GnomePie {
             }
             
             // public interface
-            public void bind_global_press(string stroke, KeybindingManager.KeybindingHandlerFunc handler) {
+            public void bind_global_press(string stroke, HandlerFunc handler) {
                 bind_global(stroke, true, handler);
             }
             
-            public void bind_local_press(string stroke, KeybindingManager.KeybindingHandlerFunc handler) {
+            public void bind_local_press(string stroke, HandlerFunc handler) {
                 bind_local(stroke, true, handler);
             }
             
-            public void bind_global_release(string stroke, KeybindingManager.KeybindingHandlerFunc handler) {
+            public void bind_global_release(string stroke, HandlerFunc handler) {
                 bind_global(stroke, false, handler);
             }
             
-            public void bind_local_release(string stroke, KeybindingManager.KeybindingHandlerFunc handler) {
+            public void bind_local_release(string stroke, HandlerFunc handler) {
                 bind_local(stroke, false, handler);
             }
             
@@ -95,7 +95,7 @@ namespace GnomePie {
             }
          
             // private stuff
-            private void bind_global(string accelerator, bool down, KeybindingHandlerFunc handler) {
+            private void bind_global(string accelerator, bool down, HandlerFunc handler) {
          
                 uint keysym;
                 Gdk.ModifierType modifiers;
@@ -127,7 +127,7 @@ namespace GnomePie {
                 }
             }
             
-            private void bind_local(string accelerator, bool down, KeybindingHandlerFunc handler) {
+            private void bind_local(string accelerator, bool down, HandlerFunc handler) {
          
                 uint keysym;
                 Gdk.ModifierType modifiers;

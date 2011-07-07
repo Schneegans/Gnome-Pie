@@ -66,6 +66,19 @@ namespace GnomePie {
         }
         
         public bool draw(Cairo.Context ctx, double mouse_x, double mouse_y) {
+            //##
+            double mouse_x = 0.0;
+	        double mouse_y = 0.0;
+	        get_pointer(out mouse_x, out mouse_y);
+	        mouse_x -= width_request*0.5;
+	        mouse_y -= height_request*0.5;
+	        
+	        var ctx = Gdk.cairo_create(window);
+            ctx.set_operator(Cairo.Operator.OVER);
+            ctx.translate(width_request*0.5, height_request*0.5);
+        
+            //##
+        
             if (fade_in) {
                 fading += Settings.global.frame_time/Settings.global.theme.fade_in_time;
                 if (fading > 1.0) 

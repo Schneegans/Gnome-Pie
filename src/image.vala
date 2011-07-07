@@ -19,11 +19,12 @@ namespace GnomePie {
 
     public class Image : GLib.Object {
     
-        // static stuff
+        // icon cache which stores loaded images
         private static Gee.HashMap<string, Cairo.ImageSurface?> cache {private get; private set;}
         
-        public static void init() {
-            this.cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
+        private static void init() {
+            if (cache == null)
+                this.cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
         }
         
         //public mambers
@@ -31,10 +32,12 @@ namespace GnomePie {
         
         //c'tors
         public Image() {
+            this.init();
             this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 0, 0);
         }
         
         public Image.from_file(string filename, int size) {
+            this.init();
             Cairo.ImageSurface icon = this.cache.get(filename);
             
             if(icon == null || icon.get_width() < size) {
@@ -54,7 +57,7 @@ namespace GnomePie {
         }
         
         public Image.themed_icon(string icon_name, int size, bool active, Theme theme) {
-        
+            this.init();
             // initialize the surface
             this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
             

@@ -56,12 +56,12 @@ namespace GnomePie {
         }
         
         // Code from Unity
-        public Color.from_icon(Cairo.ImageSurface icon) {
-            unowned uchar[] data = icon.get_data();
+        public Color.from_icon(Image icon) {
+            unowned uchar[] data = icon.surface.get_data();
         
-            uint width = icon.get_width();
-            uint height = icon.get_height();
-            uint row_bytes = icon.get_stride();
+            uint width = icon.surface.get_width();
+            uint height = icon.surface.get_height();
+            uint row_bytes = icon.surface.get_stride();
 
             double total = 0.0;
             double rtotal = 0.0;
@@ -231,7 +231,6 @@ namespace GnomePie {
 			        break;
 	        }
         }
-
     }
 
 }

@@ -26,16 +26,17 @@ namespace GnomePie {
             this.cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
         }
         
-        //private mambers
-        private Cairo.ImageSurface image {private get; private set;}
-    
-        public static Cairo.ImageSurface? load(string filename, int size) {
+        //public mambers
+        public Cairo.ImageSurface surface {get; private set;}
         
-            Cairo.ImageSurface icon = _icon_cache.get(filename);
+        //c'tors
+        public Image.from_file(string filename, int size) {
+            Cairo.ImageSurface icon = this.cache.get(filename);
             
             if(icon == null || icon.get_width() < size) {
-                icon = load_file(filename, size);
-                _icon_cache.set(filename, icon);
+                load_file(filename, size);
+                this.cache.set(filename, icon);
+                return;
                 
             } else if (icon.get_width() > size){
                  var scaled = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
@@ -43,12 +44,12 @@ namespace GnomePie {
                  ctx.scale((float)size/(float)icon.get_width(), (float)size/(float)icon.get_height());
                  ctx.set_source_surface(icon, 1.0, 1.0);
                  ctx.paint();
-                 return scaled;
+                 icon = scaled;
             }
-            return icon;
+            surface = icon;
         }
         
-        public static Cairo.ImageSurface load_themed(string icon_name, int size, bool active, Theme theme) {
+        public Image.themed(string icon_name, int size, bool active, Theme theme) {
             
             Gee.ArrayList<SliceLayer?> layers;
 	        if (active) layers = theme.active_slice_layers;
@@ -139,7 +140,7 @@ namespace GnomePie {
             return result;
         }
         
-        private static Cairo.ImageSurface? load_file(string filename, int size) {
+        public void load_file(string filename, int size) {
         
             try {
             
@@ -147,20 +148,17 @@ namespace GnomePie {
                 
                 if (pixbuf == null) {
                     warning("Failed to load " + filename + "!");
-                    return null;
+                    return;
                 }
                     
-                var surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, pixbuf.get_width(), pixbuf.get_height());
-                var ctx =     new Cairo.Context(surface);
+                surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, pixbuf.get_width(), pixbuf.get_height());
+                var ctx = new Cairo.Context(surface);
                 Gdk.cairo_set_source_pixbuf(ctx, pixbuf, 1.0, 1.0);
                 ctx.paint();
-                return surface;
                 
             } catch (GLib.Error e) {
-                message("Error loading image: %s", e.message);
+                message("Error loading image file: %s", e.message);
             }
-
-            return null;
         }
     }
 

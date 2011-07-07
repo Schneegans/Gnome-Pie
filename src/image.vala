@@ -17,13 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    public class IconLoader : GLib.Object {
+    public class Image : GLib.Object {
     
-        private static Gee.HashMap<string, Cairo.ImageSurface?> _icon_cache;
+        // static stuff
+        private static Gee.HashMap<string, Cairo.ImageSurface?> cache {private get; private set;}
         
         public static void init() {
-            _icon_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
+            this.cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
         }
+        
+        //private mambers
+        private Cairo.ImageSurface image {private get; private set;}
     
         public static Cairo.ImageSurface? load(string filename, int size) {
         

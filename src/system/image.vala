@@ -24,7 +24,7 @@ namespace GnomePie {
         
         private static void init() {
             if (cache == null)
-                this.cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
+                cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
         }
         
         //public mambers
@@ -34,6 +34,14 @@ namespace GnomePie {
         public Image() {
             this.init();
             this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 0, 0);
+        }
+        
+        public Image.empty(int size, Color color = new Color()) {
+            this.init();
+            surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
+            var ctx  = new Cairo.Context(surface);
+            ctx.set_source_rgb(color.r, color.g, color.b);
+            ctx.paint();
         }
         
         public Image.from_file(string filename, int size) {
@@ -71,7 +79,7 @@ namespace GnomePie {
             foreach (var layer in layers) {
                 if (layer.is_icon) icon_size = layer.image.width();
             }
-        
+
             string icon_file = this.get_icon_file(icon_name, size);
         
             var icon =  new Image.from_file(icon_file, icon_size);
@@ -87,6 +95,7 @@ namespace GnomePie {
 	            if (layer.colorize) ctx.push_group();
 	                    
 	            if (layer.is_icon) {
+	            
                     ctx.push_group();
                     
                     layer.image.paint(ctx);
@@ -101,11 +110,9 @@ namespace GnomePie {
 	                
 	                icon.paint(ctx);
 
-	                if (layer.image != null) {
-	                    ctx.pop_group_to_source();
-	                    ctx.paint();
-	                    ctx.set_operator(Cairo.Operator.OVER);
-	                }
+                    ctx.pop_group_to_source();
+                    ctx.paint();
+                    ctx.set_operator(Cairo.Operator.OVER);
 	                
 	            } else layer.image.paint(ctx);
 	
@@ -130,9 +137,10 @@ namespace GnomePie {
             return surface.get_height();
         }
         
-        public void paint(Cairo.Context ctx) {
+        public void paint(Cairo.Context ctx, double alpha = 1.0) {
             ctx.set_source_surface(surface, -0.5*width()-1, -0.5*height()-1);
-	        ctx.paint();
+	        if (alpha >= 1.0) ctx.paint();
+	        else              ctx.paint_with_alpha(alpha);
         }
         
         public void load_file(string filename, int size) {
@@ -160,7 +168,7 @@ namespace GnomePie {
         
             if (!icon_name.contains("/")) {
                 var icon_theme = Gtk.IconTheme.get_default();
-                var file = icon_theme.lookup_icon(icon_name, icon_size, 0);
+                var file = icon_theme.lookup_icon(icon_name, size, 0);
                 if (file != null) icon_file = file.get_filename();
             }
             

@@ -19,79 +19,93 @@ using GLib.Math;
 
 namespace GnomePie {
 
-    public class Pie : GLib.Object {
-
-	    public bool               fade_in          {get; private set; default = true;}
-	    public double             fading           {get; private set; default = 0.0;}
-	    public Color              active_color     {get; private set; default = new Color();}
-	    public Cairo.ImageSurface active_caption   {get; private set;}
-	    public bool               has_active_slice {get; private set; default = false;}
-	    
-	    public signal void on_hide();
-	    
-	    private Slice[]    slices       {private get; private set;}
-	    private int        quick_action {private get; private set;}
-	    private Slice      active_slice {private get; private set;}
-	    private Center     center       {private get; private set;}
-	    private PieWindow  window       {private get; private set;}
-	    
-	    public Pie(string hotkey, int quick_action = -1) {
-            this.center = new Center(this); 
-		    this.slices = new Slice[0];
-		    this.quick_action = quick_action;
-		    this.window = new PieWindow(this, hotkey);
+    public class Pie : Window {
+    
+        public static Gee.HashMap<string, Pie?> get_all;
+        
+        public static void load_all() {
+            get_all = new Gee.HashMap<string, Pie?>();
+            var loader = new PieLoader();
+            loader.load_pies();
         }
+        
+        public signal void on_fade_in();
+        public signal void on_fade_out();
+        public signal void on_active_change();
+
+        public Slice    active_slice {get; private set;}
+        public double   fading       {get; private set; default = 0.0;}
 	    
-	    public int slice_count() {
-	        return _slices.length;
-	    }
+	    private Gee.ArrayList<Slice?> slices {private get; private set;}
+	    private Center  center       {private get; private set;}
+	    private int     quick_action {private get; private set;}
+	    private bool    fading_in    {private get; private set;}
+	    private bool    fading_out   {private get; private set;}
 	    
-	    public void activate() {
-	        if(fade_in && fading > 0.0) {
-	        
+	    public Pie(string stroke, int quick_action = -1) {
+	        base(stroke);
+            this.center = new Center(this); 
+		    this.slices = new Gee.ArrayList<Slice?>();
+		    this.quick_action = quick_action;
+        }
+        
+        public override void activate_pie() {
+            base.activate_pie();
+            
+            if(fading == 1.0) {
         	    if(active_slice != null)
-        	        active_slice.activate();
+        	        this.active_slice.activate();
         	    else if (this.has_quick_action())
-        	        _slices[quick_action].activate();
-            	hide();
+        	        this.slices[this.quick_action].activate();
+        	        
+            	this.fade_out();
         	}
         }
         
-        public void hide() {
-            if (fading > 0) fade_in = false;
+        protected override void fade_in() {
+            if (!this.fading_out) {
+	            base.fade_in();
+	            this.on_fade_in();
+	            this.fading_out = false;
+	            this.fading_in  = true;
+	            
+	            Timeout.add ((uint)(Settings.global.theme.fade_in_time * 1000), () => {
+        	        return fading_in = false;
+        	    });
+        	 }
+        }
+	    
+	    protected override void fade_out() {
+	        if (!this.fading_out) {
+	            base.fade_out();
+	            this.on_fade_out();
+	            this.fading_out = true;
+	            this.fading_in  = false;
+	        
+                Timeout.add ((uint)(Settings.global.theme.fade_out_time * 1000), () => {
+                    base.hide();
+                    return fading_out = false;
+                });
+            }
         }
         
-        public void show() {
-            window.show();
-        }
-        
-        public bool draw(Cairo.Context ctx, double mouse_x, double mouse_y) {
-            //##
+        protected override bool draw(Gtk.Widget da, Gdk.EventExpose event) {
+            if (fading_in || fading_out) {
+        	    if (fading_in)       this.fading += Settings.global.frame_time/Settings.global.theme.fade_in_time;
+                else if (fading_out) this.fading -= Settings.global.frame_time/Settings.global.theme.fade_out_time;
+                this.fading = this.fading.clamp(0.0, 1.0);
+            }
+            else this.fading = 1.0;
+            
             double mouse_x = 0.0;
 	        double mouse_y = 0.0;
-	        get_pointer(out mouse_x, out mouse_y);
-	        mouse_x -= width_request*0.5;
-	        mouse_y -= height_request*0.5;
+	        base.get_pointer(out mouse_x, out mouse_y);
+	        mouse_x -= base.width_request*0.5;
+	        mouse_y -= base.height_request*0.5;
 	        
-	        var ctx = Gdk.cairo_create(window);
+	        var ctx = Gdk.cairo_create(base.window);
             ctx.set_operator(Cairo.Operator.OVER);
-            ctx.translate(width_request*0.5, height_request*0.5);
-        
-            //##
-        
-            if (fade_in) {
-                fading += Settings.global.frame_time/Settings.global.theme.fade_in_time;
-                if (fading > 1.0) 
-                    fading = 1.0;
-                
-            } else {
-                fading -= Settings.global.frame_time/Settings.global.theme.fade_out_time;
-                if (fading < 0.0) {
-                    fading = 0.0;
-                    fade_in = true;
-                    on_hide();
-                }     
-            }
+            ctx.translate(base.width_request*0.5, base.height_request*0.5);
         
 		    double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
 		    double angle = 0.0;
@@ -103,8 +117,6 @@ namespace GnomePie {
 		    }
 		    if (distance < Settings.global.theme.active_radius && this.has_quick_action())
 		        angle = 2.0*PI*quick_action/(double)slice_count();
-		    
-		    has_active_slice = distance > Settings.global.theme.active_radius || this.has_quick_action(); 
 
             // clear the window
             ctx.save();
@@ -113,38 +125,35 @@ namespace GnomePie {
             ctx.restore();
 
             center.draw(ctx, angle, distance);
-            
-            active_slice = null;
 		    
-		    for (int s=0; s<_slices.length; ++s) {
-			    _slices[s].draw(ctx, angle, distance);
+		    foreach (var slice in this.slices)
+			    slice.draw(ctx, angle, distance);
 			    
-			    if(_slices[s].active) {
-			        active_slice = _slices[s];
-			        active_color = active_slice.color();
-			        active_caption = active_slice.caption;
-			    }
-		    }
+			Slice new_active_slice = null;
+		    foreach (var slice in this.slices)
+			    if(slice.active) new_active_slice = slice;
 		    
-		    if (active_slice == null && this.has_quick_action()) {
-			    active_slice = _slices[quick_action];
-			    active_color = active_slice.color();
-			    active_caption = active_slice.caption;
-			}
+		    if (new_active_slice == null && this.has_quick_action())
+			    new_active_slice = this.slices[quick_action];
+		    
+		    if (new_active_slice != active_slice) {
+		        active_slice = new_active_slice;
+		        on_active_change();
+		    }
  
             return true;
         }
         
-        public double activity() {
-            return center.activity;
-        }
+        public int slice_count() {
+	        return this.slices.size;
+	    }
         
         public void add_slice(Action action) {
-            _slices += new Slice(action, this);
+            this.slices.add(new Slice(action, this));
         } 
         
         public bool has_quick_action() {
-            return 0 <= quick_action < _slices.length;
+            return (0 <= this.quick_action) && (this.quick_action < this.slice_count());
         }
     }
 }

@@ -83,7 +83,8 @@ namespace GnomePie {
                             var scale_slider = new Gtk.HScale.with_range(0.5, 2.0, 0.05);
                                 scale_slider.set_value(Settings.global.global_scale);
                                 scale_slider.value_pos = Gtk.PositionType.RIGHT;
-                               // click_to_activate.active = Settings.global.click_to_activate;
+
+                                // TODO: add timeout preventing frequent updates
                                 scale_slider.value_changed.connect(() => {
                                     Settings.global.global_scale = scale_slider.get_value();
                                     Settings.global.load_themes(Settings.global.theme.name);

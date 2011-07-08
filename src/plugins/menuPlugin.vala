@@ -21,21 +21,22 @@ namespace GnomePie {
         
         namespace Menu {
             
-            public void create(string hotkey) {
+            public void create(string name, string hotkey) {
                 var main = new Pie(hotkey);
 
                 var tree = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
                 var root = tree.get_root_directory();
 
-                parse_directory(root, main);
+                parse_directory(root, main, name);
 
+                Pie.get_all.set(name, main);
             }
             
-            private void parse_directory(GMenu.TreeDirectory dir, Pie pie) {
+            private void parse_directory(GMenu.TreeDirectory dir, Pie pie, string parent_name) {
                 foreach (var item in dir.get_contents()) {
                     switch(item.get_type()) {
                         case GMenu.TreeItemType.DIRECTORY:
-                            pie.add_slice(get_submenu((GMenu.TreeDirectory)item, pie));
+                            pie.add_slice(get_submenu((GMenu.TreeDirectory)item, pie, parent_name));
                             break;
                         case GMenu.TreeItemType.ENTRY:
                             pie.add_slice(get_action((GMenu.TreeEntry)item));
@@ -44,11 +45,12 @@ namespace GnomePie {
                 }
             }
             
-            public PieAction get_submenu(GMenu.TreeDirectory dir, Pie parent) {
+            public PieAction get_submenu(GMenu.TreeDirectory dir, Pie parent, string parent_name) {
                 var sub_menu = new Pie("");
-                sub_menu.add_slice(new PieAction("BACK", "back", parent));
-                parse_directory(dir, sub_menu);
-                return new PieAction(dir.get_name().up(), dir.get_icon(), sub_menu); 
+                sub_menu.add_slice(new PieAction("BACK", "back", parent_name));
+                parse_directory(dir, sub_menu, dir.get_name().up());
+                Pie.get_all.set(dir.get_name().up(), sub_menu);
+                return new PieAction(dir.get_name().up(), dir.get_icon(), dir.get_name().up()); 
             }
 
             public AppAction get_action(GMenu.TreeEntry entry) {

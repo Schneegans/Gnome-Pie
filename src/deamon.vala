@@ -24,6 +24,8 @@ namespace GnomePie {
 
             var deamon = new GnomePie.Deamon();
             deamon.run();
+            
+            return 0;
         }
         
         // TODO: may be not neccesary to be private member?
@@ -38,7 +40,7 @@ namespace GnomePie {
             
             indicator.active = Settings.global.show_indicator;
             
-            PieParser.parse();
+            Pie.load_all();
 
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);

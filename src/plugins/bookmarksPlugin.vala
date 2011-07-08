@@ -21,7 +21,7 @@ namespace GnomePie {
         
         namespace Bookmarks {
             
-            public void create(string hotkey) {
+            public void create(string name, string hotkey) {
             
             }
         }

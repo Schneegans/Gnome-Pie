@@ -20,15 +20,21 @@ namespace GnomePie {
     // this Action opens another pie
     public class PieAction : Action {
 	    	
-	    private Pie pie {private get; private set;};
+	    private string pie_name {private get; private set;}
 
-	    public PieAction(string name, string icon_name, Pie pie) {
+	    public PieAction(string name, string icon_name, string pie_name) {
 	        base(name, icon_name);
-	        this.pie = pie;
+	        this.pie_name = pie_name;
 	    }
 
 	    public override void execute() {
-            this.pie.on_activate();
+	        var pie = Pie.get_all[pie_name];
+	        
+            if (pie == null) {
+                warning("Can't open Pie named \"" + pie_name + "\": No such Pie defined!");
+            } else {
+                pie.activate_pie();
+            }
         } 
     }
 

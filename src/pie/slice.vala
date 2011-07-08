@@ -21,8 +21,8 @@ namespace GnomePie {
 
     public class Slice : GLib.Object {
     
-        public bool active      {get; private set; default = false;}
-        public Cairo.ImageSurface caption  {get; private set;}
+        public bool    active   {get; private set; default = false;}
+        public Image   caption  {get; private set;}
         
 	    private Action action   {private get; private set;}
 	    private Pie    parent   {private get; private set;}
@@ -32,9 +32,9 @@ namespace GnomePie {
 	    
 
 	    public Slice(Action action, Pie parent) {
-	        _parent = parent;
-	        _position = parent.slice_count();
-	        _action = action;
+	        this.parent = parent;
+	        this.position = parent.slice_count();
+	        this.action = action;
 	        
 	        if (Settings.global.theme.caption)
                 this.load_caption();
@@ -49,12 +49,12 @@ namespace GnomePie {
 	    }
 	
 	    public void activate() {
-	        action.execute();
+	        this.action.execute();
         }
 
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
-		    double direction = 2.0 * PI * position/parent.slice_count() + 0.9 * (parent.fade_in ? -1.0 : 1.0) * pow(1.0 - parent.fading, 2);
+		    double direction = 2.0 * PI * position/parent.slice_count() + 0.9 * (parent.fading < 1.0 ? -1.0 : 1.0) * pow(1.0 - parent.fading, 2);
     	    double max_scale = 1.0/Settings.global.theme.max_zoom;
 	        double diff = fabs(angle-direction);
 	        
@@ -63,19 +63,14 @@ namespace GnomePie {
 	
 	        if (diff < 2 * PI * Settings.global.theme.zoom_range)
 	            max_scale = (Settings.global.theme.max_zoom/(diff * (Settings.global.theme.max_zoom - 1)/(2 * PI * Settings.global.theme.zoom_range) + 1))/Settings.global.theme.max_zoom;
-	        
 		    
 		    active = (distance >= Settings.global.theme.active_radius || parent.has_quick_action()) && (diff < PI/parent.slice_count());
 		    
-		    if (active) {
-		        if ((fade += Settings.global.frame_time/Settings.global.theme.transition_time) > 1.0)
-                    fade = 1.0;
-		    } else {
-    		    if ((fade -= Settings.global.frame_time/Settings.global.theme.transition_time) < 0.0)
-                    fade = 0.0;
-		    }
+		    if (active) this.fade += Settings.global.frame_time/Settings.global.theme.transition_time;
+            else        this.fade -= Settings.global.frame_time/Settings.global.theme.transition_time;
+            this.fade = this.fade.clamp(0.0, 1.0);
 		    
-		    max_scale = (parent.has_active_slice ? max_scale : 1.0/Settings.global.theme.max_zoom);
+		    max_scale = (parent.active_slice != null ? max_scale : 1.0/Settings.global.theme.max_zoom);
             double scale_step = max_scale/Settings.global.theme.transition_time*0.2*Settings.global.frame_time;
             if (fabs(scale - max_scale) > scale_step) {
                 if (scale < max_scale) {
@@ -104,15 +99,8 @@ namespace GnomePie {
 	        
             ctx.set_operator(Cairo.Operator.ADD);
         
-            if (fade > 0.0) {
-                ctx.set_source_surface(action.active_icon, -0.5 * action.active_icon.get_width() - 1, -0.5 * action.active_icon.get_height() - 1);
-                ctx.paint_with_alpha(parent.fading*parent.fading*fade);
-            }
-            
-            if (fade < 1.0) {
-                ctx.set_source_surface(action.inactive_icon, -0.5 * action.inactive_icon.get_width() - 1, -0.5 * action.inactive_icon.get_height() - 1);  
-                ctx.paint_with_alpha(parent.fading*parent.fading*(1.0 - fade));
-            }
+            if (fade > 0.0) action.active_icon.paint(ctx, parent.fading*parent.fading*fade);
+            if (fade < 1.0) action.inactive_icon.paint(ctx, parent.fading*parent.fading*(1.0 - fade));
             
             ctx.set_operator(Cairo.Operator.OVER);
             
@@ -132,8 +120,8 @@ namespace GnomePie {
 	    
 	    private void load_caption() {
 	        int size = (int)Settings.global.theme.caption_size;
-	        caption = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-            var ctx = new Cairo.Context(caption);
+	        caption = new Image.empty(size);
+            var ctx = new Cairo.Context(caption.surface);
             
             ctx.set_font_size((int)Settings.global.theme.font_size);
 	        Cairo.TextExtents extents;

@@ -19,10 +19,12 @@ using GLib.Math;
 
 namespace GnomePie {
 
-    public class Window : Gtk.Window {
+    public abstract class Window : Gtk.Window {
     
+        // stores all key bindings associated with this window
         private Key.BindingManager keys {private get; private set;}
     
+        // c'tor
         public Window(string stroke) {
             base.set_title("Gnome-Pie");
             base.set_skip_taskbar_hint(true);
@@ -39,12 +41,12 @@ namespace GnomePie {
                             Gdk.EventMask.KEY_PRESS_MASK);
             
             this.set_size();
-            this.set_position();
+            this.reposition();
             
-            this.keys = new KeybindingManager();
+            this.keys = new Key.BindingManager();
             
             Settings.global.notify["open-at-mouse"].connect((s, p) => {
-                this.set_position();
+                this.reposition();
             }); 
             
             Settings.global.notify["theme"].connect((s, p) => {
@@ -52,7 +54,7 @@ namespace GnomePie {
             });
              
             base.button_release_event.connect ((e) => {
-                mouse_released((int) e.button, (int) e.x, (int) e.y);
+                this.mouse_released((int) e.button, (int) e.x, (int) e.y);
                 return true;
             });
             
@@ -66,57 +68,52 @@ namespace GnomePie {
                 return true;
             });
 
-            base.expose_event.connect(draw);
+            base.expose_event.connect(this.draw);
             base.destroy.connect(Gtk.main_quit);
             
             if (stroke != "") {
                 keys.bind_global_press(stroke, () => {
-                    this.show();
+                    this.fade_in();
                 });
 		        
 		        keys.bind_local_release(stroke, () => {
 		            if (!Settings.global.click_to_activate)
-		                this.on_activate();
+		                this.activate_pie();
 		        });
 		        
 		        keys.bind_local_press(stroke, () => {
 		            if (Settings.global.click_to_activate) 
-		                this.on_cancel();
+		                this.fade_out();
 		        });
 		    }
 		    
-		    bindings.bind_local_press("Escape", () => { 
-		        this.on_cancel();
+		    keys.bind_local_press("Escape", () => { 
+		        this.fade_out();
 		    });
 		    
-		    bindings.bind_local_press("Return", () => { 
-		        this.on_activate();
+		    keys.bind_local_press("Return", () => { 
+		        this.activate_pie();
 		    });
 		    
-		    bindings.bind_local_press("space", () => { 
-		        this.on_activate();
+		    keys.bind_local_press("space", () => { 
+		        this.activate_pie();
 		    });
         }
         
         // virtual and abstract stuff
         protected abstract bool draw(Gtk.Widget da, Gdk.EventExpose event);
 
-        private virtual void on_activate() {
+        public virtual void activate_pie() {
             this.unfix_focus();
 	        base.has_focus = 0;
         }
         
-        private virtual void on_cancel() {
+        protected virtual void fade_out() {
             this.unfix_focus();
 	        base.has_focus = 0;
         }
-        
-        private void mouse_released(int button, int x, int y) {
-            if (button == 1) on_activate();
-        }
-        
-        // overrides
-        public override void show() {
+
+        protected virtual void fade_in() {
             base.show();
             this.fix_focus();
 
@@ -150,12 +147,17 @@ namespace GnomePie {
 	        }); 
         }
         
-        public void set_size() {
-            size = (int)(fmax(2*Settings.global.theme.radius + 4*Settings.global.theme.slice_radius, 2*Settings.global.theme.center_radius));
+        // private methods
+        private void mouse_released(int button, int x, int y) {
+            if (button == 1) activate_pie();
+        }
+        
+        private void set_size() {
+            int size = (int)(fmax(2*Settings.global.theme.radius + 4*Settings.global.theme.slice_radius, 2*Settings.global.theme.center_radius));
             base.set_size_request (size, size);
         }
         
-        public override void set_position() {
+        private void reposition() {
             if(Settings.global.open_at_mouse) base.set_position(Gtk.WindowPosition.MOUSE);
             else                              base.set_position(Gtk.WindowPosition.CENTER);
         }
@@ -171,7 +173,7 @@ namespace GnomePie {
             int i = 0;
             Timeout.add (100, ()=>{
                 if (++i >= 100) return false;
-                return !try_grab_window(base);
+                return !try_grab_window();
             });
         }
         

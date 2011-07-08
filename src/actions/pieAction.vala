@@ -17,6 +17,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+    // this Action opens another pie
     public class PieAction : Action {
 	    	
 	    private Pie pie {private get; private set;};

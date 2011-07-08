@@ -146,6 +146,7 @@ namespace GnomePie {
         }
         
         private void autostart_toggled(Gtk.ToggleButton check_box) {
+            //TODO: add autostart option
             debug("Autostart toggled!");
         }
         

@@ -19,6 +19,8 @@ using GLib.Math;
 
 namespace GnomePie {
 
+    // a Color class with full rgb/hsv support
+    // and some useful utility methods
     public class Color: GLib.Object {
     
         private float _r;

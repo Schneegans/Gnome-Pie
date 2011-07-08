@@ -17,18 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    // this type of Action "presses" a key stroke
-    public class KeyAction : Action {
-	    	
-	    private string key_stroke {private get; private set;}
-
-	    public KeyAction(string name, string icon_name, string key_stroke) {
-	        base(name, icon_name);
-	        this.key_stroke = key_stroke;
-	    }
-
-	    public override void execute() {
-	        Key.press(key_stroke);
-	    }
+    public class SliceLayer : GLib.Object {
+        
+        public Image image   {get; set;}
+        
+        public bool colorize {get; private set; }
+        public bool is_icon  {get; private set;}
+        
+        public SliceLayer(Image image, bool colorize, bool is_icon) {
+            this.image = image;
+            this.colorize = colorize;
+            this.is_icon = is_icon;
+        }
     }
+
 }

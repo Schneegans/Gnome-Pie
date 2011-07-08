@@ -69,8 +69,7 @@ namespace GnomePie {
             // get size of icon layer
             int icon_size = size;
             foreach (var layer in layers) {
-                if (layer.is_icon) 
-                    icon_size = layer.image.width();
+                if (layer.is_icon) icon_size = layer.image.width();
             }
         
             string icon_file = this.get_icon_file(icon_name, size);
@@ -85,14 +84,13 @@ namespace GnomePie {
             // now render all layers on top of each other
 	        foreach (var layer in layers) {
 	        
-	            if (layer.colorize)
-	                    ctx.push_group();
+	            if (layer.colorize) ctx.push_group();
 	                    
 	            if (layer.is_icon) {
-	            
                     ctx.push_group();
-                    ctx.set_source_surface(layer.image.surface, -0.5*layer.image.width()-1, -0.5*layer.image.height()-1);
-                    ctx.paint();
+                    
+                    layer.image.paint(ctx);
+                    
                     ctx.set_operator(Cairo.Operator.IN);
 	                
 	                if (layer.image.width() != icon_size) {
@@ -101,8 +99,7 @@ namespace GnomePie {
 	                    icon = new Image.from_file(icon_file, layer.image.width());
 	                }
 	                
-	                ctx.set_source_surface(icon.surface, -0.5*icon.width()-1, -0.5*icon.height()-1);
-	                ctx.paint();
+	                icon.paint(ctx);
 
 	                if (layer.image != null) {
 	                    ctx.pop_group_to_source();
@@ -110,10 +107,8 @@ namespace GnomePie {
 	                    ctx.set_operator(Cairo.Operator.OVER);
 	                }
 	                
-	            } else {
-	                ctx.set_source_surface(layer.image, -0.5*layer.image.width()-1, -0.5*layer.image.height()-1);
-	                ctx.paint();
-	            }
+	            } else layer.image.paint(ctx);
+	
 	            
 	            if (layer.colorize) {
                     ctx.set_operator(Cairo.Operator.ATOP);
@@ -133,6 +128,11 @@ namespace GnomePie {
 
         public int height() {
             return surface.get_height();
+        }
+        
+        public void paint(Cairo.Context ctx) {
+            ctx.set_source_surface(surface, -0.5*width()-1, -0.5*height()-1);
+	        ctx.paint();
         }
         
         public void load_file(string filename, int size) {

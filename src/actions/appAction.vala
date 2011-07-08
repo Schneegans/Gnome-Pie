@@ -16,7 +16,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
-
+    
+    // this type of Action launches an application
     public class AppAction : Action {
 	    	
 	    private string command {private get; private set;}

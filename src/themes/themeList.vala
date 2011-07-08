@@ -19,16 +19,16 @@ namespace GnomePie {
 
     class ThemeList : Gtk.TreeView {
     
-        private Gtk.TreeIter _active;
+        private Gtk.TreeIter active{private get; private set;}
     
         public ThemeList() {
             GLib.Object();
             
             var data = new Gtk.ListStore(2, typeof(bool), typeof(string));
-            set_model(data);
-            set_headers_visible(false);
-            set_rules_hint(true);
-            set_grid_lines(Gtk.TreeViewGridLines.NONE);
+            base.set_model(data);
+            base.set_headers_visible(false);
+            base.set_rules_hint(true);
+            base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
             
             var check_column = new Gtk.TreeViewColumn();
             var check_render = new Gtk.CellRendererToggle();
@@ -40,15 +40,15 @@ namespace GnomePie {
                 Gtk.TreeIter toggled;
                 data.get_iter(out toggled, new Gtk.TreePath.from_string(path));
                 
-                if (toggled != _active) {
+                if (toggled != this.active) {
                     int index = int.parse(path);
                     Settings.global.theme = Settings.global.themes[index];
                     Settings.global.theme.load();
                     
-                    data.set(_active, 0, false); 
+                    data.set(this.active, 0, false); 
                     data.set(toggled, 0, true);
                     
-                    _active = toggled;
+                    this.active = toggled;
                 }
             });
             
@@ -56,8 +56,8 @@ namespace GnomePie {
             var theme_render = new Gtk.CellRendererText();
             theme_column.pack_start(theme_render, true);
             
-            append_column(check_column);
-            append_column(theme_column);
+            base.append_column(check_column);
+            base.append_column(theme_column);
             
             check_column.add_attribute(check_render, "active", 0);
             theme_column.add_attribute(theme_render, "markup", 1);
@@ -69,7 +69,7 @@ namespace GnomePie {
                 data.set(current, 0, theme == Settings.global.theme); 
                 data.set(current, 1, "<big>" + theme.name + "</big>\n<small>" + theme.description + "  -  <i>by " + theme.author + "</i></small>"); 
                 if(theme == Settings.global.theme)
-                    _active = current;
+                    this.active = current;
             }  
         }
     }

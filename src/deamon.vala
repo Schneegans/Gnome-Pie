@@ -27,12 +27,9 @@ namespace GnomePie {
             
             return 0;
         }
-        
-        // TODO: may be not neccesary to be private member?
-        private Indicator indicator {private get; private set;}       
 
         public Deamon() {        
-            indicator = new Indicator();
+            var indicator = new Indicator();
             
             Settings.global.notify["show-indicator"].connect((s, p) => {
                 indicator.active = Settings.global.show_indicator;
@@ -40,7 +37,8 @@ namespace GnomePie {
             
             indicator.active = Settings.global.show_indicator;
             
-            Pie.load_all();
+            var manager = new PieManager();
+	        manager.load_all();
 
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);

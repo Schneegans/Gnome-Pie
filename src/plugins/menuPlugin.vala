@@ -29,7 +29,8 @@ namespace GnomePie {
 
                 parse_directory(root, main, name);
 
-                Pie.get_all.set(name, main);
+                var manager = new PieManager();
+	            manager.add_pie(name, main);
             }
             
             private void parse_directory(GMenu.TreeDirectory dir, Pie pie, string parent_name) {
@@ -48,9 +49,12 @@ namespace GnomePie {
             public PieAction get_submenu(GMenu.TreeDirectory dir, Pie parent, string parent_name) {
                 var sub_menu = new Pie("");
                 sub_menu.add_slice(new PieAction("BACK", "back", parent_name));
-                parse_directory(dir, sub_menu, dir.get_name().up());
-                Pie.get_all.set(dir.get_name().up(), sub_menu);
-                return new PieAction(dir.get_name().up(), dir.get_icon(), dir.get_name().up()); 
+                parse_directory(dir, sub_menu, parent_name+dir.get_name());
+                
+                var manager = new PieManager();
+	            manager.add_pie(parent_name+dir.get_name(), sub_menu);
+
+                return new PieAction(dir.get_name().up(), dir.get_icon(), parent_name+dir.get_name()); 
             }
 
             public AppAction get_action(GMenu.TreeEntry entry) {

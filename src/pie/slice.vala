@@ -24,11 +24,11 @@ namespace GnomePie {
         public bool    active   {get; private set; default = false;}
         public Image   caption  {get; private set;}
         
-	    private Action action   {private get; private set;}
-	    private Pie    parent   {private get; private set;}
-	    private int    position {private get; private set;}
-	    private double fade     {private get; private set; default = 0.0;}
-	    private double scale    {private get; private set; default = 1.0;}
+	    private Action action      {private get; private set;}
+	    private unowned Pie parent {private get; private set;}
+	    private int    position    {private get; private set;}
+	    private double fade        {private get; private set; default = 0.0;}
+	    private double scale       {private get; private set; default = 1.0;}
 	    
 
 	    public Slice(Action action, Pie parent) {
@@ -38,6 +38,11 @@ namespace GnomePie {
 	        
 	        if (Settings.global.theme.caption)
                 this.load_caption();
+                
+            this.parent.on_fade_in.connect(() => {
+                this.scale = 1.0;
+                this.fade = 0.0;
+            });
                 
             Settings.global.notify["theme"].connect((s, p) => {
                 this.load_caption();
@@ -54,7 +59,7 @@ namespace GnomePie {
 
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
-		    double direction = 2.0 * PI * position/parent.slice_count() + 0.9 * (parent.fading < 1.0 ? -1.0 : 1.0) * pow(1.0 - parent.fading, 2);
+		    double direction = 2.0 * PI * position/parent.slice_count() + 0.9 * (parent.fading_in ? -1.0 : 1.0) * pow(1.0 - parent.fading, 2);
     	    double max_scale = 1.0/Settings.global.theme.max_zoom;
 	        double diff = fabs(angle-direction);
 	        
@@ -99,8 +104,8 @@ namespace GnomePie {
 	        
             ctx.set_operator(Cairo.Operator.ADD);
         
-            if (fade > 0.0) action.active_icon.paint(ctx, parent.fading*parent.fading*fade);
-            if (fade < 1.0) action.inactive_icon.paint(ctx, parent.fading*parent.fading*(1.0 - fade));
+            if (fade > 0.0) action.active_icon.paint_on(ctx, parent.fading*parent.fading*fade);
+            if (fade < 1.0) action.inactive_icon.paint_on(ctx, parent.fading*parent.fading*(1.0 - fade));
             
             ctx.set_operator(Cairo.Operator.OVER);
             
@@ -121,7 +126,7 @@ namespace GnomePie {
 	    private void load_caption() {
 	        int size = (int)Settings.global.theme.caption_size;
 	        caption = new Image.empty(size);
-            var ctx = new Cairo.Context(caption.surface);
+            var ctx = caption.get_context();
             
             ctx.set_font_size((int)Settings.global.theme.font_size);
 	        Cairo.TextExtents extents;

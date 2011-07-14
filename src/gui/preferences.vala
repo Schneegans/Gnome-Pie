@@ -83,12 +83,29 @@ namespace GnomePie {
                             var scale_slider = new Gtk.HScale.with_range(0.5, 2.0, 0.05);
                                 scale_slider.set_value(Settings.global.global_scale);
                                 scale_slider.value_pos = Gtk.PositionType.RIGHT;
+                                
+                                bool changing = false;
+                                bool changed_again = false;
 
-                                // TODO: add timeout preventing frequent updates
                                 scale_slider.value_changed.connect(() => {
-                                    Settings.global.global_scale = scale_slider.get_value();
-                                    Settings.global.load_themes(Settings.global.theme.name);
+                                    if (!changing) {
+                                        changing = true;
+                                        Timeout.add(300, () => {
+                                            if (changed_again) {
+                                                changed_again = false;
+                                                return true;
+                                            }
+
+                                            Settings.global.global_scale = scale_slider.get_value();
+                                            Settings.global.load_themes(Settings.global.theme.name);
+                                            changing = false;
+                                            return false;
+                                        });
+                                    } else {
+                                        changed_again = true;
+                                    }
                                 });
+                                
                                 behavior_vbox.pack_end(scale_slider, false, false);
 
                         general_tab.pack_start (behavior_frame, false);

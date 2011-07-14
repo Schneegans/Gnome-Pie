@@ -20,28 +20,20 @@ using GLib.Math;
 namespace GnomePie {
 
     public class Pie : Window {
-    
-        public static Gee.HashMap<string, Pie?> get_all;
-        
-        public static void load_all() {
-            get_all = new Gee.HashMap<string, Pie?>();
-            var loader = new PieLoader();
-            loader.load_pies();
-        }
-        
+
         public signal void on_fade_in();
         public signal void on_fade_out();
         public signal void on_active_change();
 
         public Slice    active_slice {get; private set;}
         public double   fading       {get; private set; default = 0.0;}
+        public bool     fading_in    {get; private set;}
+	    public bool     fading_out   {get; private set;}
 	    
 	    private Gee.ArrayList<Slice?> slices {private get; private set;}
 	    private Center  center       {private get; private set;}
 	    private int     quick_action {private get; private set;}
-	    private bool    fading_in    {private get; private set;}
-	    private bool    fading_out   {private get; private set;}
-	    
+
 	    public Pie(string stroke, int quick_action = -1) {
 	        base(stroke);
             this.center = new Center(this); 
@@ -50,19 +42,17 @@ namespace GnomePie {
         }
         
         public override void activate_pie() {
-            base.activate_pie();
+            if(!fading_out) {
+                base.activate_pie();
             
-            if(fading == 1.0) {
-        	    if(active_slice != null)
-        	        this.active_slice.activate();
-        	    else if (this.has_quick_action())
-        	        this.slices[this.quick_action].activate();
+        	    if(active_slice != null)          this.active_slice.activate();
+        	    else if (this.has_quick_action()) this.slices[this.quick_action].activate();
         	        
             	this.fade_out();
         	}
         }
         
-        protected override void fade_in() {
+        public override void fade_in() {
             if (!this.fading_out) {
 	            base.fade_in();
 	            this.on_fade_in();
@@ -75,7 +65,7 @@ namespace GnomePie {
         	 }
         }
 	    
-	    protected override void fade_out() {
+	    public override void fade_out() {
 	        if (!this.fading_out) {
 	            base.fade_out();
 	            this.on_fade_out();
@@ -112,17 +102,15 @@ namespace GnomePie {
 		
 		    if (distance > 0) {
 		        angle = acos(mouse_x/distance);
-			    if (mouse_y < 0) 
-			        angle = 2*PI - angle;
+			    if (mouse_y < 0) angle = 2*PI - angle;
 		    }
 		    if (distance < Settings.global.theme.active_radius && this.has_quick_action())
 		        angle = 2.0*PI*quick_action/(double)slice_count();
 
             // clear the window
-            ctx.save();
             ctx.set_operator (Cairo.Operator.CLEAR);
             ctx.paint();
-            ctx.restore();
+            ctx.set_operator (Cairo.Operator.OVER);
 
             center.draw(ctx, angle, distance);
 		    

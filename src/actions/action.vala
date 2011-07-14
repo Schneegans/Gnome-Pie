@@ -42,9 +42,10 @@ namespace GnomePie {
         
         private void reload_icon() {
             int size = (int)(2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom);
+            this.color =         new Color();
 		    this.active_icon =   new Image.themed_icon(this.icon_name, size, true,  Settings.global.theme);
 		    this.inactive_icon = new Image.themed_icon(this.icon_name, size, false, Settings.global.theme);
-		    this.color =         new Color.from_icon(this.active_icon);
+		    this.active_icon.on_finished_loading.connect(()=> {this.color = new Color.from_icon(this.active_icon);});         
         }
         
     }

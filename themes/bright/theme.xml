@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme name="Bright" description="An elegant theme." author="Simon Schneegans" email="josi.schneegans@vr-web.de">
+    <ring radius="120" maxZoom="1.1" zoomRange="0.1" transitionTime="0.3" fadeInTime="0.4" fadeOutTime="0.3">
+        <center radius="80" activeRadius="55">
+            <center_layer file="ring.svg" 
+                          active_scale="0.8"   active_rotationMode="auto"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"
+                          inactive_scale="0.8" inactive_rotationMode="auto" inactive_rotationSpeed="0" inactive_colorize="false" inactive_alpha="1.0" />
+            <center_layer file="arrow.svg" 
+                          active_scale="1.0"   active_rotationMode="turn_to_mouse"   active_rotationSpeed="15.0"    active_colorize="true"    active_alpha="1.0" 
+                          inactive_scale="1.0" inactive_rotationMode="auto" inactive_rotationSpeed="0.0"  inactive_colorize="true" inactive_alpha="0.0" />
+        </center>
+        <slices radius="26">
+            <activeSlice>
+                <slice_layer type="file" file="icon_active.svg"   scale="1"   colorize="true" />
+                <slice_layer type="file" file="gloss.svg"   scale="1"   colorize="false" />
+                <slice_layer type="icon" scale="0.9" colorize="false" />
+            </activeSlice>
+            <inactiveSlice>
+                <slice_layer type="file" file="icon_inactive.svg"   scale="1"   colorize="false" />
+                <slice_layer type="file" file="gloss.svg"   scale="1"   colorize="false" />
+                <slice_layer type="icon" scale="0.9" colorize="false" />
+            </inactiveSlice>
+        </slices>
+        <caption position="0" fontSize="12" maxSize="90" color="#000"/>
+    </ring>
+</theme>
+

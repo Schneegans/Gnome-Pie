@@ -31,7 +31,7 @@
                 <slice_layer type="icon" scale="0.5"/>
             </inactiveSlice>
         </slices>
-        <caption position="-38"  fontSize="12" maxSize="150" />
+        <caption position="-34"  fontSize="12" maxSize="150" />
     </ring>
 </theme>
 

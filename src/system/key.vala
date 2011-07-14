@@ -17,6 +17,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+    // a namespace which can be used to "press" keys.
     namespace Key {
     
         private X.Display display;
@@ -27,6 +28,7 @@ namespace GnomePie {
         
         private bool need_init = true;
 
+        // simulates a given keystroke 
         public void press(string stroke) {
             
             if (need_init) init();
@@ -40,6 +42,8 @@ namespace GnomePie {
 
             press_modifiers(current_modifiers, false);
             press_modifiers(modifiers, true);
+            
+            display.flush();
 
             X.Test.fake_key_event(display, keycode, true, 0);
             X.Test.fake_key_event(display, keycode, false, 0);

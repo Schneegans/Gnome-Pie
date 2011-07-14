@@ -21,10 +21,10 @@ namespace GnomePie {
 
     public class Center {
 
-        private Pie    parent   {private get; private set;}
-	    private double activity {private get; private set; default = 0.0;}
-	    private Image? caption  {private get; private set; default = null;}
-	    private Color  color    {private get; private set; default = new Color();}
+        private unowned Pie parent {private get; private set;}
+	    private double activity    {private get; private set; default = 0.0;}
+	    private Image? caption     {private get; private set; default = null;}
+	    private Color  color       {private get; private set; default = new Color();}
 
         public Center(Pie parent) {
             this.parent = parent;
@@ -99,7 +99,7 @@ namespace GnomePie {
 		        
 		        ctx.rotate(layer.rotation);
 		        ctx.scale(max_scale, max_scale);
-		        layer.image.paint(ctx, parent.fading*parent.fading*max_alpha);
+		        layer.image.paint_on(ctx, parent.fading*parent.fading*max_alpha);
                 
                 if (colorize > 0.0) {
                     ctx.set_operator(Cairo.Operator.ATOP);
@@ -119,7 +119,7 @@ namespace GnomePie {
         		    ctx.identity_matrix();
         		    int pos = (int)((fmax(2*Settings.global.theme.radius + 4*Settings.global.theme.slice_radius, 2*Settings.global.theme.center_radius))/2);
 		            ctx.translate(pos, (int)Settings.global.theme.caption_position + pos); 
-		            caption.paint(ctx, parent.fading*parent.fading*this.activity);
+		            caption.paint_on(ctx, parent.fading*parent.fading*this.activity);
 		            ctx.restore();
 		        }
             }

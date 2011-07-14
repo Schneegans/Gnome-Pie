@@ -108,12 +108,12 @@ namespace GnomePie {
 	        base.has_focus = 0;
         }
         
-        protected virtual void fade_out() {
+        public virtual void fade_out() {
             this.unfix_focus();
 	        base.has_focus = 0;
         }
 
-        protected virtual void fade_in() {
+        public virtual void fade_in() {
             base.show();
             this.fix_focus();
 

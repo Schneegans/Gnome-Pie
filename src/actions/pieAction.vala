@@ -27,14 +27,9 @@ namespace GnomePie {
 	        this.pie_name = pie_name;
 	    }
 
-	    public override void execute() {
-	        var pie = Pie.get_all[pie_name];
-	        
-            if (pie == null) {
-                warning("Can't open Pie named \"" + pie_name + "\": No such Pie defined!");
-            } else {
-                pie.activate_pie();
-            }
+	    public override void execute() {	    
+	        var manager = new PieManager();
+	        manager.open_pie(pie_name);
         } 
     }
 

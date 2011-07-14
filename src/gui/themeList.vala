@@ -41,9 +41,12 @@ namespace GnomePie {
                 data.get_iter(out toggled, new Gtk.TreePath.from_string(path));
                 
                 if (toggled != this.active) {
-                    int index = int.parse(path);
-                    Settings.global.theme = Settings.global.themes[index];
-                    Settings.global.theme.load();
+                    Timeout.add(10, () => {
+                        int index = int.parse(path);
+                        Settings.global.theme = Settings.global.themes[index];
+                        Settings.global.theme.load();
+                        return false;
+                    });
                     
                     data.set(this.active, 0, false); 
                     data.set(toggled, 0, true);

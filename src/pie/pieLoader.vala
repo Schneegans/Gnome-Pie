@@ -89,6 +89,11 @@ namespace GnomePie {
                 }
             }
             
+            if (name == "") {
+                warning("Invalid <pie> element in pies.conf: No name specified!");
+                return;
+            }
+            
             var pie = new Pie(hotkey, quick_action);
             
             for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {
@@ -99,13 +104,15 @@ namespace GnomePie {
                             parse_slice(slice, pie);
                             break;
                         default:
-                            warning("Invalid child element <" + node_name + "> in <pie> element pies.conf!");
+                            warning("Invalid child element <" + node_name + "> in <pie> element in pies.conf!");
                             break;
                     } 
                 }
             }
             
-            Pie.get_all.set(name, pie);
+            var manager = new PieManager();
+            manager.add_pie(name, pie);
+
         }
         
         private void parse_slice(Xml.Node* slice, Pie pie) {

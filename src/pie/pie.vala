@@ -26,7 +26,6 @@ namespace GnomePie {
         public signal void on_active_change();
 
         public Slice    active_slice {get; private set;}
-        public double   fading       {get; private set; default = 0.0;}
         public bool     fading_in    {get; private set;}
 	    public bool     fading_out   {get; private set;}
 	    
@@ -80,12 +79,6 @@ namespace GnomePie {
         }
         
         protected override bool draw(Gtk.Widget da, Gdk.EventExpose event) {
-            if (fading_in || fading_out) {
-        	    if (fading_in)       this.fading += Settings.global.frame_time/Settings.global.theme.fade_in_time;
-                else if (fading_out) this.fading -= Settings.global.frame_time/Settings.global.theme.fade_out_time;
-                this.fading = this.fading.clamp(0.0, 1.0);
-            }
-            else this.fading = 1.0;
             
             double mouse_x = 0.0;
 	        double mouse_y = 0.0;
@@ -124,7 +117,7 @@ namespace GnomePie {
 		    if (new_active_slice == null && this.has_quick_action())
 			    new_active_slice = this.slices[quick_action];
 		    
-		    if (new_active_slice != active_slice) {
+		    if (new_active_slice != active_slice && !fading_out) {
 		        active_slice = new_active_slice;
 		        on_active_change();
 		    }

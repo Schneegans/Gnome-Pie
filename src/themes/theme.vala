@@ -32,6 +32,11 @@ namespace GnomePie {
         public double transition_time  {get; private set; default=0.5;}
         public double fade_in_time     {get; private set; default=0.2;}
         public double fade_out_time    {get; private set; default=0.1;}
+        public double fade_in_zoom     {get; private set; default=1.0;}
+        public double fade_out_zoom    {get; private set; default=1.0;}
+        public double fade_in_rotation {get; private set; default=0.0;}
+        public double fade_out_rotation{get; private set; default=0.0;}
+        public double springiness      {get; private set; default=0.0;}
         public double center_radius    {get; private set; default=90.0;}
         public double active_radius    {get; private set; default=45.0;}
         public double slice_radius     {get; private set; default=32.0;}
@@ -137,6 +142,21 @@ namespace GnomePie {
                         break;
                     case "fadeouttime":
                         fade_out_time = double.parse(attr_content);
+                        break;
+                    case "fadeinzoom":
+                        fade_in_zoom = double.parse(attr_content);
+                        break;
+                    case "fadeoutzoom":
+                        fade_out_zoom = double.parse(attr_content);
+                        break;
+                    case "fadeinrotation":
+                        fade_in_rotation = double.parse(attr_content);
+                        break;
+                    case "fadeoutrotation":
+                        fade_out_rotation = double.parse(attr_content);
+                        break;
+                    case "springiness":
+                        springiness = double.parse(attr_content);
                         break;
                     default:
                         warning("Invalid attribute \"" + attr_name + "\" in <ring> element!");

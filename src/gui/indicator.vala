@@ -20,8 +20,9 @@ namespace GnomePie {
     public class Indicator : GLib.Object {
     
         private AppIndicator.Indicator indicator {private get; private set;}
+        private Preferences            prefs     {private get; private set;} 
         
-        public  bool active {
+        public bool active {
             get {
                 return indicator.get_status() == AppIndicator.IndicatorStatus.ACTIVE;
             }
@@ -31,14 +32,16 @@ namespace GnomePie {
             }
         }
         
-        public Indicator(Gtk.Window prefs) {
-            indicator = new AppIndicator.Indicator("Gnome-Pie", "indicator-applet", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+        // creates an appindicator sitting in the panel...
+        public Indicator() {
+            this.indicator = new AppIndicator.Indicator("Gnome-Pie", "indicator-applet", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            this.prefs = new Preferences();
             
             var menu = new Gtk.Menu();
 
             var item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.PREFERENCES, null);
             item.activate.connect(() => {
-                prefs.show();
+                this.prefs.show();
             });
             
             item.show();
@@ -62,8 +65,7 @@ namespace GnomePie {
             item.show();
             menu.append(item);
 
-            indicator.set_menu(menu);
+            this.indicator.set_menu(menu);
         }
-
     }
 }

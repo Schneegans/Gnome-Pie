@@ -17,17 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    public class Key : GLib.Object {
+    // a namespace which can be used to "press" keys.
+    namespace Key {
     
-        private static X.Display display;
-        private static int shift_code;
-        private static int ctrl_code;
-        private static int alt_code;
-        private static int super_code;
+        private X.Display display;
+        private int shift_code;
+        private int ctrl_code;
+        private int alt_code;
+        private int super_code;
         
-        private static bool need_init = true;
+        private bool need_init = true;
 
-        public static void press(string stroke) {
+        // simulates a given keystroke 
+        public void press(string stroke) {
             
             if (need_init) init();
 
@@ -40,6 +42,8 @@ namespace GnomePie {
 
             press_modifiers(current_modifiers, false);
             press_modifiers(modifiers, true);
+            
+            display.flush();
 
             X.Test.fake_key_event(display, keycode, true, 0);
             X.Test.fake_key_event(display, keycode, false, 0);
@@ -50,13 +54,13 @@ namespace GnomePie {
 	        display.flush();
         }
         
-        private static Gdk.ModifierType get_modifiers() {
+        private Gdk.ModifierType get_modifiers() {
             Gdk.ModifierType modifiers;
             Gdk.Display.get_default().get_pointer(null, null, null, out modifiers);
             return modifiers;
         }
         
-        private static void press_modifiers(Gdk.ModifierType modifiers, bool down) {
+        private void press_modifiers(Gdk.ModifierType modifiers, bool down) {
             if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0)
                 X.Test.fake_key_event(display, ctrl_code, down, 0);
 	
@@ -70,7 +74,7 @@ namespace GnomePie {
                 X.Test.fake_key_event(display, super_code, down, 0);
         }
 
-        private static void init() {
+        private void init() {
             display = new X.Display();
             
             shift_code =  display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));

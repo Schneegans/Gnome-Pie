@@ -19,9 +19,9 @@ using GLib.Math;
 
 namespace GnomePie {
 
-    public class PieParser : GLib.Object {
+    public class PieLoader : GLib.Object {
     
-        public static void parse() {
+        public void load_pies() {
             
             Xml.Parser.init();
             Xml.Doc* piesXML = Xml.Parser.parse_file("pies.conf");
@@ -63,9 +63,11 @@ namespace GnomePie {
             }
         }
         
-        private static void parse_pie(Xml.Node* node) {
+        private void parse_pie(Xml.Node* node) {
             string hotkey = "";
+            string name = "";
             int    quick_action = -1;
+            
         
             for (Xml.Attr* attribute = node->properties; attribute != null; attribute = attribute->next) {
                 string attr_name = attribute->name.down();
@@ -78,10 +80,18 @@ namespace GnomePie {
                     case "quickaction":
                         quick_action = int.parse(attr_content);
                         break;
+                    case "name":
+                        name = attr_content;
+                        break;
                     default:
                         warning("Invalid setting \"" + attr_name + "\" in pies.conf!");
                         break;
                 }
+            }
+            
+            if (name == "") {
+                warning("Invalid <pie> element in pies.conf: No name specified!");
+                return;
             }
             
             var pie = new Pie(hotkey, quick_action);
@@ -94,14 +104,18 @@ namespace GnomePie {
                             parse_slice(slice, pie);
                             break;
                         default:
-                            warning("Invalid child element <" + node_name + "> in <pie> element pies.conf!");
+                            warning("Invalid child element <" + node_name + "> in <pie> element in pies.conf!");
                             break;
                     } 
                 }
             }
+            
+            var manager = new PieManager();
+            manager.add_pie(name, pie);
+
         }
         
-        private static void parse_slice(Xml.Node* slice, Pie pie) {
+        private void parse_slice(Xml.Node* slice, Pie pie) {
             string name="";
             string icon="";
             string command="";
@@ -139,6 +153,9 @@ namespace GnomePie {
                 case "key":
                     action = new KeyAction(name, icon, command);
                     break;
+                case "pie":
+                    action = new PieAction(name, icon, command);
+                    break;
                 default:
                     warning("Invalid type \"" + type + "\" in pies.conf!");
                     break;
@@ -147,9 +164,10 @@ namespace GnomePie {
             if (action != null) pie.add_slice(action);
         }
         
-        private static void parse_plugin(Xml.Node* slice) {
+        private void parse_plugin(Xml.Node* slice) {
             string type="";
             string hotkey = "";
+            string name = "";
         
             for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
                 string attr_name = attribute->name.down();
@@ -162,6 +180,9 @@ namespace GnomePie {
                     case "hotkey":
                         hotkey = attr_content;
                         break;
+                    case "name":
+                        name = attr_content;
+                        break;
                     default:
                         warning("Invalid attribute \"" + attr_name + "\" in <plugin> element in pies.conf!");
                         break;
@@ -170,10 +191,10 @@ namespace GnomePie {
             
             switch(type) {
                 case "menu":
-                    Plugins.Menu.create(hotkey);
+                    Plugins.Menu.create(name, hotkey);
                     break;
                 case "bookmarks":
-                    Plugins.Bookmarks.create(hotkey);
+                    Plugins.Bookmarks.create(name, hotkey);
                     break;
                 default:
                     warning("Invalid type option \"" + type + "\" in <plugin> element in pies.conf!");

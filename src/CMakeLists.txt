@@ -3,7 +3,7 @@
 ################################################################
 
 # determine source and header files
-file(GLOB VALA_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.vala)
+file(GLOB VALA_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.vala */*.vala)
 
 # use valac to compile sources to c files
 vala_precompile(

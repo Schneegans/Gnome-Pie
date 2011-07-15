@@ -21,23 +21,40 @@ namespace GnomePie {
 
     public class Slice : GLib.Object {
     
-        public bool active      {get; private set; default = false;}
-        public Cairo.ImageSurface caption  {get; private set;}
+        public bool    active   {get; private set; default = false;}
+        public Image   caption  {get; private set;}
         
-	    private Action action   {private get; private set;}
-	    private Pie    parent   {private get; private set;}
-	    private int    position {private get; private set;}
-	    private double fade     {private get; private set; default = 0.0;}
-	    private double scale    {private get; private set; default = 1.0;}
+	    private Action action       {private get; private set;}
+	    private unowned Pie parent  {private get; private set;}
+	    private int    position     {private get; private set;}
 	    
+	    private AnimatedValue fade          {private get; private set;}
+	    private AnimatedValue scale         {private get; private set;}
+	    private AnimatedValue alpha         {private get; private set;}
+	    private AnimatedValue fade_rotation {private get; private set;}
+	    private AnimatedValue fade_scale    {private get; private set;}
 
 	    public Slice(Action action, Pie parent) {
-	        _parent = parent;
-	        _position = parent.slice_count();
-	        _action = action;
+	        this.parent = parent;
+	        this.position = parent.slice_count();
+	        this.action = action;
 	        
 	        if (Settings.global.theme.caption)
                 this.load_caption();
+                
+            this.parent.on_fade_in.connect(() => {
+                this.fade =  new AnimatedValue.linear(0.0, 0.0, Settings.global.theme.transition_time);
+                this.alpha = new AnimatedValue.linear(0.0, 1.0, Settings.global.theme.fade_in_time);
+                this.scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 1.0/Settings.global.theme.max_zoom, 1.0/Settings.global.theme.max_zoom, Settings.global.theme.transition_time, Settings.global.theme.springiness);
+                this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, Settings.global.theme.fade_in_zoom, 1.0, Settings.global.theme.fade_in_time, Settings.global.theme.springiness);
+                this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, Settings.global.theme.fade_in_rotation, 0.0, Settings.global.theme.fade_in_time);
+            });
+            
+            this.parent.on_fade_out.connect(() => {
+                this.alpha.reset_target(0.0, Settings.global.theme.fade_out_time);
+                this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.IN, this.fade_scale.val, Settings.global.theme.fade_out_zoom, Settings.global.theme.fade_out_time, Settings.global.theme.springiness);
+                this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.IN, this.fade_rotation.val, Settings.global.theme.fade_out_rotation, Settings.global.theme.fade_out_time);
+            });
                 
             Settings.global.notify["theme"].connect((s, p) => {
                 this.load_caption();
@@ -46,15 +63,23 @@ namespace GnomePie {
             Settings.global.notify["scale"].connect((s, p) => {
                 this.load_caption();
             });
+            
+            this.parent.on_active_change.connect(() => {
+                if (this.parent.active_slice == this) {
+                    this.fade.reset_target(1.0, Settings.global.theme.transition_time);
+                } else {
+                    this.fade.reset_target(0.0, Settings.global.theme.transition_time);
+                }
+            });
 	    }
 	
 	    public void activate() {
-	        action.execute();
+	        this.action.execute();
         }
 
 	    public void draw(Cairo.Context ctx, double angle, double distance) {
     	    
-		    double direction = 2.0 * PI * position/parent.slice_count() + 0.9 * (parent.fade_in ? -1.0 : 1.0) * pow(1.0 - parent.fading, 2);
+		    double direction = 2.0 * PI * position/parent.slice_count() + this.fade_rotation.val;
     	    double max_scale = 1.0/Settings.global.theme.max_zoom;
 	        double diff = fabs(angle-direction);
 	        
@@ -63,29 +88,20 @@ namespace GnomePie {
 	
 	        if (diff < 2 * PI * Settings.global.theme.zoom_range)
 	            max_scale = (Settings.global.theme.max_zoom/(diff * (Settings.global.theme.max_zoom - 1)/(2 * PI * Settings.global.theme.zoom_range) + 1))/Settings.global.theme.max_zoom;
-	        
 		    
 		    active = (distance >= Settings.global.theme.active_radius || parent.has_quick_action()) && (diff < PI/parent.slice_count());
+            
+            max_scale = (parent.active_slice != null ? max_scale : 1.0/Settings.global.theme.max_zoom);
+            
+            if (fabs(this.scale.end - max_scale) > Settings.global.theme.max_zoom*0.005)
+                this.scale.reset_target(max_scale, Settings.global.theme.transition_time);
+            
+            this.scale.update(Settings.global.frame_time);
+            this.alpha.update(Settings.global.frame_time);
+            this.fade.update(Settings.global.frame_time);
+            this.fade_scale.update(Settings.global.frame_time);
+            this.fade_rotation.update(Settings.global.frame_time);
 		    
-		    if (active) {
-		        if ((fade += Settings.global.frame_time/Settings.global.theme.transition_time) > 1.0)
-                    fade = 1.0;
-		    } else {
-    		    if ((fade -= Settings.global.frame_time/Settings.global.theme.transition_time) < 0.0)
-                    fade = 0.0;
-		    }
-		    
-		    max_scale = (parent.has_active_slice ? max_scale : 1.0/Settings.global.theme.max_zoom);
-            double scale_step = max_scale/Settings.global.theme.transition_time*0.2*Settings.global.frame_time;
-            if (fabs(scale - max_scale) > scale_step) {
-                if (scale < max_scale) {
-                    scale += scale_step;
-                } else {
-                    scale -= scale_step;
-                }
-                
-            } else scale = max_scale;
-
 	        ctx.save();
 	        
 	        // TODO increase radius for very full pies (Problem: Window radius has to be increased as well...)
@@ -97,22 +113,15 @@ namespace GnomePie {
 	            radius = Settings.global.theme.slice_radius/tan(PI/parent.slice_count() - 0.15*0.5);
 	        }*/
 	        
-	        ctx.scale(scale - 0.5*pow(1.0 - parent.fading, 2), scale - 0.5*pow(1.0 - parent.fading, 2));
+	        ctx.scale(scale.val*fade_scale.val, scale.val*fade_scale.val);
 	        ctx.translate(cos(direction)*radius, sin(direction)*radius);
 	        
 	        ctx.push_group();
 	        
             ctx.set_operator(Cairo.Operator.ADD);
         
-            if (fade > 0.0) {
-                ctx.set_source_surface(action.active_icon, -0.5 * action.active_icon.get_width() - 1, -0.5 * action.active_icon.get_height() - 1);
-                ctx.paint_with_alpha(parent.fading*parent.fading*fade);
-            }
-            
-            if (fade < 1.0) {
-                ctx.set_source_surface(action.inactive_icon, -0.5 * action.inactive_icon.get_width() - 1, -0.5 * action.inactive_icon.get_height() - 1);  
-                ctx.paint_with_alpha(parent.fading*parent.fading*(1.0 - fade));
-            }
+            if (fade.val > 0.0) action.active_icon.paint_on(ctx, this.alpha.val*this.fade.val);
+            if (fade.val < 1.0) action.inactive_icon.paint_on(ctx, this.alpha.val*(1.0 - fade.val));
             
             ctx.set_operator(Cairo.Operator.OVER);
             
@@ -132,8 +141,8 @@ namespace GnomePie {
 	    
 	    private void load_caption() {
 	        int size = (int)Settings.global.theme.caption_size;
-	        caption = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-            var ctx = new Cairo.Context(caption);
+	        caption = new Image.empty(size);
+            var ctx = caption.get_context();
             
             ctx.set_font_size((int)Settings.global.theme.font_size);
 	        Cairo.TextExtents extents;

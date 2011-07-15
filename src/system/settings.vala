@@ -17,31 +17,31 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+    // singleton class for storing global settings
     public class Settings : GLib.Object {
     
-        private static Settings _get = null;
+        private static Settings _instance = null;
         
         public static Settings global {
             get {
-                if (_get == null) {
-                    _get = new Settings();
-                    _get.load();
+                if (_instance == null) {
+                    _instance = new Settings();
+                    _instance.load();
                 }
-                return _get;
+                return _instance;
             }
             private set {
-                _get = value;
+                _instance = value;
             }
         }
 
         public Theme  theme             {get; set;}
-        public double refresh_rate      {get; private set; default = 60.0;}
+        public double refresh_rate      {get; set; default = 60.0;}
         public double frame_time        {get; set; default = 0.1;}
         public double global_scale      {get; set; default = 1.0;}
         public bool   show_indicator    {get; set; default = true;}
         public bool   open_at_mouse     {get; set; default = true;}
         public bool   click_to_activate {get; set; default = true;}
-        
         public Gee.ArrayList<Theme?> themes {get; private set;}
         
         public void save() {

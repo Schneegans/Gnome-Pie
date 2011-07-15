@@ -21,42 +21,61 @@ namespace GnomePie {
 
     public class Center {
 
-	    private Pie                parent  {private get; private set;}
-	    public double             activity {get; private set; default = 0.0;}
+        private unowned Pie parent {private get; private set;}
+	    private Image? caption     {private get; private set; default = null;}
+	    private Color  color       {private get; private set; default = new Color();}
+	    
+	    private AnimatedValue activity {private get; private set;}
+	    private AnimatedValue alpha    {private get; private set;}
 
         public Center(Pie parent) {
-            _parent = parent;
+            this.parent = parent;
+            
+            this.parent.on_fade_in.connect(() => {
+                this.activity = new AnimatedValue.linear(0.0, 0.0, Settings.global.theme.transition_time);
+                this.alpha = new AnimatedValue.linear(0.0, 1.0, Settings.global.theme.fade_in_time);
+                this.color = new Color();
+                this.caption = null;
+            });
+            
+            this.parent.on_fade_out.connect(() => {
+                this.activity.reset_target(0.0, Settings.global.theme.fade_out_time);
+                this.alpha.reset_target(0.0, Settings.global.theme.fade_out_time);
+            });
+            
+            this.parent.on_active_change.connect(() => {
+                if (this.parent.active_slice == null) {
+                    this.activity.reset_target(0.0, Settings.global.theme.transition_time);
+                } else {
+                    this.activity.reset_target(1.0, Settings.global.theme.transition_time);
+                    this.caption = this.parent.active_slice.caption;
+                    this.color   = this.parent.active_slice.color();
+                }
+            });
         }
         
         public void draw(Cairo.Context ctx, double angle, double distance) {
 
     	    var layers = Settings.global.theme.center_layers;
-    	    
-    	    if (parent.has_active_slice) { 
-	            if ((activity += Settings.global.frame_time/(Settings.global.theme.transition_time)) > 1.0)
-                    activity = 1.0;
-	        } else {
-	            if ((activity -= Settings.global.frame_time/(Settings.global.theme.transition_time)) < 0.0)
-                    activity = 0.0;
-	        }
+            
+            this.activity.update(Settings.global.frame_time);
+            this.alpha.update(Settings.global.frame_time);
     	
 		    foreach (var layer in layers) {
 		    
 		        ctx.save();
 
-
                 double active_speed       = (layer.active_rotation_mode == CenterLayer.RotationMode.AUTO) ? layer.active_rotation_speed : 0.0;
                 double inactive_speed     = (layer.inactive_rotation_mode == CenterLayer.RotationMode.AUTO) ? layer.inactive_rotation_speed : 0.0;
-		        double max_scale          = layer.active_scale*activity + layer.inactive_scale*(1.0-activity);
-                double max_alpha          = layer.active_alpha*activity + layer.inactive_alpha*(1.0-activity);
-                double colorize           = ((layer.active_colorize == true) ? activity : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - activity : 0.0);
-                double max_rotation_speed = active_speed*activity + inactive_speed*(1.0-activity);
-                CenterLayer.RotationMode rotation_mode = ((activity > 0.5) ? layer.active_rotation_mode : layer.inactive_rotation_mode);
-
+		        double max_scale          = layer.active_scale*this.activity.val + layer.inactive_scale*(1.0-this.activity.val);
+                double max_alpha          = layer.active_alpha*this.activity.val + layer.inactive_alpha*(1.0-this.activity.val);
+                double colorize           = ((layer.active_colorize == true) ? this.activity.val : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - this.activity.val : 0.0);
+                double max_rotation_speed = active_speed*this.activity.val + inactive_speed*(1.0-this.activity.val);
+                CenterLayer.RotationMode rotation_mode = ((this.activity.val > 0.5) ? layer.active_rotation_mode : layer.inactive_rotation_mode);
 		        
 		        if (rotation_mode == CenterLayer.RotationMode.TO_MOUSE) {
 		            double diff = angle-layer.rotation;
-		            max_rotation_speed = layer.active_rotation_speed*activity + layer.inactive_rotation_speed*(1.0-activity);
+		            max_rotation_speed = layer.active_rotation_speed*this.activity.val + layer.inactive_rotation_speed*(1.0-this.activity.val);
 		            double smoothy = fabs(diff) < 0.9 ? fabs(diff) + 0.1 : 1.0; 
 		            double step = max_rotation_speed*Settings.global.frame_time*smoothy;
 		            
@@ -68,9 +87,9 @@ namespace GnomePie {
                     }
                     
 		        } else if (rotation_mode == CenterLayer.RotationMode.TO_ACTIVE) {
-		            max_rotation_speed *= activity;
+		            max_rotation_speed *= this.activity.val;
 		            
-		            double slice_angle = 2*PI/parent.slice_count();
+		            double slice_angle = 2*PI/this.parent.slice_count();
 		            double direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
 		            double diff = direction-layer.rotation;
 		            double step = max_rotation_speed*Settings.global.frame_time;
@@ -86,17 +105,15 @@ namespace GnomePie {
 		        
 		        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 		        
-
 		        if (colorize > 0.0) ctx.push_group();
 		        
 		        ctx.rotate(layer.rotation);
 		        ctx.scale(max_scale, max_scale);
-		        ctx.set_source_surface(layer.image, -0.5*layer.image.get_width()-1, -0.5*layer.image.get_height()-1);
-		        ctx.paint_with_alpha(parent.fading*parent.fading*max_alpha);
+		        layer.image.paint_on(ctx, this.alpha.val*max_alpha);
                 
                 if (colorize > 0.0) {
                     ctx.set_operator(Cairo.Operator.ATOP);
-                    ctx.set_source_rgb(parent.active_color.r, parent.active_color.g, parent.active_color.b);
+                    ctx.set_source_rgb(this.color.r, this.color.g, this.color.b);
                     ctx.paint_with_alpha(colorize);
                     
                     ctx.set_operator(Cairo.Operator.OVER);
@@ -106,20 +123,17 @@ namespace GnomePie {
                 
                 ctx.restore();
                 
-                 // draw caption
-		        if (Settings.global.theme.caption && parent.active_caption != null && activity > 0) {
+                // draw caption
+		        if (Settings.global.theme.caption && caption != null && this.activity.val > 0) {
         		    ctx.save();
         		    ctx.identity_matrix();
         		    int pos = (int)((fmax(2*Settings.global.theme.radius + 4*Settings.global.theme.slice_radius, 2*Settings.global.theme.center_radius))/2);
 		            ctx.translate(pos, (int)Settings.global.theme.caption_position + pos); 
-		            ctx.set_source_surface(parent.active_caption, (int)(-parent.active_caption.get_width()*0.5), (int)(-parent.active_caption.get_height()*0.5));
-		            ctx.paint_with_alpha(parent.fading*parent.fading*activity);
+		            caption.paint_on(ctx, this.activity.val);
 		            ctx.restore();
 		        }
             }
-
         }
-        
     }
 
 }

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<theme name="Unity" description="A theme made for the Unity interface of Ubuntu" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="130" maxZoom="1.1" zoomRange="0.1" transitionTime="0.2" springiness="1.5" 
+<theme name="Bright" description="An elegant theme." author="Simon Schneegans" email="josi.schneegans@vr-web.de">
+    <ring radius="120" maxZoom="1.1" zoomRange="0.1" transitionTime="0.2" springiness="1.5" 
           fadeInTime="0.3" fadeOutTime="0.3" fadeInZoom="1.5" fadeOutZoom="0.7" fadeInRotation="0.5" fadeOutRotation="-0.7">
         <center radius="80" activeRadius="55">
             <center_layer file="ring.svg" 
                           active_scale="0.8"   active_rotationMode="auto"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"
                           inactive_scale="0.8" inactive_rotationMode="auto" inactive_rotationSpeed="0" inactive_colorize="false" inactive_alpha="1.0" />
             <center_layer file="arrow.svg" 
-                          active_scale="1.0"   active_rotationMode="turn_to_mouse"   active_rotationSpeed="15.0"    active_colorize="false"    active_alpha="1.0" 
-                          inactive_scale="1.0" inactive_rotationMode="auto" inactive_rotationSpeed="0.0"  inactive_colorize="false" inactive_alpha="0.0" />
+                          active_scale="1.0"   active_rotationMode="turn_to_mouse"   active_rotationSpeed="15.0"    active_colorize="true"    active_alpha="1.0" 
+                          inactive_scale="1.0" inactive_rotationMode="auto" inactive_rotationSpeed="0.0"  inactive_colorize="true" inactive_alpha="0.0" />
         </center>
         <slices radius="26">
             <activeSlice>
@@ -23,7 +23,7 @@
                 <slice_layer type="icon" scale="0.9" colorize="false" />
             </inactiveSlice>
         </slices>
-        <caption position="0" fontSize="12" maxSize="100"/>
+        <caption position="0" fontSize="12" maxSize="90" color="#000"/>
     </ring>
 </theme>
 

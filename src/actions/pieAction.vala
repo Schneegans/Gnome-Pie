@@ -17,18 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+    // this Action opens another pie
     public class PieAction : Action {
 	    	
-	    private Pie pie;
+	    private string pie_name {private get; private set;}
 
-	    public PieAction(string name, string icon_name, Pie pie) {
+	    public PieAction(string name, string icon_name, string pie_name) {
 	        base(name, icon_name);
-	        
-	        this.pie = pie;
+	        this.pie_name = pie_name;
 	    }
 
-	    public override void execute() {
-            this.pie.show();
+	    public override void execute() {	    
+	        var manager = new PieManager();
+	        manager.open_pie(pie_name);
         } 
     }
 

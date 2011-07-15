@@ -12,7 +12,7 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http:www.gnu.org/licenses/>. 
 */
 
 using GLib.Math;
@@ -32,6 +32,11 @@ namespace GnomePie {
         public double transition_time  {get; private set; default=0.5;}
         public double fade_in_time     {get; private set; default=0.2;}
         public double fade_out_time    {get; private set; default=0.1;}
+        public double fade_in_zoom     {get; private set; default=1.0;}
+        public double fade_out_zoom    {get; private set; default=1.0;}
+        public double fade_in_rotation {get; private set; default=0.0;}
+        public double fade_out_rotation{get; private set; default=0.0;}
+        public double springiness      {get; private set; default=0.0;}
         public double center_radius    {get; private set; default=90.0;}
         public double active_radius    {get; private set; default=45.0;}
         public double slice_radius     {get; private set; default=32.0;}
@@ -137,6 +142,21 @@ namespace GnomePie {
                         break;
                     case "fadeouttime":
                         fade_out_time = double.parse(attr_content);
+                        break;
+                    case "fadeinzoom":
+                        fade_in_zoom = double.parse(attr_content);
+                        break;
+                    case "fadeoutzoom":
+                        fade_out_zoom = double.parse(attr_content);
+                        break;
+                    case "fadeinrotation":
+                        fade_in_rotation = double.parse(attr_content);
+                        break;
+                    case "fadeoutrotation":
+                        fade_out_rotation = double.parse(attr_content);
+                        break;
+                    case "springiness":
+                        springiness = double.parse(attr_content);
                         break;
                     default:
                         warning("Invalid attribute \"" + attr_name + "\" in <ring> element!");
@@ -307,7 +327,7 @@ namespace GnomePie {
             }
             
             double max_scale = fmax(active_scale, inactive_scale);
-            Cairo.ImageSurface image = IconLoader.load("themes/" + directory + "/" + file, 2*(int)((double)center_radius*max_scale));
+            var image = new Image.from_file("themes/" + directory + "/" + file, 2*(int)((double)center_radius*max_scale));
             
             if (image != null) {
                 center_layers.add(new CenterLayer(image, active_scale/max_scale,   active_rotation_speed,   active_alpha,   active_colorize,   active_rotation_mode, 
@@ -352,18 +372,12 @@ namespace GnomePie {
                             }
                         }
                         
-                        Cairo.ImageSurface image = null;
+                        Image image = null;
                         int size = 2*(int)((double)slice_radius*scale*max_zoom);
                         
-                        if (file == "" && is_icon == true) {
-                            image = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-                            var ctx  = new Cairo.Context(image);
-                            ctx.set_source_rgb(1, 1, 1);
-                            ctx.paint();
-                        } else {
-                            image = IconLoader.load("themes/" + directory + "/" + file, size);
-                        }
-                            
+                        if (file == "" && is_icon == true) image = new Image.empty(size, new Color.from_rgb(1, 1, 1));
+                        else                               image = new Image.from_file("themes/" + directory + "/" + file, size);
+                                                    
                         if (image != null) {
                             if (slice->name.down() == "activeslice") {
                                 active_slice_layers.add(new SliceLayer(image, colorize, is_icon));

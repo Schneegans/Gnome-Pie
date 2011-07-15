@@ -17,25 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    public class AppAction : Action {
-	    	
-	    private string _command;
-
-	    public AppAction(string name, string icon_name, string command) {
-	        base(name, icon_name);
-	        
-	        _command   = command;
-	    }
-
-	    public override void execute() {
-	    
-            try{
-                var item = GLib.AppInfo.create_from_commandline(_command, null, GLib.AppInfoCreateFlags.NONE);
-                item.launch(null, null);
-        	} catch (Error e) {
-		        warning (e.message);
-	        }
-        } 
+    public class SliceLayer : GLib.Object {
+        
+        public Image image   {get; set;}
+        
+        public bool colorize {get; private set; }
+        public bool is_icon  {get; private set;}
+        
+        public SliceLayer(Image image, bool colorize, bool is_icon) {
+            this.image = image;
+            this.colorize = colorize;
+            this.is_icon = is_icon;
+        }
     }
 
 }

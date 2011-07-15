@@ -16,18 +16,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
-
-    public class KeyAction : Action {
-	    	
-	    private string key_stroke {private get; private set;}
-
-	    public KeyAction(string name, string icon_name, string key_stroke) {
-	        base(name, icon_name);
-	        this.key_stroke = key_stroke;
-	    }
-
-	    public override void execute() {
-	        Key.press(key_stroke);
-	    }
+	
+    namespace Plugins {
+        
+        namespace Bookmarks {
+            
+            public void create(string name, string hotkey) {
+            
+            }
+        }
+        
     }
 }

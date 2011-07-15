@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="Slim" description="Well... quite simplistic" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="100" maxZoom="1.3" zoomRange="0.2" transitionTime="0.2" fadeInTime="0.3" fadeOutTime="0.3">
+    <ring radius="120" maxZoom="1.3" zoomRange="0.2" transitionTime="0.2" springiness="1.5" 
+          fadeInTime="0.3" fadeOutTime="0.3" fadeInZoom="0.8" fadeOutZoom="0.8" fadeInRotation="0.3" fadeOutRotation="-0.3">
         <center radius="120" activeRadius="35">
             <center_layer file="bg.svg" 
                           active_scale="1.0"   active_rotationMode="auto"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1"

@@ -43,8 +43,6 @@ set(CFLAGS
 )
 add_definitions(${CFLAGS})
 
-#set(CMAKE_EXE_LINKER_FLAGS  ${CMAKE_EXE_LINKER_FLAGS} -pg)
-
 set(LIBS
 	${GTK_LIBRARIES}
 	${CAIRO_LIBRARIES}

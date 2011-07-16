@@ -22,7 +22,7 @@ namespace GnomePie {
     public abstract class Window : Gtk.Window {
     
         // stores all key bindings associated with this window
-        private Key.BindingManager keys {private get; private set;}
+        private BindingManager keys {private get; private set;}
     
         // c'tor
         public Window(string stroke) {
@@ -43,7 +43,7 @@ namespace GnomePie {
             this.set_size();
             this.reposition();
             
-            this.keys = new Key.BindingManager();
+            this.keys = new BindingManager();
             
             Settings.global.notify["open-at-mouse"].connect((s, p) => {
                 this.reposition();

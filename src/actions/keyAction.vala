@@ -20,15 +20,15 @@ namespace GnomePie {
     // this type of Action "presses" a key stroke
     public class KeyAction : Action {
 	    	
-	    private string key_stroke {private get; private set;}
+	    private Key key {private get; private set;}
 
 	    public KeyAction(string name, string icon_name, string key_stroke) {
 	        base(name, icon_name);
-	        this.key_stroke = key_stroke;
+	        this.key = new Key(key_stroke);
 	    }
 
 	    public override void execute() {
-	        Key.press(key_stroke);
+	        key.press();
 	    }
     }
 }

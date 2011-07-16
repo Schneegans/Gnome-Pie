@@ -17,8 +17,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    // a namespace which can be used to "press" keys.
-    namespace Key {
+    // a class which can be used to "press" keys.
+    class Key {
     
         private X.Display display;
         private int shift_code;
@@ -26,29 +26,36 @@ namespace GnomePie {
         private int alt_code;
         private int super_code;
         
-        private bool need_init = true;
+        private int key_code;
+        private Gdk.ModifierType modifiers;
+        
+        public Key(string stroke) {
+            display = new X.Display();
+            
+            uint keysym;
+            Gtk.accelerator_parse(stroke, out keysym, out this.modifiers);
+            this.key_code = display.keysym_to_keycode(keysym);
+            
+            this.shift_code =  this.display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
+            this.ctrl_code  =  this.display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
+            this.alt_code  =   this.display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
+            this.super_code  = this.display.keysym_to_keycode(Gdk.keyval_from_name("Super_L"));
+        }
 
         // simulates a given keystroke 
-        public void press(string stroke) {
-            
-            if (need_init) init();
+        public void press() {
 
-	        uint keysym;
-            Gdk.ModifierType modifiers;
-            Gtk.accelerator_parse(stroke, out keysym, out modifiers);
-            int keycode = display.keysym_to_keycode(keysym);
-            
             Gdk.ModifierType current_modifiers = get_modifiers();
 
             press_modifiers(current_modifiers, false);
-            press_modifiers(modifiers, true);
+            press_modifiers(this.modifiers, true);
             
             display.flush();
 
-            X.Test.fake_key_event(display, keycode, true, 0);
-            X.Test.fake_key_event(display, keycode, false, 0);
+            X.Test.fake_key_event(this.display, this.key_code, true, 0);
+            X.Test.fake_key_event(this.display, this.key_code, false, 0);
 	
-	        press_modifiers(modifiers, false);
+	        press_modifiers(this.modifiers, false);
 	        press_modifiers(current_modifiers, true);
 
 	        display.flush();
@@ -62,27 +69,16 @@ namespace GnomePie {
         
         private void press_modifiers(Gdk.ModifierType modifiers, bool down) {
             if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0)
-                X.Test.fake_key_event(display, ctrl_code, down, 0);
+                X.Test.fake_key_event(this.display, this.ctrl_code, down, 0);
 	
 	        if ((modifiers & Gdk.ModifierType.SHIFT_MASK) > 0)
-                X.Test.fake_key_event(display, shift_code, down, 0);
+                X.Test.fake_key_event(this.display, this.shift_code, down, 0);
                 
             if ((modifiers & Gdk.ModifierType.MOD1_MASK) > 0)
-                X.Test.fake_key_event(display, alt_code, down, 0);
+                X.Test.fake_key_event(this.display, this.alt_code, down, 0);
 	
 	        if ((modifiers & Gdk.ModifierType.SUPER_MASK) > 0)
-                X.Test.fake_key_event(display, super_code, down, 0);
-        }
-
-        private void init() {
-            display = new X.Display();
-            
-            shift_code =  display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
-            ctrl_code  =  display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
-            alt_code  =   display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
-            super_code  = display.keysym_to_keycode(Gdk.keyval_from_name("Super_L"));
-            
-            need_init = false;
+                X.Test.fake_key_event(this.display, this.super_code, down, 0);
         }
 	}
 }

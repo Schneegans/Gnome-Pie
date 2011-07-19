@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="Funky" description="Just testing what these themes can do..." author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="100" maxZoom="1.3" zoomRange="0.3" transitionTime="0.2" springiness="2.5" 
+    <ring radius="80" maxZoom="1.3" zoomRange="0.3" transitionTime="0.2" springiness="2.5"
           fadeInTime="0.3" fadeOutTime="0.3" fadeInZoom="1.5" fadeOutZoom="0.4" fadeInRotation="0.5" fadeOutRotation="-0.7">
         <center radius="100" activeRadius="40">
             <center_layer file="bg.svg" 

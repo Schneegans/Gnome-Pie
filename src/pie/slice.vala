@@ -104,14 +104,11 @@ namespace GnomePie {
 		    
 	        ctx.save();
 	        
-	        // TODO increase radius for very full pies (Problem: Window radius has to be increased as well...)
 	        double radius = Settings.global.theme.radius;
 	        
-	        /*debug("max_rad: %f act_rad: %f", 2.0*PI/parent.slice_count(), 2.0*atan(Settings.global.theme.slice_radius/radius));
-	        
-	        if (atan(Settings.global.theme.slice_radius/radius) + 0.15 > PI/parent.slice_count()) {
-	            radius = Settings.global.theme.slice_radius/tan(PI/parent.slice_count() - 0.15*0.5);
-	        }*/
+	        if (atan(Settings.global.theme.slice_radius*1.3/(radius/Settings.global.theme.max_zoom)) > PI/parent.slice_count()) {
+	            radius = Settings.global.theme.slice_radius*1.3/tan(PI/parent.slice_count())*Settings.global.theme.max_zoom;
+	        }
 	        
 	        ctx.scale(scale.val*fade_scale.val, scale.val*fade_scale.val);
 	        ctx.translate(cos(direction)*radius, sin(direction)*radius);

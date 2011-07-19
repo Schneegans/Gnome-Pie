@@ -127,7 +127,7 @@ namespace GnomePie {
 		        if (Settings.global.theme.caption && caption != null && this.activity.val > 0) {
         		    ctx.save();
         		    ctx.identity_matrix();
-        		    int pos = (int)((fmax(2*Settings.global.theme.radius + 4*Settings.global.theme.slice_radius, 2*Settings.global.theme.center_radius))/2);
+        		    int pos = this.parent.height_request/2;
 		            ctx.translate(pos, (int)Settings.global.theme.caption_position + pos); 
 		            caption.paint_on(ctx, this.activity.val);
 		            ctx.restore();

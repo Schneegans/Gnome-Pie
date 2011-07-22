@@ -20,13 +20,27 @@ namespace GnomePie {
     public class GnomePieAboutDialog: Gtk.AboutDialog {
     
         public GnomePieAboutDialog () {
+            string path = "icons/";
+            try {
+                path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/icons/";
+            } catch (GLib.FileError e) {
+                warning("Failed to get path of executable!");
+            }
+            
+            Gdk.Pixbuf? pixbuf = null;
+            try {
+                pixbuf = new Gdk.Pixbuf.from_file_at_size(path + "gnome-pie.svg", 64, 64);
+            } catch (GLib.Error e) {
+                warning("Failed to load about icon!");
+            }
+            
             string[] devs = {"Simon Schneegans <simon.schneegans@uni-weimar.de>"};
             string[] artists = devs;
             GLib.Object (artists : artists,
                          authors : devs,
                          copyright : "Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>",
                          program_name: "Gnome-Pie",
-                         logo_icon_name : "gnome-do",
+                         logo : pixbuf,
                          version: "0.1");
         }
     }

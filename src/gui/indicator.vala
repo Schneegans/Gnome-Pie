@@ -34,7 +34,16 @@ namespace GnomePie {
         
         // creates an appindicator sitting in the panel...
         public Indicator() {
-            this.indicator = new AppIndicator.Indicator("Gnome-Pie", "indicator-applet", AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            string path = "";
+            string icon = "indicator-applet";
+            try {
+                path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/icons";
+                icon = "gnome-pie-indicator";
+            } catch (GLib.FileError e) {
+                warning("Failed to get path of executable!");
+            }
+
+            this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon, AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
             this.prefs = new Preferences();
             
             var menu = new Gtk.Menu();

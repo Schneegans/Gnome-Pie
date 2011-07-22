@@ -24,15 +24,15 @@ namespace GnomePie {
         public bool    active   {get; private set; default = false;}
         public Image   caption  {get; private set;}
         
-	    private Action action       {private get; private set;}
-	    private unowned Pie parent  {private get; private set;}
-	    private int    position     {private get; private set;}
+	    private Action      action;
+	    private unowned Pie parent;
+	    private int         position;
 	    
-	    private AnimatedValue fade          {private get; private set;}
-	    private AnimatedValue scale         {private get; private set;}
-	    private AnimatedValue alpha         {private get; private set;}
-	    private AnimatedValue fade_rotation {private get; private set;}
-	    private AnimatedValue fade_scale    {private get; private set;}
+	    private AnimatedValue fade;
+	    private AnimatedValue scale;
+	    private AnimatedValue alpha;
+	    private AnimatedValue fade_rotation;
+	    private AnimatedValue fade_scale;
 
 	    public Slice(Action action, Pie parent) {
 	        this.parent = parent;
@@ -106,8 +106,8 @@ namespace GnomePie {
 	        
 	        double radius = Settings.global.theme.radius;
 	        
-	        if (atan(Settings.global.theme.slice_radius*1.3/(radius/Settings.global.theme.max_zoom)) > PI/parent.slice_count()) {
-	            radius = Settings.global.theme.slice_radius*1.3/tan(PI/parent.slice_count())*Settings.global.theme.max_zoom;
+	        if (atan((Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)/(radius/Settings.global.theme.max_zoom)) > PI/parent.slice_count()) {
+	            radius = (Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)/tan(PI/parent.slice_count())*Settings.global.theme.max_zoom;
 	        }
 	        
 	        ctx.scale(scale.val*fade_scale.val, scale.val*fade_scale.val);

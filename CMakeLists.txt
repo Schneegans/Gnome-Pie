@@ -39,7 +39,7 @@ set(CFLAGS
 	${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
 	-O3 -s
-#-g
+#    -g
 )
 add_definitions(${CFLAGS})
 

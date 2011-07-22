@@ -20,7 +20,7 @@ namespace GnomePie {
     // this type of Action launches an application
     public class AppAction : Action {
 	    	
-	    private string command {private get; private set;}
+	    private string command;
 
 	    public AppAction(string name, string icon_name, string command) {
 	        base(name, icon_name);

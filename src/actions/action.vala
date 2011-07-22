@@ -26,7 +26,7 @@ namespace GnomePie {
 	    public Color  color         {get; private set;}
 	    public string name          {get; private set;}
 	    	
-	    private string icon_name    {private get; private set;}
+	    private string icon_name;
 
 	    public Action(string name, string icon_name) {
 	        this.name      = name;

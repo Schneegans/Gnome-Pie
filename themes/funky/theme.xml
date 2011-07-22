@@ -20,7 +20,7 @@
                           active_scale="1.0"     active_rotationMode="auto"   active_rotationSpeed="0"  active_colorize="false"    active_alpha="0.5" 
                           inactive_scale="1.0" inactive_rotationMode="auto" inactive_rotationSpeed="0"  inactive_colorize="false" inactive_alpha="0.0" />
         </center>
-        <slices radius="30">
+        <slices radius="30" minGap="0">
             <activeSlice>
                 <slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="false" />
                 <slice_layer type="file" file="icon_fg.svg"   scale="1"   colorize="true" />

@@ -20,7 +20,7 @@ namespace GnomePie {
     // this type of Action "presses" a key stroke
     public class KeyAction : Action {
 	    	
-	    private Key key {private get; private set;}
+	    private Key key;
 
 	    public KeyAction(string name, string icon_name, string key_stroke) {
 	        base(name, icon_name);

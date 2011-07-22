@@ -40,6 +40,7 @@ namespace GnomePie {
         public double center_radius    {get; private set; default=90.0;}
         public double active_radius    {get; private set; default=45.0;}
         public double slice_radius     {get; private set; default=32.0;}
+        public double slice_gap        {get; private set; default=14.0;}
         public bool   caption          {get; private set; default=false;}
         public double caption_size     {get; private set; default=100.0;}
         public double font_size        {get; private set; default=12.0;}
@@ -223,6 +224,9 @@ namespace GnomePie {
                 switch (attr_name) {
                      case "radius":
                         slice_radius = double.parse(attr_content) * Settings.global.global_scale;
+                        break;
+                    case "mingap":
+                        slice_gap = double.parse(attr_content) * Settings.global.global_scale;
                         break;
                     default:
                         warning("Invalid attribute \"" + attr_name + "\" in <slices> element!");

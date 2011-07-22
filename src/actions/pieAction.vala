@@ -20,7 +20,7 @@ namespace GnomePie {
     // this Action opens another pie
     public class PieAction : Action {
 	    	
-	    private string pie_name {private get; private set;}
+	    private string pie_name;
 
 	    public PieAction(string name, string icon_name, string pie_name) {
 	        base(name, icon_name);

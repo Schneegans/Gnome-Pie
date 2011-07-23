@@ -43,7 +43,8 @@ namespace GnomePie {
                 warning("Failed to get path of executable!");
             }
 
-            this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon, AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
+            this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon, 
+                                           AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
             this.prefs = new Preferences();
             
             var menu = new Gtk.Menu();

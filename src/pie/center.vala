@@ -65,17 +65,25 @@ namespace GnomePie {
 		    
 		        ctx.save();
 
-                double active_speed       = (layer.active_rotation_mode == CenterLayer.RotationMode.AUTO) ? layer.active_rotation_speed : 0.0;
-                double inactive_speed     = (layer.inactive_rotation_mode == CenterLayer.RotationMode.AUTO) ? layer.inactive_rotation_speed : 0.0;
-		        double max_scale          = layer.active_scale*this.activity.val + layer.inactive_scale*(1.0-this.activity.val);
-                double max_alpha          = layer.active_alpha*this.activity.val + layer.inactive_alpha*(1.0-this.activity.val);
-                double colorize           = ((layer.active_colorize == true) ? this.activity.val : 0.0) + ((layer.inactive_colorize == true) ? 1.0 - this.activity.val : 0.0);
-                double max_rotation_speed = active_speed*this.activity.val + inactive_speed*(1.0-this.activity.val);
-                CenterLayer.RotationMode rotation_mode = ((this.activity.val > 0.5) ? layer.active_rotation_mode : layer.inactive_rotation_mode);
+                double active_speed = (layer.active_rotation_mode == CenterLayer.RotationMode.AUTO) ? 
+                    layer.active_rotation_speed : 0.0;
+                double inactive_speed = (layer.inactive_rotation_mode == CenterLayer.RotationMode.AUTO) ? 
+                    layer.inactive_rotation_speed : 0.0;
+		        double max_scale = layer.active_scale*this.activity.val 
+		            + layer.inactive_scale*(1.0-this.activity.val);
+                double max_alpha = layer.active_alpha*this.activity.val 
+                    + layer.inactive_alpha*(1.0-this.activity.val);
+                double colorize = ((layer.active_colorize == true) ? this.activity.val : 0.0) 
+                    + ((layer.inactive_colorize == true) ? 1.0 - this.activity.val : 0.0);
+                double max_rotation_speed = active_speed*this.activity.val 
+                    + inactive_speed*(1.0-this.activity.val);
+                CenterLayer.RotationMode rotation_mode = ((this.activity.val > 0.5) ? 
+                    layer.active_rotation_mode : layer.inactive_rotation_mode);
 		        
 		        if (rotation_mode == CenterLayer.RotationMode.TO_MOUSE) {
 		            double diff = angle-layer.rotation;
-		            max_rotation_speed = layer.active_rotation_speed*this.activity.val + layer.inactive_rotation_speed*(1.0-this.activity.val);
+		            max_rotation_speed = layer.active_rotation_speed*this.activity.val 
+		                + layer.inactive_rotation_speed*(1.0-this.activity.val);
 		            double smoothy = fabs(diff) < 0.9 ? fabs(diff) + 0.1 : 1.0; 
 		            double step = max_rotation_speed*Settings.global.frame_time*smoothy;
 		            

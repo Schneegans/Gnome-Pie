@@ -40,7 +40,9 @@ namespace GnomePie {
 		    this.quick_action = quick_action;
 		    
 		    Settings.global.notify["theme"].connect((s, p) => {
-                base.set_size((int)((((Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)/tan(PI/slice_count())) + Settings.global.theme.slice_radius)*2*Settings.global.theme.max_zoom));
+                base.set_size((int)((((Settings.global.theme.slice_radius
+                    + Settings.global.theme.slice_gap)/tan(PI/slice_count())) 
+                    + Settings.global.theme.slice_radius)*2*Settings.global.theme.max_zoom));
             });
         }
         
@@ -135,7 +137,9 @@ namespace GnomePie {
         
         public void add_slice(Action action) {
             this.slices.add(new Slice(action, this));
-            base.set_size((int)((((Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)/tan(PI/slice_count())) + Settings.global.theme.slice_radius)*2*Settings.global.theme.max_zoom));
+            base.set_size((int)((((Settings.global.theme.slice_radius
+                + Settings.global.theme.slice_gap)/tan(PI/slice_count())) 
+                + Settings.global.theme.slice_radius)*2*Settings.global.theme.max_zoom));
         } 
         
         public bool has_quick_action() {

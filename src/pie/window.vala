@@ -144,7 +144,9 @@ namespace GnomePie {
         }
         
         public void set_size(int min_size = 0) {
-            int size = (int)(fmax(2*Settings.global.theme.radius + 2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom, 2*Settings.global.theme.center_radius));
+            int size = (int)(fmax(2*Settings.global.theme.radius 
+                        + 2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom, 
+                          2*Settings.global.theme.center_radius));
             size = (int)fmax(size, min_size);
             base.set_size_request (size, size);
         }

@@ -37,8 +37,10 @@ namespace GnomePie {
         
         public double rotation {get; set;}
             
-        public CenterLayer(Image image, double active_scale,   double active_rotation_speed,   double active_alpha,   bool active_colorize,   RotationMode active_rotation_mode,
-                                        double inactive_scale, double inactive_rotation_speed, double inactive_alpha, bool inactive_colorize, RotationMode inactive_rotation_mode) {
+        public CenterLayer(Image image, double active_scale,   double active_rotation_speed,   
+                                        double active_alpha,   bool active_colorize,   RotationMode active_rotation_mode,
+                                        double inactive_scale, double inactive_rotation_speed, 
+                                        double inactive_alpha, bool inactive_colorize, RotationMode inactive_rotation_mode) {
             this.image = image;
             
             this.active_scale = active_scale;

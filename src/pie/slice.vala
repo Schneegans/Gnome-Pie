@@ -45,15 +45,31 @@ namespace GnomePie {
             this.parent.on_fade_in.connect(() => {
                 this.fade =  new AnimatedValue.linear(0.0, 0.0, Settings.global.theme.transition_time);
                 this.alpha = new AnimatedValue.linear(0.0, 1.0, Settings.global.theme.fade_in_time);
-                this.scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 1.0/Settings.global.theme.max_zoom, 1.0/Settings.global.theme.max_zoom, Settings.global.theme.transition_time, Settings.global.theme.springiness);
-                this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, Settings.global.theme.fade_in_zoom, 1.0, Settings.global.theme.fade_in_time, Settings.global.theme.springiness);
-                this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, Settings.global.theme.fade_in_rotation, 0.0, Settings.global.theme.fade_in_time);
+                this.scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
+                                                     1.0/Settings.global.theme.max_zoom, 
+                                                     1.0/Settings.global.theme.max_zoom, 
+                                                     Settings.global.theme.transition_time, 
+                                                     Settings.global.theme.springiness);
+                this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
+                                                     Settings.global.theme.fade_in_zoom, 1.0, 
+                                                     Settings.global.theme.fade_in_time, 
+                                                     Settings.global.theme.springiness);
+                this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
+                                                     Settings.global.theme.fade_in_rotation, 0.0, 
+                                                     Settings.global.theme.fade_in_time);
             });
             
             this.parent.on_fade_out.connect(() => {
                 this.alpha.reset_target(0.0, Settings.global.theme.fade_out_time);
-                this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.IN, this.fade_scale.val, Settings.global.theme.fade_out_zoom, Settings.global.theme.fade_out_time, Settings.global.theme.springiness);
-                this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.IN, this.fade_rotation.val, Settings.global.theme.fade_out_rotation, Settings.global.theme.fade_out_time);
+                this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.IN, 
+                                                     this.fade_scale.val, 
+                                                     Settings.global.theme.fade_out_zoom, 
+                                                     Settings.global.theme.fade_out_time, 
+                                                     Settings.global.theme.springiness);
+                this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.IN, 
+                                                     this.fade_rotation.val, 
+                                                     Settings.global.theme.fade_out_rotation, 
+                                                     Settings.global.theme.fade_out_time);
             });
                 
             Settings.global.notify["theme"].connect((s, p) => {
@@ -87,9 +103,12 @@ namespace GnomePie {
 		        diff = 2 * PI - diff;
 	
 	        if (diff < 2 * PI * Settings.global.theme.zoom_range)
-	            max_scale = (Settings.global.theme.max_zoom/(diff * (Settings.global.theme.max_zoom - 1)/(2 * PI * Settings.global.theme.zoom_range) + 1))/Settings.global.theme.max_zoom;
+	            max_scale = (Settings.global.theme.max_zoom/(diff * (Settings.global.theme.max_zoom - 1)
+	                        /(2 * PI * Settings.global.theme.zoom_range) + 1))
+	                        /Settings.global.theme.max_zoom;
 		    
-		    active = (distance >= Settings.global.theme.active_radius || parent.has_quick_action()) && (diff < PI/parent.slice_count());
+		    active = (distance >= Settings.global.theme.active_radius || parent.has_quick_action()) 
+		          && (diff < PI/parent.slice_count());
             
             max_scale = (parent.active_slice != null ? max_scale : 1.0/Settings.global.theme.max_zoom);
             
@@ -106,8 +125,10 @@ namespace GnomePie {
 	        
 	        double radius = Settings.global.theme.radius;
 	        
-	        if (atan((Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)/(radius/Settings.global.theme.max_zoom)) > PI/parent.slice_count()) {
-	            radius = (Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)/tan(PI/parent.slice_count())*Settings.global.theme.max_zoom;
+	        if (atan((Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)
+	          /(radius/Settings.global.theme.max_zoom)) > PI/parent.slice_count()) {
+	            radius = (Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)
+	                     /tan(PI/parent.slice_count())*Settings.global.theme.max_zoom;
 	        }
 	        
 	        ctx.scale(scale.val*fade_scale.val, scale.val*fade_scale.val);
@@ -156,7 +177,8 @@ namespace GnomePie {
 	        }
 	        
             ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
-	        ctx.move_to((int)(0.5*size - 0.5*extents.width), (int)(0.5*size+0.3*Settings.global.theme.font_size)); 
+	        ctx.move_to((int)(0.5*size - 0.5*extents.width), 
+	                    (int)(0.5*size+0.3*Settings.global.theme.font_size)); 
 	        Color color = Settings.global.theme.caption_color;
             ctx.set_source_rgb(color.r, color.g, color.g);
             ctx.show_text(text);

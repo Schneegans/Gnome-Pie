@@ -33,7 +33,7 @@ namespace GnomePie {
                                                                 GLib.AppInfoCreateFlags.NONE);
                 item.launch(null, null);
         	} catch (Error e) {
-		        warning (e.message);
+		        warning(e.message);
 	        }
         } 
     }

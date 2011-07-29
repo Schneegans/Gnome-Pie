@@ -130,7 +130,7 @@ namespace GnomePie {
                 frame_count++;
                 
                 if(frame_count == (int)Settings.global.refresh_rate) {
-                    //debug("FPS: %f", (double)frame_count/time_count);
+                    //Logger.debug("FPS: %f", (double)frame_count/time_count);
                     frame_count = 0;
                     time_count = 0.0;
                 }

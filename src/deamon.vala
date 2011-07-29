@@ -30,6 +30,9 @@ namespace GnomePie {
 
         public Deamon() { 
         
+            Logger.init();
+            Logger.display_debug=false;
+        
             Intl.bindtextdomain ("gnomepie", "./locales");
             Intl.textdomain ("gnomepie");
                
@@ -47,7 +50,7 @@ namespace GnomePie {
             Posix.signal(Posix.SIGINT, sig_handler);
 			Posix.signal(Posix.SIGTERM, sig_handler);
 			
-			stdout.printf("\nStarted happily...\n");
+			message("Started happily...");
         }
         
         public void run() {
@@ -55,7 +58,8 @@ namespace GnomePie {
         }
         
         private static void sig_handler(int sig) {
-			stdout.printf("\nCaught signal (%d), bye!\n", sig);
+            stdout.printf("\n");
+			message("Caught signal (%d), bye!".printf(sig));
 			Gtk.main_quit();
 		}
 

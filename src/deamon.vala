@@ -31,11 +31,18 @@ namespace GnomePie {
         public Deamon() { 
         
             Logger.init();
-            Logger.display_debug=false;
         
             Intl.bindtextdomain ("gnomepie", "./locales");
             Intl.textdomain ("gnomepie");
-               
+            
+            // append icon search path
+            try {
+                string path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/icons/";
+                Gtk.IconTheme.get_default().append_search_path(path);
+            } catch (GLib.FileError e) {
+                warning("Failed to get path of executable!");
+            }
+            
             var indicator = new Indicator();
             
             Settings.global.notify["show-indicator"].connect((s, p) => {

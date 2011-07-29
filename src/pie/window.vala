@@ -26,22 +26,25 @@ namespace GnomePie {
     
         // c'tor
         public Window(string stroke) {
-            base.set_title("Gnome-Pie");
-            base.set_skip_taskbar_hint(true);
-            base.set_skip_pager_hint(true);
-            base.set_keep_above(true);
-            base.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN);
-            base.set_colormap(screen.get_rgba_colormap());
-            base.set_decorated(false);
-            base.set_app_paintable(true);
-            base.set_resizable(false);
-            base.set_accept_focus(false);
-            base.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
+            this.set_title("Gnome-Pie");
+            this.set_skip_taskbar_hint(true);
+            this.set_skip_pager_hint(true);
+            this.set_keep_above(true);
+            this.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN);
+            this.set_colormap(screen.get_rgba_colormap());
+            this.set_decorated(false);
+            this.set_app_paintable(true);
+            this.set_resizable(false);
+            this.icon_name = "gnome-pie";
+            this.set_accept_focus(false);
+            this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
                             Gdk.EventMask.KEY_RELEASE_MASK |
                             Gdk.EventMask.KEY_PRESS_MASK);
             
             this.set_size();
             this.reposition();
+            
+            
             
             this.keys = new BindingManager();
             
@@ -49,23 +52,23 @@ namespace GnomePie {
                 this.reposition();
             }); 
  
-            base.button_release_event.connect ((e) => {
+            this.button_release_event.connect ((e) => {
                 this.mouse_released((int) e.button, (int) e.x, (int) e.y);
                 return true;
             });
             
-            base.key_release_event.connect ((e) => {
+            this.key_release_event.connect ((e) => {
                 keys.on_key_release(e.keyval, e.state);
                 return true;
             });
             
-            base.key_press_event.connect ((e) => {
+            this.key_press_event.connect ((e) => {
                 keys.on_key_press(e.keyval, e.state);
                 return true;
             });
 
-            base.expose_event.connect(this.draw);
-            base.destroy.connect(Gtk.main_quit);
+            this.expose_event.connect(this.draw);
+            this.destroy.connect(Gtk.main_quit);
             
             if (stroke != "") {
                 keys.bind_global_press(stroke, () => {
@@ -101,16 +104,16 @@ namespace GnomePie {
 
         public virtual void activate_pie() {
             this.unfix_focus();
-	        base.has_focus = 0;
+	        this.has_focus = 0;
         }
         
         public virtual void fade_out() {
             this.unfix_focus();
-	        base.has_focus = 0;
+	        this.has_focus = 0;
         }
 
         public virtual void fade_in() {
-            base.show();
+            this.show();
             this.fix_focus();
 
             int frame_count = 0;
@@ -139,7 +142,7 @@ namespace GnomePie {
 	           // int time_diff = (int)(1000.0/Settings.global.refresh_rate) - (int)(1000.0*Settings.global.frame_time);
 	           // wait =  (time_diff < 1) ? 1 : (uint) time_diff;
 
-	            return base.visible;
+	            return this.visible;
 	        }); 
         }
         
@@ -148,7 +151,7 @@ namespace GnomePie {
                         + 2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom, 
                           2*Settings.global.theme.center_radius));
             size = (int)fmax(size, min_size);
-            base.set_size_request (size, size);
+            this.set_size_request (size, size);
         }
         
         // private methods
@@ -157,17 +160,17 @@ namespace GnomePie {
         }
         
         private void reposition() {
-            if(Settings.global.open_at_mouse) base.set_position(Gtk.WindowPosition.MOUSE);
-            else                              base.set_position(Gtk.WindowPosition.CENTER);
+            if(Settings.global.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
+            else                              this.set_position(Gtk.WindowPosition.CENTER);
         }
         
         // utilities for grabbing focus
         // Code from Gnome-Do/Synapse 
         private void fix_focus() {
             uint32 timestamp = Gtk.get_current_event_time();
-            base.present_with_time(timestamp);
-            base.get_window().raise();
-            base.get_window().focus(timestamp);
+            this.present_with_time(timestamp);
+            this.get_window().raise();
+            this.get_window().focus(timestamp);
 
             int i = 0;
             Timeout.add (100, ()=>{
@@ -181,18 +184,18 @@ namespace GnomePie {
             uint32 time = Gtk.get_current_event_time();
             Gdk.pointer_ungrab(time);
             Gdk.keyboard_ungrab(time);
-            Gtk.grab_remove(base);
+            Gtk.grab_remove(this);
         }
         
         // Code from Gnome-Do/Synapse 
         private bool try_grab_window() {
             uint time = Gtk.get_current_event_time();
-            if (Gdk.pointer_grab (base.get_window(), true,
+            if (Gdk.pointer_grab (this.get_window(), true,
                 Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
                 null, null, time) == Gdk.GrabStatus.SUCCESS) {
                 
-                if (Gdk.keyboard_grab(base.get_window(), true, time) == Gdk.GrabStatus.SUCCESS) {
-                    Gtk.grab_add(base);
+                if (Gdk.keyboard_grab(this.get_window(), true, time) == Gdk.GrabStatus.SUCCESS) {
+                    Gtk.grab_add(this);
                     return true;
                 } else {
                     Gdk.pointer_ungrab(time);

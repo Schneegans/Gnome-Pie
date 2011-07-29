@@ -17,62 +17,41 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    class ThemeList : Gtk.TreeView {
+    class PieList : Gtk.TreeView {
     
         private Gtk.TreeIter active{private get; private set;}
     
-        public ThemeList() {
+        public PieList() {
             GLib.Object();
             
-            var data = new Gtk.ListStore(2, typeof(bool), typeof(string));
+            var data = new Gtk.ListStore(2, typeof(string), typeof(string));
             base.set_model(data);
             base.set_headers_visible(false);
             base.set_rules_hint(true);
             base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
             
-            var check_column = new Gtk.TreeViewColumn();
-            var check_render = new Gtk.CellRendererToggle();
-            check_render.set_radio(true);
-            check_render.width = 32;
-            check_render.set_activatable(true);
-            check_column.pack_start(check_render, true);
-            
-            check_render.toggled.connect((r, path) => {
-                Gtk.TreeIter toggled;
-                data.get_iter(out toggled, new Gtk.TreePath.from_string(path));
-                
-                if (toggled != this.active) {
-                    Timeout.add(10, () => {
-                        int index = int.parse(path);
-                        Settings.global.theme = Settings.global.themes[index];
-                        Settings.global.theme.load();
-                        return false;
-                    });
-                    
-                    data.set(this.active, 0, false); 
-                    data.set(toggled, 0, true);
-                    
-                    this.active = toggled;
-                }
-            });
+            var icon_column = new Gtk.TreeViewColumn();
+            var icon_render = new Gtk.CellRendererPixbuf();
+            icon_render.icon_name = "firefox";
+            icon_render.stock_size = Gtk.IconSize.DIALOG;
+            icon_column.pack_start(icon_render, true);
             
             var theme_column = new Gtk.TreeViewColumn();
             var theme_render = new Gtk.CellRendererText();
             theme_column.pack_start(theme_render, true);
             
-            base.append_column(check_column);
+            base.append_column(icon_column);
             base.append_column(theme_column);
             
-            check_column.add_attribute(check_render, "active", 0);
+            icon_column.add_attribute(icon_render, "icon_name", 0);
             theme_column.add_attribute(theme_render, "markup", 1);
             
             var themes = Settings.global.themes;
             foreach(var theme in themes) {
                 Gtk.TreeIter current;
                 data.append(out current);
-                data.set(current, 0, theme == Settings.global.theme); 
-                data.set(current, 1, "<b>" + theme.name + "</b>\n" + theme.description
-                                     + "  <small> - " + _("by") + " " + theme.author + "</small>"); 
+                data.set(current, 0, "firefox"); 
+                data.set(current, 1, "<b>" + theme.name + "</b>\n" + theme.description); 
                 if(theme == Settings.global.theme)
                     this.active = current;
             }  

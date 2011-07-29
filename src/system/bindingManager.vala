@@ -120,8 +120,6 @@ namespace GnomePie {
      
                 Keybinding binding = new Keybinding(accelerator, keycode, modifiers, down, handler);
                 _global_bindings.add(binding);
-     
-                debug("Successfully bound global key " + accelerator);
             }
         }
         
@@ -168,7 +166,6 @@ namespace GnomePie {
      
         // Unbind given accelerator.
         /*private void unbind(string accelerator) {
-            debug("Unbinding key " + accelerator);
      
             Gdk.Window rootwin = Gdk.get_default_root_window();     
             X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);

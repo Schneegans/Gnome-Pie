@@ -41,7 +41,7 @@ namespace GnomePie {
         }
         
         public void add_pie(string name, Pie pie) {
-            if (name in all_pies)
+            if (all_pies.has_key(name))
                 warning("Failed to add pie \"" + name + "\": Name already exists!");
             else
                 all_pies.set(name, pie);

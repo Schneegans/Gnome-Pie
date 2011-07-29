@@ -60,11 +60,6 @@ namespace GnomePie {
             }
         }
         
-        private static string get_time() {
-            var now = new DateTime.now_local();
-			return "%.2d:%.2d:%.2d".printf(now.get_hour(), now.get_minute(), now.get_second());
-        }
-        
         private static string reset_color() {
 			return "\x001b[0m";
 		}
@@ -79,7 +74,7 @@ namespace GnomePie {
 				var parts = regex.split(message);
 				return " %s%s: %s\n".printf(parts[1], parts[2], parts[3]);
 			}
-			return message;
+			return " " + message;
 		}
 		
 		static void log_func(string? d, LogLevelFlags flags, string message) {

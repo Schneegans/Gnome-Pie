@@ -21,11 +21,12 @@ namespace GnomePie {
         
         // Many thanks to the synapse-project, since some of this code is taken from there!
         public Preferences() {
-            title = _("Gnome-Pie - Settings");
-            set_position(Gtk.WindowPosition.CENTER);
-            set_size_request(550, 550);
-            resizable = false;
-            delete_event.connect(hide_on_delete);
+            this.title = _("Gnome-Pie - Settings");
+            this.set_position(Gtk.WindowPosition.CENTER);
+            this.set_size_request(550, 550);
+            this.resizable = false;
+            this.icon_name = "gnome-pie";
+            this.delete_event.connect(hide_on_delete);
             
             // main container
             var main_vbox = new Gtk.VBox(false, 12);
@@ -155,9 +156,9 @@ namespace GnomePie {
                             scroll.set_shadow_type (Gtk.ShadowType.IN);
                             
                             // pies list
-                            //theme_list = new ThemeList();
-                              //  theme_list.show();
-                                //scroll.add_with_viewport(theme_list);
+                            var pie_list = new PieList();
+                                pie_list.show();
+                                scroll.add_with_viewport(pie_list);
                                 
                             scroll.show();
                             

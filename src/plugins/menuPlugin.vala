@@ -21,16 +21,15 @@ namespace GnomePie {
         
         namespace Menu {
             
-            public void create(string name, string hotkey) {
-                var main = new Pie(hotkey);
+            public void create(Pie pie, string name) {
 
                 var tree = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
                 var root = tree.get_root_directory();
 
-                parse_directory(root, main, name);
+                parse_directory(root, pie, name);
 
                 var manager = new PieManager();
-	            manager.add_pie(name, main);
+	            manager.add_pie(name, pie);
             }
             
             private void parse_directory(GMenu.TreeDirectory dir, Pie pie, string parent_name) {

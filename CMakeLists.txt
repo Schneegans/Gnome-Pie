@@ -37,7 +37,10 @@ set(CFLAGS
 	${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
 	${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
 	${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
+	#for gnome-menu
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
+    # for gettext
+    -DGETTEXT_PACKAGE="gnomepie"
 	-O3 -s
 #    -g
 )

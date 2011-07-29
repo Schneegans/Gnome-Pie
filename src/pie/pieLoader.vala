@@ -38,9 +38,6 @@ namespace GnomePie {
                                 case "pie":
                                     parse_pie(node);
                                     break;
-                                case "plugin":
-                                    parse_plugin(node);
-                                    break;
                                 default:
                                     warning("Invalid child element <" + node_name + "> in <pies> element pies.conf!");
                                     break;
@@ -66,6 +63,7 @@ namespace GnomePie {
         private void parse_pie(Xml.Node* node) {
             string hotkey = "";
             string name = "";
+            string icon = "";
             int    quick_action = -1;
             
         
@@ -82,6 +80,9 @@ namespace GnomePie {
                         break;
                     case "name":
                         name = attr_content;
+                        break;
+                    case "icon":
+                        icon = attr_content;
                         break;
                     default:
                         warning("Invalid setting \"" + attr_name + "\" in pies.conf!");
@@ -144,7 +145,7 @@ namespace GnomePie {
                 }
             }
             
-            Action action=null;
+            Action action = null;
             
             switch (type) {
                 case "app":
@@ -156,50 +157,18 @@ namespace GnomePie {
                 case "pie":
                     action = new PieAction(name, icon, command);
                     break;
+                case "menu":
+                    Plugins.Menu.create(pie, name);
+                    break;
+                case "bookmarks":
+                    Plugins.Bookmarks.create(pie, name);
+                    break;
                 default:
                     warning("Invalid type \"" + type + "\" in pies.conf!");
                     break;
             }
             
             if (action != null) pie.add_slice(action);
-        }
-        
-        private void parse_plugin(Xml.Node* slice) {
-            string type="";
-            string hotkey = "";
-            string name = "";
-        
-            for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
-                string attr_name = attribute->name.down();
-                string attr_content = attribute->children->content;
-
-                switch (attr_name) {
-                    case "type":
-                        type = attr_content;
-                        break;
-                    case "hotkey":
-                        hotkey = attr_content;
-                        break;
-                    case "name":
-                        name = attr_content;
-                        break;
-                    default:
-                        warning("Invalid attribute \"" + attr_name + "\" in <plugin> element in pies.conf!");
-                        break;
-                }
-            }
-            
-            switch(type) {
-                case "menu":
-                    Plugins.Menu.create(name, hotkey);
-                    break;
-                case "bookmarks":
-                    Plugins.Bookmarks.create(name, hotkey);
-                    break;
-                default:
-                    warning("Invalid type option \"" + type + "\" in <plugin> element in pies.conf!");
-                    break;
-            }
         }
     }
 }

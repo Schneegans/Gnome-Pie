@@ -71,7 +71,7 @@ namespace GnomePie {
                 data.append(out current);
                 data.set(current, 0, theme == Settings.global.theme); 
                 data.set(current, 1, "<big>" + theme.name + "</big>\n<small>" + theme.description
-                                     + "  -  <i>by " + theme.author + "</i></small>"); 
+                                     + "  -  <i>" + _("by") + " " + theme.author + "</i></small>"); 
                 if(theme == Settings.global.theme)
                     this.active = current;
             }  

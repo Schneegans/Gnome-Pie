@@ -28,7 +28,11 @@ namespace GnomePie {
             return 0;
         }
 
-        public Deamon() {        
+        public Deamon() { 
+        
+            Intl.bindtextdomain ("gnomepie", "./locales");
+            Intl.textdomain ("gnomepie");
+               
             var indicator = new Indicator();
             
             Settings.global.notify["show-indicator"].connect((s, p) => {

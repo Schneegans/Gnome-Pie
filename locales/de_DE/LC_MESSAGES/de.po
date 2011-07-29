@@ -1,0 +1,70 @@
+# German translations for gnomepie package.
+# Copyright (C) 2011 THE gnomepie'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnomepie package.
+# Simon Schneegans <simon.schneegans@uni-weimar.de>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnomepie 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-07-29 17:02+0200\n"
+"PO-Revision-Date: 2011-07-29 17:03+0200\n"
+"Last-Translator: Simon Schneegans <simon.schneegans@uni-weimar.de>\n"
+"Language-Team: German\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: src/gui/preferences.vala:24
+msgid "Gnome-Pie - Settings"
+msgstr "Gnome-Pie - Einstellungen"
+
+#: src/gui/preferences.vala:46
+msgid "Behavior"
+msgstr "Verhalten"
+
+#: src/gui/preferences.vala:56
+msgid "Startup on Login"
+msgstr "Beim Anmelden starten"
+
+#: src/gui/preferences.vala:62
+msgid "Show Indicator"
+msgstr "Benachichtigungssymbol anzeigen"
+
+#: src/gui/preferences.vala:68
+msgid "Open Pies at Mouse"
+msgstr "Pies an der Maus öffen"
+
+#: src/gui/preferences.vala:74
+msgid "Click to activate a Slice"
+msgstr "Slice-Aktivierung durch klicken"
+
+#: src/gui/preferences.vala:83
+msgid "Global Scale"
+msgstr "Skalierungsfaktor"
+
+#: src/gui/preferences.vala:120
+msgid "Themes"
+msgstr "Themen"
+
+#: src/gui/preferences.vala:141
+msgid "General"
+msgstr "Allgemein"
+
+#: src/gui/preferences.vala:146
+msgid "Pies"
+msgstr "Pie-Einstellungen"
+
+#: src/gui/preferences.vala:173
+msgid ""
+"You can drag'n'drop Slices from \n"
+"one Pie to another."
+msgstr ""
+"Du kannst die Slices von einer Pie\n"
+"in andere ziehen."
+
+#: src/gui/themeList.vala:74
+msgid "by"
+msgstr "von"

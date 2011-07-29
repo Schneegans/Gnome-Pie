@@ -19,9 +19,9 @@ namespace GnomePie {
 
     public class Preferences : Gtk.Window {
         
-        // Many thanks to the synapse-project, since much of this code is taken from there!
+        // Many thanks to the synapse-project, since some of this code is taken from there!
         public Preferences() {
-            title = "Gnome-Pie - Settings";
+            title = _("Gnome-Pie - Settings");
             set_position(Gtk.WindowPosition.CENTER);
             set_size_request(550, 550);
             resizable = false;
@@ -43,7 +43,7 @@ namespace GnomePie {
                         var behavior_frame = new Gtk.Frame(null);
                             behavior_frame.set_shadow_type(Gtk.ShadowType.NONE);
                             var behavior_frame_label = new Gtk.Label(null);
-                            behavior_frame_label.set_markup(Markup.printf_escaped ("<b>%s</b>", "Behavior"));
+                            behavior_frame_label.set_markup(Markup.printf_escaped ("<b>%s</b>", _("Behavior")));
                             behavior_frame.set_label_widget(behavior_frame_label);
 
                             var behavior_vbox = new Gtk.VBox (false, 6);
@@ -53,25 +53,25 @@ namespace GnomePie {
                             behavior_frame.add (align);
 
                             // Autostart checkbox
-                            var autostart = new Gtk.CheckButton.with_label ("Startup on Login");
+                            var autostart = new Gtk.CheckButton.with_label (_("Startup on Login"));
                                 //autostart.active = 
                                 autostart.toggled.connect(autostart_toggled);
                                 behavior_vbox.pack_start(autostart, false);
 
                             // Indicator icon 
-                            var indicator = new Gtk.CheckButton.with_label ("Show Indicator");
+                            var indicator = new Gtk.CheckButton.with_label (_("Show Indicator"));
                                 indicator.active = Settings.global.show_indicator;
                                 indicator.toggled.connect(indicator_toggled);
                                 behavior_vbox.pack_start(indicator, false);
                                 
                             // Open Pies at Mouse
-                            var open_at_mouse = new Gtk.CheckButton.with_label ("Open Pies at Mouse");
+                            var open_at_mouse = new Gtk.CheckButton.with_label (_("Open Pies at Mouse"));
                                 open_at_mouse.active = Settings.global.open_at_mouse;
                                 open_at_mouse.toggled.connect(open_at_mouse_toggled);
                                 behavior_vbox.pack_start(open_at_mouse, false);
                                 
                             // Click to activate
-                            var click_to_activate = new Gtk.CheckButton.with_label ("Click to activate a Slice");
+                            var click_to_activate = new Gtk.CheckButton.with_label (_("Click to activate a Slice"));
                                 click_to_activate.active = Settings.global.click_to_activate;
                                 click_to_activate.toggled.connect(click_to_activate_toggled);
                                 behavior_vbox.pack_start(click_to_activate, false);
@@ -80,7 +80,7 @@ namespace GnomePie {
                             var slider_hbox = new Gtk.HBox (false, 6);
                                 behavior_vbox.pack_start(slider_hbox);
                                 
-                                var scale_label = new Gtk.Label("Global Scale");
+                                var scale_label = new Gtk.Label(_("Global Scale"));
                                     slider_hbox.pack_start(scale_label, false, false);
                                 
                                 var scale_slider = new Gtk.HScale.with_range(0.5, 2.0, 0.05);
@@ -117,7 +117,7 @@ namespace GnomePie {
                         var theme_frame = new Gtk.Frame(null);
                             theme_frame.set_shadow_type(Gtk.ShadowType.NONE);
                             var theme_frame_label = new Gtk.Label(null);
-                            theme_frame_label.set_markup(Markup.printf_escaped("<b>%s</b>", "Themes"));
+                            theme_frame_label.set_markup(Markup.printf_escaped("<b>%s</b>", _("Themes")));
                             theme_frame.set_label_widget(theme_frame_label);
                             
                             // scrollable frame
@@ -138,16 +138,57 @@ namespace GnomePie {
                              scroll.show();
 
                     general_tab.pack_start (theme_frame, true, true);
-                    tabs.append_page(general_tab, new Gtk.Label("General"));
+                    tabs.append_page(general_tab, new Gtk.Label(_("General")));
                     
                     // pies tab
                     var pies_tab = new Gtk.VBox(false, 6);
                         pies_tab.border_width = 12;
-                        tabs.append_page(pies_tab, new Gtk.Label("Pies"));
+                        tabs.append_page(pies_tab, new Gtk.Label(_("Pies")));
                         
-                        var nothing_here = new Gtk.Label(null);
-                        nothing_here.set_markup(Markup.printf_escaped("<b>%s</b>", "Well... here is nothing. For now."));
-                        pies_tab.pack_start(nothing_here);
+                        // scrollable frame
+                        scroll = new Gtk.ScrolledWindow (null, null);
+                            align = new Gtk.Alignment(0.5f, 0.5f, 1.0f, 1.0f);
+                            align.add(scroll);
+                            pies_tab.add(align);
+
+                            scroll.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+                            scroll.set_shadow_type (Gtk.ShadowType.IN);
+                            
+                            // pies list
+                            //theme_list = new ThemeList();
+                              //  theme_list.show();
+                                //scroll.add_with_viewport(theme_list);
+                                
+                            scroll.show();
+                            
+                        // bottom box
+                        var info_box = new Gtk.HBox (false, 6);
+                        
+                            // info image
+                            var info_image = new Gtk.Image.from_stock (Gtk.Stock.INFO, Gtk.IconSize.MENU);
+                                info_box.pack_start (info_image, false);
+
+                            // info label
+                            var info_label = new Gtk.Label (Markup.printf_escaped ("<span size=\"small\">%s</span>",
+                                _("You can drag'n'drop Slices from \none Pie to another.")));
+                                info_label.set_use_markup(true);
+                                info_label.set_alignment (0.0f, 0.5f);
+                                info_label.wrap = true;
+                                info_box.pack_start (info_label);
+                            
+                            // add Button
+                            var add_button = new Gtk.Button();
+                                var add_image = new Gtk.Image.from_stock (Gtk.Stock.ADD, Gtk.IconSize.LARGE_TOOLBAR);
+                                add_button.add(add_image);
+                                add_button.clicked.connect (() => { 
+                                    debug("CLICK!");
+                                });
+                                info_box.pack_end (add_button, false, false);
+                            
+                            info_box.show_all();
+                            pies_tab.pack_start (info_box, false);
+                         
+                    //pies_tab.pack_start (pies_tab, true, true);    
                     
                     main_vbox.pack_start(tabs);
 

@@ -12,7 +12,8 @@ It is inspired by the an addon written for the game World of Warcraft.
 #                   About this Branch                              #
 ####################################################################
 
-This is the master Branch of Gnome-Pie.
+This is the master Branch of Gnome-Pie. A recent "stable" version 
+will be in here.
 
 ####################################################################
 #                        Compiling                                 #
@@ -23,21 +24,17 @@ First of all, install all dependancies:
 sudo apt-get install libgtk2.0-dev libcairo2-dev libappindicator-dev
 libgee-dev libxml2-dev libxtst-dev libgnome-menu-dev valac cmake
 
-Then build Gnome-Pie:
+Then build and launch Gnome-Pie by typing:
 
-cd Gnome-Pie
-mkdir build
-cd build
-cmake ..
-cd ..
-./gnome-pie
+./make.sh
 
 ####################################################################
 #                          Usage                                   #
 ####################################################################
 
-Now you may launch it by Pressing <Alt>V to open up the default ring.
-Any customization is not possible yet :D
+Now you may launch it by Pressing <ctrl><Alt>F to open up the default 
+ring. Any customization via a GUI is not possible yet :D
+... but soon!
 
 ####################################################################
 #                        License                                   #
@@ -45,17 +42,17 @@ Any customization is not possible yet :D
 
 Copyright (C) 2011 Simon Schneegans
 
-This program is free software: you can redistribute it and/or modify it
-under the terms of the GNU General Public License as published by the Free
-Software Foundation, either version 3 of the License, or (at your option)
-any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or 
+(at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT
-ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-more details.
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of 
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 

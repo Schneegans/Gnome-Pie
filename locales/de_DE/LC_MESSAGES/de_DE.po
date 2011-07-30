@@ -1,68 +1,70 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Simon Schneegans <simon.schneegans@uni-weimar.de>
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# German translations for gnomepie package.
+# Copyright (C) 2011 THE gnomepie'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnomepie package.
+# Simon Schneegans <simon.schneegans@uni-weimar.de>, 2011.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-30 16:09+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"POT-Creation-Date: 2011-07-30 13:46+0200\n"
+"PO-Revision-Date: 2011-07-30 15:13+0200\n"
+"Last-Translator: Simon Schneegans <simon.schneegans@uni-weimar.de>\n"
+"Language-Team: German\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../src/gui/preferences.vala:24
 msgid "Gnome-Pie - Settings"
-msgstr ""
+msgstr "Gnome-Pie - Einstellungen"
 
 #: ../src/gui/preferences.vala:47
 msgid "Behavior"
-msgstr ""
+msgstr "Verhalten"
 
 #: ../src/gui/preferences.vala:57
 msgid "Startup on Login"
-msgstr ""
+msgstr "Beim Anmelden ausführen"
 
 #: ../src/gui/preferences.vala:63
 msgid "Show Indicator"
-msgstr ""
+msgstr "Benachrichtigungssymbol anzeigen"
 
 #: ../src/gui/preferences.vala:69
 msgid "Open Pies at Mouse"
-msgstr ""
+msgstr "Pies an der Mausposition öffnen"
 
 #: ../src/gui/preferences.vala:75
 msgid "Click to activate a Slice"
-msgstr ""
+msgstr "Slice-Aktivierung durch anklicken"
 
 #: ../src/gui/preferences.vala:84
 msgid "Global Scale"
-msgstr ""
+msgstr "Skalierungsfaktor"
 
 #: ../src/gui/preferences.vala:121
 msgid "Themes"
-msgstr ""
+msgstr "Themen"
 
 #: ../src/gui/preferences.vala:142
 msgid "General"
-msgstr ""
+msgstr "Allgemein"
 
 #: ../src/gui/preferences.vala:147
 msgid "Pies"
-msgstr ""
+msgstr "Pie-Einstellungen"
 
 #: ../src/gui/preferences.vala:174
 msgid ""
 "You can drag'n'drop Slices from \n"
 "one Pie to another."
 msgstr ""
+"Du kannst Slices von einer Pie\n"
+"in andere Ziehen"
 
 #: ../src/gui/themeList.vala:75
 msgid "by"
-msgstr ""
+msgstr "von"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-30 16:09+0200\n"
+"POT-Creation-Date: 2011-08-02 13:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -49,20 +49,101 @@ msgstr ""
 msgid "Themes"
 msgstr ""
 
-#: ../src/gui/preferences.vala:142
+#: ../src/gui/preferences.vala:139
 msgid "General"
 msgstr ""
 
-#: ../src/gui/preferences.vala:147
+#: ../src/gui/preferences.vala:144
 msgid "Pies"
 msgstr ""
 
-#: ../src/gui/preferences.vala:174
+#: ../src/gui/preferences.vala:168
 msgid ""
 "You can drag'n'drop Slices from \n"
 "one Pie to another."
 msgstr ""
 
-#: ../src/gui/themeList.vala:75
+#: ../src/gui/preferences.vala:176
+msgid "Add a new entry to the list"
+msgstr ""
+
+#: ../src/gui/preferences.vala:186
+msgid "Remove the selected entry from the list"
+msgstr ""
+
+#: ../src/gui/cellRendererMorph.vala:69 ../src/gui/pieList.vala:184
+#: ../src/gui/pieList.vala:195
+msgid "Not bound"
+msgstr ""
+
+#: ../src/gui/themeList.vala:72
 msgid "by"
+msgstr ""
+
+#: ../src/gui/iconChooserWindow.vala:76
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../src/gui/iconChooserWindow.vala:98
+msgid "All icons"
+msgstr ""
+
+#: ../src/gui/iconChooserWindow.vala:99
+msgid "Applications"
+msgstr ""
+
+#: ../src/gui/iconChooserWindow.vala:100
+msgid "Actions"
+msgstr ""
+
+#: ../src/gui/iconChooserWindow.vala:101
+msgid "Places"
+msgstr ""
+
+#: ../src/gui/iconChooserWindow.vala:102
+msgid "File types"
+msgstr ""
+
+#: ../src/gui/iconChooserWindow.vala:103
+msgid "Emotes"
+msgstr ""
+
+#: ../src/gui/iconChooserWindow.vala:104
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../src/gui/pieList.vala:27 ../src/gui/pieList.vala:194
+msgid "Key Stroke"
+msgstr ""
+
+#: ../src/gui/pieList.vala:28 ../src/gui/pieList.vala:106
+msgid "Command"
+msgstr ""
+
+#: ../src/gui/pieList.vala:29
+msgid "Open Pie"
+msgstr ""
+
+#: ../src/gui/pieList.vala:30
+msgid "Plugin"
+msgstr ""
+
+#: ../src/gui/pieList.vala:33
+msgid "Main Menu"
+msgstr ""
+
+#: ../src/gui/pieList.vala:34
+msgid "Bookmarks"
+msgstr ""
+
+#: ../src/gui/pieList.vala:65
+msgid "Icon"
+msgstr ""
+
+#: ../src/gui/pieList.vala:122
+msgid "Action type"
+msgstr ""
+
+#: ../src/gui/pieList.vala:151
+msgid "Name"
 msgstr ""

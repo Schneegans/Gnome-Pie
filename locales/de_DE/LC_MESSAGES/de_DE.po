@@ -1,5 +1,5 @@
 # German translations for gnomepie package.
-# Copyright (C) 2011 THE gnomepie'S COPYRIGHT HOLDER
+# Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>
 # This file is distributed under the same license as the gnomepie package.
 # Simon Schneegans <simon.schneegans@uni-weimar.de>, 2011.
 #
@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-30 13:46+0200\n"
-"PO-Revision-Date: 2011-07-30 15:13+0200\n"
+"POT-Creation-Date: 2011-08-02 13:26+0200\n"
+"PO-Revision-Date: 2011-08-02 13:26+0200\n"
 "Last-Translator: Simon Schneegans <simon.schneegans@uni-weimar.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -27,7 +27,7 @@ msgstr "Verhalten"
 
 #: ../src/gui/preferences.vala:57
 msgid "Startup on Login"
-msgstr "Beim Anmelden ausführen"
+msgstr "Beim Anmelden automatisch ausführen"
 
 #: ../src/gui/preferences.vala:63
 msgid "Show Indicator"
@@ -35,11 +35,11 @@ msgstr "Benachrichtigungssymbol anzeigen"
 
 #: ../src/gui/preferences.vala:69
 msgid "Open Pies at Mouse"
-msgstr "Pies an der Mausposition öffnen"
+msgstr "Pies an der Maus öffnen"
 
 #: ../src/gui/preferences.vala:75
 msgid "Click to activate a Slice"
-msgstr "Slice-Aktivierung durch anklicken"
+msgstr "Slice-Aktivierung durch Klicken"
 
 #: ../src/gui/preferences.vala:84
 msgid "Global Scale"
@@ -49,22 +49,102 @@ msgstr "Skalierungsfaktor"
 msgid "Themes"
 msgstr "Themen"
 
-#: ../src/gui/preferences.vala:142
+#: ../src/gui/preferences.vala:139
 msgid "General"
 msgstr "Allgemein"
 
-#: ../src/gui/preferences.vala:147
+#: ../src/gui/preferences.vala:144
 msgid "Pies"
-msgstr "Pie-Einstellungen"
+msgstr "Pie-Optionen"
 
-#: ../src/gui/preferences.vala:174
+#: ../src/gui/preferences.vala:168
 msgid ""
 "You can drag'n'drop Slices from \n"
 "one Pie to another."
 msgstr ""
-"Du kannst Slices von einer Pie\n"
-"in andere Ziehen"
+"Du kannst Slices von einer Pie \n"
+"in andere ziehen."
+#: ../src/gui/preferences.vala:176
+msgid "Add a new entry to the list"
+msgstr "Füge einen neuen Eintrag zur Liste hinzu"
 
-#: ../src/gui/themeList.vala:75
+#: ../src/gui/preferences.vala:186
+msgid "Remove the selected entry from the list"
+msgstr "Entferne den ausgewählten Eintrag aus der Liste"
+
+#: ../src/gui/cellRendererMorph.vala:69 ../src/gui/pieList.vala:184
+#: ../src/gui/pieList.vala:195
+msgid "Not bound"
+msgstr "Nicht zugewiesen"
+
+#: ../src/gui/themeList.vala:72
 msgid "by"
 msgstr "von"
+
+#: ../src/gui/iconChooserWindow.vala:76
+msgid "Choose an Icon"
+msgstr "Wähle ein Symbol"
+
+#: ../src/gui/iconChooserWindow.vala:98
+msgid "All icons"
+msgstr "Alle Symbole"
+
+#: ../src/gui/iconChooserWindow.vala:99
+msgid "Applications"
+msgstr "Anwendungen"
+
+#: ../src/gui/iconChooserWindow.vala:100
+msgid "Actions"
+msgstr "Aktionen"
+
+#: ../src/gui/iconChooserWindow.vala:101
+msgid "Places"
+msgstr "Orte"
+
+#: ../src/gui/iconChooserWindow.vala:102
+msgid "File types"
+msgstr "Dateitypen"
+
+#: ../src/gui/iconChooserWindow.vala:103
+msgid "Emotes"
+msgstr "Smileys"
+
+#: ../src/gui/iconChooserWindow.vala:104
+msgid "Miscellaneous"
+msgstr "Sonstiges"
+
+#: ../src/gui/pieList.vala:27 ../src/gui/pieList.vala:194
+msgid "Key Stroke"
+msgstr "Tastenkombination"
+
+#: ../src/gui/pieList.vala:28 ../src/gui/pieList.vala:106
+msgid "Command"
+msgstr "Befehl"
+
+#: ../src/gui/pieList.vala:29
+msgid "Open Pie"
+msgstr "Pie öffnen"
+
+#: ../src/gui/pieList.vala:30
+msgid "Plugin"
+msgstr "Plugin"
+
+#: ../src/gui/pieList.vala:33
+msgid "Main Menu"
+msgstr "Hauptmenü"
+
+#: ../src/gui/pieList.vala:34
+msgid "Bookmarks"
+msgstr "Lesezeichen"
+
+#: ../src/gui/pieList.vala:65
+msgid "Icon"
+msgstr "Symbol"
+
+#: ../src/gui/pieList.vala:122
+msgid "Action type"
+msgstr "Aktionstyp"
+
+#: ../src/gui/pieList.vala:151
+msgid "Name"
+msgstr "Name"

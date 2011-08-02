@@ -44,7 +44,7 @@ namespace GnomePie {
             }
 
             this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon, 
-                                           AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
+                                 AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
             this.prefs = new Preferences();
             
             var menu = new Gtk.Menu();

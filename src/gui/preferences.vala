@@ -133,10 +133,7 @@ namespace GnomePie {
                                 
                                 // themes list
                                 var theme_list = new ThemeList();
-                                    theme_list.show();
-                                    scroll.add_with_viewport(theme_list);
-                                    
-                             scroll.show();
+                                    scroll.add(theme_list);
 
                     general_tab.pack_start (theme_frame, true, true);
                     tabs.append_page(general_tab, new Gtk.Label(_("General")));
@@ -145,7 +142,7 @@ namespace GnomePie {
                     var pies_tab = new Gtk.VBox(false, 6);
                         pies_tab.border_width = 12;
                         tabs.append_page(pies_tab, new Gtk.Label(_("Pies")));
-                        
+                            
                         // scrollable frame
                         scroll = new Gtk.ScrolledWindow (null, null);
                             align = new Gtk.Alignment(0.5f, 0.5f, 1.0f, 1.0f);
@@ -157,10 +154,7 @@ namespace GnomePie {
                             
                             // pies list
                             var pie_list = new PieList();
-                                pie_list.show();
-                                scroll.add_with_viewport(pie_list);
-                                
-                            scroll.show();
+                                scroll.add(pie_list);
                             
                         // bottom box
                         var info_box = new Gtk.HBox (false, 6);
@@ -179,17 +173,25 @@ namespace GnomePie {
                             
                             // add Button
                             var add_button = new Gtk.Button();
+                                add_button.tooltip_text = _("Add a new entry to the list");
                                 var add_image = new Gtk.Image.from_stock (Gtk.Stock.ADD, Gtk.IconSize.LARGE_TOOLBAR);
                                 add_button.add(add_image);
                                 add_button.clicked.connect (() => { 
-                                    debug("CLICK!");
+
                                 });
                                 info_box.pack_end (add_button, false, false);
+                                
+                            // remove Button
+                            var remove_button = new Gtk.Button();
+                                remove_button.tooltip_text = _("Remove the selected entry from the list");
+                                var remove_image = new Gtk.Image.from_stock (Gtk.Stock.DELETE, Gtk.IconSize.LARGE_TOOLBAR);
+                                remove_button.add(remove_image);
+                                remove_button.clicked.connect (() => { 
+
+                                });
+                                info_box.pack_end (remove_button, false, false);
                             
-                            info_box.show_all();
                             pies_tab.pack_start (info_box, false);
-                         
-                    //pies_tab.pack_start (pies_tab, true, true);    
                     
                     main_vbox.pack_start(tabs);
 
@@ -205,7 +207,7 @@ namespace GnomePie {
 
                     main_vbox.pack_start(bbox, false);
                     
-                main_vbox.show_all ();
+                main_vbox.show_all();
         }
         
         private void autostart_toggled(Gtk.ToggleButton check_box) {

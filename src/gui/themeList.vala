@@ -30,41 +30,38 @@ namespace GnomePie {
             base.set_rules_hint(true);
             base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
             
-            var check_column = new Gtk.TreeViewColumn();
-            var check_render = new Gtk.CellRendererToggle();
-            check_render.set_radio(true);
-            check_render.width = 32;
-            check_render.set_activatable(true);
-            check_column.pack_start(check_render, true);
-            
-            check_render.toggled.connect((r, path) => {
-                Gtk.TreeIter toggled;
-                data.get_iter(out toggled, new Gtk.TreePath.from_string(path));
-                
-                if (toggled != this.active) {
-                    Timeout.add(10, () => {
-                        int index = int.parse(path);
-                        Settings.global.theme = Settings.global.themes[index];
-                        Settings.global.theme.load();
-                        return false;
+            var main_column = new Gtk.TreeViewColumn();
+                var check_render = new Gtk.CellRendererToggle();
+                    check_render.set_radio(true);
+                    check_render.set_activatable(true);
+                    main_column.pack_start(check_render, false);
+                    
+                    check_render.toggled.connect((r, path) => {
+                        Gtk.TreeIter toggled;
+                        data.get_iter(out toggled, new Gtk.TreePath.from_string(path));
+                        
+                        if (toggled != this.active) {
+                            Timeout.add(10, () => {
+                                int index = int.parse(path);
+                                Settings.global.theme = Settings.global.themes[index];
+                                Settings.global.theme.load();
+                                return false;
+                            });
+                            
+                            data.set(this.active, 0, false); 
+                            data.set(toggled, 0, true);
+                            
+                            this.active = toggled;
+                        }
                     });
-                    
-                    data.set(this.active, 0, false); 
-                    data.set(toggled, 0, true);
-                    
-                    this.active = toggled;
-                }
-            });
             
-            var theme_column = new Gtk.TreeViewColumn();
-            var theme_render = new Gtk.CellRendererText();
-            theme_column.pack_start(theme_render, true);
+                var theme_render = new Gtk.CellRendererText();
+                    main_column.pack_start(theme_render, true);
             
-            base.append_column(check_column);
-            base.append_column(theme_column);
+            base.append_column(main_column);
             
-            check_column.add_attribute(check_render, "active", 0);
-            theme_column.add_attribute(theme_render, "markup", 1);
+            main_column.add_attribute(check_render, "active", 0);
+            main_column.add_attribute(theme_render, "markup", 1);
             
             var themes = Settings.global.themes;
             foreach(var theme in themes) {

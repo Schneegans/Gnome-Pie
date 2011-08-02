@@ -74,7 +74,7 @@ namespace GnomePie {
 				var parts = regex.split(message);
 				return " %s%s: %s\n".printf(parts[1], parts[2], parts[3]);
 			}
-			return " " + message;
+			return " " + message + "\n";
 		}
 		
 		static void log_func(string? d, LogLevelFlags flags, string message) {

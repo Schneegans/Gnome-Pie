@@ -29,6 +29,9 @@ namespace GnomePie {
         private static void init() {
             if (cache == null)
                 cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
+            Gtk.IconTheme.get_default().changed.connect(() => {
+                cache.clear();
+            });
         }
         
         //public members

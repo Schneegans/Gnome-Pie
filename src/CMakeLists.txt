@@ -24,6 +24,7 @@ vala_precompile(
         libgnome-menu
     OPTIONS
         --vapidir=${CMAKE_SOURCE_DIR}/vapi/
+        --thread
 )
 
 add_executable(gnome-pie ${VALA_C})

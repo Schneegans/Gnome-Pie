@@ -19,6 +19,8 @@ namespace GnomePie {
 	
     public class Deamon : GLib.Object {
     
+        private Indicator indicator;
+    
         public static int main(string[] args) {
             Gtk.init (ref args);
 
@@ -31,6 +33,11 @@ namespace GnomePie {
         public Deamon() { 
         
             Logger.init();
+            
+            Gdk.threads_init();
+            if (!Thread.supported()) {
+                error ("Cannot run without thread support.");
+            }
         
             Intl.bindtextdomain ("gnomepie", "./locales");
             Intl.textdomain ("gnomepie");
@@ -39,11 +46,12 @@ namespace GnomePie {
             try {
                 string path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/icons/";
                 Gtk.IconTheme.get_default().append_search_path(path);
+                Gtk.IconTheme.get_default().append_search_path("/usr/share/pixmaps/");
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
             }
             
-            var indicator = new Indicator();
+            indicator = new Indicator();
             
             Settings.global.notify["show-indicator"].connect((s, p) => {
                 indicator.active = Settings.global.show_indicator;
@@ -69,7 +77,6 @@ namespace GnomePie {
 			message("Caught signal (%d), bye!".printf(sig));
 			Gtk.main_quit();
 		}
-
     }
 
 }

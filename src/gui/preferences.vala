@@ -55,7 +55,7 @@ namespace GnomePie {
 
                             // Autostart checkbox
                             var autostart = new Gtk.CheckButton.with_label (_("Startup on Login"));
-                                //autostart.active = 
+                                autostart.active = Settings.global.auto_start;
                                 autostart.toggled.connect(autostart_toggled);
                                 behavior_vbox.pack_start(autostart, false);
 

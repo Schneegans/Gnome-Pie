@@ -42,6 +42,7 @@ namespace GnomePie {
         public bool   show_indicator    {get; set; default = true;}
         public bool   open_at_mouse     {get; set; default = true;}
         public bool   click_to_activate {get; set; default = true;}
+        public bool   auto_start        {get; set; default = false;}
         public Gee.ArrayList<Theme?> themes {get; private set;}
         
         public void save() {
@@ -59,6 +60,10 @@ namespace GnomePie {
         }
         
         private void load() {
+        
+            // check for auto_start filename
+            this.auto_start = FileUtils.test(Paths.autostart, FileTest.EXISTS);
+        
             Xml.Parser.init();
             Xml.Doc* settingsXML = Xml.Parser.parse_file(Paths.settings);
             bool   error_occrured = false;

@@ -27,4 +27,50 @@ vala_precompile(
         --thread
 )
 
+# compile c-sources
 add_executable(gnome-pie ${VALA_C})
+
+# install executable
+install(
+	TARGETS 
+		gnome-pie
+	RUNTIME DESTINATION
+		${CMAKE_INSTALL_PREFIX}/share/bin
+)
+
+# install credits
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/README
+	DESTINATION
+		${CMAKE_INSTALL_PREFIX}/share/doc/gnome-pie
+)
+
+# install locales
+install(
+	DIRECTORY 
+		${CMAKE_SOURCE_DIR}/locale
+	DESTINATION 
+		${CMAKE_INSTALL_PREFIX}/share
+	PATTERN *.po EXCLUDE
+	PATTERN *.pot EXCLUDE
+	PATTERN *.sh EXCLUDE
+)
+
+# install icons
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/resources/gnome-pie.svg
+		${CMAKE_SOURCE_DIR}/resources/gnome-pie-indicator.svg
+	DESTINATION
+		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps
+)
+
+# desktop file
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/resources/gnome-pie.desktop
+	DESTINATION
+		${CMAKE_INSTALL_PREFIX}/share/applications
+)
+

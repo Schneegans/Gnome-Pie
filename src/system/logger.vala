@@ -38,25 +38,25 @@ namespace GnomePie {
         
         private static void info(string message) {
             if (display_info) {
-                stdout.printf(set_color(32, false) + "[INFO]" + reset_color() + message);
+                stdout.printf(set_color(32, false) + "[INFO]" + message);
             }
         }
         
         private static void debug(string message) {
             if (display_debug) {
-                stdout.printf(set_color(34, false) + "[DEBUG]" + reset_color() + message);
+                stdout.printf(set_color(34, false) + "[DEBUG]" + message);
             }
         }
         
         private static void warning(string message) {
             if (display_warning) {
-                stdout.printf(set_color(33, false) + "[WARNING]" + reset_color() + message);
+                stdout.printf(set_color(33, false) + "[WARNING]" + message);
             }
         }
         
         private static void error(string message) {
             if (display_error) {
-                stdout.printf(set_color(31, false) + "[ERROR]" + reset_color()+ message);
+                stdout.printf(set_color(31, false) + "[ERROR]" + message);
             }
         }
         
@@ -72,9 +72,9 @@ namespace GnomePie {
 		private static string create_message(string message) {
 		    if (regex != null && regex.match(message)) {
 				var parts = regex.split(message);
-				return " %s%s: %s\n".printf(parts[1], parts[2], parts[3]);
+				return " [%s%s]%s %s\n".printf(parts[1], parts[2], reset_color(), parts[3]);
 			}
-			return " " + message + "\n";
+			return reset_color() + " " + message + "\n";
 		}
 		
 		static void log_func(string? d, LogLevelFlags flags, string message) {

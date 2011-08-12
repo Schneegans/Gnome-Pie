@@ -1,0 +1,10 @@
+
+[Desktop Entry]
+Type=Application
+Name=Gnome-Pie
+Comment=Cakes don't lie.
+Comment[de]=Kuchen lügen nicht.
+
+Exec=gnome-pie
+Icon=gnome-pie
+Categories=GNOME;Utility;

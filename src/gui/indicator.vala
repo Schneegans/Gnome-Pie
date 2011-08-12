@@ -37,7 +37,7 @@ namespace GnomePie {
             string path = "";
             string icon = "indicator-applet";
             try {
-                path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/icons";
+                path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
                 icon = "gnome-pie-indicator";
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
@@ -76,6 +76,15 @@ namespace GnomePie {
             menu.append(item);
 
             this.indicator.set_menu(menu);
+            
+            this.active = Settings.global.show_indicator;
+            Settings.global.notify["show-indicator"].connect((s, p) => {
+                this.active = Settings.global.show_indicator;
+            });
+        }
+        
+        public void show_preferences() {
+            this.prefs.show();
         }
     }
 }

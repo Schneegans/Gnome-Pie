@@ -63,21 +63,7 @@ namespace GnomePie {
             
             this.morph_mode = Mode.TEXT;
             
-            this.notify["text"].connect(() => {
-            
-                if (this.text == "") {
-                    renderer_accel.text = _("Not bound");
-                    
-                    string text = "";
-                    Gtk.TreeIter iter = Gtk.TreeIter();
-                    if (model.get_iter_first(out iter))
-                        this.model.get(iter, 0, out text);
-                    renderer_combo.text = text;
-                } else {
-                    renderer_accel.text = this.text;
-                    renderer_combo.text = this.text;
-                }
-            });
+            this.notify["text"].connect(this.erase_text);
             
             this.edited.connect((path, text) => {
                 this.text_edited(path, text);
@@ -104,20 +90,22 @@ namespace GnomePie {
             return null;
         }
         
-        public override void render (Gdk.Window window, Gtk.Widget widget, Gdk.Rectangle bg_area,
-            Gdk.Rectangle cell_area, Gdk.Rectangle expose_area, Gtk.CellRendererState flags) {
-            
-            switch (this.morph_mode) {
-                case Mode.TEXT:
-                    base.render(window, widget, bg_area, cell_area, expose_area, flags);
-                    break;
-                case Mode.ACCEL:
-                    this.renderer_accel.render(window, widget, bg_area, cell_area, expose_area, flags);
-                    break;
-                case Mode.COMBO:
-                    this.renderer_combo.render(window, widget, bg_area, cell_area, expose_area, flags);
-                    break;
-            }
+        private void erase_text() {
+            if (this.text == "")
+                switch (this.morph_mode) {
+                    case Mode.ACCEL:
+                        this.renderer_accel.keycode = 0;
+                        this.text = this.renderer_accel.text;
+                        break;
+                    case Mode.COMBO:
+                        string text = "";
+                        Gtk.TreeIter iter = Gtk.TreeIter();
+                        if (model.get_iter_first(out iter))
+                            this.model.get(iter, 0, out text);
+                        this.renderer_combo.text = text;
+                        this.text = text;
+                        break;
+                }
         }
     }
 }

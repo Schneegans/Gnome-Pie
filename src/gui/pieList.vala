@@ -181,7 +181,7 @@ namespace GnomePie {
                 data.set(parent, 0, "firefox",
                                  1, "Pie name",
                                  2, "",
-                                 3, _("Not bound"),
+                                 3, "",
                                  4, false,
                                  5, Gtk.IconSize.DIALOG,
                                  6, CellRendererMorph.Mode.ACCEL);
@@ -192,7 +192,7 @@ namespace GnomePie {
                     data.set(child, 0, "thunderbird",
                                     1, "Slice name",
                                     2, _("Key Stroke"),
-                                    3, _("Not bound"),
+                                    3, "",
                                     4, true,
                                     5, Gtk.IconSize.LARGE_TOOLBAR,
                                     6, CellRendererMorph.Mode.ACCEL);

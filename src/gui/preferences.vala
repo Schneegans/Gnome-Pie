@@ -209,10 +209,41 @@ namespace GnomePie {
                     
                 main_vbox.show_all();
         }
-        
+
+        // code inspired by project synapse
         private void autostart_toggled(Gtk.ToggleButton check_box) {
-            //TODO: add autostart option
-            debug("Autostart toggled!");
+            bool active = check_box.active;
+            if (!active && FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
+                // delete the autostart file
+                FileUtils.remove (Paths.autostart);
+            }
+            else if (active && !FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
+                string autostart_entry = 
+                    "#!/usr/bin/env xdg-open\n" + 
+                    "[Desktop Entry]\n" +
+                    "Name=Gnome-Pie\n" +
+                    "Exec=gnome-pie\n" +
+                    "Encoding=UTF-8\n" +
+                    "Type=Application\n" +
+                    "X-GNOME-Autostart-enabled=true\n" +
+                    "Icon=gnome-pie\n";
+
+                // create the autostart file
+                string autostart_dir = GLib.Path.get_dirname(Paths.autostart);
+                if (!FileUtils.test(autostart_dir, FileTest.EXISTS | FileTest.IS_DIR)) {
+                    DirUtils.create_with_parents(autostart_dir, 0755);
+                }
+                
+                try {
+                    FileUtils.set_contents(Paths.autostart, autostart_entry);
+                    FileUtils.chmod(Paths.autostart, 0755);
+                } catch (Error e) {
+                    var d = new Gtk.MessageDialog (this, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
+                                               "%s", e.message);
+                    d.run ();
+                    d.destroy ();
+                }
+            }
         }
         
         private void indicator_toggled(Gtk.ToggleButton check_box) {

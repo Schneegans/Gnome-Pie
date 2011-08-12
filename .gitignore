@@ -2,4 +2,4 @@
 *.h
 build/*
 gnome-pie
-gnome-pie.conf
+gnome-pie.deb

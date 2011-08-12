@@ -35,7 +35,7 @@ install(
 	TARGETS 
 		gnome-pie
 	RUNTIME DESTINATION
-		${CMAKE_INSTALL_PREFIX}/share/bin
+		${CMAKE_INSTALL_PREFIX}/bin
 )
 
 # install credits
@@ -49,12 +49,28 @@ install(
 # install locales
 install(
 	DIRECTORY 
-		${CMAKE_SOURCE_DIR}/locale
+		${CMAKE_SOURCE_DIR}/resources/locale
 	DESTINATION 
 		${CMAKE_INSTALL_PREFIX}/share
 	PATTERN *.po EXCLUDE
 	PATTERN *.pot EXCLUDE
 	PATTERN *.sh EXCLUDE
+)
+
+# install themes
+install(
+	DIRECTORY 
+		${CMAKE_SOURCE_DIR}/resources/themes
+	DESTINATION 
+		${CMAKE_INSTALL_PREFIX}/share/gnome-pie
+)
+
+# install default configuration file
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/resources/pies.conf.default
+	DESTINATION
+		${CMAKE_INSTALL_PREFIX}/share/gnome-pie
 )
 
 # install icons

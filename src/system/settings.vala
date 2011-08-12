@@ -45,7 +45,7 @@ namespace GnomePie {
         public Gee.ArrayList<Theme?> themes {get; private set;}
         
         public void save() {
-            var writer = new Xml.TextWriter.filename("gnome-pie.conf");
+            var writer = new Xml.TextWriter.filename(Paths.settings);
             writer.start_document("1.0");
                 writer.start_element("settings");
                     writer.write_attribute("theme", theme.name);
@@ -60,7 +60,7 @@ namespace GnomePie {
         
         private void load() {
             Xml.Parser.init();
-            Xml.Doc* settingsXML = Xml.Parser.parse_file("gnome-pie.conf");
+            Xml.Doc* settingsXML = Xml.Parser.parse_file(Paths.settings);
             bool   error_occrured = false;
             string theme_name = "";
             
@@ -122,12 +122,23 @@ namespace GnomePie {
             themes = new Gee.ArrayList<Theme?>();
             try {
                 string name;
-                var d = Dir.open("themes/");
+                
+                // load global themes
+                var d = Dir.open(Paths.global_themes);
                 while ((name = d.read_name()) != null) {
-                    var theme = new Theme(name);
+                    var theme = new Theme(Paths.global_themes + "/" + name);
                     if (theme != null)
                         themes.add(theme);
                 }
+                
+                // load local themes
+                d = Dir.open(Paths.local_themes);
+                while ((name = d.read_name()) != null) {
+                    var theme = new Theme(Paths.local_themes + "/" + name);
+                    if (theme != null)
+                        themes.add(theme);
+                }
+                
             } catch (Error e) {
                 warning (e.message);
             } 

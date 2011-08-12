@@ -24,7 +24,7 @@ namespace GnomePie {
         public void load_pies() {
             
             Xml.Parser.init();
-            Xml.Doc* piesXML = Xml.Parser.parse_file("pies.conf");
+            Xml.Doc* piesXML = Xml.Parser.parse_file(Paths.pie_config);
             bool   error_occrured = false;
             
             if (piesXML != null) {

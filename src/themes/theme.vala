@@ -67,7 +67,7 @@ namespace GnomePie {
             inactive_slice_layers.clear();
         
             Xml.Parser.init();
-            string path = "themes/" + directory + "/theme.xml";
+            string path = directory + "/theme.xml";
             
             Xml.Doc* themeXML = Xml.Parser.parse_file(path);
             if (themeXML == null) {
@@ -331,7 +331,7 @@ namespace GnomePie {
             }
             
             double max_scale = fmax(active_scale, inactive_scale);
-            var image = new Image.from_file("themes/" + directory + "/" + file, 2*(int)((double)center_radius*max_scale));
+            var image = new Image.from_file(directory + "/" + file, 2*(int)((double)center_radius*max_scale));
             
             if (image != null) {
                 center_layers.add(new CenterLayer(image, active_scale/max_scale,   active_rotation_speed,   active_alpha,   active_colorize,   active_rotation_mode, 
@@ -380,7 +380,7 @@ namespace GnomePie {
                         int size = 2*(int)((double)slice_radius*scale*max_zoom);
                         
                         if (file == "" && is_icon == true) image = new Image.empty(size, new Color.from_rgb(1, 1, 1));
-                        else                               image = new Image.from_file("themes/" + directory + "/" + file, size);
+                        else                               image = new Image.from_file(directory + "/" + file, size);
                                                     
                         if (image != null) {
                             if (slice->name.down() == "activeslice") {

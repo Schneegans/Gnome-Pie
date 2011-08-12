@@ -22,6 +22,7 @@ namespace GnomePie {
         private Indicator indicator = null;
     
         public static int main(string[] args) {
+        
             var deamon = new GnomePie.Deamon(args);
             deamon.run(args);
             
@@ -42,7 +43,8 @@ namespace GnomePie {
             if (this.indicator == null) {
             
                 // init toolkits and static stuff
-                Logger.init();    
+                Logger.init();
+                Paths.init();
                 Gdk.threads_init();
                 
                 // check for thread support
@@ -51,7 +53,7 @@ namespace GnomePie {
                 }
             
                 // init locale support
-                Intl.bindtextdomain ("gnomepie", "./locale");
+                Intl.bindtextdomain ("gnomepie", Paths.locales);
                 Intl.textdomain ("gnomepie");
                 
                 // append icon search path to icon theme

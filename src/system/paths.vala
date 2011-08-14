@@ -36,7 +36,8 @@ namespace GnomePie {
                 
                 if(!default_dir.query_exists()) {
                     try {
-                        default_dir = GLib.File.new_for_path(GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources");
+                        default_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
+                            GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources");
                     } catch (GLib.FileError e) {
                         warning("Failed to get path of executable!");
                     }
@@ -52,14 +53,17 @@ namespace GnomePie {
                 locale_dir = GLib.File.new_for_path("/usr/share/locale");
             } else {
                 try {
-                    locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources/locale/de/LC_MESSAGES/gnomepie.mo");
+                    locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
+                        GLib.FileUtils.read_link("/proc/self/exe"))).get_child(
+                        "resources/locale/de/LC_MESSAGES/gnomepie.mo");
                 } catch (GLib.FileError e) {
                     warning("Failed to get path of executable!");
                 }
                 
                 if(locale_dir.query_exists()) {
                     try {
-                        locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources/locale");
+                        locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
+                            GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources/locale");
                     } catch (GLib.FileError e) {
                         warning("Failed to get path of executable!");
                     }
@@ -69,7 +73,8 @@ namespace GnomePie {
             locales = locale_dir.get_path();
         
             // get local paths
-            var config_dir = GLib.File.new_for_path(GLib.Environment.get_user_config_dir()).get_child("gnome-pie");
+            var config_dir = GLib.File.new_for_path(
+                GLib.Environment.get_user_config_dir()).get_child("gnome-pie");
 
             // create config_dir if neccasary
             if(!config_dir.query_exists()) {

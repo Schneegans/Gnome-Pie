@@ -42,6 +42,8 @@ namespace GnomePie {
         
             if (this.indicator == null) {
             
+                Plugins.Bookmarks.get_bookmarks();
+            
                 // init toolkits and static stuff
                 Logger.init();
                 Paths.init();

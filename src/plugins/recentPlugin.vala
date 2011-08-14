@@ -19,31 +19,12 @@ namespace GnomePie {
 	
     namespace Plugins {
         
-        namespace Bookmarks {
+        namespace Recent {
             
             public void create(Pie pie, string name) {
             
             }
             
-            public void get_bookmarks() {
-                var bookmark_file = GLib.File.new_for_path(
-                    GLib.Environment.get_home_dir()).get_child(".gtk-bookmarks");
-                    
-                if (!bookmark_file.query_exists()) {
-                    warning("Failed to find file \".gtk-bookmarks\"!");
-                    return;
-                }
-                
-                string content = "";
-                try {
-                    bookmark_file.load_contents(null, out content);
-                } catch (GLib.Error e) {
-                    warning(e.message);
-                }
-                
-                
-            
-            }
         }
         
     }

@@ -29,8 +29,7 @@ public class PieAction : Action {
     }
 
     public override void execute() {	    
-        var manager = new PieManager();
-        manager.open_pie(pie_name);
+        Deamon.open_pie(pie_name);
     } 
 }
 

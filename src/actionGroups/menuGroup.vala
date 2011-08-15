@@ -16,47 +16,74 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
+
+// An ActionGroup which displays the user's main menu.
         
 public class MenuGroup : ActionGroup {
     
-    public void load(Pie pie, string name) {
-
-        var tree = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
-        var root = tree.get_root_directory();
-
-        parse_directory(root, pie, name);
-
-        var manager = new PieManager();
-        manager.add_pie(name, pie);
-    }
+    private GMenu.Tree menu = null;
+    private Gee.ArrayList<MenuGroup?> childs;
+    private bool is_toplevel = false;
     
-    private void parse_directory(GMenu.TreeDirectory dir, Pie pie, string parent_name) {
+    public void load(string parent_name, GMenu.TreeDirectory? dir = null) {
+    
+        this.childs = new Gee.ArrayList<MenuGroup?>();
+    
+        if (dir == null) {
+            is_toplevel = true;
+        
+            this.menu = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
+            
+            this.menu.add_monitor(this.on_change);
+            
+            dir = this.menu.get_root_directory();
+        } else {
+            this.add_action(new PieAction(_("BACK"), "back", parent_name));
+        }
+
         foreach (var item in dir.get_contents()) {
             switch(item.get_type()) {
+            
                 case GMenu.TreeItemType.DIRECTORY:
-                    pie.add_slice(get_submenu((GMenu.TreeDirectory)item, pie, parent_name));
+                    var sub_menu_name = pie_name + (GMenu.TreeDirectory)item.get_name();
+                
+                    var sub_menu = PieManager.add_pie(sub_menu_name,
+                                                      (GMenu.TreeDirectory)item.get_icon());
+                    var group = new MenuGroup();
+                    group.load(sub_menu_name, (GMenu.TreeDirectory)item);
+                    childs.add(group);
+                                                      
+                    sub_menu.add_group(group);
+                    
+                    this.add_action(new PieAction(sub_menu_name));  
                     break;
+                    
                 case GMenu.TreeItemType.ENTRY:
-                    pie.add_slice(get_action((GMenu.TreeEntry)item));
+                    this.add_action(new AppAction((GMenu.TreeEntry)(entry).get_name(), 
+                                                  (GMenu.TreeEntry)(entry).get_icon(), 
+                                                  (GMenu.TreeEntry)(entry).get_exec()));  
                     break;
             }
         }
+        
+        private void on_change() {
+            this.menu.remove_monitor(this.on_change);
+            this.clear();
+            this.load(this.pie_name);
+        }
+        
+        private void clear() {
+            foreach (child in childs)
+                child.clear();
+
+            if (!this.is_toplevel)
+                PieManager.remove_pie(this.pie_name);
+            
+            this.childs.clear();
+            this.menu = null;
+        }
     }
     
-    public PieAction get_submenu(GMenu.TreeDirectory dir, Pie parent, string parent_name) {
-        var sub_menu = new Pie("");
-        sub_menu.add_slice(new PieAction("BACK", "back", parent_name));
-        parse_directory(dir, sub_menu, parent_name+dir.get_name());
-        
-        var manager = new PieManager();
-        manager.add_pie(parent_name+dir.get_name(), sub_menu);
-
-        return new PieAction(dir.get_name().up(), dir.get_icon(), parent_name+dir.get_name()); 
-    }
-
-    public AppAction get_action(GMenu.TreeEntry entry) {
-        return new AppAction(entry.get_name(), entry.get_icon(), entry.get_exec()); 
-    }
 }
 
 }

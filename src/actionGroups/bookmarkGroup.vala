@@ -20,20 +20,20 @@ namespace GnomePie {
 public class BookmarkGroup : ActionGroup {
     
     public void load() {
-        var bookmark_file = GLib.File.new_for_path(
-            GLib.Environment.get_home_dir()).get_child(".gtk-bookmarks");
-            
-        if (!bookmark_file.query_exists()) {
-            warning("Failed to find file \".gtk-bookmarks\"!");
-            return;
-        }
-        
-        string content = "";
-        try {
-            bookmark_file.load_contents(null, out content);
-        } catch (GLib.Error e) {
-            warning(e.message);
-        }
+//        var bookmark_file = GLib.File.new_for_path(
+//            GLib.Environment.get_home_dir()).get_child(".gtk-bookmarks");
+//            
+//        if (!bookmark_file.query_exists()) {
+//            warning("Failed to find file \".gtk-bookmarks\"!");
+//            return;
+//        }
+//        
+//        string content = "";
+//        try {
+//            bookmark_file.load_contents(null, out content);
+//        } catch (GLib.Error e) {
+//            warning(e.message);
+//        }
     }
     
 }

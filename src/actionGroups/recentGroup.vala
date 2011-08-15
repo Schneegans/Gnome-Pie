@@ -16,16 +16,13 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
-	
-    namespace Plugins {
-        
-        namespace Recent {
-            
-            public void create(Pie pie, string name) {
-            
-            }
-            
-        }
-        
+
+public class RecentGroup : ActionGroup {
+    
+    public void load() {
+    
     }
+    
+}
+
 }

@@ -17,25 +17,26 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
     
-    // this type of Action launches an application
-    public class AppAction : Action {
-	    	
-	    private string command;
+// This type of Action launches an application.
 
-	    public AppAction(string name, string icon_name, string command) {
-	        base(name, icon_name);
-	        this.command = command;
-	    }
+public class AppAction : Action {
+    	
+    private string command;
 
-	    public override void execute() {
-            try{
-                var item = GLib.AppInfo.create_from_commandline(this.command, null, 
-                                                                GLib.AppInfoCreateFlags.NONE);
-                item.launch(null, null);
-        	} catch (Error e) {
-		        warning(e.message);
-	        }
-        } 
+    public AppAction(string name, string icon_name, string command) {
+        base(name, icon_name);
+        this.command = command;
     }
+
+    public override void execute() {
+        try{
+            var item = GLib.AppInfo.create_from_commandline(this.command, null, 
+                                                            GLib.AppInfoCreateFlags.NONE);
+            item.launch(null, null);
+    	} catch (Error e) {
+	        warning(e.message);
+        }
+    } 
+}
 
 }

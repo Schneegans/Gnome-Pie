@@ -17,18 +17,20 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    // this type of Action "presses" a key stroke
-    public class KeyAction : Action {
-	    	
-	    private Key key;
+// This type of Action "presses" a key stroke.
 
-	    public KeyAction(string name, string icon_name, string key_stroke) {
-	        base(name, icon_name);
-	        this.key = new Key(key_stroke);
-	    }
+public class KeyAction : Action {
+    	
+    private Key key;
 
-	    public override void execute() {
-	        key.press();
-	    }
+    public KeyAction(string name, string icon_name, string key_stroke) {
+        base(name, icon_name);
+        this.key = new Key(key_stroke);
     }
+
+    public override void execute() {
+        key.press();
+    }
+}
+
 }

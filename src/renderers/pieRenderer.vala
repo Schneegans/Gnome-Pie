@@ -17,10 +17,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A static class which stores recently used Icons.
-
-public class IconCache {
-
+public class PieRenderer {
+    
+    
 }
 
 }

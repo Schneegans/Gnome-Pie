@@ -17,41 +17,42 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    // a base class for actions, which are executed when the user
-    // activates a pie's slice
-    public abstract class Action : GLib.Object {
+// A base class for actions, which are executed when the user
+// activates a pie's slice.
 
-	    public Image  active_icon   {get; private set;}
-	    public Image  inactive_icon {get; private set;}
-	    public Color  color         {get; private set;}
-	    public string name          {get; private set;}
-	    	
-	    private string icon_name;
+public abstract class Action : GLib.Object {
 
-	    public Action(string name, string icon_name) {
-	        this.name      = name;
-	        this.icon_name = icon_name;
+    public Image  active_icon   {get; private set;}
+    public Image  inactive_icon {get; private set;}
+    public Color  color         {get; private set;}
+    public string name          {get; private set;}
+    	
+    private string icon_name;
 
-	        this.reload_icon();
-		    
-		    Settings.global.notify["theme"].connect(this.reload_icon);
-		    Gtk.IconTheme.get_default().changed.connect(this.reload_icon);
-	    }
+    public Action(string name, string icon_name) {
+        this.name      = name;
+        this.icon_name = icon_name;
 
-	    public abstract void execute();
-        
-        private void reload_icon() {
-            int size = (int)(2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom);
-            this.color =         new Color();
-		    this.active_icon =   new Image.themed_icon(this.icon_name, size, true,  
-		                                               Settings.global.theme);
-		    this.inactive_icon = new Image.themed_icon(this.icon_name, size, false, 
-		                                               Settings.global.theme);
-		    this.active_icon.on_finished_loading.connect(()=> {
-		        this.color = new Color.from_icon(this.active_icon);
-		    });         
-        }
-        
+        this.reload_icon();
+	    
+	    Settings.global.notify["theme"].connect(this.reload_icon);
+	    Gtk.IconTheme.get_default().changed.connect(this.reload_icon);
     }
+
+    public abstract void execute();
+    
+    private void reload_icon() {
+        int size = (int)(2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom);
+        this.color =         new Color();
+	    this.active_icon =   new Image.themed_icon(this.icon_name, size, true,  
+	                                               Settings.global.theme);
+	    this.inactive_icon = new Image.themed_icon(this.icon_name, size, false, 
+	                                               Settings.global.theme);
+	    this.active_icon.on_finished_loading.connect(()=> {
+	        this.color = new Color.from_icon(this.active_icon);
+	    });         
+    }
+    
+}
 
 }

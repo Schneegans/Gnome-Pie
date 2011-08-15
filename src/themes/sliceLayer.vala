@@ -17,10 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A static class which stores recently used Icons.
-
-public class IconCache {
-
+public class SliceLayer : GLib.Object {
+    
+    public Image image   {get; set;}
+    
+    public bool colorize {get; private set; }
+    public bool is_icon  {get; private set;}
+    
+    public SliceLayer(Image image, bool colorize, bool is_icon) {
+        this.image = image;
+        this.colorize = colorize;
+        this.is_icon = is_icon;
+    }
 }
 
 }

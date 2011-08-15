@@ -17,35 +17,35 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-    // stores all pies
-    public class PieManager : GLib.Object {
+// stores all pies
+public class PieManager : GLib.Object {
+
+    private static Gee.HashMap<string, Pie?> all_pies;
     
-        private static Gee.HashMap<string, Pie?> all_pies;
-	    
-	    public PieManager() {}
-	    
-	    public void load_all() {
-            all_pies = new Gee.HashMap<string, Pie?>();
-            var loader = new PieLoader();
-            loader.load_pies();
-        }
+    public PieManager() {}
+    
+    public void load_all() {
+        all_pies = new Gee.HashMap<string, Pie?>();
+        var loader = new PieLoader();
+        loader.load_pies();
+    }
+    
+    public void open_pie(string name) {
+        var pie = all_pies[name];
         
-        public void open_pie(string name) {
-            var pie = all_pies[name];
-	        
-            if (pie == null) {
-                warning("Can't open Pie named \"" + name + "\": No such Pie defined!");
-            } else {
-                pie.fade_in();
-            }
-        }
-        
-        public void add_pie(string name, Pie pie) {
-            if (all_pies.has_key(name))
-                warning("Failed to add pie \"" + name + "\": Name already exists!");
-            else
-                all_pies.set(name, pie);
+        if (pie == null) {
+            warning("Can't open Pie named \"" + name + "\": No such Pie defined!");
+        } else {
+            pie.fade_in();
         }
     }
+    
+    public void add_pie(string name, Pie pie) {
+        if (all_pies.has_key(name))
+            warning("Failed to add pie \"" + name + "\": Name already exists!");
+        else
+            all_pies.set(name, pie);
+    }
+}
 
 }

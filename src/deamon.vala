@@ -33,7 +33,7 @@ public class Deamon : GLib.Application {
         Gtk.init(ref args);
     
         GLib.Object(application_id : "org.gnome.gnomepie", 
-                    flags : GLib.ApplicationFlags.FLAGS_NONE);
+                             flags : GLib.ApplicationFlags.FLAGS_NONE);
         
         this.activate.connect(this.start);
     }
@@ -42,17 +42,14 @@ public class Deamon : GLib.Application {
     
         if (this.indicator == null) {
         
-            Plugins.Bookmarks.get_bookmarks();
-        
             // init toolkits and static stuff
             Logger.init();
             Paths.init();
             Gdk.threads_init();
             
             // check for thread support
-            if (!Thread.supported()) {
+            if (!Thread.supported())
                 error("Cannot run without thread support.");
-            }
         
             // init locale support
             Intl.bindtextdomain ("gnomepie", Paths.locales);
@@ -63,7 +60,7 @@ public class Deamon : GLib.Application {
 
             // load all Pies
             var manager = new PieManager();
-            manager.load_all();
+            manager.load_config();
 
             // connect SigHandlers
             Posix.signal(Posix.SIGINT, sig_handler);

@@ -20,18 +20,16 @@ namespace GnomePie {
 // a class which loads image files.
 public class Image : GLib.Object {
 
-    // called, when an image finished loading
-    public signal void on_finished_loading();
-
     // icon cache which stores loaded images
     private static Gee.HashMap<string, Cairo.ImageSurface?> cache {private get; private set;}
     
     private static void init() {
-        if (cache == null)
+        if (cache == null) {
             cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-        Gtk.IconTheme.get_default().changed.connect(() => {
-            cache.clear();
-        });
+            Gtk.IconTheme.get_default().changed.connect(() => {
+                cache.clear();
+            });
+        }
     }
     
     //public members
@@ -54,16 +52,14 @@ public class Image : GLib.Object {
         }
     }
     
-    // Loads an icon from the the given filename. Since this takes some time,
-    // this happens in an extra thread. Once loading has finished, on_finished_loading
-    // will be called.
+    // Loads an icon from the the given filename.
     public Image.from_file(string filename, int size) {
         this.init();
         surface = this.cache.get(filename);
         
         if(surface == null || surface.get_width() < size) {
             this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-            this.load_file.begin(filename, size);
+            this.load_file(filename, size);
             this.cache.set(filename, surface);
             return;
             
@@ -75,16 +71,42 @@ public class Image : GLib.Object {
              ctx.paint();
              surface = scaled;
         }
-        on_finished_loading();
     }
     
-    // Loads an icon from the current icon theme of the user. Since this takes some time,
-    // this happens in an extra thread. Once loading has finished, on_finished_loading
-    // will be called.
-    public Image.themed_icon(string icon_name, int size, bool active, Theme theme) {
+    public Image.from_string(string text, int size, int font_size) {
         this.init();
+        
         this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-        Timeout.add(1, () => {this.paint_themed(icon_name, size, active, theme); return false;});
+        var ctx = this.get_context();
+        
+        string ellipsed_text = text;
+        
+        ctx.set_font_size(font_size);
+        Cairo.TextExtents extents;
+        ctx.text_extents(ellipsed_text, out extents);
+        
+        if (extents.width > size && ellipsed_text.length > 3) {
+            ellipsed_text = ellipsed_text.substring(0, ellipsed_text.length-1) + "...";
+            
+            while (extents.width > size && ellipsed_text.length > 3) {
+                ellipsed_text = ellipsed_text.substring(0, ellipsed_text.length-4) + "...";
+                ctx.text_extents(ellipsed_text, out extents);
+            }
+        }
+        
+        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
+        ctx.move_to((int)(0.5*size - 0.5*extents.width), 
+                    (int)(0.5*size+0.3*Config.global.theme.font_size)); 
+        Color color = Config.global.theme.caption_color;
+        ctx.set_source_rgb(color.r, color.g, color.g);
+        ctx.show_text(ellipsed_text);
+    }
+    
+    // Loads an icon from the current icon theme of the user.
+    public Image.themed_icon(string icon_name, bool active) {
+        this.init();
+        
+        this.paint_themed(icon_name, active);
     }
     
     public int size() {
@@ -103,7 +125,7 @@ public class Image : GLib.Object {
         else              ctx.paint_with_alpha(alpha);
     }
     
-    private async void load_file(string filename, int size) {
+    private void load_file(string filename, int size) {
     
         try {
             var pixbuf = new Gdk.Pixbuf.from_file_at_size(filename, size, size);
@@ -120,15 +142,21 @@ public class Image : GLib.Object {
         } catch (GLib.Error e) {
             message("Error loading image file: %s", e.message);
         }
-        on_finished_loading();
     }
     
-    // TODO: this can be async... but vala version has to be bumped to 0.13 due to a bug in 0.12
-    private void paint_themed(string icon_name, int size, bool active, Theme theme) {
+    private void paint_themed(string icon_name, bool active) {
         // get layers for the desired slice type
         Gee.ArrayList<SliceLayer?> layers;
-        if (active) layers = theme.active_slice_layers;
-		else        layers = theme.inactive_slice_layers;
+        if (active) layers = Config.global.theme.active_slice_layers;
+		else        layers = Config.global.theme.inactive_slice_layers;
+        
+        // get max size
+        int size = 0;
+        foreach (var layer in layers) {
+            if (layer.image.size() > size) size = layer.image.size();
+        }
+        
+        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
         
         // get size of icon layer
         int icon_size = size;
@@ -183,7 +211,6 @@ public class Image : GLib.Object {
                 ctx.paint();
             }
         }
-        on_finished_loading();
     }
     
     // returns the filename for a given system icon

@@ -19,14 +19,19 @@ using GLib.Math;
 
 namespace GnomePie {
 
-public class Slice : GLib.Object {
+public class SliceRenderer : GLib.Object {
 
-    public bool    active   {get; private set; default = false;}
-    public Image   caption  {get; private set;}
+    public bool active {get; private set; default = false;}
+    public Image caption {get; private set;}
+    public Color color {get; private set;}
     
-    private Action      action;
-    private unowned Pie parent;
-    private int         position;
+    private Image active_icon;
+    private Image inactive_icon;
+    
+    private Action action;
+
+    private unowned PieRenderer parent;    
+    private int position;
     
     private AnimatedValue fade;
     private AnimatedValue scale;
@@ -34,101 +39,101 @@ public class Slice : GLib.Object {
     private AnimatedValue fade_rotation;
     private AnimatedValue fade_scale;
 
-    public Slice(Action action, Pie parent) {
+    public SliceRenderer(PieRenderer parent) {
         this.parent = parent;
-        this.position = parent.slice_count();
+       
+        this.fade =  new AnimatedValue.linear(0.0, 0.0, Config.global.theme.transition_time);
+        this.alpha = new AnimatedValue.linear(0.0, 1.0, Config.global.theme.fade_in_time);
+        this.scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
+                                                 1.0/Config.global.theme.max_zoom, 
+                                                 1.0/Config.global.theme.max_zoom, 
+                                                 Config.global.theme.transition_time, 
+                                                 Config.global.theme.springiness);
+        this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
+                                                 Config.global.theme.fade_in_zoom, 1.0, 
+                                                 Config.global.theme.fade_in_time, 
+                                                 Config.global.theme.springiness);
+        this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
+                                                 Config.global.theme.fade_in_rotation, 0.0, 
+                                                 Config.global.theme.fade_in_time);
+    }
+    
+    public void load(Action action, int position) {
+        this.position = position;
         this.action = action;
         
-        if (Settings.global.theme.caption)
-            this.load_caption();
+    
+        if (Config.global.theme.caption)
+            this.caption = new Image.from_string(action.name, 
+                                                (int)Config.global.theme.caption_size,
+                                                (int)Config.global.theme.font_size);
             
-        this.parent.on_fade_in.connect(() => {
-            this.fade =  new AnimatedValue.linear(0.0, 0.0, Settings.global.theme.transition_time);
-            this.alpha = new AnimatedValue.linear(0.0, 1.0, Settings.global.theme.fade_in_time);
-            this.scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
-                                                 1.0/Settings.global.theme.max_zoom, 
-                                                 1.0/Settings.global.theme.max_zoom, 
-                                                 Settings.global.theme.transition_time, 
-                                                 Settings.global.theme.springiness);
-            this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
-                                                 Settings.global.theme.fade_in_zoom, 1.0, 
-                                                 Settings.global.theme.fade_in_time, 
-                                                 Settings.global.theme.springiness);
-            this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
-                                                 Settings.global.theme.fade_in_rotation, 0.0, 
-                                                 Settings.global.theme.fade_in_time);
-        });
+        this.active_icon = new Image.themed_icon(action.icon_name, true);
+        this.inactive_icon = new Image.themed_icon(action.icon_name, false);
         
-        this.parent.on_fade_out.connect(() => {
-            this.alpha.reset_target(0.0, Settings.global.theme.fade_out_time);
-            this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.IN, 
-                                                 this.fade_scale.val, 
-                                                 Settings.global.theme.fade_out_zoom, 
-                                                 Settings.global.theme.fade_out_time, 
-                                                 Settings.global.theme.springiness);
-            this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.IN, 
-                                                 this.fade_rotation.val, 
-                                                 Settings.global.theme.fade_out_rotation, 
-                                                 Settings.global.theme.fade_out_time);
-        });
-            
-        Settings.global.notify["theme"].connect((s, p) => {
-            this.load_caption();
-        });
-        
-        Settings.global.notify["scale"].connect((s, p) => {
-            this.load_caption();
-        });
-        
-        this.parent.on_active_change.connect(() => {
-            if (this.parent.active_slice == this) {
-                this.fade.reset_target(1.0, Settings.global.theme.transition_time);
-            } else {
-                this.fade.reset_target(0.0, Settings.global.theme.transition_time);
-            }
-        });
+        this.color = new Color.from_icon(this.active_icon);
     }
-
+    
     public void activate() {
-        this.action.execute();
+        action.activate();
+    }
+    
+    public void fade_out() {
+        this.alpha.reset_target(0.0, Config.global.theme.fade_out_time);
+        this.fade_scale = new AnimatedValue.cubic(AnimatedValue.Direction.IN, 
+                                             this.fade_scale.val, 
+                                             Config.global.theme.fade_out_zoom, 
+                                             Config.global.theme.fade_out_time, 
+                                             Config.global.theme.springiness);
+        this.fade_rotation = new AnimatedValue.cubic(AnimatedValue.Direction.IN, 
+                                             this.fade_rotation.val, 
+                                             Config.global.theme.fade_out_rotation, 
+                                             Config.global.theme.fade_out_time);
+    }
+    
+    public void set_active_slice(SliceRenderer? active_slice) {
+       if (active_slice == this) {
+            this.fade.reset_target(1.0, Config.global.theme.transition_time);
+        } else {
+            this.fade.reset_target(0.0, Config.global.theme.transition_time);
+        }
     }
 
     public void draw(Cairo.Context ctx, double angle, double distance) {
 	    
 	    double direction = 2.0 * PI * position/parent.slice_count() + this.fade_rotation.val;
-	    double max_scale = 1.0/Settings.global.theme.max_zoom;
+	    double max_scale = 1.0/Config.global.theme.max_zoom;
         double diff = fabs(angle-direction);
         
         if (diff > PI)
 	        diff = 2 * PI - diff;
 
-        if (diff < 2 * PI * Settings.global.theme.zoom_range)
-            max_scale = (Settings.global.theme.max_zoom/(diff * (Settings.global.theme.max_zoom - 1)
-                        /(2 * PI * Settings.global.theme.zoom_range) + 1))
-                        /Settings.global.theme.max_zoom;
+        if (diff < 2 * PI * Config.global.theme.zoom_range)
+            max_scale = (Config.global.theme.max_zoom/(diff * (Config.global.theme.max_zoom - 1)
+                        /(2 * PI * Config.global.theme.zoom_range) + 1))
+                        /Config.global.theme.max_zoom;
 	    
-	    active = (distance >= Settings.global.theme.active_radius || parent.has_quick_action()) 
-	          && (diff < PI/parent.slice_count());
+	    active = ((parent.active_slice >= 0) && (diff < PI/parent.slice_count()));
         
-        max_scale = (parent.active_slice != null ? max_scale : 1.0/Settings.global.theme.max_zoom);
+        max_scale = (parent.active_slice >= 0 ? max_scale : 1.0/Config.global.theme.max_zoom);
         
-        if (fabs(this.scale.end - max_scale) > Settings.global.theme.max_zoom*0.005)
-            this.scale.reset_target(max_scale, Settings.global.theme.transition_time);
+        if (fabs(this.scale.end - max_scale) > Config.global.theme.max_zoom*0.005)
+            this.scale.reset_target(max_scale, Config.global.theme.transition_time);
         
-        this.scale.update(Settings.global.frame_time);
-        this.alpha.update(Settings.global.frame_time);
-        this.fade.update(Settings.global.frame_time);
-        this.fade_scale.update(Settings.global.frame_time);
-        this.fade_rotation.update(Settings.global.frame_time);
+        this.scale.update(Config.global.frame_time);
+        this.alpha.update(Config.global.frame_time);
+        this.fade.update(Config.global.frame_time);
+        this.fade_scale.update(Config.global.frame_time);
+        this.fade_rotation.update(Config.global.frame_time);
 	    
         ctx.save();
         
-        double radius = Settings.global.theme.radius;
+        double radius = Config.global.theme.radius;
         
-        if (atan((Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)
-          /(radius/Settings.global.theme.max_zoom)) > PI/parent.slice_count()) {
-            radius = (Settings.global.theme.slice_radius+Settings.global.theme.slice_gap)
-                     /tan(PI/parent.slice_count())*Settings.global.theme.max_zoom;
+        if (atan((Config.global.theme.slice_radius+Config.global.theme.slice_gap)
+          /(radius/Config.global.theme.max_zoom)) > PI/parent.slice_count()) {
+            radius = (Config.global.theme.slice_radius+Config.global.theme.slice_gap)
+                     /tan(PI/parent.slice_count())*Config.global.theme.max_zoom;
         }
         
         ctx.scale(scale.val*fade_scale.val, scale.val*fade_scale.val);
@@ -138,8 +143,8 @@ public class Slice : GLib.Object {
         
         ctx.set_operator(Cairo.Operator.ADD);
     
-        if (fade.val > 0.0) action.active_icon.paint_on(ctx, this.alpha.val*this.fade.val);
-        if (fade.val < 1.0) action.inactive_icon.paint_on(ctx, this.alpha.val*(1.0 - fade.val));
+        if (fade.val > 0.0) active_icon.paint_on(ctx, this.alpha.val*this.fade.val);
+        if (fade.val < 1.0) inactive_icon.paint_on(ctx, this.alpha.val*(1.0 - fade.val));
         
         ctx.set_operator(Cairo.Operator.OVER);
         
@@ -147,41 +152,6 @@ public class Slice : GLib.Object {
         ctx.paint();
             
         ctx.restore();
-    }
-    
-    public Color color() {
-        return action.color;
-    }
-    
-    public string name() {
-        return action.name;
-    }
-    
-    private void load_caption() {
-        int size = (int)Settings.global.theme.caption_size;
-        caption = new Image.empty(size);
-        var ctx = caption.get_context();
-        
-        ctx.set_font_size((int)Settings.global.theme.font_size);
-        Cairo.TextExtents extents;
-        string text = action.name;
-        ctx.text_extents(text, out extents);
-        
-        if (extents.width > size && text.length > 3) {
-            text = text.substring(0, text.length-1) + "...";
-            
-            while (extents.width > size && text.length > 3) {
-                text = text.substring(0, text.length-4) + "...";
-                ctx.text_extents(text, out extents);
-            }
-        }
-        
-        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
-        ctx.move_to((int)(0.5*size - 0.5*extents.width), 
-                    (int)(0.5*size+0.3*Settings.global.theme.font_size)); 
-        Color color = Settings.global.theme.caption_color;
-        ctx.set_source_rgb(color.r, color.g, color.g);
-        ctx.show_text(text);
     }
 }
 

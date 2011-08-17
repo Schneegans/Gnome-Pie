@@ -21,11 +21,11 @@ namespace GnomePie {
 
 public class Theme : GLib.Object {
     
-    public string directory        {get; private set;}
-    public string name             {get; private set;}
-    public string description      {get; private set;}
-    public string author           {get; private set;}
-    public string email            {get; private set;}
+    public string directory        {get; private set; default="";}
+    public string name             {get; private set; default="";}
+    public string description      {get; private set; default="";}
+    public string author           {get; private set; default="";}
+    public string email            {get; private set; default="";}
     public double radius           {get; private set; default=150;}
     public double max_zoom         {get; private set; default=1.2;}
     public double zoom_range       {get; private set; default=0.2;}
@@ -52,22 +52,22 @@ public class Theme : GLib.Object {
     public Gee.ArrayList<SliceLayer?>  inactive_slice_layers {get; private set;}
     
     public Theme(string dir) {
-        center_layers =         new Gee.ArrayList<CenterLayer?>();
-        active_slice_layers =   new Gee.ArrayList<SliceLayer?>();
-        inactive_slice_layers = new Gee.ArrayList<SliceLayer?>();
+        this.center_layers =         new Gee.ArrayList<CenterLayer?>();
+        this.active_slice_layers =   new Gee.ArrayList<SliceLayer?>();
+        this.inactive_slice_layers = new Gee.ArrayList<SliceLayer?>();
         
-        directory = dir;
+        this.directory = dir;
         
-        load();
+        this.load();
     }
     
     public void load() {
-        center_layers.clear();
-        active_slice_layers.clear();
-        inactive_slice_layers.clear();
+        this.center_layers.clear();
+        this.active_slice_layers.clear();
+        this.inactive_slice_layers.clear();
     
         Xml.Parser.init();
-        string path = directory + "/theme.xml";
+        string path = this.directory + "/theme.xml";
         
         Xml.Doc* themeXML = Xml.Parser.parse_file(path);
         if (themeXML == null) {
@@ -78,16 +78,25 @@ public class Theme : GLib.Object {
         Xml.Node* root = themeXML->get_root_element();
         if (root == null) {
             delete themeXML;
-            warning("Invalid theme \"" + directory + "\": theme.xml is empty!");
+            warning("Invalid theme \"" + this.directory + "\": theme.xml is empty!");
             return;
         }
         
-        parse_root(root);
+        this.parse_root(root);
         
         delete themeXML;
         Xml.Parser.cleanup();
         
-        radius *= max_zoom;
+        this.radius *= max_zoom;
+    }
+    
+    public void load_images() {
+        foreach (var layer in this.center_layers)
+            layer.load_image();
+        foreach (var layer in this.active_slice_layers)
+            layer.load_image();
+        foreach (var layer in this.inactive_slice_layers)
+            layer.load_image();
     }
     
     private void parse_root(Xml.Node* root) {
@@ -115,19 +124,19 @@ public class Theme : GLib.Object {
         }
         for (Xml.Node* node = root->children; node != null; node = node->next) {
             if (node->type == Xml.ElementType.ELEMENT_NODE) {
-                parse_ring(node);
+                parse_pie(node);
             }
         }
     }
     
-    private void parse_ring(Xml.Node* ring) {
-        for (Xml.Attr* attribute = ring->properties; attribute != null; attribute = attribute->next) {
+    private void parse_pie(Xml.Node* pie) {
+        for (Xml.Attr* attribute = pie->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
             string attr_content = attribute->children->content;
             
             switch (attr_name) {
                 case "radius":
-                    radius = double.parse(attr_content) * Settings.global.global_scale;
+                    radius = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 case "maxzoom":
                     max_zoom = double.parse(attr_content);
@@ -160,11 +169,11 @@ public class Theme : GLib.Object {
                     springiness = double.parse(attr_content);
                     break;
                 default:
-                    warning("Invalid attribute \"" + attr_name + "\" in <ring> element!");
+                    warning("Invalid attribute \"" + attr_name + "\" in <pie> element!");
                     break;
             }
         }
-        for (Xml.Node* node = ring->children; node != null; node = node->next) {
+        for (Xml.Node* node = pie->children; node != null; node = node->next) {
             if (node->type == Xml.ElementType.ELEMENT_NODE) {
                 string element_name = node->name.down();
                 switch (element_name) {
@@ -179,7 +188,7 @@ public class Theme : GLib.Object {
                         parse_caption(node);
                         break;
                     default:
-                        warning("Invalid child element \"" + element_name + "\" in <ring> element!");
+                        warning("Invalid child element \"" + element_name + "\" in <pie> element!");
                         break;
                 }
             }
@@ -193,10 +202,10 @@ public class Theme : GLib.Object {
             
             switch (attr_name) {
                 case "radius":
-                    center_radius = double.parse(attr_content) * Settings.global.global_scale;
+                    center_radius = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 case "activeradius":
-                    active_radius = double.parse(attr_content) * Settings.global.global_scale;
+                    active_radius = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 default:
                     warning("Invalid attribute \"" + attr_name + "\" in <center> element!");
@@ -223,10 +232,10 @@ public class Theme : GLib.Object {
             
             switch (attr_name) {
                  case "radius":
-                    slice_radius = double.parse(attr_content) * Settings.global.global_scale;
+                    slice_radius = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 case "mingap":
-                    slice_gap = double.parse(attr_content) * Settings.global.global_scale;
+                    slice_gap = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 default:
                     warning("Invalid attribute \"" + attr_name + "\" in <slices> element!");
@@ -329,14 +338,10 @@ public class Theme : GLib.Object {
                     break;
             }
         }
-        
-        double max_scale = fmax(active_scale, inactive_scale);
-        var image = new Image.from_file(directory + "/" + file, 2*(int)((double)center_radius*max_scale));
-        
-        if (image != null) {
-            center_layers.add(new CenterLayer(image, active_scale/max_scale,   active_rotation_speed,   active_alpha,   active_colorize,   active_rotation_mode, 
-                                                     inactive_scale/max_scale, inactive_rotation_speed, inactive_alpha, inactive_colorize, inactive_rotation_mode));
-        }
+
+        double max_scale = GLib.Math.fmax(active_scale, inactive_scale);
+        center_layers.add(new CenterLayer(directory + "/" + file, (int)(center_radius*max_scale), active_scale/max_scale,   active_rotation_speed,   active_alpha,   active_colorize,   active_rotation_mode, 
+                                                 inactive_scale/max_scale, inactive_rotation_speed, inactive_alpha, inactive_colorize, inactive_rotation_mode));
     }
     
     private void parse_slice_layers(Xml.Node* slice) {
@@ -376,19 +381,17 @@ public class Theme : GLib.Object {
                         }
                     }
                     
-                    Image image = null;
-                    int size = 2*(int)((double)slice_radius*scale*max_zoom);
+                    if (file != "")
+                        file = directory + "/" + file;
                     
-                    if (file == "" && is_icon == true) image = new Image.empty(size, new Color.from_rgb(1, 1, 1));
-                    else                               image = new Image.from_file(directory + "/" + file, size);
-                                                
-                    if (image != null) {
-                        if (slice->name.down() == "activeslice") {
-                            active_slice_layers.add(new SliceLayer(image, colorize, is_icon));
-                        } else {
-                            inactive_slice_layers.add(new SliceLayer(image, colorize, is_icon));
-                        }
+                    int size = 2*(int)(slice_radius*scale*max_zoom);
+
+                    if (slice->name.down() == "activeslice") {
+                        active_slice_layers.add(new SliceLayer(file, size, colorize, is_icon));
+                    } else {
+                        inactive_slice_layers.add(new SliceLayer(file, size, colorize, is_icon));
                     }
+
                 } else {
                     warning("Invalid child element \"" + element_name + "\" in <" + slice->name + "> element!");
                 }
@@ -403,13 +406,13 @@ public class Theme : GLib.Object {
             
             switch (attr_name) {
                 case "fontsize":
-                    font_size = double.parse(attr_content) * Settings.global.global_scale;
+                    font_size = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 case "maxsize":
-                    caption_size = double.parse(attr_content) * Settings.global.global_scale;
+                    caption_size = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 case "position":
-                    caption_position = double.parse(attr_content) * Settings.global.global_scale;
+                    caption_position = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 case "color":
                     caption_color = new Color.from_string(attr_content);

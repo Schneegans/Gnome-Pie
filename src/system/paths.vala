@@ -55,7 +55,7 @@ public class Paths : GLib.Object {
     
         // append resources to icon search path to icon theme, if neccasary
         try {
-            icon_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
+            var icon_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
                         GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources");
                         
             if (icon_dir.query_exists()) {

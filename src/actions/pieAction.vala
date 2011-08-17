@@ -21,16 +21,22 @@ namespace GnomePie {
 
 public class PieAction : Action {
     	
-    private string pie_name;
+    private string pie_id;
 
-    public PieAction(string name, string icon_name, string pie_name) {
-        base(name, icon_name);
-        this.pie_name = pie_name;
+    public PieAction(string id) {
+        base("", "");
+        this.pie_id = id;
     }
 
-    public override void execute() {	    
-        Deamon.open_pie(pie_name);
+    public override void activate() {	    
+        PieManager.open_pie(pie_id);
     } 
+    
+    public override void on_all_loaded() {
+        var referee = PieManager.get_pie(pie_id);
+        this.name = referee.name;
+        this.icon_name = referee.icon_name;
+    }
 }
 
 }

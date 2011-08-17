@@ -43,8 +43,9 @@ class ThemeList : Gtk.TreeView {
                     if (toggled != this.active) {
                         Timeout.add(10, () => {
                             int index = int.parse(path);
-                            Settings.global.theme = Settings.global.themes[index];
-                            Settings.global.theme.load();
+                            Config.global.theme = Config.global.themes[index];
+                            Config.global.theme.load();
+                            Config.global.theme.load_images();
                             return false;
                         });
                         
@@ -63,14 +64,14 @@ class ThemeList : Gtk.TreeView {
         main_column.add_attribute(check_render, "active", 0);
         main_column.add_attribute(theme_render, "markup", 1);
         
-        var themes = Settings.global.themes;
+        var themes = Config.global.themes;
         foreach(var theme in themes) {
             Gtk.TreeIter current;
             data.append(out current);
-            data.set(current, 0, theme == Settings.global.theme); 
+            data.set(current, 0, theme == Config.global.theme); 
             data.set(current, 1, "<b>" + theme.name + "</b>\n" + theme.description
                                  + "  <small> - " + _("by") + " " + theme.author + "</small>"); 
-            if(theme == Settings.global.theme)
+            if(theme == Config.global.theme)
                 this.active = current;
         }  
     }

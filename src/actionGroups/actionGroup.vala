@@ -24,14 +24,20 @@ public class ActionGroup {
     
     public Gee.ArrayList<Action?> actions {get; private set;}
     
-    public string pie_name {get; set;}
+    public string parent_id {get; private set;}
     
-    public ActionGroup() {
-        this.actions = new Gee.ArrayList<Slice?>();
+    public ActionGroup(string parent_id) {
+        this.parent_id = parent_id;
+        this.actions = new Gee.ArrayList<Action?>();
+    }
+    
+    public virtual void on_all_loaded() {
+        foreach (var action in actions)
+            action.on_all_loaded();
     }
     
     public void add_action(Action new_action) {
-       this. actions.add(new_action);
+       this.actions.add(new_action);
     }
     
     public void delete_by_name(string name) {
@@ -39,7 +45,7 @@ public class ActionGroup {
     }
     
     public void delete_by_position(int pos) {
-        if (pos >= 0 && pos < actions.size()) this.actions.remove_at(pos);
+        if (pos >= 0 && pos < this.actions.size) this.actions.remove_at(pos);
         else warning("Failed to delete an Action: Index out of bounds!");
     }
     
@@ -48,7 +54,7 @@ public class ActionGroup {
     }
     
     public void swap_by_position(int pos1, int pos2) {
-        if ((pos1 >= 0 && pos1 < actions.size()) || (pos2 >= 0 && pos2 < actions.size())) {
+        if ((pos1 >= 0 && pos1 < this.actions.size) || (pos2 >= 0 && pos2 < this.actions.size)) {
             warning("Failed to swap Actions: Index out of bounds!");
             return;
         }
@@ -59,7 +65,7 @@ public class ActionGroup {
     }
     
     public int get_position(string name) {
-        for (int i=0; i<this.actions.size(); ++i) 
+        for (int i=0; i<this.actions.size; ++i) 
             if (this.actions[i].name == name) 
                 return i;
         

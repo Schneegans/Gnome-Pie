@@ -19,13 +19,16 @@ using GLib.Math;
 
 namespace GnomePie {
 
-public abstract class Window : Gtk.Window {
+// An invisible window.
 
-    // stores all key bindings associated with this window
-    private BindingManager keys {private get; private set;}
+public class PieWindow : Gtk.Window {
 
-    // c'tor
-    public Window(string stroke) {
+    private PieRenderer renderer;
+    private bool closing = false;
+
+    public PieWindow() {
+        this.renderer = new PieRenderer();
+    
         this.set_title("Gnome-Pie");
         this.set_skip_taskbar_hint(true);
         this.set_skip_pager_hint(true);
@@ -40,79 +43,35 @@ public abstract class Window : Gtk.Window {
         this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
                         Gdk.EventMask.KEY_RELEASE_MASK |
                         Gdk.EventMask.KEY_PRESS_MASK);
-        
-        this.set_size();
-        this.reposition();
-        
-        
-        
-        this.keys = new BindingManager();
-        
-        Settings.global.notify["open-at-mouse"].connect((s, p) => {
-            this.reposition();
-        }); 
 
         this.button_release_event.connect ((e) => {
-            this.mouse_released((int) e.button, (int) e.x, (int) e.y);
+            if (e.button == 1) this.activate_slice();
+            else               this.cancel();
             return true;
         });
         
         this.key_release_event.connect ((e) => {
-            keys.on_key_release(e.keyval, e.state);
+            if (!Config.global.click_to_activate)
+                this.activate_slice();
             return true;
         });
         
         this.key_press_event.connect ((e) => {
-            keys.on_key_press(e.keyval, e.state);
+            if (Gdk.keyval_name(e.keyval) == "Escape") this.cancel();
             return true;
         });
 
         this.expose_event.connect(this.draw);
-        this.destroy.connect(Gtk.main_quit);
+    }
+    
+    public void load_pie(Pie pie) {
+        renderer.load_pie(pie);
         
-        if (stroke != "") {
-            keys.bind_global_press(stroke, () => {
-                this.fade_in();
-            });
-	        
-	        keys.bind_local_release(stroke, () => {
-	            if (!Settings.global.click_to_activate)
-	                this.activate_pie();
-	        });
-	        
-	        keys.bind_local_press(stroke, () => {
-	            if (Settings.global.click_to_activate) 
-	                this.fade_out();
-	        });
-	    }
-	    
-	    keys.bind_local_press("Escape", () => { 
-	        this.fade_out();
-	    });
-	    
-	    keys.bind_local_press("Return", () => { 
-	        this.activate_pie();
-	    });
-	    
-	    keys.bind_local_press("space", () => { 
-	        this.activate_pie();
-	    });
+        this.set_window_position();
+        this.set_size_request(renderer.get_size(), renderer.get_size());
     }
     
-    // virtual and abstract stuff
-    protected abstract bool draw(Gtk.Widget da, Gdk.EventExpose event);
-
-    public virtual void activate_pie() {
-        this.unfix_focus();
-        this.has_focus = 0;
-    }
-    
-    public virtual void fade_out() {
-        this.unfix_focus();
-        this.has_focus = 0;
-    }
-
-    public virtual void fade_in() {
+    public void open() {
         this.show();
         this.fix_focus();
 
@@ -122,46 +81,80 @@ public abstract class Window : Gtk.Window {
         var timer = new GLib.Timer();
         timer.start();
 
-        Timeout.add ((uint)(1000.0/Settings.global.refresh_rate), () => {
+        Timeout.add ((uint)(1000.0/Config.global.refresh_rate), () => {
         
             this.queue_draw();
         
-            Settings.global.frame_time = timer.elapsed();
+            Config.global.frame_time = timer.elapsed();
             timer.reset();
             
-            time_count += Settings.global.frame_time;
+            time_count += Config.global.frame_time;
             frame_count++;
             
-            if(frame_count == (int)Settings.global.refresh_rate) {
+            if(frame_count == (int)Config.global.refresh_rate) {
                 //Logger.debug("FPS: %f", (double)frame_count/time_count);
                 frame_count = 0;
                 time_count = 0.0;
             }
         
            // TODO: reduce wait time if drawing takes to much time
-           // int time_diff = (int)(1000.0/Settings.global.refresh_rate) - (int)(1000.0*Settings.global.frame_time);
+           // int time_diff = (int)(1000.0/Config.global.refresh_rate) - (int)(1000.0*Config.global.frame_time);
            // wait =  (time_diff < 1) ? 1 : (uint) time_diff;
 
             return this.visible;
         }); 
     }
     
-    public void set_size(int min_size = 0) {
-        int size = (int)(fmax(2*Settings.global.theme.radius 
-                    + 2*Settings.global.theme.slice_radius*Settings.global.theme.max_zoom, 
-                      2*Settings.global.theme.center_radius));
-        size = (int)fmax(size, min_size);
-        this.set_size_request (size, size);
+    private bool draw(Gtk.Widget da, Gdk.EventExpose event) {
+        double mouse_x = 0.0;
+        double mouse_y = 0.0;
+        this.get_pointer(out mouse_x, out mouse_y);
+        mouse_x -= this.width_request*0.5;
+        mouse_y -= this.height_request*0.5;
+        
+        var ctx = Gdk.cairo_create(this.window);
+        ctx.set_operator(Cairo.Operator.OVER);
+        ctx.translate(this.width_request*0.5, this.height_request*0.5);
+        
+        // clear the window
+        ctx.set_operator (Cairo.Operator.CLEAR);
+        ctx.paint();
+        ctx.set_operator (Cairo.Operator.OVER);
+        
+        renderer.draw(ctx, (int)mouse_x, (int)mouse_y);
+        
+        return true;
     }
     
-    // private methods
-    private void mouse_released(int button, int x, int y) {
-        if (button == 1) activate_pie();
+    private void activate_slice() {
+        if (!this.closing) {
+            this.closing = true;
+            this.unfix_focus();
+            renderer.activate();
+            
+            Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
+                this.destroy();
+                return false;
+            });
+        }
     }
     
-    private void reposition() {
-        if(Settings.global.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
-        else                              this.set_position(Gtk.WindowPosition.CENTER);
+    private void cancel() {
+        if (!this.closing) {
+            this.closing = true;
+            this.unfix_focus();
+            renderer.cancel();
+            
+            Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
+                this.destroy();
+                return false;
+            });
+        }
+    }
+    
+    private void set_window_position() {
+        if(Config.global.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
+        else                            this.set_position(Gtk.WindowPosition.CENTER);
     }
     
     // utilities for grabbing focus
@@ -203,7 +196,7 @@ public abstract class Window : Gtk.Window {
             }
         }
         return false;
-    }
+    }  
 }
 
 }

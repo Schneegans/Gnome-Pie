@@ -32,6 +32,17 @@ public class Logger {
     
     private static Regex regex = null;
     
+    private enum Color {
+        BLACK,
+        RED,
+        GREEN,
+        YELLOW,
+        BLUE,
+        PURPLE,
+        TURQUOISE,
+        WHITE
+    }
+    
     public static void init() {
         try {
 			regex = new Regex("""(.*)\.vala(:\d+): (.*)""");
@@ -42,25 +53,25 @@ public class Logger {
     
     private static void info(string message) {
         if (display_info) {
-            stdout.printf(set_color(32, false) + "[INFO]" + message);
+            stdout.printf(set_color(Color.GREEN, false) + "[INFO]" + message);
         }
     }
     
     private static void debug(string message) {
         if (display_debug) {
-            stdout.printf(set_color(34, false) + "[DEBUG]" + message);
+            stdout.printf(set_color(Color.BLUE, false) + "[DEBUG]" + message);
         }
     }
     
     private static void warning(string message) {
         if (display_warning) {
-            stdout.printf(set_color(33, false) + "[WARNING]" + message);
+            stdout.printf(set_color(Color.YELLOW, false) + "[WARNING]" + message);
         }
     }
     
     private static void error(string message) {
         if (display_error) {
-            stdout.printf(set_color(31, false) + "[ERROR]" + message);
+            stdout.printf(set_color(Color.RED, false) + "[ERROR]" + message);
         }
     }
     
@@ -68,9 +79,9 @@ public class Logger {
 		return "\x001b[0m";
 	}
 	
-	private static string set_color(int color, bool bold) {
-	    if (bold) return "\x001b[1;%dm".printf(color);
-	    else      return "\x001b[0;%dm".printf(color);
+	private static string set_color(Color color, bool bold) {
+	    if (bold) return "\x001b[1;%dm".printf((int)color + 30);
+	    else      return "\x001b[0;%dm".printf((int)color + 30);
 	}
 	
 	private static string create_message(string message) {

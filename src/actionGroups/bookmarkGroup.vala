@@ -19,7 +19,8 @@ namespace GnomePie {
 
 public class BookmarkGroup : ActionGroup {
     
-    public void load() {
+    public BookmarkGroup(string parent_id) {
+        base(parent_id);
 //        var bookmark_file = GLib.File.new_for_path(
 //            GLib.Environment.get_home_dir()).get_child(".gtk-bookmarks");
 //            
@@ -34,6 +35,8 @@ public class BookmarkGroup : ActionGroup {
 //        } catch (GLib.Error e) {
 //            warning(e.message);
 //        }
+
+        
     }
     
 }

@@ -55,25 +55,25 @@ public class Preferences : Gtk.Window {
 
                         // Autostart checkbox
                         var autostart = new Gtk.CheckButton.with_label (_("Startup on Login"));
-                            autostart.active = Settings.global.auto_start;
+                            autostart.active = Config.global.auto_start;
                             autostart.toggled.connect(autostart_toggled);
                             behavior_vbox.pack_start(autostart, false);
 
                         // Indicator icon 
                         var indicator = new Gtk.CheckButton.with_label (_("Show Indicator"));
-                            indicator.active = Settings.global.show_indicator;
+                            indicator.active = Config.global.show_indicator;
                             indicator.toggled.connect(indicator_toggled);
                             behavior_vbox.pack_start(indicator, false);
                             
                         // Open Pies at Mouse
                         var open_at_mouse = new Gtk.CheckButton.with_label (_("Open Pies at Mouse"));
-                            open_at_mouse.active = Settings.global.open_at_mouse;
+                            open_at_mouse.active = Config.global.open_at_mouse;
                             open_at_mouse.toggled.connect(open_at_mouse_toggled);
                             behavior_vbox.pack_start(open_at_mouse, false);
                             
                         // Click to activate
                         var click_to_activate = new Gtk.CheckButton.with_label (_("Click to activate a Slice"));
-                            click_to_activate.active = Settings.global.click_to_activate;
+                            click_to_activate.active = Config.global.click_to_activate;
                             click_to_activate.toggled.connect(click_to_activate_toggled);
                             behavior_vbox.pack_start(click_to_activate, false);
                             
@@ -85,7 +85,7 @@ public class Preferences : Gtk.Window {
                                 slider_hbox.pack_start(scale_label, false, false);
                             
                             var scale_slider = new Gtk.HScale.with_range(0.5, 2.0, 0.05);
-                                scale_slider.set_value(Settings.global.global_scale);
+                                scale_slider.set_value(Config.global.global_scale);
                                 scale_slider.value_pos = Gtk.PositionType.RIGHT;
                                 
                                 bool changing = false;
@@ -100,8 +100,8 @@ public class Preferences : Gtk.Window {
                                                 return true;
                                             }
 
-                                            Settings.global.global_scale = scale_slider.get_value();
-                                            Settings.global.load_themes(Settings.global.theme.name);
+                                            Config.global.global_scale = scale_slider.get_value();
+                                            Config.global.load_themes(Config.global.theme.name);
                                             changing = false;
                                             return false;
                                         });
@@ -201,7 +201,7 @@ public class Preferences : Gtk.Window {
                 var close_button = new Gtk.Button.from_stock (Gtk.Stock.CLOSE);
                 close_button.clicked.connect (() => { 
                     hide();
-                    Settings.global.save();
+                    Config.global.save();
                 });
                 bbox.pack_start (close_button);
 
@@ -248,17 +248,17 @@ public class Preferences : Gtk.Window {
     
     private void indicator_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
-        Settings.global.show_indicator = check.active;
+        Config.global.show_indicator = check.active;
     }
     
     private void open_at_mouse_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
-        Settings.global.open_at_mouse = check.active;
+        Config.global.open_at_mouse = check.active;
     }
     
     private void click_to_activate_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
-        Settings.global.click_to_activate = check.active;
+        Config.global.click_to_activate = check.active;
     }
 }
 

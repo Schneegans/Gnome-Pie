@@ -77,9 +77,9 @@ public class Indicator : GLib.Object {
 
         this.indicator.set_menu(menu);
         
-        this.active = Settings.global.show_indicator;
-        Settings.global.notify["show-indicator"].connect((s, p) => {
-            this.active = Settings.global.show_indicator;
+        this.active = Config.global.show_indicator;
+        Config.global.notify["show-indicator"].connect((s, p) => {
+            this.active = Config.global.show_indicator;
         });
     }
     

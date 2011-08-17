@@ -19,47 +19,46 @@ using GLib.Math;
 
 namespace GnomePie {
 
-public class Center {
+// Renders the center of a Pie
 
-    private unowned Pie parent {private get; private set;}
-    private Image? caption     {private get; private set; default = null;}
-    private Color  color       {private get; private set; default = new Color();}
+public class CenterRenderer {
+
+    private unowned PieRenderer parent;
+    private Image? caption;
+    private Color color;
     
-    private AnimatedValue activity {private get; private set;}
-    private AnimatedValue alpha    {private get; private set;}
+    private AnimatedValue activity;
+    private AnimatedValue alpha;
 
-    public Center(Pie parent) {
+    public CenterRenderer(PieRenderer parent) {
         this.parent = parent;
-        
-        this.parent.on_fade_in.connect(() => {
-            this.activity = new AnimatedValue.linear(0.0, 0.0, Settings.global.theme.transition_time);
-            this.alpha = new AnimatedValue.linear(0.0, 1.0, Settings.global.theme.fade_in_time);
-            this.color = new Color();
-            this.caption = null;
-        });
-        
-        this.parent.on_fade_out.connect(() => {
-            this.activity.reset_target(0.0, Settings.global.theme.fade_out_time);
-            this.alpha.reset_target(0.0, Settings.global.theme.fade_out_time);
-        });
-        
-        this.parent.on_active_change.connect(() => {
-            if (this.parent.active_slice == null) {
-                this.activity.reset_target(0.0, Settings.global.theme.transition_time);
-            } else {
-                this.activity.reset_target(1.0, Settings.global.theme.transition_time);
-                this.caption = this.parent.active_slice.caption;
-                this.color   = this.parent.active_slice.color();
-            }
-        });
+        this.activity = new AnimatedValue.linear(0.0, 0.0, Config.global.theme.transition_time);
+        this.alpha = new AnimatedValue.linear(0.0, 1.0, Config.global.theme.fade_in_time);
+        this.color = new Color();
+        this.caption = null;
+    }
+    
+    public void fade_out() {
+        this.activity.reset_target(0.0, Config.global.theme.fade_out_time);
+        this.alpha.reset_target(0.0, Config.global.theme.fade_out_time);
+    }
+    
+    public void set_active_slice(SliceRenderer? active_slice) {
+        if (active_slice == null) {
+            this.activity.reset_target(0.0, Config.global.theme.transition_time);
+        } else {
+            this.activity.reset_target(1.0, Config.global.theme.transition_time);
+            this.caption = active_slice.caption;
+            this.color   = active_slice.color;
+        }
     }
     
     public void draw(Cairo.Context ctx, double angle, double distance) {
 
-	    var layers = Settings.global.theme.center_layers;
+	    var layers = Config.global.theme.center_layers;
         
-        this.activity.update(Settings.global.frame_time);
-        this.alpha.update(Settings.global.frame_time);
+        this.activity.update(Config.global.frame_time);
+        this.alpha.update(Config.global.frame_time);
 	
 	    foreach (var layer in layers) {
 	    
@@ -85,7 +84,7 @@ public class Center {
 	            max_rotation_speed = layer.active_rotation_speed*this.activity.val 
 	                + layer.inactive_rotation_speed*(1.0-this.activity.val);
 	            double smoothy = fabs(diff) < 0.9 ? fabs(diff) + 0.1 : 1.0; 
-	            double step = max_rotation_speed*Settings.global.frame_time*smoothy;
+	            double step = max_rotation_speed*Config.global.frame_time*smoothy;
 	            
                 if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 		            layer.rotation = angle;
@@ -97,10 +96,10 @@ public class Center {
 	        } else if (rotation_mode == CenterLayer.RotationMode.TO_ACTIVE) {
 	            max_rotation_speed *= this.activity.val;
 	            
-	            double slice_angle = 2*PI/this.parent.slice_count();
+	            double slice_angle = 2*PI/parent.slice_count();
 	            double direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
 	            double diff = direction-layer.rotation;
-	            double step = max_rotation_speed*Settings.global.frame_time;
+	            double step = max_rotation_speed*Config.global.frame_time;
 	            
                 if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 		            layer.rotation = direction;
@@ -109,7 +108,7 @@ public class Center {
 		            else            		                   layer.rotation -= step;
                 }
 	            
-	        } else layer.rotation += max_rotation_speed*Settings.global.frame_time;
+	        } else layer.rotation += max_rotation_speed*Config.global.frame_time;
 	        
 	        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 	        
@@ -132,13 +131,13 @@ public class Center {
             ctx.restore();
             
             // draw caption
-	        if (Settings.global.theme.caption && caption != null && this.activity.val > 0) {
+	        if (Config.global.theme.caption && caption != null && this.activity.val > 0) {
     		    ctx.save();
-    		    ctx.identity_matrix();
-    		    int pos = this.parent.height_request/2;
-	            ctx.translate(pos, (int)Settings.global.theme.caption_position + pos); 
-	            caption.paint_on(ctx, this.activity.val);
-	            ctx.restore();
+                ctx.identity_matrix();
+                int pos = this.parent.get_size()/2;
+                ctx.translate(pos, (int)(Config.global.theme.caption_position) + pos);
+                caption.paint_on(ctx, this.activity.val);
+                ctx.restore();
 	        }
         }
     }

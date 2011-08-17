@@ -22,15 +22,17 @@ namespace GnomePie {
 
 public abstract class Action : GLib.Object {
 
-    public string name      {get; private set;}
-    public string icon_name {get; private set;}
+    public string name      {get; protected set;}
+    public string icon_name {get; protected set;}
 
     public Action(string name, string icon_name) {
         this.name      = name;
         this.icon_name = icon_name;
     }
 
-    public abstract void execute();
+    public abstract void activate();
+    
+    public virtual void on_all_loaded() {}
 }
 
 }

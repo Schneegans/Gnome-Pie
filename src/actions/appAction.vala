@@ -28,7 +28,7 @@ public class AppAction : Action {
         this.command = command;
     }
 
-    public override void execute() {
+    public override void activate() {
         try{
             var item = GLib.AppInfo.create_from_commandline(this.command, null, 
                                                             GLib.AppInfoCreateFlags.NONE);

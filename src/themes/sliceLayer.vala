@@ -23,11 +23,21 @@ public class SliceLayer : GLib.Object {
     
     public bool colorize {get; private set; }
     public bool is_icon  {get; private set;}
+    public string icon_file  {get; private set;}
+    public int icon_size  {get; private set;}
     
-    public SliceLayer(Image image, bool colorize, bool is_icon) {
-        this.image = image;
+    public SliceLayer(string icon_file, int icon_size, bool colorize, bool is_icon) {
+        this.icon_file = icon_file;
         this.colorize = colorize;
         this.is_icon = is_icon;
+        this.icon_size = icon_size;
+    }
+    
+    public void load_image() {
+        if (this.icon_file == "" && this.is_icon == true) 
+            this.image = new Image.empty(this.icon_size, new Color.from_rgb(1, 1, 1));
+        else
+            this.image = new Image.from_file(this.icon_file, this.icon_size);
     }
 }
 

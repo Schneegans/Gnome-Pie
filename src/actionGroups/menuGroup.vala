@@ -25,63 +25,71 @@ public class MenuGroup : ActionGroup {
     private Gee.ArrayList<MenuGroup?> childs;
     private bool is_toplevel = false;
     
-    public void load(string parent_name, GMenu.TreeDirectory? dir = null) {
-    
-        this.childs = new Gee.ArrayList<MenuGroup?>();
-    
-        if (dir == null) {
-            is_toplevel = true;
+    public MenuGroup(string parent_id, bool is_toplevel = true) {
+        base(parent_id);
         
-            this.menu = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
-            
-            this.menu.add_monitor(this.on_change);
-            
-            dir = this.menu.get_root_directory();
-        } else {
-            this.add_action(new PieAction(_("BACK"), "back", parent_name));
-        }
+        this.is_toplevel = is_toplevel;
+        this.childs = new Gee.ArrayList<MenuGroup?>();
+        
+        if (this.is_toplevel) {
+            this.load_toplevel();
+        } 
+    }
+    
+    private void load_toplevel() {
+        this.menu = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
+        this.menu.add_monitor(this.on_change);
+        
+        var dir = this.menu.get_root_directory();
 
+        this.load_contents(dir, parent_id);
+    }
+    
+    private void load_contents(GMenu.TreeDirectory dir, string parent_id) {
         foreach (var item in dir.get_contents()) {
             switch(item.get_type()) {
             
                 case GMenu.TreeItemType.DIRECTORY:
-                    var sub_menu_name = pie_name + (GMenu.TreeDirectory)item.get_name();
+                    var sub_menu_id = parent_id +((GMenu.TreeDirectory)item).get_name();
                 
-                    var sub_menu = PieManager.add_pie(sub_menu_name,
-                                                      (GMenu.TreeDirectory)item.get_icon());
-                    var group = new MenuGroup();
-                    group.load(sub_menu_name, (GMenu.TreeDirectory)item);
+                    var sub_menu = PieManager.add_pie(sub_menu_id, out sub_menu_id,
+                                                      ((GMenu.TreeDirectory)item).get_name(),
+                                                      ((GMenu.TreeDirectory)item).get_icon(),
+                                                      "", 0);
+                    var group = new MenuGroup(parent_id, false);
+                    group.add_action(new PieAction(parent_id));
+                    group.load_contents((GMenu.TreeDirectory)item, sub_menu_id);
                     childs.add(group);
                                                       
                     sub_menu.add_group(group);
                     
-                    this.add_action(new PieAction(sub_menu_name));  
+                    this.add_action(new PieAction(sub_menu_id));  
                     break;
                     
                 case GMenu.TreeItemType.ENTRY:
-                    this.add_action(new AppAction((GMenu.TreeEntry)(entry).get_name(), 
-                                                  (GMenu.TreeEntry)(entry).get_icon(), 
-                                                  (GMenu.TreeEntry)(entry).get_exec()));  
+                    this.add_action(new AppAction(((GMenu.TreeEntry)item).get_name(), 
+                                                  ((GMenu.TreeEntry)item).get_icon(), 
+                                                  ((GMenu.TreeEntry)item).get_exec()));  
                     break;
             }
         }
-        
-        private void on_change() {
-            this.menu.remove_monitor(this.on_change);
-            this.clear();
-            this.load(this.pie_name);
-        }
-        
-        private void clear() {
-            foreach (child in childs)
-                child.clear();
+    }
+    
+     private void on_change() {
+        this.menu.remove_monitor(this.on_change);
+        this.clear();
+        this.load_toplevel();
+    }
+    
+    private void clear() {
+        foreach (var child in childs)
+            child.clear();
 
-            if (!this.is_toplevel)
-                PieManager.remove_pie(this.pie_name);
-            
-            this.childs.clear();
-            this.menu = null;
-        }
+        if (!this.is_toplevel)
+            PieManager.remove_pie(this.parent_id);
+        
+        this.childs.clear();
+        this.menu = null;
     }
     
 }

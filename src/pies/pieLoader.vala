@@ -19,6 +19,8 @@ using GLib.Math;
 
 namespace GnomePie {
 
+// A helper class which loads pies according to the configuration file.
+
 public class PieLoader : GLib.Object {
 
     public void load_pies() {
@@ -61,10 +63,12 @@ public class PieLoader : GLib.Object {
     }
     
     private void parse_pie(Xml.Node* node) {
+    
         string hotkey = "";
         string name = "";
         string icon = "";
-        int    quick_action = -1;
+        string id = "";
+        int quick_action = -1;
         
     
         for (Xml.Attr* attribute = node->properties; attribute != null; attribute = attribute->next) {
@@ -84,6 +88,9 @@ public class PieLoader : GLib.Object {
                 case "icon":
                     icon = attr_content;
                     break;
+                case "id":
+                    id = attr_content;
+                    break;
                 default:
                     warning("Invalid setting \"" + attr_name + "\" in pies.conf!");
                     break;
@@ -95,7 +102,10 @@ public class PieLoader : GLib.Object {
             return;
         }
         
-        var pie = new Pie(hotkey, quick_action);
+        if (id == "")
+            id = name;
+        
+        var pie = PieManager.add_pie(id, out id, name, icon, hotkey, quick_action);
         
         for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {
             if (slice->type == Xml.ElementType.ELEMENT_NODE) {
@@ -110,10 +120,6 @@ public class PieLoader : GLib.Object {
                 } 
             }
         }
-        
-        var manager = new PieManager();
-        manager.add_pie(name, pie);
-
     }
     
     private void parse_slice(Xml.Node* slice, Pie pie) {
@@ -145,30 +151,37 @@ public class PieLoader : GLib.Object {
             }
         }
         
-        Action action = null;
-        
+        ActionGroup group = null;
+
         switch (type) {
             case "app":
-                action = new AppAction(name, icon, command);
+                Action action = new AppAction(name, icon, command);
+                group = new ActionGroup(pie.id);
+                group.add_action(action);
                 break;
             case "key":
-                action = new KeyAction(name, icon, command);
+                Action action = new KeyAction(name, icon, command);
+                group = new ActionGroup(pie.id);
+                group.add_action(action);
                 break;
             case "pie":
-                action = new PieAction(name, icon, command);
+                Action action = new PieAction(command);
+                group = new ActionGroup(pie.id);
+                group.add_action(action);
                 break;
             case "menu":
-                Plugins.Menu.create(pie, name);
+                group = new MenuGroup(pie.id);
                 break;
             case "bookmarks":
-                Plugins.Bookmarks.create(pie, name);
+                group = new BookmarkGroup(pie.id);
                 break;
             default:
                 warning("Invalid type \"" + type + "\" in pies.conf!");
                 break;
         }
         
-        if (action != null) pie.add_slice(action);
+        
+        if (group != null) pie.add_group(group);
     }
 }
 

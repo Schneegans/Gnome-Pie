@@ -19,8 +19,8 @@ namespace GnomePie {
 
 public class RecentGroup : ActionGroup {
     
-    public void load() {
-    
+    public RecentGroup(string parent_id) {
+        base(parent_id);
     }
     
 }

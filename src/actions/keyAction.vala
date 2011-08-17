@@ -28,7 +28,7 @@ public class KeyAction : Action {
         this.key = new Key(key_stroke);
     }
 
-    public override void execute() {
+    public override void activate() {
         key.press();
     }
 }

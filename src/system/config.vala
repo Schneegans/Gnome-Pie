@@ -159,6 +159,7 @@ public class Config : GLib.Object {
             foreach (var t in themes) {
                 if (t.name == current) {
                     theme = t;
+                    theme.load_images();
                     break;
                 }
             }

@@ -22,12 +22,15 @@ public class CenterLayer : GLib.Object {
     public enum RotationMode {AUTO, TO_MOUSE, TO_ACTIVE}
     
     public Image image {get; private set;}
+
+    public string image_file;
+    private int center_radius;
     
-    public double active_scale                {get; private set;}
-    public double active_rotation_speed       {get; private set;}
-    public double active_alpha                {get; private set;}
-    public bool   active_colorize             {get; private set;}
-    public RotationMode active_rotation_mode  {get; private set;}
+    public double active_scale                 {get; private set;}
+    public double active_rotation_speed        {get; private set;}
+    public double active_alpha                 {get; private set;}
+    public bool   active_colorize              {get; private set;}
+    public RotationMode active_rotation_mode   {get; private set;}
     
     public double inactive_scale               {get; private set;}
     public double inactive_rotation_speed      {get; private set;}
@@ -37,11 +40,13 @@ public class CenterLayer : GLib.Object {
     
     public double rotation {get; set;}
         
-    public CenterLayer(Image image, double active_scale,   double active_rotation_speed,   
+    public CenterLayer(string image_file, int center_radius, double active_scale, double active_rotation_speed,   
                                     double active_alpha,   bool active_colorize,   RotationMode active_rotation_mode,
                                     double inactive_scale, double inactive_rotation_speed, 
                                     double inactive_alpha, bool inactive_colorize, RotationMode inactive_rotation_mode) {
-        this.image = image;
+        
+        this.image_file = image_file;
+        this.center_radius = center_radius;
         
         this.active_scale = active_scale;
         this.active_rotation_speed = active_rotation_speed;
@@ -56,6 +61,10 @@ public class CenterLayer : GLib.Object {
         this.inactive_rotation_mode = inactive_rotation_mode;
         
         this.rotation = 0.0;
+    }
+    
+    public void load_image() {
+        this.image = new Image.from_file(image_file, 2*center_radius);
     }
 }
 

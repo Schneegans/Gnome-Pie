@@ -17,6 +17,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+// An appindicator sitting in the panel...
+
 public class Indicator : GLib.Object {
 
     private AppIndicator.Indicator indicator {private get; private set;}
@@ -32,7 +34,6 @@ public class Indicator : GLib.Object {
         }
     }
     
-    // creates an appindicator sitting in the panel...
     public Indicator() {
         string path = "";
         string icon = "indicator-applet";

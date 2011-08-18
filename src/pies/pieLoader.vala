@@ -20,6 +20,7 @@ using GLib.Math;
 namespace GnomePie {
 
 // A helper class which loads pies according to the configuration file.
+// It has got it's own class in order to keep other files clean.
 
 public class PieLoader : GLib.Object {
 

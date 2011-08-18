@@ -17,8 +17,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// need to subclass Gtk.CellRenderer because Gtk.CellRendererPixbuf
-// can't receive click events
+// A cellrenderer which displays an Icon. When clicked onto, a window opens
+// for selecting another icon. This needs to be a subclass of Gtk.CellRenderer
+// because Gtk.CellRendererPixbuf can't receive click events. Internally it
+// stores a Gtk.CellRendererPixbuf, which renders and stuff.
+
 public class CellRendererIcon : Gtk.CellRenderer {
 
     private IconSelectWindow select_window = null;

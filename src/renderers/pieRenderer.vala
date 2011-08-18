@@ -19,6 +19,9 @@ using GLib.Math;
 
 namespace GnomePie {
 
+// This class renders a Pie. In order to accomplish that, it owns a
+// CenterRenderer and some SliceRenderers.
+
 public class PieRenderer {
 
     public int quick_action {get; private set;}
@@ -59,14 +62,10 @@ public class PieRenderer {
         }
         
         this.size = (int)fmax(
-                        (((Config.global.theme.slice_radius
-                         + Config.global.theme.slice_gap)/tan(PI/slices.size)) 
-                         + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom,
-                        fmax(
-                              2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
-                              2*Config.global.theme.center_radius
-                        )
-                    );
+            (((Config.global.theme.slice_radius + Config.global.theme.slice_gap)/tan(PI/slices.size)) 
+            + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom,
+            fmax(2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
+                 2*Config.global.theme.center_radius));
     }
     
     public void activate() {

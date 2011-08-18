@@ -17,10 +17,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+// A static class which beautifies the messages of the default logger.
 // Some of this code is inspired by plank's written by Robert Dyer. 
 // Thanks a lot for this project!
-
-// A static class which beautifies the messages of the default logger.
 
 public class Logger {
     
@@ -30,6 +29,7 @@ public class Logger {
     public static bool display_warning {get; set; default = true;}
     public static bool display_error   {get; set; default = true;}
     
+    // some options
     public static bool display_time    {get; set; default = true;}
     public static bool display_file    {get; set; default = false;}
     

@@ -17,7 +17,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
     
-// This type of Action launches an application.
+// This type of Action launches an application or a custom command.
 
 public class AppAction : Action {
     	
@@ -30,8 +30,7 @@ public class AppAction : Action {
 
     public override void activate() {
         try{
-            var item = GLib.AppInfo.create_from_commandline(this.command, null, 
-                                                            GLib.AppInfoCreateFlags.NONE);
+            var item = GLib.AppInfo.create_from_commandline(this.command, null, GLib.AppInfoCreateFlags.NONE);
             item.launch(null, null);
     	} catch (Error e) {
 	        warning(e.message);

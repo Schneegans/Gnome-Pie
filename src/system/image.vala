@@ -17,7 +17,11 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// a class which loads image files.
+// A class which loads image files. It caches them, so no image nedd to be
+// loaded twice. It can load image files in various formats. Additionally
+// it can create empty images, images with strings written to and and system
+// icons themed according to the current theme.
+
 public class Image : GLib.Object {
 
     // icon cache which stores loaded images

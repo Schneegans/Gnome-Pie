@@ -17,6 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+// This class stores information on a pie. A pie consists of a name, an icon_name
+// and an unique ID. Furthermore it has a "quick_action", which describes the
+// action to be executed when the user clicks on the center of a pie.
+
 public class Pie {
     
     public string name {get; private set;}
@@ -48,7 +52,6 @@ public class Pie {
             count += group.actions.size;
         return count;
     }
-    
 }
 
 }

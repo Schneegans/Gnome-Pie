@@ -17,6 +17,9 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+// This class representing a layer of a slice of a pie. Each theme may
+// have plenty of them.
+
 public class SliceLayer : GLib.Object {
     
     public Image image   {get; set;}

@@ -17,6 +17,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+// A widget displaying all available themes of Gnome-Pie.
+
 class ThemeList : Gtk.TreeView {
 
     private Gtk.TreeIter active{private get; private set;}

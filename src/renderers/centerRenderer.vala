@@ -19,7 +19,7 @@ using GLib.Math;
 
 namespace GnomePie {
 
-// Renders the center of a Pie
+// Renders the center of a Pie.
 
 public class CenterRenderer {
 
@@ -129,16 +129,16 @@ public class CenterRenderer {
 	        }
             
             ctx.restore();
-            
-            // draw caption
-	        if (Config.global.theme.caption && caption != null && this.activity.val > 0) {
-    		    ctx.save();
-                ctx.identity_matrix();
-                int pos = this.parent.get_size()/2;
-                ctx.translate(pos, (int)(Config.global.theme.caption_position) + pos);
-                caption.paint_on(ctx, this.activity.val);
-                ctx.restore();
-	        }
+        }
+        
+        // draw caption
+        if (Config.global.theme.caption && caption != null && this.activity.val > 0) {
+		    ctx.save();
+            ctx.identity_matrix();
+            int pos = this.parent.get_size()/2;
+            ctx.translate(pos, (int)(Config.global.theme.caption_position) + pos);
+            caption.paint_on(ctx, this.activity.val);
+            ctx.restore();
         }
     }
 }

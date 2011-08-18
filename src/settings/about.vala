@@ -17,6 +17,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+// A simple about Dialog.
+
 public class GnomePieAboutDialog: Gtk.AboutDialog {
 
     public GnomePieAboutDialog () {

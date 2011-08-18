@@ -12,8 +12,8 @@ It is inspired by the an addon written for the game World of Warcraft.
 #                   About this Branch                              #
 ####################################################################
 
-This is a code-cleanup-branch which will barely compile. Please use
-the master branch to test the prog.
+This is the master Branch of Gnome-Pie. A recent "stable" version 
+will be in here.
 
 ####################################################################
 #                        Compiling                                 #

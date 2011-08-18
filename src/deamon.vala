@@ -16,13 +16,16 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
+
+// This class runs in the background. It has an Indicator sitting in the
+// user's panel. It initializes everything and guarantees that there is
+// only one instance of Gnome-Pie running.
 	
 public class Deamon : GLib.Application {
 
     private Indicator indicator = null;
 
     public static int main(string[] args) {
-    
         var deamon = new GnomePie.Deamon(args);
         deamon.run(args);
         

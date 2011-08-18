@@ -17,7 +17,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A static class which stores all pies. It can be used to open pies.
+// A static class which stores all pies. It can be used to add, delete and
+// open pies.
 
 public class PieManager : GLib.Object {
 

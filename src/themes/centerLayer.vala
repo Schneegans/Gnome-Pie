@@ -16,7 +16,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
-    
+
+// This class representing a layer of the center of a pie. Each theme may
+// have plenty of them.
+
 public class CenterLayer : GLib.Object {
 
     public enum RotationMode {AUTO, TO_MOUSE, TO_ACTIVE}

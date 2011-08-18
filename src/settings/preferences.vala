@@ -17,6 +17,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+// The Gtk settings menu of Gnome-Pie.
+
 public class Preferences : Gtk.Window {
     
     // Many thanks to the synapse-project, since some of this code is taken from there!

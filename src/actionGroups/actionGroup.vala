@@ -18,12 +18,15 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 	
 // A base class storing a set of Actions. Derived classes may define
-// how these Actions are created.
+// how these Actions are created. This base class serves for custom
+// actions, defined by the user.
 
 public class ActionGroup {
     
+    // a list of all stored actions
     public Gee.ArrayList<Action?> actions {get; private set;}
     
+    // the ID of the pie to which this group is attached
     public string parent_id {get; private set;}
     
     public ActionGroup(string parent_id) {
@@ -75,7 +78,6 @@ public class ActionGroup {
     public void delete_all() {
         actions.clear();
     }
-    
 }
 
 }

@@ -19,6 +19,8 @@ using GLib.Math;
 
 namespace GnomePie {
 
+// A theme of Gnome-Pie. Can be loaded from XML-Files.
+
 public class Theme : GLib.Object {
     
     public string directory        {get; private set; default="";}

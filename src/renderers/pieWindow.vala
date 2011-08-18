@@ -19,7 +19,7 @@ using GLib.Math;
 
 namespace GnomePie {
 
-// An invisible window.
+// An invisible window. Used to draw Pies onto.
 
 public class PieWindow : Gtk.Window {
 

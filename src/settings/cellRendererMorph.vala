@@ -17,9 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {    
     
-// a cellrenderer which can change it's type: Depending
+// A cellrenderer which can change it's type: Depending
 // on it's morph_mode it can look like a CellRendererText,
-// a CellRendererCombo or a CellRendererAccel 
+// a CellRendererCombo or a CellRendererAccel. Mighty.
+
 public class CellRendererMorph : Gtk.CellRendererText {
 
     public enum Mode { TEXT, ACCEL, COMBO }

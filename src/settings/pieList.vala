@@ -17,6 +17,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+// A very complex Widget.
+
 class PieList : Gtk.TreeView {
 
     public PieList() {

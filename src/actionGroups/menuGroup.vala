@@ -47,10 +47,10 @@ public class MenuGroup : ActionGroup {
         this.load_contents(dir, parent_id);
     }
     
+    // parse the main menu recursively
     private void load_contents(GMenu.TreeDirectory dir, string parent_id) {
         foreach (var item in dir.get_contents()) {
             switch(item.get_type()) {
-            
                 case GMenu.TreeItemType.DIRECTORY:
                     if (!((GMenu.TreeDirectory)item).get_is_nodisplay()) {
                         var sub_menu_id = parent_id +((GMenu.TreeDirectory)item).get_name();
@@ -116,7 +116,6 @@ public class MenuGroup : ActionGroup {
         this.childs.clear();
         this.menu = null;
     }
-    
 }
 
 }

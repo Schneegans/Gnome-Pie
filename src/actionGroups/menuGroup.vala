@@ -24,6 +24,8 @@ public class MenuGroup : ActionGroup {
     private GMenu.Tree menu = null;
     private Gee.ArrayList<MenuGroup?> childs;
     private bool is_toplevel = false;
+    private bool changing = false;
+    private bool changed_again = false;
     
     public MenuGroup(string parent_id, bool is_toplevel = true) {
         base(parent_id);
@@ -50,36 +52,56 @@ public class MenuGroup : ActionGroup {
             switch(item.get_type()) {
             
                 case GMenu.TreeItemType.DIRECTORY:
-                    var sub_menu_id = parent_id +((GMenu.TreeDirectory)item).get_name();
-                
-                    var sub_menu = PieManager.add_pie(sub_menu_id, out sub_menu_id,
-                                                      ((GMenu.TreeDirectory)item).get_name(),
-                                                      ((GMenu.TreeDirectory)item).get_icon(),
-                                                      "", 0);
-                    var group = new MenuGroup(parent_id, false);
-                    group.add_action(new PieAction(parent_id));
-                    group.load_contents((GMenu.TreeDirectory)item, sub_menu_id);
-                    childs.add(group);
-                                                      
-                    sub_menu.add_group(group);
+                    if (!((GMenu.TreeDirectory)item).get_is_nodisplay()) {
+                        var sub_menu_id = parent_id +((GMenu.TreeDirectory)item).get_name();
                     
-                    this.add_action(new PieAction(sub_menu_id));  
+                        var sub_menu = PieManager.add_pie(sub_menu_id, out sub_menu_id,
+                                                          ((GMenu.TreeDirectory)item).get_name(),
+                                                          ((GMenu.TreeDirectory)item).get_icon(),
+                                                          "", 0);
+                        var group = new MenuGroup(sub_menu_id, false);
+                        group.add_action(new PieAction(parent_id));
+                        group.load_contents((GMenu.TreeDirectory)item, sub_menu_id);
+                        childs.add(group);
+                                                          
+                        sub_menu.add_group(group);
+                        
+                        this.add_action(new PieAction(sub_menu_id)); 
+                    } 
                     break;
                     
                 case GMenu.TreeItemType.ENTRY:
-                    this.add_action(new AppAction(((GMenu.TreeEntry)item).get_name(), 
-                                                  ((GMenu.TreeEntry)item).get_icon(), 
-                                                  ((GMenu.TreeEntry)item).get_exec()));  
+                    if (!((GMenu.TreeEntry)item).get_is_nodisplay() && !((GMenu.TreeEntry)item).get_is_excluded()) {
+                        this.add_action(new AppAction(((GMenu.TreeEntry)item).get_name(), 
+                                                      ((GMenu.TreeEntry)item).get_icon(), 
+                                                      ((GMenu.TreeEntry)item).get_exec())); 
+                    } 
                     break;
             }
         }
     }
     
      private void on_change() {
-        message("Main menu changed...");
-        this.menu.remove_monitor(this.on_change);
-        this.clear();
-        this.load_toplevel();
+        // avoid too frequent changes...
+        if (!this.changing) {
+            this.changing = true;
+            Timeout.add(500, () => {
+                if (this.changed_again) {
+                    this.changed_again = false;
+                    return true;
+                }
+
+                message("Main menu changed...");
+                this.menu.remove_monitor(this.on_change);
+                this.clear();
+                this.load_toplevel();
+                
+                this.changing = false;
+                return false;
+            });
+        } else {
+            this.changed_again = true;
+        }  
     }
     
     private void clear() {
@@ -88,6 +110,8 @@ public class MenuGroup : ActionGroup {
 
         if (!this.is_toplevel)
             PieManager.remove_pie(this.parent_id);
+            
+        this.delete_all();
         
         this.childs.clear();
         this.menu = null;

@@ -31,9 +31,9 @@ public class ActionGroup {
         this.actions = new Gee.ArrayList<Action?>();
     }
     
-    public virtual void on_all_loaded() {
+    public virtual void on_display() {
         foreach (var action in actions)
-            action.on_all_loaded();
+            action.on_display();
     }
     
     public void add_action(Action new_action) {
@@ -70,6 +70,10 @@ public class ActionGroup {
                 return i;
         
         return -1;
+    }
+    
+    public void delete_all() {
+        actions.clear();
     }
     
 }

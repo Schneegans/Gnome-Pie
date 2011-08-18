@@ -33,9 +33,9 @@ public class Pie {
         this.action_groups = new Gee.ArrayList<ActionGroup?>();
     }
     
-    public virtual void on_all_loaded() {
+    public virtual void on_display() {
         foreach (var action_group in action_groups)
-            action_group.on_all_loaded();
+            action_group.on_display();
     }
     
     public void add_group(ActionGroup group) {

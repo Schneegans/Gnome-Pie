@@ -32,7 +32,7 @@ public abstract class Action : GLib.Object {
 
     public abstract void activate();
     
-    public virtual void on_all_loaded() {}
+    public virtual void on_display() {}
 }
 
 }

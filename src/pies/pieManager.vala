@@ -31,9 +31,6 @@ public class PieManager : GLib.Object {
         var loader = new PieLoader();
         loader.load_pies();
         
-        foreach (var pie in all_pies.entries)
-            pie.value.on_all_loaded();
-        
         bindings.on_press.connect((id) => {
             open_pie(id);
         });
@@ -47,9 +44,12 @@ public class PieManager : GLib.Object {
     }
     
     public static void open_pie(string id) {
-        if (all_pies.has_key(id)) {
+        Pie? pie = all_pies[id];
+        
+        if (pie != null) {
             var window = new PieWindow();
-            window.load_pie(all_pies[id]);
+            pie.on_display();
+            window.load_pie(pie);
             window.open();
         } else {
             warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");

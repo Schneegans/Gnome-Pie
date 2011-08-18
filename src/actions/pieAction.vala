@@ -29,13 +29,10 @@ public class PieAction : Action {
     }
 
     public override void activate() {
-        Timeout.add((uint)(500.0*Config.global.theme.fade_out_time), () => {
-            PieManager.open_pie(pie_id);
-            return false;
-        });	    
+        PieManager.open_pie(pie_id);
     } 
     
-    public override void on_all_loaded() {
+    public override void on_display() {
         var referee = PieManager.get_pie(pie_id);
         this.name = referee.name;
         this.icon_name = referee.icon_name;

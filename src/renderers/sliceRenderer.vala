@@ -99,7 +99,7 @@ public class SliceRenderer : GLib.Object {
         }
     }
 
-    public void draw(Cairo.Context ctx, double angle, double distance) {
+    public void draw(double frame_time, Cairo.Context ctx, double angle, double distance) {
 	    
 	    double direction = 2.0 * PI * position/parent.slice_count() + this.fade_rotation.val;
 	    double max_scale = 1.0/Config.global.theme.max_zoom;
@@ -120,11 +120,11 @@ public class SliceRenderer : GLib.Object {
         if (fabs(this.scale.end - max_scale) > Config.global.theme.max_zoom*0.005)
             this.scale.reset_target(max_scale, Config.global.theme.transition_time);
         
-        this.scale.update(Config.global.frame_time);
-        this.alpha.update(Config.global.frame_time);
-        this.fade.update(Config.global.frame_time);
-        this.fade_scale.update(Config.global.frame_time);
-        this.fade_rotation.update(Config.global.frame_time);
+        this.scale.update(frame_time);
+        this.alpha.update(frame_time);
+        this.fade.update(frame_time);
+        this.fade_scale.update(frame_time);
+        this.fade_rotation.update(frame_time);
 	    
         ctx.save();
         

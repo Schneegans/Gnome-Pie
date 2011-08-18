@@ -25,8 +25,6 @@ public class PieWindow : Gtk.Window {
 
     private PieRenderer renderer;
     private bool closing = false;
-    private int frame_count = 0;
-    private double time_count = 0.0;
     private GLib.Timer timer;
 
     public PieWindow() {
@@ -60,7 +58,8 @@ public class PieWindow : Gtk.Window {
         });
         
         this.key_press_event.connect ((e) => {
-            if (Gdk.keyval_name(e.keyval) == "Escape") this.cancel();
+            if      (Gdk.keyval_name(e.keyval) == "Escape") this.cancel();
+            else if (Gdk.keyval_name(e.keyval) == "Return") this.activate_slice();
             return true;
         });
 
@@ -78,47 +77,20 @@ public class PieWindow : Gtk.Window {
         this.show();
         this.fix_focus();
 
-        this.frame_count = 0;
-        this.time_count = 0.0;
-
         this.timer = new GLib.Timer();
         this.timer.start();
+        this.queue_draw();
         
-        this.draw_loop(0);
-
-        
-    }
-    
-    private void draw_loop(uint wait) {
-        Timeout.add (wait, () => {
-        
+        Timeout.add ((uint)(1000.0/Config.global.refresh_rate), () => {
             this.queue_draw();
-        
-            Config.global.frame_time = this.timer.elapsed();
-            this.timer.reset();
-            
-            this.time_count += Config.global.frame_time;
-            this.frame_count++;
-            
-            if(this.frame_count == (int)Config.global.refresh_rate) {
-                debug("FPS: %f", (double)this.frame_count/this.time_count);
-                this.frame_count = 0;
-                this.time_count = 0.0;
-            }
-        
-           // TODO: reduce wait time if drawing takes to much time
-            int time_diff = (int)(1000.0/Config.global.refresh_rate) - (int)(1000.0*Config.global.frame_time);
-            uint next_wait =  (time_diff < 1) ? 1 : (uint) time_diff;
-            
-            if (this.visible)
-                this.draw_loop(next_wait);
-
-            return false;
+            return this.visible;
         }); 
     }
-    
+
     private bool draw(Gtk.Widget da, Gdk.EventExpose event) {
-        Posix.usleep(30*1000);
+        double frame_time = this.timer.elapsed();
+        this.timer.reset();
+    
         double mouse_x = 0.0;
         double mouse_y = 0.0;
         this.get_pointer(out mouse_x, out mouse_y);
@@ -134,7 +106,7 @@ public class PieWindow : Gtk.Window {
         ctx.paint();
         ctx.set_operator (Cairo.Operator.OVER);
         
-        renderer.draw(ctx, (int)mouse_x, (int)mouse_y);
+        renderer.draw(frame_time, ctx, (int)mouse_x, (int)mouse_y);
         
         return true;
     }

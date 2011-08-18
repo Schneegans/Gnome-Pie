@@ -30,6 +30,9 @@ public class Logger {
     public static bool display_warning {get; set; default = true;}
     public static bool display_error   {get; set; default = true;}
     
+    public static bool display_time    {get; set; default = true;}
+    public static bool display_file    {get; set; default = false;}
+    
     private static Regex regex = null;
     
     private enum Color {
@@ -53,25 +56,25 @@ public class Logger {
     
     private static void info(string message) {
         if (display_info) {
-            stdout.printf(set_color(Color.GREEN, false) + "[INFO]" + message);
+            stdout.printf(set_color(Color.GREEN, false) + "[" + get_time() + "MESSAGE]" + message);
         }
     }
     
     private static void debug(string message) {
         if (display_debug) {
-            stdout.printf(set_color(Color.BLUE, false) + "[DEBUG]" + message);
+            stdout.printf(set_color(Color.BLUE, false) + "[" + get_time() + " DEBUG ]" + message);
         }
     }
     
     private static void warning(string message) {
         if (display_warning) {
-            stdout.printf(set_color(Color.YELLOW, false) + "[WARNING]" + message);
+            stdout.printf(set_color(Color.YELLOW, false) + "[" + get_time() + "WARNING]" + message);
         }
     }
     
     private static void error(string message) {
         if (display_error) {
-            stdout.printf(set_color(Color.RED, false) + "[ERROR]" + message);
+            stdout.printf(set_color(Color.RED, false) + "[" + get_time() + " ERROR ]" + message);
         }
     }
     
@@ -84,12 +87,25 @@ public class Logger {
 	    else      return "\x001b[0;%dm".printf((int)color + 30);
 	}
 	
+	private static string get_time() {
+	    if (display_time) {  
+            var now = new DateTime.now_local ();
+		    return "%.2d:%.2d:%.2d.%.6d ".printf (now.get_hour (), now.get_minute (), now.get_second (), now.get_microsecond ());
+		} else {
+		    return "";
+		}
+	}
+	
 	private static string create_message(string message) {
-	    if (regex != null && regex.match(message)) {
+	    if (display_file && regex != null && regex.match(message)) {
 			var parts = regex.split(message);
 			return " [%s%s]%s %s\n".printf(parts[1], parts[2], reset_color(), parts[3]);
+		} else if (regex != null && regex.match(message)) {
+		    var parts = regex.split(message);
+			return "%s %s\n".printf(reset_color(), parts[3]);
+		} else {
+		    return reset_color() + " " + message + "\n";
 		}
-		return reset_color() + " " + message + "\n";
 	}
 	
 	private static void log_func(string? d, LogLevelFlags flags, string message) {

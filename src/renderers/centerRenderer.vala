@@ -53,12 +53,12 @@ public class CenterRenderer {
         }
     }
     
-    public void draw(Cairo.Context ctx, double angle, double distance) {
+    public void draw(double frame_time, Cairo.Context ctx, double angle, double distance) {
 
 	    var layers = Config.global.theme.center_layers;
         
-        this.activity.update(Config.global.frame_time);
-        this.alpha.update(Config.global.frame_time);
+        this.activity.update(frame_time);
+        this.alpha.update(frame_time);
 	
 	    foreach (var layer in layers) {
 	    
@@ -84,7 +84,7 @@ public class CenterRenderer {
 	            max_rotation_speed = layer.active_rotation_speed*this.activity.val 
 	                + layer.inactive_rotation_speed*(1.0-this.activity.val);
 	            double smoothy = fabs(diff) < 0.9 ? fabs(diff) + 0.1 : 1.0; 
-	            double step = max_rotation_speed*Config.global.frame_time*smoothy;
+	            double step = max_rotation_speed*frame_time*smoothy;
 	            
                 if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 		            layer.rotation = angle;
@@ -99,7 +99,7 @@ public class CenterRenderer {
 	            double slice_angle = 2*PI/parent.slice_count();
 	            double direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
 	            double diff = direction-layer.rotation;
-	            double step = max_rotation_speed*Config.global.frame_time;
+	            double step = max_rotation_speed*frame_time;
 	            
                 if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
 		            layer.rotation = direction;
@@ -108,7 +108,7 @@ public class CenterRenderer {
 		            else            		                   layer.rotation -= step;
                 }
 	            
-	        } else layer.rotation += max_rotation_speed*Config.global.frame_time;
+	        } else layer.rotation += max_rotation_speed*frame_time;
 	        
 	        layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 	        

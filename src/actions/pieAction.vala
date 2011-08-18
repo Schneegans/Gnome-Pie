@@ -28,8 +28,11 @@ public class PieAction : Action {
         this.pie_id = id;
     }
 
-    public override void activate() {	    
-        PieManager.open_pie(pie_id);
+    public override void activate() {
+        Timeout.add((uint)(500.0*Config.global.theme.fade_out_time), () => {
+            PieManager.open_pie(pie_id);
+            return false;
+        });	    
     } 
     
     public override void on_all_loaded() {

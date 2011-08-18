@@ -39,7 +39,6 @@ public class Config : GLib.Object {
 
     public Theme  theme             {get; set;}
     public double refresh_rate      {get; set; default = 60.0;}
-    public double frame_time        {get; set; default = 0.1;}
     public double global_scale      {get; set; default = 1.0;}
     public bool   show_indicator    {get; set; default = true;}
     public bool   open_at_mouse     {get; set; default = true;}

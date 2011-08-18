@@ -21,13 +21,29 @@ namespace GnomePie {
 public class Image : GLib.Object {
 
     // icon cache which stores loaded images
-    private static Gee.HashMap<string, Cairo.ImageSurface?> cache {private get; private set;}
+    private static Gee.HashMap<string, Cairo.ImageSurface?> file_cache {private get; private set;}
+    private static Gee.HashMap<string, Cairo.ImageSurface?> themed_active_cache {private get; private set;}
+    private static Gee.HashMap<string, Cairo.ImageSurface?> themed_inactive_cache {private get; private set;}
     
     private static void init() {
-        if (cache == null) {
-            cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
+        if (file_cache == null) {
+            file_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
             Gtk.IconTheme.get_default().changed.connect(() => {
-                cache.clear();
+                file_cache.clear();
+            });
+        }
+        
+        if (themed_active_cache == null) {
+            themed_active_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
+            Config.global.notify["theme"].connect(() => {
+                themed_active_cache.clear();
+            });
+        }
+        
+        if (themed_inactive_cache == null) {
+            themed_inactive_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
+            Config.global.notify["theme"].connect(() => {
+                themed_inactive_cache.clear();
             });
         }
     }
@@ -55,12 +71,12 @@ public class Image : GLib.Object {
     // Loads an icon from the the given filename.
     public Image.from_file(string filename, int size) {
         this.init();
-        surface = this.cache.get(filename);
+        this.surface = this.file_cache.get(filename);
         
         if(surface == null || surface.get_width() < size) {
             this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
             this.load_file(filename, size);
-            this.cache.set(filename, surface);
+            this.file_cache.set(filename, surface);
             return;
             
         } else if (this.size() > size){
@@ -106,7 +122,19 @@ public class Image : GLib.Object {
     public Image.themed_icon(string icon_name, bool active) {
         this.init();
         
-        this.paint_themed(icon_name, active);
+        if (active) {
+            this.surface = this.themed_active_cache.get(icon_name);
+            if (this.surface == null) {
+                this.paint_themed(icon_name, active);
+                this.themed_active_cache.set(icon_name, this.surface);
+            }
+        } else {
+            this.surface = this.themed_inactive_cache.get(icon_name);
+            if (this.surface == null) {
+                this.paint_themed(icon_name, active);
+                this.themed_inactive_cache.set(icon_name, this.surface);
+            } 
+        }
     }
     
     public int size() {

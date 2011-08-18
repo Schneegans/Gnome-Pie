@@ -90,7 +90,7 @@ public class PieRenderer {
         return size;
     }
     
-    public void draw(Cairo.Context ctx, int mouse_x, int mouse_y) {
+    public void draw(double frame_time, Cairo.Context ctx, int mouse_x, int mouse_y) {
 	    double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
 	    double angle = 0.0;
 	
@@ -125,10 +125,10 @@ public class PieRenderer {
 		        slice.set_active_slice(active);
 	    }
 
-        center.draw(ctx, angle, distance);
+        center.draw(frame_time, ctx, angle, distance);
 	    
 	    foreach (var slice in this.slices)
-		    slice.draw(ctx, angle, distance);
+		    slice.draw(frame_time, ctx, angle, distance);
     }
 }
 

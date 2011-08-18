@@ -77,7 +77,6 @@ public class PieManager : GLib.Object {
     public static void remove_pie(string id) {
         if (all_pies.has_key(id)) {
             all_pies.remove(id);
-            
             bindings.unbind(id);
         }
         else {

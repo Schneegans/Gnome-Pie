@@ -25,6 +25,9 @@ public class PieWindow : Gtk.Window {
 
     private PieRenderer renderer;
     private bool closing = false;
+    private int frame_count = 0;
+    private double time_count = 0.0;
+    private GLib.Timer timer;
 
     public PieWindow() {
         this.renderer = new PieRenderer();
@@ -75,37 +78,47 @@ public class PieWindow : Gtk.Window {
         this.show();
         this.fix_focus();
 
-        int frame_count = 0;
-        double time_count = 0.0;
+        this.frame_count = 0;
+        this.time_count = 0.0;
 
-        var timer = new GLib.Timer();
-        timer.start();
+        this.timer = new GLib.Timer();
+        this.timer.start();
+        
+        this.draw_loop(0);
 
-        Timeout.add ((uint)(1000.0/Config.global.refresh_rate), () => {
+        
+    }
+    
+    private void draw_loop(uint wait) {
+        Timeout.add (wait, () => {
         
             this.queue_draw();
         
-            Config.global.frame_time = timer.elapsed();
-            timer.reset();
+            Config.global.frame_time = this.timer.elapsed();
+            this.timer.reset();
             
-            time_count += Config.global.frame_time;
-            frame_count++;
+            this.time_count += Config.global.frame_time;
+            this.frame_count++;
             
-            if(frame_count == (int)Config.global.refresh_rate) {
-                //Logger.debug("FPS: %f", (double)frame_count/time_count);
-                frame_count = 0;
-                time_count = 0.0;
+            if(this.frame_count == (int)Config.global.refresh_rate) {
+                debug("FPS: %f", (double)this.frame_count/this.time_count);
+                this.frame_count = 0;
+                this.time_count = 0.0;
             }
         
            // TODO: reduce wait time if drawing takes to much time
-           // int time_diff = (int)(1000.0/Config.global.refresh_rate) - (int)(1000.0*Config.global.frame_time);
-           // wait =  (time_diff < 1) ? 1 : (uint) time_diff;
+            int time_diff = (int)(1000.0/Config.global.refresh_rate) - (int)(1000.0*Config.global.frame_time);
+            uint next_wait =  (time_diff < 1) ? 1 : (uint) time_diff;
+            
+            if (this.visible)
+                this.draw_loop(next_wait);
 
-            return this.visible;
+            return false;
         }); 
     }
     
     private bool draw(Gtk.Widget da, Gdk.EventExpose event) {
+        Posix.usleep(30*1000);
         double mouse_x = 0.0;
         double mouse_y = 0.0;
         this.get_pointer(out mouse_x, out mouse_y);

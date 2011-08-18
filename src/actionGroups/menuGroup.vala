@@ -76,6 +76,7 @@ public class MenuGroup : ActionGroup {
     }
     
      private void on_change() {
+        message("Main menu changed...");
         this.menu.remove_monitor(this.on_change);
         this.clear();
         this.load_toplevel();

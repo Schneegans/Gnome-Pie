@@ -58,19 +58,25 @@ public class PieManager : GLib.Object {
     }
     
     public static Pie add_pie(string desired_id, out string final_id, string name, string icon_name, string hotkey, int quick_action) {
-        if (all_pies.has_key(desired_id)) {
-            final_id = desired_id + "0";
-            warning("Trying to add pie \"" + name + "\": ID \"" + desired_id + "\" already exists! Using \"" + final_id + "\" instead...");
+        final_id = desired_id;
+        
+        if (final_id.contains(" ")) {
+            final_id = final_id.delimit(" ", '_');
+            warning("For ID's no whitespaces are allowed! Using \"" + final_id + "\" instead of \"" + desired_id + "\"...");
+        }
+    
+        if (all_pies.has_key(final_id)) {
+            var tmp = final_id;
+            final_id = final_id + "_";
+            warning("Trying to add pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
             return add_pie(final_id, out final_id, name, icon_name, hotkey, quick_action);
         }
 
-        final_id = desired_id;
-
-        Pie pie = new Pie(desired_id, name, icon_name, quick_action);
-        all_pies.set(desired_id, pie);
+        Pie pie = new Pie(final_id, name, icon_name, quick_action);
+        all_pies.set(final_id, pie);
         
         if (hotkey != "")
-            bindings.bind(hotkey, desired_id);
+            bindings.bind(hotkey, final_id);
         
         return pie;
     }

@@ -68,10 +68,10 @@ public class BookmarkGroup : ActionGroup {
             error ("%s", e.message);
         }
         
-        // add desktop
+        // add trash
         this.add_uri("trash:///");
         
-        // add trash
+        // add desktop
         this.add_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP));
     }
     

@@ -27,6 +27,7 @@ public class Deamon : GLib.Application {
 
     public static int main(string[] args) {
         var deamon = new GnomePie.Deamon(args);
+        
         deamon.run(args);
         
         return 0;
@@ -36,15 +37,15 @@ public class Deamon : GLib.Application {
         Gtk.init(ref args);
     
         GLib.Object(application_id : "org.gnome.gnomepie", 
-                             flags : GLib.ApplicationFlags.FLAGS_NONE);
+                             flags : GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
         
-        this.activate.connect(this.start);
+        this.command_line.connect(this.start);
     }
     
-    private void start() {
-    
-        if (this.indicator == null) {
+    private int start(GLib.ApplicationCommandLine line) {
         
+        if (this.indicator == null) {
+            // if this is called for the first instance
             // init toolkits and static stuff
             Logger.init();
             Paths.init();
@@ -75,8 +76,19 @@ public class Deamon : GLib.Application {
 		    Gtk.main();
 		    
 		} else {
-		    this.indicator.show_preferences();
+		    var args = line.get_arguments();
+		    
+		    if (args.length > 2) {
+		        if (args[1] == "-o" || args[1] == "--open")
+		            PieManager.open_pie(args[2]);
+		        else
+		            warning("Unknown flag \"" + args[1] + "\" passed!");
+		    } else {
+		        this.indicator.show_preferences();
+		    } 
 		}
+		
+		return 0;
     }
     
     private static void sig_handler(int sig) {

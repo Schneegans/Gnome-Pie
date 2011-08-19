@@ -137,7 +137,7 @@ public class CenterRenderer {
             ctx.identity_matrix();
             int pos = this.parent.get_size()/2;
             ctx.translate(pos, (int)(Config.global.theme.caption_position) + pos);
-            caption.paint_on(ctx, this.activity.val);
+            caption.paint_on(ctx, this.activity.val*this.alpha.val);
             ctx.restore();
         }
     }

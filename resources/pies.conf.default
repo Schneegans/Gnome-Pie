@@ -15,6 +15,13 @@
         <slice type="key" name="Toggle Maximize" icon="stock_fullscreen" command="&lt;alt>F11" />
     </pie>
     
+    <pie name="Web" hotkey="&lt;ctrl>&lt;alt>I" icon="web" id="Web">
+        <slice type="uri" name="Wetter" icon="weather-clouds" command="http://www.wetteronline.de/" />
+        <slice type="uri" name="Google" icon="stock_search" command="http://www.google.de/" />
+        <slice type="uri" name="Wikipedia" icon="addressbook" command="http://www.wikipedia.de/" />
+        <slice type="uri" name="Sintel" icon="folder-videos" command="file:///home/simon/Videos/sintel-hd2.avi" />
+    </pie>
+    
     <pie name="Desktops" hotkey="&lt;ctrl>&lt;alt>C" icon="desktop" id="Desktops">
         <slice type="key" name="Switch Right" icon="stock_right" command="&lt;ctrl>&lt;alt>Right" />
         <slice type="key" name="Desktop 4" icon="applications-graphics" command="&lt;ctrl>&lt;alt>4" />
@@ -39,6 +46,7 @@
     
     <pie name="Bookmarks" hotkey="&lt;ctrl>&lt;alt>B" icon="bookmarks" id="Bookmarks">
         <slice type="bookmarks" />
+        <slice type="devices" />
     </pie>
     
 </pies>

@@ -40,7 +40,7 @@ public class MenuGroup : ActionGroup {
     
     private void load_toplevel() {
         this.menu = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
-        this.menu.add_monitor(this.on_change);
+        this.menu.add_monitor(this.reload);
         
         var dir = this.menu.get_root_directory();
 
@@ -81,7 +81,7 @@ public class MenuGroup : ActionGroup {
         }
     }
     
-     private void on_change() {
+     private void reload() {
         // avoid too frequent changes...
         if (!this.changing) {
             this.changing = true;
@@ -92,7 +92,7 @@ public class MenuGroup : ActionGroup {
                 }
 
                 message("Main menu changed...");
-                this.menu.remove_monitor(this.on_change);
+                this.menu.remove_monitor(this.reload);
                 this.clear();
                 this.load_toplevel();
                 

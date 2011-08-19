@@ -170,11 +170,19 @@ public class PieLoader : GLib.Object {
                 group = new ActionGroup(pie.id);
                 group.add_action(action);
                 break;
+            case "uri":
+                Action action = new UriAction(name, icon, command);
+                group = new ActionGroup(pie.id);
+                group.add_action(action);
+                break;
             case "menu":
                 group = new MenuGroup(pie.id);
                 break;
             case "bookmarks":
                 group = new BookmarkGroup(pie.id);
+                break;
+            case "devices":
+                group = new DevicesGroup(pie.id);
                 break;
             default:
                 warning("Invalid type \"" + type + "\" in pies.conf!");

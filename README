@@ -16,6 +16,17 @@ This is the master Branch of Gnome-Pie. A recent "stable" version
 will be in here.
 
 ####################################################################
+#                           PPA                                    #
+####################################################################
+
+There is a PPA with a recent version of Gnome-Pie. If you simply
+want to test it, it's very easy to install:
+
+sudo add-apt-repository ppa:simonschneegans/testing
+sudo apt-get update
+sudo apt-get install gnome-pie
+
+####################################################################
 #                        Compiling                                 #
 ####################################################################
 

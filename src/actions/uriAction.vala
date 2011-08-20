@@ -20,8 +20,13 @@ namespace GnomePie {
 // This type of Action launches an application or a custom command.
 
 public class UriAction : Action {
+
+    // the name of this group, as displayed in the gui
+    public static string get_name() {
+        return _("Open URL");
+    }
     	
-    private string uri;
+    public string uri { get; set; }
 
     public UriAction(string name, string icon_name, string uri) {
         base(name, icon_name);

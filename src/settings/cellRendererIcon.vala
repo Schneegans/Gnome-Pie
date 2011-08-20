@@ -22,10 +22,13 @@ namespace GnomePie {
 // because Gtk.CellRendererPixbuf can't receive click events. Internally it
 // stores a Gtk.CellRendererPixbuf, which renders and stuff.
 
-public class CellRendererIcon : Gtk.CellRenderer {
+public class CellRendererIcon : Gtk.CellRendererText {
 
     private IconSelectWindow select_window = null;
     private Gtk.CellRendererPixbuf renderer = null;
+    private string current_path = "";
+    
+    public signal void on_select(string path, string icon);
     
     // forward CellRendererPixbuf's interface
     public bool follow_state {
@@ -33,39 +36,9 @@ public class CellRendererIcon : Gtk.CellRenderer {
         set { renderer.follow_state = value; }
     }
     
-    public GLib.Icon gicon {
-        owned get { return renderer.gicon; }
-        set { renderer.gicon = value; }
-    }
-    
     public string icon_name { 
         owned get { return renderer.icon_name; }
         set { renderer.icon_name = value; }
-    }
-    
-    public Gdk.Pixbuf pixbuf {
-        owned get { return renderer.pixbuf; }
-        set { renderer.pixbuf = value; }
-    }
-    
-    public Gdk.Pixbuf pixbuf_expander_closed {
-        owned get { return renderer.pixbuf_expander_closed; }
-        set { renderer.pixbuf_expander_closed = value; }
-    }
-    
-    public Gdk.Pixbuf pixbuf_expander_open {
-        owned get { return renderer.pixbuf_expander_open; }
-        set { renderer.pixbuf_expander_open = value; }
-    }
-    
-    public string stock_detail { 
-        owned get { return renderer.stock_detail; }
-        set { renderer.stock_detail = value; }
-    }
-    
-    public string stock_id { 
-        owned get { return renderer.stock_id; }
-        set { renderer.stock_id = value; }
     }
     
     public uint stock_size {
@@ -80,6 +53,7 @@ public class CellRendererIcon : Gtk.CellRenderer {
     
         this.select_window.on_select.connect((icon) => {
             this.icon_name = icon;
+            this.on_select(current_path, icon);
         });
     }
     
@@ -87,7 +61,7 @@ public class CellRendererIcon : Gtk.CellRenderer {
                                out int x_offset, out int y_offset,
                                out int width, out int height) {
 
-        renderer.get_size(widget, cell_area, out x_offset, out y_offset, out width, out height);
+        this.renderer.get_size(widget, cell_area, out x_offset, out y_offset, out width, out height);
     }
     
     public override void render (Gdk.Window window, Gtk.Widget widget,
@@ -95,18 +69,21 @@ public class CellRendererIcon : Gtk.CellRenderer {
                              Gdk.Rectangle cell_area,
                              Gdk.Rectangle expose_area,
                              Gtk.CellRendererState flags) {
-        renderer.render(window, widget, bg_area, cell_area, expose_area, flags);
+                             
+        this.renderer.render(window, widget, bg_area, cell_area, expose_area, flags);
     }
     
     public override unowned Gtk.CellEditable start_editing(
         Gdk.Event event, Gtk.Widget widget, string path, Gdk.Rectangle bg_area, 
         Gdk.Rectangle cell_area, Gtk.CellRendererState flags) {
         
-        select_window.show();
-        select_window.active_icon = this.icon_name;
+        this.current_path = path;
+        this.select_window.show();
+        this.select_window.active_icon = this.icon_name;
             
-        return null;
+        return this.renderer.start_editing(event, widget, path, bg_area, cell_area, flags);
     }
 }
 
 }
+

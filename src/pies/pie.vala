@@ -26,13 +26,15 @@ public class Pie {
     public string name {get; private set;}
     public string icon_name {get; private set;}
     public string id {get; private set;}
+    public bool is_custom {get; private set;}
     public int quick_action {get; private set;}
     public Gee.ArrayList<ActionGroup?> action_groups {get; private set;}
     
-    public Pie(string id, string name, string icon_name, int quick_action) {
+    public Pie(string id, string name, string icon_name, int quick_action, bool is_custom) {
         this.id = id;
         this.name = name;
         this.icon_name = icon_name;
+        this.is_custom = is_custom;
         this.quick_action = quick_action;
         this.action_groups = new Gee.ArrayList<ActionGroup?>();
     }

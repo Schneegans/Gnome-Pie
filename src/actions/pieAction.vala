@@ -20,8 +20,33 @@ namespace GnomePie {
 // This Action opens another pie.
 
 public class PieAction : Action {
+
+    // the name of this group, as displayed in the gui
+    public static string get_name() {
+        return _("Open Pie");
+    }
+    
+    public override string name {
+        get {
+            var referee = PieManager.get_pie(pie_id);
+            if (referee != null)
+                return referee.name;
+            return "";
+        }
+        protected set {}
+    }
+    
+    public override string icon_name {
+        get {
+            var referee = PieManager.get_pie(pie_id);
+            if (referee != null)
+                return referee.icon_name;
+            return "";
+        }
+        protected set {}
+    }
     	
-    private string pie_id;
+    public string pie_id { get; set; }
 
     public PieAction(string id) {
         base("", "");
@@ -31,12 +56,6 @@ public class PieAction : Action {
     public override void activate() {
         PieManager.open_pie(pie_id);
     } 
-    
-    public override void on_display() {
-        var referee = PieManager.get_pie(pie_id);
-        this.name = referee.name;
-        this.icon_name = referee.icon_name;
-    }
 }
 
 }

@@ -19,6 +19,11 @@ namespace GnomePie {
 
 public class DevicesGroup : ActionGroup {
 
+    // the name of this group, as displayed in the gui
+    public static string get_name() {
+        return _("Devices");
+    }
+
     private bool changing = false;
     private bool changed_again = false;
     private GLib.VolumeMonitor monitor;

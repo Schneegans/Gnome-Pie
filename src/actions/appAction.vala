@@ -20,8 +20,13 @@ namespace GnomePie {
 // This type of Action launches an application or a custom command.
 
 public class AppAction : Action {
+
+    // the name of this group, as displayed in the gui
+    public static string get_name() {
+        return _("Launch application");
+    }
     	
-    private string command;
+    public string command { get; set; }
 
     public AppAction(string name, string icon_name, string command) {
         base(name, icon_name);

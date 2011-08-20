@@ -19,6 +19,11 @@ namespace GnomePie {
 
 public class BookmarkGroup : ActionGroup {
 
+    // the name of this group, as displayed in the gui
+    public static string get_name() {
+        return _("Bookmarks");
+    }
+
     private bool changing = false;
     private bool changed_again = false;
     

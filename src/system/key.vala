@@ -20,7 +20,9 @@ namespace GnomePie {
 // A class which represents a key stroke. It can be used to "press" 
 // the associated keys.
 
-class Key {
+public class Key {
+
+    public string label {get; private set;}
 
     private X.Display display;
     private int shift_code;
@@ -37,6 +39,8 @@ class Key {
         uint keysym;
         Gtk.accelerator_parse(stroke, out keysym, out this.modifiers);
         this.key_code = display.keysym_to_keycode(keysym);
+        
+        this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
         
         this.shift_code =  this.display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
         this.ctrl_code  =  this.display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));

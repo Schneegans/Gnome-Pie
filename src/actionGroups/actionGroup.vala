@@ -22,7 +22,7 @@ namespace GnomePie {
 // actions, defined by the user.
 
 public class ActionGroup {
-    
+
     // a list of all stored actions
     public Gee.ArrayList<Action?> actions {get; private set;}
     

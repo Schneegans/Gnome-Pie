@@ -20,8 +20,13 @@ namespace GnomePie {
 // This type of Action "presses" a key stroke.
 
 public class KeyAction : Action {
+
+    // the name of this group, as displayed in the gui
+    public static string get_name() {
+        return _("Press key stroke");
+    }
     	
-    private Key key;
+    public Key key { get; set; }
 
     public KeyAction(string name, string icon_name, string key_stroke) {
         base(name, icon_name);

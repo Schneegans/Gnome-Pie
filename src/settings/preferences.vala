@@ -151,7 +151,7 @@ public class Preferences : Gtk.Window {
                         align.add(scroll);
                         pies_tab.add(align);
 
-                        scroll.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
+                        scroll.set_policy (Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC);
                         scroll.set_shadow_type (Gtk.ShadowType.IN);
                         
                         // pies list

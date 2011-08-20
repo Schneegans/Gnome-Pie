@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <pies>
-    <pie name="Multimedia Steuerung" hotkey="&lt;ctrl>&lt;alt>M" quickAction="0" icon="stock_media-play" id="Multimedia Steuerung">
+    <pie name="Multimedia Steuerung" hotkey="&lt;ctrl>&lt;alt>M" quickAction="0" icon="stock_media-play" id="Multimedia_Steuerung">
         <slice type="key" name="Next Track" icon="stock_media-next" command="XF86AudioNext" />
         <slice type="key" name="Stop" icon="stock_media-stop" command="XF86AudioStop" />
         <slice type="key" name="Previous Track" icon="stock_media-prev" command="XF86AudioPrev" />
@@ -15,7 +15,7 @@
         <slice type="key" name="Toggle Maximize" icon="stock_fullscreen" command="&lt;alt>F11" />
     </pie>
     
-    <pie name="Web" hotkey="&lt;ctrl>&lt;alt>I" icon="web" id="Web">
+    <pie name="Web" hotkey="&lt;ctrl>&lt;alt>I" icon="emblem-web" id="Web">
         <slice type="uri" name="Wetter" icon="weather-clouds" command="http://www.wetteronline.de/" />
         <slice type="uri" name="Google" icon="stock_search" command="http://www.google.de/" />
         <slice type="uri" name="Wikipedia" icon="addressbook" command="http://www.wikipedia.de/" />
@@ -33,10 +33,10 @@
         <slice type="key" name="Desktop 2" icon="applications-internet" command="&lt;ctrl>&lt;alt>2" />
     </pie>
     
-    <pie name="Pies" hotkey="&lt;ctrl>&lt;alt>Y" id="Pies">
+    <pie name="Pies" hotkey="&lt;ctrl>&lt;alt>Y" icon="gnome-pie" id="Pies">
         <slice type="pie" command="Desktops" />
         <slice type="pie" command="Window" />
-        <slice type="pie" command="Multimedia Steuerung" />
+        <slice type="pie" command="Multimedia_Steuerung" />
         <slice type="pie" command="Menu" />
     </pie>
     
@@ -44,7 +44,7 @@
         <slice type="menu" />
     </pie>
     
-    <pie name="Bookmarks" hotkey="&lt;ctrl>&lt;alt>B" icon="bookmarks" id="Bookmarks">
+    <pie name="Bookmarks" hotkey="&lt;ctrl>&lt;alt>B" icon="user-bookmarks" id="Bookmarks">
         <slice type="bookmarks" />
         <slice type="devices" />
     </pie>

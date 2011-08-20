@@ -22,8 +22,8 @@ namespace GnomePie {
 
 public abstract class Action : GLib.Object {
 
-    public string name {get; protected set;}
-    public string icon_name {get; protected set;}
+    public virtual string name {get; protected set;}
+    public virtual string icon_name {get; protected set;}
 
     public Action(string name, string icon_name) {
         this.name = name;

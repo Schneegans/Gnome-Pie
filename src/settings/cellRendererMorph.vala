@@ -28,7 +28,7 @@ public class CellRendererMorph : Gtk.CellRendererText {
     // private stuff
     private Gtk.CellRendererAccel renderer_accel;
     private Gtk.CellRendererCombo renderer_combo;
-    private string own_path = "";
+    private string current_path = "";
 
     public Mode morph_mode { get; set; }
     
@@ -46,9 +46,13 @@ public class CellRendererMorph : Gtk.CellRendererText {
         this.renderer_combo.has_entry = false;
         this.renderer_combo.text_column = 0;
         this.renderer_combo.changed.connect((path, iter) => {
-            string text = "";
-            this.model.get(iter, 0, out text);
-            this.text_edited(own_path, text);
+             debug("dfgd");
+            if (this.model != null) {
+                string text = "";
+                this.model.get(iter, 0, out text);
+                debug(current_path + " " + text);
+                this.text_edited(current_path, text);
+            }
         });
         
         this.renderer_accel = new Gtk.CellRendererAccel();
@@ -59,7 +63,7 @@ public class CellRendererMorph : Gtk.CellRendererText {
         });
         
         this.renderer_accel.accel_cleared.connect((a, path) => {
-            this.text_edited(own_path, renderer_accel.text);
+            this.text_edited(current_path, renderer_accel.text);
         });
         
         this.morph_mode = Mode.TEXT;
@@ -75,7 +79,7 @@ public class CellRendererMorph : Gtk.CellRendererText {
         Gdk.Event event, Gtk.Widget widget, string path, Gdk.Rectangle bg_area, 
         Gdk.Rectangle cell_area, Gtk.CellRendererState flags) {
         
-        this.own_path = path;
+        this.current_path = path;
         
         if (this.editable) {
             switch (this.morph_mode) {
@@ -88,7 +92,7 @@ public class CellRendererMorph : Gtk.CellRendererText {
             }
         } 
             
-        return null;
+        return base.start_editing(event, widget, path, bg_area, cell_area, flags);
     }
     
     private void erase_text() {

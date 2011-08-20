@@ -20,6 +20,11 @@ namespace GnomePie {
 // An ActionGroup which displays the user's main menu.
         
 public class MenuGroup : ActionGroup {
+
+    // the name of this group, as displayed in the gui
+    public static string get_name() {
+        return _("Main menu");
+    }
     
     private GMenu.Tree menu = null;
     private Gee.ArrayList<MenuGroup?> childs;
@@ -58,7 +63,7 @@ public class MenuGroup : ActionGroup {
                         var sub_menu = PieManager.add_pie(sub_menu_id, out sub_menu_id,
                                                           ((GMenu.TreeDirectory)item).get_name(),
                                                           ((GMenu.TreeDirectory)item).get_icon(),
-                                                          "", 0);
+                                                          "", 0, false);
                         var group = new MenuGroup(sub_menu_id, false);
                         group.add_action(new PieAction(parent_id));
                         group.load_contents((GMenu.TreeDirectory)item, sub_menu_id);

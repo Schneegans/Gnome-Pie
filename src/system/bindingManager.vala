@@ -42,12 +42,14 @@ public class BindingManager : GLib.Object {
     // Helper class to store keybinding
     private class Keybinding {
     
-        public Keybinding(int keycode, Gdk.ModifierType modifiers, string id) {
+        public Keybinding(string accelerator, int keycode, Gdk.ModifierType modifiers, string id) {
+            this.accelerator = accelerator;
             this.keycode = keycode;
             this.modifiers = modifiers;
             this.id = id;
         }
  
+        public string accelerator { get; set; }
         public int keycode { get; set; }
         public Gdk.ModifierType modifiers { get; set; }
         public string id { get; set; }
@@ -87,7 +89,7 @@ public class BindingManager : GLib.Object {
  
             Gdk.flush();
  
-            Keybinding binding = new Keybinding(keycode, modifiers, id);
+            Keybinding binding = new Keybinding(accelerator, keycode, modifiers, id);
             bindings.add(binding);
         }
     }
@@ -107,6 +109,19 @@ public class BindingManager : GLib.Object {
         }
 
         bindings.remove_all(remove_bindings);
+    }
+    
+    public string get_accelerator_of(string id) {
+        foreach (var binding in bindings) {
+            if (binding.id == id) {
+                uint key = 0;
+                Gdk.ModifierType mods;
+                Gtk.accelerator_parse(binding.accelerator, out key, out mods);
+                return Gtk.accelerator_get_label(key, binding.modifiers);
+            }
+        }
+        
+        return "";
     }
  
     // Event filter method needed to fetch X.Events

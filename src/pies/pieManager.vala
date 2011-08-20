@@ -22,7 +22,8 @@ namespace GnomePie {
 
 public class PieManager : GLib.Object {
 
-    private static Gee.HashMap<string, Pie?> all_pies;
+    public  static Gee.HashMap<string, Pie?> all_pies { get; private set; }
+    
     private static BindingManager bindings;
     
     public static void load_config() {
@@ -44,6 +45,16 @@ public class PieManager : GLib.Object {
         return null;
     }
     
+    public static string get_accelerator_of(string id) {
+        return bindings.get_accelerator_of(id);
+    }
+    
+    public static string get_name_of(string id) {
+        Pie? pie = get_pie(id);
+        if (pie == null) return "";
+        else             return pie.name;
+    }
+    
     public static void open_pie(string id) {
         Pie? pie = all_pies[id];
         
@@ -57,7 +68,7 @@ public class PieManager : GLib.Object {
         }
     }
     
-    public static Pie add_pie(string desired_id, out string final_id, string name, string icon_name, string hotkey, int quick_action) {
+    public static Pie add_pie(string desired_id, out string final_id, string name, string icon_name, string hotkey, int quick_action, bool is_custom) {
         final_id = desired_id;
         
         if (final_id.contains(" ")) {
@@ -69,10 +80,10 @@ public class PieManager : GLib.Object {
             var tmp = final_id;
             final_id = final_id + "_";
             warning("Trying to add pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
-            return add_pie(final_id, out final_id, name, icon_name, hotkey, quick_action);
+            return add_pie(final_id, out final_id, name, icon_name, hotkey, quick_action, is_custom);
         }
 
-        Pie pie = new Pie(final_id, name, icon_name, quick_action);
+        Pie pie = new Pie(final_id, name, icon_name, quick_action, is_custom);
         all_pies.set(final_id, pie);
         
         if (hotkey != "")
@@ -83,7 +94,7 @@ public class PieManager : GLib.Object {
     
     public static void remove_pie(string id) {
         if (all_pies.has_key(id)) {
-            all_pies.remove(id);
+            all_pies.unset(id);
             bindings.unbind(id);
         }
         else {

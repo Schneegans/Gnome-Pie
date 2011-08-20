@@ -106,7 +106,7 @@ public class PieLoader : GLib.Object {
         if (id == "")
             id = name;
         
-        var pie = PieManager.add_pie(id, out id, name, icon, hotkey, quick_action);
+        var pie = PieManager.add_pie(id, out id, name, icon, hotkey, quick_action, true);
         
         for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {
             if (slice->type == Xml.ElementType.ELEMENT_NODE) {

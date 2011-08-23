@@ -167,31 +167,11 @@ public class Preferences : Gtk.Window {
 
                         // info label
                         var info_label = new Gtk.Label (Markup.printf_escaped ("<span size=\"small\">%s</span>",
-                            _("You can drag'n'drop Slices from \none Pie to another.")));
+                            _("You can right-click in the list\nfor adding or removing entries.")));
                             info_label.set_use_markup(true);
                             info_label.set_alignment (0.0f, 0.5f);
                             info_label.wrap = true;
                             info_box.pack_start (info_label);
-                        
-                        // add Button
-                        var add_button = new Gtk.Button();
-                            add_button.tooltip_text = _("Add a new entry to the list");
-                            var add_image = new Gtk.Image.from_stock (Gtk.Stock.ADD, Gtk.IconSize.LARGE_TOOLBAR);
-                            add_button.add(add_image);
-                            add_button.clicked.connect (() => { 
-
-                            });
-                            info_box.pack_end (add_button, false, false);
-                            
-                        // remove Button
-                        var remove_button = new Gtk.Button();
-                            remove_button.tooltip_text = _("Remove the selected entry from the list");
-                            var remove_image = new Gtk.Image.from_stock (Gtk.Stock.DELETE, Gtk.IconSize.LARGE_TOOLBAR);
-                            remove_button.add(remove_image);
-                            remove_button.clicked.connect (() => { 
-
-                            });
-                            info_box.pack_end (remove_button, false, false);
                         
                         pies_tab.pack_start (info_box, false);
                 
@@ -203,7 +183,9 @@ public class Preferences : Gtk.Window {
                 var close_button = new Gtk.Button.from_stock (Gtk.Stock.CLOSE);
                 close_button.clicked.connect (() => { 
                     hide();
+                    // save settings on close
                     Config.global.save();
+                    //PieSaver.save_pies();
                 });
                 bbox.pack_start (close_button);
 

@@ -19,10 +19,9 @@ namespace GnomePie {
 
 public class DevicesGroup : ActionGroup {
 
-    // the name of this group, as displayed in the gui
-    public static string get_name() {
-        return _("Devices");
-    }
+    public override bool is_custom { get {return false;} }
+    public override string group_type { get {return _("Devices");} }
+    public override string icon_name { get {return "harddrive";} }
 
     private bool changing = false;
     private bool changed_again = false;

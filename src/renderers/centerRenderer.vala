@@ -96,7 +96,7 @@ public class CenterRenderer {
 	        } else if (rotation_mode == CenterLayer.RotationMode.TO_ACTIVE) {
 	            max_rotation_speed *= this.activity.val;
 	            
-	            double slice_angle = 2*PI/parent.slice_count();
+	            double slice_angle = parent.slice_count() > 0 ? 2*PI/parent.slice_count() : 0;
 	            double direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
 	            double diff = direction-layer.rotation;
 	            double step = max_rotation_speed*frame_time;

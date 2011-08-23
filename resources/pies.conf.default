@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <pies>
-    <pie name="Multimedia Steuerung" hotkey="&lt;ctrl>&lt;alt>M" quickAction="0" icon="stock_media-play" id="Multimedia_Steuerung">
-        <slice type="key" name="Next Track" icon="stock_media-next" command="XF86AudioNext" />
+    <pie name="Multimedia Steuerung" hotkey="&lt;ctrl>&lt;alt>M" icon="stock_media-play" id="Multimedia_Steuerung">
+        <slice type="key" name="Next Track" icon="stock_media-next" command="XF86AudioNext" quickAction="true" />
         <slice type="key" name="Stop" icon="stock_media-stop" command="XF86AudioStop" />
         <slice type="key" name="Previous Track" icon="stock_media-prev" command="XF86AudioPrev" />
         <slice type="key" name="Play/Pause" icon="stock_media-play" command="XF86AudioPlay" />
     </pie>
     
-    <pie name="Window" hotkey="&lt;ctrl>&lt;alt>W" quickAction="2" icon="window-manager" id="Window">
+    <pie name="Window" hotkey="&lt;ctrl>&lt;alt>W" icon="window-manager" id="Window">
         <slice type="key" name="Shade" icon="stock_top" command="&lt;ctrl>&lt;alt>S" />
         <slice type="key" name="Close" icon="stock_delete" command="&lt;alt>F4" />
-        <slice type="key" name="Minimize" icon="stock_first" command="&lt;alt>F9" />
+        <slice type="key" name="Minimize" icon="stock_first" command="&lt;alt>F9" quickAction="true" />
         <slice type="key" name="Toggle Maximize" icon="stock_fullscreen" command="&lt;alt>F11" />
     </pie>
     
@@ -41,12 +41,12 @@
     </pie>
     
     <pie name="Menu" hotkey="&lt;ctrl>&lt;alt>F" icon="menu-editor" id="Menu">
-        <slice type="menu" />
+        <group type="menu" />
     </pie>
     
     <pie name="Bookmarks" hotkey="&lt;ctrl>&lt;alt>B" icon="user-bookmarks" id="Bookmarks">
-        <slice type="bookmarks" />
-        <slice type="devices" />
+        <group type="bookmarks" />
+        <group type="devices" />
     </pie>
     
 </pies>

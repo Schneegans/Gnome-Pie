@@ -30,8 +30,7 @@ public class PieManager : GLib.Object {
         all_pies = new Gee.HashMap<string, Pie?>();
         bindings = new BindingManager();
         
-        var loader = new PieLoader();
-        loader.load_pies();
+        PieLoader.load_pies();
         
         bindings.on_press.connect((id) => {
             open_pie(id);
@@ -47,6 +46,10 @@ public class PieManager : GLib.Object {
     
     public static string get_accelerator_of(string id) {
         return bindings.get_accelerator_of(id);
+    }
+    
+    public static string get_accelerator_label_of(string id) {
+        return bindings.get_accelerator_label_of(id);
     }
     
     public static string get_name_of(string id) {
@@ -68,7 +71,7 @@ public class PieManager : GLib.Object {
         }
     }
     
-    public static Pie add_pie(string desired_id, out string final_id, string name, string icon_name, string hotkey, int quick_action, bool is_custom) {
+    public static Pie add_pie(string desired_id, out string final_id, string name, string icon_name, string hotkey, bool is_custom) {
         final_id = desired_id;
         
         if (final_id.contains(" ")) {
@@ -80,10 +83,10 @@ public class PieManager : GLib.Object {
             var tmp = final_id;
             final_id = final_id + "_";
             warning("Trying to add pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
-            return add_pie(final_id, out final_id, name, icon_name, hotkey, quick_action, is_custom);
+            return add_pie(final_id, out final_id, name, icon_name, hotkey, is_custom);
         }
 
-        Pie pie = new Pie(final_id, name, icon_name, quick_action, is_custom);
+        Pie pie = new Pie(final_id, name, icon_name, is_custom);
         all_pies.set(final_id, pie);
         
         if (hotkey != "")
@@ -94,6 +97,7 @@ public class PieManager : GLib.Object {
     
     public static void remove_pie(string id) {
         if (all_pies.has_key(id)) {
+            all_pies[id].on_remove();
             all_pies.unset(id);
             bindings.unbind(id);
         }

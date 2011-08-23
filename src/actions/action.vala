@@ -22,17 +22,24 @@ namespace GnomePie {
 
 public abstract class Action : GLib.Object {
 
+    public abstract string action_type { get; }
+    public abstract string label { get; }
+    public abstract string command { get; }
+
     public virtual string name {get; protected set;}
     public virtual string icon_name {get; protected set;}
+    public virtual bool is_quick_action {get; protected set;}
 
-    public Action(string name, string icon_name) {
+    public Action(string name, string icon_name, bool is_quick_action) {
         this.name = name;
         this.icon_name = icon_name;
+        this.is_quick_action = is_quick_action;
     }
 
     public abstract void activate();
     
     public virtual void on_display() {}
+    public virtual void on_remove() {}
 }
 
 }

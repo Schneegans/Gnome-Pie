@@ -21,15 +21,14 @@ namespace GnomePie {
 
 public class UriAction : Action {
 
-    // the name of this group, as displayed in the gui
-    public static string get_name() {
-        return _("Open URL");
-    }
+    public override string action_type { get {return _("Open URL");} }
+    public override string label { get {return uri;} }
+    public override string command { get {return uri;} }
     	
     public string uri { get; set; }
 
-    public UriAction(string name, string icon_name, string uri) {
-        base(name, icon_name);
+    public UriAction(string name, string icon_name, string uri, bool is_quick_action = false) {
+        base(name, icon_name, is_quick_action);
         this.uri = uri;
     }
 

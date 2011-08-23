@@ -24,7 +24,7 @@ namespace GnomePie {
 
 public class PieLoader : GLib.Object {
 
-    public void load_pies() {
+    public static void load_pies() {
         
         Xml.Parser.init();
         Xml.Doc* piesXML = Xml.Parser.parse_file(Paths.pie_config);
@@ -63,7 +63,7 @@ public class PieLoader : GLib.Object {
         }
     }
     
-    private void parse_pie(Xml.Node* node) {
+    private static void parse_pie(Xml.Node* node) {
     
         string hotkey = "";
         string name = "";
@@ -106,7 +106,7 @@ public class PieLoader : GLib.Object {
         if (id == "")
             id = name;
         
-        var pie = PieManager.add_pie(id, out id, name, icon, hotkey, quick_action, true);
+        var pie = PieManager.add_pie(id, out id, name, icon, hotkey, true);
         
         for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {
             if (slice->type == Xml.ElementType.ELEMENT_NODE) {
@@ -114,6 +114,9 @@ public class PieLoader : GLib.Object {
                 switch (node_name) {
                     case "slice":
                         parse_slice(slice, pie);
+                        break;
+                    case "group":
+                        parse_group(slice, pie);
                         break;
                     default:
                         warning("Invalid child element <" + node_name + "> in <pie> element in pies.conf!");
@@ -123,11 +126,12 @@ public class PieLoader : GLib.Object {
         }
     }
     
-    private void parse_slice(Xml.Node* slice, Pie pie) {
+    private static void parse_slice(Xml.Node* slice, Pie pie) {
         string name="";
         string icon="";
         string command="";
         string type="";
+        bool quick_action = false;
         
         for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
@@ -146,6 +150,9 @@ public class PieLoader : GLib.Object {
                 case "type":
                     type = attr_content;
                     break;
+                case "quickaction":
+                    quick_action = bool.parse(attr_content);
+                    break;
                 default:
                     warning("Invalid attribute \"" + attr_name + "\" in <slice> element in pies.conf!");
                     break;
@@ -156,25 +163,54 @@ public class PieLoader : GLib.Object {
 
         switch (type) {
             case "app":
-                Action action = new AppAction(name, icon, command);
+                Action action = new AppAction(name, icon, command, quick_action);
                 group = new ActionGroup(pie.id);
                 group.add_action(action);
                 break;
             case "key":
-                Action action = new KeyAction(name, icon, command);
+                Action action = new KeyAction(name, icon, command, quick_action);
                 group = new ActionGroup(pie.id);
                 group.add_action(action);
                 break;
             case "pie":
-                Action action = new PieAction(command);
+                Action action = new PieAction(command, quick_action);
                 group = new ActionGroup(pie.id);
                 group.add_action(action);
                 break;
             case "uri":
-                Action action = new UriAction(name, icon, command);
+                Action action = new UriAction(name, icon, command, quick_action);
                 group = new ActionGroup(pie.id);
                 group.add_action(action);
                 break;
+            default:
+                warning("Invalid type \"" + type + "\" in pies.conf!");
+                break;
+        }
+        
+        
+        if (group != null) pie.add_group(group);
+    }
+    
+    private static void parse_group(Xml.Node* slice, Pie pie) {
+        string type="";
+        
+        for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
+            string attr_name = attribute->name.down();
+            string attr_content = attribute->children->content;
+
+            switch (attr_name) {
+                case "type":
+                    type = attr_content;
+                    break;
+                default:
+                    warning("Invalid attribute \"" + attr_name + "\" in <group> element in pies.conf!");
+                    break;
+            }
+        }
+        
+        ActionGroup group = null;
+
+        switch (type) {
             case "menu":
                 group = new MenuGroup(pie.id);
                 break;

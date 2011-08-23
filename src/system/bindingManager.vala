@@ -111,13 +111,22 @@ public class BindingManager : GLib.Object {
         bindings.remove_all(remove_bindings);
     }
     
+    public string get_accelerator_label_of(string id) {
+        string accelerator = this.get_accelerator_of(id);
+        
+        if (accelerator == "")
+            return _("Not bound");
+        
+        uint key = 0;
+        Gdk.ModifierType mods;
+        Gtk.accelerator_parse(accelerator, out key, out mods);
+        return Gtk.accelerator_get_label(key, mods);
+    }
+    
     public string get_accelerator_of(string id) {
         foreach (var binding in bindings) {
             if (binding.id == id) {
-                uint key = 0;
-                Gdk.ModifierType mods;
-                Gtk.accelerator_parse(binding.accelerator, out key, out mods);
-                return Gtk.accelerator_get_label(key, binding.modifiers);
+                return binding.accelerator;
             }
         }
         

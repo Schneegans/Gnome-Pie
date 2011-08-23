@@ -40,17 +40,21 @@ public class PieRenderer {
     }
     
     public void load_pie(Pie pie) {
-    
         this.slices.clear();
-        
-        this.quick_action = pie.quick_action;
-        this.active_slice = pie.quick_action;
     
+        int count = 0;
         foreach (var group in pie.action_groups) {
             foreach (var action in group.actions) {
                 var renderer = new SliceRenderer(this);
                 this.slices.add(renderer);
                 renderer.load(action, slices.size-1);
+                
+                if (action.is_quick_action) {
+                    this.quick_action = count;
+                    this.active_slice = count;
+                }
+                
+                ++count;
             }
         }
         
@@ -61,11 +65,15 @@ public class PieRenderer {
 		        slice.set_active_slice(this.slices[this.quick_action]);
         }
         
-        this.size = (int)fmax(
-            (((Config.global.theme.slice_radius + Config.global.theme.slice_gap)/tan(PI/slices.size)) 
-            + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom,
-            fmax(2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
-                 2*Config.global.theme.center_radius));
+        this.size = (int)fmax(2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
+                              2*Config.global.theme.center_radius);
+        
+        // increase size if there are many slices
+        if (slices.size > 0) {
+            this.size = (int)fmax(this.size,
+                (((Config.global.theme.slice_radius + Config.global.theme.slice_gap)/tan(PI/slices.size)) 
+                + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom);
+        }
     }
     
     public void activate() {
@@ -106,7 +114,7 @@ public class PieRenderer {
 	     
 	        next_active_slice = this.quick_action;   
 	        angle = 2.0*PI*quick_action/(double)slice_count();
-	    } else if (distance > Config.global.theme.active_radius) {
+	    } else if (distance > Config.global.theme.active_radius && this.slice_count() > 0) {
 	        next_active_slice = (int)(angle*slices.size/(2*PI) + 0.5) % this.slice_count();
 	    } else {
 	        next_active_slice = -1;

@@ -23,6 +23,7 @@ namespace GnomePie {
 public class Key {
 
     public string label {get; private set;}
+    public string accelerator {get; private set;}
 
     private X.Display display;
     private int shift_code;
@@ -35,6 +36,8 @@ public class Key {
     
     public Key(string stroke) {
         display = new X.Display();
+        
+        this.accelerator = stroke;
         
         uint keysym;
         Gtk.accelerator_parse(stroke, out keysym, out this.modifiers);

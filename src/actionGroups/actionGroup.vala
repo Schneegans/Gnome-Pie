@@ -21,13 +21,17 @@ namespace GnomePie {
 // how these Actions are created. This base class serves for custom
 // actions, defined by the user.
 
-public class ActionGroup {
+public class ActionGroup : GLib.Object {
 
     // a list of all stored actions
     public Gee.ArrayList<Action?> actions {get; private set;}
     
     // the ID of the pie to which this group is attached
     public string parent_id {get; private set;}
+    
+    public virtual bool is_custom { get {return true;} }
+    public virtual string group_type { get {return "Custom";} }
+    public virtual string icon_name { get {return "";} }
     
     public ActionGroup(string parent_id) {
         this.parent_id = parent_id;
@@ -37,6 +41,11 @@ public class ActionGroup {
     public virtual void on_display() {
         foreach (var action in actions)
             action.on_display();
+    }
+    
+    public virtual void on_remove() {
+        foreach (var action in actions)
+            action.on_remove();
     }
     
     public void add_action(Action new_action) {

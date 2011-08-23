@@ -21,10 +21,9 @@ namespace GnomePie {
 
 public class PieAction : Action {
 
-    // the name of this group, as displayed in the gui
-    public static string get_name() {
-        return _("Open Pie");
-    }
+    public override string action_type { get {return _("Open Pie");} }
+    public override string label { get {return name;} }
+    public override string command { get {return pie_id;} }
     
     public override string name {
         get {
@@ -48,8 +47,8 @@ public class PieAction : Action {
     	
     public string pie_id { get; set; }
 
-    public PieAction(string id) {
-        base("", "");
+    public PieAction(string id, bool is_quick_action = false) {
+        base("", "", is_quick_action);
         this.pie_id = id;
     }
 

@@ -21,15 +21,14 @@ namespace GnomePie {
 
 public class KeyAction : Action {
 
-    // the name of this group, as displayed in the gui
-    public static string get_name() {
-        return _("Press key stroke");
-    }
+    public override string action_type { get {return _("Press key stroke");} }
+    public override string label { get {return key.label;} }
+    public override string command { get {return key.accelerator;} }
     	
     public Key key { get; set; }
 
-    public KeyAction(string name, string icon_name, string key_stroke) {
-        base(name, icon_name);
+    public KeyAction(string name, string icon_name, string key_stroke, bool is_quick_action = false) {
+        base(name, icon_name, is_quick_action);
         this.key = new Key(key_stroke);
     }
 

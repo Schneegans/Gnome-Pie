@@ -21,10 +21,9 @@ namespace GnomePie {
         
 public class MenuGroup : ActionGroup {
 
-    // the name of this group, as displayed in the gui
-    public static string get_name() {
-        return _("Main menu");
-    }
+    public override bool is_custom { get {return false;} }
+    public override string group_type { get {return _("Main menu");} }
+    public override string icon_name { get {return "gnome-main-menu";} }
     
     private GMenu.Tree menu = null;
     private Gee.ArrayList<MenuGroup?> childs;
@@ -63,9 +62,9 @@ public class MenuGroup : ActionGroup {
                         var sub_menu = PieManager.add_pie(sub_menu_id, out sub_menu_id,
                                                           ((GMenu.TreeDirectory)item).get_name(),
                                                           ((GMenu.TreeDirectory)item).get_icon(),
-                                                          "", 0, false);
+                                                          "", false);
                         var group = new MenuGroup(sub_menu_id, false);
-                        group.add_action(new PieAction(parent_id));
+                        group.add_action(new PieAction(parent_id, true));
                         group.load_contents((GMenu.TreeDirectory)item, sub_menu_id);
                         childs.add(group);
                                                           
@@ -107,6 +106,11 @@ public class MenuGroup : ActionGroup {
         } else {
             this.changed_again = true;
         }  
+    }
+    
+    public override void on_remove() {
+        if (this.is_toplevel)
+            this.clear();
     }
     
     private void clear() {

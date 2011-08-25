@@ -185,7 +185,7 @@ public class Preferences : Gtk.Window {
                     hide();
                     // save settings on close
                     Config.global.save();
-                    //PieSaver.save_pies();
+                    PieSaver.save_pies();
                 });
                 bbox.pack_start (close_button);
 

@@ -46,7 +46,7 @@ public class BookmarkGroup : ActionGroup {
     
     private void load() {
         // add home folder
-        this.add_uri("file://" + GLib.Environment.get_home_dir());
+        this.add_action(Action.new_for_uri("file://" + GLib.Environment.get_home_dir()));
         
         // add .gtk-bookmarks
         var bookmark_file = GLib.File.new_for_path(
@@ -66,63 +66,17 @@ public class BookmarkGroup : ActionGroup {
                 string uri = parts[0];
                 string name = parts[1];
 
-                this.add_uri(uri, name);
+                this.add_action(Action.new_for_uri(uri, name));
             }
         } catch (Error e) {
             error ("%s", e.message);
         }
         
         // add trash
-        this.add_uri("trash:///");
+        this.add_action(Action.new_for_uri("trash:///"));
         
         // add desktop
-        this.add_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP));
-    }
-    
-    private void add_uri(string uri, string? name = null, string? icon = null) {
-        string? final_name = name;
-        string? final_icon = icon;
-    
-        // if no name is specified, use basename
-        if (final_name == null) {
-            if (uri.has_prefix("trash")) {
-                final_name = _("Trash");
-            } else {
-                final_name = GLib.Path.get_basename(uri);
-            } 
-        }
-        
-        // if no icon is specified, try to find a good one   
-        if (final_icon == null) {
-            if (uri.has_prefix("ftp") || uri.has_prefix("sftp")) {
-                final_icon = "folder-remote";
-            } else if (uri.has_prefix("trash")) {
-                final_icon = "user-trash";
-            } else if (final_name == GLib.Path.get_basename(GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP))) {
-                final_icon = "user-desktop";
-            } else if (final_name == GLib.Path.get_basename(GLib.Environment.get_user_special_dir(GLib.UserDirectory.DOCUMENTS))) {
-                final_icon = "folder-documents";
-            } else if (final_name == GLib.Path.get_basename(GLib.Environment.get_user_special_dir(GLib.UserDirectory.DOWNLOAD))) {
-                final_icon = "folder-download";
-            } else if (final_name == GLib.Path.get_basename(GLib.Environment.get_user_special_dir(GLib.UserDirectory.MUSIC))) {
-                final_icon = "folder-music";
-            } else if (final_name == GLib.Path.get_basename(GLib.Environment.get_user_special_dir(GLib.UserDirectory.PICTURES))) {
-                final_icon = "folder-pictures";
-            } else if (final_name == GLib.Path.get_basename(GLib.Environment.get_user_special_dir(GLib.UserDirectory.PUBLIC_SHARE))) {
-                final_icon = "folder-publicshare";
-            } else if (final_name == GLib.Path.get_basename(GLib.Environment.get_user_special_dir(GLib.UserDirectory.TEMPLATES))) {
-                final_icon = "folder-templates";
-            } else if (final_name == GLib.Path.get_basename(GLib.Environment.get_user_special_dir(GLib.UserDirectory.VIDEOS))) {
-                final_icon = "folder-videos";
-            } else {
-                final_icon = "folder";
-            }
-            
-            if (!Gtk.IconTheme.get_default().has_icon(final_icon))
-                final_icon = "folder";
-        }
-        
-        this.add_action(new UriAction(final_name, final_icon, uri));
+        this.add_action(Action.new_for_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP)));
     }
     
     private void reload() {

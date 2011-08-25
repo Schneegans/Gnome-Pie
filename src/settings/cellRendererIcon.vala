@@ -45,6 +45,11 @@ public class CellRendererIcon : Gtk.CellRendererText {
         get { return renderer.stock_size; }
         set { renderer.stock_size = value; }
     }
+    
+    public bool icon_sensitive {
+        get { return renderer.sensitive; }
+        set { renderer.sensitive = value; }
+    }
 
     // c'tor
     public CellRendererIcon() {

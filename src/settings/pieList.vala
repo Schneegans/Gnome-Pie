@@ -71,7 +71,7 @@ class PieList : Gtk.TreeView {
         types.append(out last); types.set(last, 0, _("Launch application"), 1, typeof(AppAction).name(),   2, true,  3, true ); 
         types.append(out last); types.set(last, 0, _("Press key stroke"),   1, typeof(KeyAction).name(),   2, true,  3, true ); 
         types.append(out last); types.set(last, 0, _("Open Pie"),           1, typeof(PieAction).name(),   2, true,  3, false); 
-        types.append(out last); types.set(last, 0, _("Open URL"),           1, typeof(UriAction).name(),   2, true,  3, true ); 
+        types.append(out last); types.set(last, 0, _("Open URI"),           1, typeof(UriAction).name(),   2, true,  3, true ); 
         types.append(out last); types.set(last, 0, _("Slice group"),        1, typeof(ActionGroup).name(), 2, false, 3, false); 
         
         // main data model
@@ -151,6 +151,7 @@ class PieList : Gtk.TreeView {
                 
                 icon_column.pack_start(check_render, false);
                 icon_column.add_attribute(check_render, "activatable", DataPos.QUICKACTION_ACTIVATABLE);
+                icon_column.add_attribute(check_render, "sensitive", DataPos.QUICKACTION_ACTIVATABLE);
                 icon_column.add_attribute(check_render, "visible", DataPos.QUICKACTION_VISIBLE);
                 icon_column.add_attribute(check_render, "active", DataPos.IS_QUICKACTION);
                 
@@ -172,7 +173,7 @@ class PieList : Gtk.TreeView {
                 icon_column.add_attribute(icon_render, "icon_name", DataPos.ICON);
                 icon_column.add_attribute(icon_render, "stock_size", DataPos.ICON_SIZE);
                 icon_column.add_attribute(icon_render, "editable", DataPos.ICON_NAME_EDITABLE);
-                
+                icon_column.add_attribute(icon_render, "icon_sensitive", DataPos.ICON_NAME_EDITABLE);
                   
         // command column    
         var command_column = new Gtk.TreeViewColumn();
@@ -372,7 +373,7 @@ class PieList : Gtk.TreeView {
                     this.update_linked();
                     this.update_pie(data_iter);
                     
-                    this.set_cursor(new Gtk.TreePath.from_string(path), command_column, true);
+                    //this.set_cursor(new Gtk.TreePath.from_string(path), command_column, true);
                 });
                 
                 type_column.pack_start(type_render, true);
@@ -399,12 +400,13 @@ class PieList : Gtk.TreeView {
                     this.update_pie(iter);
                     this.update_linked();
                     
-                    this.set_cursor(new Gtk.TreePath.from_string(path), type_column, true);
+                    //this.set_cursor(new Gtk.TreePath.from_string(path), type_column, true);
                 });
                 
                 name_column.pack_start(name_render, true);
                 name_column.add_attribute(name_render, "weight", DataPos.FONT_WEIGHT);
                 name_column.add_attribute(name_render, "text", DataPos.NAME);
+                name_column.add_attribute(name_render, "sensitive", DataPos.ICON_NAME_EDITABLE);
                 name_column.add_attribute(name_render, "editable", DataPos.ICON_NAME_EDITABLE);
         
         this.append_column(icon_column);
@@ -419,12 +421,12 @@ class PieList : Gtk.TreeView {
 
         var item = new Gtk.ImageMenuItem.with_label(_("Add new Pie"));
         item.set_image(new Gtk.Image.from_stock(Gtk.Stock.ADD, Gtk.IconSize.MENU));
-        item.activate.connect(this.add_pie);
+        item.activate.connect(this.add_empty_pie);
         menu.append(item);
 
         item = new Gtk.ImageMenuItem.with_label(_("Add new Slice"));
         item.set_image(new Gtk.Image.from_stock(Gtk.Stock.ADD, Gtk.IconSize.MENU));
-        item.activate.connect(this.add_slice);
+        item.activate.connect(this.add_empty_slice);
         menu.append(item);
         
         var sepa = new Gtk.SeparatorMenuItem();
@@ -443,6 +445,12 @@ class PieList : Gtk.TreeView {
             }
             return false;
         });
+        
+        // setup drag'n'drop
+        Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
+        Gtk.TargetEntry[] entries = { uri_source };
+        this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
+        this.drag_data_received.connect(this.on_dnd);
     }
     
     private void update_linked() {
@@ -504,7 +512,7 @@ class PieList : Gtk.TreeView {
         });
     }
     
-    private void add_pie() {
+    private void add_empty_pie() {
         var new_one = PieManager.add_pie("new_pie", null, _("New Pie"), "application-default-icon", "", true);
         
         Gtk.TreeIter last;
@@ -542,7 +550,7 @@ class PieList : Gtk.TreeView {
         this.scroll_to_cell(this.data.get_path(parent), null, true, 0.5f, 0.0f);
     }
     
-    private void add_slice() {
+    private void add_empty_slice() {
         Gtk.TreeIter selected;
         if (this.get_selection().get_selected(null, out selected)) {
             var path = this.data.get_path(selected);
@@ -568,6 +576,33 @@ class PieList : Gtk.TreeView {
             dialog.run();
             dialog.destroy();
         }
+    }
+    
+    private void write_action(Action action, Gtk.TreeIter slice) {
+        this.data.set(slice, DataPos.IS_QUICKACTION, action.is_quick_action,
+                                       DataPos.ICON, action.icon_name,
+                                       DataPos.NAME, action.name,
+                                    DataPos.TYPE_ID, action.action_type,
+                                DataPos.ACTION_TYPE, action.get_type().name(),
+                                  DataPos.ICON_SIZE, Gtk.IconSize.LARGE_TOOLBAR,
+                                DataPos.FONT_WEIGHT, 400,
+                         DataPos.ICON_NAME_EDITABLE, !(action is PieAction),
+                        DataPos.QUICKACTION_VISIBLE, true,
+                    DataPos.QUICKACTION_ACTIVATABLE, true,
+                               DataPos.TYPE_VISIBLE, true,
+                              DataPos.GROUP_VISIBLE, false,
+                                DataPos.APP_VISIBLE, action is AppAction,
+                                DataPos.KEY_VISIBLE, action is KeyAction,
+                                DataPos.PIE_VISIBLE, action is PieAction,
+                                DataPos.URI_VISIBLE, action is UriAction,
+                      DataPos.DISPLAY_COMMAND_GROUP, "",
+                        DataPos.DISPLAY_COMMAND_APP, (action is AppAction) ? action.label : "",
+                        DataPos.DISPLAY_COMMAND_KEY, (action is KeyAction) ? action.label : _("Not bound"),
+                        DataPos.DISPLAY_COMMAND_PIE, (action is PieAction) ? action.label : "",
+                        DataPos.DISPLAY_COMMAND_URI, (action is UriAction) ? action.label : "",
+                         DataPos.REAL_COMMAND_GROUP, "",
+                           DataPos.REAL_COMMAND_PIE, (action is PieAction) ? action.command : "",
+                           DataPos.REAL_COMMAND_KEY, (action is KeyAction) ? action.command : "");
     }
     
     private void delete_selection() {
@@ -726,30 +761,7 @@ class PieList : Gtk.TreeView {
     private void load_action(Gtk.TreeIter parent, Action action) {
         Gtk.TreeIter child;
         this.data.append(out child, parent);
-        this.data.set(child, DataPos.IS_QUICKACTION, action.is_quick_action,
-                                       DataPos.ICON, action.icon_name,
-                                       DataPos.NAME, action.name,
-                                    DataPos.TYPE_ID, action.action_type,
-                                DataPos.ACTION_TYPE, action.get_type().name(),
-                                  DataPos.ICON_SIZE, Gtk.IconSize.LARGE_TOOLBAR,
-                                DataPos.FONT_WEIGHT, 400,
-                         DataPos.ICON_NAME_EDITABLE, !(action is PieAction),
-                        DataPos.QUICKACTION_VISIBLE, true,
-                    DataPos.QUICKACTION_ACTIVATABLE, true,
-                               DataPos.TYPE_VISIBLE, true,
-                              DataPos.GROUP_VISIBLE, false,
-                                DataPos.APP_VISIBLE, action is AppAction,
-                                DataPos.KEY_VISIBLE, action is KeyAction,
-                                DataPos.PIE_VISIBLE, action is PieAction,
-                                DataPos.URI_VISIBLE, action is UriAction,
-                      DataPos.DISPLAY_COMMAND_GROUP, "",
-                        DataPos.DISPLAY_COMMAND_APP, (action is AppAction) ? action.label : "",
-                        DataPos.DISPLAY_COMMAND_KEY, (action is KeyAction) ? action.label : _("Not bound"),
-                        DataPos.DISPLAY_COMMAND_PIE, (action is PieAction) ? action.label : "",
-                        DataPos.DISPLAY_COMMAND_URI, (action is UriAction) ? action.label : "",
-                         DataPos.REAL_COMMAND_GROUP, "",
-                           DataPos.REAL_COMMAND_PIE, (action is PieAction) ? action.command : "",
-                           DataPos.REAL_COMMAND_KEY, (action is KeyAction) ? action.command : "");
+        this.write_action(action, child);
     }
     
     private void update_pie(Gtk.TreeIter slice_or_pie) {
@@ -849,6 +861,51 @@ class PieList : Gtk.TreeView {
                 } while (this.data.iter_next(ref child));
             }
         }         
+    }
+    
+    private void on_dnd(Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint info, uint time_) {
+        string[] uris = selection_data.get_uris();
+        
+        Gtk.TreePath path;
+        Gtk.TreeViewDropPosition pos;
+        
+        // check for valid position
+        if (!this.get_dest_row_at_pos(x, y, out path, out pos)
+            || (path.to_string() == "0" && pos == Gtk.TreeViewDropPosition.BEFORE)) {
+            
+            warning("Failed to insert Slice: Invalid location!");
+            return;
+        }
+        
+        // get position to insert (when child: after, when parent: as first child)
+        Gtk.TreeIter parent;
+        int insert_pos = 0;
+        if (path.get_depth() == 1) {
+            if (pos == Gtk.TreeViewDropPosition.BEFORE) {
+                path.prev();
+                this.data.get_iter(out parent, path);
+                insert_pos = this.data.iter_n_children(parent);
+            } else {
+                this.data.get_iter(out parent, path);
+            }
+        } else {
+            if (pos == Gtk.TreeViewDropPosition.BEFORE) {
+                insert_pos = path.get_indices()[1];
+            } else {
+                insert_pos = path.get_indices()[1]+1;
+            }
+            
+            path.up();
+            this.data.get_iter(out parent, path);
+        }
+        
+        foreach (var uri in uris) {
+            Gtk.TreeIter new_child;
+            this.data.insert(out new_child, parent, insert_pos);
+            this.write_action(Action.new_for_uri(uri), new_child);
+        }
+        
+        this.update_pie(parent);
     }
 }
 

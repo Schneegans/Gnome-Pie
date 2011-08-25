@@ -21,7 +21,7 @@ namespace GnomePie {
 
 public class UriAction : Action {
 
-    public override string action_type { get {return _("Open URL");} }
+    public override string action_type { get {return _("Open URI");} }
     public override string label { get {return uri;} }
     public override string command { get {return uri;} }
     	

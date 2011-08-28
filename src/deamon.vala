@@ -80,7 +80,7 @@ public class Deamon : GLib.Application {
 		} else {
 		    var args = line.get_arguments();
 		    
-		    if (args.length > 2) {
+		    if (args.length == 3) {
 		        if (args[1] == "-o" || args[1] == "--open")
 		            PieManager.open_pie(args[2]);
 		        else

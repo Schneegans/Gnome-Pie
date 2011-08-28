@@ -1,52 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0"?>
 <pies>
-    <pie name="Multimedia Steuerung" hotkey="&lt;ctrl>&lt;alt>M" icon="stock_media-play" id="Multimedia_Steuerung">
-        <slice type="key" name="Next Track" icon="stock_media-next" command="XF86AudioNext" quickAction="true" />
-        <slice type="key" name="Stop" icon="stock_media-stop" command="XF86AudioStop" />
-        <slice type="key" name="Previous Track" icon="stock_media-prev" command="XF86AudioPrev" />
-        <slice type="key" name="Play/Pause" icon="stock_media-play" command="XF86AudioPlay" />
-    </pie>
-    
-    <pie name="Window" hotkey="&lt;ctrl>&lt;alt>W" icon="window-manager" id="Window">
-        <slice type="key" name="Shade" icon="stock_top" command="&lt;ctrl>&lt;alt>S" />
-        <slice type="key" name="Close" icon="stock_delete" command="&lt;alt>F4" />
-        <slice type="key" name="Minimize" icon="stock_first" command="&lt;alt>F9" quickAction="true" />
-        <slice type="key" name="Toggle Maximize" icon="stock_fullscreen" command="&lt;alt>F11" />
-    </pie>
-    
-    <pie name="Web" hotkey="&lt;ctrl>&lt;alt>I" icon="emblem-web" id="Web">
-        <slice type="uri" name="Wetter" icon="weather-clouds" command="http://www.wetteronline.de/" />
-        <slice type="uri" name="Google" icon="stock_search" command="http://www.google.de/" />
-        <slice type="uri" name="Wikipedia" icon="addressbook" command="http://www.wikipedia.de/" />
-        <slice type="uri" name="Sintel" icon="folder-videos" command="file:///home/simon/Videos/sintel-hd2.avi" />
-    </pie>
-    
-    <pie name="Desktops" hotkey="&lt;ctrl>&lt;alt>C" icon="desktop" id="Desktops">
-        <slice type="key" name="Switch Right" icon="stock_right" command="&lt;ctrl>&lt;alt>Right" />
-        <slice type="key" name="Desktop 4" icon="applications-graphics" command="&lt;ctrl>&lt;alt>4" />
-        <slice type="key" name="Switch Down" icon="stock_down" command="&lt;ctrl>&lt;alt>Down" />
-        <slice type="key" name="Desktop 3" icon="applications-office" command="&lt;ctrl>&lt;alt>3" />
-        <slice type="key" name="Switch Left" icon="stock_left" command="&lt;ctrl>&lt;alt>Left" />
-        <slice type="key" name="Desktop 1" icon="applications-games" command="&lt;ctrl>&lt;alt>1" />
-        <slice type="key" name="Switch Up" icon="stock_up" command="&lt;ctrl>&lt;alt>Up" />
-        <slice type="key" name="Desktop 2" icon="applications-internet" command="&lt;ctrl>&lt;alt>2" />
-    </pie>
-    
-    <pie name="Pies" hotkey="&lt;ctrl>&lt;alt>Y" icon="gnome-pie" id="Pies">
-        <slice type="pie" command="Desktops" />
-        <slice type="pie" command="Window" />
-        <slice type="pie" command="Multimedia_Steuerung" />
-        <slice type="pie" command="Menu" />
-    </pie>
-    
-    <pie name="Menu" hotkey="&lt;ctrl>&lt;alt>F" icon="menu-editor" id="Menu">
-        <group type="menu" />
-    </pie>
-    
-    <pie name="Bookmarks" hotkey="&lt;ctrl>&lt;alt>B" icon="user-bookmarks" id="Bookmarks">
-        <group type="bookmarks" />
-        <group type="devices" />
-    </pie>
-    
+ <pie name="Window" id="637" icon="window-manager" hotkey="&lt;ctrl&gt;&lt;alt&gt;W">
+  <slice type="key" name="Shade" icon="stock_top" command="&lt;ctrl&gt;&lt;alt&gt;S" quickAction="false"/>
+  <slice type="key" name="Close" icon="stock_delete" command="&lt;alt&gt;F4" quickAction="false"/>
+  <slice type="key" name="Minimize" icon="stock_first" command="&lt;alt&gt;F9" quickAction="true"/>
+  <slice type="key" name="Toggle Maximize" icon="stock_fullscreen" command="&lt;alt&gt;F11" quickAction="false"/>
+ </pie>
+ <pie name="Menu" id="257" icon="alacarte" hotkey="&lt;ctrl&gt;&lt;alt&gt;F">
+  <group type="menu"/>
+ </pie>
+ <pie name="Bookmarks" id="741" icon="user-bookmarks" hotkey="&lt;ctrl&gt;&lt;alt&gt;B">
+  <group type="bookmarks"/>
+  <group type="devices"/>
+ </pie>
+ <pie name="Session" id="363" icon="gnome-session-hibernate" hotkey="&lt;Control&gt;space">
+  <group type="session"/>
+ </pie>
+ <pie name="Desktops" id="544" icon="desktop" hotkey="&lt;ctrl&gt;&lt;alt&gt;C">
+  <slice type="key" name="Switch Right" icon="stock_right" command="&lt;ctrl&gt;&lt;alt&gt;Right" quickAction="false"/>
+  <slice type="key" name="Desktop 4" icon="applications-graphics" command="&lt;ctrl&gt;&lt;alt&gt;4" quickAction="false"/>
+  <slice type="key" name="Switch Down" icon="stock_down" command="&lt;ctrl&gt;&lt;alt&gt;Down" quickAction="false"/>
+  <slice type="key" name="Desktop 3" icon="applications-office" command="&lt;ctrl&gt;&lt;alt&gt;3" quickAction="false"/>
+  <slice type="key" name="Switch Left" icon="stock_left" command="&lt;ctrl&gt;&lt;alt&gt;Left" quickAction="false"/>
+  <slice type="key" name="Desktop 1" icon="applications-games" command="&lt;ctrl&gt;&lt;alt&gt;1" quickAction="false"/>
+  <slice type="key" name="Switch Up" icon="stock_up" command="&lt;ctrl&gt;&lt;alt&gt;Up" quickAction="false"/>
+  <slice type="key" name="Desktop 2" icon="applications-internet" command="&lt;ctrl&gt;&lt;alt&gt;2" quickAction="false"/>
+ </pie>
+ <pie name="Multimedia Steuerung" id="385" icon="stock_media-play" hotkey="&lt;ctrl&gt;&lt;alt&gt;M">
+  <slice type="key" name="Next Track" icon="stock_media-next" command="XF86AudioNext" quickAction="true"/>
+  <slice type="key" name="Stop" icon="stock_media-stop" command="XF86AudioStop" quickAction="false"/>
+  <slice type="key" name="Previous Track" icon="stock_media-prev" command="XF86AudioPrev" quickAction="false"/>
+  <slice type="key" name="Play/Pause" icon="stock_media-play" command="XF86AudioPlay" quickAction="false"/>
+ </pie>
 </pies>

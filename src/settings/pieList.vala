@@ -91,8 +91,8 @@ class PieList : Gtk.TreeView {
         this.data = new Gtk.TreeStore(24, typeof(bool),       // is quickaction
                                           typeof(string),     // icon
                                           typeof(string),     // name   
-                                          typeof(string),     // slice: type label, pie: id
-                                          typeof(string),     // typeof(action), typeof(ActionGroup).name() if group action  
+                                          typeof(string),     // slice: type label, pie: "ID: %id"
+                                          typeof(string),     // typeof(action), typeof(ActionGroup).name() if group action, pie_id if Pie 
                                           
                                           typeof(int),        // icon size
                                           typeof(int),        // font weight
@@ -335,7 +335,7 @@ class PieList : Gtk.TreeView {
         
         // type column   
         var type_column = new Gtk.TreeViewColumn();
-            type_column.title = _("Action type");
+            type_column.title = _("Pie-ID / Action type");
             type_column.expand = true;
             type_column.resizable = true;
                 
@@ -390,10 +390,9 @@ class PieList : Gtk.TreeView {
                 });
                 
                 type_column.pack_start(type_render, true);
-                type_column.add_attribute(type_render, "visible", DataPos.TYPE_VISIBLE);
+                type_column.add_attribute(type_render, "sensitive", DataPos.TYPE_VISIBLE);
+                type_column.add_attribute(type_render, "editable", DataPos.TYPE_VISIBLE);
                 type_column.add_attribute(type_render, "text", DataPos.TYPE_ID);
-                type_column.add_attribute(type_render, "weight", DataPos.FONT_WEIGHT);
-                
         
         // name column    
         var name_column = new Gtk.TreeViewColumn();
@@ -408,7 +407,15 @@ class PieList : Gtk.TreeView {
                 name_render.edited.connect((path, text) => {                        
                     Gtk.TreeIter iter;
                     this.data.get_iter_from_string(out iter, path);
+                    
                     this.data.set(iter, DataPos.NAME, text);
+                    
+                    // try to change icon to a fitting one
+                    string icon;
+                    this.data.get(iter, DataPos.ICON, out icon);
+                    if (icon == "application-default-icon" && Gtk.IconTheme.get_default().has_icon(text.down())) {
+                        this.data.set(iter, DataPos.ICON, text.down());
+                    }
                     
                     this.update_pie(iter);
                     this.update_linked();
@@ -559,7 +566,7 @@ class PieList : Gtk.TreeView {
     
     // adds a new, empty pie to the list
     private void add_empty_pie() {
-        var new_one = PieManager.add_pie("new_pie", null, _("New Pie"), "application-default-icon", "", true);
+        var new_one = PieManager.add_static_pie(_("New Pie"), "application-default-icon", "");
         
         Gtk.TreeIter last;
         this.pies.append(out last); this.pies.set(last, 0, new_one.name, 1, new_one.id); 
@@ -569,8 +576,8 @@ class PieList : Gtk.TreeView {
         this.data.set(parent, DataPos.IS_QUICKACTION, false,
                                         DataPos.ICON, new_one.icon,
                                         DataPos.NAME, new_one.name,
-                                     DataPos.TYPE_ID, new_one.id,
-                                 DataPos.ACTION_TYPE, "",
+                                     DataPos.TYPE_ID, "ID: " + new_one.id,
+                                 DataPos.ACTION_TYPE, new_one.id,
                                    DataPos.ICON_SIZE, Gtk.IconSize.DND,
                                  DataPos.FONT_WEIGHT, 800,
                           DataPos.ICON_NAME_EDITABLE, true,
@@ -684,7 +691,7 @@ class PieList : Gtk.TreeView {
         dialog.response.connect((response) => {
             if (response == Gtk.ResponseType.YES) {
                 string id;
-                this.data.get(pie, DataPos.TYPE_ID, out id);
+                this.data.get(pie, DataPos.ACTION_TYPE, out id);
                 this.data.remove(pie);
                 PieManager.remove_pie(id);
                 
@@ -748,8 +755,8 @@ class PieList : Gtk.TreeView {
             this.data.set(parent, DataPos.IS_QUICKACTION, false,
                                             DataPos.ICON, pie.icon,
                                             DataPos.NAME, pie.name,
-                                         DataPos.TYPE_ID, pie.id,
-                                     DataPos.ACTION_TYPE, "",
+                                         DataPos.TYPE_ID, "ID: " + pie.id,
+                                     DataPos.ACTION_TYPE, pie.id,
                                        DataPos.ICON_SIZE, Gtk.IconSize.DND,
                                      DataPos.FONT_WEIGHT, 800,
                               DataPos.ICON_NAME_EDITABLE, true,
@@ -836,7 +843,7 @@ class PieList : Gtk.TreeView {
             
             this.data.get(pie, DataPos.ICON, out icon);
             this.data.get(pie, DataPos.NAME, out name);
-            this.data.get(pie, DataPos.TYPE_ID, out id);
+            this.data.get(pie, DataPos.ACTION_TYPE, out id);
             this.data.get(pie, DataPos.REAL_COMMAND_KEY, out hotkey);
             
             // remove pie
@@ -855,7 +862,7 @@ class PieList : Gtk.TreeView {
             });
                 
             // create new pie
-            var new_pie = PieManager.add_pie(id, null, name, icon, hotkey, true);
+            var new_pie = PieManager.add_static_pie(name, icon, hotkey, id);
             
             // add actions accordingly
             if (this.data.iter_has_child(pie)) {

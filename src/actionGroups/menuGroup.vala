@@ -64,20 +64,17 @@ public class MenuGroup : ActionGroup {
             switch(item.get_type()) {
                 case GMenu.TreeItemType.DIRECTORY:
                     if (!((GMenu.TreeDirectory)item).get_is_nodisplay()) {
-                        var sub_menu_id = parent_id +((GMenu.TreeDirectory)item).get_name();
-                    
-                        var sub_menu = PieManager.add_pie(sub_menu_id, out sub_menu_id,
+                        var sub_menu = PieManager.add_dynamic_pie(
                                                           ((GMenu.TreeDirectory)item).get_name(),
-                                                          ((GMenu.TreeDirectory)item).get_icon(),
-                                                          "", false);
-                        var group = new MenuGroup.sub_menu(sub_menu_id);
+                                                          ((GMenu.TreeDirectory)item).get_icon());
+                        var group = new MenuGroup.sub_menu(sub_menu.id);
                         group.add_action(new PieAction(parent_id, true));
-                        group.load_contents((GMenu.TreeDirectory)item, sub_menu_id);
+                        group.load_contents((GMenu.TreeDirectory)item, sub_menu.id);
                         childs.add(group);
                                                           
                         sub_menu.add_group(group);
                         
-                        this.add_action(new PieAction(sub_menu_id)); 
+                        this.add_action(new PieAction(sub_menu.id)); 
                     } 
                     break;
                     

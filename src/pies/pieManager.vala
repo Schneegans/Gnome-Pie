@@ -71,26 +71,69 @@ public class PieManager : GLib.Object {
         }
     }
     
-    public static Pie add_pie(string desired_id, out string final_id, string name, string icon_name, string hotkey, bool is_custom) {
-        final_id = desired_id;
+    public static Pie add_static_pie(string name, string icon_name, string hotkey, string? desired_id = null) {
         
-        if (final_id.contains(" ")) {
-            final_id = final_id.delimit(" ", '_');
-            warning("For ID's no whitespaces are allowed! Using \"" + final_id + "\" instead of \"" + desired_id + "\"...");
+        var random = new GLib.Rand();
+        
+        string final_id;
+        
+        if (desired_id == null) final_id = random.int_range(100, 999).to_string();
+        else                    final_id = desired_id;
+        
+        final_id.canon("0123456789", '_');
+        final_id = final_id.replace("_", "");
+        
+        if (desired_id != null && final_id.length != 3) {
+            final_id = random.int_range(100, 999).to_string();
+            warning("A static ID should be a three digit number! Using \"" + final_id + "\" instead of \"" + desired_id + "\" for static pie \"" + name + "\"...");
         }
     
         if (all_pies.has_key(final_id)) {
             var tmp = final_id;
-            final_id = final_id + "_";
-            warning("Trying to add pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
-            return add_pie(final_id, out final_id, name, icon_name, hotkey, is_custom);
+            var id_number = int.parse(final_id) + 1;
+            if (id_number == 1000) id_number = 100;
+            final_id = id_number.to_string();
+            warning("Trying to add static pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
+            return add_static_pie(name, icon_name, hotkey, final_id);
         }
 
-        Pie pie = new Pie(final_id, name, icon_name, is_custom);
+        Pie pie = new Pie(final_id, name, icon_name, true);
         all_pies.set(final_id, pie);
         
         if (hotkey != "")
             bindings.bind(hotkey, final_id);
+        
+        return pie;
+    }
+    
+    public static Pie add_dynamic_pie(string name, string icon_name, string? desired_id = null) {
+        
+        var random = new GLib.Rand();
+        
+        string final_id;
+        
+        if (desired_id == null) final_id = random.int_range(1000, 9999).to_string();
+        else                    final_id = desired_id;
+        
+        final_id.canon("0123456789", '_');
+        final_id = final_id.replace("_", "");
+        
+        if (desired_id != null && final_id.length != 4) {
+            final_id = random.int_range(1000, 9999).to_string();
+            warning("A dynamic ID should be a four digit number! Using \"" + final_id + "\" instead of \"" + desired_id + "\" for dynamic pie \"" + name + "\"...");
+        }
+    
+        if (all_pies.has_key(final_id)) {
+            var tmp = final_id;
+            var id_number = int.parse(final_id) + 1;
+            if (id_number == 10000) id_number = 1000;
+            final_id = id_number.to_string();
+            warning("Trying to add dynamic pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
+            return add_dynamic_pie(name, icon_name, final_id);
+        }
+
+        Pie pie = new Pie(final_id, name, icon_name, false);
+        all_pies.set(final_id, pie);
         
         return pie;
     }

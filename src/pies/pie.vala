@@ -24,15 +24,15 @@ namespace GnomePie {
 public class Pie {
     
     public string name {get; private set;}
-    public string icon_name {get; private set;}
+    public string icon {get; private set;}
     public string id {get; private set;}
     public bool is_custom {get; private set;}
     public Gee.ArrayList<ActionGroup?> action_groups {get; private set;}
     
-    public Pie(string id, string name, string icon_name, bool is_custom) {
+    public Pie(string id, string name, string icon, bool is_custom) {
         this.id = id;
         this.name = name;
-        this.icon_name = icon_name;
+        this.icon = icon;
         this.is_custom = is_custom;
         this.action_groups = new Gee.ArrayList<ActionGroup?>();
     }

@@ -50,6 +50,8 @@ public class Deamon : GLib.Application {
             Logger.init();
             Paths.init();
             Gdk.threads_init();
+            ActionRegistry.init();
+            GroupRegistry.init();
             
             // check for thread support
             if (!Thread.supported())
@@ -61,7 +63,7 @@ public class Deamon : GLib.Application {
             
             // launch the indicator
             indicator = new Indicator();
-
+            
             // load all Pies
             var manager = new PieManager();
             manager.load_config();

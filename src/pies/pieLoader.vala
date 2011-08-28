@@ -160,33 +160,19 @@ public class PieLoader : GLib.Object {
         }
         
         ActionGroup group = null;
-
-        switch (type) {
-            case "app":
-                Action action = new AppAction(name, icon, command, quick_action);
-                group = new ActionGroup(pie.id);
-                group.add_action(action);
-                break;
-            case "key":
-                Action action = new KeyAction(name, icon, command, quick_action);
-                group = new ActionGroup(pie.id);
-                group.add_action(action);
-                break;
-            case "pie":
-                Action action = new PieAction(command, quick_action);
-                group = new ActionGroup(pie.id);
-                group.add_action(action);
-                break;
-            case "uri":
-                Action action = new UriAction(name, icon, command, quick_action);
-                group = new ActionGroup(pie.id);
-                group.add_action(action);
-                break;
-            default:
-                warning("Invalid type \"" + type + "\" in pies.conf!");
-                break;
-        }
         
+        foreach (var action_type in ActionRegistry.types) {
+            if (ActionRegistry.settings_names[action_type] == type) {
+            
+                Action action = GLib.Object.new(action_type, "name", name, 
+                                                             "icon", icon, 
+                                                     "real_command", command, 
+                                                  "is_quick_action", quick_action) as Action;
+                group = new ActionGroup(pie.id);
+                group.add_action(action);
+                break;
+            } 
+        }
         
         if (group != null) pie.add_group(group);
     }
@@ -209,23 +195,14 @@ public class PieLoader : GLib.Object {
         }
         
         ActionGroup group = null;
-
-        switch (type) {
-            case "menu":
-                group = new MenuGroup(pie.id);
+        
+        foreach (var group_type in GroupRegistry.types) {
+            if (GroupRegistry.settings_names[group_type] == type) {
+                group = GLib.Object.new(group_type, "parent_id", pie.id) as ActionGroup;
                 break;
-            case "bookmarks":
-                group = new BookmarkGroup(pie.id);
-                break;
-            case "devices":
-                group = new DevicesGroup(pie.id);
-                break;
-            default:
-                warning("Invalid type \"" + type + "\" in pies.conf!");
-                break;
+            } 
         }
-        
-        
+
         if (group != null) pie.add_group(group);
     }
 }

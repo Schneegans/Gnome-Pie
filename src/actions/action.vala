@@ -22,105 +22,21 @@ namespace GnomePie {
 
 public abstract class Action : GLib.Object {
 
-    public abstract string action_type { get; }
-    public abstract string label { get; }
-    public abstract string command { get; }
+    public abstract string real_command {get; construct set;}
+    public abstract string display_command {get;}    
 
     public virtual string name {get; protected set;}
-    public virtual string icon_name {get; protected set;}
+    public virtual string icon {get; protected set;}
     public virtual bool is_quick_action {get; protected set;}
 
-    public Action(string name, string icon_name, bool is_quick_action) {
-        this.name = name;
-        this.icon_name = icon_name;
-        this.is_quick_action = is_quick_action;
+    public Action(string name, string icon, bool is_quick_action) {
+        GLib.Object(name : name, icon : icon, is_quick_action : is_quick_action);
     }
 
     public abstract void activate();
     
     public virtual void on_display() {}
     public virtual void on_remove() {}
-    
-    
-    public static Action? new_for_uri(string uri, string? name = null) {
-        var file = GLib.File.new_for_uri(uri);
-        var scheme = file.get_uri_scheme();
-        
-        string final_icon = "";
-        string final_name = file.get_basename();
-
-        switch (scheme) {
-            case "application":
-                var file_name = uri.split("//")[1];
-                
-                var desktop_file = GLib.File.new_for_path("/usr/share/applications/" + file_name);
-                if (desktop_file.query_exists())
-                    return new_for_desktop_file(desktop_file.get_path());
-
-                break;
-                
-            case "file":
-                try {
-                    var info = file.query_info("*", GLib.FileQueryInfoFlags.NONE);
-                    
-                    if (info.get_content_type() == "application/x-desktop")
-                        return new_for_desktop_file(file.get_parse_name());
-                    
-                    var gicon = info.get_icon();
-                                        
-                    string[] icons = gicon.to_string().split(" ");
-                    
-                    foreach (var icon in icons) {
-                        if (Gtk.IconTheme.get_default().has_icon(icon)) {
-                            final_icon = icon;
-                            break;
-                        }
-                    }
-                    
-                } catch (GLib.Error e) {
-                    warning(e.message);
-                }
-
-                break;
-                
-            case "trash":
-                final_icon = "user-trash";
-                final_name = _("Trash");
-                break;
-                
-            case "http": case "https":
-                final_icon = "www";
-                break;
-                
-            case "ftp": case "sftp":
-                final_icon = "folder-remote";
-                break;
-        }
-        
-        if (!Gtk.IconTheme.get_default().has_icon(final_icon))
-                final_icon = "application-default-icon";
-        
-        if (name != null)
-            final_name = name;
-        
-        return new UriAction(final_name, final_icon, uri);
-    }
-    
-    public static Action? new_for_desktop_file(string file_name) {
-        var file = new DesktopAppInfo.from_filename(file_name);
-        
-        string[] icons = file.get_icon().to_string().split(" ");
-        string final_icon = "application-default-icon";
-                  
-        foreach (var icon in icons) {
-            if (Gtk.IconTheme.get_default().has_icon(icon)) {
-                final_icon = icon;
-                break;
-            }
-        }
-        
-        return new AppAction(file.get_display_name() , final_icon, file.get_commandline());
-    }
 }
 
 }

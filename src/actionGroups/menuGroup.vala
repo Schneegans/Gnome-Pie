@@ -20,23 +20,30 @@ namespace GnomePie {
 // An ActionGroup which displays the user's main menu.
         
 public class MenuGroup : ActionGroup {
-
-    public override bool is_custom { get {return false;} }
-    public override string group_type { get {return _("Main menu");} }
-    public override string icon_name { get {return "gnome-main-menu";} }
     
+    public static void register(out string name, out string icon, out string settings_name) {
+        name = _("Main menu");
+        icon = "gnome-main-menu";
+        settings_name = "menu";
+    }
+    
+    public bool is_toplevel {get; construct set; default = true;}
     private GMenu.Tree menu = null;
     private Gee.ArrayList<MenuGroup?> childs;
-    private bool is_toplevel = false;
     private bool changing = false;
     private bool changed_again = false;
     
-    public MenuGroup(string parent_id, bool is_toplevel = true) {
-        base(parent_id);
-        
-        this.is_toplevel = is_toplevel;
+    public MenuGroup(string parent_id) {
+        GLib.Object(parent_id : parent_id, is_toplevel : true);
+    }
+    
+    public MenuGroup.sub_menu(string parent_id) {
+        GLib.Object(parent_id : parent_id, is_toplevel : false);
+    }
+    
+    construct {
         this.childs = new Gee.ArrayList<MenuGroup?>();
-        
+
         if (this.is_toplevel) {
             this.load_toplevel();
         } 
@@ -48,7 +55,7 @@ public class MenuGroup : ActionGroup {
         
         var dir = this.menu.get_root_directory();
 
-        this.load_contents(dir, parent_id);
+        this.load_contents(dir, this.parent_id);
     }
     
     // parse the main menu recursively
@@ -63,7 +70,7 @@ public class MenuGroup : ActionGroup {
                                                           ((GMenu.TreeDirectory)item).get_name(),
                                                           ((GMenu.TreeDirectory)item).get_icon(),
                                                           "", false);
-                        var group = new MenuGroup(sub_menu_id, false);
+                        var group = new MenuGroup.sub_menu(sub_menu_id);
                         group.add_action(new PieAction(parent_id, true));
                         group.load_contents((GMenu.TreeDirectory)item, sub_menu_id);
                         childs.add(group);

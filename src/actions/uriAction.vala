@@ -20,21 +20,23 @@ namespace GnomePie {
 // This type of Action launches an application or a custom command.
 
 public class UriAction : Action {
+    
+    public static void register(out string name, out bool icon_name_editable, out string settings_name) {
+        name = _("Open URI");
+        icon_name_editable = true;
+        settings_name = "uri";
+    }
+    
+    public override string real_command { get; construct set; }
+    public override string display_command { get {return real_command;} }
 
-    public override string action_type { get {return _("Open URI");} }
-    public override string label { get {return uri;} }
-    public override string command { get {return uri;} }
-    	
-    public string uri { get; set; }
-
-    public UriAction(string name, string icon_name, string uri, bool is_quick_action = false) {
-        base(name, icon_name, is_quick_action);
-        this.uri = uri;
+    public UriAction(string name, string icon, string command, bool is_quick_action = false) {
+        GLib.Object(name : name, icon : icon, real_command : command, is_quick_action : is_quick_action);
     }
 
     public override void activate() {
         try{
-            GLib.AppInfo.launch_default_for_uri(uri, null);
+            GLib.AppInfo.launch_default_for_uri(real_command, null);
     	} catch (Error e) {
 	        warning(e.message);
         }

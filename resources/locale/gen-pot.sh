@@ -3,7 +3,7 @@
 # Searches trough all vala files of Gnome-Pie and generates
 # a gnomepie.pot for strings which need to be translated.
 
-filelist=$( find ../src/ -name '*.vala' -printf "%h/%f " )
+filelist=$( find ../../src/ -name '*.vala' -printf "%h/%f " )
 
 domain="gnomepie"
 version="0.1"

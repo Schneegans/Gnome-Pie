@@ -18,16 +18,21 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 public class BookmarkGroup : ActionGroup {
-
-    public override bool is_custom { get {return false;} }
-    public override string group_type { get {return _("Bookmarks");} }
-    public override string icon_name { get {return "user-bookmarks";} }
+    
+    public static void register(out string name, out string icon, out string settings_name) {
+        name = _("Bookmarks");
+        icon = "user-bookmarks";
+        settings_name = "bookmarks";
+    }
 
     private bool changing = false;
     private bool changed_again = false;
     
     public BookmarkGroup(string parent_id) {
-        base(parent_id);
+        GLib.Object(parent_id : parent_id);
+    }
+    
+    construct {
         this.load();
         
         // add monitor
@@ -46,7 +51,7 @@ public class BookmarkGroup : ActionGroup {
     
     private void load() {
         // add home folder
-        this.add_action(Action.new_for_uri("file://" + GLib.Environment.get_home_dir()));
+        this.add_action(ActionRegistry.new_for_uri("file://" + GLib.Environment.get_home_dir()));
         
         // add .gtk-bookmarks
         var bookmark_file = GLib.File.new_for_path(
@@ -66,17 +71,17 @@ public class BookmarkGroup : ActionGroup {
                 string uri = parts[0];
                 string name = parts[1];
 
-                this.add_action(Action.new_for_uri(uri, name));
+                this.add_action(ActionRegistry.new_for_uri(uri, name));
             }
         } catch (Error e) {
             error ("%s", e.message);
         }
         
         // add trash
-        this.add_action(Action.new_for_uri("trash:///"));
+        this.add_action(ActionRegistry.new_for_uri("trash:///"));
         
         // add desktop
-        this.add_action(Action.new_for_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP)));
+        this.add_action(ActionRegistry.new_for_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP)));
     }
     
     private void reload() {

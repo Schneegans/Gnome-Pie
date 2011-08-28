@@ -21,13 +21,18 @@ namespace GnomePie {
 
 public class PieAction : Action {
 
-    public override string action_type { get {return _("Open Pie");} }
-    public override string label { get {return name;} }
-    public override string command { get {return pie_id;} }
+    public static void register(out string name, out bool icon_name_editable, out string settings_name) {
+        name = _("Open Pie");
+        icon_name_editable = false;
+        settings_name = "pie";
+    }
+
+    public override string real_command { get; construct set;}
+    public override string display_command { get {return name;} }
     
     public override string name {
         get {
-            var referee = PieManager.get_pie(pie_id);
+            var referee = PieManager.get_pie(real_command);
             if (referee != null)
                 return referee.name;
             return "";
@@ -35,25 +40,22 @@ public class PieAction : Action {
         protected set {}
     }
     
-    public override string icon_name {
+    public override string icon {
         get {
-            var referee = PieManager.get_pie(pie_id);
+            var referee = PieManager.get_pie(real_command);
             if (referee != null)
-                return referee.icon_name;
+                return referee.icon;
             return "";
         }
         protected set {}
     }
-    	
-    public string pie_id { get; set; }
 
     public PieAction(string id, bool is_quick_action = false) {
-        base("", "", is_quick_action);
-        this.pie_id = id;
+        GLib.Object(name : "", icon : "", real_command : id, is_quick_action : is_quick_action);
     }
 
     public override void activate() {
-        PieManager.open_pie(pie_id);
+        PieManager.open_pie(real_command);
     } 
 }
 

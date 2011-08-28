@@ -21,20 +21,22 @@ namespace GnomePie {
 
 public class AppAction : Action {
 
-    public override string action_type { get {return _("Launch application");} }
-    public override string label { get {return command_line;} }
-    public override string command { get {return command_line;} }
-    
-    public string command_line { get; set; }
+    public static void register(out string name, out bool icon_name_editable, out string settings_name) {
+        name = _("Launch application");
+        icon_name_editable = true;
+        settings_name = "app";
+    }
 
-    public AppAction(string name, string icon_name, string command, bool is_quick_action = false) {
-        base(name, icon_name, is_quick_action);
-        this.command_line = command;
+    public override string real_command {get; construct set;}
+    public override string display_command {get {return real_command;}}
+
+    public AppAction(string name, string icon, string command, bool is_quick_action = false) {
+        GLib.Object(name : name, icon : icon, real_command : command, is_quick_action : is_quick_action);
     }
 
     public override void activate() {
         try{
-            var item = GLib.AppInfo.create_from_commandline(this.command_line, null, GLib.AppInfoCreateFlags.NONE);
+            var item = GLib.AppInfo.create_from_commandline(this.real_command, null, GLib.AppInfoCreateFlags.NONE);
             item.launch(null, null);
     	} catch (Error e) {
 	        warning(e.message);

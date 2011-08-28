@@ -21,7 +21,7 @@ namespace GnomePie {
 
 class ThemeList : Gtk.TreeView {
 
-    private Gtk.TreeIter active{private get; private set;}
+    private Gtk.TreeIter active {private get; private set;}
 
     public ThemeList() {
         GLib.Object();

@@ -18,18 +18,22 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 public class DevicesGroup : ActionGroup {
-
-    public override bool is_custom { get {return false;} }
-    public override string group_type { get {return _("Devices");} }
-    public override string icon_name { get {return "harddrive";} }
+    
+    public static void register(out string name, out string icon, out string settings_name) {
+        name = _("Devices");
+        icon = "harddrive";
+        settings_name = "devices";
+    }
 
     private bool changing = false;
     private bool changed_again = false;
     private GLib.VolumeMonitor monitor;
     
     public DevicesGroup(string parent_id) {
-        base(parent_id);
-        
+        GLib.Object(parent_id : parent_id);
+    }
+    
+    construct {
         this.monitor = GLib.VolumeMonitor.get();
         
         this.load();

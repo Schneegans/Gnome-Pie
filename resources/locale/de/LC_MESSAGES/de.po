@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-02 13:26+0200\n"
-"PO-Revision-Date: 2011-08-02 13:26+0200\n"
+"POT-Creation-Date: 2011-08-25 21:04+0200\n"
+"PO-Revision-Date: 2011-08-25 21:04+0200\n"
 "Last-Translator: Simon Schneegans <simon.schneegans@uni-weimar.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -17,134 +17,205 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../src/gui/preferences.vala:24
-msgid "Gnome-Pie - Settings"
-msgstr "Gnome-Pie - Einstellungen"
-
-#: ../src/gui/preferences.vala:47
-msgid "Behavior"
-msgstr "Verhalten"
-
-#: ../src/gui/preferences.vala:57
-msgid "Startup on Login"
-msgstr "Beim Anmelden automatisch ausführen"
-
-#: ../src/gui/preferences.vala:63
-msgid "Show Indicator"
-msgstr "Benachrichtigungssymbol anzeigen"
-
-#: ../src/gui/preferences.vala:69
-msgid "Open Pies at Mouse"
-msgstr "Pies an der Maus öffnen"
-
-#: ../src/gui/preferences.vala:75
-msgid "Click to activate a Slice"
-msgstr "Slice-Aktivierung durch Klicken"
-
-#: ../src/gui/preferences.vala:84
-msgid "Global Scale"
-msgstr "Skalierungsfaktor"
-
-#: ../src/gui/preferences.vala:121
-msgid "Themes"
-msgstr "Themen"
-
-#: ../src/gui/preferences.vala:139
-msgid "General"
-msgstr "Allgemein"
-
-#: ../src/gui/preferences.vala:144
-msgid "Pies"
-msgstr "Pie-Optionen"
-
-#: ../src/gui/preferences.vala:168
-msgid ""
-"You can drag'n'drop Slices from \n"
-"one Pie to another."
-msgstr ""
-"Du kannst Slices von einer Pie \n"
-"in andere ziehen."
-#: ../src/gui/preferences.vala:176
-msgid "Add a new entry to the list"
-msgstr "Füge einen neuen Eintrag zur Liste hinzu"
-
-#: ../src/gui/preferences.vala:186
-msgid "Remove the selected entry from the list"
-msgstr "Entferne den ausgewählten Eintrag aus der Liste"
-
-#: ../src/gui/cellRendererMorph.vala:69 ../src/gui/pieList.vala:184
-#: ../src/gui/pieList.vala:195
-msgid "Not bound"
-msgstr "Nicht zugewiesen"
-
-#: ../src/gui/themeList.vala:72
-msgid "by"
-msgstr "von"
-
-#: ../src/gui/iconChooserWindow.vala:76
-msgid "Choose an Icon"
-msgstr "Wähle ein Symbol"
-
-#: ../src/gui/iconChooserWindow.vala:98
-msgid "All icons"
-msgstr "Alle Symbole"
-
-#: ../src/gui/iconChooserWindow.vala:99
-msgid "Applications"
-msgstr "Anwendungen"
-
-#: ../src/gui/iconChooserWindow.vala:100
-msgid "Actions"
-msgstr "Aktionen"
-
-#: ../src/gui/iconChooserWindow.vala:101
-msgid "Places"
-msgstr "Orte"
-
-#: ../src/gui/iconChooserWindow.vala:102
-msgid "File types"
-msgstr "Dateitypen"
-
-#: ../src/gui/iconChooserWindow.vala:103
-msgid "Emotes"
-msgstr "Smileys"
-
-#: ../src/gui/iconChooserWindow.vala:104
-msgid "Miscellaneous"
-msgstr "Sonstiges"
-
-#: ../src/gui/pieList.vala:27 ../src/gui/pieList.vala:194
-msgid "Key Stroke"
+#: ../../src/actions/keyAction.vala:24 ../../src/settings/pieList.vala:73
+msgid "Press key stroke"
 msgstr "Tastenkombination"
 
-#: ../src/gui/pieList.vala:28 ../src/gui/pieList.vala:106
-msgid "Command"
-msgstr "Befehl"
+#: ../../src/actions/appAction.vala:24 ../../src/settings/pieList.vala:72
+msgid "Launch application"
+msgstr "Programm ausführen"
 
-#: ../src/gui/pieList.vala:29
+#: ../../src/actions/action.vala:88
+msgid "Trash"
+msgstr "Müll"
+
+#: ../../src/actions/uriAction.vala:24 ../../src/settings/pieList.vala:75
+msgid "Open URI"
+msgstr "URI öffnen"
+
+#: ../../src/actions/pieAction.vala:24 ../../src/settings/pieList.vala:74
 msgid "Open Pie"
 msgstr "Pie öffnen"
 
-#: ../src/gui/pieList.vala:30
-msgid "Plugin"
-msgstr "Plugin"
+#: ../../src/settings/preferences.vala:26
+msgid "Gnome-Pie - Settings"
+msgstr "Gnome-Pie - Einstellungen"
 
-#: ../src/gui/pieList.vala:33
-msgid "Main Menu"
-msgstr "Hauptmenü"
+#: ../../src/settings/preferences.vala:49
+msgid "Behavior"
+msgstr "Verhalten"
 
-#: ../src/gui/pieList.vala:34
+#: ../../src/settings/preferences.vala:59
+msgid "Startup on Login"
+msgstr "Beim Anmelden automatisch ausführen"
+
+#: ../../src/settings/preferences.vala:65
+msgid "Show Indicator"
+msgstr "Benachrichtigungssymbol anzeigen"
+
+#: ../../src/settings/preferences.vala:71
+msgid "Open Pies at Mouse"
+msgstr "Pies an der Maus öffnen"
+
+#: ../../src/settings/preferences.vala:77
+msgid "Click to activate a Slice"
+msgstr "Klicken um Slices zu aktivieren"
+
+#: ../../src/settings/preferences.vala:86
+msgid "Global Scale"
+msgstr "Skalierungsfaktor"
+
+#: ../../src/settings/preferences.vala:123
+msgid "Themes"
+msgstr "Themen"
+
+#: ../../src/settings/preferences.vala:141
+msgid "General"
+msgstr "Allgemein"
+
+#: ../../src/settings/preferences.vala:146
+msgid "Pies"
+msgstr "Pies"
+
+#: ../../src/settings/preferences.vala:170
+msgid ""
+"You can right-click in the list\n"
+"for adding or removing entries."
+msgstr ""
+"Zum Löschen und Hinzufügen von Einträgen kannst \n"
+"du mit der rechten Maustaste in die Liste klicken."
+
+#: ../../src/settings/themeList.vala:75
+msgid "by"
+msgstr "von"
+
+#: ../../src/settings/iconChooserWindow.vala:79
+msgid "Choose an Icon"
+msgstr "Wähle ein Symbol"
+
+#: ../../src/settings/iconChooserWindow.vala:101
+msgid "All icons"
+msgstr "Alle Symbole"
+
+#: ../../src/settings/iconChooserWindow.vala:102
+msgid "Applications"
+msgstr "Anwendungen"
+
+#: ../../src/settings/iconChooserWindow.vala:103
+msgid "Actions"
+msgstr "Aktionen"
+
+#: ../../src/settings/iconChooserWindow.vala:104
+msgid "Places"
+msgstr "Orte"
+
+#: ../../src/settings/iconChooserWindow.vala:105
+msgid "File types"
+msgstr "Dateitypen"
+
+#: ../../src/settings/iconChooserWindow.vala:106
+msgid "Emotes"
+msgstr "Smilies"
+
+#: ../../src/settings/iconChooserWindow.vala:107
+msgid "Miscellaneous"
+msgstr "Sonstige"
+
+#: ../../src/settings/pieList.vala:56
+#: ../../src/actionGroups/bookmarkGroup.vala:23
 msgid "Bookmarks"
 msgstr "Lesezeichen"
 
-#: ../src/gui/pieList.vala:65
+#: ../../src/settings/pieList.vala:57
+#: ../../src/actionGroups/devicesGroup.vala:23
+msgid "Devices"
+msgstr "Laufwerke"
+
+#: ../../src/settings/pieList.vala:58 ../../src/actionGroups/menuGroup.vala:25
+msgid "Main menu"
+msgstr "Hauptmenü"
+
+#: ../../src/settings/pieList.vala:59
+#: ../../src/actionGroups/sessionGroup.vala:23
+msgid "Session Control"
+msgstr "Sitzung"
+
+#: ../../src/settings/pieList.vala:76 ../../src/settings/pieList.vala:738
+msgid "Slice group"
+msgstr "Slice-Gruppe"
+
+#: ../../src/settings/pieList.vala:119
 msgid "Icon"
 msgstr "Symbol"
 
-#: ../src/gui/pieList.vala:122
-msgid "Action type"
-msgstr "Aktionstyp"
+#: ../../src/settings/pieList.vala:181
+msgid "Command"
+msgstr "Kommando"
 
-#: ../src/gui/pieList.vala:151
+#: ../../src/settings/pieList.vala:261 ../../src/settings/pieList.vala:601
+#: ../../src/settings/pieList.vala:753
+#: ../../src/system/bindingManager.vala:118
+msgid "Not bound"
+msgstr "Nicht zugewiesen"
+
+#: ../../src/settings/pieList.vala:326
+msgid "Action type"
+msgstr "Slice-Typ"
+
+#: ../../src/settings/pieList.vala:388
 msgid "Name"
 msgstr "Name"
+
+#: ../../src/settings/pieList.vala:423
+msgid "Add new Pie"
+msgstr "Pie hinzufügen"
+
+#: ../../src/settings/pieList.vala:428
+msgid "Add new Slice"
+msgstr "Slice hinzufügen"
+
+#: ../../src/settings/pieList.vala:436
+msgid "Delete"
+msgstr "Eintrag löschen"
+
+#: ../../src/settings/pieList.vala:517
+msgid "New Pie"
+msgstr "Neuer Pie"
+
+#: ../../src/settings/pieList.vala:562
+msgid "New Action"
+msgstr "Neue Slice"
+
+#: ../../src/settings/pieList.vala:576
+msgid "You have to select a Pie to add a Slice to!"
+msgstr "Es muss ein Pie ausgewählt sein, zu dem eine Slice hinzugefügt werden soll!"
+
+#: ../../src/settings/pieList.vala:623
+msgid "You have to select a Pie or a Slice to delete!"
+msgstr "Es muss etwas ausgewählt sein, das gelöscht werden soll!"
+
+#: ../../src/settings/pieList.vala:633
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+"Soll dieser Pie wirklich mit allen Slices gelöscht werden?"
+
+#: ../../src/settings/pieList.vala:666
+msgid "Do you really want to delete the selected Slice?"
+msgstr "Soll die ausgewählte Slice wirklich gelöscht werden?"
+
+#: ../../src/actionGroups/sessionGroup.vala:29
+msgid "Shutdown"
+msgstr "Herunterfahren"
+
+#: ../../src/actionGroups/sessionGroup.vala:32
+msgid "Logout"
+msgstr "Ausloggen"
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+msgid "Reboot"
+msgstr "Neustarten"
+
+#: ../../src/actionGroups/devicesGroup.vala:44
+msgid "Root"
+msgstr "Dateisystem"

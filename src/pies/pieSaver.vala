@@ -28,64 +28,41 @@ public class PieSaver : GLib.Object {
         var writer = new Xml.TextWriter.filename(Paths.pie_config);
         writer.set_indent(true);
         writer.start_document("1.0");
-            writer.start_element("pies");
+        writer.start_element("pies");
+            
+        foreach (var pie_entry in PieManager.all_pies.entries) {
+            var pie = pie_entry.value;
+            if (pie.is_custom) {
+                writer.start_element("pie");
+                writer.write_attribute("name", pie.name);
+                writer.write_attribute("id", pie.id);
+                writer.write_attribute("icon", pie.icon);
+                writer.write_attribute("hotkey", PieManager.get_accelerator_of(pie.id));
                 
-                foreach (var pie_entry in PieManager.all_pies.entries) {
-                    var pie = pie_entry.value;
-                    if (pie.is_custom) {
-                        writer.start_element("pie");
-                            writer.write_attribute("name", pie.name);
-                            writer.write_attribute("id", pie.id);
-                            writer.write_attribute("icon", pie.icon_name);
-                            writer.write_attribute("hotkey", PieManager.get_accelerator_of(pie.id));
-                            
-                            foreach (var group in pie.action_groups) {
-                                if (group is BookmarkGroup) {
-                                    writer.start_element("group");
-                                        writer.write_attribute("type", "bookmarks");
-                                    writer.end_element();
-                                } else if (group is DevicesGroup) {
-                                    writer.start_element("group");
-                                        writer.write_attribute("type", "devices");
-                                    writer.end_element();
-                                } else if (group is MenuGroup) {
-                                    writer.start_element("group");
-                                        writer.write_attribute("type", "menu");
-                                    writer.end_element();
-                                } else {
-                                    writer.start_element("slice");
-                                        foreach (var action in group.actions) {
-                                            if (action is AppAction) {
-                                                writer.write_attribute("type", "app");
-                                                writer.write_attribute("name", action.name);
-                                                writer.write_attribute("icon", action.icon_name);
-                                                writer.write_attribute("command", ((AppAction)action).command);
-                                                writer.write_attribute("quickAction", action.is_quick_action ? "true" : "false");
-                                            } else if (action is KeyAction) {
-                                                writer.write_attribute("type", "key");
-                                                writer.write_attribute("name", action.name);
-                                                writer.write_attribute("icon", action.icon_name);
-                                                writer.write_attribute("command", ((KeyAction)action).key.accelerator);
-                                                writer.write_attribute("quickAction", action.is_quick_action ? "true" : "false");
-                                            } else if (action is PieAction) {
-                                                writer.write_attribute("type", "pie");
-                                                writer.write_attribute("command", ((PieAction)action).pie_id);
-                                                writer.write_attribute("quickAction", action.is_quick_action ? "true" : "false");
-                                            } else if (action is UriAction) {
-                                                writer.write_attribute("type", "uri");
-                                                writer.write_attribute("name", action.name);
-                                                writer.write_attribute("icon", action.icon_name);
-                                                writer.write_attribute("command", ((UriAction)action).uri);
-                                                writer.write_attribute("quickAction", action.is_quick_action ? "true" : "false");
-                                            } 
-                                        }
-                                    writer.end_element();
-                                }
+                foreach (var group in pie.action_groups) {
+                    // if it's a custom ActionGroup
+                    if (group.get_type().depth() == 2) {
+                        foreach (var action in group.actions) {
+                            writer.start_element("slice");
+                            writer.write_attribute("type", ActionRegistry.settings_names[action.get_type()]);
+                            if (ActionRegistry.icon_name_editables[action.get_type()]) {
+                                writer.write_attribute("name", action.name);
+                                writer.write_attribute("icon", action.icon);
                             }
+                            writer.write_attribute("command", action.real_command);
+                            writer.write_attribute("quickAction", action.is_quick_action ? "true" : "false");
+                            writer.end_element();
+                        }
+                    } else {
+                        writer.start_element("group");
+                            writer.write_attribute("type", GroupRegistry.settings_names[group.get_type()]);
                         writer.end_element();
                     }
                 }
-            writer.end_element();
+                writer.end_element();
+            }
+        }
+        writer.end_element();
         writer.end_document();
     }
 }

@@ -159,25 +159,17 @@ public class Paths : GLib.Object {
                                              "autostart", "gnome-pie.desktop", null);
         
         // print results
-        if (GLib.File.new_for_path(pie_config).query_exists()) 
-            message("Found pie configuration file: " + pie_config);
-        else                                                   
+        if (!GLib.File.new_for_path(pie_config).query_exists())                                                  
             warning("Failed to find pie configuration file \"pies.conf\"!");
             
-        if (GLib.File.new_for_path(settings).query_exists()) 
-            message("Found settings file: " + settings);
-        else                                                   
+        if (!GLib.File.new_for_path(settings).query_exists())                                                  
             warning("Failed to find settings file \"gnome-pie.conf\"!");
             
-        if (GLib.File.new_for_path(local_themes).query_exists()) 
-            message("Found local themes directory: " + local_themes);
-        else                                                   
+        if (!GLib.File.new_for_path(local_themes).query_exists())                                                  
             warning("Failed to find local themes directory!");
             
-        if (GLib.File.new_for_path(global_themes).query_exists()) 
-            message("Found global themes directory: " + global_themes);
-        else                                                   
-            warning("Failed to find global themes directory!");
+        if (!GLib.File.new_for_path(global_themes).query_exists()) 
+            warning("Failed to find global themes directory!");     
     }    
 }
 

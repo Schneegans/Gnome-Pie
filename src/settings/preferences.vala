@@ -173,6 +173,56 @@ public class Preferences : Gtk.Window {
                             info_label.wrap = true;
                             info_box.pack_start (info_label);
                         
+                        // down Button
+                        var down_button = new Gtk.Button();
+                            down_button.tooltip_text = _("Moves the selected Slice down");
+                            down_button.sensitive = false;
+                            var down_image = new Gtk.Image.from_stock (Gtk.Stock.GO_DOWN, Gtk.IconSize.LARGE_TOOLBAR);
+                            down_button.add(down_image);
+                            down_button.clicked.connect (() => {
+                                pie_list.selection_down();
+                            });
+
+                            info_box.pack_end(down_button, false, false);
+                        
+                        // up Button
+                        var up_button = new Gtk.Button();
+                            up_button.tooltip_text = _("Moves the selected Slice up");
+                            up_button.sensitive = false;
+                            var up_image = new Gtk.Image.from_stock (Gtk.Stock.GO_UP, Gtk.IconSize.LARGE_TOOLBAR);
+                            up_button.add(up_image);
+                            up_button.clicked.connect (() => {
+                                pie_list.selection_up();
+                            });
+                            
+                            info_box.pack_end(up_button, false, false);
+                            
+                        pie_list.get_selection().changed.connect(() => {
+                            Gtk.TreeIter selected;
+                            if (pie_list.get_selection().get_selected(null, out selected)) {
+                                Gtk.TreePath path = pie_list.model.get_path(selected);
+                                if (path.get_depth() == 1) {
+                                    up_button.sensitive = false;
+                                    down_button.sensitive = false;
+                                } else {
+                                    up_button.sensitive = true;
+                                    down_button.sensitive = true;
+                                    
+                                    int child_pos = path.get_indices()[1];
+
+                                    if (child_pos == 0)
+                                        up_button.sensitive = false;
+                                    
+                                    path.up();
+                                    Gtk.TreeIter parent_iter;
+                                    pie_list.model.get_iter(out parent_iter, path);
+                                    if (child_pos == pie_list.model.iter_n_children(parent_iter)-1)
+                                        down_button.sensitive = false;
+                                    
+                                }
+                            }
+                        });
+                        
                         pies_tab.pack_start (info_box, false);
                 
                 main_vbox.pack_start(tabs);

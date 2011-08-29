@@ -16,10 +16,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
-    
-// This type of Action launches an application or a custom command.
+
+/////////////////////////////////////////////////////////////////////////    
+/// This type of Action opens the default application for an URI.
+/////////////////////////////////////////////////////////////////////////
 
 public class UriAction : Action {
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Used to register this type of Action. It sets the display name
+    /// for this Action, whether it has a custom Icon/Name and the string
+    /// used in the pies.conf file for this kind of Actions.
+    /////////////////////////////////////////////////////////////////////
     
     public static void register(out string name, out bool icon_name_editable, out string settings_name) {
         name = _("Open URI");
@@ -27,12 +35,31 @@ public class UriAction : Action {
         settings_name = "uri";
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// The URI of this Action.
+    /////////////////////////////////////////////////////////////////////
+    
     public override string real_command { get; construct set; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns only the real URI. An URI can't be beautified.
+    /////////////////////////////////////////////////////////////////////
+    
     public override string display_command { get {return real_command;} }
+
+
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
 
     public UriAction(string name, string icon, string command, bool is_quick_action = false) {
         GLib.Object(name : name, icon : icon, real_command : command, is_quick_action : is_quick_action);
     }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Opens the default application for the URI.
+    /////////////////////////////////////////////////////////////////////
 
     public override void activate() {
         try{

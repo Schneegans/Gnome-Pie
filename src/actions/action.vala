@@ -17,26 +17,67 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A base class for actions, which are executed when the user
-// activates a pie's slice.
+/////////////////////////////////////////////////////////////////////////    
+/// A base class for actions, which are executed when the user
+/// activates a pie's slice.
+/////////////////////////////////////////////////////////////////////////
 
 public abstract class Action : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// The command which gets executed when user activates the Slice.
+    /// It may be anything but has to be representable with a string.
+    /////////////////////////////////////////////////////////////////////
+
     public abstract string real_command {get; construct set;}
-    public abstract string display_command {get;}    
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The command displayed to the user. It should be a bit more
+    /// beautiful than the real_command.
+    /////////////////////////////////////////////////////////////////////
+    
+    public abstract string display_command {get;}  
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The name of the Action.
+    /////////////////////////////////////////////////////////////////////  
 
     public virtual string name {get; protected set;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The name of the icon of this Action. It should be in the users
+    /// current icon theme.
+    /////////////////////////////////////////////////////////////////////
+    
     public virtual string icon {get; protected set;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True, if this Action is the quickAction of the associated Pie.
+    /// The quickAction of a Pie gets executed when the users clicks on
+    /// the center of a Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     public virtual bool is_quick_action {get; protected set;}
+
+
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
 
     public Action(string name, string icon, bool is_quick_action) {
         GLib.Object(name : name, icon : icon, is_quick_action : is_quick_action);
     }
 
+
+    /////////////////////////////////////////////////////////////////////
+    /// This one is called, when the user activates the Slice.
+    /////////////////////////////////////////////////////////////////////
+
     public abstract void activate();
-    
-    public virtual void on_display() {}
-    public virtual void on_remove() {}
 }
 
 }

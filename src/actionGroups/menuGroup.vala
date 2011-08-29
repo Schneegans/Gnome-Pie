@@ -64,7 +64,7 @@ public class MenuGroup : ActionGroup {
             switch(item.get_type()) {
                 case GMenu.TreeItemType.DIRECTORY:
                     if (!((GMenu.TreeDirectory)item).get_is_nodisplay()) {
-                        var sub_menu = PieManager.add_dynamic_pie(
+                        var sub_menu = PieManager.create_dynamic_pie(
                                                           ((GMenu.TreeDirectory)item).get_name(),
                                                           ((GMenu.TreeDirectory)item).get_icon());
                         var group = new MenuGroup.sub_menu(sub_menu.id);

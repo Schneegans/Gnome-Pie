@@ -16,10 +16,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
-	
+
+/////////////////////////////////////////////////////////////////////////	
 // A base class storing a set of Actions. Derived classes may define
 // how these Actions are created. This base class serves for custom
 // actions, defined by the user.
+/////////////////////////////////////////////////////////////////////////
 
 public class ActionGroup : GLib.Object {
 
@@ -37,15 +39,7 @@ public class ActionGroup : GLib.Object {
         this.actions = new Gee.ArrayList<Action?>();
     }
     
-    public virtual void on_display() {
-        foreach (var action in actions)
-            action.on_display();
-    }
-    
-    public virtual void on_remove() {
-        foreach (var action in actions)
-            action.on_remove();
-    }
+    public virtual void on_remove() {}
     
     public void add_action(Action new_action) {
        this.actions.add(new_action);

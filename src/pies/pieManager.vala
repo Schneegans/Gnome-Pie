@@ -17,53 +17,54 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A static class which stores all pies. It can be used to add, delete and
-// open pies.
+/////////////////////////////////////////////////////////////////////////    
+/// A static class which stores all Pies. It can be used to add, delete 
+/// and open Pies.
+/////////////////////////////////////////////////////////////////////////
 
 public class PieManager : GLib.Object {
 
-    public  static Gee.HashMap<string, Pie?> all_pies { get; private set; }
+    /////////////////////////////////////////////////////////////////////
+    /// A map of all Pies. It contains both, dynamic and persistent Pies.
+    /// They are associated to their ID's.
+    /////////////////////////////////////////////////////////////////////
+
+    public static Gee.HashMap<string, Pie?> all_pies { get; private set; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Stores all global hotkeys.
+    /////////////////////////////////////////////////////////////////////
     
     private static BindingManager bindings;
     
-    public static void load_config() {
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Initializes all Pies. They are loaded from the pies.conf file.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static void init() {
         all_pies = new Gee.HashMap<string, Pie?>();
         bindings = new BindingManager();
         
+        // load all Pies from th pies.conf file
         PieLoader.load_pies();
         
+        // open the according pie if it's hotkey is pressed
         bindings.on_press.connect((id) => {
             open_pie(id);
         });
     }
     
-    public static Pie? get_pie(string id) {
-        if (all_pies.has_key(id))
-            return all_pies[id];
-
-        return null;
-    }
-    
-    public static string get_accelerator_of(string id) {
-        return bindings.get_accelerator_of(id);
-    }
-    
-    public static string get_accelerator_label_of(string id) {
-        return bindings.get_accelerator_label_of(id);
-    }
-    
-    public static string get_name_of(string id) {
-        Pie? pie = get_pie(id);
-        if (pie == null) return "";
-        else             return pie.name;
-    }
+    /////////////////////////////////////////////////////////////////////
+    /// Opens the Pie with the given ID, if it exists.
+    /////////////////////////////////////////////////////////////////////
     
     public static void open_pie(string id) {
         Pie? pie = all_pies[id];
         
         if (pie != null) {
             var window = new PieWindow();
-            pie.on_display();
             window.load_pie(pie);
             window.open();
         } else {
@@ -71,7 +72,34 @@ public class PieManager : GLib.Object {
         }
     }
     
-    public static Pie add_static_pie(string name, string icon_name, string hotkey, string? desired_id = null) {
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the hotkey which the Pie with the given ID is bound to.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string get_accelerator_of(string id) {
+        return bindings.get_accelerator_of(id);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns a human-readable version of the hotkey which the Pie
+    /// with the given ID is bound to.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string get_accelerator_label_of(string id) {
+        return bindings.get_accelerator_label_of(id);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the name of the Pie with the given ID.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string get_name_of(string id) {
+        Pie? pie = all_pies[id];
+        if (pie == null) return "";
+        else             return pie.name;
+    }
+    
+    public static Pie create_persistent_pie(string name, string icon_name, string hotkey, string? desired_id = null) {
         
         var random = new GLib.Rand();
         
@@ -94,10 +122,10 @@ public class PieManager : GLib.Object {
             if (id_number == 1000) id_number = 100;
             final_id = id_number.to_string();
             warning("Trying to add static pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
-            return add_static_pie(name, icon_name, hotkey, final_id);
+            return create_persistent_pie(name, icon_name, hotkey, final_id);
         }
 
-        Pie pie = new Pie(final_id, name, icon_name, true);
+        Pie pie = new Pie(final_id, name, icon_name);
         all_pies.set(final_id, pie);
         
         if (hotkey != "")
@@ -106,7 +134,7 @@ public class PieManager : GLib.Object {
         return pie;
     }
     
-    public static Pie add_dynamic_pie(string name, string icon_name, string? desired_id = null) {
+    public static Pie create_dynamic_pie(string name, string icon_name, string? desired_id = null) {
         
         var random = new GLib.Rand();
         
@@ -129,14 +157,19 @@ public class PieManager : GLib.Object {
             if (id_number == 10000) id_number = 1000;
             final_id = id_number.to_string();
             warning("Trying to add dynamic pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
-            return add_dynamic_pie(name, icon_name, final_id);
+            return create_dynamic_pie(name, icon_name, final_id);
         }
 
-        Pie pie = new Pie(final_id, name, icon_name, false);
+        Pie pie = new Pie(final_id, name, icon_name);
         all_pies.set(final_id, pie);
         
         return pie;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Removes the Pie with the given ID if it exists. Additionally it
+    /// unbinds it's global hotkey.
+    /////////////////////////////////////////////////////////////////////
     
     public static void remove_pie(string id) {
         if (all_pies.has_key(id)) {

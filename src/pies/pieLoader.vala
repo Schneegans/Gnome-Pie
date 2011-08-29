@@ -19,19 +19,24 @@ using GLib.Math;
 
 namespace GnomePie {
 
-// A helper class which loads pies according to the configuration file.
-// It has got it's own class in order to keep other files clean.
+/////////////////////////////////////////////////////////////////////////    
+/// A helper class which loads pies according to the configuration file.
+/// It has got it's own class in order to keep other files clean.
+/////////////////////////////////////////////////////////////////////////
 
 public class PieLoader : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// Loads all Pies from the pies.conf file.
+    /////////////////////////////////////////////////////////////////////
+    
     public static void load_pies() {
-        
+        // load the settings file
         Xml.Parser.init();
         Xml.Doc* piesXML = Xml.Parser.parse_file(Paths.pie_config);
-        bool   error_occrured = false;
         
         if (piesXML != null) {
-
+            // begin parsing at the root element
             Xml.Node* root = piesXML->get_root_element();
             if (root != null) {
                 for (Xml.Node* node = root->children; node != null; node = node->next) {
@@ -47,31 +52,31 @@ public class PieLoader : GLib.Object {
                         } 
                     }
                 }
-               
                 Xml.Parser.cleanup();
                 
             } else {
                 warning("Error loading pies: pies.conf is empty! The cake is a lie...");
-                error_occrured = true;
             }
             
             delete piesXML;
             
         } else {
             warning("Error loading pies: pies.conf not found! The cake is a lie...");
-            error_occrured = true;
         }
     }
     
-    private static void parse_pie(Xml.Node* node) {
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <pie> element from the pies.conf file.
+    /////////////////////////////////////////////////////////////////////
     
+    private static void parse_pie(Xml.Node* node) {
         string hotkey = "";
         string name = "";
         string icon = "";
         string id = "";
         int quick_action = -1;
         
-    
+        // parse all attributes of this node
         for (Xml.Attr* attribute = node->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
             string attr_content = attribute->children->content;
@@ -103,11 +108,10 @@ public class PieLoader : GLib.Object {
             return;
         }
         
-        if (id == "")
-            id = name;
+        // add a new Pie with the loaded properties
+        var pie = PieManager.create_persistent_pie(name, icon, hotkey, id);
         
-        var pie = PieManager.add_static_pie(name, icon, hotkey, id);
-        
+        // and parse all child elements
         for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {
             if (slice->type == Xml.ElementType.ELEMENT_NODE) {
                 string node_name = slice->name.down();
@@ -126,6 +130,10 @@ public class PieLoader : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <slice> element from the pies.conf file.
+    /////////////////////////////////////////////////////////////////////
+    
     private static void parse_slice(Xml.Node* slice, Pie pie) {
         string name="";
         string icon="";
@@ -133,6 +141,7 @@ public class PieLoader : GLib.Object {
         string type="";
         bool quick_action = false;
         
+        // parse all attributes of this node
         for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
             string attr_content = attribute->children->content;
@@ -161,6 +170,7 @@ public class PieLoader : GLib.Object {
         
         ActionGroup group = null;
         
+        // create a new Action according to the loaded type
         foreach (var action_type in ActionRegistry.types) {
             if (ActionRegistry.settings_names[action_type] == type) {
             
@@ -177,9 +187,14 @@ public class PieLoader : GLib.Object {
         if (group != null) pie.add_group(group);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <group> element from the pies.conf file.
+    /////////////////////////////////////////////////////////////////////
+    
     private static void parse_group(Xml.Node* slice, Pie pie) {
         string type="";
         
+        // parse all attributes of this node
         for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
             string attr_content = attribute->children->content;
@@ -196,6 +211,7 @@ public class PieLoader : GLib.Object {
         
         ActionGroup group = null;
         
+        // create a new ActionGroup according to the loaded type
         foreach (var group_type in GroupRegistry.types) {
             if (GroupRegistry.settings_names[group_type] == type) {
                 group = GLib.Object.new(group_type, "parent_id", pie.id) as ActionGroup;

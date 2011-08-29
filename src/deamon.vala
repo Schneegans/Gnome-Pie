@@ -34,24 +34,27 @@ public class Deamon : GLib.Application {
     }
 
     public Deamon(string[] args) {
-        Gtk.init(ref args);
     
         GLib.Object(application_id : "org.gnome.gnomepie", 
                              flags : GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
-        
+    
+        // init gtk
+        Gtk.init(ref args);
+
         this.command_line.connect(this.start);
     }
     
     private int start(GLib.ApplicationCommandLine line) {
         
+        // if this is called for the first instance
         if (this.indicator == null) {
-            // if this is called for the first instance
             // init toolkits and static stuff
             Logger.init();
             Paths.init();
             Gdk.threads_init();
             ActionRegistry.init();
             GroupRegistry.init();
+            PieManager.init();
             
             // check for thread support
             if (!Thread.supported())
@@ -62,23 +65,20 @@ public class Deamon : GLib.Application {
             Intl.textdomain ("gnomepie");
             
             // launch the indicator
-            indicator = new Indicator();
-            
-            // load all Pies
-            var manager = new PieManager();
-            manager.load_config();
+            this.indicator = new Indicator();
 
             // connect SigHandlers
             Posix.signal(Posix.SIGINT, sig_handler);
 		    Posix.signal(Posix.SIGTERM, sig_handler);
 		
-		    // finished loading!
+		    // finished loading... so run the prog!
 		    message("Started happily...");
-		
 		    Gtk.main();
 		    
 		} else {
 		    var args = line.get_arguments();
+		    
+		    debug("%d", args.length);
 		    
 		    if (args.length == 3) {
 		        if (args[1] == "-o" || args[1] == "--open")

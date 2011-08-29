@@ -17,45 +17,73 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// This class stores information on a pie. A pie consists of a name, an icon_name
-// and an unique ID. Furthermore it has a "quick_action", which describes the
-// action to be executed when the user clicks on the center of a pie.
+/////////////////////////////////////////////////////////////////////////    
+/// This class stores information on a pie. A pie consists of a name, an 
+/// icon name and an unique ID. Furthermore it has an arbitrary amount
+/// of ActionGroups storing Actions.
+/////////////////////////////////////////////////////////////////////////
 
-public class Pie {
+public class Pie : GLib.Object {
     
-    public string name {get; private set;}
-    public string icon {get; private set;}
-    public string id {get; private set;}
-    public bool is_custom {get; private set;}
+    /////////////////////////////////////////////////////////////////////
+    /// The name of this Pie. It has not to be unique.
+    /////////////////////////////////////////////////////////////////////
+    
+    public string name {get; construct;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The name of the icon to be used for this Pie. It should exist in
+    /// the users current icon theme, else a standard icon will be used.
+    /////////////////////////////////////////////////////////////////////
+    
+    public string icon {get; construct;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The ID of this Pie. It has to be unique among all Pies. This ID
+    /// consists of three digits when the Pie was created by the user, 
+    /// of four digits when it was created dynamically by another class, 
+    /// for example by an ActionGroup.
+    /////////////////////////////////////////////////////////////////////
+    
+    public string id {get; construct;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Stores all ActionGroups of this Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     public Gee.ArrayList<ActionGroup?> action_groups {get; private set;}
     
-    public Pie(string id, string name, string icon, bool is_custom) {
-        this.id = id;
-        this.name = name;
-        this.icon = icon;
-        this.is_custom = is_custom;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all given members.
+    /////////////////////////////////////////////////////////////////////
+    
+    public Pie(string id, string name, string icon) {
+        GLib.Object(id: id, name: name, icon:icon);
+        
         this.action_groups = new Gee.ArrayList<ActionGroup?>();
     }
     
-    public virtual void on_display() {
-        foreach (var action_group in action_groups)
-            action_group.on_display();
-    }
+    /////////////////////////////////////////////////////////////////////
+    /// Should be called when this Pie is deleted, in order to clean up
+    /// stuff created by contained ActionGroups.
+    /////////////////////////////////////////////////////////////////////
     
     public virtual void on_remove() {
         foreach (var action_group in action_groups)
             action_group.on_remove();
     }
     
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Adds an ActionGroup to this Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     public void add_group(ActionGroup group) {
         this.action_groups.add(group);
-    }
-    
-    public int action_count() {
-        int count = 0;
-        foreach (var group in action_groups)
-            count += group.actions.size;
-        return count;
     }
 }
 

@@ -513,7 +513,7 @@ class PieList : Gtk.TreeView {
                 string command;
                 this.data.get(iter, DataPos.REAL_COMMAND_PIE, out command);
                 
-                var referee = PieManager.get_pie(command);
+                var referee = PieManager.all_pies[command];
                 
                 if (referee != null) {
                     this.data.set(iter, DataPos.ICON, referee.icon);
@@ -566,7 +566,7 @@ class PieList : Gtk.TreeView {
     
     // adds a new, empty pie to the list
     private void add_empty_pie() {
-        var new_one = PieManager.add_static_pie(_("New Pie"), "application-default-icon", "");
+        var new_one = PieManager.create_persistent_pie(_("New Pie"), "application-default-icon", "");
         
         Gtk.TreeIter last;
         this.pies.append(out last); this.pies.set(last, 0, new_one.name, 1, new_one.id); 
@@ -744,7 +744,7 @@ class PieList : Gtk.TreeView {
     
     // loads one given pie to the list
     private void load_pie(Pie pie) {
-        if (pie.is_custom) {
+        if (pie.id.length == 3) {
         
             Gtk.TreeIter last;
             this.pies.append(out last); this.pies.set(last, PiePos.NAME, pie.name, 
@@ -862,7 +862,7 @@ class PieList : Gtk.TreeView {
             });
                 
             // create new pie
-            var new_pie = PieManager.add_static_pie(name, icon, hotkey, id);
+            var new_pie = PieManager.create_persistent_pie(name, icon, hotkey, id);
             
             // add actions accordingly
             if (this.data.iter_has_child(pie)) {

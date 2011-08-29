@@ -19,26 +19,38 @@ using GLib.Math;
 
 namespace GnomePie {
 
-// A helper class which saves pies in a configuration file.
-// It has got it's own class in order to keep other files clean.
+/////////////////////////////////////////////////////////////////////////    
+/// A helper class which saves pies in a configuration file.
+/// It has got it's own class in order to keep other files clean.
+/////////////////////////////////////////////////////////////////////////
 
 public class PieSaver : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// Saves all Pies of the PieManager to the pies.conf file.
+    /////////////////////////////////////////////////////////////////////
+    
     public static void save_pies() {
+        // initializes the XML-Writer
         var writer = new Xml.TextWriter.filename(Paths.pie_config);
         writer.set_indent(true);
         writer.start_document("1.0");
         writer.start_element("pies");
-            
+        
+        // iterate through all Pies
         foreach (var pie_entry in PieManager.all_pies.entries) {
             var pie = pie_entry.value;
-            if (pie.is_custom) {
+            
+            // if it's no dynamically created Pie
+            if (pie.id.length == 3) {
+                // write all attributes of the Pie
                 writer.start_element("pie");
                 writer.write_attribute("name", pie.name);
                 writer.write_attribute("id", pie.id);
                 writer.write_attribute("icon", pie.icon);
                 writer.write_attribute("hotkey", PieManager.get_accelerator_of(pie.id));
                 
+                // and all of it's Actions
                 foreach (var group in pie.action_groups) {
                     // if it's a custom ActionGroup
                     if (group.get_type().depth() == 2) {

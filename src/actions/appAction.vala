@@ -16,23 +16,50 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
-    
-// This type of Action launches an application or a custom command.
+
+/////////////////////////////////////////////////////////////////////////    
+/// This type of Action launches an application or a custom command.
+/////////////////////////////////////////////////////////////////////////
 
 public class AppAction : Action {
+
+    /////////////////////////////////////////////////////////////////////
+    /// Used to register this type of Action. It sets the display name
+    /// for this Action, whether it has a custom Icon/Name and the string
+    /// used in the pies.conf file for this kind of Actions.
+    /////////////////////////////////////////////////////////////////////
 
     public static void register(out string name, out bool icon_name_editable, out string settings_name) {
         name = _("Launch application");
         icon_name_editable = true;
         settings_name = "app";
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Stores the command line.
+    /////////////////////////////////////////////////////////////////////
 
-    public override string real_command {get; construct set;}
-    public override string display_command {get {return real_command;}}
+    public override string real_command { get; construct set; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Simply returns the real_command. No beautification.
+    /////////////////////////////////////////////////////////////////////
+    
+    public override string display_command { get {return real_command;} }
+
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
 
     public AppAction(string name, string icon, string command, bool is_quick_action = false) {
         GLib.Object(name : name, icon : icon, real_command : command, is_quick_action : is_quick_action);
     }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Launches the desired command.
+    /////////////////////////////////////////////////////////////////////
 
     public override void activate() {
         try{

@@ -17,15 +17,32 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A which has knowledge on all possible acion group types.
+/////////////////////////////////////////////////////////////////////////    
+/// A which has knowledge on all possible acion group types.
+/////////////////////////////////////////////////////////////////////////
 
 public class GroupRegistry : GLib.Object {
     
+    /////////////////////////////////////////////////////////////////////
+    /// A list containing all available ActionGroup types.
+    /////////////////////////////////////////////////////////////////////
+    
     public static Gee.ArrayList<Type> types {get; private set;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Three maps associating a displayable name for each ActionGroup, 
+    /// an icon name and a name for the pies.conf file with it's type.
+    /////////////////////////////////////////////////////////////////////
     
     public static Gee.HashMap<Type, string> names {get; private set;}
     public static Gee.HashMap<Type, string> icons {get; private set;}
     public static Gee.HashMap<Type, string> settings_names {get; private set;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Registers all ActionGroup types.
+    /////////////////////////////////////////////////////////////////////
     
     public static void init() {
         types = new Gee.ArrayList<Type>();
@@ -62,7 +79,6 @@ public class GroupRegistry : GLib.Object {
         icons.set(typeof(SessionGroup), icon);
         settings_names.set(typeof(SessionGroup), settings_name);
     }
-
 }
 
 }

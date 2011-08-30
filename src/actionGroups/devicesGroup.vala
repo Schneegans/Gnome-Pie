@@ -17,7 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+/////////////////////////////////////////////////////////////////////
+/// An ActionGroup which contains all currently plugged-in devices, 
+/// such as CD-ROM's or USB-sticks.
+/////////////////////////////////////////////////////////////////////
+
 public class DevicesGroup : ActionGroup {
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Used to register this type of ActionGroup. It sets the display
+    /// name for this ActionGroup, it's icon name and the string used in 
+    /// the pies.conf file for this kind of ActionGroups.
+    /////////////////////////////////////////////////////////////////////
     
     public static void register(out string name, out string icon, out string settings_name) {
         name = _("Devices");
@@ -25,13 +36,34 @@ public class DevicesGroup : ActionGroup {
         settings_name = "devices";
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /// Two members needed to avoid useless, frequent changes of the 
+    /// stored Actions.
+    /////////////////////////////////////////////////////////////////////
+
     private bool changing = false;
     private bool changed_again = false;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The VolumeMonitor used to check for added or removed devices.
+    /////////////////////////////////////////////////////////////////////
+    
     private GLib.VolumeMonitor monitor;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
     
     public DevicesGroup(string parent_id) {
         GLib.Object(parent_id : parent_id);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Construct block loads all currently plugged-in devices and
+    /// connects signal handlers to the VolumeMonitor.
+    /////////////////////////////////////////////////////////////////////
     
     construct {
         this.monitor = GLib.VolumeMonitor.get();
@@ -43,10 +75,15 @@ public class DevicesGroup : ActionGroup {
         this.monitor.mount_removed.connect(this.reload);
     }
     
-    private void load() {
+    /////////////////////////////////////////////////////////////////////
+    /// Loads all currently plugged-in devices.
+    /////////////////////////////////////////////////////////////////////
     
+    private void load() {
+        // add root device
         this.add_action(new UriAction(_("Root"), "harddrive", "file:///"));
     
+        // add all other devices
         foreach(var mount in this.monitor.get_mounts()) {
             // get icon
             var icon_names = mount.get_icon().to_string().split(" ");
@@ -63,6 +100,10 @@ public class DevicesGroup : ActionGroup {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Reloads all devices. Is called when the VolumeMonitor changes.
+    /////////////////////////////////////////////////////////////////////
+    
     private void reload() {
         // avoid too frequent changes...
         if (!this.changing) {
@@ -73,6 +114,7 @@ public class DevicesGroup : ActionGroup {
                     return true;
                 }
 
+                // reload
                 message("Devices changed...");
                 this.delete_all();
                 this.load();

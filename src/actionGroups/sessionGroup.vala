@@ -17,7 +17,18 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+/////////////////////////////////////////////////////////////////////
+/// An ActionGroup which has three Actions: Logout, Shutdown and
+/// Reboot.
+/////////////////////////////////////////////////////////////////////
+
 public class SessionGroup : ActionGroup {
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Used to register this type of ActionGroup. It sets the display
+    /// name for this ActionGroup, it's icon name and the string used in 
+    /// the pies.conf file for this kind of ActionGroups.
+    /////////////////////////////////////////////////////////////////////
     
     public static void register(out string name, out string icon, out string settings_name) {
         name = _("Session Control");
@@ -25,9 +36,17 @@ public class SessionGroup : ActionGroup {
         settings_name = "session";
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
+    
     public SessionGroup(string parent_id) {
         GLib.Object(parent_id : parent_id);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Construct block adds the three Actions.
+    /////////////////////////////////////////////////////////////////////
     
     construct {
         this.add_action(new AppAction(_("Shutdown"), "gnome-shutdown", 

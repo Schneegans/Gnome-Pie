@@ -17,23 +17,48 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A static class which beautifies the messages of the default logger.
-// Some of this code is inspired by plank's written by Robert Dyer. 
-// Thanks a lot for this project!
+/////////////////////////////////////////////////////////////////////////    
+/// A static class which beautifies the messages of the default logger.
+/// Some of this code is inspired by plank's written by Robert Dyer. 
+/// Thanks a lot for this project! 
+/////////////////////////////////////////////////////////////////////////
 
 public class Logger {
+
+    /////////////////////////////////////////////////////////////////////
+    /// If these are set to false, the according messages are not shown
+    /////////////////////////////////////////////////////////////////////
     
-    // if these are set to false, the according messages are not shown
-    public static bool display_info    {get; set; default = true;}
-    public static bool display_debug   {get; set; default = true;}
+    public static bool display_info {get; set; default = true;}
+    public static bool display_debug {get; set; default = true;}
     public static bool display_warning {get; set; default = true;}
-    public static bool display_error   {get; set; default = true;}
+    public static bool display_error {get; set; default = true;}
     
-    // some options
-    public static bool display_time    {get; set; default = true;}
-    public static bool display_file    {get; set; default = false;}
+    
+    /////////////////////////////////////////////////////////////////////
+    /// If true, a time stamp is shown in each message.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static bool display_time {get; set; default = true;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// If true, the origin of the message is shown. In form file:line
+    /////////////////////////////////////////////////////////////////////
+    
+    public static bool display_file {get; set; default = false;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A regex, used to format the standard message.
+    /////////////////////////////////////////////////////////////////////
     
     private static Regex regex = null;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Possible terminal colors.
+    /////////////////////////////////////////////////////////////////////
     
     private enum Color {
         BLACK,
@@ -46,6 +71,10 @@ public class Logger {
         WHITE
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Creates the regex and binds the handler.
+    /////////////////////////////////////////////////////////////////////
+    
     public static void init() {
         try {
 			regex = new Regex("""(.*)\.vala(:\d+): (.*)""");
@@ -54,11 +83,19 @@ public class Logger {
         GLib.Log.set_default_handler(log_func);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Displays an Info message.
+    /////////////////////////////////////////////////////////////////////
+    
     private static void info(string message) {
         if (display_info) {
             stdout.printf(set_color(Color.GREEN, false) + "[" + get_time() + "MESSAGE]" + message);
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Displays a Debug message.
+    /////////////////////////////////////////////////////////////////////
     
     private static void debug(string message) {
         if (display_debug) {
@@ -66,11 +103,19 @@ public class Logger {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Displays a Warning message.
+    /////////////////////////////////////////////////////////////////////
+    
     private static void warning(string message) {
         if (display_warning) {
             stdout.printf(set_color(Color.YELLOW, false) + "[" + get_time() + "WARNING]" + message);
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Displays a Error message.
+    /////////////////////////////////////////////////////////////////////
     
     private static void error(string message) {
         if (display_error) {
@@ -78,14 +123,26 @@ public class Logger {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Helper method which resets the terminal color.
+    /////////////////////////////////////////////////////////////////////
+    
     private static string reset_color() {
 		return "\x001b[0m";
 	}
+	
+	/////////////////////////////////////////////////////////////////////
+	/// Helper method which sets the terminal color.
+	/////////////////////////////////////////////////////////////////////
 	
 	private static string set_color(Color color, bool bold) {
 	    if (bold) return "\x001b[1;%dm".printf((int)color + 30);
 	    else      return "\x001b[0;%dm".printf((int)color + 30);
 	}
+	
+	/////////////////////////////////////////////////////////////////////
+	/// Returns the current time in hh:mm:ss:mmmmmm
+	/////////////////////////////////////////////////////////////////////
 	
 	private static string get_time() {
 	    if (display_time) {  
@@ -95,6 +152,10 @@ public class Logger {
 		    return "";
 		}
 	}
+	
+	/////////////////////////////////////////////////////////////////////
+    /// Helper method to format the message.
+    /////////////////////////////////////////////////////////////////////
 	
 	private static string create_message(string message) {
 	    if (display_file && regex != null && regex.match(message)) {
@@ -107,6 +168,10 @@ public class Logger {
 		    return reset_color() + " " + message + "\n";
 		}
 	}
+	
+	/////////////////////////////////////////////////////////////////////
+	/// The handler function.
+	/////////////////////////////////////////////////////////////////////
 	
 	private static void log_func(string? d, LogLevelFlags flags, string message) {
 			

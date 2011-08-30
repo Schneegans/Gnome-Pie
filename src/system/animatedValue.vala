@@ -17,25 +17,87 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {	
 
-// A class which interpolates smoothly between to given values.
-// Duration and interpolation mode can be specified.
+/////////////////////////////////////////////////////////////////////////    
+/// A class which interpolates smoothly between to given values.
+/// Duration and interpolation mode can be specified.
+/////////////////////////////////////////////////////////////////////////
 
 public class AnimatedValue : GLib.Object {
 
-    public enum Direction {IN, OUT, IN_OUT, OUT_IN}
+    /////////////////////////////////////////////////////////////////////
+    /// The direction of the interpolation.
+    /////////////////////////////////////////////////////////////////////
+
+    public enum Direction { IN, OUT, IN_OUT, OUT_IN }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Type of the interpolation, linear or cubic.
+    /////////////////////////////////////////////////////////////////////
     
     private enum Type {LINEAR, CUBIC}
     
-    public double val    {get; private set;}
-    public double start {get; private set; default=0.0;}
-    public double end   {get; private set; default=0.0;} 
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Current value, interpolated.
+    /////////////////////////////////////////////////////////////////////
+    
+    public double val { get; private set; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Starting value of the interpolation.
+    /////////////////////////////////////////////////////////////////////
+    
+    public double start { get; private set; default=0.0; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Final value of the interpolation.
+    /////////////////////////////////////////////////////////////////////
+    
+    public double end { get; private set; default=0.0; } 
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The current state. In range 0 .. 1
+    /////////////////////////////////////////////////////////////////////
     
     private double state = 0.0;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Duration of the interpolation. Should be in the same unit as 
+    /// taken for the update() method.
+    /////////////////////////////////////////////////////////////////////
+    
     private double duration = 0.0;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The amount of over-shooting of the cubicly interpolated value.
+    /////////////////////////////////////////////////////////////////////
+    
     private double multiplier = 0.0;
     
-    private Type      type = Type.LINEAR;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Type of the interpolation, linear or cubic.
+    /////////////////////////////////////////////////////////////////////
+    
+    private Type type = Type.LINEAR;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The direction of the interpolation.
+    /////////////////////////////////////////////////////////////////////
+    
     private Direction direction = Direction.IN;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a new linearly interpolated value.
+    /////////////////////////////////////////////////////////////////////
     
     public AnimatedValue.linear(double start, double end, double duration) {
         this.val = start;
@@ -43,6 +105,10 @@ public class AnimatedValue : GLib.Object {
         this.end = end;
         this.duration = duration;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a new cubicly interpolated value.
+    /////////////////////////////////////////////////////////////////////
     
     public AnimatedValue.cubic(Direction direction, double start, double end, double duration, double multiplier = 0) {
         this.val = start;
@@ -54,12 +120,21 @@ public class AnimatedValue : GLib.Object {
         this.multiplier = multiplier;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Resets the final value of the interpolation to a new value. The
+    /// current state is taken for the beginning from now.
+    /////////////////////////////////////////////////////////////////////
+    
     public void reset_target(double end, double duration) {
         this.start = this.val;
         this.end = end;
         this.duration = duration;
         this.state = 0.0;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Updates the interpolated value according to it's type.
+    /////////////////////////////////////////////////////////////////////
     
     public void update(double time) {
         this.state += time/this.duration;
@@ -91,11 +166,13 @@ public class AnimatedValue : GLib.Object {
              this.val = this.end;
         }  
     }
-    
-    // The following equations are based on Robert Penner's easing equations. 
-    // See (http://www.robertpenner.com/easing/) and their adaption by
-    // Zeh Fernando, Nate Chatellier and Arthur Debert for the Tweener class. 
-    // See (http://code.google.com/p/tweener/).
+
+    /////////////////////////////////////////////////////////////////////
+    /// The following equations are based on Robert Penner's easing 
+    /// equations. See (http://www.robertpenner.com/easing/) and their 
+    /// adaption by Zeh Fernando, Nate Chatellier and Arthur Debert for
+    /// the Tweener class. See (http://code.google.com/p/tweener/).
+    /////////////////////////////////////////////////////////////////////
     
     private double update_linear(double t = this.state, double s = this.start, double e = this.end) {
         return (s + t*(e - s));

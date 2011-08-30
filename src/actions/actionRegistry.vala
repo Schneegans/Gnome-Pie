@@ -17,15 +17,33 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A which has knowledge on all possible acion types.
+/////////////////////////////////////////////////////////////////////////    
+/// A which has knowledge on all possible acion types.
+/////////////////////////////////////////////////////////////////////////
 
 public class ActionRegistry : GLib.Object {
     
+    /////////////////////////////////////////////////////////////////////
+    /// A list containing all available Action types.
+    /////////////////////////////////////////////////////////////////////
+    
     public static Gee.ArrayList<Type> types {get; private set;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Three maps associating a displayable name for each Action, 
+    /// whether it has a custom icon and a name for the pies.conf
+    /// file with it's type.
+    /////////////////////////////////////////////////////////////////////
     
     public static Gee.HashMap<Type, string> names {get; private set;}
     public static Gee.HashMap<Type, bool> icon_name_editables {get; private set;}
     public static Gee.HashMap<Type, string> settings_names {get; private set;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Registers all Action types.
+    /////////////////////////////////////////////////////////////////////
     
     public static void init() {
         types = new Gee.ArrayList<Type>();
@@ -62,6 +80,12 @@ public class ActionRegistry : GLib.Object {
         icon_name_editables.set(typeof(UriAction), icon_name_editable);
         settings_names.set(typeof(UriAction), settings_name);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A helper method which creates an Action, appropriate for the 
+    /// given URI. This can result in an UriAction or in an AppAction,
+    /// depending on the Type of the URI. 
+    /////////////////////////////////////////////////////////////////////
 
     public static Action? new_for_uri(string uri, string? name = null) {
         var file = GLib.File.new_for_uri(uri);
@@ -87,8 +111,8 @@ public class ActionRegistry : GLib.Object {
                     if (info.get_content_type() == "application/x-desktop")
                         return new_for_desktop_file(file.get_parse_name());
                     
-                    var gicon = info.get_icon();
-                                        
+                    // search for an appropriate icon
+                    var gicon = info.get_icon();                
                     string[] icons = gicon.to_string().split(" ");
                     
                     foreach (var icon in icons) {
@@ -127,12 +151,18 @@ public class ActionRegistry : GLib.Object {
         return new UriAction(final_name, final_icon, uri);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// A helper method which creates an AppAction for given *.desktop
+    /// file.
+    /////////////////////////////////////////////////////////////////////
+    
     public static Action? new_for_desktop_file(string file_name) {
         var file = new DesktopAppInfo.from_filename(file_name);
         
         string[] icons = file.get_icon().to_string().split(" ");
         string final_icon = "application-default-icon";
-                  
+        
+        // search for available icons
         foreach (var icon in icons) {
             if (Gtk.IconTheme.get_default().has_icon(icon)) {
                 final_icon = icon;

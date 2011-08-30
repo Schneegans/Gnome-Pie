@@ -16,40 +16,73 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
-	
-// A static class which stores all relevant paths
-// used by Gnome-Pie. These depend upon the location
-// from which the program was launched.
+
+/////////////////////////////////////////////////////////////////////////    
+/// A static class which stores all relevant paths used by Gnome-Pie.
+/// These depend upon the location from which the program was launched.
+/////////////////////////////////////////////////////////////////////////
 
 public class Paths : GLib.Object {
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The file settings file,
+    /// usually ~/.config/gnome-pie/gnome-pie.conf.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string settings { get; private set; default=""; }
 
-    // the file settings file,
-    // usually ~/.config/gnome-pie/gnome-pie.conf
-    public static string settings           {get; private set; default="";}
     
-    // the file pie configuration file
-    // usually ~/.config/gnome-pie/pies.conf
-    public static string pie_config         {get; private set; default="";}
+    /////////////////////////////////////////////////////////////////////
+    /// The file pie configuration file
+    /// usually ~/.config/gnome-pie/pies.conf.
+    /////////////////////////////////////////////////////////////////////
     
-    // the directory where pies.config.default resides in,
-    // usually /usr/share/gnome-pie
-    public static string default_pie_config {get; private set; default="";}
+    public static string pie_config { get; private set; default=""; }
     
-    // the directory containing themes installed by the user
-    // usually ~/.config/gnome-pie/themes
-    public static string local_themes       {get; private set; default="";}
     
-    // the directory containing pre-installed themes
-    // usually /usr/share/gnome-pie/themes
-    public static string global_themes      {get; private set; default="";}
+    /////////////////////////////////////////////////////////////////////
+    /// The directory where pies.config.default resides in,
+    /// usually /usr/share/gnome-pie.
+    /////////////////////////////////////////////////////////////////////
     
-    // the directory containing locale files
-    // usually /usr/share/locale
-    public static string locales            {get; private set; default="";}
+    public static string default_pie_config { get; private set; default=""; }
     
-    // the autostart file of gnome-pie_config
-    // usually ~/.config/autostart/gnome-pie.desktop
-    public static string autostart          {get; private set; default="";}
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The directory containing themes installed by the user
+    /// usually ~/.config/gnome-pie/themes.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string local_themes { get; private set; default=""; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The directory containing pre-installed themes
+    /// usually /usr/share/gnome-pie/themes.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string global_themes { get; private set; default=""; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The directory containing locale files
+    /// usually /usr/share/locale.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string locales { get; private set; default=""; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The autostart file of gnome-pie_config
+    /// usually ~/.config/autostart/gnome-pie.desktop.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string autostart { get; private set; default=""; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Initializes all values above.
+    /////////////////////////////////////////////////////////////////////
     
     public static void init() {
     

@@ -17,7 +17,19 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
+/////////////////////////////////////////////////////////////////////////    
+/// A group of Actions, which represent the users gtk-bookmarks, his home
+/// directory, desktop and trash. It stay up-to-date, even if the 
+/// bookmarks change.
+/////////////////////////////////////////////////////////////////////////
+
 public class BookmarkGroup : ActionGroup {
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Used to register this type of ActionGroup. It sets the display
+    /// name for this ActionGroup, it's icon name and the string used in 
+    /// the pies.conf file for this kind of ActionGroups.
+    /////////////////////////////////////////////////////////////////////
     
     public static void register(out string name, out string icon, out string settings_name) {
         name = _("Bookmarks");
@@ -25,12 +37,28 @@ public class BookmarkGroup : ActionGroup {
         settings_name = "bookmarks";
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /// Two members needed to avoid useless, frequent changes of the 
+    /// stored Actions.
+    /////////////////////////////////////////////////////////////////////
+
     private bool changing = false;
     private bool changed_again = false;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
     
     public BookmarkGroup(string parent_id) {
         GLib.Object(parent_id : parent_id);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Construct block loads the bookmarks of the user and adds a file
+    /// monitor in order to update the BookmarkGroup when the bookmarks
+    /// of the user change.
+    /////////////////////////////////////////////////////////////////////
     
     construct {
         this.load();
@@ -49,6 +77,11 @@ public class BookmarkGroup : ActionGroup {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Adds Actions for each gtk-bookmark of the user and for his home
+    /// folder, desktop and trash.
+    /////////////////////////////////////////////////////////////////////
+    
     private void load() {
         // add home folder
         this.add_action(ActionRegistry.new_for_uri("file://" + GLib.Environment.get_home_dir()));
@@ -63,7 +96,7 @@ public class BookmarkGroup : ActionGroup {
         }
         
         try {
-            var dis = new DataInputStream(bookmark_file.read ());
+            var dis = new DataInputStream(bookmark_file.read());
             string line;
             while ((line = dis.read_line(null)) != null) {
                 var parts = line.split(" ");
@@ -84,6 +117,11 @@ public class BookmarkGroup : ActionGroup {
         this.add_action(ActionRegistry.new_for_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP)));
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Reloads all Bookmarks. Is called when the user's gtk-bookmarks
+    /// file changes.
+    /////////////////////////////////////////////////////////////////////
+    
     private void reload() {
         // avoid too frequent changes...
         if (!this.changing) {
@@ -94,6 +132,7 @@ public class BookmarkGroup : ActionGroup {
                     return true;
                 }
 
+                // reload
                 message("Bookmarks changed...");
                 this.delete_all();
                 this.load();

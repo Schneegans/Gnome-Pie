@@ -17,8 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A class which represents a key stroke. It can be used to "press" 
-// the associated keys.
+/////////////////////////////////////////////////////////////////////////    
+/// A class which represents a key stroke. It can be used to "press" 
+/// the associated keys.
+/////////////////////////////////////////////////////////////////////////
 
 public class Key {
 

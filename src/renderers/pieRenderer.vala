@@ -22,7 +22,7 @@ namespace GnomePie {
 // This class renders a Pie. In order to accomplish that, it owns a
 // CenterRenderer and some SliceRenderers.
 
-public class PieRenderer {
+public class PieRenderer : GLib.Object {
 
     public int quick_action {get; private set;}
     public int active_slice {get; private set;}

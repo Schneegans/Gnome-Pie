@@ -65,7 +65,7 @@ public class PieWindow : Gtk.Window {
 
         this.expose_event.connect(this.draw);
     }
-    
+
     public void load_pie(Pie pie) {
         renderer.load_pie(pie);
         

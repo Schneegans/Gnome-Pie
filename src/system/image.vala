@@ -17,17 +17,22 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A class which loads image files. It caches them, so no image nedd to be
-// loaded twice. It can load image files in various formats. Additionally
-// it can create empty images, images with strings written to and and system
-// icons themed according to the current theme.
+/////////////////////////////////////////////////////////////////////////    
+/// A class which loads image files. It caches them, so no image nedd to
+/// be loaded twice. It can load image files in various formats. 
+/// Additionally it can create empty images, images with strings written
+/// to and and system icons themed according to the current theme.
+/////////////////////////////////////////////////////////////////////////
 
 public class Image : GLib.Object {
 
-    // icon cache which stores loaded images
-    private static Gee.HashMap<string, Cairo.ImageSurface?> file_cache {private get; private set;}
-    private static Gee.HashMap<string, Cairo.ImageSurface?> themed_active_cache {private get; private set;}
-    private static Gee.HashMap<string, Cairo.ImageSurface?> themed_inactive_cache {private get; private set;}
+    /////////////////////////////////////////////////////////////////////
+    /// Icon cache which stores loaded images
+    /////////////////////////////////////////////////////////////////////
+    
+    private static Gee.HashMap<string, Cairo.ImageSurface?> file_cache { private get; private set; }
+    private static Gee.HashMap<string, Cairo.ImageSurface?> themed_active_cache { private get; private set; }
+    private static Gee.HashMap<string, Cairo.ImageSurface?> themed_inactive_cache { private get; private set; }
     
     private static void init() {
         if (file_cache == null) {
@@ -52,14 +57,25 @@ public class Image : GLib.Object {
         }
     }
     
-    //public members
-    public Cairo.ImageSurface surface {get; private set;}
+    /////////////////////////////////////////////////////////////////////
+    /// The internally used surface.
+    /////////////////////////////////////////////////////////////////////
     
-    //c'tors
+    public Cairo.ImageSurface surface { get; private set; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates an invalid Image.
+    /////////////////////////////////////////////////////////////////////
+    
     public Image() {
         this.init();
         this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 0, 0);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates an empty Image.
+    /////////////////////////////////////////////////////////////////////
     
     public Image.empty(int size, Color? color = null) {
         this.init();
@@ -72,7 +88,10 @@ public class Image : GLib.Object {
         }
     }
     
-    // Loads an icon from the the given filename.
+    /////////////////////////////////////////////////////////////////////
+    /// Loads an icon from the the given filename.
+    /////////////////////////////////////////////////////////////////////
+    
     public Image.from_file(string filename, int size) {
         this.init();
         this.surface = this.file_cache.get(filename);
@@ -92,6 +111,10 @@ public class Image : GLib.Object {
              surface = scaled;
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a new transparent image, with text written onto.
+    /////////////////////////////////////////////////////////////////////
     
     public Image.from_string(string text, int size, int font_size) {
         this.init();
@@ -121,8 +144,11 @@ public class Image : GLib.Object {
         ctx.set_source_rgb(color.r, color.g, color.g);
         ctx.show_text(ellipsed_text);
     }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Loads an icon from the current icon theme of the user.
+    /////////////////////////////////////////////////////////////////////
     
-    // Loads an icon from the current icon theme of the user.
     public Image.themed_icon(string icon_name, bool active) {
         this.init();
         
@@ -141,21 +167,36 @@ public class Image : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the size of the image. In pixels.
+    /////////////////////////////////////////////////////////////////////
+    
     public int size() {
         if (surface == null) return 0;
         else return surface.get_width();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the context of the image.
+    /////////////////////////////////////////////////////////////////////
+    
     public Cairo.Context get_context() {
         return new Cairo.Context(surface);
     }
     
-    // Paints the image onto the given Cairo.Context
+    /////////////////////////////////////////////////////////////////////
+    /// Paints the image onto the given Cairo.Context
+    /////////////////////////////////////////////////////////////////////
+    
     public void paint_on(Cairo.Context ctx, double alpha = 1.0) {
         ctx.set_source_surface(surface, -0.5*this.size()-1, -0.5*this.size()-1);
         if (alpha >= 1.0) ctx.paint();
         else              ctx.paint_with_alpha(alpha);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads the image from a given file.
+    /////////////////////////////////////////////////////////////////////
     
     private void load_file(string filename, int size) {
     
@@ -175,6 +216,10 @@ public class Image : GLib.Object {
             message("Error loading image file: %s", e.message);
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Paint a slice icon according to the current theme.
+    /////////////////////////////////////////////////////////////////////
     
     private void paint_themed(string icon_name, bool active) {
         // get layers for the desired slice type
@@ -245,7 +290,10 @@ public class Image : GLib.Object {
         }
     }
     
-    // returns the filename for a given system icon
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the filename for a given system icon.
+    /////////////////////////////////////////////////////////////////////
+    
     private string get_icon_file(string icon_name, int size) {
         string result = "";
     

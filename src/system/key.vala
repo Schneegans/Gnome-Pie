@@ -22,36 +22,70 @@ namespace GnomePie {
 /// the associated keys.
 /////////////////////////////////////////////////////////////////////////
 
-public class Key {
+public class Key : GLib.Object {
+
+    /////////////////////////////////////////////////////////////////////
+    /// Some static members, which are often used by this class.
+    /////////////////////////////////////////////////////////////////////    
+
+    private static X.Display display;
+
+    private static int shift_code;
+    private static int ctrl_code;
+    private static int alt_code;
+    private static int super_code;
+
+    /////////////////////////////////////////////////////////////////////
+    /// A human readable form of the Key's accelerator.
+    /////////////////////////////////////////////////////////////////////
 
     public string label {get; private set;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The accelerator of the Key.
+    /////////////////////////////////////////////////////////////////////
+    
     public string accelerator {get; private set;}
-
-    private X.Display display;
-    private int shift_code;
-    private int ctrl_code;
-    private int alt_code;
-    private int super_code;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Keycode and modifiers of this stroke.
+    /////////////////////////////////////////////////////////////////////
     
     private int key_code;
     private Gdk.ModifierType modifiers;
     
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
+    
     public Key(string stroke) {
-        display = new X.Display();
-        
         this.accelerator = stroke;
         
         uint keysym;
         Gtk.accelerator_parse(stroke, out keysym, out this.modifiers);
         this.key_code = display.keysym_to_keycode(keysym);
-        
         this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
-        
-        this.shift_code =  this.display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
-        this.ctrl_code  =  this.display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
-        this.alt_code  =   this.display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
-        this.super_code  = this.display.keysym_to_keycode(Gdk.keyval_from_name("Super_L"));
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Initializes static members.
+    /////////////////////////////////////////////////////////////////////
+    
+    static construct {
+        display = new X.Display();
+    
+        shift_code = display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
+        ctrl_code =  display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
+        alt_code =   display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
+        super_code = display.keysym_to_keycode(Gdk.keyval_from_name("Super_L"));
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Simulates the pressing of the Key .
+    /////////////////////////////////////////////////////////////////////
 
     public void press() {
 
@@ -71,11 +105,19 @@ public class Key {
         display.flush();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Helper method returning currently hold down modifier keys.
+    /////////////////////////////////////////////////////////////////////
+    
     private Gdk.ModifierType get_modifiers() {
         Gdk.ModifierType modifiers;
         Gdk.Display.get_default().get_pointer(null, null, null, out modifiers);
         return modifiers;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Helper method which 'presses' the desired modifier keys.
+    /////////////////////////////////////////////////////////////////////
     
     private void press_modifiers(Gdk.ModifierType modifiers, bool down) {
         if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0)

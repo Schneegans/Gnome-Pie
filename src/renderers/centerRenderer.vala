@@ -21,10 +21,10 @@ namespace GnomePie {
 
 // Renders the center of a Pie.
 
-public class CenterRenderer {
+public class CenterRenderer : GLib.Object {
 
     private unowned PieRenderer parent;
-    private Image? caption;
+    private unowned Image? caption;
     private Color color;
     
     private AnimatedValue activity;
@@ -64,10 +64,10 @@ public class CenterRenderer {
 	    
 	        ctx.save();
 
-            double active_speed = (layer.active_rotation_mode == CenterLayer.RotationMode.AUTO) ? 
-                layer.active_rotation_speed : 0.0;
-            double inactive_speed = (layer.inactive_rotation_mode == CenterLayer.RotationMode.AUTO) ? 
-                layer.inactive_rotation_speed : 0.0;
+            double active_speed = (layer.active_rotation_mode == CenterLayer.RotationMode.TO_MOUSE) ? 
+                0.0 : layer.active_rotation_speed;
+            double inactive_speed = (layer.inactive_rotation_mode == CenterLayer.RotationMode.TO_MOUSE) ? 
+                0.0 : layer.inactive_rotation_speed;
 	        double max_scale = layer.active_scale*this.activity.val 
 	            + layer.inactive_scale*(1.0-this.activity.val);
             double max_alpha = layer.active_alpha*this.activity.val 

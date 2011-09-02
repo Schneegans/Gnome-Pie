@@ -78,6 +78,12 @@ public class GroupRegistry : GLib.Object {
         names.set(typeof(SessionGroup), name);
         icons.set(typeof(SessionGroup), icon);
         settings_names.set(typeof(SessionGroup), settings_name);
+        
+//        ClipboardGroup.register(out name, out icon, out settings_name);
+//        types.add(typeof(ClipboardGroup));
+//        names.set(typeof(ClipboardGroup), name);
+//        icons.set(typeof(ClipboardGroup), icon);
+//        settings_names.set(typeof(ClipboardGroup), settings_name);
     }
 }
 

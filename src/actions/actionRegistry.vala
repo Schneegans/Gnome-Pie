@@ -104,7 +104,20 @@ public class ActionRegistry : GLib.Object {
 
                 break;
                 
-            case "file":
+            case "trash":
+                final_icon = "user-trash";
+                final_name = _("Trash");
+                break;
+                
+            case "http": case "https":
+                final_icon = "www";
+                break;
+                
+            case "ftp": case "sftp":
+                final_icon = "folder-remote";
+                break;
+                
+            default:
                 try {
                     var info = file.query_info("*", GLib.FileQueryInfoFlags.NONE);
                     
@@ -126,19 +139,6 @@ public class ActionRegistry : GLib.Object {
                     warning(e.message);
                 }
 
-                break;
-                
-            case "trash":
-                final_icon = "user-trash";
-                final_name = _("Trash");
-                break;
-                
-            case "http": case "https":
-                final_icon = "www";
-                break;
-                
-            case "ftp": case "sftp":
-                final_icon = "folder-remote";
                 break;
         }
         

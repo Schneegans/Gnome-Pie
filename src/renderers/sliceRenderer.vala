@@ -59,7 +59,7 @@ public class SliceRenderer : GLib.Object {
                                                  Config.global.theme.fade_in_rotation, 0.0, 
                                                  Config.global.theme.fade_in_time);
     }
-    
+
     public void load(Action action, int position) {
         this.position = position;
         this.action = action;

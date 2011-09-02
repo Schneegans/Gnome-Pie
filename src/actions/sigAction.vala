@@ -18,65 +18,49 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// A base class for actions, which are executed when the user
-/// activates a pie's slice.
+/// This type of Action can't be selected by the user, therefore there is
+/// no register() method for this class. But it may be useful for
+/// ActionGroups: It emits a signal on activation.
 /////////////////////////////////////////////////////////////////////////
 
-public abstract class Action : GLib.Object {
+public class SigAction : Action {
 
     /////////////////////////////////////////////////////////////////////
-    /// The command which gets executed when user activates the Slice.
-    /// It may be anything but has to be representable with a string.
+    /// This signal is emitted on activation.
     /////////////////////////////////////////////////////////////////////
 
-    public abstract string real_command {get; construct set;}
-    
-    
-    /////////////////////////////////////////////////////////////////////
-    /// The command displayed to the user. It should be a bit more
-    /// beautiful than the real_command.
-    /////////////////////////////////////////////////////////////////////
-    
-    public abstract string display_command {get;}  
-    
-    
-    /////////////////////////////////////////////////////////////////////
-    /// The name of the Action.
-    /////////////////////////////////////////////////////////////////////  
+    public signal void activated();
 
-    public virtual string name {get; protected set;}
-    
     
     /////////////////////////////////////////////////////////////////////
-    /// The name of the icon of this Action. It should be in the users
-    /// current icon theme.
+    /// This may store something useful.
     /////////////////////////////////////////////////////////////////////
-    
-    public virtual string icon {get; protected set;}
-    
-    
-    /////////////////////////////////////////////////////////////////////
-    /// True, if this Action is the quickAction of the associated Pie.
-    /// The quickAction of a Pie gets executed when the users clicks on
-    /// the center of a Pie.
-    /////////////////////////////////////////////////////////////////////
-    
-    public virtual bool is_quick_action {get; protected set;}
 
+    public override string real_command { get; construct set; }
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Only for inheritance... Greetings to Liskov.
+    /////////////////////////////////////////////////////////////////////
+    
+    public override string display_command { get {return real_command;} }
 
+    
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
     /////////////////////////////////////////////////////////////////////
 
-    public Action(string name, string icon, bool is_quick_action) {
-        GLib.Object(name : name, icon : icon, is_quick_action : is_quick_action);
+    public SigAction(string name, string icon, string command, bool is_quick_action = false) {
+        GLib.Object(name : name, icon : icon, real_command : command, is_quick_action : is_quick_action);
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// This one is called, when the user activates the Slice.
+    /// Emits the signal on activation.
     /////////////////////////////////////////////////////////////////////
 
-    public abstract void activate();
+    public override void activate() {
+        this.activated();
+    } 
 }
 
 }

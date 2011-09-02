@@ -17,12 +17,23 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A singleton class for storing global settings. These settings can
-// be loaded from and saved to an XML file.
+/////////////////////////////////////////////////////////////////////////    
+/// A singleton class for storing global settings. These settings can
+/// be loaded from and saved to an XML file.
+/////////////////////////////////////////////////////////////////////////
 
 public class Config : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// The singleton instance of this class.
+    /////////////////////////////////////////////////////////////////////
+
     private static Config _instance = null;
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the singleton instance.
+    /////////////////////////////////////////////////////////////////////
     
     public static Config global {
         get {
@@ -36,6 +47,10 @@ public class Config : GLib.Object {
             _instance = value;
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// All settings variables.
+    /////////////////////////////////////////////////////////////////////
 
     public Theme  theme             {get; set;}
     public double refresh_rate      {get; set; default = 60.0;}
@@ -45,6 +60,11 @@ public class Config : GLib.Object {
     public bool   click_to_activate {get; set; default = true;}
     public bool   auto_start        {get; set; default = false;}
     public Gee.ArrayList<Theme?> themes {get; private set;}
+    
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Saves all above variables to a file.
+    /////////////////////////////////////////////////////////////////////
     
     public void save() {
         var writer = new Xml.TextWriter.filename(Paths.settings);
@@ -59,6 +79,10 @@ public class Config : GLib.Object {
             writer.end_element();
         writer.end_document();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads all settings variables from a file.
+    /////////////////////////////////////////////////////////////////////
     
     private void load() {
     
@@ -124,6 +148,11 @@ public class Config : GLib.Object {
 
         if (error_occrured) save();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Registers all themes in the user's and in the global
+    /// theme directory.
+    /////////////////////////////////////////////////////////////////////
     
     public void load_themes(string current) {
         themes = new Gee.ArrayList<Theme?>();

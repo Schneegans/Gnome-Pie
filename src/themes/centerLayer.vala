@@ -29,16 +29,16 @@ public class CenterLayer : GLib.Object {
     public string image_file;
     private int center_radius;
     
-    public double active_scale                 {get; private set;}
-    public double active_rotation_speed        {get; private set;}
-    public double active_alpha                 {get; private set;}
-    public bool   active_colorize              {get; private set;}
-    public RotationMode active_rotation_mode   {get; private set;}
+    public double active_scale {get; private set;}
+    public double active_rotation_speed {get; private set;}
+    public double active_alpha {get; private set;}
+    public bool active_colorize {get; private set;}
+    public RotationMode active_rotation_mode {get; private set;}
     
-    public double inactive_scale               {get; private set;}
-    public double inactive_rotation_speed      {get; private set;}
-    public double inactive_alpha               {get; private set;}
-    public bool   inactive_colorize            {get; private set;}
+    public double inactive_scale {get; private set;}
+    public double inactive_rotation_speed {get; private set;}
+    public double inactive_alpha {get; private set;}
+    public bool inactive_colorize {get; private set;}
     public RotationMode inactive_rotation_mode {get; private set;}
     
     public double rotation {get; set;}
@@ -67,7 +67,7 @@ public class CenterLayer : GLib.Object {
     }
     
     public void load_image() {
-        this.image = new Image.from_file(image_file, 2*center_radius);
+        this.image = new Image.from_file_at_size(image_file, 2*center_radius, 2*center_radius);
     }
 }
 

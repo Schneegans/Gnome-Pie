@@ -23,7 +23,7 @@
                 <slice_layer type="icon" scale="0.9" colorize="false" />
             </inactiveSlice>
         </slices>
-        <caption position="0" fontSize="12" maxSize="90" color="#000"/>
+        <caption position="0" font="sans 12" width="90" height="90" color="#000"/>
     </ring>
 </theme>
 

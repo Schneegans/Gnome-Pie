@@ -18,170 +18,102 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// A class which loads image files. It caches them, so no image nedd to
-/// be loaded twice. It can load image files in various formats. 
-/// Additionally it can create empty images, images with strings written
-/// to and and system icons themed according to the current theme.
+/// A class which loads image files. It can load image files in various
+/// formats, including jpeg, png and svg. 
 /////////////////////////////////////////////////////////////////////////
 
 public class Image : GLib.Object {
-
-    /////////////////////////////////////////////////////////////////////
-    /// Icon cache which stores loaded images
-    /////////////////////////////////////////////////////////////////////
-    
-    private static Gee.HashMap<string, Cairo.ImageSurface?> file_cache { private get; private set; }
-    private static Gee.HashMap<string, Cairo.ImageSurface?> themed_active_cache { private get; private set; }
-    private static Gee.HashMap<string, Cairo.ImageSurface?> themed_inactive_cache { private get; private set; }
-    
-    private static void init() {
-        if (file_cache == null) {
-            file_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-            Gtk.IconTheme.get_default().changed.connect(() => {
-                file_cache.clear();
-            });
-        }
-        
-        if (themed_active_cache == null) {
-            themed_active_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-            Config.global.notify["theme"].connect(() => {
-                themed_active_cache.clear();
-            });
-        }
-        
-        if (themed_inactive_cache == null) {
-            themed_inactive_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-            Config.global.notify["theme"].connect(() => {
-                themed_inactive_cache.clear();
-            });
-        }
-    }
     
     /////////////////////////////////////////////////////////////////////
     /// The internally used surface.
     /////////////////////////////////////////////////////////////////////
     
-    public Cairo.ImageSurface surface { get; private set; }
-    
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Creates an invalid Image.
-    /////////////////////////////////////////////////////////////////////
-    
-    public Image() {
-        this.init();
-        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 0, 0);
-    }
+    public Cairo.ImageSurface surface { public get; protected set; default=null; }
     
     /////////////////////////////////////////////////////////////////////
     /// Creates an empty Image.
     /////////////////////////////////////////////////////////////////////
     
-    public Image.empty(int size, Color? color = null) {
-        this.init();
-        surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
+    public Image.empty(int width, int height, Color? color = null) {
+        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
         
         if (color != null) {
-            var ctx = get_context();
+            var ctx = this.context();
             ctx.set_source_rgb(color.r, color.g, color.b);
             ctx.paint();
         }
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Loads an icon from the the given filename.
+    /// Creates an image from the the given filename.
     /////////////////////////////////////////////////////////////////////
     
-    public Image.from_file(string filename, int size) {
-        this.init();
-        this.surface = this.file_cache.get(filename);
-        
-        if(surface == null || surface.get_width() < size) {
-            this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-            this.load_file(filename, size);
-            this.file_cache.set(filename, surface);
-            return;
+    public Image.from_file(string filename) {
+        this.load_file(filename);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates an image from the the given filename at a given size.
+    /////////////////////////////////////////////////////////////////////
+    
+    public Image.from_file_at_size(string filename, int width, int height) {
+        this.load_file_at_size(filename, width, height);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates an image from the the given Gdk.Pixbuf.
+    /////////////////////////////////////////////////////////////////////
+    
+    public Image.from_pixbuf(Gdk.Pixbuf pixbuf) {
+        this.load_pixbuf(pixbuf);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads an image from the the given filename.
+    /////////////////////////////////////////////////////////////////////
+    
+    public void load_file(string filename) {
+        try {
+            var pixbuf = new Gdk.Pixbuf.from_file(filename);
             
-        } else if (this.size() > size){
-             var scaled = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-             var ctx = new Cairo.Context(scaled);
-             ctx.scale((float)size/(float)this.size(), (float)size/(float)this.size());
-             ctx.set_source_surface(surface, 1.0, 1.0);
-             ctx.paint();
-             surface = scaled;
+            if (pixbuf != null) {
+                this.load_pixbuf(pixbuf);
+            } else {
+                warning("Failed to load " + filename + "!");
+            }
+        } catch (GLib.Error e) {
+            message("Error loading image file: %s", e.message);
         }
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Creates a new transparent image, with text written onto.
+    /// Loads an image from the the given filename at a given size.
     /////////////////////////////////////////////////////////////////////
     
-    public Image.from_string(string text, int size, int font_size) {
-        this.init();
-        
-        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-        var ctx = this.get_context();
-        
-        string ellipsed_text = text;
-        
-        ctx.set_font_size(font_size);
-        Cairo.TextExtents extents;
-        ctx.text_extents(ellipsed_text, out extents);
-        
-        if (extents.width > size && ellipsed_text.length > 3) {
-            ellipsed_text = ellipsed_text.substring(0, ellipsed_text.length-1) + "...";
+    public void load_file_at_size(string filename, int width, int height) {
+        try {
+            var pixbuf = new Gdk.Pixbuf.from_file_at_size(filename, width, height);
             
-            while (extents.width > size && ellipsed_text.length > 3) {
-                ellipsed_text = ellipsed_text.substring(0, ellipsed_text.length-4) + "...";
-                ctx.text_extents(ellipsed_text, out extents);
+            if (pixbuf != null) {
+                this.load_pixbuf(pixbuf);
+            } else {
+                warning("Failed to load " + filename + "!");
             }
-        }
-        
-        ctx.select_font_face("Sans", Cairo.FontSlant.NORMAL, Cairo.FontWeight.NORMAL);
-        ctx.move_to((int)(0.5*size - 0.5*extents.width), 
-                    (int)(0.5*size+0.3*Config.global.theme.font_size)); 
-        Color color = Config.global.theme.caption_color;
-        ctx.set_source_rgb(color.r, color.g, color.g);
-        ctx.show_text(ellipsed_text);
-    }
-
-    /////////////////////////////////////////////////////////////////////
-    /// Loads an icon from the current icon theme of the user.
-    /////////////////////////////////////////////////////////////////////
-    
-    public Image.themed_icon(string icon_name, bool active) {
-        this.init();
-        
-        if (active) {
-            this.surface = this.themed_active_cache.get(icon_name);
-            if (this.surface == null) {
-                this.paint_themed(icon_name, active);
-                this.themed_active_cache.set(icon_name, this.surface);
-            }
-        } else {
-            this.surface = this.themed_inactive_cache.get(icon_name);
-            if (this.surface == null) {
-                this.paint_themed(icon_name, active);
-                this.themed_inactive_cache.set(icon_name, this.surface);
-            } 
+        } catch (GLib.Error e) {
+            message("Error loading image file: %s", e.message);
         }
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Returns the size of the image. In pixels.
+    /// Loads an image from the the given Gdk.Pixbuf.
     /////////////////////////////////////////////////////////////////////
     
-    public int size() {
-        if (surface == null) return 0;
-        else return surface.get_width();
-    }
+    public void load_pixbuf(Gdk.Pixbuf pixbuf) {
+        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, pixbuf.width, pixbuf.height);
     
-    /////////////////////////////////////////////////////////////////////
-    /// Returns the context of the image.
-    /////////////////////////////////////////////////////////////////////
-    
-    public Cairo.Context get_context() {
-        return new Cairo.Context(surface);
+        var ctx = this.context();
+        Gdk.cairo_set_source_pixbuf(ctx, pixbuf, 1.0, 1.0);
+        ctx.paint();
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -189,134 +121,33 @@ public class Image : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public void paint_on(Cairo.Context ctx, double alpha = 1.0) {
-        ctx.set_source_surface(surface, -0.5*this.size()-1, -0.5*this.size()-1);
+        ctx.set_source_surface(this.surface, -0.5*this.width()-1, -0.5*this.height()-1);
         if (alpha >= 1.0) ctx.paint();
         else              ctx.paint_with_alpha(alpha);
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Loads the image from a given file.
+    /// Returns a Cairo.Context for the Image.
     /////////////////////////////////////////////////////////////////////
     
-    private void load_file(string filename, int size) {
-    
-        try {
-            var pixbuf = new Gdk.Pixbuf.from_file_at_size(filename, size, size);
-            
-            if (pixbuf == null) {
-                warning("Failed to load " + filename + "!");
-                return;
-            }
-                
-            var ctx = new Cairo.Context(this.surface);
-            Gdk.cairo_set_source_pixbuf(ctx, pixbuf, 1.0, 1.0);
-            ctx.paint();
-            
-        } catch (GLib.Error e) {
-            message("Error loading image file: %s", e.message);
-        }
+    public Cairo.Context context() {
+        return new Cairo.Context(this.surface);;
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Paint a slice icon according to the current theme.
+    /// Returns the width of the image in pixels.
     /////////////////////////////////////////////////////////////////////
     
-    private void paint_themed(string icon_name, bool active) {
-        // get layers for the desired slice type
-        Gee.ArrayList<SliceLayer?> layers;
-        if (active) layers = Config.global.theme.active_slice_layers;
-		else        layers = Config.global.theme.inactive_slice_layers;
-        
-        // get max size
-        int size = 0;
-        foreach (var layer in layers) {
-            if (layer.image.size() > size) size = layer.image.size();
-        }
-        
-        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
-        
-        // get size of icon layer
-        int icon_size = size;
-        foreach (var layer in layers) {
-            if (layer.is_icon) icon_size = layer.image.size();
-        }
-
-        string icon_file = this.get_icon_file(icon_name, size);
-    
-        var icon =  new Image.from_file(icon_file, icon_size);
-        var color = new Color.from_icon(icon);
-        var ctx  =  get_context();
-        
-        ctx.translate(size/2, size/2);
-        ctx.set_operator(Cairo.Operator.OVER);
-        
-        // now render all layers on top of each other
-        foreach (var layer in layers) {
-        
-            if (layer.colorize) ctx.push_group();
-                    
-            if (layer.is_icon) {
-            
-                ctx.push_group();
-                
-                layer.image.paint_on(ctx);
-                
-                ctx.set_operator(Cairo.Operator.IN);
-                
-                if (layer.image.size() != icon_size) {
-                    var icon_theme = Gtk.IconTheme.get_default();
-                    icon_file = icon_theme.lookup_icon(icon_name, layer.image.size(), 0).get_filename();
-                    icon = new Image.from_file(icon_file, layer.image.size());
-                }
-                
-                icon.paint_on(ctx);
-
-                ctx.pop_group_to_source();
-                ctx.paint();
-                ctx.set_operator(Cairo.Operator.OVER);
-                
-            } else layer.image.paint_on(ctx);
-
-            
-            if (layer.colorize) {
-                ctx.set_operator(Cairo.Operator.ATOP);
-                ctx.set_source_rgb(color.r, color.g, color.b);
-                ctx.paint();
-                
-                ctx.set_operator(Cairo.Operator.OVER);
-                ctx.pop_group_to_source();
-                ctx.paint();
-            }
-        }
+    public int width() {
+        return this.surface.get_width();
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Returns the filename for a given system icon.
+    /// Returns the height of the image in pixels.
     /////////////////////////////////////////////////////////////////////
     
-    private string get_icon_file(string icon_name, int size) {
-        string result = "";
-    
-        if (!icon_name.contains("/")) {
-            var icon_theme = Gtk.IconTheme.get_default();
-            var file = icon_theme.lookup_icon(icon_name, size, 0);
-            if (file != null) result = file.get_filename();
-        } else {
-            result = icon_name;
-        }
-        
-        if (result == "") {
-            warning("Icon \"" + icon_name + "\" not found! Using default icon...");
-            icon_name = "application-default-icon";
-            var icon_theme = Gtk.IconTheme.get_default();
-            var file = icon_theme.lookup_icon(icon_name, size, 0);
-            if (file != null) result = file.get_filename();
-        }
-        
-        if (result == "")
-            warning("Icon \"" + icon_name + "\" not found! Will be ugly...");
-            
-        return result;
+    public int height() {
+        return this.surface.get_height();
     }
 }
 

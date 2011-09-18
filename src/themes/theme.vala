@@ -44,8 +44,9 @@ public class Theme : GLib.Object {
     public double slice_radius     {get; private set; default=32.0;}
     public double slice_gap        {get; private set; default=14.0;}
     public bool   caption          {get; private set; default=false;}
-    public double caption_size     {get; private set; default=100.0;}
-    public double font_size        {get; private set; default=12.0;}
+    public string caption_font     {get; private set; default="sans 12";}
+    public int    caption_width    {get; private set; default=100;}
+    public int    caption_height   {get; private set; default=100;}
     public double caption_position {get; private set; default=0.0;}
     public Color  caption_color    {get; private set; default=new Color();}
     
@@ -407,11 +408,18 @@ public class Theme : GLib.Object {
             string attr_content = attribute->children->content;
             
             switch (attr_name) {
-                case "fontsize":
-                    font_size = double.parse(attr_content) * Config.global.global_scale;
+                case "font":
+                    caption_font = attr_content;
                     break;
-                case "maxsize":
-                    caption_size = double.parse(attr_content) * Config.global.global_scale;
+                case "width":
+                    caption_width = (int)(int.parse(attr_content) * Config.global.global_scale);
+                    if (caption_width % 2 == 1)
+                        --caption_width;
+                    break;
+                case "height":
+                    caption_height = (int)(int.parse(attr_content) * Config.global.global_scale);
+                    if (caption_height % 2 == 1)
+                        --caption_height;
                     break;
                 case "position":
                     caption_position = double.parse(attr_content) * Config.global.global_scale;

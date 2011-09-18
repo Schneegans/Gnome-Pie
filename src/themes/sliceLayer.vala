@@ -22,12 +22,12 @@ namespace GnomePie {
 
 public class SliceLayer : GLib.Object {
     
-    public Image image   {get; set;}
+    public Image image {get; set;}
     
     public bool colorize {get; private set; }
-    public bool is_icon  {get; private set;}
-    public string icon_file  {get; private set;}
-    public int icon_size  {get; private set;}
+    public bool is_icon {get; private set;}
+    public string icon_file {get; private set;}
+    public int icon_size {get; private set;}
     
     public SliceLayer(string icon_file, int icon_size, bool colorize, bool is_icon) {
         this.icon_file = icon_file;
@@ -38,9 +38,9 @@ public class SliceLayer : GLib.Object {
     
     public void load_image() {
         if (this.icon_file == "" && this.is_icon == true) 
-            this.image = new Image.empty(this.icon_size, new Color.from_rgb(1, 1, 1));
+            this.image = new Image.empty(this.icon_size, this.icon_size, new Color.from_rgb(1, 1, 1));
         else
-            this.image = new Image.from_file(this.icon_file, this.icon_size);
+            this.image = new Image.from_file_at_size(this.icon_file, this.icon_size, this.icon_size);
     }
 }
 

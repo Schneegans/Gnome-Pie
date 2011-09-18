@@ -102,6 +102,9 @@ public class Deamon : GLib.Application {
         ActionRegistry.init();
         GroupRegistry.init();
         PieManager.init();
+        Icon.init();
+        ThemedIcon.init();
+        RenderedText.init();
     
         // init locale support
         Intl.bindtextdomain ("gnomepie", Paths.locales);

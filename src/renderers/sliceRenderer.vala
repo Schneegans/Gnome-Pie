@@ -66,12 +66,13 @@ public class SliceRenderer : GLib.Object {
         
     
         if (Config.global.theme.caption)
-            this.caption = new Image.from_string(action.name, 
-                                                (int)Config.global.theme.caption_size,
-                                                (int)Config.global.theme.font_size);
+            this.caption = new RenderedText(action.name, 
+                                            Config.global.theme.caption_width,
+                                            Config.global.theme.caption_height,
+                                            Config.global.theme.caption_font);
             
-        this.active_icon = new Image.themed_icon(action.icon, true);
-        this.inactive_icon = new Image.themed_icon(action.icon, false);
+        this.active_icon = new ThemedIcon(action.icon, true);
+        this.inactive_icon = new ThemedIcon(action.icon, false);
         
         this.color = new Color.from_icon(this.active_icon);
     }

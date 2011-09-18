@@ -17,7 +17,7 @@
                           active_scale="0.5"     active_rotationMode="auto"   active_rotationSpeed="2"  active_colorize="false"    active_alpha="1.0" 
                           inactive_scale="1.0" inactive_rotationMode="auto" inactive_rotationSpeed="2"  inactive_colorize="false" inactive_alpha="1.0" />
             <center_layer file="caption.svg" 
-                          active_scale="1.0"     active_rotationMode="auto"   active_rotationSpeed="0"  active_colorize="false"    active_alpha="0.5" 
+                          active_scale="1.0"     active_rotationMode="auto"   active_rotationSpeed="0"  active_colorize="false"    active_alpha="0.8" 
                           inactive_scale="1.0" inactive_rotationMode="auto" inactive_rotationSpeed="0"  inactive_colorize="false" inactive_alpha="0.0" />
         </center>
         <slices radius="30" minGap="0">
@@ -32,7 +32,7 @@
                 <slice_layer type="icon" scale="0.5"/>
             </inactiveSlice>
         </slices>
-        <caption position="-34"  fontSize="12" maxSize="150" />
+        <caption position="-35"  font="sans bold 10" width="100" height="30" />
     </ring>
 </theme>
 

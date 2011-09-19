@@ -17,16 +17,27 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A widget displaying all available themes of Gnome-Pie.
+/////////////////////////////////////////////////////////////////////////    
+/// A widget displaying all available themes of Gnome-Pie.
+/////////////////////////////////////////////////////////////////////////
 
 class ThemeList : Gtk.TreeView {
 
-    private Gtk.TreeIter active {private get; private set;}
+    /////////////////////////////////////////////////////////////////////
+    /// The currently selected row.
+    /////////////////////////////////////////////////////////////////////
+
+    private Gtk.TreeIter active { private get; private set; }
+
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, constructs the Widget.
+    /////////////////////////////////////////////////////////////////////
 
     public ThemeList() {
         GLib.Object();
         
-        var data = new Gtk.ListStore(2, typeof(bool), typeof(string));
+        var data = new Gtk.ListStore(2, typeof(bool),    // selected
+                                        typeof(string)); // description
         base.set_model(data);
         base.set_headers_visible(false);
         base.set_rules_hint(true);
@@ -38,6 +49,7 @@ class ThemeList : Gtk.TreeView {
                 check_render.set_activatable(true);
                 main_column.pack_start(check_render, false);
                 
+                // switch the theme if the entry has been toggled
                 check_render.toggled.connect((r, path) => {
                     Gtk.TreeIter toggled;
                     data.get_iter(out toggled, new Gtk.TreePath.from_string(path));
@@ -66,6 +78,7 @@ class ThemeList : Gtk.TreeView {
         main_column.add_attribute(check_render, "active", 0);
         main_column.add_attribute(theme_render, "markup", 1);
         
+        // load all themes into the list
         var themes = Config.global.themes;
         foreach(var theme in themes) {
             Gtk.TreeIter current;

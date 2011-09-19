@@ -17,12 +17,27 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// An appindicator sitting in the panel...
+/////////////////////////////////////////////////////////////////////////    
+/// An appindicator sitting in the panel. It owns the settings menu.
+/////////////////////////////////////////////////////////////////////////
 
 public class Indicator : GLib.Object {
 
-    private AppIndicator.Indicator indicator {private get; private set;}
-    private Preferences            prefs     {private get; private set;} 
+    /////////////////////////////////////////////////////////////////////
+    /// The internally used indicator.
+    /////////////////////////////////////////////////////////////////////
+
+    private AppIndicator.Indicator indicator { private get; private set; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The Preferences Menu of Gnome-Pie.
+    /////////////////////////////////////////////////////////////////////
+    
+    private Preferences prefs { private get; private set; } 
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns true, when the indicator is currently visible.
+    /////////////////////////////////////////////////////////////////////
     
     public bool active {
         get {
@@ -33,6 +48,10 @@ public class Indicator : GLib.Object {
             else       indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE);
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, constructs a new Indicator, residing in the user's panel.
+    /////////////////////////////////////////////////////////////////////
     
     public Indicator() {
         string path = "";
@@ -50,6 +69,7 @@ public class Indicator : GLib.Object {
         
         var menu = new Gtk.Menu();
 
+        // preferences item
         var item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.PREFERENCES, null);
         item.activate.connect(() => {
             this.prefs.show();
@@ -58,6 +78,7 @@ public class Indicator : GLib.Object {
         item.show();
         menu.append(item);
 
+        // about item
         item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.ABOUT, null);
         item.show();
         item.activate.connect(() => {
@@ -67,10 +88,12 @@ public class Indicator : GLib.Object {
         });
         menu.append(item);
         
+        // separator
         var sepa = new Gtk.SeparatorMenuItem();
         sepa.show();
         menu.append(sepa);
 
+        // quit item
         item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.QUIT, null);
         item.activate.connect(Gtk.main_quit);
         item.show();
@@ -83,6 +106,10 @@ public class Indicator : GLib.Object {
             this.active = Config.global.show_indicator;
         });
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Shows the preferences menu.
+    /////////////////////////////////////////////////////////////////////
     
     public void show_preferences() {
         this.prefs.show();

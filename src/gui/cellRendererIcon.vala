@@ -17,20 +17,44 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A cellrenderer which displays an Icon. When clicked onto, a window opens
-// for selecting another icon. This needs to be a subclass of Gtk.CellRenderer
-// because Gtk.CellRendererPixbuf can't receive click events. Internally it
-// stores a Gtk.CellRendererPixbuf, which renders and stuff.
+/////////////////////////////////////////////////////////////////////////    
+/// A cellrenderer which displays an Icon. When clicked onto, a window
+/// opens for selecting another icon. This needs to be a subclass of
+/// Gtk.CellRendererText because Gtk.CellRendererPixbuf can't receive
+/// click events. Internally it stores a Gtk.CellRendererPixbuf
+/// which renders and stuff.
+/////////////////////////////////////////////////////////////////////////
 
 public class CellRendererIcon : Gtk.CellRendererText {
-
-    private IconSelectWindow select_window = null;
-    private Gtk.CellRendererPixbuf renderer = null;
-    private string current_path = "";
+    
+    /////////////////////////////////////////////////////////////////////
+    /// This signal is emitted when the user selects another icon.
+    /////////////////////////////////////////////////////////////////////
     
     public signal void on_select(string path, string icon);
     
-    // forward CellRendererPixbuf's interface
+    /////////////////////////////////////////////////////////////////////
+    /// The IconSelectWindow which is shown on click.
+    /////////////////////////////////////////////////////////////////////
+
+    private IconSelectWindow select_window = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The internal Renderer used for drawing.
+    /////////////////////////////////////////////////////////////////////
+    
+    private Gtk.CellRendererPixbuf renderer = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A helper variable, needed to emit the current path.
+    /////////////////////////////////////////////////////////////////////
+    
+    private string current_path = "";
+
+    /////////////////////////////////////////////////////////////////////
+    /// Forward some parts of the CellRendererPixbuf's interface.
+    /////////////////////////////////////////////////////////////////////
+    
     public bool follow_state {
         get { return renderer.follow_state; }
         set { renderer.follow_state = value; }
@@ -51,7 +75,10 @@ public class CellRendererIcon : Gtk.CellRendererText {
         set { renderer.sensitive = value; }
     }
 
-    // c'tor
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, creates a new CellRendererIcon.
+    /////////////////////////////////////////////////////////////////////
+    
     public CellRendererIcon() {
         this.select_window = new IconSelectWindow();  
         this.renderer = new Gtk.CellRendererPixbuf();
@@ -62,12 +89,20 @@ public class CellRendererIcon : Gtk.CellRendererText {
         });
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Forward some parts of the CellRendererPixbuf's interface.
+    /////////////////////////////////////////////////////////////////////
+    
     public override void get_size (Gtk.Widget widget, Gdk.Rectangle? cell_area,
                                out int x_offset, out int y_offset,
                                out int width, out int height) {
 
         this.renderer.get_size(widget, cell_area, out x_offset, out y_offset, out width, out height);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Forward some parts of the CellRendererPixbuf's interface.
+    /////////////////////////////////////////////////////////////////////
     
     public override void render (Gdk.Window window, Gtk.Widget widget,
                              Gdk.Rectangle bg_area,
@@ -77,6 +112,10 @@ public class CellRendererIcon : Gtk.CellRendererText {
                              
         this.renderer.render(window, widget, bg_area, cell_area, expose_area, flags);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Open the IconSelectWindow on click.
+    /////////////////////////////////////////////////////////////////////
     
     public override unowned Gtk.CellEditable start_editing(
         Gdk.Event event, Gtk.Widget widget, string path, Gdk.Rectangle bg_area, 

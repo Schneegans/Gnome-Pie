@@ -17,8 +17,10 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// A window which allows selection of an Icon of the user's current icon 
-// theme. Loading of Icons happens in an extra thread.
+/////////////////////////////////////////////////////////////////////////    
+/// A window which allows selection of an Icon of the user's current icon 
+/// theme. Loading of Icons happens in an extra thread.
+/////////////////////////////////////////////////////////////////////////
 
 public class IconSelectWindow : Gtk.Window {
 

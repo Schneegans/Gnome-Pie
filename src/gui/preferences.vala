@@ -17,11 +17,17 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// The Gtk settings menu of Gnome-Pie.
+/////////////////////////////////////////////////////////////////////////    
+/// The Gtk settings menu of Gnome-Pie.
+/////////////////////////////////////////////////////////////////////////
 
 public class Preferences : Gtk.Window {
     
-    // Many thanks to the synapse-project, since some of this code is taken from there!
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, constructs the whole dialog. Many thanks to the
+    /// synapse-project, since some of this code is taken from there! 
+    /////////////////////////////////////////////////////////////////////
+    
     public Preferences() {
         this.title = _("Gnome-Pie - Settings");
         this.set_position(Gtk.WindowPosition.CENTER);
@@ -244,7 +250,11 @@ public class Preferences : Gtk.Window {
             main_vbox.show_all();
     }
 
-    // code inspired by project synapse
+    /////////////////////////////////////////////////////////////////////
+    /// Creates or deletes the autostart file. This code is inspired
+    /// by project synapse as well.
+    /////////////////////////////////////////////////////////////////////
+    
     private void autostart_toggled(Gtk.ToggleButton check_box) {
         bool active = check_box.active;
         if (!active && FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
@@ -280,15 +290,29 @@ public class Preferences : Gtk.Window {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Shows or hides the indicator.
+    /////////////////////////////////////////////////////////////////////
+    
     private void indicator_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
         Config.global.show_indicator = check.active;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Toggles whether the Pies are shown at the mouse or in the middle
+    /// of the screen.
+    /////////////////////////////////////////////////////////////////////
+    
     private void open_at_mouse_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
         Config.global.open_at_mouse = check.active;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Toggles whether the user has to click with the mouse in order to
+    /// activate a slice.
+    /////////////////////////////////////////////////////////////////////
     
     private void click_to_activate_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;

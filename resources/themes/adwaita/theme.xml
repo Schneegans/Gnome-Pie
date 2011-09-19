@@ -21,7 +21,7 @@
                 <slice_layer type="icon" scale="0.9" />
             </inactiveSlice>
         </slices>
-        <caption position="0" font="sans 12" width="100" height="100" color="#000"/>
+        <caption position="0" font="sans 10" width="100" height="100" color="#000"/>
     </ring>
 </theme>
 

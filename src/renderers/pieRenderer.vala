@@ -24,8 +24,8 @@ namespace GnomePie {
 
 public class PieRenderer : GLib.Object {
 
-    public int quick_action {get; private set;}
-    public int active_slice {get; private set;}
+    public int quick_action { get; private set; }
+    public int active_slice { get; private set; }
 
     private int size;
     private Gee.ArrayList<SliceRenderer?> slices;

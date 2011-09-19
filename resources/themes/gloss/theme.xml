@@ -28,7 +28,7 @@
                 <slice_layer type="file" file="icon_fg.svg"   scale="1"   colorize="false" />
             </inactiveSlice>
         </slices>
-        <caption position="0"  font="sans 12" width="100" height="100" />
+        <caption position="0"  font="sans 10" width="100" height="100" />
     </ring>
 </theme>
 

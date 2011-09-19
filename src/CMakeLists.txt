@@ -12,7 +12,6 @@ vala_precompile(
     PACKAGES 
         appindicator-0.1
         gtk+-2.0 
-        gdk-2.0 
         gdk-x11-2.0 
         cairo 
         gee-1.0

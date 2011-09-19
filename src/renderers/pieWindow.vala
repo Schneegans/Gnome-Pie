@@ -37,7 +37,6 @@ public class PieWindow : Gtk.Window {
         this.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN);
         this.set_colormap(screen.get_rgba_colormap());
         this.set_decorated(false);
-        this.set_app_paintable(true);
         this.set_resizable(false);
         this.icon_name = "gnome-pie";
         this.set_accept_focus(false);
@@ -60,6 +59,7 @@ public class PieWindow : Gtk.Window {
         this.key_press_event.connect ((e) => {
             if      (Gdk.keyval_name(e.keyval) == "Escape") this.cancel();
             else if (Gdk.keyval_name(e.keyval) == "Return") this.activate_slice();
+            else if (Gdk.keyval_name(e.keyval) == "space") this.activate_slice();
             return true;
         });
 
@@ -67,8 +67,7 @@ public class PieWindow : Gtk.Window {
     }
 
     public void load_pie(Pie pie) {
-        renderer.load_pie(pie);
-        
+        this.renderer.load_pie(pie);
         this.set_window_position();
         this.set_size_request(renderer.get_size(), renderer.get_size());
     }
@@ -81,32 +80,28 @@ public class PieWindow : Gtk.Window {
         this.timer.start();
         this.queue_draw();
         
-        Timeout.add ((uint)(1000.0/Config.global.refresh_rate), () => {
+        Timeout.add((uint)(1000.0/Config.global.refresh_rate), () => {
             this.queue_draw();
             return this.visible;
         }); 
     }
 
-    private bool draw(Gtk.Widget da, Gdk.EventExpose event) {
+    private bool draw(Gtk.Widget da, Gdk.EventExpose event) {    
+        // clear the window
+        var ctx = Gdk.cairo_create(this.window);
+            ctx.set_operator (Cairo.Operator.CLEAR);
+            ctx.paint();
+            ctx.set_operator (Cairo.Operator.OVER);
+            ctx.translate(this.width_request*0.5, this.height_request*0.5);
+        
+        double mouse_x = 0.0, mouse_y = 0.0;
+        this.get_pointer(out mouse_x, out mouse_y);
+        
         double frame_time = this.timer.elapsed();
         this.timer.reset();
-    
-        double mouse_x = 0.0;
-        double mouse_y = 0.0;
-        this.get_pointer(out mouse_x, out mouse_y);
-        mouse_x -= this.width_request*0.5;
-        mouse_y -= this.height_request*0.5;
         
-        var ctx = Gdk.cairo_create(this.window);
-        ctx.set_operator(Cairo.Operator.OVER);
-        ctx.translate(this.width_request*0.5, this.height_request*0.5);
-        
-        // clear the window
-        ctx.set_operator (Cairo.Operator.CLEAR);
-        ctx.paint();
-        ctx.set_operator (Cairo.Operator.OVER);
-        
-        renderer.draw(frame_time, ctx, (int)mouse_x, (int)mouse_y);
+        this.renderer.draw(frame_time, ctx, (int)(mouse_x - this.width_request*0.5), 
+                                            (int)(mouse_y - this.height_request*0.5));
         
         return true;
     }
@@ -115,7 +110,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.unfix_focus();
-            renderer.activate();
+            this.renderer.activate();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
                 this.destroy();
@@ -128,7 +123,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.unfix_focus();
-            renderer.cancel();
+            this.renderer.cancel();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
                 this.destroy();
@@ -151,7 +146,7 @@ public class PieWindow : Gtk.Window {
         this.get_window().focus(timestamp);
 
         int i = 0;
-        Timeout.add (100, ()=>{
+        Timeout.add(100, () => {
             if (++i >= 100) return false;
             return !try_grab_window();
         });
@@ -168,9 +163,9 @@ public class PieWindow : Gtk.Window {
     // Code from Gnome-Do/Synapse 
     private bool try_grab_window() {
         uint time = Gtk.get_current_event_time();
-        if (Gdk.pointer_grab (this.get_window(), true,
-            Gdk.EventMask.BUTTON_PRESS_MASK | Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
-            null, null, time) == Gdk.GrabStatus.SUCCESS) {
+        if (Gdk.pointer_grab(this.get_window(), true, Gdk.EventMask.BUTTON_PRESS_MASK | 
+                             Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
+                             null, null, time) == Gdk.GrabStatus.SUCCESS) {
             
             if (Gdk.keyboard_grab(this.get_window(), true, time) == Gdk.GrabStatus.SUCCESS) {
                 Gtk.grab_add(this);

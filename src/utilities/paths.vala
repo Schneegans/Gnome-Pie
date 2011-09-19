@@ -30,7 +30,6 @@ public class Paths : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public static string settings { get; private set; default=""; }
-
     
     /////////////////////////////////////////////////////////////////////
     /// The file pie configuration file
@@ -39,14 +38,12 @@ public class Paths : GLib.Object {
     
     public static string pie_config { get; private set; default=""; }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// The directory where pies.config.default resides in,
     /// usually /usr/share/gnome-pie.
     /////////////////////////////////////////////////////////////////////
     
     public static string default_pie_config { get; private set; default=""; }
-    
     
     /////////////////////////////////////////////////////////////////////
     /// The directory containing themes installed by the user
@@ -55,14 +52,12 @@ public class Paths : GLib.Object {
     
     public static string local_themes { get; private set; default=""; }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// The directory containing pre-installed themes
     /// usually /usr/share/gnome-pie/themes.
     /////////////////////////////////////////////////////////////////////
     
     public static string global_themes { get; private set; default=""; }
-    
     
     /////////////////////////////////////////////////////////////////////
     /// The directory containing locale files
@@ -71,14 +66,12 @@ public class Paths : GLib.Object {
     
     public static string locales { get; private set; default=""; }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// The autostart file of gnome-pie_config
     /// usually ~/.config/autostart/gnome-pie.desktop.
     /////////////////////////////////////////////////////////////////////
     
     public static string autostart { get; private set; default=""; }
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Initializes all values above.

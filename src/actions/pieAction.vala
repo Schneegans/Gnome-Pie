@@ -39,15 +39,13 @@ public class PieAction : Action {
     /// Stores the ID of the referenced Pie.
     /////////////////////////////////////////////////////////////////////
 
-    public override string real_command { get; construct set;}
-    
+    public override string real_command { get; construct set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Returns the name of the referenced Pie.
     /////////////////////////////////////////////////////////////////////
     
     public override string display_command { get {return name;} }
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Returns the name of the referenced Pie.

@@ -31,13 +31,11 @@ public class PieManager : GLib.Object {
 
     public static Gee.HashMap<string, Pie?> all_pies { get; private set; }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// Stores all global hotkeys.
     /////////////////////////////////////////////////////////////////////
     
     private static BindingManager bindings;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Initializes all Pies. They are loaded from the pies.conf file.

@@ -43,13 +43,11 @@ public class Deamon : GLib.Application {
 
     private Indicator indicator = null;
     
-    
     /////////////////////////////////////////////////////////////////////
     /// Only true when the first instance of Gnome-Pie is launched.
     /////////////////////////////////////////////////////////////////////
     
     private bool need_init = true;
-
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor of the Deamon. It checks whether it's the firts running

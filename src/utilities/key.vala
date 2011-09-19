@@ -39,15 +39,13 @@ public class Key : GLib.Object {
     /// A human readable form of the Key's accelerator.
     /////////////////////////////////////////////////////////////////////
 
-    public string label {get; private set;}
-    
+    public string label { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// The accelerator of the Key.
     /////////////////////////////////////////////////////////////////////
     
-    public string accelerator {get; private set;}
-    
+    public string accelerator { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Keycode and modifiers of this stroke.
@@ -55,7 +53,6 @@ public class Key : GLib.Object {
     
     private int key_code;
     private Gdk.ModifierType modifiers;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.

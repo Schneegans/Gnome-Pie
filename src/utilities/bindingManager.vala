@@ -31,14 +31,12 @@ public class BindingManager : GLib.Object {
 
     public signal void on_press(string id);
     
-    
     /////////////////////////////////////////////////////////////////////
     /// A list storing bindings, which are invoked even if Gnome-Pie
     /// doesn't have the current focus
     /////////////////////////////////////////////////////////////////////
     
     private Gee.List<Keybinding> bindings = new Gee.ArrayList<Keybinding>();
-
 
     /////////////////////////////////////////////////////////////////////
     /// Ignored modifier masks, used to grab all keys even if these locks

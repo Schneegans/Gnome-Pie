@@ -27,17 +27,16 @@ public class GroupRegistry : GLib.Object {
     /// A list containing all available ActionGroup types.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.ArrayList<Type> types {get; private set;}
-    
+    public static Gee.ArrayList<Type> types { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Three maps associating a displayable name for each ActionGroup, 
     /// an icon name and a name for the pies.conf file with it's type.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.HashMap<Type, string> names {get; private set;}
-    public static Gee.HashMap<Type, string> icons {get; private set;}
-    public static Gee.HashMap<Type, string> settings_names {get; private set;}
+    public static Gee.HashMap<Type, string> names { get; private set; }
+    public static Gee.HashMap<Type, string> icons { get; private set; }
+    public static Gee.HashMap<Type, string> settings_names { get; private set; }
     
     
     /////////////////////////////////////////////////////////////////////

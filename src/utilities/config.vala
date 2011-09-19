@@ -30,7 +30,6 @@ public class Config : GLib.Object {
 
     private static Config _instance = null;
     
-    
     /////////////////////////////////////////////////////////////////////
     /// Returns the singleton instance.
     /////////////////////////////////////////////////////////////////////
@@ -52,15 +51,14 @@ public class Config : GLib.Object {
     /// All settings variables.
     /////////////////////////////////////////////////////////////////////
 
-    public Theme  theme             {get; set;}
-    public double refresh_rate      {get; set; default = 60.0;}
-    public double global_scale      {get; set; default = 1.0;}
-    public bool   show_indicator    {get; set; default = true;}
-    public bool   open_at_mouse     {get; set; default = true;}
-    public bool   click_to_activate {get; set; default = true;}
-    public bool   auto_start        {get; set; default = false;}
-    public Gee.ArrayList<Theme?> themes {get; private set;}
-    
+    public Theme theme { get; set; }
+    public double refresh_rate { get; set; default = 60.0; }
+    public double global_scale { get; set; default = 1.0; }
+    public bool show_indicator { get; set; default = true; }
+    public bool open_at_mouse { get; set; default = true; }
+    public bool click_to_activate { get; set; default = true; }
+    public bool auto_start { get; set; default = false; }
+    public Gee.ArrayList<Theme?> themes { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Saves all above variables to a file.

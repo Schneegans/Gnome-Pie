@@ -29,32 +29,28 @@ public class Logger {
     /// If these are set to false, the according messages are not shown
     /////////////////////////////////////////////////////////////////////
     
-    public static bool display_info {get; set; default = true;}
-    public static bool display_debug {get; set; default = true;}
-    public static bool display_warning {get; set; default = true;}
-    public static bool display_error {get; set; default = true;}
-    
+    public static bool display_info { get; set; default = true; }
+    public static bool display_debug { get; set; default = true; }
+    public static bool display_warning { get; set; default = true; }
+    public static bool display_error { get; set; default = true; }
     
     /////////////////////////////////////////////////////////////////////
     /// If true, a time stamp is shown in each message.
     /////////////////////////////////////////////////////////////////////
     
-    public static bool display_time {get; set; default = true;}
-    
+    public static bool display_time { get; set; default = true; }
     
     /////////////////////////////////////////////////////////////////////
     /// If true, the origin of the message is shown. In form file:line
     /////////////////////////////////////////////////////////////////////
     
-    public static bool display_file {get; set; default = false;}
-    
+    public static bool display_file { get; set; default = false; }
     
     /////////////////////////////////////////////////////////////////////
     /// A regex, used to format the standard message.
     /////////////////////////////////////////////////////////////////////
     
     private static Regex regex = null;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Possible terminal colors.

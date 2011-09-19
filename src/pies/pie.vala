@@ -29,16 +29,14 @@ public class Pie : GLib.Object {
     /// The name of this Pie. It has not to be unique.
     /////////////////////////////////////////////////////////////////////
     
-    public string name {get; construct;}
-    
+    public string name { get; construct; }
     
     /////////////////////////////////////////////////////////////////////
     /// The name of the icon to be used for this Pie. It should exist in
     /// the users current icon theme, else a standard icon will be used.
     /////////////////////////////////////////////////////////////////////
     
-    public string icon {get; construct;}
-    
+    public string icon { get; construct; }
     
     /////////////////////////////////////////////////////////////////////
     /// The ID of this Pie. It has to be unique among all Pies. This ID
@@ -47,15 +45,13 @@ public class Pie : GLib.Object {
     /// for example by an ActionGroup.
     /////////////////////////////////////////////////////////////////////
     
-    public string id {get; construct;}
-    
+    public string id { get; construct; }
     
     /////////////////////////////////////////////////////////////////////
     /// Stores all ActionGroups of this Pie.
     /////////////////////////////////////////////////////////////////////
     
-    public Gee.ArrayList<ActionGroup?> action_groups {get; private set;}
-    
+    public Gee.ArrayList<ActionGroup?> action_groups { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all given members.
@@ -76,7 +72,6 @@ public class Pie : GLib.Object {
         foreach (var action_group in action_groups)
             action_group.on_remove();
     }
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Adds an ActionGroup to this Pie.

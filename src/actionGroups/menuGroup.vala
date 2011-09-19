@@ -41,7 +41,6 @@ public class MenuGroup : ActionGroup {
     
     public bool is_toplevel {get; construct set; default = true;}
     
-    
     /////////////////////////////////////////////////////////////////////
     /// The menu tree displayed by the MenuGroup. Only set for the
     /// toplevel MenuGroup.
@@ -49,13 +48,11 @@ public class MenuGroup : ActionGroup {
     
     private GMenu.Tree menu = null;
     
-    
     /////////////////////////////////////////////////////////////////////
     /// A list of all sub menus of this MenuGroup.
     /////////////////////////////////////////////////////////////////////
     
     private Gee.ArrayList<MenuGroup?> childs;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Two members needed to avoid useless, frequent changes of the 
@@ -64,7 +61,6 @@ public class MenuGroup : ActionGroup {
     
     private bool changing = false;
     private bool changed_again = false;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members. Used for the toplevel menu.

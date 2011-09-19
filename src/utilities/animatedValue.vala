@@ -30,13 +30,11 @@ public class AnimatedValue : GLib.Object {
 
     public enum Direction { IN, OUT, IN_OUT, OUT_IN }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// Type of the interpolation, linear or cubic.
     /////////////////////////////////////////////////////////////////////
     
-    private enum Type {LINEAR, CUBIC}
-    
+    private enum Type { LINEAR, CUBIC }
     
     /////////////////////////////////////////////////////////////////////
     /// Current value, interpolated.
@@ -44,13 +42,11 @@ public class AnimatedValue : GLib.Object {
     
     public double val { get; private set; }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// Starting value of the interpolation.
     /////////////////////////////////////////////////////////////////////
     
     public double start { get; private set; default=0.0; }
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Final value of the interpolation.
@@ -58,13 +54,11 @@ public class AnimatedValue : GLib.Object {
     
     public double end { get; private set; default=0.0; } 
     
-    
     /////////////////////////////////////////////////////////////////////
     /// The current state. In range 0 .. 1
     /////////////////////////////////////////////////////////////////////
     
     private double state = 0.0;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Duration of the interpolation. Should be in the same unit as 
@@ -73,13 +67,11 @@ public class AnimatedValue : GLib.Object {
     
     private double duration = 0.0;
     
-    
     /////////////////////////////////////////////////////////////////////
     /// The amount of over-shooting of the cubicly interpolated value.
     /////////////////////////////////////////////////////////////////////
     
     private double multiplier = 0.0;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Type of the interpolation, linear or cubic.
@@ -87,13 +79,11 @@ public class AnimatedValue : GLib.Object {
     
     private Type type = Type.LINEAR;
     
-    
     /////////////////////////////////////////////////////////////////////
     /// The direction of the interpolation.
     /////////////////////////////////////////////////////////////////////
     
     private Direction direction = Direction.IN;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Creates a new linearly interpolated value.

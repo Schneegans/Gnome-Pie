@@ -41,13 +41,11 @@ public class UriAction : Action {
     
     public override string real_command { get; construct set; }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// Returns only the real URI. An URI can't be beautified.
     /////////////////////////////////////////////////////////////////////
     
     public override string display_command { get {return real_command;} }
-
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.

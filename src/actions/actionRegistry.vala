@@ -27,8 +27,7 @@ public class ActionRegistry : GLib.Object {
     /// A list containing all available Action types.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.ArrayList<Type> types {get; private set;}
-    
+    public static Gee.ArrayList<Type> types { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Three maps associating a displayable name for each Action, 
@@ -36,10 +35,9 @@ public class ActionRegistry : GLib.Object {
     /// file with it's type.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.HashMap<Type, string> names {get; private set;}
-    public static Gee.HashMap<Type, bool> icon_name_editables {get; private set;}
-    public static Gee.HashMap<Type, string> settings_names {get; private set;}
-    
+    public static Gee.HashMap<Type, string> names { get; private set; }
+    public static Gee.HashMap<Type, bool> icon_name_editables { get; private set; }
+    public static Gee.HashMap<Type, string> settings_names { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Registers all Action types.

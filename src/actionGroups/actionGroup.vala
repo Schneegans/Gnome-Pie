@@ -29,15 +29,13 @@ public class ActionGroup : GLib.Object {
     /// A list of all stored actions.
     /////////////////////////////////////////////////////////////////////
     
-    public Gee.ArrayList<Action?> actions {get; private set;}
+    public Gee.ArrayList<Action?> actions { get; private set; }
     
-
     /////////////////////////////////////////////////////////////////////
     /// The ID of the pie to which this group is attached.
     /////////////////////////////////////////////////////////////////////
     
-    public string parent_id {get; construct set;}
-    
+    public string parent_id { get; construct set; }
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
@@ -56,7 +54,6 @@ public class ActionGroup : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public virtual void on_remove() {}
-    
     
     /////////////////////////////////////////////////////////////////////
     /// Adds a new Action to the group.

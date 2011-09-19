@@ -29,31 +29,27 @@ public abstract class Action : GLib.Object {
     /// It may be anything but has to be representable with a string.
     /////////////////////////////////////////////////////////////////////
 
-    public abstract string real_command {get; construct set;}
-    
+    public abstract string real_command { get; construct set; }
     
     /////////////////////////////////////////////////////////////////////
     /// The command displayed to the user. It should be a bit more
     /// beautiful than the real_command.
     /////////////////////////////////////////////////////////////////////
     
-    public abstract string display_command {get;}  
-    
+    public abstract string display_command { get; }  
     
     /////////////////////////////////////////////////////////////////////
     /// The name of the Action.
     /////////////////////////////////////////////////////////////////////  
 
-    public virtual string name {get; protected set;}
-    
+    public virtual string name { get; protected set; }
     
     /////////////////////////////////////////////////////////////////////
     /// The name of the icon of this Action. It should be in the users
     /// current icon theme.
     /////////////////////////////////////////////////////////////////////
     
-    public virtual string icon {get; protected set;}
-    
+    public virtual string icon { get; protected set; }
     
     /////////////////////////////////////////////////////////////////////
     /// True, if this Action is the quickAction of the associated Pie.
@@ -61,8 +57,7 @@ public abstract class Action : GLib.Object {
     /// the center of a Pie.
     /////////////////////////////////////////////////////////////////////
     
-    public virtual bool is_quick_action {get; protected set;}
-
+    public virtual bool is_quick_action { get; protected set; }
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.

@@ -44,13 +44,11 @@ public class DevicesGroup : ActionGroup {
     private bool changing = false;
     private bool changed_again = false;
     
-    
     /////////////////////////////////////////////////////////////////////
     /// The VolumeMonitor used to check for added or removed devices.
     /////////////////////////////////////////////////////////////////////
     
     private GLib.VolumeMonitor monitor;
-    
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.

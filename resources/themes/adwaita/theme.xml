@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="Adwaita" description="Made for the default theme of Gnome3" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="120" maxZoom="1.3" zoomRange="0.1" transitionTime="0.2" springiness="1.5" 
+    <ring radius="150" maxZoom="1.1" zoomRange="0.1" transitionTime="0.2" springiness="1.5" 
           fadeInTime="0.3" fadeOutTime="0.3" fadeInZoom="1.5" fadeOutZoom="0.7" fadeInRotation="0.5" fadeOutRotation="-0.7">
         <center radius="100" activeRadius="55">
             <center_layer file="ring.svg" 
@@ -11,14 +11,14 @@
                           active_scale="1.0"     active_rotationMode="turn_to_mouse"   active_rotationSpeed="10.0"    active_colorize="true"    active_alpha="1.0" 
                           inactive_scale="1.0" inactive_rotationMode="turn_to_mouse" inactive_rotationSpeed="5.0"  inactive_colorize="false" inactive_alpha="0.0" />
         </center>
-        <slices radius="50">
+        <slices radius="30">
             <activeSlice>
-                <slice_layer type="file" file="icon_active.svg" />
-                <slice_layer type="icon" scale="0.4" />
+                <slice_layer type="file" file="icon_active.svg" scale="1.8" />
+                <slice_layer type="icon" scale="0.9" />
             </activeSlice>
             <inactiveSlice>
-                <slice_layer type="file" file="icon_inactive.svg"/>
-                <slice_layer type="icon" scale="0.4" />
+                <slice_layer type="file" file="icon_inactive.svg" scale="1.8" />
+                <slice_layer type="icon" scale="0.9" />
             </inactiveSlice>
         </slices>
         <caption position="0" font="sans 12" width="100" height="100" color="#000"/>

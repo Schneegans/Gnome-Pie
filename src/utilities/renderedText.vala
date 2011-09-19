@@ -79,17 +79,22 @@ public class RenderedText : Image {
         
         var layout = Pango.cairo_create_layout(ctx);        
         layout.set_width(Pango.units_from_double(width));
-        layout.set_height(Pango.units_from_double(height));
         
         var font_description = Pango.FontDescription.from_string(font);
         font_description.set_size((int)(font_description.get_size() * Config.global.global_scale));
         
         layout.set_font_description(font_description);
         layout.set_text(text, -1);
-        layout.set_alignment(Pango.Alignment.CENTER);
         
-        layout.set_wrap(Pango.WrapMode.WORD_CHAR);
+        // add newlines at the end of each line, in order to allow ellipsizing
+        string broken_string = "";
+        foreach (var line in layout.get_lines()) {
+            broken_string = broken_string.concat(text.substring(line.start_index, line.length), "\n");
+        }
+        layout.set_text(broken_string, broken_string.length-1);
+        
         layout.set_ellipsize(Pango.EllipsizeMode.END);
+        layout.set_alignment(Pango.Alignment.CENTER);
         
         Pango.Rectangle extents;
         layout.get_pixel_extents(null, out extents);

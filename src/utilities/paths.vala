@@ -39,13 +39,6 @@ public class Paths : GLib.Object {
     public static string pie_config { get; private set; default=""; }
     
     /////////////////////////////////////////////////////////////////////
-    /// The directory where pies.config.default resides in,
-    /// usually /usr/share/gnome-pie.
-    /////////////////////////////////////////////////////////////////////
-    
-    public static string default_pie_config { get; private set; default=""; }
-    
-    /////////////////////////////////////////////////////////////////////
     /// The directory containing themes installed by the user
     /// usually ~/.config/gnome-pie/themes.
     /////////////////////////////////////////////////////////////////////
@@ -111,7 +104,6 @@ public class Paths : GLib.Object {
         }
         
         global_themes = default_dir.get_path() + "/themes";
-        default_pie_config = default_dir.get_path() + "/pies.conf.default";
         
         // get locales path
         var locale_dir = GLib.File.new_for_path("/usr/share/locale/de/LC_MESSAGES/gnomepie.mo");
@@ -165,17 +157,6 @@ public class Paths : GLib.Object {
         
         // check for config file and copy default if it doesn't exist
         var config_file = config_dir.get_child("pies.conf");
-        if(!config_file.query_exists()) {
-        
-            var default_conf = GLib.File.new_for_path(default_pie_config);
-            if(default_conf.query_exists()) {
-                try {
-                    default_conf.copy(config_file, GLib.FileCopyFlags.NONE);
-                } catch (GLib.Error e) {
-                    error(e.message);
-                }
-            } 
-        }
         
         pie_config = config_file.get_path();
         settings = config_dir.get_path() + "/gnome-pie.conf";
@@ -186,7 +167,7 @@ public class Paths : GLib.Object {
         
         // print results
         if (!GLib.File.new_for_path(pie_config).query_exists())                                                  
-            warning("Failed to find pie configuration file \"pies.conf\"!");
+            warning("Failed to find pie configuration file \"pies.conf\"! (This should only happen when Gnome-Pie is started for the first time...)");
             
         if (!GLib.File.new_for_path(settings).query_exists())                                                  
             warning("Failed to find settings file \"gnome-pie.conf\"!");

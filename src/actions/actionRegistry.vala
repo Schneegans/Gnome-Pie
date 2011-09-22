@@ -150,14 +150,11 @@ public class ActionRegistry : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// A helper method which creates an AppAction for given *.desktop
-    /// file.
+    /// A helper method which creates an AppAction for given AppInfo.
     /////////////////////////////////////////////////////////////////////
     
-    public static Action? new_for_desktop_file(string file_name) {
-        var file = new DesktopAppInfo.from_filename(file_name);
-        
-        string[] icons = file.get_icon().to_string().split(" ");
+    public static Action? new_for_app_info(GLib.AppInfo info) {        
+        string[] icons = info.get_icon().to_string().split(" ");
         string final_icon = "application-default-icon";
         
         // search for available icons
@@ -168,7 +165,35 @@ public class ActionRegistry : GLib.Object {
             }
         }
         
-        return new AppAction(file.get_display_name() , final_icon, file.get_commandline());
+        return new AppAction(info.get_display_name() , final_icon, info.get_commandline());
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A helper method which creates an AppAction for given *.desktop
+    /// file.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static Action? new_for_desktop_file(string file_name) {
+        var info = new DesktopAppInfo.from_filename(file_name);
+        return new_for_app_info(info);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A helper method which creates an AppAction for given mime type.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static Action? default_for_mime_type(string type) {
+        var info = AppInfo.get_default_for_type(type, false);
+        return new_for_app_info(info);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A helper method which creates an AppAction for given uri scheme.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static Action? default_for_uri(string uri) {
+        var info = AppInfo. get_default_for_uri_scheme(uri);
+        return new_for_app_info(info);
     }
 }
 

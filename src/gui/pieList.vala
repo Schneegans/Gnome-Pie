@@ -623,7 +623,7 @@ class PieList : Gtk.TreeView {
                 this.update_pie(selected);
             } 
         } else {
-            var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL, 
+            var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
                                                      Gtk.MessageType.INFO, 
                                                      Gtk.ButtonsType.CLOSE, 
                                                      _("You have to select a Pie to add a Slice to!"));
@@ -672,7 +672,7 @@ class PieList : Gtk.TreeView {
                     this.delete_slice(selected);
             } 
         } else {
-            var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL, 
+            var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
                                                      Gtk.MessageType.INFO, 
                                                      Gtk.ButtonsType.CLOSE, 
                                                      _("You have to select a Pie or a Slice to delete!"));
@@ -683,7 +683,7 @@ class PieList : Gtk.TreeView {
 
     // deletes the given pie
     private void delete_pie(Gtk.TreeIter pie) {
-        var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL, 
+        var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
                                                  Gtk.MessageType.QUESTION, 
                                                  Gtk.ButtonsType.YES_NO, 
                                                  _("Do you really want to delete the selected Pie with all contained Slices?"));
@@ -717,7 +717,7 @@ class PieList : Gtk.TreeView {
 
     // deletes the given slice
     private void delete_slice(Gtk.TreeIter slice) {
-        var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL, 
+        var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
                                                  Gtk.MessageType.QUESTION, 
                                                  Gtk.ButtonsType.YES_NO, 
                                                  _("Do you really want to delete the selected Slice?"));

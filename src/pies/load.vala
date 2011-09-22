@@ -20,17 +20,23 @@ using GLib.Math;
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// A helper class which loads pies according to the configuration file.
-/// It has got it's own class in order to keep other files clean.
+/// A helper method which loads pies according to the configuration file.
 /////////////////////////////////////////////////////////////////////////
 
-public class PieLoader : GLib.Object {
+namespace Pies {
 
     /////////////////////////////////////////////////////////////////////
     /// Loads all Pies from the pies.conf file.
     /////////////////////////////////////////////////////////////////////
     
-    public static void load_pies() {
+    public void load() {
+        // check whether the config file exists
+        if (!GLib.File.new_for_path(Paths.pie_config).query_exists()) {
+            message("Creating new configuration file in \"" + Paths.pie_config + "\".");
+            Pies.create_default_config();
+            return;
+        }
+    
         // load the settings file
         Xml.Parser.init();
         Xml.Doc* piesXML = Xml.Parser.parse_file(Paths.pie_config);
@@ -168,23 +174,21 @@ public class PieLoader : GLib.Object {
             }
         }
         
-        ActionGroup group = null;
+        Action action = null;
         
         // create a new Action according to the loaded type
         foreach (var action_type in ActionRegistry.types) {
             if (ActionRegistry.settings_names[action_type] == type) {
             
-                Action action = GLib.Object.new(action_type, "name", name, 
-                                                             "icon", icon, 
-                                                     "real_command", command, 
-                                                  "is_quick_action", quick_action) as Action;
-                group = new ActionGroup(pie.id);
-                group.add_action(action);
+                action = GLib.Object.new(action_type, "name", name, 
+                                                      "icon", icon, 
+                                              "real_command", command, 
+                                           "is_quick_action", quick_action) as Action;
                 break;
             } 
         }
         
-        if (group != null) pie.add_group(group);
+        if (action != null) pie.add_action(action);
     }
     
     /////////////////////////////////////////////////////////////////////

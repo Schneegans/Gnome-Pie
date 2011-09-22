@@ -20,17 +20,16 @@ using GLib.Math;
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// A helper class which saves pies in a configuration file.
-/// It has got it's own class in order to keep other files clean.
+/// A helper method which saves pies in a configuration file.
 /////////////////////////////////////////////////////////////////////////
 
-public class PieSaver : GLib.Object {
+namespace Pies {
 
     /////////////////////////////////////////////////////////////////////
     /// Saves all Pies of the PieManager to the pies.conf file.
     /////////////////////////////////////////////////////////////////////
     
-    public static void save_pies() {
+    public void save() {
         // initializes the XML-Writer
         var writer = new Xml.TextWriter.filename(Paths.pie_config);
         writer.set_indent(true);

@@ -46,7 +46,7 @@ public class PieManager : GLib.Object {
         bindings = new BindingManager();
         
         // load all Pies from th pies.conf file
-        PieLoader.load_pies();
+        Pies.load();
         
         // open the according pie if it's hotkey is pressed
         bindings.on_press.connect((id) => {
@@ -98,14 +98,14 @@ public class PieManager : GLib.Object {
     }
     
     public static Pie create_persistent_pie(string name, string icon_name, string hotkey, string? desired_id = null) {
-        
+
         var random = new GLib.Rand();
         
         string final_id;
         
         if (desired_id == null) final_id = random.int_range(100, 999).to_string();
         else                    final_id = desired_id;
-        
+
         final_id.canon("0123456789", '_');
         final_id = final_id.replace("_", "");
         
@@ -113,7 +113,7 @@ public class PieManager : GLib.Object {
             final_id = random.int_range(100, 999).to_string();
             warning("A static ID should be a three digit number! Using \"" + final_id + "\" instead of \"" + desired_id + "\" for static pie \"" + name + "\"...");
         }
-    
+
         if (all_pies.has_key(final_id)) {
             var tmp = final_id;
             var id_number = int.parse(final_id) + 1;
@@ -125,7 +125,7 @@ public class PieManager : GLib.Object {
 
         Pie pie = new Pie(final_id, name, icon_name);
         all_pies.set(final_id, pie);
-        
+
         if (hotkey != "")
             bindings.bind(hotkey, final_id);
         

@@ -22,7 +22,7 @@ namespace GnomePie {
 /// theme. Loading of Icons happens in an extra thread.
 /////////////////////////////////////////////////////////////////////////
 
-public class IconSelectWindow : Gtk.Window {
+public class IconSelectWindow : Gtk.Dialog {
 
     private static Gtk.ListStore icon_list = null;
     
@@ -33,6 +33,7 @@ public class IconSelectWindow : Gtk.Window {
     private Gtk.TreeModelFilter icon_list_filtered = null;
     private Gtk.IconView icon_view = null;
     private Gtk.Spinner spinner = null;
+
     
     private class ListEntry {
         public string name;
@@ -61,7 +62,7 @@ public class IconSelectWindow : Gtk.Window {
         set {
             _active_icon = value;
 
-            icon_list_filtered.foreach((model, path, iter) => {
+            this.icon_list_filtered.foreach((model, path, iter) => {
                 string name = "";
                 model.get(iter, 0, out name);
                 
@@ -79,7 +80,6 @@ public class IconSelectWindow : Gtk.Window {
     
     public IconSelectWindow() {
         this.title = _("Choose an Icon");
-        this.modal = true;
         this.set_size_request(290, 450);
         this.delete_event.connect(hide_on_delete);
         this.load_queue = new GLib.AsyncQueue<ListEntry?>();
@@ -94,11 +94,11 @@ public class IconSelectWindow : Gtk.Window {
             });
         } 
         
-        icon_list_filtered = new Gtk.TreeModelFilter(this.icon_list, null);
-        
-        var main_vbox = new Gtk.VBox(false, 12);
-            main_vbox.border_width = 12;
-        
+        this.icon_list_filtered = new Gtk.TreeModelFilter(this.icon_list, null);
+
+        var container = new Gtk.VBox(false, 12);
+            container.set_border_width(12);
+    
             var context_combo = new Gtk.ComboBox.text();
                 context_combo.append_text(_("All icons"));
                 context_combo.append_text(_("Applications"));
@@ -111,18 +111,18 @@ public class IconSelectWindow : Gtk.Window {
                 context_combo.set_active(0);
                 
                 context_combo.changed.connect(() => {
-                    icon_list_filtered.refilter();
+                    this.icon_list_filtered.refilter();
                 });
                 
-                main_vbox.pack_start(context_combo, false, false);
+                container.pack_start(context_combo, false, false);
                 
             var filter = new Gtk.Entry();
                 filter.primary_icon_stock = Gtk.Stock.FIND;
                 filter.primary_icon_activatable = false;
                 filter.secondary_icon_stock = Gtk.Stock.CLEAR;
-                main_vbox.pack_start(filter, false, false);
+                container.pack_start(filter, false, false);
                 
-                icon_list_filtered.set_visible_func((model, iter) => {
+                this.icon_list_filtered.set_visible_func((model, iter) => {
                     string name = "";
                     IconContext context = IconContext.ALL;
                     model.get(iter, 0, out name);
@@ -141,41 +141,41 @@ public class IconSelectWindow : Gtk.Window {
                 });
                 
                 filter.notify["text"].connect(() => {
-                    icon_list_filtered.refilter();
+                    this.icon_list_filtered.refilter();
                 });
             
             var scroll = new Gtk.ScrolledWindow (null, null);
                 scroll.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
                 scroll.set_shadow_type (Gtk.ShadowType.IN);
 
-                this.icon_view = new Gtk.IconView.with_model(icon_list_filtered);
+                this.icon_view = new Gtk.IconView.with_model(this.icon_list_filtered);
                     this.icon_view.item_width = 32;
                     this.icon_view.item_padding = 3;
                     this.icon_view.pixbuf_column = 2;
                     this.icon_view.tooltip_column = 0;
                     
                     this.icon_view.selection_changed.connect(() => {
-                        foreach (var path in icon_view.get_selected_items()) {
+                        foreach (var path in this.icon_view.get_selected_items()) {
                             Gtk.TreeIter iter;
-                            icon_list_filtered.get_iter(out iter, path);
+                            this.icon_list_filtered.get_iter(out iter, path);
                             icon_list_filtered.get(iter, 0, out this._active_icon);
                         }
                     });
                     
                     this.icon_view.item_activated.connect((path) => {
                         Gtk.TreeIter iter;
-                        icon_list_filtered.get_iter(out iter, path);
-                        icon_list_filtered.get(iter, 0, out this._active_icon);
+                        this.icon_list_filtered.get_iter(out iter, path);
+                        this.icon_list_filtered.get(iter, 0, out this._active_icon);
                         this.on_select(this.active_icon);
                         this.hide();
                     });
             
-                scroll.add(icon_view);
-                
-                main_vbox.pack_start(scroll, true, true);
+                scroll.add(this.icon_view);
             
-            // button box
-            var bottom_box = new Gtk.HBox(false, 6);
+                container.pack_start(scroll, true, true);
+
+            // button box 
+            var bottom_box = new Gtk.HBox(false, 0);
             
                 var bbox = new Gtk.HButtonBox();
                     bbox.set_spacing(6);
@@ -195,23 +195,26 @@ public class IconSelectWindow : Gtk.Window {
                         bbox.pack_start(ok_button);
                         
                     bottom_box.pack_end(bbox, false);
-                
-                spinner = new Gtk.Spinner();
-                    spinner.set_size_request(16, 16);
-                    spinner.start();
                     
-                    bottom_box.pack_start(spinner, false, false);
-                    
-                main_vbox.pack_start(bottom_box, false);
+                    this.spinner = new Gtk.Spinner();
+                        this.spinner.set_size_request(16, 16);
+                        this.spinner.start();
+                        
+                        bottom_box.pack_start(this.spinner, false, false);
+        
+            container.pack_start(bottom_box, false, false);
             
-        main_vbox.show_all();
-        spinner.visible = this.loading;
-        this.add(main_vbox);
-        this.set_focus(icon_view);
+        this.vbox.pack_start(container, true, true);
+                
+        this.vbox.show_all();
+
+        this.set_focus(this.icon_view);
     }
     
     public override void show() {
         base.show();
+        this.action_area.hide();
+        
         if (this.need_reload) {
             this.need_reload = false;
             this.load_icons();
@@ -219,34 +222,37 @@ public class IconSelectWindow : Gtk.Window {
     }
     
     private void load_icons() {
-        this.icon_list.clear();
-        this.loading = true;
-        this.icon_list.set_sort_column_id(-1, Gtk.SortType.ASCENDING);
-        
-        if (spinner != null)
-            this.spinner.visible = true;
-        
-        try {
-            unowned Thread loader = Thread.create<void*>(load_thread, false);
-            loader.set_priority(ThreadPriority.LOW);
-        } catch (GLib.ThreadError e) {
-            error("Failed to create icon loader thread!");
-        }
-        
-        Timeout.add(200, () => {
-            while (load_queue.length() > 0) {
-                var new_entry = load_queue.pop();
-                Gtk.TreeIter current;
-                icon_list.append(out current);
-                icon_list.set(current, 0, new_entry.name, 
-                                       1, new_entry.context,
-                                       2, new_entry.pixbuf);
+        if (!this.loading) {
+            this.loading = true;
+            this.icon_list.clear();
+            
+            if (spinner != null)
+                this.spinner.visible = true;
+
+            this.icon_list.set_sort_column_id(-1, Gtk.SortType.ASCENDING);
+            
+            try {
+                unowned Thread loader = Thread.create<void*>(load_thread, false);
+                loader.set_priority(ThreadPriority.LOW);
+            } catch (GLib.ThreadError e) {
+                error("Failed to create icon loader thread!");
             }
             
-            if (!loading) this.icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);  
+            Timeout.add(200, () => {
+                while (this.load_queue.length() > 0) {
+                    var new_entry = this.load_queue.pop();
+                    Gtk.TreeIter current;
+                    this.icon_list.append(out current);
+                    this.icon_list.set(current, 0, new_entry.name, 
+                                                1, new_entry.context,
+                                                2, new_entry.pixbuf);
+                }
+                
+                if (!this.loading) this.icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);  
 
-            return loading;
-        });
+                return loading;
+            });
+        }
     }
     
     private void* load_thread() {
@@ -270,15 +276,13 @@ public class IconSelectWindow : Gtk.Window {
                         default: break;
                     }
                     
-                    try {
+                    try {      
                         var new_entry = new ListEntry();
                         new_entry.name = icon;
                         new_entry.context = icon_context;
                         new_entry.pixbuf = icon_theme.load_icon(icon, 32, 0); 
                         
-                        load_queue.push(new_entry);
-                        
-                        Thread.usleep(2000);
+                        this.load_queue.push(new_entry);
                     } catch (GLib.Error e) {
                         warning("Failed to load image " + icon);
                     }
@@ -286,11 +290,11 @@ public class IconSelectWindow : Gtk.Window {
             }
         }
         
-        loading = false;
+        this.loading = false;
         
         if (spinner != null)
             spinner.visible = this.loading;
-        
+
         return null;
     }
 }

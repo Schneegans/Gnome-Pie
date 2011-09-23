@@ -121,6 +121,9 @@ public class CellRendererIcon : Gtk.CellRendererText {
         Gdk.Event event, Gtk.Widget widget, string path, Gdk.Rectangle bg_area, 
         Gdk.Rectangle cell_area, Gtk.CellRendererState flags) {
         
+        this.select_window.set_transient_for((Gtk.Window)widget.get_toplevel());
+        this.select_window.set_modal(true);
+        
         this.current_path = path;
         this.select_window.show();
         this.select_window.active_icon = this.icon_name;

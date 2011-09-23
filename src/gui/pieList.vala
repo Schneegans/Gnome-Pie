@@ -191,7 +191,6 @@ class PieList : Gtk.TreeView {
         // command column    
         var command_column = new Gtk.TreeViewColumn();
             command_column.title = _("Command");
-            command_column.expand = true;
             command_column.resizable = true;
             
             // slice group 
@@ -336,7 +335,6 @@ class PieList : Gtk.TreeView {
         // type column   
         var type_column = new Gtk.TreeViewColumn();
             type_column.title = _("Pie-ID / Action type");
-            type_column.expand = true;
             type_column.resizable = true;
                 
             var type_render = new Gtk.CellRendererCombo();

@@ -81,13 +81,9 @@ public class Icon : Image {
     private static string get_icon_file(string icon_name, int size) {
         string result = "";
     
-        if (!icon_name.contains("/")) {
-            var icon_theme = Gtk.IconTheme.get_default();
-            var file = icon_theme.lookup_icon(icon_name, size, 0);
-            if (file != null) result = file.get_filename();
-        } else {
-            result = icon_name;
-        }
+        var icon_theme = Gtk.IconTheme.get_default();
+        var file = icon_theme.lookup_icon(icon_name, size, 0);
+        if (file != null) result = file.get_filename();
         
         if (result == "") {
             warning("Icon \"" + icon_name + "\" not found! Using default icon...");

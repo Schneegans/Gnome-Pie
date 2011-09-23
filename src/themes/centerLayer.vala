@@ -17,17 +17,32 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// This class representing a layer of the center of a pie. Each theme may
-// have plenty of them.
+/////////////////////////////////////////////////////////////////////////    
+/// This class representing a layer of the center of a pie. Each theme
+/// may have plenty of them.
+/////////////////////////////////////////////////////////////////////////
 
 public class CenterLayer : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// Possible rotation modes.
+    /// AUTO:      Turns the layer continously.
+    /// TO_MOUSE:  Turns the layer always to the pointer.
+    /// TO_ACTIVE: Turns the layer to the active slice.
+    /////////////////////////////////////////////////////////////////////
+
     public enum RotationMode {AUTO, TO_MOUSE, TO_ACTIVE}
     
+    /////////////////////////////////////////////////////////////////////
+    /// Information on the contained image.
+    /////////////////////////////////////////////////////////////////////
+    
     public Image image {get; private set;}
-
     public string image_file;
-    private int center_radius;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Properties for the active state of this layer.
+    /////////////////////////////////////////////////////////////////////
     
     public double active_scale {get; private set;}
     public double active_rotation_speed {get; private set;}
@@ -35,14 +50,32 @@ public class CenterLayer : GLib.Object {
     public bool active_colorize {get; private set;}
     public RotationMode active_rotation_mode {get; private set;}
     
+    /////////////////////////////////////////////////////////////////////
+    /// Properties for the inactive state of this layer.
+    /////////////////////////////////////////////////////////////////////
+    
     public double inactive_scale {get; private set;}
     public double inactive_rotation_speed {get; private set;}
     public double inactive_alpha {get; private set;}
     public bool inactive_colorize {get; private set;}
     public RotationMode inactive_rotation_mode {get; private set;}
     
+    /////////////////////////////////////////////////////////////////////
+    /// The current rotation of this layer. TODO: Remove this.
+    /////////////////////////////////////////////////////////////////////
+    
     public double rotation {get; set;}
-        
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Helper variable for image loading.
+    /////////////////////////////////////////////////////////////////////
+    
+    private int center_radius;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members of the layer.
+    /////////////////////////////////////////////////////////////////////
+    
     public CenterLayer(string image_file, int center_radius, double active_scale, double active_rotation_speed,   
                                     double active_alpha,   bool active_colorize,   RotationMode active_rotation_mode,
                                     double inactive_scale, double inactive_rotation_speed, 
@@ -65,6 +98,10 @@ public class CenterLayer : GLib.Object {
         
         this.rotation = 0.0;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads the contained image.
+    /////////////////////////////////////////////////////////////////////
     
     public void load_image() {
         this.image = new Image.from_file_at_size(image_file, 2*center_radius, 2*center_radius);

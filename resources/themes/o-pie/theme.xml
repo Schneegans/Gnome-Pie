@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="O-Pie" description="Inspired by the original O-Pie theme" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="120" maxZoom="1.3" zoomRange="0.2" transitionTime="0.1" springiness="1.5" 
+    <pie radius="120" maxZoom="1.3" zoomRange="0.2" transitionTime="0.1" springiness="1.5" 
           fadeInTime="0.2" fadeOutTime="0.2" fadeInZoom="0.7" fadeOutZoom="0.8" fadeInRotation="0.2" fadeOutRotation="-0.2">
         <center radius="70" activeRadius="35">
             <center_layer file="ring.svg" 
@@ -19,6 +19,6 @@
                 <slice_layer type="icon" />
             </inactiveSlice>
         </slices>
-    </ring>
+    </pie>
 </theme>
 

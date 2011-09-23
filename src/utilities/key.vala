@@ -85,20 +85,25 @@ public class Key : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void press() {
-
+        // store currently pressed modifier keys
         Gdk.ModifierType current_modifiers = get_modifiers();
 
+        // release them and press the desired ones
         press_modifiers(current_modifiers, false);
         press_modifiers(this.modifiers, true);
         
+        // send events to X
         display.flush();
 
+        // press and release the actual key
         X.Test.fake_key_event(this.display, this.key_code, true, 0);
         X.Test.fake_key_event(this.display, this.key_code, false, 0);
 
+        // release the pressed modifiers and re-press the keys hold down by the user
         press_modifiers(this.modifiers, false);
         press_modifiers(current_modifiers, true);
 
+        // send events to X
         display.flush();
     }
     

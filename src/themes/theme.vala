@@ -19,9 +19,15 @@ using GLib.Math;
 
 namespace GnomePie {
 
-// A theme of Gnome-Pie. Can be loaded from XML-Files.
+/////////////////////////////////////////////////////////////////////////    
+/// A theme of Gnome-Pie. Can be loaded from XML-Files.
+/////////////////////////////////////////////////////////////////////////
 
 public class Theme : GLib.Object {
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Properties of a theme.
+    /////////////////////////////////////////////////////////////////////
     
     public string directory        {get; private set; default="";}
     public string name             {get; private set; default="";}
@@ -54,6 +60,11 @@ public class Theme : GLib.Object {
     public Gee.ArrayList<SliceLayer?>  active_slice_layers   {get; private set;}
     public Gee.ArrayList<SliceLayer?>  inactive_slice_layers {get; private set;}
     
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, creates a theme object for a given theme directory. This
+    /// directory should contain a theme.xml file.
+    /////////////////////////////////////////////////////////////////////
+    
     public Theme(string dir) {
         this.center_layers =         new Gee.ArrayList<CenterLayer?>();
         this.active_slice_layers =   new Gee.ArrayList<SliceLayer?>();
@@ -63,6 +74,11 @@ public class Theme : GLib.Object {
         
         this.load();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads the theme from its directory. Images have to be loaded 
+    /// explicitly.
+    /////////////////////////////////////////////////////////////////////
     
     public void load() {
         this.center_layers.clear();
@@ -93,6 +109,10 @@ public class Theme : GLib.Object {
         this.radius *= max_zoom;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Loads all images of the theme.
+    /////////////////////////////////////////////////////////////////////
+    
     public void load_images() {
         foreach (var layer in this.center_layers)
             layer.load_image();
@@ -101,6 +121,11 @@ public class Theme : GLib.Object {
         foreach (var layer in this.inactive_slice_layers)
             layer.load_image();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The following methods parse specific parts of the theme file.
+    /// Nothing special here, just some boring code.
+    /////////////////////////////////////////////////////////////////////
     
     private void parse_root(Xml.Node* root) {
         for (Xml.Attr* attribute = root->properties; attribute != null; attribute = attribute->next) {
@@ -131,6 +156,10 @@ public class Theme : GLib.Object {
             }
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <pie> element from the theme.xml file.
+    /////////////////////////////////////////////////////////////////////
     
     private void parse_pie(Xml.Node* pie) {
         for (Xml.Attr* attribute = pie->properties; attribute != null; attribute = attribute->next) {
@@ -198,6 +227,10 @@ public class Theme : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <center> element from the theme.xml file.
+    /////////////////////////////////////////////////////////////////////
+    
     private void parse_center(Xml.Node* center) {
         for (Xml.Attr* attribute = center->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
@@ -228,6 +261,10 @@ public class Theme : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <slices> element from the theme.xml file.
+    /////////////////////////////////////////////////////////////////////
+    
     private void parse_slices(Xml.Node* slices) {
         for (Xml.Attr* attribute = slices->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
@@ -257,6 +294,10 @@ public class Theme : GLib.Object {
             }
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <center_layer> element from the theme.xml file.
+    /////////////////////////////////////////////////////////////////////
     
     private void parse_center_layer(Xml.Node* layer) {
 
@@ -347,6 +388,10 @@ public class Theme : GLib.Object {
                                                  inactive_scale/max_scale, inactive_rotation_speed, inactive_alpha, inactive_colorize, inactive_rotation_mode));
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <slice_layer> element from the theme.xml file.
+    /////////////////////////////////////////////////////////////////////
+    
     private void parse_slice_layers(Xml.Node* slice) {
         for (Xml.Node* layer = slice->children; layer != null; layer = layer->next) {
             if (layer->type == Xml.ElementType.ELEMENT_NODE) {
@@ -401,6 +446,10 @@ public class Theme : GLib.Object {
             }
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Parses a <caption> element from the theme.xml file.
+    /////////////////////////////////////////////////////////////////////
     
     private void parse_caption(Xml.Node* caption) {
         for (Xml.Attr* attribute = caption->properties; attribute != null; attribute = attribute->next) {

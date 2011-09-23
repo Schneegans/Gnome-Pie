@@ -126,6 +126,7 @@ public class ThemedIcon : Image {
                 layer.image.paint_on(ctx);
             }
             
+            // colorize the whole layer if neccasary
             if (layer.colorize) {
                 ctx.set_operator(Cairo.Operator.ATOP);
                 ctx.set_source_rgb(color.r, color.g, color.b);
@@ -137,6 +138,7 @@ public class ThemedIcon : Image {
             }
         }
         
+        // store the surface in cache
         current_cache.set(icon_name, this.surface);
     }
     

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="Unity" description="A theme made for the Unity interface of Ubuntu" author="Simon Schneegans" email="josi.schneegans@vr-web.de">
-    <ring radius="130" maxZoom="1.1" zoomRange="0.1" transitionTime="0.2" springiness="1.5" 
+    <pie radius="130" maxZoom="1.1" zoomRange="0.1" transitionTime="0.2" springiness="1.5" 
           fadeInTime="0.3" fadeOutTime="0.3" fadeInZoom="1.5" fadeOutZoom="0.7" fadeInRotation="0.5" fadeOutRotation="-0.7">
         <center radius="80" activeRadius="55">
             <center_layer file="ring.svg" 
@@ -24,6 +24,6 @@
             </inactiveSlice>
         </slices>
         <caption position="0" font="sans 10" width="90" height="90" />
-    </ring>
+    </pie>
 </theme>
 

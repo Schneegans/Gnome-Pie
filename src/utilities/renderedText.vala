@@ -74,6 +74,8 @@ public class RenderedText : Image {
         this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
 
         var ctx = this.context();
+        
+        // set the color as specified in the current theme
         Color color = Config.global.theme.caption_color;
         ctx.set_source_rgb(color.r, color.g, color.g);
         

@@ -17,17 +17,31 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-// This class representing a layer of a slice of a pie. Each theme may
-// have plenty of them.
+/////////////////////////////////////////////////////////////////////////    
+/// This class representing a layer of a slice of a pie. Each theme may
+/// have plenty of them.
+/////////////////////////////////////////////////////////////////////////
 
 public class SliceLayer : GLib.Object {
     
+    /////////////////////////////////////////////////////////////////////
+    /// Information on the contained image.
+    /////////////////////////////////////////////////////////////////////
+    
     public Image image {get; set;}
+    public string icon_file {get; private set;}
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Properties of this layer.
+    /////////////////////////////////////////////////////////////////////
     
     public bool colorize {get; private set; }
     public bool is_icon {get; private set;}
-    public string icon_file {get; private set;}
     public int icon_size {get; private set;}
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members of the layer.
+    /////////////////////////////////////////////////////////////////////
     
     public SliceLayer(string icon_file, int icon_size, bool colorize, bool is_icon) {
         this.icon_file = icon_file;
@@ -35,6 +49,10 @@ public class SliceLayer : GLib.Object {
         this.is_icon = is_icon;
         this.icon_size = icon_size;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads the contained image.
+    /////////////////////////////////////////////////////////////////////
     
     public void load_image() {
         if (this.icon_file == "" && this.is_icon == true) 

@@ -19,7 +19,8 @@ namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
 /// A window which allows selection of an Icon of the user's current icon 
-/// theme. Loading of Icons happens in an extra thread.
+/// theme. Loading of Icons happens in an extra thread and a spinner is
+/// displayed while loading.
 /////////////////////////////////////////////////////////////////////////
 
 public class IconSelectWindow : Gtk.Dialog {
@@ -34,7 +35,6 @@ public class IconSelectWindow : Gtk.Dialog {
     private Gtk.IconView icon_view = null;
     private Gtk.Spinner spinner = null;
 
-    
     private class ListEntry {
         public string name;
         public IconContext context;
@@ -282,7 +282,10 @@ public class IconSelectWindow : Gtk.Dialog {
                         new_entry.context = icon_context;
                         new_entry.pixbuf = icon_theme.load_icon(icon, 32, 0); 
                         
-                        this.load_queue.push(new_entry);
+                        // some icons have only weird sizes... do not include them
+                        if (new_entry.pixbuf.width == 32)
+                            this.load_queue.push(new_entry);
+                            
                     } catch (GLib.Error e) {
                         warning("Failed to load image " + icon);
                     }

@@ -64,14 +64,6 @@ install(
 		${CMAKE_INSTALL_PREFIX}/share/gnome-pie
 )
 
-# install default configuration file
-install(
-	FILES
-		${CMAKE_SOURCE_DIR}/resources/pies.conf.default
-	DESTINATION
-		${CMAKE_INSTALL_PREFIX}/share/gnome-pie
-)
-
 # install icons
 install(
 	FILES

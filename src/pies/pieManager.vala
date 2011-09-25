@@ -97,65 +97,60 @@ public class PieManager : GLib.Object {
         else             return pie.name;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a new Pie which is displayed in the configuration dialog
+    /// and gets saved.
+    /////////////////////////////////////////////////////////////////////
+    
     public static Pie create_persistent_pie(string name, string icon_name, string hotkey, string? desired_id = null) {
+        Pie pie = create_pie(name, icon_name, 100, 999, desired_id);
 
-        var random = new GLib.Rand();
-        
-        string final_id;
-        
-        if (desired_id == null) final_id = random.int_range(100, 999).to_string();
-        else                    final_id = desired_id;
-
-        final_id.canon("0123456789", '_');
-        final_id = final_id.replace("_", "");
-        
-        if (desired_id != null && final_id.length != 3) {
-            final_id = random.int_range(100, 999).to_string();
-            warning("A static ID should be a three digit number! Using \"" + final_id + "\" instead of \"" + desired_id + "\" for static pie \"" + name + "\"...");
-        }
-
-        if (all_pies.has_key(final_id)) {
-            var tmp = final_id;
-            var id_number = int.parse(final_id) + 1;
-            if (id_number == 1000) id_number = 100;
-            final_id = id_number.to_string();
-            warning("Trying to add static pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
-            return create_persistent_pie(name, icon_name, hotkey, final_id);
-        }
-
-        Pie pie = new Pie(final_id, name, icon_name);
-        all_pies.set(final_id, pie);
-
-        if (hotkey != "")
-            bindings.bind(hotkey, final_id);
+        if (hotkey != "") bindings.bind(hotkey, pie.id);
         
         return pie;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a new Pie which is not displayed in the configuration
+    /// dialog and is not saved.
+    /////////////////////////////////////////////////////////////////////
+    
     public static Pie create_dynamic_pie(string name, string icon_name, string? desired_id = null) {
-        
-        var random = new GLib.Rand();
+        return create_pie(name, icon_name, 1000, 9999, desired_id);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Adds a new Pie. Can't be accesd from outer scope. Use
+    /// create_persistent_pie or create_dynamic_pie instead.
+    /////////////////////////////////////////////////////////////////////
+    
+    private static Pie create_pie(string name, string icon_name, int min_id, int max_id, string? desired_id = null) {
+         var random = new GLib.Rand();
         
         string final_id;
         
-        if (desired_id == null) final_id = random.int_range(1000, 9999).to_string();
-        else                    final_id = desired_id;
-        
-        final_id.canon("0123456789", '_');
-        final_id = final_id.replace("_", "");
-        
-        if (desired_id != null && final_id.length != 4) {
-            final_id = random.int_range(1000, 9999).to_string();
-            warning("A dynamic ID should be a four digit number! Using \"" + final_id + "\" instead of \"" + desired_id + "\" for dynamic pie \"" + name + "\"...");
+        if (desired_id == null) 
+            final_id = random.int_range(min_id, max_id).to_string();
+        else {
+            final_id = desired_id;
+            final_id.canon("0123456789", '_');
+            final_id = final_id.replace("_", "");
+            
+            int id = int.parse(final_id);
+            
+            if (id < min_id || id > max_id) {
+                final_id = random.int_range(min_id, max_id).to_string();
+                warning("The ID for pie \"" + name + "\" should be in range %u - %u! Using \"" + final_id + "\" instead of \"" + desired_id + "\"...", min_id, max_id);
+            }
         }
-    
+
         if (all_pies.has_key(final_id)) {
             var tmp = final_id;
             var id_number = int.parse(final_id) + 1;
-            if (id_number == 10000) id_number = 1000;
+            if (id_number == max_id+1) id_number = min_id;
             final_id = id_number.to_string();
-            warning("Trying to add dynamic pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
-            return create_dynamic_pie(name, icon_name, final_id);
+            warning("Trying to add pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
+            return create_pie(name, icon_name, min_id, max_id, final_id);
         }
 
         Pie pie = new Pie(final_id, name, icon_name);

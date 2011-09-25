@@ -16,8 +16,7 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /////////////////////////////////////////////////////////////////////
-/// TODO-List:s
-/// PieManager
+/// TODO-List:
 /// IconSelectWindow
 /// PieList
 /// PieWindow

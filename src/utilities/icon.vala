@@ -88,8 +88,7 @@ public class Icon : Image {
         if (result == "") {
             warning("Icon \"" + icon_name + "\" not found! Using default icon...");
             icon_name = "application-default-icon";
-            var icon_theme = Gtk.IconTheme.get_default();
-            var file = icon_theme.lookup_icon(icon_name, size, 0);
+            file = icon_theme.lookup_icon(icon_name, size, 0);
             if (file != null) result = file.get_filename();
         }
         

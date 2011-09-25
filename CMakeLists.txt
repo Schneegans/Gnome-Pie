@@ -41,7 +41,7 @@ set(CFLAGS
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
     # for gettext
     -DGETTEXT_PACKAGE="gnomepie"
-	-s -Ofast 
+	-s -O3 
 #    -g
 )
 add_definitions(${CFLAGS})

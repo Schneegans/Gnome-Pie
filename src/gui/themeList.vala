@@ -84,8 +84,8 @@ class ThemeList : Gtk.TreeView {
             Gtk.TreeIter current;
             data.append(out current);
             data.set(current, 0, theme == Config.global.theme); 
-            data.set(current, 1, "<b>" + theme.name + "</b>\n" + theme.description
-                                 + "  <small> - " + _("by") + " " + theme.author + "</small>"); 
+            data.set(current, 1, "<b>" + theme.name + "</b><small>  -  " + theme.description + "\n"
+                                 + "<i>" + _("By") + " " + theme.author + "</i></small>"); 
             if(theme == Config.global.theme)
                 this.active = current;
         }  

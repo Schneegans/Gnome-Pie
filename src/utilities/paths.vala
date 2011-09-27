@@ -91,7 +91,7 @@ public class Paths : GLib.Object {
         // get global paths
         var default_dir = GLib.File.new_for_path("/usr/share/gnome-pie/");
         if(!default_dir.query_exists()) {
-            default_dir = GLib.File.new_for_path("/usr/local/gnome-pie/");
+            default_dir = GLib.File.new_for_path("/usr/local/share/gnome-pie/");
             
             if(!default_dir.query_exists()) {
                 try {
@@ -110,20 +110,26 @@ public class Paths : GLib.Object {
         if(locale_dir.query_exists()) {
             locale_dir = GLib.File.new_for_path("/usr/share/locale");
         } else {
-            try {
-                locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
-                    GLib.FileUtils.read_link("/proc/self/exe"))).get_child(
-                    "resources/locale/de/LC_MESSAGES/gnomepie.mo");
-            } catch (GLib.FileError e) {
-                warning("Failed to get path of executable!");
-            }
-            
+            locale_dir = GLib.File.new_for_path("/usr/local/share/locale/de/LC_MESSAGES/gnomepie.mo");
             if(locale_dir.query_exists()) {
+                locale_dir = GLib.File.new_for_path("/usr/local/share/locale");
+            } else {
+            
                 try {
                     locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
-                        GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources/locale");
+                        GLib.FileUtils.read_link("/proc/self/exe"))).get_child(
+                        "resources/locale/de/LC_MESSAGES/gnomepie.mo");
                 } catch (GLib.FileError e) {
                     warning("Failed to get path of executable!");
+                }
+                
+                if(locale_dir.query_exists()) {
+                    try {
+                        locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
+                            GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources/locale");
+                    } catch (GLib.FileError e) {
+                        warning("Failed to get path of executable!");
+                    }
                 }
             }
         }
@@ -155,7 +161,7 @@ public class Paths : GLib.Object {
         
         local_themes = themes_dir.get_path();
         
-        // check for config file and copy default if it doesn't exist
+        // check for config file
         var config_file = config_dir.get_child("pies.conf");
         
         pie_config = config_file.get_path();

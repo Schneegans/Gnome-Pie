@@ -5,25 +5,20 @@
 # determine source and header files
 file(GLOB VALA_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.vala */*.vala)
 
+if (${INDICATOR_FOUND})
+  SET(DEFINES --define HAVE_APPINDICATOR)
+endif(${INDICATOR_FOUND})
+
 # use valac to compile sources to c files
 vala_precompile(
     VALA_C
-        ${VALA_SRC} 
-    PACKAGES 
-        appindicator-0.1
-        gtk+-2.0 
-        gdk-x11-2.0 
-        cairo 
-        gee-1.0
-        x11
-        gio-unix-2.0
-        posix
-        libxml-2.0
-        xtst
-        libgnome-menu
+        ${VALA_SRC}
+    PACKAGES
+        ${VALA_PKGS}
     OPTIONS
         --vapidir=${CMAKE_SOURCE_DIR}/vapi/
         --thread
+        ${DEFINES}
 )
 
 # compile c-sources
@@ -31,7 +26,7 @@ add_executable(gnome-pie ${VALA_C})
 
 # install executable
 install(
-	TARGETS 
+	TARGETS
 		gnome-pie
 	RUNTIME DESTINATION
 		${CMAKE_INSTALL_PREFIX}/bin
@@ -47,9 +42,9 @@ install(
 
 # install locales
 install(
-	DIRECTORY 
+	DIRECTORY
 		${CMAKE_SOURCE_DIR}/resources/locale
-	DESTINATION 
+	DESTINATION
 		${CMAKE_INSTALL_PREFIX}/share
 	PATTERN *.po EXCLUDE
 	PATTERN *.pot EXCLUDE
@@ -58,9 +53,9 @@ install(
 
 # install themes
 install(
-	DIRECTORY 
+	DIRECTORY
 		${CMAKE_SOURCE_DIR}/resources/themes
-	DESTINATION 
+	DESTINATION
 		${CMAKE_INSTALL_PREFIX}/share/gnome-pie
 )
 

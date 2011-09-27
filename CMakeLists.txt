@@ -2,38 +2,41 @@
 # Project Gnome-Pie
 ################################################################
 
- project("gnomepie" C)
- 
- cmake_minimum_required(VERSION 2.6)
- 
- # Location where cmake first looks for modules.
- list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/vala)
+project("gnomepie" C)
+
+cmake_minimum_required(VERSION 2.6)
+
+# Location where cmake first looks for modules.
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/vala)
 
 ################################################################
 # Find Vala
 ################################################################
 
-include(ValaPrecompile) 
+include(ValaPrecompile)
 include(ValaVersion)
 
-find_package(Vala) 
+find_package(Vala)
 ensure_vala_version("0.11.0" MINIMUM)
 
 ################################################################
 # Configure and find libraries
 ################################################################
 
-find_package(PkgConfig) 
-pkg_check_modules(GTK REQUIRED gtk+-2.0) 
-pkg_check_modules(CAIRO REQUIRED cairo) 
+find_package(PkgConfig)
+pkg_check_modules(GIO REQUIRED gio-unix-2.0)
+pkg_check_modules(GTK REQUIRED gtk+-2.0)
+pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(X11 REQUIRED x11)
-pkg_check_modules(INDICATOR REQUIRED appindicator-0.1)
+pkg_check_modules(INDICATOR appindicator-0.1)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(GMENU REQUIRED libgnome-menu)
 
+# TODO if here
 set(CFLAGS
+  ${GIO_CFLAGS}
 	${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
 	${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
 	${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
@@ -41,12 +44,13 @@ set(CFLAGS
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
     # for gettext
     -DGETTEXT_PACKAGE="gnomepie"
-	-s -O3 
+	-s -O3
 #    -g
 )
 add_definitions(${CFLAGS})
 
 set(LIBS
+  ${GIO_LIBRARIES}
 	${GTK_LIBRARIES}
 	${CAIRO_LIBRARIES}
 	${GEE_LIBRARIES}
@@ -84,6 +88,23 @@ include_directories(${INCLUDE_PATHS})
 ################################################################
 
 set(EXECUTABLE_OUTPUT_PATH ${gnomepie_SOURCE_DIR})
+
+
+##
+set(VALA_PKGS
+  gtk+-2.0
+  gdk-x11-2.0
+  cairo
+  gee-1.0
+  x11
+  gio-unix-2.0
+  posix
+  libxml-2.0
+  xtst
+  libgnome-menu
+)
+
+LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
 
 add_subdirectory(src)
 

@@ -34,12 +34,11 @@ pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(GMENU REQUIRED libgnome-menu)
 
-# TODO if here
 set(CFLAGS
-  ${GIO_CFLAGS}
-	${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
-	${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
-	${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
+    ${GIO_CFLAGS}
+    ${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
+    ${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
+    ${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
 	#for gnome-menu
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
     # for gettext
@@ -47,6 +46,11 @@ set(CFLAGS
 	-s -O3
 #    -g
 )
+
+if (${INDICATOR_FOUND})
+    LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
+endif(${INDICATOR_FOUND})
+
 add_definitions(${CFLAGS})
 
 set(LIBS
@@ -89,8 +93,6 @@ include_directories(${INCLUDE_PATHS})
 
 set(EXECUTABLE_OUTPUT_PATH ${gnomepie_SOURCE_DIR})
 
-
-##
 set(VALA_PKGS
   gtk+-2.0
   gdk-x11-2.0
@@ -102,9 +104,12 @@ set(VALA_PKGS
   libxml-2.0
   xtst
   libgnome-menu
+  appindicator-0.1
 )
 
-LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
+if (${INDICATOR_FOUND})
+    LIST(APPEND VALA_PKGS appindicator-0.1)
+endif(${INDICATOR_FOUND})
 
 add_subdirectory(src)
 

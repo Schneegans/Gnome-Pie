@@ -27,12 +27,12 @@ public class Indicator : GLib.Object {
     /// The internally used indicator.
     /////////////////////////////////////////////////////////////////////
 
-#if HAVE_APPINDICATOR
-    private AppIndicator.Indicator indicator { private get; private set; }
-#else
-    private Gtk.StatusIcon indicator {private get; private set; }
-    private Gtk.Menu menu {private get; private set; }
-#endif
+    #if HAVE_APPINDICATOR
+        private AppIndicator.Indicator indicator { private get; private set; }
+    #else
+        private Gtk.StatusIcon indicator {private get; private set; }
+        private Gtk.Menu menu {private get; private set; }
+    #endif
 
     /////////////////////////////////////////////////////////////////////
     /// The Preferences Menu of Gnome-Pie.
@@ -46,19 +46,20 @@ public class Indicator : GLib.Object {
 
     public bool active {
         get {
-#if HAVE_APPINDICATOR
-            return indicator.get_status() == AppIndicator.IndicatorStatus.ACTIVE;
-#else
-            return indicator.get_visible();
-#endif
+        
+            #if HAVE_APPINDICATOR
+                return indicator.get_status() == AppIndicator.IndicatorStatus.ACTIVE;
+            #else
+                return indicator.get_visible();
+            #endif
         }
         set {
-#if HAVE_APPINDICATOR
-            if (value) indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
-            else       indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE);
-#else
-            indicator.set_visible(value);
-#endif
+            #if HAVE_APPINDICATOR
+                if (value) indicator.set_status(AppIndicator.IndicatorStatus.ACTIVE);
+                else       indicator.set_status(AppIndicator.IndicatorStatus.PASSIVE);
+            #else
+                indicator.set_visible(value);
+            #endif
         }
     }
 
@@ -67,34 +68,35 @@ public class Indicator : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public Indicator() {
-#if HAVE_APPINDICATOR
-        string path = "";
-        string icon = "indicator-applet";
-        try {
-            path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
-            icon = "gnome-pie-indicator";
-        } catch (GLib.FileError e) {
-            warning("Failed to get path of executable!");
-        }
+        #if HAVE_APPINDICATOR
+            string path = "";
+            string icon = "indicator-applet";
+            try {
+                path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
+                icon = "gnome-pie-indicator";
+            } catch (GLib.FileError e) {
+                warning("Failed to get path of executable!");
+            }
 
-        this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon,
-                             AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
-        var menu = new Gtk.Menu();
-#else
-        this.indicator = new Gtk.StatusIcon();
-        try {
-            this.indicator.set_from_file(GLib.Path.build_filename(
-                GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources",
-                "gnome-pie-indicator.svg"
-            ));
-        } catch (GLib.FileError e) {
-            warning("Failed to get path of executable!");
-            this.indicator.set_from_stock(Gtk.Stock.HOME); // or suitable stock
-        }
+            this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon,
+                                 AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
+            var menu = new Gtk.Menu();
+        #else
+            this.indicator = new Gtk.StatusIcon();
+            try {
+                this.indicator.set_from_file(GLib.Path.build_filename(
+                    GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources",
+                    "gnome-pie-indicator.svg"
+                ));
+            } catch (GLib.FileError e) {
+                warning("Failed to get path of executable!");
+                this.indicator.set_from_stock(Gtk.Stock.HOME); // or suitable stock
+            }
 
-        this.menu = new Gtk.Menu();
-        var menu = this.menu;
-#endif
+            this.menu = new Gtk.Menu();
+            var menu = this.menu;
+        #endif
+        
         this.prefs = new Preferences();
 
         // preferences item
@@ -127,13 +129,13 @@ public class Indicator : GLib.Object {
         item.show();
         menu.append(item);
 
-#if HAVE_APPINDICATOR
-        this.indicator.set_menu(menu);
-#else
-        this.indicator.popup_menu.connect((btn, time) => {
-            this.menu.popup(null, null, null, btn, time);
-        });
-#endif
+        #if HAVE_APPINDICATOR
+            this.indicator.set_menu(menu);
+        #else
+            this.indicator.popup_menu.connect((btn, time) => {
+                this.menu.popup(null, null, null, btn, time);
+            });
+        #endif
 
         this.active = Config.global.show_indicator;
         Config.global.notify["show-indicator"].connect((s, p) => {

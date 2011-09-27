@@ -24,8 +24,9 @@ namespace GnomePie {
 public class GnomePieAboutDialog: Gtk.AboutDialog {
 
     public GnomePieAboutDialog () {
-        string[] devs = {"Simon Schneegans <simon.schneegans@uni-weimar.de>"};
-        string[] artists = devs;
+        string[] devs = {"Simon Schneegans <simon.schneegans@uni-weimar.de>", 
+                         "Francesco Piccinno"};
+        string[] artists = {"Simon Schneegans <simon.schneegans@uni-weimar.de>"};
         GLib.Object (
             artists : artists,
             authors : devs,

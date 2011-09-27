@@ -179,7 +179,7 @@ public class Config : GLib.Object {
         
         if (themes.size > 0) {
             if (current == "") {
-                current = "O-Pie";
+                current = "Unity";
                 warning("No theme specified! Using default...");
             }
             foreach (var t in themes) {

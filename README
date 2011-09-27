@@ -43,9 +43,17 @@ Then build and launch Gnome-Pie by typing:
 #                          Usage                                   #
 ####################################################################
 
-Now you may launch it by Pressing <ctrl><Alt>F to open up the default 
-ring. Any customization via a GUI is not possible yet :D
-... but soon!
+Now you may launch it by Pressing <ctrl><Alt>A to open up a default 
+Pie with your default applications. There are some other Pies 
+defined --- just open up the configuration dialog by activating the
+appropriate entry in the appindicator menu or by launching gnome-pie
+for a second time. There you may configure the Pies to suit your
+needs.
+
+You can open Pies not only by presing their key stroke.
+Alternatively you may open any Pie by invoking gnome-pie --open 123
+where 123 is the ID of the desired Pie (which is displayed in the
+configuration dialog).
 
 ####################################################################
 #                        License                                   #

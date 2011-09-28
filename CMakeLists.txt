@@ -33,6 +33,7 @@ pkg_check_modules(INDICATOR appindicator-0.1)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(GMENU REQUIRED libgnome-menu)
+pkg_check_modules(UNIQUE REQUIRED unique-1.0)
 
 set(CFLAGS
     ${GIO_CFLAGS}
@@ -62,6 +63,7 @@ set(LIBS
 	${XML_LIBRARIES}
 	${XTST_LIBRARIES}
 	${GMENU_LIBRARIES}
+	${UNIQUE_LIBRARIES}
 )
 link_libraries(${LIBS})
 
@@ -74,6 +76,7 @@ set(LIB_PATHS
 	${XML_LIBRARY_DIRS}
 	${XTST_LIBRARY_DIRS}
 	${GMENU_LIBRARY_DIRS}
+	${UNIQUE_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -86,6 +89,7 @@ set(INCLUDE_PATHS
 	${XML_INCLUDE_DIRS}
 	${XTST_INCLUDE_DIRS}	
 	${GMENU_INCLUDE_DIRS}
+	${UNIQUE_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -106,6 +110,7 @@ set(VALA_PKGS
   libxml-2.0
   xtst
   libgnome-menu
+  unique-1.0
 )
 
 if (${INDICATOR_FOUND})
@@ -142,4 +147,5 @@ message( "  INDICATOR_LIBRARIES = ${INDICATOR_LIBRARIES}" )
 message( "  XML_LIBRARIES = ${XML_LIBRARIES}" )
 message( "  XTST_LIBRARIES = ${XTST_LIBRARIES}" )
 message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )
+message( "  UNIQUE_LIBRARIES = ${UNIQUE_LIBRARIES}" )
 message( "" )

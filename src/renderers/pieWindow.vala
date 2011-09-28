@@ -26,6 +26,10 @@ public class PieWindow : Gtk.Window {
     private PieRenderer renderer;
     private bool closing = false;
     private GLib.Timer timer;
+    
+    private bool has_compositing = false;
+    
+    private Image background = null;
 
     public PieWindow() {
         this.renderer = new PieRenderer();
@@ -35,11 +39,16 @@ public class PieWindow : Gtk.Window {
         this.set_skip_pager_hint(true);
         this.set_keep_above(true);
         this.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN);
-        this.set_colormap(screen.get_rgba_colormap());
         this.set_decorated(false);
         this.set_resizable(false);
         this.icon_name = "gnome-pie";
         this.set_accept_focus(false);
+        
+        if (this.screen.is_composited()) {
+            this.set_colormap(this.screen.get_rgba_colormap());
+            this.has_compositing = true;
+        }
+        
         this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
                         Gdk.EventMask.KEY_RELEASE_MASK |
                         Gdk.EventMask.KEY_PRESS_MASK);
@@ -73,6 +82,15 @@ public class PieWindow : Gtk.Window {
     }
     
     public void open() {
+        this.realize();
+        
+        if (!this.has_compositing) {
+            int x, y, width, height;
+            this.get_position(out x, out y);
+            this.get_size(out width, out height);
+            this.background = new Image.capture_screen(x, y, width+1, height+1);
+        }
+    
         this.show();
         this.fix_focus();
 
@@ -89,11 +107,19 @@ public class PieWindow : Gtk.Window {
     private bool draw(Gtk.Widget da, Gdk.EventExpose event) {    
         // clear the window
         var ctx = Gdk.cairo_create(this.window);
+
+        if (this.has_compositing) {
             ctx.set_operator (Cairo.Operator.CLEAR);
             ctx.paint();
             ctx.set_operator (Cairo.Operator.OVER);
-            ctx.translate(this.width_request*0.5, this.height_request*0.5);
+        } else {
+            ctx.set_operator (Cairo.Operator.OVER);
+            ctx.set_source_surface(background.surface, -1, -1);
+            ctx.paint();
+        }
         
+        ctx.translate(this.width_request*0.5, this.height_request*0.5);
+
         double mouse_x = 0.0, mouse_y = 0.0;
         this.get_pointer(out mouse_x, out mouse_y);
         

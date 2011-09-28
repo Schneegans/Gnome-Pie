@@ -68,6 +68,13 @@ public class Image : GLib.Object {
         this.load_pixbuf(pixbuf);
     }
     
+    public Image.capture_screen(int posx, int posy, int width, int height) {
+        Gdk.Window root = Gdk.get_default_root_window();
+        Gdk.Pixbuf pixbuf = Gdk.pixbuf_get_from_drawable(null, root, null, posx, posy, 0, 0, width, height);
+
+        this.load_pixbuf(pixbuf);
+    }
+    
     /////////////////////////////////////////////////////////////////////
     /// Loads an image from the the given filename.
     /////////////////////////////////////////////////////////////////////

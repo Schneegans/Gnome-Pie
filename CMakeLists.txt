@@ -106,7 +106,6 @@ set(VALA_PKGS
   libxml-2.0
   xtst
   libgnome-menu
-  appindicator-0.1
 )
 
 if (${INDICATOR_FOUND})

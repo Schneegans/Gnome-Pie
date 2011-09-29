@@ -44,7 +44,7 @@ public class Logger {
     /// If true, the origin of the message is shown. In form file:line
     /////////////////////////////////////////////////////////////////////
     
-    public static bool display_file { get; set; default = false; }
+    public static bool display_file { get; set; default = true; }
     
     /////////////////////////////////////////////////////////////////////
     /// A regex, used to format the standard message.

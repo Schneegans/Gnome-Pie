@@ -50,6 +50,8 @@ public class CellRendererIcon : Gtk.CellRendererText {
     /////////////////////////////////////////////////////////////////////
     
     private string current_path = "";
+    
+    public string icon_name { get; set; }
 
     /////////////////////////////////////////////////////////////////////
     /// Forward some parts of the CellRendererPixbuf's interface.
@@ -60,19 +62,14 @@ public class CellRendererIcon : Gtk.CellRendererText {
         set { renderer.follow_state = value; }
     }
     
-    public string icon_name { 
-        owned get { return renderer.icon_name; }
-        set { renderer.icon_name = value; }
-    }
-    
-    public uint stock_size {
-        get { return renderer.stock_size; }
-        set { renderer.stock_size = value; }
-    }
-    
     public bool icon_sensitive {
         get { return renderer.sensitive; }
         set { renderer.sensitive = value; }
+    }
+    
+    public Gdk.Pixbuf pixbuf {
+        owned get { return renderer.pixbuf; }
+        set { renderer.pixbuf = value; }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -84,7 +81,6 @@ public class CellRendererIcon : Gtk.CellRendererText {
         this.renderer = new Gtk.CellRendererPixbuf();
     
         this.select_window.on_select.connect((icon) => {
-            this.icon_name = icon;
             this.on_select(current_path, icon);
         });
     }

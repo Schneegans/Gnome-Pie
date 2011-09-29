@@ -27,9 +27,12 @@ class PieList : Gtk.TreeView {
     private Gtk.ListStore actions;
     private Gtk.TreeStore data;
     
+    private const int small_icon = 24;
+    private const int large_icon = 48;
+    
     // data positions in the data ListStore
     private enum DataPos {IS_QUICKACTION, ICON, NAME, TYPE_ID, ACTION_TYPE,
-                          ICON_SIZE, FONT_WEIGHT, ICON_NAME_EDITABLE, QUICKACTION_VISIBLE, QUICKACTION_ACTIVATABLE,
+                          ICON_PIXBUF, FONT_WEIGHT, ICON_NAME_EDITABLE, QUICKACTION_VISIBLE, QUICKACTION_ACTIVATABLE,
                           TYPE_VISIBLE, GROUP_VISIBLE, APP_VISIBLE, KEY_VISIBLE, PIE_VISIBLE,
                           URI_VISIBLE, DISPLAY_COMMAND_GROUP, DISPLAY_COMMAND_APP, 
                           DISPLAY_COMMAND_KEY, DISPLAY_COMMAND_PIE, DISPLAY_COMMAND_URI,
@@ -94,7 +97,7 @@ class PieList : Gtk.TreeView {
                                           typeof(string),     // slice: type label, pie: "ID: %id"
                                           typeof(string),     // typeof(action), typeof(ActionGroup).name() if group action, pie_id if Pie 
                                           
-                                          typeof(int),        // icon size
+                                          typeof(Gdk.Pixbuf), // icon pixbuf
                                           typeof(int),        // font weight
                                           
                                           typeof(bool),       // icon/name editable
@@ -176,7 +179,10 @@ class PieList : Gtk.TreeView {
                 icon_render.on_select.connect((path, icon_name) => {
                     Gtk.TreeIter iter;
                     this.data.get_iter_from_string(out iter, path);
+                    int icon_size =  this.data.iter_depth(iter) == 0 ? this.large_icon : this.small_icon;
+                    
                     this.data.set(iter, DataPos.ICON, icon_name);
+                    this.data.set(iter, DataPos.ICON_PIXBUF, this.load_icon(icon_name, icon_size));
                     
                     this.update_pie(iter);
                     this.update_linked();
@@ -184,7 +190,7 @@ class PieList : Gtk.TreeView {
                 
                 icon_column.pack_start(icon_render, false);
                 icon_column.add_attribute(icon_render, "icon_name", DataPos.ICON);
-                icon_column.add_attribute(icon_render, "stock_size", DataPos.ICON_SIZE);
+                icon_column.add_attribute(icon_render, "pixbuf", DataPos.ICON_PIXBUF);
                 icon_column.add_attribute(icon_render, "editable", DataPos.ICON_NAME_EDITABLE);
                 icon_column.add_attribute(icon_render, "icon_sensitive", DataPos.ICON_NAME_EDITABLE);
                   
@@ -516,6 +522,7 @@ class PieList : Gtk.TreeView {
                 if (referee != null) {
                     this.data.set(iter, DataPos.ICON, referee.icon);
                     this.data.set(iter, DataPos.NAME, referee.name);
+                    this.data.set(iter, DataPos.ICON_PIXBUF, this.load_icon(referee.icon, this.small_icon));
                     this.data.set(iter, DataPos.DISPLAY_COMMAND_PIE, referee.name);
                 } else {
                     // referenced Pie does not exist anymore or no is selected;
@@ -576,7 +583,7 @@ class PieList : Gtk.TreeView {
                                         DataPos.NAME, new_one.name,
                                      DataPos.TYPE_ID, "ID: " + new_one.id,
                                  DataPos.ACTION_TYPE, new_one.id,
-                                   DataPos.ICON_SIZE, Gtk.IconSize.DND,
+                                 DataPos.ICON_PIXBUF, this.load_icon(new_one.icon, this.large_icon),
                                  DataPos.FONT_WEIGHT, 800,
                           DataPos.ICON_NAME_EDITABLE, true,
                          DataPos.QUICKACTION_VISIBLE, false,
@@ -637,7 +644,7 @@ class PieList : Gtk.TreeView {
                                        DataPos.NAME, action.name,
                                     DataPos.TYPE_ID, ActionRegistry.names[action.get_type()],
                                 DataPos.ACTION_TYPE, action.get_type().name(),
-                                  DataPos.ICON_SIZE, Gtk.IconSize.LARGE_TOOLBAR,
+                                DataPos.ICON_PIXBUF, this.load_icon(action.icon, this.small_icon),
                                 DataPos.FONT_WEIGHT, 400,
                          DataPos.ICON_NAME_EDITABLE, !(action is PieAction),
                         DataPos.QUICKACTION_VISIBLE, true,
@@ -755,7 +762,7 @@ class PieList : Gtk.TreeView {
                                             DataPos.NAME, pie.name,
                                          DataPos.TYPE_ID, "ID: " + pie.id,
                                      DataPos.ACTION_TYPE, pie.id,
-                                       DataPos.ICON_SIZE, Gtk.IconSize.DND,
+                                     DataPos.ICON_PIXBUF, this.load_icon(pie.icon, this.large_icon),
                                      DataPos.FONT_WEIGHT, 800,
                               DataPos.ICON_NAME_EDITABLE, true,
                              DataPos.QUICKACTION_VISIBLE, false,
@@ -795,7 +802,7 @@ class PieList : Gtk.TreeView {
                                            DataPos.NAME, GroupRegistry.names[group.get_type()],
                                         DataPos.TYPE_ID, _("Slice group"),
                                     DataPos.ACTION_TYPE, typeof(ActionGroup).name(),
-                                      DataPos.ICON_SIZE, Gtk.IconSize.LARGE_TOOLBAR,
+                                    DataPos.ICON_PIXBUF, this.load_icon(GroupRegistry.icons[group.get_type()], this.small_icon),
                                     DataPos.FONT_WEIGHT, 400,
                              DataPos.ICON_NAME_EDITABLE, false,
                             DataPos.QUICKACTION_VISIBLE, true,
@@ -960,6 +967,21 @@ class PieList : Gtk.TreeView {
         }
         
         this.update_pie(parent);
+    }
+    
+    private Gdk.Pixbuf load_icon(string name, int size) {
+        Gdk.Pixbuf pixbuf = null;
+        
+        try {
+            if (name.contains("/"))
+                pixbuf = new Gdk.Pixbuf.from_file_at_size(name, size, size);
+            else
+                pixbuf = new Gdk.Pixbuf.from_file_at_size(Icon.get_icon_file(name, size), size, size);
+        } catch (GLib.Error e) {
+            warning(e.message);
+        }
+        
+        return pixbuf;
     }
 }
 

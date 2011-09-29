@@ -41,6 +41,7 @@ public class Deamon : GLib.Object {
 
     public static int main(string[] args) {
         Logger.init();
+        Paths.init();
         Gtk.init(ref args);
 
         // create the Deamon and run it
@@ -57,10 +58,11 @@ public class Deamon : GLib.Object {
     private Indicator indicator = null;
     
     /////////////////////////////////////////////////////////////////////
-    /// To be opened Pie. Set by the commend line parser.
+    /// Varaibles set by the commend line parser.
     /////////////////////////////////////////////////////////////////////
     
     private static string open_pie = null;
+    private static bool reset = false;
     
     /////////////////////////////////////////////////////////////////////
     /// Available command line options.
@@ -69,6 +71,8 @@ public class Deamon : GLib.Object {
     private const GLib.OptionEntry[] options = {
         { "open", 'o', 0, GLib.OptionArg.STRING, out open_pie, 
           "Open the Pie with the given ID", "ID" },
+        { "reset", 'r', 0, GLib.OptionArg.NONE, out reset, 
+          "Reset all options to default values" },
         { null }
     };
 
@@ -88,6 +92,14 @@ public class Deamon : GLib.Object {
             context.parse(ref args);
         } catch(GLib.OptionError error) {
             warning(error.message);
+        }
+        
+        if (this.reset) {
+            if (GLib.FileUtils.remove(Paths.pie_config) == 0)
+                message("Removed file \"%s\"", Paths.pie_config);
+            if (GLib.FileUtils.remove(Paths.settings) == 0)
+                message("Removed file \"%s\"", Paths.settings);
+            return;
         }
     
         // create unique application
@@ -121,7 +133,6 @@ public class Deamon : GLib.Object {
         });
     
         // init toolkits and static stuff
-        Paths.init();
         Gdk.threads_init();
         ActionRegistry.init();
         GroupRegistry.init();

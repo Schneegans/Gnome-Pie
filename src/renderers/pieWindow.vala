@@ -140,6 +140,7 @@ public class PieWindow : Gtk.Window {
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
                 this.destroy();
+                //ThemedIcon.clear_cache();
                 return false;
             });
         }
@@ -153,6 +154,7 @@ public class PieWindow : Gtk.Window {
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
                 this.destroy();
+                //ThemedIcon.clear_cache();
                 return false;
             });
         }

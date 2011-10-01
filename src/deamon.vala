@@ -41,8 +41,8 @@ public class Deamon : GLib.Object {
 
     public static int main(string[] args) {
         Logger.init();
-        Paths.init();
         Gtk.init(ref args);
+        Paths.init();
 
         // create the Deamon and run it
         var deamon = new GnomePie.Deamon();

@@ -84,19 +84,24 @@ public class Indicator : GLib.Object {
         #else
             this.indicator = new Gtk.StatusIcon();
             try {
-                this.indicator.set_from_file(GLib.Path.build_filename(
+                var file = GLib.File.new_for_path(GLib.Path.build_filename(
                     GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources",
                     "gnome-pie-indicator.svg"
                 ));
+
+                if (!file.query_exists())
+                  this.indicator.set_from_icon_name("gnome-pie-indicator");
+                else
+                  this.indicator.set_from_file(file.get_path());
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
-                this.indicator.set_from_stock(Gtk.Stock.HOME); // or suitable stock
+                this.indicator.set_from_icon_name("gnome-pie-indicator");
             }
 
             this.menu = new Gtk.Menu();
             var menu = this.menu;
         #endif
-        
+
         this.prefs = new Preferences();
 
         // preferences item

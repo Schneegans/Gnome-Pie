@@ -30,9 +30,11 @@ public class GnomePieAboutDialog: Gtk.AboutDialog {
         GLib.Object (
             artists : artists,
             authors : devs,
-            copyright : "Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>",
+            copyright : "Copyright (C) 2011 Simon Schneegans <code@simonschneegans.de>",
             program_name: "Gnome-Pie",
             logo_icon_name: "gnome-pie",
+            website: "http://www.simonschneegans.de/?page_id=12",
+            website_label: "Homepage",
             version: "0.1"
         );
     }

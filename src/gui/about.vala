@@ -34,7 +34,7 @@ public class GnomePieAboutDialog: Gtk.AboutDialog {
             program_name: "Gnome-Pie",
             logo_icon_name: "gnome-pie",
             website: "http://www.simonschneegans.de/?page_id=12",
-            website_label: "Homepage",
+            website_label: "www.gnome-pie.simonschneegans.de",
             version: "0.1"
         );
     }

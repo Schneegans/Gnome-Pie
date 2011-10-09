@@ -22,6 +22,8 @@ namespace GnomePie {
 // An invisible window. Used to draw Pies onto.
 
 public class PieWindow : Gtk.Window {
+    
+    public signal void on_closing();
 
     private PieRenderer renderer;
     private bool closing = false;
@@ -59,16 +61,22 @@ public class PieWindow : Gtk.Window {
             return true;
         });
         
-        this.key_release_event.connect ((e) => {
-            if (!Config.global.click_to_activate)
-                this.activate_slice();
+        // remember last pressed key in order to disable key repeat
+        uint last_key = 0;
+        this.key_press_event.connect ((e) => {
+            if (e.keyval != last_key) {
+                last_key = e.keyval;
+            
+                if      (Gdk.keyval_name(e.keyval) == "Escape") this.cancel();
+                else if (Gdk.keyval_name(e.keyval) == "Return") this.activate_slice();
+            }
             return true;
         });
         
-        this.key_press_event.connect ((e) => {
-            if      (Gdk.keyval_name(e.keyval) == "Escape") this.cancel();
-            else if (Gdk.keyval_name(e.keyval) == "Return") this.activate_slice();
-            else if (Gdk.keyval_name(e.keyval) == "space") this.activate_slice();
+        this.key_release_event.connect ((e) => {
+            last_key = 0;
+            if (!Config.global.click_to_activate)
+                this.activate_slice();
             return true;
         });
 
@@ -135,6 +143,7 @@ public class PieWindow : Gtk.Window {
     private void activate_slice() {
         if (!this.closing) {
             this.closing = true;
+            this.on_closing();
             this.unfix_focus();
             this.renderer.activate();
             
@@ -149,6 +158,7 @@ public class PieWindow : Gtk.Window {
     private void cancel() {
         if (!this.closing) {
             this.closing = true;
+            this.on_closing();
             this.unfix_focus();
             this.renderer.cancel();
             

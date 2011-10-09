@@ -38,6 +38,13 @@ public class PieManager : GLib.Object {
     private static BindingManager bindings;
     
     /////////////////////////////////////////////////////////////////////
+    /// True, if any pie has the current focus. If it is closing this
+    /// will be false already.
+    /////////////////////////////////////////////////////////////////////
+    
+    private static bool a_pie_is_opened = false;
+    
+    /////////////////////////////////////////////////////////////////////
     /// Initializes all Pies. They are loaded from the pies.conf file.
     /////////////////////////////////////////////////////////////////////
     
@@ -59,14 +66,22 @@ public class PieManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public static void open_pie(string id) {
-        Pie? pie = all_pies[id];
-        
-        if (pie != null) {
-            var window = new PieWindow();
-            window.load_pie(pie);
-            window.open();
-        } else {
-            warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");
+        if (!a_pie_is_opened) {
+            Pie? pie = all_pies[id];
+            
+            if (pie != null) {
+                a_pie_is_opened = true;
+                
+                var window = new PieWindow();
+                window.load_pie(pie);
+                window.open();
+                
+                window.on_closing.connect(() => {
+                    a_pie_is_opened = false;
+                });
+            } else {
+                warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");
+            }
         }
     }
     

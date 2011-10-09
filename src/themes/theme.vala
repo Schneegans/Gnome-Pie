@@ -417,7 +417,7 @@ public class Theme : GLib.Object {
                             case "type":
                                 if (attr_content == "icon")
                                     is_icon = true;
-                                else if (attr_content == "icon")
+                                else if (attr_content != "file")
                                     warning("Invalid attribute content " + attr_content + " for attribute " + attr_name + " in <slice_layer> element!");
                                 break;
                             case "colorize":

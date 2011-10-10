@@ -19,17 +19,21 @@ using GLib.Math;
 
 namespace GnomePie {
 
-// This class renders a Pie. In order to accomplish that, it owns a
-// CenterRenderer and some SliceRenderers.
+/////////////////////////////////////////////////////////////////////////    
+/// This class renders a Pie. In order to accomplish that, it owns a
+/// CenterRenderer and some SliceRenderers.
+/////////////////////////////////////////////////////////////////////////
 
 public class PieRenderer : GLib.Object {
 
     public int quick_action { get; private set; }
     public int active_slice { get; private set; }
+    public bool show_hotkeys { get; set; }
 
     private int size;
     private Gee.ArrayList<SliceRenderer?> slices;
     private CenterRenderer center;
+    private bool key_board_control = false;
     
     public PieRenderer() {
         this.slices = new Gee.ArrayList<SliceRenderer?>(); 
@@ -89,6 +93,54 @@ public class PieRenderer : GLib.Object {
         center.fade_out();
     }
     
+    public void select_up() {
+        int bottom = this.slice_count()/4;
+        int top = this.slice_count()*3/4;
+    
+        if (this.active_slice == -1 || this.active_slice == bottom)
+           this.set_highlighted_slice(top);
+        else if (this.active_slice > bottom && this.active_slice < top)
+           this.set_highlighted_slice(this.active_slice+1);
+        else if (this.active_slice != top)
+           this.set_highlighted_slice((this.active_slice-1+this.slice_count())%this.slice_count());
+    }
+    
+    public void select_down() {
+        int bottom = this.slice_count()/4;
+        int top = this.slice_count()*3/4;
+    
+        if (this.active_slice == -1 || this.active_slice == top)
+           this.set_highlighted_slice(bottom);
+        else if (this.active_slice > bottom && this.active_slice < top)
+           this.set_highlighted_slice(this.active_slice-1);
+        else if (this.active_slice != bottom)
+           this.set_highlighted_slice((this.active_slice+1)%this.slice_count());
+    }
+    
+    public void select_left() {
+        int left = this.slice_count()/2;
+        int right = 0;
+    
+        if (this.active_slice == -1 || this.active_slice == right)
+           this.set_highlighted_slice(left);
+        else if (this.active_slice > left)
+           this.set_highlighted_slice(this.active_slice-1);
+        else if (this.active_slice < left)
+           this.set_highlighted_slice(this.active_slice+1);
+    }
+    
+    public void select_right() {
+        int left = this.slice_count()/2;
+        int right = 0;
+    
+        if (this.active_slice == -1 || this.active_slice == left)
+           this.set_highlighted_slice(right);
+        else if (this.active_slice > left)
+           this.set_highlighted_slice((this.active_slice+1)%this.slice_count());
+        else if (this.active_slice < left && this.active_slice != right)
+           this.set_highlighted_slice((this.active_slice-1+this.slice_count())%this.slice_count());
+    }
+    
     public int slice_count() {
         return slices.size;
     }
@@ -100,42 +152,62 @@ public class PieRenderer : GLib.Object {
     public void draw(double frame_time, Cairo.Context ctx, int mouse_x, int mouse_y) {
 	    double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
 	    double angle = 0.0;
-	
-	    if (distance > 0) {
-	        angle = acos(mouse_x/distance);
-		    if (mouse_y < 0) 
-		        angle = 2*PI - angle;
-	    }
-	    
-	    int next_active_slice = this.active_slice;
-	    
-	    if (distance < Config.global.theme.active_radius
-	        && this.quick_action >= 0 && this.quick_action < this.slices.size) {
-	     
-	        next_active_slice = this.quick_action;   
-	        angle = 2.0*PI*quick_action/(double)slice_count();
-	    } else if (distance > Config.global.theme.active_radius && this.slice_count() > 0) {
-	        next_active_slice = (int)(angle*slices.size/(2*PI) + 0.5) % this.slice_count();
+
+	    if (this.key_board_control) {
+	        angle = 2.0*PI*this.active_slice/(double)slice_count();
 	    } else {
-	        next_active_slice = -1;
-	    }
 	    
-	    if (next_active_slice != this.active_slice) {
-	        this.active_slice = next_active_slice;
+	        if (distance > 0) {
+	            angle = acos(mouse_x/distance);
+		        if (mouse_y < 0) 
+		            angle = 2*PI - angle;
+	        }
 	        
-	        SliceRenderer? active = ((this.active_slice >= 0 && this.active_slice < this.slice_count()) ?
-	                                  this.slices[this.active_slice] : null);
-	                                  
-	        center.set_active_slice(active);
+	        int next_active_slice = this.active_slice;
 	        
-	        foreach (var slice in this.slices)
-		        slice.set_active_slice(active);
+	        if (distance < Config.global.theme.active_radius
+	            && this.quick_action >= 0 && this.quick_action < this.slices.size) {
+	         
+	            next_active_slice = this.quick_action;   
+	            angle = 2.0*PI*quick_action/(double)slice_count();
+	        } else if (distance > Config.global.theme.active_radius && this.slice_count() > 0) {
+	            next_active_slice = (int)(angle*slices.size/(2*PI) + 0.5) % this.slice_count();
+	        } else {
+	            next_active_slice = -1;
+	        }
+	    
+	        this.set_highlighted_slice(next_active_slice);
 	    }
 
         center.draw(frame_time, ctx, angle, distance);
 	    
 	    foreach (var slice in this.slices)
 		    slice.draw(frame_time, ctx, angle, distance);
+    }
+    
+    public void on_mouse_move() {
+        this.key_board_control = false;
+    }
+    
+    public void set_highlighted_slice(int index) {
+        if (index != this.active_slice) {
+            if (index >= 0 && index < this.slice_count()) 
+                this.active_slice = index;
+            else if (this.quick_action >= 0)
+                this.active_slice = this.quick_action;
+            else
+                this.active_slice = -1;
+            
+            SliceRenderer? active = (this.active_slice >= 0 && this.active_slice < this.slice_count()) ?
+                                     this.slices[this.active_slice] : null;
+	                    
+            center.set_active_slice(active);
+            
+            foreach (var slice in this.slices)
+                slice.set_active_slice(active);
+                
+            this.key_board_control = true;
+        }
     }
 }
 

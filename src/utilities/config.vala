@@ -56,7 +56,7 @@ public class Config : GLib.Object {
     public double global_scale { get; set; default = 1.0; }
     public bool show_indicator { get; set; default = true; }
     public bool open_at_mouse { get; set; default = true; }
-    public bool click_to_activate { get; set; default = true; }
+    public bool turbo_mode { get; set; default = true; }
     public bool auto_start { get; set; default = false; }
     public Gee.ArrayList<Theme?> themes { get; private set; }
     
@@ -73,7 +73,7 @@ public class Config : GLib.Object {
                 writer.write_attribute("global_scale", global_scale.to_string());
                 writer.write_attribute("show_indicator", show_indicator ? "true" : "false");
                 writer.write_attribute("open_at_mouse", open_at_mouse ? "true" : "false");
-                writer.write_attribute("click_to_activate", click_to_activate ? "true" : "false");
+                writer.write_attribute("turbo_mode", turbo_mode ? "true" : "false");
             writer.end_element();
         writer.end_document();
     }
@@ -119,8 +119,8 @@ public class Config : GLib.Object {
                         case "open_at_mouse":
                             open_at_mouse = bool.parse(attr_content);
                             break;
-                        case "click_to_activate":
-                            click_to_activate = bool.parse(attr_content);
+                        case "turbo_mode":
+                            turbo_mode = bool.parse(attr_content);
                             break;
                         default:
                             warning("Invalid setting \"" + attr_name + "\" in gnome-pie.conf!");

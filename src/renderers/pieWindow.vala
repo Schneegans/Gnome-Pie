@@ -53,7 +53,8 @@ public class PieWindow : Gtk.Window {
         
         this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
                         Gdk.EventMask.KEY_RELEASE_MASK |
-                        Gdk.EventMask.KEY_PRESS_MASK);
+                        Gdk.EventMask.KEY_PRESS_MASK |
+                        Gdk.EventMask.POINTER_MOTION_MASK);
 
         this.button_release_event.connect ((e) => {
             if (e.button == 1) this.activate_slice();
@@ -63,20 +64,25 @@ public class PieWindow : Gtk.Window {
         
         // remember last pressed key in order to disable key repeat
         uint last_key = 0;
-        this.key_press_event.connect ((e) => {
+        this.key_press_event.connect((e) => {
             if (e.keyval != last_key) {
                 last_key = e.keyval;
-            
-                if      (Gdk.keyval_name(e.keyval) == "Escape") this.cancel();
-                else if (Gdk.keyval_name(e.keyval) == "Return") this.activate_slice();
+                this.handle_key_press(e.keyval);
             }
             return true;
         });
         
-        this.key_release_event.connect ((e) => {
+        this.key_release_event.connect((e) => {
             last_key = 0;
-            if (!Config.global.click_to_activate)
+            if (Config.global.turbo_mode)
                 this.activate_slice();
+            else
+                this.handle_key_release(e.keyval);
+            return true;
+        });
+        
+        this.motion_notify_event.connect((e) => {
+            this.renderer.on_mouse_move();
             return true;
         });
 
@@ -134,7 +140,7 @@ public class PieWindow : Gtk.Window {
         double frame_time = this.timer.elapsed();
         this.timer.reset();
         
-        this.renderer.draw(frame_time, ctx, (int)(mouse_x - this.width_request*0.5), 
+        this.renderer.draw(frame_time, ctx, (int)(mouse_x - this.width_request*0.5),
                                             (int)(mouse_y - this.height_request*0.5));
         
         return true;
@@ -173,6 +179,43 @@ public class PieWindow : Gtk.Window {
     private void set_window_position() {
         if(Config.global.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
         else                            this.set_position(Gtk.WindowPosition.CENTER);
+    }
+    
+    private void handle_key_press(uint key) {
+        if      (Gdk.keyval_name(key) == "Escape") this.cancel();
+        else if (Gdk.keyval_name(key) == "Return") this.activate_slice();
+        else if (!Config.global.turbo_mode) {
+            if (Gdk.keyval_name(key) == "Up") this.renderer.select_up();
+            else if (Gdk.keyval_name(key) == "Down") this.renderer.select_down();
+            else if (Gdk.keyval_name(key) == "Left") this.renderer.select_left();
+            else if (Gdk.keyval_name(key) == "Right") this.renderer.select_right();
+            else if (Gdk.keyval_name(key) == "Alt_L") this.renderer.show_hotkeys = true;
+            else {
+                int index = -1;
+                
+                if (key >= 48 && key <= 57)        index = (int)key - 48;
+                else if (key >= 97 && key <= 122)  index = (int)key - 87;
+                else if (key >= 65 && key <= 90)   index = (int)key - 55;
+                
+                if (index >= 0 && index < this.renderer.slice_count()) {
+                    this.renderer.set_highlighted_slice(index);
+                
+                    if (this.renderer.active_slice == index) {
+                        GLib.Timeout.add((uint)(Config.global.theme.transition_time*1000.0), ()=> {
+                            this.activate_slice();
+                            return false;
+                        });
+                    }
+                        
+                }
+            }
+        }
+    }
+    
+    private void handle_key_release(uint key) {
+        if (!Config.global.turbo_mode) {
+            if (Gdk.keyval_name(key) == "Alt_L") this.renderer.show_hotkeys = false;
+        }
     }
     
     // utilities for grabbing focus

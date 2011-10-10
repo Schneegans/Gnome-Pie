@@ -29,6 +29,7 @@ public class SliceRenderer : GLib.Object {
     
     private Image active_icon;
     private Image inactive_icon;
+    private Image hotkey;
     
     private Action action;
 
@@ -75,6 +76,16 @@ public class SliceRenderer : GLib.Object {
         this.inactive_icon = new ThemedIcon(action.icon, false);
         
         this.color = new Color.from_icon(this.active_icon);
+        
+        string hotkey_label = "";
+        if (position < 10) {
+            hotkey_label = "%u".printf(position);
+        } else if (position < 36) {
+            hotkey_label = "%c".printf((char)(55 + position));
+        }
+        
+        this.hotkey = new RenderedText(hotkey_label, (int)Config.global.theme.slice_radius*2,
+                         (int)Config.global.theme.slice_radius*2, "sans 20");
     }
     
     public void activate() {
@@ -149,10 +160,20 @@ public class SliceRenderer : GLib.Object {
         if (fade.val > 0.0) active_icon.paint_on(ctx, this.alpha.val*this.fade.val);
         if (fade.val < 1.0) inactive_icon.paint_on(ctx, this.alpha.val*(1.0 - fade.val));
         
+        if (this.parent.show_hotkeys) {
+            ctx.set_operator(Cairo.Operator.ATOP);
+            ctx.set_source_rgba(0, 0, 0, 0.5);
+            ctx.paint();
+        }
+        
         ctx.set_operator(Cairo.Operator.OVER);
+        
         
         ctx.pop_group_to_source();
         ctx.paint();
+        
+        if (this.parent.show_hotkeys)
+            this.hotkey.paint_on(ctx, 1.0);
             
         ctx.restore();
     }

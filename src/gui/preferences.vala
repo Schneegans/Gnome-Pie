@@ -63,26 +63,30 @@ public class Preferences : Gtk.Window {
 
                         // Autostart checkbox
                         var autostart = new Gtk.CheckButton.with_label (_("Startup on Login"));
+                            autostart.tooltip_text = _("If checked, Gnome-Pie will start when you log in.");
                             autostart.active = Config.global.auto_start;
                             autostart.toggled.connect(autostart_toggled);
                             behavior_vbox.pack_start(autostart, false);
 
                         // Indicator icon 
                         var indicator = new Gtk.CheckButton.with_label (_("Show Indicator"));
+                            indicator.tooltip_text = _("If checked, an indicator for easy access of the settings menu is shown in your panel.");
                             indicator.active = Config.global.show_indicator;
                             indicator.toggled.connect(indicator_toggled);
                             behavior_vbox.pack_start(indicator, false);
                             
                         // Open Pies at Mouse
                         var open_at_mouse = new Gtk.CheckButton.with_label (_("Open Pies at Mouse"));
+                            open_at_mouse.tooltip_text = _("If checked, pies will open at your pointer. Otherwise they'll pop up in the middle of the screen.");
                             open_at_mouse.active = Config.global.open_at_mouse;
                             open_at_mouse.toggled.connect(open_at_mouse_toggled);
                             behavior_vbox.pack_start(open_at_mouse, false);
                             
                         // Click to activate
-                        var click_to_activate = new Gtk.CheckButton.with_label (_("Click to activate a Slice"));
-                            click_to_activate.active = Config.global.click_to_activate;
-                            click_to_activate.toggled.connect(click_to_activate_toggled);
+                        var click_to_activate = new Gtk.CheckButton.with_label (_("Turbo mode"));
+                            click_to_activate.tooltip_text = _("If checked, the pie closes when its keystroke is released. The currently hovered slice gets executed. This allows very fast selection but disables keyboard navigating.");
+                            click_to_activate.active = Config.global.turbo_mode;
+                            click_to_activate.toggled.connect(turbo_mode_toggled);
                             behavior_vbox.pack_start(click_to_activate, false);
                             
                         // Slider
@@ -314,9 +318,9 @@ public class Preferences : Gtk.Window {
     /// activate a slice.
     /////////////////////////////////////////////////////////////////////
     
-    private void click_to_activate_toggled(Gtk.ToggleButton check_box) {
+    private void turbo_mode_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
-        Config.global.click_to_activate = check.active;
+        Config.global.turbo_mode = check.active;
     }
 }
 

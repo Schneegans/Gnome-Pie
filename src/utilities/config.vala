@@ -56,7 +56,7 @@ public class Config : GLib.Object {
     public double global_scale { get; set; default = 1.0; }
     public bool show_indicator { get; set; default = true; }
     public bool open_at_mouse { get; set; default = true; }
-    public bool turbo_mode { get; set; default = true; }
+    public bool turbo_mode { get; set; default = false; }
     public bool auto_start { get; set; default = false; }
     public Gee.ArrayList<Theme?> themes { get; private set; }
     

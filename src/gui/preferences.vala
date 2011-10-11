@@ -178,6 +178,7 @@ public class Preferences : Gtk.Window {
                         // info label
                         var info_label = new TipViewer({
                                 _("You can right-click in the list for adding or removing entries."),
+                                _("You can reset Gnome-Pie to its default options with the terminal command \"gnome-pie --reset\"."),
                                 _("The radiobutton at the beginning of each slice-line indicates the QuickAction of the pie."),
                                 _("Pies can be opened with the terminal command \"gnome-pie --open=ID\"."),
                                 _("Feel free to visit Gnome-Pie's homepage at %s!").printf("<a href='http://gnome-pie.simonschneegans.de'>gnome-pie.simonschneegans.de</a>"),
@@ -185,7 +186,7 @@ public class Preferences : Gtk.Window {
                                 _("If you want to give some feedback, please write an e-mail to %s!").printf("<a href='mailto:code@simonschneegans.de'>code@simonschneegans.de</a>"),
                                 _("You may drag'n'drop URLs and bookmarks from your internet browser to the list above."),
                                 _("Bugs can be reported at %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie'>Github</a>"),
-                                _("You can drag'n'drop files and folders from your file browser to the list above.")
+                                _("It's possible to drag'n'drop files and folders from your file browser to the list above.")
                             });
                             this.show.connect(info_label.start_slide_show);
                             this.hide.connect(info_label.stop_slide_show);

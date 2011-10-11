@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-25 21:04+0200\n"
+"POT-Creation-Date: 2011-10-11 15:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,202 +17,341 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../src/actions/keyAction.vala:24 ../../src/settings/pieList.vala:73
+#: ../../src/actions/keyAction.vala:33
 msgid "Press key stroke"
 msgstr ""
 
-#: ../../src/actions/appAction.vala:24 ../../src/settings/pieList.vala:72
-msgid "Launch application"
-msgstr ""
-
-#: ../../src/actions/action.vala:88
-msgid "Trash"
-msgstr ""
-
-#: ../../src/actions/uriAction.vala:24 ../../src/settings/pieList.vala:75
-msgid "Open URI"
-msgstr ""
-
-#: ../../src/actions/pieAction.vala:24 ../../src/settings/pieList.vala:74
+#: ../../src/actions/pieAction.vala:33
 msgid "Open Pie"
 msgstr ""
 
-#: ../../src/settings/preferences.vala:26
-msgid "Gnome-Pie - Settings"
+#: ../../src/actions/appAction.vala:33
+msgid "Launch application"
 msgstr ""
 
-#: ../../src/settings/preferences.vala:49
-msgid "Behavior"
+#: ../../src/actions/uriAction.vala:33
+msgid "Open URI"
 msgstr ""
 
-#: ../../src/settings/preferences.vala:59
-msgid "Startup on Login"
+#: ../../src/actions/actionRegistry.vala:107
+msgid "Trash"
 msgstr ""
 
-#: ../../src/settings/preferences.vala:65
-msgid "Show Indicator"
-msgstr ""
-
-#: ../../src/settings/preferences.vala:71
-msgid "Open Pies at Mouse"
-msgstr ""
-
-#: ../../src/settings/preferences.vala:77
-msgid "Click to activate a Slice"
-msgstr ""
-
-#: ../../src/settings/preferences.vala:86
-msgid "Global Scale"
-msgstr ""
-
-#: ../../src/settings/preferences.vala:123
-msgid "Themes"
-msgstr ""
-
-#: ../../src/settings/preferences.vala:141
-msgid "General"
-msgstr ""
-
-#: ../../src/settings/preferences.vala:146
-msgid "Pies"
-msgstr ""
-
-#: ../../src/settings/preferences.vala:170
-msgid ""
-"You can right-click in the list\n"
-"for adding or removing entries."
-msgstr ""
-
-#: ../../src/settings/themeList.vala:75
-msgid "by"
-msgstr ""
-
-#: ../../src/settings/iconChooserWindow.vala:79
-msgid "Choose an Icon"
-msgstr ""
-
-#: ../../src/settings/iconChooserWindow.vala:101
-msgid "All icons"
-msgstr ""
-
-#: ../../src/settings/iconChooserWindow.vala:102
-msgid "Applications"
-msgstr ""
-
-#: ../../src/settings/iconChooserWindow.vala:103
-msgid "Actions"
-msgstr ""
-
-#: ../../src/settings/iconChooserWindow.vala:104
-msgid "Places"
-msgstr ""
-
-#: ../../src/settings/iconChooserWindow.vala:105
-msgid "File types"
-msgstr ""
-
-#: ../../src/settings/iconChooserWindow.vala:106
-msgid "Emotes"
-msgstr ""
-
-#: ../../src/settings/iconChooserWindow.vala:107
-msgid "Miscellaneous"
-msgstr ""
-
-#: ../../src/settings/pieList.vala:56
-#: ../../src/actionGroups/bookmarkGroup.vala:23
-msgid "Bookmarks"
-msgstr ""
-
-#: ../../src/settings/pieList.vala:57
-#: ../../src/actionGroups/devicesGroup.vala:23
-msgid "Devices"
-msgstr ""
-
-#: ../../src/settings/pieList.vala:58 ../../src/actionGroups/menuGroup.vala:25
-msgid "Main menu"
-msgstr ""
-
-#: ../../src/settings/pieList.vala:59
-#: ../../src/actionGroups/sessionGroup.vala:23
-msgid "Session Control"
-msgstr ""
-
-#: ../../src/settings/pieList.vala:76 ../../src/settings/pieList.vala:738
-msgid "Slice group"
-msgstr ""
-
-#: ../../src/settings/pieList.vala:119
-msgid "Icon"
-msgstr ""
-
-#: ../../src/settings/pieList.vala:181
-msgid "Command"
-msgstr ""
-
-#: ../../src/settings/pieList.vala:261 ../../src/settings/pieList.vala:601
-#: ../../src/settings/pieList.vala:753
-#: ../../src/system/bindingManager.vala:118
+#: ../../src/utilities/bindingManager.vala:150 ../../src/gui/pieList.vala:278
+#: ../../src/gui/pieList.vala:660 ../../src/gui/pieList.vala:818
 msgid "Not bound"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:326
-msgid "Action type"
+#: ../../src/pies/defaultConfig.vala:29
+msgid "Multimedia"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:388
+#: ../../src/pies/defaultConfig.vala:30
+msgid "Next Track"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:31
+msgid "Stop"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:32
+msgid "Previous Track"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:33
+msgid "Play/Pause"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:36
+#: ../../src/gui/iconSelectWindow.vala:119
+msgid "Applications"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:45
+#: ../../src/actionGroups/bookmarkGroup.vala:35
+msgid "Bookmarks"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:50
+msgid "Session"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:54
+msgid "Main Menu"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:58
+msgid "Window"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:59
+msgid "Scale"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:60
+msgid "Minimize"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:61
+msgid "Close"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:62
+msgid "Maximize"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:63
+msgid "Restore"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:32
+msgid "Gnome-Pie - Settings"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:55
+msgid "Behavior"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:65
+msgid "Startup on Login"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:66
+msgid "If checked, Gnome-Pie will start when you log in."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:72
+msgid "Show Indicator"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:73
+msgid ""
+"If checked, an indicator for easy access of the settings menu is shown in "
+"your panel."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:79
+msgid "Open Pies at Mouse"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:80
+msgid ""
+"If checked, pies will open at your pointer. Otherwise they'll pop up in the "
+"middle of the screen."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:86
+msgid "Turbo mode"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:87
+msgid ""
+"If checked, the pie closes when its keystroke is released. The currently "
+"hovered slice gets executed. This allows very fast selection but disables "
+"keyboard navigating."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:96
+msgid "Global Scale"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:133
+msgid "Themes"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:151
+msgid "General"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:156
+msgid "Pies"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:180
+msgid "You can right-click in the list for adding or removing entries."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:181
+msgid ""
+"You can reset Gnome-Pie to its default options with the terminal command "
+"\"gnome-pie --reset\"."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:182
+msgid ""
+"The radiobutton at the beginning of each slice-line indicates the "
+"QuickAction of the pie."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:183
+msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:184
+msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:185
+msgid "You can drag'n'drop applications from your main menu to the list above."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:186
+msgid "If you want to give some feedback, please write an e-mail to %s!"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:187
+msgid ""
+"You may drag'n'drop URLs and bookmarks from your internet browser to the "
+"list above."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:188
+msgid "Bugs can be reported at %s!"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:189
+msgid ""
+"It's possible to drag'n'drop files and folders from your file browser to the "
+"list above."
+msgstr ""
+
+#: ../../src/gui/preferences.vala:198
+msgid "Moves the selected Slice down"
+msgstr ""
+
+#: ../../src/gui/preferences.vala:210
+msgid "Moves the selected Slice up"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:803
+msgid "Slice group"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:134
+msgid "Icon"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:199
+msgid "Command"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:343
+msgid "Pie-ID / Action type"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:403
 msgid "Name"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:423
+#: ../../src/gui/pieList.vala:446
 msgid "Add new Pie"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:428
+#: ../../src/gui/pieList.vala:451
 msgid "Add new Slice"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:436
+#: ../../src/gui/pieList.vala:459
 msgid "Delete"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:517
+#: ../../src/gui/pieList.vala:574
 msgid "New Pie"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:562
+#: ../../src/gui/pieList.vala:620
 msgid "New Action"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:576
+#: ../../src/gui/pieList.vala:634
 msgid "You have to select a Pie to add a Slice to!"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:623
+#: ../../src/gui/pieList.vala:683
 msgid "You have to select a Pie or a Slice to delete!"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:633
+#: ../../src/gui/pieList.vala:694
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr ""
 
-#: ../../src/settings/pieList.vala:666
+#: ../../src/gui/pieList.vala:728
 msgid "Do you really want to delete the selected Slice?"
 msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:29
+#: ../../src/gui/themeList.vala:88
+msgid "by"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:91
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:118
+msgid "All icons"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:120
+msgid "Actions"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:121
+msgid "Places"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:122
+msgid "File types"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:123
+msgid "Emotes"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:124
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:192
+msgid "Icon Theme"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:200
+msgid "All supported image formats"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:217
+msgid "Custom Icon"
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:34
+msgid "Devices"
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:82
+msgid "Root"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:34
+msgid "Session Control"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:52
 msgid "Shutdown"
 msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:32
+#: ../../src/actionGroups/sessionGroup.vala:55
 msgid "Logout"
 msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:35
+#: ../../src/actionGroups/sessionGroup.vala:58
 msgid "Reboot"
 msgstr ""
 
-#: ../../src/actionGroups/devicesGroup.vala:44
-msgid "Root"
+#: ../../src/actionGroups/menuGroup.vala:33
+msgid "Main menu"
+msgstr ""
+
+#: ../../src/actionGroups/clipboardGroup.vala:62
+msgid "Clipboard"
 msgstr ""

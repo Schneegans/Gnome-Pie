@@ -39,7 +39,7 @@ public class PieRenderer : GLib.Object {
         this.slices = new Gee.ArrayList<SliceRenderer?>(); 
         this.center = new CenterRenderer(this);
         this.quick_action = -1;
-        this.active_slice = -1;
+        this.active_slice = -2;
         this.size = 0;
     }
     
@@ -55,19 +55,13 @@ public class PieRenderer : GLib.Object {
                 
                 if (action.is_quick_action) {
                     this.quick_action = count;
-                    this.active_slice = count;
                 }
                 
                 ++count;
             }
         }
         
-        if(this.quick_action >= 0 && this.quick_action < this.slices.size) {
-            this.center.set_active_slice(this.slices[this.quick_action]);
-            
-            foreach (var slice in this.slices)
-		        slice.set_active_slice(this.slices[this.quick_action]);
-        }
+        this.set_highlighted_slice(this.quick_action);
         
         this.size = (int)fmax(2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
                               2*Config.global.theme.center_radius);
@@ -205,7 +199,7 @@ public class PieRenderer : GLib.Object {
             
             foreach (var slice in this.slices)
                 slice.set_active_slice(active);
-                
+            
             this.key_board_control = true;
         }
     }

@@ -18,11 +18,12 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// An ActionGroup which displays the user's main menu.
+/// An ActionGroup which displays the user's main menu. It's a bit ugly,
+/// but it supports both, an older version and libgnome-menus-3 at the
+/// same time.
 /////////////////////////////////////////////////////////////////////////
         
 public class MenuGroup : ActionGroup {
-    
     /////////////////////////////////////////////////////////////////////
     /// Used to register this type of ActionGroup. It sets the display
     /// name for this ActionGroup, it's icon name and the string used in 
@@ -82,7 +83,12 @@ public class MenuGroup : ActionGroup {
         this.childs = new Gee.ArrayList<MenuGroup?>();
 
         if (this.is_toplevel) {
-            this.load_toplevel();
+            #if HAVE_GMENU_3
+                this.menu = new GMenu.Tree("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
+                this.menu.changed.connect(this.reload);
+            #endif 
+            
+            this.load_toplevel(); 
         } 
     }
     
@@ -91,12 +97,20 @@ public class MenuGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
     
     private void load_toplevel() {
-        this.menu = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
-        this.menu.add_monitor(this.reload);
-        
-        var dir = this.menu.get_root_directory();
-
-        this.load_contents(dir, this.parent_id);
+        #if HAVE_GMENU_3
+            try {
+                if (this.menu.load_sync()) {
+                    this.load_contents(this.menu.get_root_directory(), this.parent_id);
+                }
+            } catch (GLib.Error e) {
+                warning(e.message);
+            }
+        #else
+            this.menu = GMenu.Tree.lookup ("applications.menu", GMenu.TreeFlags.INCLUDE_EXCLUDED);
+            this.menu.add_monitor(this.reload);
+            var dir = this.menu.get_root_directory();
+            this.load_contents(dir, this.parent_id);
+        #endif 
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -104,35 +118,75 @@ public class MenuGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
     
     private void load_contents(GMenu.TreeDirectory dir, string parent_id) {
-        foreach (var item in dir.get_contents()) {
-            switch(item.get_type()) {
-                case GMenu.TreeItemType.DIRECTORY:
-                    // create a MenuGroup for sub menus 
-                    if (!((GMenu.TreeDirectory)item).get_is_nodisplay()) {
-                        var sub_menu = PieManager.create_dynamic_pie(
-                                                          ((GMenu.TreeDirectory)item).get_name(),
-                                                          ((GMenu.TreeDirectory)item).get_icon());
-                        var group = new MenuGroup.sub_menu(sub_menu.id);
-                        group.add_action(new PieAction(parent_id, true));
-                        group.load_contents((GMenu.TreeDirectory)item, sub_menu.id);
-                        childs.add(group);
-                                                          
-                        sub_menu.add_group(group);
-                        
-                        this.add_action(new PieAction(sub_menu.id)); 
-                    } 
+        #if HAVE_GMENU_3
+            var item = dir.iter();
+
+            while (true) {
+                var type = item.next();
+                if (type == GMenu.TreeItemType.INVALID)
                     break;
                     
-                case GMenu.TreeItemType.ENTRY:
+                if (type == GMenu.TreeItemType.DIRECTORY && !item.get_directory().get_is_nodisplay()) {
+                    // create a MenuGroup for sub menus 
+                    string[] icons = item.get_directory().get_icon().to_string().split(" ");
+                    string final_icon = "application-default-icon";
+                    
+                    // search for available icons
+                    foreach (var icon in icons) {
+                        if (Gtk.IconTheme.get_default().has_icon(icon)) {
+                            final_icon = icon;
+                            break;
+                        }
+                    }
+                
+                    var sub_menu = PieManager.create_dynamic_pie(item.get_directory().get_name(), final_icon);
+                    var group = new MenuGroup.sub_menu(sub_menu.id);
+                    group.add_action(new PieAction(parent_id, true));
+                    group.load_contents(item.get_directory(), sub_menu.id);
+                    childs.add(group);
+                                                      
+                    sub_menu.add_group(group);
+                    
+                    this.add_action(new PieAction(sub_menu.id)); 
+
+                } else if (type == GMenu.TreeItemType.ENTRY ) {
                     // create an AppAction for entries
-                    if (!((GMenu.TreeEntry)item).get_is_nodisplay() && !((GMenu.TreeEntry)item).get_is_excluded()) {
-                        this.add_action(new AppAction(((GMenu.TreeEntry)item).get_name(), 
-                                                      ((GMenu.TreeEntry)item).get_icon(), 
-                                                      ((GMenu.TreeEntry)item).get_exec())); 
+                    if (!item.get_entry().get_is_excluded()) {
+                        this.add_action(ActionRegistry.new_for_app_info(item.get_entry().get_app_info())); 
                     } 
-                    break;
+                }
             }
-        }
+        #else
+            foreach (var item in dir.get_contents()) {
+                switch(item.get_type()) {
+                    case GMenu.TreeItemType.DIRECTORY:
+                        // create a MenuGroup for sub menus 
+                        if (!((GMenu.TreeDirectory)item).get_is_nodisplay()) {
+                            var sub_menu = PieManager.create_dynamic_pie(
+                                                              ((GMenu.TreeDirectory)item).get_name(),
+                                                              ((GMenu.TreeDirectory)item).get_icon());
+                            var group = new MenuGroup.sub_menu(sub_menu.id);
+                            group.add_action(new PieAction(parent_id, true));
+                            group.load_contents((GMenu.TreeDirectory)item, sub_menu.id);
+                            childs.add(group);
+                                                              
+                            sub_menu.add_group(group);
+                            
+                            this.add_action(new PieAction(sub_menu.id)); 
+                        } 
+                        break;
+                        
+                    case GMenu.TreeItemType.ENTRY:
+                        // create an AppAction for entries
+                        if (!((GMenu.TreeEntry)item).get_is_nodisplay() && !((GMenu.TreeEntry)item).get_is_excluded()) {
+                            this.add_action(new AppAction(((GMenu.TreeEntry)item).get_name(), 
+                                                          ((GMenu.TreeEntry)item).get_icon(), 
+                                                          ((GMenu.TreeEntry)item).get_exec())); 
+                        } 
+                        break;
+                }
+            }
+        #endif
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -151,7 +205,10 @@ public class MenuGroup : ActionGroup {
 
                 // reload
                 message("Main menu changed...");
-                this.menu.remove_monitor(this.reload);
+                #if !HAVE_GMENU_3
+                    this.menu.remove_monitor(this.reload);
+                #endif
+                
                 this.clear();
                 this.load_toplevel();
                 
@@ -186,7 +243,11 @@ public class MenuGroup : ActionGroup {
         this.delete_all();
         
         this.childs.clear();
-        this.menu = null;
+        
+        #if !HAVE_GMENU_3
+            this.menu = null;
+        #endif
+        
     }
 }
 

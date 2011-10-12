@@ -32,8 +32,8 @@ pkg_check_modules(X11 REQUIRED x11)
 pkg_check_modules(INDICATOR appindicator-0.1)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
-pkg_check_modules(GMENU REQUIRED libgnome-menu)
 pkg_check_modules(UNIQUE REQUIRED unique-1.0)
+pkg_check_modules(GMENU3 libgnome-menu-3.0)
 
 set(CFLAGS
     ${GIO_CFLAGS}
@@ -41,17 +41,20 @@ set(CFLAGS
     ${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
     ${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
     ${X11_CFLAGS} ${X11_CFLAGS_OTHER}
-	#for gnome-menu
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
-    # for gettext
     -DGETTEXT_PACKAGE="gnomepie"
 	-s -O3
-#    -g
 )
+
+if (${GMENU3_FOUND})
+    LIST(APPEND CFLAGS -DHAVE_GMENU_3)
+else (${GMENU3_FOUND})
+    pkg_check_modules(GMENU REQUIRED libgnome-menu)
+endif (${GMENU3_FOUND})
 
 if (${INDICATOR_FOUND})
     LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
-endif(${INDICATOR_FOUND})
+endif (${INDICATOR_FOUND})
 
 add_definitions(${CFLAGS})
 
@@ -64,6 +67,7 @@ set(LIBS
 	${XML_LIBRARIES}
 	${XTST_LIBRARIES}
 	${GMENU_LIBRARIES}
+	${GMENU3_LIBRARIES}
 	${UNIQUE_LIBRARIES}
 	${X11_LIBRARIES}
 )
@@ -78,6 +82,7 @@ set(LIB_PATHS
 	${XML_LIBRARY_DIRS}
 	${XTST_LIBRARY_DIRS}
 	${GMENU_LIBRARY_DIRS}
+	${GMENU3_LIBRARY_DIRS}
 	${UNIQUE_LIBRARY_DIRS}
 	${X11_LIBRARY_DIRS}
 )
@@ -92,6 +97,7 @@ set(INCLUDE_PATHS
 	${XML_INCLUDE_DIRS}
 	${XTST_INCLUDE_DIRS}	
 	${GMENU_INCLUDE_DIRS}
+	${GMENU3_INCLUDE_DIRS}
 	${UNIQUE_INCLUDE_DIRS}
 	${X11_INCLUDE_DIRS}
 )
@@ -113,13 +119,18 @@ set(VALA_PKGS
   posix
   libxml-2.0
   xtst
-  libgnome-menu
   unique-1.0
 )
 
 if (${INDICATOR_FOUND})
     LIST(APPEND VALA_PKGS appindicator-0.1)
-endif(${INDICATOR_FOUND})
+endif (${INDICATOR_FOUND})
+
+if (${GMENU3_FOUND})
+    LIST(APPEND VALA_PKGS libgnome-menu-3.0)
+else (${GMENU3_FOUND})
+    LIST(APPEND VALA_PKGS libgnome-menu)
+endif (${GMENU3_FOUND})
 
 add_subdirectory(src)
 
@@ -151,6 +162,7 @@ message( "  INDICATOR_LIBRARIES = ${INDICATOR_LIBRARIES}" )
 message( "  XML_LIBRARIES = ${XML_LIBRARIES}" )
 message( "  XTST_LIBRARIES = ${XTST_LIBRARIES}" )
 message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )
+message( "  GMENU3_LIBRARIES = ${GMENU3_LIBRARIES}" )
 message( "  UNIQUE_LIBRARIES = ${UNIQUE_LIBRARIES}" )
 message( "  X11_LIBRARIES = ${X11_LIBRARIES}" )
 message( "" )

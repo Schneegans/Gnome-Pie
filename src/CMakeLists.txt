@@ -9,6 +9,10 @@ if (${INDICATOR_FOUND})
   SET(DEFINES --define HAVE_APPINDICATOR)
 endif(${INDICATOR_FOUND})
 
+if (${GMENU3_FOUND})
+    LIST(APPEND DEFINES --define HAVE_GMENU_3)
+endif (${GMENU3_FOUND})
+
 # use valac to compile sources to c files
 vala_precompile(
     VALA_C

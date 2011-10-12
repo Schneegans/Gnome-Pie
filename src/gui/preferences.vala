@@ -84,7 +84,7 @@ public class Preferences : Gtk.Window {
                             
                         // Click to activate
                         var click_to_activate = new Gtk.CheckButton.with_label (_("Turbo mode"));
-                            click_to_activate.tooltip_text = _("If checked, the pie closes when its keystroke is released. The currently hovered slice gets executed. This allows very fast selection but disables keyboard navigating.");
+                            click_to_activate.tooltip_text = _("If checked, the pie closes when its keystroke is released. The currently hovered slice gets executed. This allows very fast selection but disables keyboard navigation.");
                             click_to_activate.active = Config.global.turbo_mode;
                             click_to_activate.toggled.connect(turbo_mode_toggled);
                             behavior_vbox.pack_start(click_to_activate, false);

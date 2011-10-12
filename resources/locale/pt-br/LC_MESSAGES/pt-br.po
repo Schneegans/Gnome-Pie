@@ -1,104 +1,44 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Simon Schneegans <simon.schneegans@uni-weimar.de>
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Language pt-br translations for gnomepie package.
+# Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>
+# This file is distributed under the same license as the gnomepie package.
+# Magnun Leno <magnun@codecommunity.org>, 2011.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-10-11 15:55-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2011-10-11 15:55-0300\n"
+"Last-Translator: Magnun Leno <magnun@codecommunity.org>\n"
+"Language-Team: Language pt-br\n"
+"Language: pt-br\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../src/actions/keyAction.vala:33
 msgid "Press key stroke"
-msgstr ""
+msgstr "Pressione qualquer tecla"
 
 #: ../../src/actions/pieAction.vala:33
 msgid "Open Pie"
-msgstr ""
+msgstr "Abrir menu"
 
 #: ../../src/actions/appAction.vala:33
 msgid "Launch application"
-msgstr ""
+msgstr "Lançar aplicação"
 
 #: ../../src/actions/uriAction.vala:33
 msgid "Open URI"
-msgstr ""
+msgstr "Abrir URL"
 
 #: ../../src/actions/actionRegistry.vala:107
 msgid "Trash"
-msgstr ""
-
-#: ../../src/utilities/bindingManager.vala:150 ../../src/gui/pieList.vala:278
-#: ../../src/gui/pieList.vala:660 ../../src/gui/pieList.vala:818
-msgid "Not bound"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:29
-msgid "Multimedia"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:30
-msgid "Next Track"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:31
-msgid "Stop"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:32
-msgid "Previous Track"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:33
-msgid "Play/Pause"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:36
-#: ../../src/gui/iconSelectWindow.vala:119
-msgid "Applications"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:45
-#: ../../src/actionGroups/bookmarkGroup.vala:35
-msgid "Bookmarks"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:50
-msgid "Session"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:54
-msgid "Main Menu"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:58
-msgid "Window"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:59
-msgid "Scale"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:60
-msgid "Minimize"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:61
-msgid "Close"
-msgstr ""
+msgstr "Remover"
 
 #: ../../src/pies/defaultConfig.vala:62
 msgid "Maximize"
-msgstr ""
+msgstr "Maximizar"
 
 #: ../../src/pies/defaultConfig.vala:63
 msgid "Restore"
@@ -106,43 +46,39 @@ msgstr ""
 
 #: ../../src/gui/preferences.vala:32
 msgid "Gnome-Pie - Settings"
-msgstr ""
+msgstr "Gnome-Pie - Configurações"
 
 #: ../../src/gui/preferences.vala:55
 msgid "Behavior"
-msgstr ""
+msgstr "Comportamento"
 
 #: ../../src/gui/preferences.vala:65
 msgid "Startup on Login"
-msgstr ""
+msgstr "Iniciar durante o Login"
 
 #: ../../src/gui/preferences.vala:66
 msgid "If checked, Gnome-Pie will start when you log in."
-msgstr ""
+msgstr "Se marcado, o Gnome-Pie irá iniciar durante o login."
 
 #: ../../src/gui/preferences.vala:72
 msgid "Show Indicator"
-msgstr ""
+msgstr "Mostrar Indicador"
 
 #: ../../src/gui/preferences.vala:73
 msgid ""
 "If checked, an indicator for easy access of the settings menu is shown in "
 "your panel."
 msgstr ""
+"Se marcado, um indicador para facilitar o acesso às configurações estará "
+"disponível em seu painel."
 
 #: ../../src/gui/preferences.vala:79
 msgid "Open Pies at Mouse"
-msgstr ""
-
-#: ../../src/gui/preferences.vala:80
-msgid ""
-"If checked, pies will open at your pointer. Otherwise they'll pop up in the "
-"middle of the screen."
-msgstr ""
+msgstr "Abrir Menus sobre o Mouse"
 
 #: ../../src/gui/preferences.vala:86
 msgid "Turbo mode"
-msgstr ""
+msgstr "Modo Turbo"
 
 #: ../../src/gui/preferences.vala:87
 msgid ""
@@ -150,208 +86,216 @@ msgid ""
 "hovered slice gets executed. This allows very fast selection but disables "
 "keyboard navigating."
 msgstr ""
+"Se marcado, o menu se fechará quando a combinação de teclas for liberada. A opção que estiver "
+"sobre o cursor será executada. Essa opção possibilita uma uma seleção rápida mas desativa "
+"a navegação pelo teclado."
 
 #: ../../src/gui/preferences.vala:96
 msgid "Global Scale"
-msgstr ""
+msgstr "Escalonamento Global"
 
 #: ../../src/gui/preferences.vala:133
 msgid "Themes"
-msgstr ""
+msgstr "Temas"
 
 #: ../../src/gui/preferences.vala:151
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #: ../../src/gui/preferences.vala:156
 msgid "Pies"
-msgstr ""
+msgstr "Menus"
 
 #: ../../src/gui/preferences.vala:180
 msgid "You can right-click in the list for adding or removing entries."
-msgstr ""
+msgstr "Você pode clicar com o botão direito sobre a lista para adicioná-las ou removê-las."
 
 #: ../../src/gui/preferences.vala:181
 msgid ""
 "You can reset Gnome-Pie to its default options with the terminal command "
 "\"gnome-pie --reset\"."
 msgstr ""
+"Você pode voltar o Gnome-Pie para suas configurações padrão usando o comando de terminal "
+"\"gnome-pie --reset\"."
 
 #: ../../src/gui/preferences.vala:182
 msgid ""
 "The radiobutton at the beginning of each slice-line indicates the "
 "QuickAction of the pie."
 msgstr ""
+"O botão de seleção no início de cada Opção indica a "
+"Ação Rápida vinculada ao Menu."
 
 #: ../../src/gui/preferences.vala:183
 msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
-msgstr ""
+msgstr "Menus podem ser abertos através do terminal com o comando \"gnome-pie --open=ID\"."
 
 #: ../../src/gui/preferences.vala:184
 msgid "Feel free to visit Gnome-Pie's homepage at %s!"
-msgstr ""
+msgstr "Sinta-se a vontade para visitar o site do Gnome-Pie em %s"
 
 #: ../../src/gui/preferences.vala:185
 msgid "You can drag'n'drop applications from your main menu to the list above."
-msgstr ""
+msgstr "Você pode arrastar aplicações do seu menu principal para a lista acima."
 
 #: ../../src/gui/preferences.vala:186
 msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr ""
+msgstr "Se você quiser enviar algum feedback, por favor escreva um e-mail para %s!"
 
 #: ../../src/gui/preferences.vala:187
 msgid ""
 "You may drag'n'drop URLs and bookmarks from your internet browser to the "
 "list above."
 msgstr ""
+"Você pode arrastar URLs e Favoritos do seu navegador predileto para "
+"a lista acima."
 
 #: ../../src/gui/preferences.vala:188
 msgid "Bugs can be reported at %s!"
-msgstr ""
+msgstr "Defeitos podem ser informados em %s!"
 
 #: ../../src/gui/preferences.vala:189
 msgid ""
 "It's possible to drag'n'drop files and folders from your file browser to the "
 "list above."
 msgstr ""
+"É possível arrastar arquivos e pastas do seu navegador para dentro da "
+"lista acima."
 
 #: ../../src/gui/preferences.vala:198
 msgid "Moves the selected Slice down"
-msgstr ""
+msgstr "Move a Opção selecionada para baixo"
 
 #: ../../src/gui/preferences.vala:210
 msgid "Moves the selected Slice up"
-msgstr ""
+msgstr "Move a Opção selecionada para cima"
 
 #: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:803
 msgid "Slice group"
-msgstr ""
+msgstr "Grupo de Opções"
 
 #: ../../src/gui/pieList.vala:134
 msgid "Icon"
-msgstr ""
+msgstr "Ícone"
 
 #: ../../src/gui/pieList.vala:199
 msgid "Command"
-msgstr ""
+msgstr "Comando"
 
 #: ../../src/gui/pieList.vala:343
 msgid "Pie-ID / Action type"
-msgstr ""
+msgstr "ID-Opção / Tipo de Ação"
 
 #: ../../src/gui/pieList.vala:403
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: ../../src/gui/pieList.vala:446
 msgid "Add new Pie"
-msgstr ""
+msgstr "Adicionar novo Menu"
 
 #: ../../src/gui/pieList.vala:451
 msgid "Add new Slice"
-msgstr ""
+msgstr "Adicionar nova Opção"
 
 #: ../../src/gui/pieList.vala:459
 msgid "Delete"
-msgstr ""
+msgstr "Deletar"
 
 #: ../../src/gui/pieList.vala:574
 msgid "New Pie"
-msgstr ""
+msgstr "Novo Menu"
 
 #: ../../src/gui/pieList.vala:620
 msgid "New Action"
-msgstr ""
+msgstr "Nova Ação"
 
 #: ../../src/gui/pieList.vala:634
 msgid "You have to select a Pie to add a Slice to!"
-msgstr ""
+msgstr "Você tem que selecionar um Menu para poder adicionar uma Opção"
 
 #: ../../src/gui/pieList.vala:683
 msgid "You have to select a Pie or a Slice to delete!"
-msgstr ""
+msgstr "Para remover você precisa selecionar um Menu ou uma Opção"
 
 #: ../../src/gui/pieList.vala:694
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr ""
+"Você realmente deseja excluir o Menu selecionado e todas as suas Opções?"
 
 #: ../../src/gui/pieList.vala:728
 msgid "Do you really want to delete the selected Slice?"
-msgstr ""
-
-#: ../../src/gui/themeList.vala:88
-msgid "by"
-msgstr ""
+msgstr "Você realmente deseja excluir a Opção selecionada?"
 
 #: ../../src/gui/iconSelectWindow.vala:91
 msgid "Choose an Icon"
-msgstr ""
+msgstr "Escolha um Ícone"
 
 #: ../../src/gui/iconSelectWindow.vala:118
 msgid "All icons"
-msgstr ""
+msgstr "Todos os ícones"
 
 #: ../../src/gui/iconSelectWindow.vala:120
 msgid "Actions"
-msgstr ""
+msgstr "Ações"
 
 #: ../../src/gui/iconSelectWindow.vala:121
 msgid "Places"
-msgstr ""
+msgstr "Lugares"
 
 #: ../../src/gui/iconSelectWindow.vala:122
 msgid "File types"
-msgstr ""
+msgstr "Tipos de arquivos"
 
 #: ../../src/gui/iconSelectWindow.vala:123
 msgid "Emotes"
-msgstr ""
+msgstr "Emotes"
 
 #: ../../src/gui/iconSelectWindow.vala:124
 msgid "Miscellaneous"
-msgstr ""
+msgstr "Diversos"
 
 #: ../../src/gui/iconSelectWindow.vala:192
 msgid "Icon Theme"
-msgstr ""
+msgstr "Tema de Ícones"
 
 #: ../../src/gui/iconSelectWindow.vala:200
 msgid "All supported image formats"
-msgstr ""
+msgstr "Todos os tipos de imagem suportados"
 
 #: ../../src/gui/iconSelectWindow.vala:217
 msgid "Custom Icon"
-msgstr ""
+msgstr "Outros Ícones"
 
 #: ../../src/actionGroups/devicesGroup.vala:34
 msgid "Devices"
-msgstr ""
+msgstr "Dispositivos"
 
 #: ../../src/actionGroups/devicesGroup.vala:82
 msgid "Root"
-msgstr ""
+msgstr "Raiz"
 
 #: ../../src/actionGroups/sessionGroup.vala:34
 msgid "Session Control"
-msgstr ""
+msgstr "Controle de Sessão"
 
 #: ../../src/actionGroups/sessionGroup.vala:52
 msgid "Shutdown"
-msgstr ""
+msgstr "Desligar"
 
 #: ../../src/actionGroups/sessionGroup.vala:55
 msgid "Logout"
-msgstr ""
+msgstr "Logout"
 
 #: ../../src/actionGroups/sessionGroup.vala:58
 msgid "Reboot"
-msgstr ""
+msgstr "Reboot"
 
 #: ../../src/actionGroups/menuGroup.vala:33
 msgid "Main menu"
-msgstr ""
+msgstr "Menu Principal"
 
 #: ../../src/actionGroups/clipboardGroup.vala:62
 msgid "Clipboard"
-msgstr ""
+msgstr "Clipboard"

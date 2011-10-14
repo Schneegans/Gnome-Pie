@@ -67,6 +67,13 @@ public class Paths : GLib.Object {
     public static string autostart { get; private set; default=""; }
     
     /////////////////////////////////////////////////////////////////////
+    /// The path where all pie-launchers are stored
+    /// usually ~/.config/gnome-pie/launchers.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string launchers { get; private set; default=""; }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Initializes all values above.
     /////////////////////////////////////////////////////////////////////
     
@@ -161,6 +168,18 @@ public class Paths : GLib.Object {
         
         local_themes = themes_dir.get_path();
         
+        // create launchers directory if neccasary
+        var launchers_dir = config_dir.get_child("launchers");
+        if(!launchers_dir.query_exists()) {
+            try {
+                launchers_dir.make_directory();
+            } catch (GLib.Error e) {
+                error(e.message);
+            }
+        }
+        
+        launchers = launchers_dir.get_path();
+        
         // check for config file
         var config_file = config_dir.get_child("pies.conf");
         
@@ -180,6 +199,9 @@ public class Paths : GLib.Object {
             
         if (!GLib.File.new_for_path(local_themes).query_exists())                                                  
             warning("Failed to find local themes directory!");
+            
+        if (!GLib.File.new_for_path(launchers).query_exists())                                                  
+            warning("Failed to find launchers directory!");
             
         if (!GLib.File.new_for_path(global_themes).query_exists()) 
             warning("Failed to find global themes directory!");     

@@ -122,6 +122,8 @@ public class PieManager : GLib.Object {
 
         if (hotkey != "") bindings.bind(hotkey, pie.id);
         
+        create_launcher(pie.id);
+        
         return pie;
     }
     
@@ -184,9 +186,44 @@ public class PieManager : GLib.Object {
             all_pies[id].on_remove();
             all_pies.unset(id);
             bindings.unbind(id);
+            
+            if (id.length == 3)
+                remove_launcher(id);
         }
         else {
             warning("Failed to remove pie with ID \"" + id + "\": ID does not exist!");
+        }
+    }
+    
+    private static void create_launcher(string id) {
+        if (all_pies.has_key(id)) {
+            Pie? pie = all_pies[id];
+            
+            string launcher_entry = 
+                "#!/usr/bin/env xdg-open\n" + 
+                "[Desktop Entry]\n" +
+                "Name=%s\n".printf(pie.name) +
+                "Exec=gnome-pie -o %s\n".printf(pie.id) +
+                "Encoding=UTF-8\n" +
+                "Type=Application\n" +
+                "Icon=%s\n".printf(pie.icon);
+
+            // create the launcher file
+            string launcher = Paths.launchers + "/%s.desktop".printf(pie.id);
+            
+            try {
+                FileUtils.set_contents(launcher, launcher_entry);
+                FileUtils.chmod(launcher, 0755);
+            } catch (Error e) {
+                warning(e.message);
+            }
+        }
+    }
+    
+    private static void remove_launcher(string id) {
+        string launcher = Paths.launchers + "/%s.desktop".printf(id);
+        if (FileUtils.test(launcher, FileTest.EXISTS)) {
+            FileUtils.remove(launcher);
         }
     }
 }

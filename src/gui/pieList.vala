@@ -28,7 +28,7 @@ class PieList : Gtk.TreeView {
     private Gtk.TreeStore data;
     
     private const int small_icon = 24;
-    private const int large_icon = 48;
+    private const int large_icon = 36;
     
     // data positions in the data ListStore
     private enum DataPos {IS_QUICKACTION, ICON, NAME, TYPE_ID, ACTION_TYPE,

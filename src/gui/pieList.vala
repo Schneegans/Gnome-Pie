@@ -473,8 +473,32 @@ class PieList : Gtk.TreeView {
         // setup drag'n'drop
         Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
         Gtk.TargetEntry[] entries = { uri_source };
-        this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
-        this.drag_data_received.connect(this.on_dnd);
+        
+        this.drag_data_received.connect(this.on_dnd_received);
+        this.drag_data_get.connect(this.on_dnd_source);
+        
+        this.get_selection().changed.connect(() => {
+            Gtk.TreeIter selected;
+            if (this.get_selection().get_selected(null, out selected)) {
+                if (this.data.iter_depth(selected) == 0) {
+                     this.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);   
+                } else {
+                    this.unset_rows_drag_source();
+                }
+            }
+        });
+        
+        this.drag_begin.connect(() => {
+            this.unset_rows_drag_dest();
+        });
+        
+        this.drag_begin.connect_after(() => {
+            
+        });
+        
+        this.drag_end.connect(() => {
+            this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
+        });
     }
     
     // moves the selected slice up
@@ -924,7 +948,7 @@ class PieList : Gtk.TreeView {
     }
     
     // creates new action when the list receives a drag'n'drop event
-    private void on_dnd(Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint info, uint time_) {
+    private void on_dnd_received(Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint info, uint time_) {
         string[] uris = selection_data.get_uris();
         
         Gtk.TreePath path;
@@ -967,6 +991,15 @@ class PieList : Gtk.TreeView {
         }
         
         this.update_pie(parent);
+    }
+    
+    private void on_dnd_source(Gdk.DragContext context, Gtk.SelectionData selection_data, uint info, uint time_) {
+        Gtk.TreeIter selected;
+        if (this.get_selection().get_selected(null, out selected)) {
+            string id = "";
+            this.data.get(selected, DataPos.ACTION_TYPE, out id);
+            selection_data.set_uris({"file://" + Paths.launchers + "/" + id + ".desktop"});
+        }
     }
     
     private Gdk.Pixbuf load_icon(string name, int size) {

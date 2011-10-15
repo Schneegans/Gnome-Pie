@@ -186,7 +186,8 @@ public class Preferences : Gtk.Window {
                                 _("If you want to give some feedback, please write an e-mail to %s!").printf("<a href='mailto:code@simonschneegans.de'>code@simonschneegans.de</a>"),
                                 _("You may drag'n'drop URLs and bookmarks from your internet browser to the list above."),
                                 _("Bugs can be reported at %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie'>Github</a>"),
-                                _("It's possible to drag'n'drop files and folders from your file browser to the list above.")
+                                _("It's possible to drag'n'drop files and folders from your file browser to the list above."),
+                                _("In order to create a launcher for a Pie, drag the Pie from the list to your desktop!")
                             });
                             this.show.connect(info_label.start_slide_show);
                             this.hide.connect(info_label.stop_slide_show);

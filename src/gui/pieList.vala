@@ -492,10 +492,6 @@ class PieList : Gtk.TreeView {
             this.unset_rows_drag_dest();
         });
         
-        this.drag_begin.connect_after(() => {
-            
-        });
-        
         this.drag_end.connect(() => {
             this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
         });

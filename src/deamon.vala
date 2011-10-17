@@ -19,10 +19,6 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 /// TODO-List:
 /// IconSelectWindow
 /// PieList
-/// PieWindow
-/// CenterRenderer
-/// SliceRenderer
-/// PieRenderer
 /////////////////////////////////////////////////////////////////////
 
 namespace GnomePie {

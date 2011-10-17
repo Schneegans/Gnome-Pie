@@ -90,6 +90,7 @@ public class Image : GLib.Object {
             }
         } catch (GLib.Error e) {
             message("Error loading image file: %s", e.message);
+            this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);
         }
     }
     
@@ -108,6 +109,7 @@ public class Image : GLib.Object {
             }
         } catch (GLib.Error e) {
             message("Error loading image file: %s", e.message);
+            this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
         }
     }
     

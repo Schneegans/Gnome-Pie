@@ -35,6 +35,8 @@ pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(UNIQUE REQUIRED unique-1.0)
 pkg_check_modules(GMENU3 libgnome-menu-3.0)
 
+find_library(M_LIB m)
+
 set(CFLAGS
     ${GIO_CFLAGS}
     ${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
@@ -70,6 +72,7 @@ set(LIBS
 	${GMENU3_LIBRARIES}
 	${UNIQUE_LIBRARIES}
 	${X11_LIBRARIES}
+	${M_LIB}
 )
 link_libraries(${LIBS})
 

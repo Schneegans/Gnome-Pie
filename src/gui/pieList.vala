@@ -476,6 +476,7 @@ class PieList : Gtk.TreeView {
         
         this.drag_data_received.connect(this.on_dnd_received);
         this.drag_data_get.connect(this.on_dnd_source);
+        this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
         
         this.get_selection().changed.connect(() => {
             Gtk.TreeIter selected;

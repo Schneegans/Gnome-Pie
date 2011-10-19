@@ -251,7 +251,7 @@ public class Preferences : Gtk.Window {
             // close button 
             var bbox = new Gtk.HButtonBox ();
                 bbox.set_layout (Gtk.ButtonBoxStyle.END);
-                var close_button = new Gtk.Button.from_stock (Gtk.Stock.CLOSE);
+                var close_button = new Gtk.Button.from_stock(Gtk.Stock.CLOSE);
                 close_button.clicked.connect (() => { 
                     hide();
                     // save settings on close
@@ -259,6 +259,16 @@ public class Preferences : Gtk.Window {
                     Pies.save();
                 });
                 bbox.pack_start (close_button);
+                
+//                var test_button = new Gtk.Button.from_stock(Gtk.Stock.ABOUT);
+//                test_button.clicked.connect (() => { 
+//                    var test = new AcceleratorSelectWindow();
+//                    test.set_transient_for((Gtk.Window)this.get_toplevel());
+//                    test.set_modal(true);
+//                    test.show();
+//                    //test.destroy();
+//                });
+//                bbox.pack_start (test_button);
 
                 main_vbox.pack_start(bbox, false);
                 

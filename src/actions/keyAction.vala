@@ -30,7 +30,7 @@ public class KeyAction : Action {
     /////////////////////////////////////////////////////////////////////
 
     public static void register(out string name, out bool icon_name_editable, out string settings_name) {
-        name = _("Press key stroke");
+        name = _("Press hotkey");
         icon_name_editable = true;
         settings_name = "key";
     }   

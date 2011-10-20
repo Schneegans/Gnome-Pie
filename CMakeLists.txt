@@ -33,6 +33,8 @@ pkg_check_modules(INDICATOR appindicator-0.1)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(UNIQUE REQUIRED unique-1.0)
+pkg_check_modules(BAMF REQUIRED libbamf)
+pkg_check_modules(WNCK REQUIRED libwnck-1.0)
 pkg_check_modules(GMENU3 libgnome-menu-3.0)
 
 find_library(M_LIB m)
@@ -44,6 +46,7 @@ set(CFLAGS
     ${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
     ${X11_CFLAGS} ${X11_CFLAGS_OTHER}
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
+	-DWNCK_I_KNOW_THIS_IS_UNSTABLE
     -DGETTEXT_PACKAGE="gnomepie"
 	-s -O3
 )
@@ -72,6 +75,8 @@ set(LIBS
 	${GMENU3_LIBRARIES}
 	${UNIQUE_LIBRARIES}
 	${X11_LIBRARIES}
+	${WNCK_LIBRARIES}
+	${BAMF_LIBRARIES}
 	${M_LIB}
 )
 link_libraries(${LIBS})
@@ -88,6 +93,8 @@ set(LIB_PATHS
 	${GMENU3_LIBRARY_DIRS}
 	${UNIQUE_LIBRARY_DIRS}
 	${X11_LIBRARY_DIRS}
+	${WNCK_LIBRARY_DIRS}
+	${BAMF_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -103,6 +110,8 @@ set(INCLUDE_PATHS
 	${GMENU3_INCLUDE_DIRS}
 	${UNIQUE_INCLUDE_DIRS}
 	${X11_INCLUDE_DIRS}
+	${BAMF_INCLUDE_DIRS}
+	${WNCK_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -123,6 +132,8 @@ set(VALA_PKGS
   libxml-2.0
   xtst
   unique-1.0
+  bamf
+  libwnck-1.0
 )
 
 if (${INDICATOR_FOUND})
@@ -168,4 +179,6 @@ message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )
 message( "  GMENU3_LIBRARIES = ${GMENU3_LIBRARIES}" )
 message( "  UNIQUE_LIBRARIES = ${UNIQUE_LIBRARIES}" )
 message( "  X11_LIBRARIES = ${X11_LIBRARIES}" )
+message( "  BAMF_LIBRARIES = ${BAMF_LIBRARIES}" )
+message( "  WNCK_LIBRARIES = ${WNCK_LIBRARIES}" )
 message( "" )

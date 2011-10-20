@@ -1,0 +1,346 @@
+# Italian translations for gnomepie package.
+# Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>
+# This file is distributed under the same license as the gnomepie package.
+# Riccardo Traverso <gr3yfox.fw@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnomepie 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-11 15:55-0300\n"
+"PO-Revision-Date: 2011-10-20 23:51+0100\n"
+"Last-Translator: Riccardo Traverso <gr3yfox.fw@gmail.com>\n"
+"Language-Team: Italian\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Italian\n"
+
+#: ../../src/actions/keyAction.vala:33
+msgid "Press key stroke"
+msgstr "Pressione di tasti"
+
+#: ../../src/actions/pieAction.vala:33
+msgid "Open Pie"
+msgstr "Apri una Torta"
+
+#: ../../src/actions/appAction.vala:33
+msgid "Launch application"
+msgstr "Lancia applicazione"
+
+#: ../../src/actions/uriAction.vala:33
+msgid "Open URI"
+msgstr "Apri URI"
+
+#: ../../src/actions/actionRegistry.vala:107
+msgid "Trash"
+msgstr "Cestino"
+
+#: ../../src/utilities/bindingManager.vala:150
+#: ../../src/gui/pieList.vala:278
+#: ../../src/gui/pieList.vala:660
+#: ../../src/gui/pieList.vala:818
+msgid "Not bound"
+msgstr "Non assegnato"
+
+#: ../../src/pies/defaultConfig.vala:29
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: ../../src/pies/defaultConfig.vala:30
+msgid "Next Track"
+msgstr "Traccia Successiva"
+
+#: ../../src/pies/defaultConfig.vala:31
+msgid "Stop"
+msgstr "Ferma"
+
+#: ../../src/pies/defaultConfig.vala:32
+msgid "Previous Track"
+msgstr "Traccia Precedente"
+
+#: ../../src/pies/defaultConfig.vala:33
+msgid "Play/Pause"
+msgstr "Riproduci/Pausa"
+
+#: ../../src/pies/defaultConfig.vala:36
+#: ../../src/gui/iconSelectWindow.vala:119
+msgid "Applications"
+msgstr "Applicazioni"
+
+#: ../../src/pies/defaultConfig.vala:45
+#: ../../src/actionGroups/bookmarkGroup.vala:35
+msgid "Bookmarks"
+msgstr "Segnalibri"
+
+#: ../../src/pies/defaultConfig.vala:50
+msgid "Session"
+msgstr "Sessione"
+
+#: ../../src/pies/defaultConfig.vala:54
+msgid "Main Menu"
+msgstr "Menu principale"
+
+#: ../../src/pies/defaultConfig.vala:58
+msgid "Window"
+msgstr "Finestra"
+
+#: ../../src/pies/defaultConfig.vala:59
+msgid "Scale"
+msgstr "Scala"
+
+#: ../../src/pies/defaultConfig.vala:60
+msgid "Minimize"
+msgstr "Minimizza"
+
+#: ../../src/pies/defaultConfig.vala:61
+msgid "Close"
+msgstr "Chiudi"
+
+#: ../../src/pies/defaultConfig.vala:62
+msgid "Maximize"
+msgstr "Massimizza"
+
+#: ../../src/pies/defaultConfig.vala:63
+msgid "Restore"
+msgstr "Ripristina"
+
+#: ../../src/gui/preferences.vala:32
+msgid "Gnome-Pie - Settings"
+msgstr "Gnome-Pie - Impostazioni"
+
+#: ../../src/gui/preferences.vala:55
+msgid "Behavior"
+msgstr "Comportamento"
+
+#: ../../src/gui/preferences.vala:65
+msgid "Startup on Login"
+msgstr "Avvia al Login"
+
+#: ../../src/gui/preferences.vala:66
+msgid "If checked, Gnome-Pie will start when you log in."
+msgstr "Se selezionato, Gnome-Pie si avvierà all'accesso."
+
+#: ../../src/gui/preferences.vala:72
+msgid "Show Indicator"
+msgstr "Mostra indicatore"
+
+#: ../../src/gui/preferences.vala:73
+msgid "If checked, an indicator for easy access of the settings menu is shown in your panel."
+msgstr "Se selezionato, il pannello di sistema mostrerà un indicatore per l'accesso rapido al menu di configurazione."
+
+#: ../../src/gui/preferences.vala:79
+msgid "Open Pies at Mouse"
+msgstr "Apri Torte dal cursore"
+
+#: ../../src/gui/preferences.vala:80
+msgid "If checked, pies will open at your pointer. Otherwise they'll pop up in the middle of the screen."
+msgstr "Se selezionato le Torte si apriranno dal cursore, altrimenti compariranno al centro dello schermo."
+
+#: ../../src/gui/preferences.vala:86
+msgid "Turbo mode"
+msgstr "Modalità turbo"
+
+#: ../../src/gui/preferences.vala:87
+msgid "If checked, the pie closes when its keystroke is released. The currently hovered slice gets executed. This allows very fast selection but disables keyboard navigating."
+msgstr "Se selezionata, la Torta si chiude appena si rilascia la combinazione di tasti. La Fetta attualmente selezionata viene eseguita. Questo consente una selezione molto rapida, ma disabilita la navigazione da tastiera."
+
+#: ../../src/gui/preferences.vala:96
+msgid "Global Scale"
+msgstr "Scala globale"
+
+#: ../../src/gui/preferences.vala:133
+msgid "Themes"
+msgstr "Temi"
+
+#: ../../src/gui/preferences.vala:151
+msgid "General"
+msgstr "Generale"
+
+#: ../../src/gui/preferences.vala:156
+msgid "Pies"
+msgstr "Torte"
+
+#: ../../src/gui/preferences.vala:180
+msgid "You can right-click in the list for adding or removing entries."
+msgstr "Puoi cliccare col tasto destro sulla lista per aggiungere o rimuovere voci."
+
+#: ../../src/gui/preferences.vala:181
+msgid "You can reset Gnome-Pie to its default options with the terminal command \"gnome-pie --reset\"."
+msgstr "Puoi resettare Gnome-Pie alla configurazione predefinita con il comando da terminale \"gnome-pie --reset\"."
+
+#: ../../src/gui/preferences.vala:182
+msgid "The radiobutton at the beginning of each slice-line indicates the QuickAction of the pie."
+msgstr "Il pulsante di selezione all'inizio di ciascuna riga-fetta indica l'azione veloce (QuickAction) della Torta."
+
+#: ../../src/gui/preferences.vala:183
+msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+msgstr "Le Torte possono essere aperte col comando da terminale \"gnome-pie --open=ID\"."
+
+#: ../../src/gui/preferences.vala:184
+msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+msgstr "Sentiti libero di visitare la homepage di Gnome-Pie all'indirizzo %s!"
+
+#: ../../src/gui/preferences.vala:185
+msgid "You can drag'n'drop applications from your main menu to the list above."
+msgstr "Puoi trascinare applicazioni nella lista sovrastante dal tuo menu principale."
+
+#: ../../src/gui/preferences.vala:186
+msgid "If you want to give some feedback, please write an e-mail to %s!"
+msgstr "Se vuoi inviarci dei feedback, per favore scrivi una e-mail a %s!"
+
+#: ../../src/gui/preferences.vala:187
+msgid "You may drag'n'drop URLs and bookmarks from your internet browser to the list above."
+msgstr "Puoi trascinare URLs e segnalibri nella lista sovrastante dal tuo internet browser."
+
+#: ../../src/gui/preferences.vala:188
+msgid "Bugs can be reported at %s!"
+msgstr "I bug possono essere segnalati su %s!"
+
+#: ../../src/gui/preferences.vala:189
+msgid "It's possible to drag'n'drop files and folders from your file browser to the list above."
+msgstr "E' possibile trascinare file e cartelle nella lista sovrastante dal tuo file browser."
+
+#: ../../src/gui/preferences.vala:198
+msgid "Moves the selected Slice down"
+msgstr "Sposta in basso la Fetta selezionata"
+
+#: ../../src/gui/preferences.vala:210
+msgid "Moves the selected Slice up"
+msgstr "Sposta in alto la Fetta selezionata"
+
+#: ../../src/gui/pieList.vala:88
+#: ../../src/gui/pieList.vala:803
+msgid "Slice group"
+msgstr "Gruppo di Fette"
+
+#: ../../src/gui/pieList.vala:134
+msgid "Icon"
+msgstr "Icona"
+
+#: ../../src/gui/pieList.vala:199
+msgid "Command"
+msgstr "Comando"
+
+#: ../../src/gui/pieList.vala:343
+msgid "Pie-ID / Action type"
+msgstr "ID Torta / Tipo di azione"
+
+#: ../../src/gui/pieList.vala:403
+msgid "Name"
+msgstr "Nome"
+
+#: ../../src/gui/pieList.vala:446
+msgid "Add new Pie"
+msgstr "Aggiungi nuova Torta"
+
+#: ../../src/gui/pieList.vala:451
+msgid "Add new Slice"
+msgstr "Aggiungi nuova Fetta"
+
+#: ../../src/gui/pieList.vala:459
+msgid "Delete"
+msgstr "Elimina"
+
+#: ../../src/gui/pieList.vala:574
+msgid "New Pie"
+msgstr "Nuova Torta"
+
+#: ../../src/gui/pieList.vala:620
+msgid "New Action"
+msgstr "Nuova Azione"
+
+#: ../../src/gui/pieList.vala:634
+msgid "You have to select a Pie to add a Slice to!"
+msgstr "Devi selezionare una Torta alla quale aggiungere una Fetta!"
+
+#: ../../src/gui/pieList.vala:683
+msgid "You have to select a Pie or a Slice to delete!"
+msgstr "Devi selezionare una Torta o una Fetta da eliminare!"
+
+#: ../../src/gui/pieList.vala:694
+msgid "Do you really want to delete the selected Pie with all contained Slices?"
+msgstr "Vuoi davvero eliminare la Torta selezionata e tutte le Fette che contiene?"
+
+#: ../../src/gui/pieList.vala:728
+msgid "Do you really want to delete the selected Slice?"
+msgstr "Vuoi davvero eliminare la Fetta selezionata?"
+
+#: ../../src/gui/themeList.vala:88
+msgid "by"
+msgstr "di"
+
+#: ../../src/gui/iconSelectWindow.vala:91
+msgid "Choose an Icon"
+msgstr "Scegli un'icona"
+
+#: ../../src/gui/iconSelectWindow.vala:118
+msgid "All icons"
+msgstr "Tutte le icone"
+
+#: ../../src/gui/iconSelectWindow.vala:120
+msgid "Actions"
+msgstr "Azioni"
+
+#: ../../src/gui/iconSelectWindow.vala:121
+msgid "Places"
+msgstr "Luoghi"
+
+#: ../../src/gui/iconSelectWindow.vala:122
+msgid "File types"
+msgstr "Tipi di file"
+
+#: ../../src/gui/iconSelectWindow.vala:123
+msgid "Emotes"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:124
+msgid "Miscellaneous"
+msgstr "Varie"
+
+#: ../../src/gui/iconSelectWindow.vala:192
+msgid "Icon Theme"
+msgstr "Tema di icone"
+
+#: ../../src/gui/iconSelectWindow.vala:200
+msgid "All supported image formats"
+msgstr "Tutti i formati immagine supportati"
+
+#: ../../src/gui/iconSelectWindow.vala:217
+msgid "Custom Icon"
+msgstr "Icona personalizzata"
+
+#: ../../src/actionGroups/devicesGroup.vala:34
+msgid "Devices"
+msgstr "Dispositivi"
+
+#: ../../src/actionGroups/devicesGroup.vala:82
+msgid "Root"
+msgstr "Root"
+
+#: ../../src/actionGroups/sessionGroup.vala:34
+msgid "Session Control"
+msgstr "Controllo della sessione"
+
+#: ../../src/actionGroups/sessionGroup.vala:52
+msgid "Shutdown"
+msgstr "Spegnimento"
+
+#: ../../src/actionGroups/sessionGroup.vala:55
+msgid "Logout"
+msgstr "Chiudi sessione"
+
+#: ../../src/actionGroups/sessionGroup.vala:58
+msgid "Reboot"
+msgstr "Riavvio"
+
+#: ../../src/actionGroups/menuGroup.vala:33
+msgid "Main menu"
+msgstr "Menu principale"
+
+#: ../../src/actionGroups/clipboardGroup.vala:62
+msgid "Clipboard"
+msgstr "Appunti"
+

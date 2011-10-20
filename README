@@ -38,9 +38,14 @@ sudo apt-get install libgtk2.0-dev libcairo2-dev libappindicator-dev
                      libgee-dev libxml2-dev libxtst-dev
                      libgnome-menu-dev valac cmake libunique-dev
 
-Then build and launch Gnome-Pie by typing:
-
+Then build  Gnome-Pie by typing:
 ./make.sh
+
+Launch it with 
+./gnome-pie
+
+If you want to install it system wide use
+cd build && sudo make install
 
 ####################################################################
 #                          Usage                                   #

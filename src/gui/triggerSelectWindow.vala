@@ -21,14 +21,27 @@ namespace GnomePie {
 /// Not ready yet
 /////////////////////////////////////////////////////////////////////////
 
-public class AcceleratorSelectWindow : Gtk.Dialog {
+public class TriggerSelectWindow : Gtk.Dialog {
     
-    public signal void on_select(string icon_name);
+    public signal void on_select(Trigger trigger);
     
-    public AcceleratorSelectWindow() {
+    private Gtk.CheckButton turbo;
+    private Gtk.CheckButton delayed;
+    
+    public TriggerSelectWindow() {
         this.title = _("Define an open-command");
-        this.set_size_request(300, 250);
+        this.resizable = false;
         this.delete_event.connect(hide_on_delete);
+        this.key_press_event.connect(on_key_press);
+        this.button_press_event.connect(on_button_press);
+        
+        this.show.connect_after(() => {
+            FocusGrabber.grab(this);
+        });
+        
+        this.hide.connect(() => {
+            FocusGrabber.ungrab(this);
+        });
 
         var container = new Gtk.VBox(false, 6);
             container.set_border_width(6);
@@ -36,7 +49,7 @@ public class AcceleratorSelectWindow : Gtk.Dialog {
             var label = new Gtk.Label(null);
                 label.set_line_wrap(true);
                 label.width_request = 288;
-                label.set_markup(_("Please press your desired <b>hot key</b>. If you want to bind the Pie to a <b>button of your mouse</b>, click with a button of your choice in the area below. You can also hold some modifier keys while clicking."));
+                label.set_markup(_("Please press your desired <b>hot key</b>. If you want to bind the Pie to a <b>button of your mouse</b>, click with a button of your choice in the area below. You can also hold some modifier keys while clicking. Press <b>Esc to cancel</b> this dialog, <b>Backspace to unbind</b> the pie."));
                 
             container.pack_start(label, true);
             
@@ -50,15 +63,15 @@ public class AcceleratorSelectWindow : Gtk.Dialog {
                 
             container.pack_start(click_frame, false);
             
-            var clickhold = new Gtk.CheckButton.with_label (_("Click & hold"));
-                clickhold.tooltip_text = _("If checked, the Pie will close when you release the chosen hot key.");
-                clickhold.active = false;
+            this.turbo = new Gtk.CheckButton.with_label (_("Turbo mode"));
+                this.turbo.tooltip_text = _("If checked, the Pie will close when you release the chosen hot key.");
+                this.turbo.active = false;
                 
-            container.pack_start(clickhold, false);
+            container.pack_start(turbo, false);
                 
-            var delayed = new Gtk.CheckButton.with_label (_("Long press for activation"));
-                delayed.tooltip_text = _("If checked, the Pie will only open if you press this hot key a bit longer.");
-                delayed.active = false;
+            this.delayed = new Gtk.CheckButton.with_label (_("Long press for activation"));
+                this.delayed.tooltip_text = _("If checked, the Pie will only open if you press this hot key a bit longer.");
+                this.delayed.active = false;
                 
             container.pack_start(delayed, false);
 
@@ -67,9 +80,57 @@ public class AcceleratorSelectWindow : Gtk.Dialog {
         this.vbox.pack_start(container, true, true);
     }
     
-    bool on_area_clicked(Gdk.EventButton event) {
-        debug("%u", event.button);
+    public void set_trigger(Trigger trigger) {
+        this.turbo.active = trigger.turbo;
+        this.delayed.active = trigger.delayed;
+    }
+    
+    private bool on_area_clicked(Gdk.EventButton event) {
+        var trigger = new Trigger.from_values((int)event.button, event.state, true, this.turbo.active, this.delayed.active);
+        if (trigger.name.contains("button1")) {
+            var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
+                                                Gtk.MessageType.WARNING, 
+                                                Gtk.ButtonsType.YES_NO, 
+                                                _("It possible to make your system unusable if you bind a Pie to your left mouse button. Do you really want to do this?"));
+                                                 
+            dialog.response.connect((response) => {
+                if (response == Gtk.ResponseType.YES) {
+                    this.select(trigger);
+                }
+            });
+            
+            dialog.run();
+            dialog.destroy();
+        } else {
+            this.select(trigger);
+        }
+        
         return true;
+    }
+    
+    private bool on_key_press(Gdk.EventKey event) {
+        if (Gdk.keyval_name(event.keyval) == "Escape") {
+            this.hide();
+        } else if (Gdk.keyval_name(event.keyval) == "BackSpace") {
+            this.select(new Trigger());
+        } else if (event.is_modifier == 0) {
+            this.select(new Trigger.from_values((int)event.keyval, event.state, false, this.turbo.active, this.delayed.active));
+        }
+        
+        return true;
+    }
+    
+    private bool on_button_press(Gdk.EventButton event) {
+        int width = 0, height = 0;
+        this.window.get_geometry(null, null, out width, out height, null);
+        if (event.x < 0 || event.x > width || event.y < 0 || event.y > height)
+            this.hide();
+        return true;
+    }
+    
+    private void select(Trigger trigger) {
+        this.on_select(trigger);
+        this.hide();
     }
 }
 

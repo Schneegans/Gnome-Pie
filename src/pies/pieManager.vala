@@ -103,6 +103,14 @@ public class PieManager : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
+    /// Returns true if the pie with the given id is in turbo mode.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static bool get_is_turbo(string id) {
+        return bindings.get_is_turbo(id);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Returns the name of the Pie with the given ID.
     /////////////////////////////////////////////////////////////////////
     
@@ -117,10 +125,10 @@ public class PieManager : GLib.Object {
     /// and gets saved.
     /////////////////////////////////////////////////////////////////////
     
-    public static Pie create_persistent_pie(string name, string icon_name, string hotkey, string? desired_id = null) {
+    public static Pie create_persistent_pie(string name, string icon_name, Trigger? hotkey, string? desired_id = null) {
         Pie pie = create_pie(name, icon_name, 100, 999, desired_id);
 
-        if (hotkey != "") bindings.bind(hotkey, pie.id);
+        if (hotkey != null) bindings.bind(hotkey, pie.id);
         
         create_launcher(pie.id);
         

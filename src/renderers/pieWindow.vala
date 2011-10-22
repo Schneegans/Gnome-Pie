@@ -93,8 +93,8 @@ public class PieWindow : Gtk.Window {
 
         // activate on left click
         this.button_release_event.connect ((e) => {
-            if (e.button == 1) this.activate_slice();
-            else               this.cancel();
+            if (e.button == 1 || this.renderer.turbo_mode) this.activate_slice();
+            else if (e.button == 3)                        this.cancel();
             return true;
         });
         
@@ -111,7 +111,7 @@ public class PieWindow : Gtk.Window {
         // activate on key release if turbo_mode is enabled
         this.key_release_event.connect((e) => {
             last_key = 0;
-            if (Config.global.turbo_mode)
+            if (this.renderer.turbo_mode)
                 this.activate_slice();
             else
                 this.handle_key_release(e.keyval);
@@ -155,7 +155,7 @@ public class PieWindow : Gtk.Window {
     
         // capture the input focus
         this.show();
-        this.fix_focus();
+        FocusGrabber.grab(this);
 
         // start the timer
         this.timer = new GLib.Timer();
@@ -214,7 +214,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            this.unfix_focus();
+            FocusGrabber.ungrab(this);
             this.renderer.activate();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
@@ -233,7 +233,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            this.unfix_focus();
+            FocusGrabber.ungrab(this);
             this.renderer.cancel();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
@@ -261,7 +261,7 @@ public class PieWindow : Gtk.Window {
     private void handle_key_press(uint key) {
         if      (Gdk.keyval_name(key) == "Escape") this.cancel();
         else if (Gdk.keyval_name(key) == "Return") this.activate_slice();
-        else if (!Config.global.turbo_mode) {
+        else if (!this.renderer.turbo_mode) {
             if (Gdk.keyval_name(key) == "Up") this.renderer.select_up();
             else if (Gdk.keyval_name(key) == "Down") this.renderer.select_down();
             else if (Gdk.keyval_name(key) == "Left") this.renderer.select_left();
@@ -294,60 +294,10 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
     
     private void handle_key_release(uint key) {
-        if (!Config.global.turbo_mode) {
+        if (!this.renderer.turbo_mode) {
             if (Gdk.keyval_name(key) == "Alt_L") this.renderer.show_hotkeys = false;
         }
     }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Utilities for grabbing focus.
-    /// Code from Gnome-Do/Synapse.
-    /////////////////////////////////////////////////////////////////////
-    
-    private void fix_focus() {
-        uint32 timestamp = Gtk.get_current_event_time();
-        this.present_with_time(timestamp);
-        this.get_window().raise();
-        this.get_window().focus(timestamp);
-
-        int i = 0;
-        Timeout.add(100, () => {
-            if (++i >= 100) return false;
-            return !try_grab_window();
-        });
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Code from Gnome-Do/Synapse.
-    /////////////////////////////////////////////////////////////////////
-    
-    private void unfix_focus() {
-        uint32 time = Gtk.get_current_event_time();
-        Gdk.pointer_ungrab(time);
-        Gdk.keyboard_ungrab(time);
-        Gtk.grab_remove(this);
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Code from Gnome-Do/Synapse.
-    /////////////////////////////////////////////////////////////////////
-    
-    private bool try_grab_window() {
-        uint time = Gtk.get_current_event_time();
-        if (Gdk.pointer_grab(this.get_window(), true, Gdk.EventMask.BUTTON_PRESS_MASK | 
-                             Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
-                             null, null, time) == Gdk.GrabStatus.SUCCESS) {
-            
-            if (Gdk.keyboard_grab(this.get_window(), true, time) == Gdk.GrabStatus.SUCCESS) {
-                Gtk.grab_add(this);
-                return true;
-            } else {
-                Gdk.pointer_ungrab(time);
-                return false;
-            }
-        }
-        return false;
-    }  
 }
 
 }

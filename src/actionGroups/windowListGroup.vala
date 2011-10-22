@@ -31,7 +31,7 @@ public class WindowListGroup : ActionGroup {
     
     public static void register(out string name, out string icon, out string settings_name) {
         name = _("Window List");
-        icon = "harddrive";
+        icon = "window-manager";
         settings_name = "window_list";
     }
 
@@ -43,8 +43,7 @@ public class WindowListGroup : ActionGroup {
     private bool changing = false;
     private bool changed_again = false;
     
-    
-    private Bamf.Matcher applications;
+    private Wnck.Screen screen;
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
@@ -59,10 +58,10 @@ public class WindowListGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
     
     construct {
-        this.applications = Bamf.Matcher.get_default();
-        
-        this.applications.view_opened.connect(reload);
-        this.applications.view_closed.connect(reload);
+        this.screen = Wnck.Screen.get_default();
+    
+        this.screen.window_opened.connect(reload);
+        this.screen.window_closed.connect(reload);
         
         this.load();
     }
@@ -72,11 +71,14 @@ public class WindowListGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
     
     private void load() {
-        unowned GLib.List<Bamf.Window?> windows = this.applications.get_windows();
+        unowned GLib.List<Wnck.Window?> windows = this.screen.get_windows();
+        
+        var matcher = Bamf.Matcher.get_default();
 
         foreach (var window in windows) {
-            if (window.get_window_type() == Bamf.WindowType.NORMAL) {
-                var application = this.applications.get_application_for_window(window);
+            if (window.get_window_type() == Wnck.WindowType.NORMAL) {
+                var application = window.get_application();
+                var bamf_app = matcher.get_application_for_xid((uint32)window.get_xid());
                 
                 string name = window.get_name();
                 
@@ -85,7 +87,7 @@ public class WindowListGroup : ActionGroup {
                 
                 var action = new SigAction(
                     name,
-                    application.get_icon(),
+                    bamf_app == null ? application.get_icon_name().down() : bamf_app.get_icon(),
                     "%lu".printf(window.get_xid()) 
                 );
                 action.activated.connect(() => {
@@ -117,7 +119,7 @@ public class WindowListGroup : ActionGroup {
         // avoid too frequent changes...
         if (!this.changing) {
             this.changing = true;
-            Timeout.add(200, () => {
+            Timeout.add(500, () => {
                 if (this.changed_again) {
                     this.changed_again = false;
                     return true;

@@ -26,14 +26,14 @@ namespace Pies {
     public void create_default_config() {
         
         // add a pie with playback controls
-        var multimedia = PieManager.create_persistent_pie(_("Multimedia"), "stock_media-play", "<Control><Alt>m");
+        var multimedia = PieManager.create_persistent_pie(_("Multimedia"), "stock_media-play", new Trigger.from_string("<Control><Alt>m"));
             multimedia.add_action(new KeyAction(_("Next Track"), "stock_media-next", "XF86AudioNext", true));
             multimedia.add_action(new KeyAction(_("Stop"), "stock_media-stop", "XF86AudioStop"));
             multimedia.add_action(new KeyAction(_("Previous Track"), "stock_media-prev", "XF86AudioPrev"));
             multimedia.add_action(new KeyAction(_("Play/Pause"), "stock_media-play", "XF86AudioPlay"));
         
         // add a pie with the users default applications
-        var apps = PieManager.create_persistent_pie(_("Applications"), "applications-accessories", "<Control><Alt>a");
+        var apps = PieManager.create_persistent_pie(_("Applications"), "applications-accessories", new Trigger.from_string("<Control><Alt>a"));
             apps.add_action(ActionRegistry.default_for_mime_type("text/plain"));
             apps.add_action(ActionRegistry.default_for_mime_type("audio/ogg"));
             apps.add_action(ActionRegistry.default_for_mime_type("video/ogg"));
@@ -42,20 +42,20 @@ namespace Pies {
             apps.add_action(ActionRegistry.default_for_uri("mailto"));
         
         // add a pie with the users bookmarks and devices
-        var bookmarks = PieManager.create_persistent_pie(_("Bookmarks"), "user-bookmarks", "<Control><Alt>b");
+        var bookmarks = PieManager.create_persistent_pie(_("Bookmarks"), "user-bookmarks", new Trigger.from_string("<Control><Alt>b"));
             bookmarks.add_group(new BookmarkGroup(bookmarks.id));
             bookmarks.add_group(new DevicesGroup(bookmarks.id));
         
         // add a pie with session controls
-        var session = PieManager.create_persistent_pie(_("Session"), "gnome-session-halt", "<Control><Alt>q");
+        var session = PieManager.create_persistent_pie(_("Session"), "gnome-session-halt", new Trigger.from_string("<Control><Alt>q"));
             session.add_group(new SessionGroup(session.id));
         
         // add a pie with a main menu
-        var menu = PieManager.create_persistent_pie(_("Main Menu"), "alacarte", "<Control><Alt>space");
+        var menu = PieManager.create_persistent_pie(_("Main Menu"), "alacarte", new Trigger.from_string("<Control><Alt>space"));
             menu.add_group(new MenuGroup(menu.id));
         
         // add a pie with window controls
-        var window = PieManager.create_persistent_pie(_("Window"), "gnome-window-manager", "<Control><Alt>w");
+        var window = PieManager.create_persistent_pie(_("Window"), "gnome-window-manager", new Trigger.from_string("<Control><Alt>w"));
             window.add_action(new KeyAction(_("Scale"), "top", "<Control><Alt>s"));
             window.add_action(new KeyAction(_("Minimize"), "bottom", "<Alt>F9", true));
             window.add_action(new KeyAction(_("Close"), "window-close", "<Alt>F4"));

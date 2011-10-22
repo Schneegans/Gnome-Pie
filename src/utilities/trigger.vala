@@ -24,23 +24,63 @@ namespace GnomePie {
 
 public class Trigger : GLib.Object {
 
-    private bool with_mouse;
-    private int key_code;
-    private Gdk.ModifierType modifiers;
+    /////////////////////////////////////////////////////////////////////
+    /// Returns a human-readable version of this Trigger.
+    /////////////////////////////////////////////////////////////////////
+
+    public string label { get; private set; default=""; }
     
     /////////////////////////////////////////////////////////////////////
-    /// C'tor, creates an invalid Trigger.
+    /// The Trigger string. Like [delayed]<Control>button3
+    /////////////////////////////////////////////////////////////////////
+    
+    public string name { get; private set; default=""; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The key code of the hotkey or the button number of the mouse.
+    /////////////////////////////////////////////////////////////////////
+    
+    public int key_code { get; private set; default=0; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Modifier keys pressed for this hotkey.
+    /////////////////////////////////////////////////////////////////////
+    
+    public Gdk.ModifierType modifiers { get; private set; default=0; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True if this hotkey involves the mouse.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool with_mouse { get; private set; default=false; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True if the pie closes when the trigger hotkey is released.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool turbo { get; private set; default=false; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True if the trigger should wait a short delay before being
+    /// triggered.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool delayed { get; private set; default=false; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, creates a new, "unbound" Trigger.
     /////////////////////////////////////////////////////////////////////
     
     public Trigger() {
-        this.with_mouse = false;
-        this.key_code = -1;
-        this.modifiers = 0;
+        this.set_unbound();
     }
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, creates a new Trigger from a given Trigger string. This is
-    /// in this format: 
+    /// in this format: "[option(s)]<modifier(s)>button" where
+    /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
+    /// something like "s", "F4" or "button0" and "[option]" is either
+    /// "[turbo]" or "["delayed"]".
     /////////////////////////////////////////////////////////////////////
     
     public Trigger.from_string(string trigger) {
@@ -48,31 +88,144 @@ public class Trigger : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Initializes static members.
+    /// C'tor, creates a new Trigger from the key values.
     /////////////////////////////////////////////////////////////////////
     
-    public void parse_string(string trigger) {
+    public Trigger.from_values(int key_code, Gdk.ModifierType modifiers, 
+                               bool with_mouse, bool turbo, bool delayed ) {
         
+        string trigger = (turbo ? "[turbo]" : "") + (delayed ? "[delayed]" : "");
+        
+        if (with_mouse) {
+            trigger += Gtk.accelerator_name(0, modifiers) + "button%i".printf(key_code);
+        } else {
+            trigger += Gtk.accelerator_name(key_code, modifiers);
+        }
+        
+        this.parse_string(trigger);
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Initializes static members.
+    /// Parses a Trigger string. This is
+    /// in this format: "[option(s)]<modifier(s)>button" where
+    /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
+    /// something like "s", "F4" or "button0" and "[option]" is either
+    /// "[turbo]" or "["delayed"]".
     /////////////////////////////////////////////////////////////////////
     
-    public string get_label() {
-        if (this.with_mouse) {
-            return "";
+    public void parse_string(string trigger) {
+        if (this.is_valid(trigger)) {
+            // copy string
+            string check_string = trigger;
+        
+            this.name = check_string;
+            
+            this.turbo = check_string.contains("[turbo]");
+            this.delayed = check_string.contains("[delayed]");
+            
+            // remove optional arguments
+            check_string = check_string.replace("[turbo]", "");
+            check_string = check_string.replace("[delayed]", "");
+            
+            int button = this.get_mouse_button(check_string);
+            if (button > 0) {
+                this.with_mouse = true;
+                this.key_code = button;
+                
+                Gtk.accelerator_parse(check_string, null, out this._modifiers);
+                this.label = Gtk.accelerator_get_label(0, this.modifiers);
+                
+                string button_text = _("Button %i").printf(this.key_code);
+                
+                if (this.key_code == 1)
+                    button_text = _("LeftButton");
+                else if (this.key_code == 3)
+                    button_text = _("RightButton");
+                else if (this.key_code == 2)
+                    button_text = _("MiddleButton");
+                
+                this.label += button_text;
+            } else {
+                this.with_mouse = false;
+                
+                var display = new X.Display();
+                
+                uint keysym = 0;
+                Gtk.accelerator_parse(check_string, out keysym, out this._modifiers);
+                this.key_code = display.keysym_to_keycode(keysym);
+                this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
+            }
+            
+            if (this.turbo && this.delayed)
+                this.label += ("\n<small><span weight='light'>" + _("Turbo") + " | " + _("Delayed") + "</span></small>");
+            else if (this.turbo)
+                this.label += ("\n<small><span weight='light'>" + _("Turbo") + "</span></small>");
+            else if (this.delayed)
+                this.label += ("\n<small><span weight='light'>" + _("Delayed") + "</span></small>");
+            
         } else {
-            return "";
+            this.set_unbound();
         }
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Initializes static members.
+    /// Resets all member variables to their defaults.
     /////////////////////////////////////////////////////////////////////
     
-    public string get_trigger() {
-        return "";
+    private void set_unbound() {
+        this.label = _("Not bound");
+        this.name = "";
+        this.key_code = 0;
+        this.modifiers = 0;
+        this.turbo = false;
+        this.delayed = false;
+        this.with_mouse = false;
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns true, if the trigger string is in a valid format.
+    /////////////////////////////////////////////////////////////////////
+    
+    private bool is_valid(string trigger) {
+        // copy string
+        string check_string = trigger;
+        
+        // remove optional arguments
+        check_string = check_string.replace("[turbo]", "");
+        check_string = check_string.replace("[delayed]", "");
+         
+        if (this.get_mouse_button(check_string) > 0) {
+            // it seems to be a valid mouse-trigger so replace button part,
+            // with something accepted by gtk, and check it with gtk
+            int button_index = check_string.index_of("button");
+            check_string = check_string.slice(0, button_index) + "a";
+        } 
+        
+        // now it shouls be a normal gtk accelerator
+        uint keysym = 0;
+        Gdk.ModifierType modifiers = 0;
+        Gtk.accelerator_parse(check_string, out keysym, out modifiers);
+        if (keysym == 0)
+            return false;
+        
+        return true; 
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the mouse button number of the given trigger string. 
+    /// Returns -1 if it is not a mouse trigger.
+    /////////////////////////////////////////////////////////////////////
+    
+    private int get_mouse_button(string trigger) {
+        if (trigger.contains("button")) {
+            // it seems to be a mouse-trigger so check the button part.
+            int button_index = trigger.index_of("button");
+            int number = int.parse(trigger.slice(button_index + 6, trigger.length));  
+            if (number > 0)      
+                return number;
+        }
+        
+        return -1;
     }
 }
 

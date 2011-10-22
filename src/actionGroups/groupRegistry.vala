@@ -38,7 +38,6 @@ public class GroupRegistry : GLib.Object {
     public static Gee.HashMap<Type, string> icons { get; private set; }
     public static Gee.HashMap<Type, string> settings_names { get; private set; }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// Registers all ActionGroup types.
     /////////////////////////////////////////////////////////////////////

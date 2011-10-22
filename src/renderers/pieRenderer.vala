@@ -52,6 +52,12 @@ public class PieRenderer : GLib.Object {
     public int size { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
+    /// True if the pie should close when it's trigger is released.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool turbo_mode { get; private set; default=false; }
+    
+    /////////////////////////////////////////////////////////////////////
     /// All SliceRenderers used to draw this Pie.
     /////////////////////////////////////////////////////////////////////
     
@@ -103,6 +109,8 @@ public class PieRenderer : GLib.Object {
                 ++count;
             }
         }
+        
+        this.turbo_mode = PieManager.get_is_turbo(pie.id);
         
         this.set_highlighted_slice(this.quick_action);
         

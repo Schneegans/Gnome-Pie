@@ -28,6 +28,10 @@ public class TriggerSelectWindow : Gtk.Dialog {
     private Gtk.CheckButton turbo;
     private Gtk.CheckButton delayed;
     
+    private Gdk.ModifierType lock_modifiers = Gdk.ModifierType.MOD2_MASK
+                                             |Gdk.ModifierType.LOCK_MASK
+                                             |Gdk.ModifierType.MOD5_MASK;
+    
     public TriggerSelectWindow() {
         this.title = _("Define an open-command");
         this.resizable = false;
@@ -48,32 +52,45 @@ public class TriggerSelectWindow : Gtk.Dialog {
         
             var label = new Gtk.Label(null);
                 label.set_line_wrap(true);
-                label.width_request = 288;
-                label.set_markup(_("Please press your desired <b>hot key</b>. If you want to bind the Pie to a <b>button of your mouse</b>, click with a button of your choice in the area below. You can also hold some modifier keys while clicking. Press <b>Esc to cancel</b> this dialog, <b>Backspace to unbind</b> the pie."));
+                label.width_request = 388;
+                label.set_markup(_("Please press your desired <b>hot key</b>. If you want to bind " +
+                                   "the Pie to a <b>button of your mouse</b>, click in the area " +
+                                   "below. Press <b>Esc to cancel</b> this dialog, <b>Backspace " +
+                                   "to unbind</b> the pie."));
                 
             container.pack_start(label, true);
             
-            var click_frame = new Gtk.Frame("Click area");
+            var sub_container = new Gtk.HBox(false, 6);
             
-                var click_box = new Gtk.EventBox();
-                    click_box.height_request = 50;
-                    click_box.button_press_event.connect(on_area_clicked);
+                var click_frame = new Gtk.Frame("Click area");
+                
+                    var click_box = new Gtk.EventBox();
+                        click_box.width_request = 100;
+                        click_box.button_press_event.connect(on_area_clicked);
+                        
+                    click_frame.add(click_box);
                     
-                click_frame.add(click_box);
+                sub_container.pack_start(click_frame, false);
                 
-            container.pack_start(click_frame, false);
-            
-            this.turbo = new Gtk.CheckButton.with_label (_("Turbo mode"));
-                this.turbo.tooltip_text = _("If checked, the Pie will close when you release the chosen hot key.");
-                this.turbo.active = false;
+                var sub_sub_container = new Gtk.VBox(false, 6);
                 
-            container.pack_start(turbo, false);
+                    this.turbo = new Gtk.CheckButton.with_label (_("Turbo mode"));
+                        this.turbo.tooltip_text = _("If checked, the Pie will close when you " + 
+                                                    "release the chosen hot key.");
+                        this.turbo.active = false;
+                        
+                    sub_sub_container.pack_start(turbo, false);
+                        
+                    this.delayed = new Gtk.CheckButton.with_label (_("Long press for activation"));
+                        this.delayed.tooltip_text = _("If checked, the Pie will only open if you " + 
+                                                      "press this hot key a bit longer.");
+                        this.delayed.active = false;
+                        
+                    sub_sub_container.pack_start(delayed, false);
+                    
+                sub_container.pack_start(sub_sub_container, false);
                 
-            this.delayed = new Gtk.CheckButton.with_label (_("Long press for activation"));
-                this.delayed.tooltip_text = _("If checked, the Pie will only open if you press this hot key a bit longer.");
-                this.delayed.active = false;
-                
-            container.pack_start(delayed, false);
+            container.pack_start(sub_container, true);
 
         container.show_all();
         
@@ -86,12 +103,16 @@ public class TriggerSelectWindow : Gtk.Dialog {
     }
     
     private bool on_area_clicked(Gdk.EventButton event) {
-        var trigger = new Trigger.from_values((int)event.button, event.state, true, this.turbo.active, this.delayed.active);
+        Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
+        var trigger = new Trigger.from_values((int)event.button, state, true, 
+                                              this.turbo.active, this.delayed.active);
         if (trigger.name.contains("button1")) {
             var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
                                                 Gtk.MessageType.WARNING, 
                                                 Gtk.ButtonsType.YES_NO, 
-                                                _("It possible to make your system unusable if you bind a Pie to your left mouse button. Do you really want to do this?"));
+                                                _("It possible to make your system unusable if " +
+                                                  "you bind a Pie to your left mouse button. Do " +
+                                                  "you really want to do this?"));
                                                  
             dialog.response.connect((response) => {
                 if (response == Gtk.ResponseType.YES) {
@@ -114,7 +135,9 @@ public class TriggerSelectWindow : Gtk.Dialog {
         } else if (Gdk.keyval_name(event.keyval) == "BackSpace") {
             this.select(new Trigger());
         } else if (event.is_modifier == 0) {
-            this.select(new Trigger.from_values((int)event.keyval, event.state, false, this.turbo.active, this.delayed.active));
+            Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
+            this.select(new Trigger.from_values((int)event.keyval, state, false, 
+                                                this.turbo.active, this.delayed.active));
         }
         
         return true;

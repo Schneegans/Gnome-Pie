@@ -87,7 +87,7 @@ public class WindowListGroup : ActionGroup {
                 
                 var action = new SigAction(
                     name,
-                    bamf_app == null ? application.get_icon_name().down() : bamf_app.get_icon(),
+                    (bamf_app == null) ? application.get_icon_name().down() : bamf_app.get_icon(),
                     "%lu".printf(window.get_xid()) 
                 );
                 action.activated.connect(() => {

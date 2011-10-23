@@ -152,8 +152,22 @@ public class TriggerSelectWindow : Gtk.Dialog {
     }
     
     private void select(Trigger trigger) {
-        this.on_select(trigger);
-        this.hide();
+        var id = PieManager.get_assigned_id(trigger);
+    
+        if (id != "") {
+            var error = _("This hotkey is already assigned to the pie \"%s\"! \n\nPlease select " +
+                          "another one or cancel your selection.").printf(PieManager.get_name_of(id));
+            var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
+                                                Gtk.MessageType.ERROR, 
+                                                Gtk.ButtonsType.CANCEL, 
+                                                error);
+            
+            dialog.run();
+            dialog.destroy();
+        } else {
+            this.on_select(trigger);
+            this.hide();
+        }
     }
 }
 

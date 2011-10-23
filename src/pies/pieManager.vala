@@ -121,6 +121,15 @@ public class PieManager : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
+    /// Returns the name ID of the Pie bound to the given Trigger.
+    /// Returns "" if there is nothing bound to this trigger.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string get_assigned_id(Trigger trigger) {
+        return bindings.get_assigned_id(trigger);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Creates a new Pie which is displayed in the configuration dialog
     /// and gets saved.
     /////////////////////////////////////////////////////////////////////

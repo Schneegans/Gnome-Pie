@@ -156,6 +156,9 @@ public class Trigger : GLib.Object {
                 this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
             }
             
+            this.label = this.label.replace("<", "&lt;");
+            this.label = this.label.replace(">", "&gt;");
+            
             if (this.turbo && this.delayed)
                 this.label += ("\n<small><span weight='light'>" + _("Turbo") + " | " + _("Delayed") + "</span></small>");
             else if (this.turbo)

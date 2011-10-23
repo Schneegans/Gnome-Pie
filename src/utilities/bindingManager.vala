@@ -181,6 +181,23 @@ public class BindingManager : GLib.Object {
         
         return false;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the name ID of the Pie bound to the given Trigger.
+    /// Returns "" if there is nothing bound to this trigger.
+    /////////////////////////////////////////////////////////////////////
+    
+    public string get_assigned_id(Trigger trigger) {
+        foreach (var binding in bindings) {
+            var first = binding.trigger.name.replace("[turbo]", "");
+            var second = trigger.name.replace("[turbo]", "");
+            if (first == second) {
+                return binding.id;
+            }
+        }
+        
+        return "";
+    }
 
     /////////////////////////////////////////////////////////////////////
     /// Event filter method needed to fetch X.Events

@@ -180,6 +180,7 @@ public class Preferences : Gtk.Window {
                                 _("You may drag'n'drop URLs and bookmarks from your internet browser to the list above."),
                                 _("Bugs can be reported at %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie'>Github</a>"),
                                 _("It's possible to drag'n'drop files and folders from your file browser to the list above."),
+                                _("It's recommended to keep your Pies small (at most 6-8 Slices). Else they will become hard to navigate."),
                                 _("In order to create a launcher for a Pie, drag the Pie from the list to your desktop!")
                             });
                             this.show.connect(info_label.start_slide_show);

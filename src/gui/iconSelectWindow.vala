@@ -19,45 +19,17 @@ namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
 /// A window which allows selection of an Icon of the user's current icon 
-/// theme. Loading of Icons happens in an extra thread and a spinner is
-/// displayed while loading.
+/// theme. Custom icons/images can be selested as well. Loading of icons
+/// happens in an extra thread and a spinner is displayed while loading.
 /////////////////////////////////////////////////////////////////////////
 
 public class IconSelectWindow : Gtk.Dialog {
 
-    private static Gtk.ListStore icon_list = null;
+    /////////////////////////////////////////////////////////////////////
+    /// The currently selected icon. If set, this icon gets focused.
+    /////////////////////////////////////////////////////////////////////
     
-    private static bool loading {get; set; default = false;}
-    private static bool need_reload {get; set; default = true;}
-    
-    private const string disabled_contexts = "Animations, FileSystems, MimeTypes";
-    private Gtk.TreeModelFilter icon_list_filtered = null;
-    private Gtk.IconView icon_view = null;
-    private Gtk.Spinner spinner = null;
-    
-    private Gtk.FileChooserWidget file_chooser = null;
-    
-    private Gtk.Notebook tabs = null;
-
-    private class ListEntry {
-        public string name;
-        public IconContext context;
-        public Gdk.Pixbuf pixbuf;
-    }
-    
-    private GLib.AsyncQueue<ListEntry?> load_queue;
-    
-    private enum IconContext {
-        ALL,
-        APPS,
-        ACTIONS,
-        PLACES,
-        FILES,
-        EMOTES,
-        OTHER
-    }
-    
-    public string _active_icon = "application-default-icon";
+    private string _active_icon = "application-default-icon";
     
     public string active_icon {
         get {
@@ -85,7 +57,104 @@ public class IconSelectWindow : Gtk.Dialog {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// This signal gets emitted when the user selects a new icon.
+    /////////////////////////////////////////////////////////////////////
+    
     public signal void on_select(string icon_name);
+
+    /////////////////////////////////////////////////////////////////////
+    /// The ListStore storing all theme-icons.
+    /////////////////////////////////////////////////////////////////////
+
+    private static Gtk.ListStore icon_list = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True, if the icon theme is currently reloaded.
+    /////////////////////////////////////////////////////////////////////
+    
+    private static bool loading = false;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// If set to true, the icon list will be reloaded next time the
+    /// window opens.
+    /////////////////////////////////////////////////////////////////////
+    
+    private static bool need_reload = true;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Icons of these contexts won't appear in the list.
+    /////////////////////////////////////////////////////////////////////
+    
+    private const string disabled_contexts = "Animations, FileSystems";
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The list of icons, filtered according to the chosen type and
+    /// filter string.
+    /////////////////////////////////////////////////////////////////////
+    
+    private Gtk.TreeModelFilter icon_list_filtered = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The Gtk widget displaying the icons.
+    /////////////////////////////////////////////////////////////////////
+    
+    private Gtk.IconView icon_view = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// This spinner is displayed when the icons are loaded.
+    /////////////////////////////////////////////////////////////////////
+    
+    private Gtk.Spinner spinner = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A Gtk widget used for custom icon/image selection.
+    /////////////////////////////////////////////////////////////////////
+    
+    private Gtk.FileChooserWidget file_chooser = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The notebook containing the different icon choice possibilities:
+    /// from the theme or custom.
+    /////////////////////////////////////////////////////////////////////
+    
+    private Gtk.Notebook tabs = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A little structure containing data for one icon in the icon_view.
+    /////////////////////////////////////////////////////////////////////
+
+    private class ListEntry {
+        public string name;
+        public IconContext context;
+        public Gdk.Pixbuf pixbuf;
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// This queue is used for icon loading. A loading thread pushes
+    /// icons into it --- the main thread updates the icon_view
+    /// accordingly.
+    /////////////////////////////////////////////////////////////////////
+    
+    private GLib.AsyncQueue<ListEntry?> load_queue;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Possible icon types.
+    /////////////////////////////////////////////////////////////////////
+    
+    private enum IconContext {
+        ALL,
+        APPS,
+        ACTIONS,
+        PLACES,
+        FILES,
+        EMOTES,
+        OTHER
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, creates a new IconSelectWindow.
+    /////////////////////////////////////////////////////////////////////
     
     public IconSelectWindow() {
         this.title = _("Choose an Icon");
@@ -94,15 +163,22 @@ public class IconSelectWindow : Gtk.Dialog {
         this.load_queue = new GLib.AsyncQueue<ListEntry?>();
             
         if (this.icon_list == null) {
-            this.icon_list = new Gtk.ListStore(3, typeof(string), typeof(IconContext), typeof(Gdk.Pixbuf)); 
+            this.icon_list = new Gtk.ListStore(3, typeof(string),      // icon name
+                                                  typeof(IconContext), // icon type
+                                                  typeof(Gdk.Pixbuf)); // the icon itself
+                                                  
+            // disable sorting until all icons are loaded
+            // else loading becomes horribly slow                                    
             this.icon_list.set_default_sort_func(() => {return 0;});
 
+            // reload if icon theme changes
             Gtk.IconTheme.get_default().changed.connect(() => {
                 if (this.visible) load_icons();
                 else              need_reload = true;
             });
         } 
         
+        // make the icon_view filterable
         this.icon_list_filtered = new Gtk.TreeModelFilter(this.icon_list, null);
 
         var container = new Gtk.VBox(false, 12);
@@ -111,9 +187,11 @@ public class IconSelectWindow : Gtk.Dialog {
             // tab container
             this.tabs = new Gtk.Notebook();
 
+                // icon theme tab
                 var theme_tab = new Gtk.VBox(false, 12);
                     theme_tab.set_border_width(12);
             
+                    // type chooser combo-box
                     var context_combo = new Gtk.ComboBox.text();
                         context_combo.append_text(_("All icons"));
                         context_combo.append_text(_("Applications"));
@@ -130,13 +208,16 @@ public class IconSelectWindow : Gtk.Dialog {
                         });
                         
                         theme_tab.pack_start(context_combo, false, false);
-                        
+                    
+                    // string filter entry
                     var filter = new Gtk.Entry();
                         filter.primary_icon_stock = Gtk.Stock.FIND;
                         filter.primary_icon_activatable = false;
                         filter.secondary_icon_stock = Gtk.Stock.CLEAR;
                         theme_tab.pack_start(filter, false, false);
                         
+                        // only display items which have the selected type
+                        // and whose name contains the text entered in the entry
                         this.icon_list_filtered.set_visible_func((model, iter) => {
                             string name = "";
                             IconContext context = IconContext.ALL;
@@ -150,33 +231,39 @@ public class IconSelectWindow : Gtk.Dialog {
                                     name.down().contains(filter.text.down());
                         });
                         
+                        // clear when the users clicks on the "clear" icon
                         filter.icon_release.connect((pos, event) => {
                             if (pos == Gtk.EntryIconPosition.SECONDARY)
                                 filter.text = "";
                         });
                         
+                        // refilter on input
                         filter.notify["text"].connect(() => {
                             this.icon_list_filtered.refilter();
                         });
                     
+                    // container for the icon_view
                     var scroll = new Gtk.ScrolledWindow (null, null);
                         scroll.set_policy (Gtk.PolicyType.NEVER, Gtk.PolicyType.AUTOMATIC);
                         scroll.set_shadow_type (Gtk.ShadowType.IN);
 
+                        // displays the filtered icons
                         this.icon_view = new Gtk.IconView.with_model(this.icon_list_filtered);
                             this.icon_view.item_width = 32;
                             this.icon_view.item_padding = 3;
                             this.icon_view.pixbuf_column = 2;
                             this.icon_view.tooltip_column = 0;
                             
+                            // set _active_icon if selection changes
                             this.icon_view.selection_changed.connect(() => {
                                 foreach (var path in this.icon_view.get_selected_items()) {
                                     Gtk.TreeIter iter;
                                     this.icon_list_filtered.get_iter(out iter, path);
-                                    icon_list_filtered.get(iter, 0, out this._active_icon);
+                                    this.icon_list_filtered.get(iter, 0, out this._active_icon);
                                 }
                             });
                             
+                            // hide this window when the user activates an icon
                             this.icon_view.item_activated.connect((path) => {
                                 Gtk.TreeIter iter;
                                 this.icon_list_filtered.get_iter(out iter, path);
@@ -191,20 +278,27 @@ public class IconSelectWindow : Gtk.Dialog {
                         
                     tabs.append_page(theme_tab, new Gtk.Label(_("Icon Theme")));
                 
+                // tab containing the possibility to choose a custom icon
                 var custom_tab = new Gtk.VBox(false, 6);
                     custom_tab.border_width = 12;
                     
+                    // file chooser widget
                     this.file_chooser = new Gtk.FileChooserWidget(Gtk.FileChooserAction.OPEN);
                         var file_filter = new Gtk.FileFilter();
                         file_filter.add_pixbuf_formats();
                         file_filter.set_name(_("All supported image formats"));
                         file_chooser.add_filter(file_filter);
                         
+                        // set _active_icon if the user selected a file
                         file_chooser.selection_changed.connect(() => {
-                            if (file_chooser.get_filename() != null && GLib.FileUtils.test(file_chooser.get_filename(), GLib.FileTest.IS_REGULAR))
+                            if (file_chooser.get_filename() != null && 
+                                GLib.FileUtils.test(file_chooser.get_filename(), 
+                                                    GLib.FileTest.IS_REGULAR))
+                                
                                 this._active_icon = file_chooser.get_filename();
                         });
                         
+                        // hide this window when the user activates a file
                         file_chooser.file_activated.connect(() => {
                             this._active_icon = file_chooser.get_filename();
                             this.on_select(this._active_icon);
@@ -218,7 +312,9 @@ public class IconSelectWindow : Gtk.Dialog {
                     
             container.pack_start(tabs, true, true);
 
-            // button box 
+            // button box --- this dialog has a custom button box at the bottom because it
+            // should have a spinner there. Sadly that's impossible with the "normal"
+            // action_area of Gtk.Dialog's 
             var bottom_box = new Gtk.HBox(false, 0);
             
                 var bbox = new Gtk.HButtonBox();
@@ -255,8 +351,16 @@ public class IconSelectWindow : Gtk.Dialog {
         this.set_focus(this.icon_view);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Hide the "normal" action_area when this window is shown. Reload
+    /// all icons if necessary.
+    /////////////////////////////////////////////////////////////////////
+    
     public override void show() {
         base.show();
+        
+        // hide the "normal" action_area --- this Dialog has a custom set of
+        // buttons containg the spinner
         this.action_area.hide();
         
         if (this.need_reload) {
@@ -265,23 +369,32 @@ public class IconSelectWindow : Gtk.Dialog {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// (Re)load all icons.
+    /////////////////////////////////////////////////////////////////////
+    
     private void load_icons() {
+        // only if it's not loading currently
         if (!this.loading) {
             this.loading = true;
             this.icon_list.clear();
             
+            // display the spinner
             if (spinner != null)
                 this.spinner.visible = true;
 
+            // disable sorting of the icon_view - else it's horribly slow
             this.icon_list.set_sort_column_id(-1, Gtk.SortType.ASCENDING);
             
             try {
+                // start loading in another thread
                 unowned Thread loader = Thread.create<void*>(load_thread, false);
                 loader.set_priority(ThreadPriority.LOW);
             } catch (GLib.ThreadError e) {
                 error("Failed to create icon loader thread!");
             }
             
+            // insert loaded icons every 200 ms
             Timeout.add(200, () => {
                 while (this.load_queue.length() > 0) {
                     var new_entry = this.load_queue.pop();
@@ -292,12 +405,18 @@ public class IconSelectWindow : Gtk.Dialog {
                                                 2, new_entry.pixbuf);
                 }
                 
+                // enable sorting of the icon_view if loading finished
                 if (!this.loading) this.icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);  
 
                 return loading;
             });
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads all icons of an icon theme and pushes them into the
+    /// load_queue.
+    /////////////////////////////////////////////////////////////////////
     
     private void* load_thread() {
         var icon_theme = Gtk.IconTheme.get_default();
@@ -321,6 +440,7 @@ public class IconSelectWindow : Gtk.Dialog {
                     }
                     
                     try {      
+                        // create a new entry for the queue
                         var new_entry = new ListEntry();
                         new_entry.name = icon;
                         new_entry.context = icon_context;
@@ -337,8 +457,10 @@ public class IconSelectWindow : Gtk.Dialog {
             }
         }
         
+        // finished loading
         this.loading = false;
         
+        // hide the spinner
         if (spinner != null)
             spinner.visible = this.loading;
 

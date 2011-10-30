@@ -244,6 +244,11 @@ public class BindingManager : GLib.Object {
         var current_count = ++this.delayed_count;
         
         if (binding == null && this.delayed_event != null) {
+            Gdk.Window rootwin = Gdk.get_default_root_window();
+            X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
+            X.ID xid = Gdk.x11_drawable_get_xid(rootwin);
+            
+            display.send_event(0x2200005, true, X.EventMask.ButtonPressMask | X.EventMask.ButtonReleaseMask, ref this.delayed_event);
             
             debug("resend");
         } else if (binding != null) {

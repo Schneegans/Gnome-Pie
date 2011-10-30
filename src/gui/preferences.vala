@@ -248,15 +248,18 @@ public class Preferences : Gtk.Window {
                 var close_button = new Gtk.Button.from_stock(Gtk.Stock.CLOSE);
                 close_button.clicked.connect (() => { 
                     hide();
-                    // save settings on close
-                    Config.global.save();
-                    Pies.save();
                 });
                 bbox.pack_start (close_button);
 
                 main_vbox.pack_start(bbox, false);
                 
             main_vbox.show_all();
+            
+            this.hide.connect(() => {
+                // save settings on close
+                Config.global.save();
+                Pies.save();
+            });
     }
 
     /////////////////////////////////////////////////////////////////////

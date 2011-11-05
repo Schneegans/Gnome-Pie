@@ -255,11 +255,11 @@ public class Preferences : Gtk.Window {
                 
             main_vbox.show_all();
             
-            this.hide.connect(() => {
-                // save settings on close
-                Config.global.save();
-                Pies.save();
-            });
+        this.hide.connect(() => {
+            // save settings on close
+            Config.global.save();
+            Pies.save();
+        });
     }
 
     /////////////////////////////////////////////////////////////////////

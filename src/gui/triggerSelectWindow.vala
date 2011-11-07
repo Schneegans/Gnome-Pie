@@ -27,6 +27,9 @@ public class TriggerSelectWindow : Gtk.Dialog {
     
     private Gtk.CheckButton turbo;
     private Gtk.CheckButton delayed;
+    private Gtk.Label preview;
+    private Trigger trigger = null;
+    private Trigger original_trigger = null;
     
     private Gdk.ModifierType lock_modifiers = Gdk.ModifierType.MOD2_MASK
                                              |Gdk.ModifierType.LOCK_MASK
@@ -49,64 +52,105 @@ public class TriggerSelectWindow : Gtk.Dialog {
 
         var container = new Gtk.VBox(false, 6);
             container.set_border_width(6);
-        
-            var label = new Gtk.Label(null);
-                label.set_line_wrap(true);
-                label.width_request = 388;
-                label.set_markup(_("Please press your desired <b>hot key</b>. If you want to bind " +
-                                   "the Pie to a <b>button of your mouse</b>, click in the area " +
-                                   "below. Press <b>Esc to cancel</b> this dialog, <b>Backspace " +
-                                   "to unbind</b> the pie."));
                 
-            container.pack_start(label, true);
+             var click_frame = new Gtk.Frame(_("Click here if you want to bind a mouse button!"));
             
-            var sub_container = new Gtk.HBox(false, 6);
+                var click_box = new Gtk.EventBox();
+                    click_box.height_request = 100;
+                    click_box.button_press_event.connect(on_area_clicked);
+                    
+                    this.preview = new Gtk.Label(null);
+                    
+                    click_box.add(this.preview);
+                    
+                click_frame.add(click_box);
+                
+            container.pack_start(click_frame, false);
             
-                var click_frame = new Gtk.Frame("Click area");
+            this.turbo = new Gtk.CheckButton.with_label (_("Turbo mode"));
+                this.turbo.tooltip_text = _("If checked, the Pie will close when you " + 
+                                            "release the chosen hot key.");
+                this.turbo.active = false;
+                this.turbo.toggled.connect(() => {
+                	if (this.trigger != null)
+		            	this.update_trigger(new Trigger.from_values(
+		            		this.trigger.key_sym, this.trigger.modifiers,
+							this.trigger.with_mouse, this.turbo.active,
+							this.delayed.active));
+                });
                 
-                    var click_box = new Gtk.EventBox();
-                        click_box.width_request = 100;
-                        click_box.button_press_event.connect(on_area_clicked);
-                        
-                    click_frame.add(click_box);
-                    
-                sub_container.pack_start(click_frame, false);
+            container.pack_start(turbo, false);
                 
-                var sub_sub_container = new Gtk.VBox(false, 6);
+            this.delayed = new Gtk.CheckButton.with_label (_("Long press for activation"));
+                this.delayed.tooltip_text = _("If checked, the Pie will only open if you " + 
+                                              "press this hot key a bit longer.");
+                this.delayed.active = false;
+                this.delayed.toggled.connect(() => {
+                	if (this.trigger != null)
+		            	this.update_trigger(new Trigger.from_values(
+		            		this.trigger.key_sym, this.trigger.modifiers,
+							this.trigger.with_mouse, this.turbo.active,
+							this.delayed.active));
+                });
                 
-                    this.turbo = new Gtk.CheckButton.with_label (_("Turbo mode"));
-                        this.turbo.tooltip_text = _("If checked, the Pie will close when you " + 
-                                                    "release the chosen hot key.");
-                        this.turbo.active = false;
-                        
-                    sub_sub_container.pack_start(turbo, false);
-                        
-                    this.delayed = new Gtk.CheckButton.with_label (_("Long press for activation"));
-                        this.delayed.tooltip_text = _("If checked, the Pie will only open if you " + 
-                                                      "press this hot key a bit longer.");
-                        this.delayed.active = false;
-                        
-                    sub_sub_container.pack_start(delayed, false);
-                    
-                sub_container.pack_start(sub_sub_container, false);
-                
-            container.pack_start(sub_container, true);
+            container.pack_start(delayed, false);
 
         container.show_all();
         
         this.vbox.pack_start(container, true, true);
+        
+        this.add_button(Gtk.Stock.CANCEL, 1);
+        this.add_button(Gtk.Stock.OK, 0);
+        
+        this.response.connect((id) => {
+        	if (id == 1)
+        		this.hide();
+        	else if (id == 0) {
+        		var assigned_id = PieManager.get_assigned_id(this.trigger);
+    
+    			
+				if (this.trigger == this.original_trigger) {
+					// nothing did change
+					this.hide();
+				} else if (this.trigger.key_code == this.original_trigger.key_code
+						   && this.trigger.modifiers == this.original_trigger.modifiers
+						   && this.trigger.with_mouse == this.original_trigger.with_mouse
+						   && this.trigger.delayed == this.original_trigger.delayed) {
+					// only turbo mode changed, no need to check for double assignment
+					this.on_select(this.trigger);
+				    this.hide();
+				} else if (assigned_id != "") {
+					// it's already assigned
+				    var error = _("This hotkey is already assigned to the pie \"%s\"! \n\nPlease select " +
+				                  "another one or cancel your selection.").printf(PieManager.get_name_of(assigned_id));
+				    var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), 
+				    									Gtk.DialogFlags.MODAL, 
+				                                        Gtk.MessageType.ERROR, 
+				                                        Gtk.ButtonsType.CANCEL, 
+				                                        error);
+				    dialog.run();
+				    dialog.destroy();
+				} else {
+					// a unused hot key has been chosen, great!
+				    this.on_select(this.trigger);
+				    this.hide();
+				}
+        	}
+        });
     }
     
     public void set_trigger(Trigger trigger) {
         this.turbo.active = trigger.turbo;
         this.delayed.active = trigger.delayed;
+        this.original_trigger = trigger;
+        this.update_trigger(trigger);
     }
     
     private bool on_area_clicked(Gdk.EventButton event) {
         Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
-        var trigger = new Trigger.from_values((int)event.button, state, true, 
-                                              this.turbo.active, this.delayed.active);
-        if (trigger.name.contains("button1")) {
+        var new_trigger = new Trigger.from_values((int)event.button, state, true, 
+                                                  this.turbo.active, this.delayed.active);
+        if (new_trigger.name.contains("button1")) {
             var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
                                                 Gtk.MessageType.WARNING, 
                                                 Gtk.ButtonsType.YES_NO, 
@@ -116,14 +160,14 @@ public class TriggerSelectWindow : Gtk.Dialog {
                                                  
             dialog.response.connect((response) => {
                 if (response == Gtk.ResponseType.YES) {
-                    this.select(trigger);
+                    this.update_trigger(new_trigger);
                 }
             });
             
             dialog.run();
             dialog.destroy();
         } else {
-            this.select(trigger);
+            this.update_trigger(new_trigger);
         }
         
         return true;
@@ -133,11 +177,11 @@ public class TriggerSelectWindow : Gtk.Dialog {
         if (Gdk.keyval_name(event.keyval) == "Escape") {
             this.hide();
         } else if (Gdk.keyval_name(event.keyval) == "BackSpace") {
-            this.select(new Trigger());
+            this.update_trigger(new Trigger());
         } else if (event.is_modifier == 0) {
             Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
-            this.select(new Trigger.from_values((int)event.keyval, state, false, 
-                                                this.turbo.active, this.delayed.active));
+            this.update_trigger(new Trigger.from_values((int)event.keyval, state, false, 
+                                                   this.turbo.active, this.delayed.active));
         }
         
         return true;
@@ -151,24 +195,10 @@ public class TriggerSelectWindow : Gtk.Dialog {
         return true;
     }
     
-    private void select(Trigger trigger) {
-        var id = PieManager.get_assigned_id(trigger);
-    
-        if (id != "") {
-            var error = _("This hotkey is already assigned to the pie \"%s\"! \n\nPlease select " +
-                          "another one or cancel your selection.").printf(PieManager.get_name_of(id));
-            var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
-                                                Gtk.MessageType.ERROR, 
-                                                Gtk.ButtonsType.CANCEL, 
-                                                error);
-            
-            dialog.run();
-            dialog.destroy();
-        } else {
-            this.on_select(trigger);
-            this.hide();
-        }
-    }
+    private void update_trigger(Trigger new_trigger) {
+    	this.trigger = new_trigger;
+        this.preview.set_markup("<big><b>" + this.trigger.label + "</b></big>");
+    }     
 }
 
 }

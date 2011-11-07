@@ -147,7 +147,7 @@ public class BindingManager : GLib.Object {
     public string get_accelerator_label_of(string id) {
         foreach (var binding in bindings) {
             if (binding.id == id) {
-                return binding.trigger.label;
+                return binding.trigger.label_with_specials;
             }
         }
         

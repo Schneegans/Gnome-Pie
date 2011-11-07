@@ -210,7 +210,7 @@ class PieList : Gtk.TreeView {
                     Gtk.TreeIter data_iter;
                     this.data.get_iter_from_string(out data_iter, path);
                     
-                    this.data.set(data_iter, DataPos.DISPLAY_COMMAND_KEY, trigger.label);
+                    this.data.set(data_iter, DataPos.DISPLAY_COMMAND_KEY, trigger.label_with_specials);
                     this.data.set(data_iter, DataPos.REAL_COMMAND_KEY, trigger.name);
                     
                     this.update_pie(data_iter);

@@ -31,6 +31,13 @@ public class Trigger : GLib.Object {
     public string label { get; private set; default=""; }
     
     /////////////////////////////////////////////////////////////////////
+    /// Returns a human-readable version of this Trigger. Small
+    /// identifiers for turbo mode and delayed mode are added.
+    /////////////////////////////////////////////////////////////////////
+
+    public string label_with_specials { get; private set; default=""; }
+    
+    /////////////////////////////////////////////////////////////////////
     /// The Trigger string. Like [delayed]<Control>button3
     /////////////////////////////////////////////////////////////////////
     
@@ -41,6 +48,12 @@ public class Trigger : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public int key_code { get; private set; default=0; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The keysym of the hotkey or the button number of the mouse.
+    /////////////////////////////////////////////////////////////////////
+    
+    public uint key_sym { get; private set; default=0; }
     
     /////////////////////////////////////////////////////////////////////
     /// Modifier keys pressed for this hotkey.
@@ -91,15 +104,15 @@ public class Trigger : GLib.Object {
     /// C'tor, creates a new Trigger from the key values.
     /////////////////////////////////////////////////////////////////////
     
-    public Trigger.from_values(int key_code, Gdk.ModifierType modifiers, 
+    public Trigger.from_values(uint key_sym, Gdk.ModifierType modifiers, 
                                bool with_mouse, bool turbo, bool delayed ) {
         
         string trigger = (turbo ? "[turbo]" : "") + (delayed ? "[delayed]" : "");
         
         if (with_mouse) {
-            trigger += Gtk.accelerator_name(0, modifiers) + "button%i".printf(key_code);
+            trigger += Gtk.accelerator_name(0, modifiers) + "button%u".printf(key_sym);
         } else {
-            trigger += Gtk.accelerator_name(key_code, modifiers);
+            trigger += Gtk.accelerator_name(key_sym, modifiers);
         }
         
         this.parse_string(trigger);
@@ -131,6 +144,7 @@ public class Trigger : GLib.Object {
             if (button > 0) {
                 this.with_mouse = true;
                 this.key_code = button;
+                this.key_sym = button;
                 
                 Gtk.accelerator_parse(check_string, null, out this._modifiers);
                 this.label = Gtk.accelerator_get_label(0, this.modifiers);
@@ -153,18 +167,22 @@ public class Trigger : GLib.Object {
                 uint keysym = 0;
                 Gtk.accelerator_parse(check_string, out keysym, out this._modifiers);
                 this.key_code = display.keysym_to_keycode(keysym);
+                this.key_sym = keysym;
                 this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
             }
             
             this.label = this.label.replace("<", "&lt;");
             this.label = this.label.replace(">", "&gt;");
+            this.label = this.label.replace("&", "&amp;");
+            
+            this.label_with_specials = this.label;
             
             if (this.turbo && this.delayed)
-                this.label += ("\n<small><span weight='light'>" + _("Turbo") + " | " + _("Delayed") + "</span></small>");
+                this.label_with_specials += ("\n<small><span weight='light'>" + _("Turbo") + " | " + _("Delayed") + "</span></small>");
             else if (this.turbo)
-                this.label += ("\n<small><span weight='light'>" + _("Turbo") + "</span></small>");
+                this.label_with_specials += ("\n<small><span weight='light'>" + _("Turbo") + "</span></small>");
             else if (this.delayed)
-                this.label += ("\n<small><span weight='light'>" + _("Delayed") + "</span></small>");
+                this.label_with_specials += ("\n<small><span weight='light'>" + _("Delayed") + "</span></small>");
             
         } else {
             this.set_unbound();
@@ -177,8 +195,10 @@ public class Trigger : GLib.Object {
     
     private void set_unbound() {
         this.label = _("Not bound");
+        this.label_with_specials = _("Not bound");
         this.name = "";
         this.key_code = 0;
+        this.key_sym = 0;
         this.modifiers = 0;
         this.turbo = false;
         this.delayed = false;

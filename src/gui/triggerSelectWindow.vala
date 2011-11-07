@@ -18,22 +18,52 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// Not ready yet
+/// This window allows the selection of a hotkey. It is returned in form
+/// of a Trigger. Therefore it can be either a keyboard driven hotkey or
+/// a mouse based hotkey.
 /////////////////////////////////////////////////////////////////////////
 
 public class TriggerSelectWindow : Gtk.Dialog {
     
+    /////////////////////////////////////////////////////////////////////
+    /// This signal is emitted when the user selects a new hot key.
+    /////////////////////////////////////////////////////////////////////
+    
     public signal void on_select(Trigger trigger);
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Some private members which are needed by other methods.
+    /////////////////////////////////////////////////////////////////////
     
     private Gtk.CheckButton turbo;
     private Gtk.CheckButton delayed;
     private Gtk.Label preview;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The currently configured trigger.
+    /////////////////////////////////////////////////////////////////////
+    
     private Trigger trigger = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The trigger which was active when this window was opened. It is
+    /// stored in order to check whether anything has changed when the
+    /// user clicks on OK.
+    /////////////////////////////////////////////////////////////////////
+    
     private Trigger original_trigger = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// These modifiers are ignored.
+    /////////////////////////////////////////////////////////////////////
     
     private Gdk.ModifierType lock_modifiers = Gdk.ModifierType.MOD2_MASK
                                              |Gdk.ModifierType.LOCK_MASK
                                              |Gdk.ModifierType.MOD5_MASK;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, constructs a new TriggerSelectWindow.
+    /////////////////////////////////////////////////////////////////////
     
     public TriggerSelectWindow() {
         this.title = _("Define an open-command");
@@ -52,7 +82,8 @@ public class TriggerSelectWindow : Gtk.Dialog {
 
         var container = new Gtk.VBox(false, 6);
             container.set_border_width(6);
-                
+             
+             // click area
              var click_frame = new Gtk.Frame(_("Click here if you want to bind a mouse button!"));
             
                 var click_box = new Gtk.EventBox();
@@ -67,6 +98,7 @@ public class TriggerSelectWindow : Gtk.Dialog {
                 
             container.pack_start(click_frame, false);
             
+            // turbo checkbox
             this.turbo = new Gtk.CheckButton.with_label (_("Turbo mode"));
                 this.turbo.tooltip_text = _("If checked, the Pie will close when you " + 
                                             "release the chosen hot key.");
@@ -80,7 +112,8 @@ public class TriggerSelectWindow : Gtk.Dialog {
                 });
                 
             container.pack_start(turbo, false);
-                
+            
+            // delayed checkbox
             this.delayed = new Gtk.CheckButton.with_label (_("Long press for activation"));
                 this.delayed.tooltip_text = _("If checked, the Pie will only open if you " + 
                                               "press this hot key a bit longer.");
@@ -102,6 +135,7 @@ public class TriggerSelectWindow : Gtk.Dialog {
         this.add_button(Gtk.Stock.CANCEL, 1);
         this.add_button(Gtk.Stock.OK, 0);
         
+        // select a new trigger on OK, hide on CANCEL
         this.response.connect((id) => {
         	if (id == 1)
         		this.hide();
@@ -139,12 +173,20 @@ public class TriggerSelectWindow : Gtk.Dialog {
         });
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Used to set the currently selected trigger on opening.
+    /////////////////////////////////////////////////////////////////////
+    
     public void set_trigger(Trigger trigger) {
         this.turbo.active = trigger.turbo;
         this.delayed.active = trigger.delayed;
         this.original_trigger = trigger;
         this.update_trigger(trigger);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user clicks in the click area.
+    /////////////////////////////////////////////////////////////////////
     
     private bool on_area_clicked(Gdk.EventButton event) {
         Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
@@ -173,6 +215,10 @@ public class TriggerSelectWindow : Gtk.Dialog {
         return true;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user presses a keyboard key.
+    /////////////////////////////////////////////////////////////////////
+    
     private bool on_key_press(Gdk.EventKey event) {
         if (Gdk.keyval_name(event.keyval) == "Escape") {
             this.hide();
@@ -187,6 +233,10 @@ public class TriggerSelectWindow : Gtk.Dialog {
         return true;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user presses a mouse button.
+    /////////////////////////////////////////////////////////////////////
+    
     private bool on_button_press(Gdk.EventButton event) {
         int width = 0, height = 0;
         this.window.get_geometry(null, null, out width, out height, null);
@@ -194,6 +244,10 @@ public class TriggerSelectWindow : Gtk.Dialog {
             this.hide();
         return true;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Helper method to update the content of the trigger preview label.
+    /////////////////////////////////////////////////////////////////////
     
     private void update_trigger(Trigger new_trigger) {
     	this.trigger = new_trigger;

@@ -34,7 +34,7 @@ class PieList : Gtk.TreeView {
     private enum DataPos {IS_QUICKACTION, ICON, NAME, TYPE_ID, ACTION_TYPE,
                           ICON_PIXBUF, FONT_WEIGHT, ICON_NAME_EDITABLE, QUICKACTION_VISIBLE, QUICKACTION_ACTIVATABLE,
                           TYPE_VISIBLE, GROUP_VISIBLE, APP_VISIBLE, KEY_VISIBLE, PIE_VISIBLE,
-                          URI_VISIBLE, DISPLAY_COMMAND_GROUP, DISPLAY_COMMAND_APP, 
+                          URI_VISIBLE, TRIGGER_VISIBLE, DISPLAY_COMMAND_GROUP, DISPLAY_COMMAND_APP, 
                           DISPLAY_COMMAND_KEY, DISPLAY_COMMAND_PIE, DISPLAY_COMMAND_URI,
                           REAL_COMMAND_GROUP, REAL_COMMAND_PIE, REAL_COMMAND_KEY}
     
@@ -91,7 +91,7 @@ class PieList : Gtk.TreeView {
                  ActionPos.ICON_NAME_EDITABLE, false); 
         
         // main data model
-        this.data = new Gtk.TreeStore(24, typeof(bool),       // is quickaction
+        this.data = new Gtk.TreeStore(25, typeof(bool),       // is quickaction
                                           typeof(string),     // icon
                                           typeof(string),     // name   
                                           typeof(string),     // slice: type label, pie: "ID: %id"
@@ -110,6 +110,7 @@ class PieList : Gtk.TreeView {
                                           typeof(bool),       // key renderer visible
                                           typeof(bool),       // pie renderer visible
                                           typeof(bool),       // uri renderer visible
+                                          typeof(bool),       // trigger renderer visible
                                           
                                           typeof(string),     // display command group
                                           typeof(string),     // display command app
@@ -198,6 +199,28 @@ class PieList : Gtk.TreeView {
         var command_column = new Gtk.TreeViewColumn();
             command_column.title = _("Command");
             command_column.resizable = true;
+            command_column.expand = true;
+            
+            // trigger 
+            var command_renderer_trigger = new CellRendererTrigger();
+                command_renderer_trigger.editable = true;
+                command_renderer_trigger.ellipsize = Pango.EllipsizeMode.END;
+
+                command_renderer_trigger.on_select.connect((path, trigger) => {                 
+                    Gtk.TreeIter data_iter;
+                    this.data.get_iter_from_string(out data_iter, path);
+                    
+                    this.data.set(data_iter, DataPos.DISPLAY_COMMAND_KEY, trigger.label_with_specials);
+                    this.data.set(data_iter, DataPos.REAL_COMMAND_KEY, trigger.name);
+                    
+                    this.update_pie(data_iter);
+                });
+                
+                command_column.pack_end(command_renderer_trigger, true);
+                command_column.add_attribute(command_renderer_trigger, "weight", DataPos.FONT_WEIGHT);
+                command_column.add_attribute(command_renderer_trigger, "markup", DataPos.DISPLAY_COMMAND_KEY);
+                command_column.add_attribute(command_renderer_trigger, "visible", DataPos.TRIGGER_VISIBLE);
+                command_column.add_attribute(command_renderer_trigger, "trigger", DataPos.REAL_COMMAND_KEY);
             
             // slice group 
             var command_renderer_group = new Gtk.CellRendererCombo();
@@ -342,6 +365,7 @@ class PieList : Gtk.TreeView {
         var type_column = new Gtk.TreeViewColumn();
             type_column.title = _("Pie-ID / Action type");
             type_column.resizable = true;
+            type_column.expand = false;
                 
             var type_render = new Gtk.CellRendererCombo();
                 type_render.editable = true;
@@ -592,7 +616,7 @@ class PieList : Gtk.TreeView {
     
     // adds a new, empty pie to the list
     private void add_empty_pie() {
-        var new_one = PieManager.create_persistent_pie(_("New Pie"), "application-default-icon", "");
+        var new_one = PieManager.create_persistent_pie(_("New Pie"), "application-default-icon", null);
         
         Gtk.TreeIter last;
         this.pies.append(out last); this.pies.set(last, 0, new_one.name, 1, new_one.id); 
@@ -612,9 +636,10 @@ class PieList : Gtk.TreeView {
                                 DataPos.TYPE_VISIBLE, false,
                                DataPos.GROUP_VISIBLE, false,
                                  DataPos.APP_VISIBLE, false,
-                                 DataPos.KEY_VISIBLE, true,
+                                 DataPos.KEY_VISIBLE, false,
                                  DataPos.PIE_VISIBLE, false,
                                  DataPos.URI_VISIBLE, false,
+                             DataPos.TRIGGER_VISIBLE, true,
                        DataPos.DISPLAY_COMMAND_GROUP, "",
                          DataPos.DISPLAY_COMMAND_APP, "",
                          DataPos.DISPLAY_COMMAND_KEY, PieManager.get_accelerator_label_of(new_one.id),
@@ -672,6 +697,7 @@ class PieList : Gtk.TreeView {
                     DataPos.QUICKACTION_ACTIVATABLE, true,
                                DataPos.TYPE_VISIBLE, true,
                               DataPos.GROUP_VISIBLE, false,
+                            DataPos.TRIGGER_VISIBLE, false,
                                 DataPos.APP_VISIBLE, action is AppAction,
                                 DataPos.KEY_VISIBLE, action is KeyAction,
                                 DataPos.PIE_VISIBLE, action is PieAction,
@@ -791,9 +817,10 @@ class PieList : Gtk.TreeView {
                                     DataPos.TYPE_VISIBLE, false,
                                    DataPos.GROUP_VISIBLE, false,
                                      DataPos.APP_VISIBLE, false,
-                                     DataPos.KEY_VISIBLE, true,
+                                     DataPos.KEY_VISIBLE, false,
                                      DataPos.PIE_VISIBLE, false,
                                      DataPos.URI_VISIBLE, false,
+                                 DataPos.TRIGGER_VISIBLE, true,
                            DataPos.DISPLAY_COMMAND_GROUP, "",
                              DataPos.DISPLAY_COMMAND_APP, "",
                              DataPos.DISPLAY_COMMAND_KEY, PieManager.get_accelerator_label_of(pie.id),
@@ -834,6 +861,7 @@ class PieList : Gtk.TreeView {
                                     DataPos.KEY_VISIBLE, false,
                                     DataPos.PIE_VISIBLE, false,
                                     DataPos.URI_VISIBLE, false,
+                                DataPos.TRIGGER_VISIBLE, false,
                           DataPos.DISPLAY_COMMAND_GROUP, GroupRegistry.names[group.get_type()],
                             DataPos.DISPLAY_COMMAND_APP, "",
                             DataPos.DISPLAY_COMMAND_KEY, _("Not bound"),
@@ -888,7 +916,7 @@ class PieList : Gtk.TreeView {
             });
                 
             // create new pie
-            var new_pie = PieManager.create_persistent_pie(name, icon, hotkey, id);
+            var new_pie = PieManager.create_persistent_pie(name, icon, new Trigger.from_string(hotkey), id);
             
             // add actions accordingly
             if (this.data.iter_has_child(pie)) {

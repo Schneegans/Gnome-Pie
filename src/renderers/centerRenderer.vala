@@ -19,16 +19,43 @@ using GLib.Math;
 
 namespace GnomePie {
 
-// Renders the center of a Pie.
+/////////////////////////////////////////////////////////////////////////    
+///  Renders the center of a Pie.
+/////////////////////////////////////////////////////////////////////////
 
 public class CenterRenderer : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// The PieRenderer which owns this CenterRenderer.
+    /////////////////////////////////////////////////////////////////////
+
     private unowned PieRenderer parent;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The caption drawn in the center. Changes when the active slice
+    /// changes.
+    /////////////////////////////////////////////////////////////////////
+    
     private unowned Image? caption;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The color of the currently active slice. Used to colorize layers.
+    /////////////////////////////////////////////////////////////////////
+    
     private Color color;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Two AnimatedValues: alpha is for global transparency (when
+    /// fading in/out), activity is 1.0 if there is an active slice and
+    /// 0.0 if there is no active slice.
+    /////////////////////////////////////////////////////////////////////
     
     private AnimatedValue activity;
     private AnimatedValue alpha;
+
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
 
     public CenterRenderer(PieRenderer parent) {
         this.parent = parent;
@@ -38,10 +65,20 @@ public class CenterRenderer : GLib.Object {
         this.caption = null;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Initiates the fade-out animation by resetting the targets of the
+    /// AnimatedValues to 0.0.
+    /////////////////////////////////////////////////////////////////////
+    
     public void fade_out() {
         this.activity.reset_target(0.0, Config.global.theme.fade_out_time);
         this.alpha.reset_target(0.0, Config.global.theme.fade_out_time);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Should be called if the active slice of the PieRenderer changes.
+    /// The members activity, caption and color are set accordingly.
+    /////////////////////////////////////////////////////////////////////
     
     public void set_active_slice(SliceRenderer? active_slice) {
         if (active_slice == null) {
@@ -53,17 +90,23 @@ public class CenterRenderer : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Draws all center layers and the caption.
+    /////////////////////////////////////////////////////////////////////
+    
     public void draw(double frame_time, Cairo.Context ctx, double angle, double distance) {
-
+        // get all center_layers
 	    var layers = Config.global.theme.center_layers;
         
+        // update the AnimatedValues
         this.activity.update(frame_time);
         this.alpha.update(frame_time);
 	
+	    // draw each layer
 	    foreach (var layer in layers) {
-	    
 	        ctx.save();
 
+            // calculate all values needed for animation/drawing
             double active_speed = (layer.active_rotation_mode == CenterLayer.RotationMode.TO_MOUSE) ? 
                 0.0 : layer.active_rotation_speed;
             double inactive_speed = (layer.inactive_rotation_mode == CenterLayer.RotationMode.TO_MOUSE) ? 
@@ -114,10 +157,14 @@ public class CenterRenderer : GLib.Object {
 	        
 	        if (colorize > 0.0) ctx.push_group();
 	        
+	        // transform the context
 	        ctx.rotate(layer.rotation);
 	        ctx.scale(max_scale, max_scale);
+	        
+	        // paint the layer
 	        layer.image.paint_on(ctx, this.alpha.val*max_alpha);
             
+            // colorize it, if necessary
             if (colorize > 0.0) {
                 ctx.set_operator(Cairo.Operator.ATOP);
                 ctx.set_source_rgb(this.color.r, this.color.g, this.color.b);
@@ -135,7 +182,7 @@ public class CenterRenderer : GLib.Object {
         if (Config.global.theme.caption && caption != null && this.activity.val > 0) {
 		    ctx.save();
             ctx.identity_matrix();
-            int pos = this.parent.get_size()/2;
+            int pos = this.parent.size/2;
             ctx.translate(pos, (int)(Config.global.theme.caption_position) + pos);
             caption.paint_on(ctx, this.activity.val*this.alpha.val);
             ctx.restore();

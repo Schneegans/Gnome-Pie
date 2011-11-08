@@ -82,13 +82,6 @@ public class Preferences : Gtk.Window {
                             open_at_mouse.toggled.connect(open_at_mouse_toggled);
                             behavior_vbox.pack_start(open_at_mouse, false);
                             
-                        // Click to activate
-                        var click_to_activate = new Gtk.CheckButton.with_label (_("Turbo mode"));
-                            click_to_activate.tooltip_text = _("If checked, the pie closes when its keystroke is released. The currently hovered slice gets executed. This allows very fast selection but disables keyboard navigation.");
-                            click_to_activate.active = Config.global.turbo_mode;
-                            click_to_activate.toggled.connect(turbo_mode_toggled);
-                            behavior_vbox.pack_start(click_to_activate, false);
-                            
                         // Slider
                         var slider_hbox = new Gtk.HBox (false, 6);
                             behavior_vbox.pack_start(slider_hbox);
@@ -187,6 +180,7 @@ public class Preferences : Gtk.Window {
                                 _("You may drag'n'drop URLs and bookmarks from your internet browser to the list above."),
                                 _("Bugs can be reported at %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie'>Github</a>"),
                                 _("It's possible to drag'n'drop files and folders from your file browser to the list above."),
+                                _("It's recommended to keep your Pies small (at most 6-8 Slices). Else they will become hard to navigate."),
                                 _("In order to create a launcher for a Pie, drag the Pie from the list to your desktop!")
                             });
                             this.show.connect(info_label.start_slide_show);
@@ -251,18 +245,21 @@ public class Preferences : Gtk.Window {
             // close button 
             var bbox = new Gtk.HButtonBox ();
                 bbox.set_layout (Gtk.ButtonBoxStyle.END);
-                var close_button = new Gtk.Button.from_stock (Gtk.Stock.CLOSE);
+                var close_button = new Gtk.Button.from_stock(Gtk.Stock.CLOSE);
                 close_button.clicked.connect (() => { 
                     hide();
-                    // save settings on close
-                    Config.global.save();
-                    Pies.save();
                 });
                 bbox.pack_start (close_button);
 
                 main_vbox.pack_start(bbox, false);
                 
             main_vbox.show_all();
+            
+        this.hide.connect(() => {
+            // save settings on close
+            Config.global.save();
+            Pies.save();
+        });
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -322,16 +319,6 @@ public class Preferences : Gtk.Window {
     private void open_at_mouse_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
         Config.global.open_at_mouse = check.active;
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Toggles whether the user has to click with the mouse in order to
-    /// activate a slice.
-    /////////////////////////////////////////////////////////////////////
-    
-    private void turbo_mode_toggled(Gtk.ToggleButton check_box) {
-        var check = check_box as Gtk.CheckButton;
-        Config.global.turbo_mode = check.active;
     }
 }
 

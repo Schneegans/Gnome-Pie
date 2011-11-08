@@ -19,19 +19,52 @@ using GLib.Math;
 
 namespace GnomePie {
 
-// An invisible window. Used to draw Pies onto.
+/////////////////////////////////////////////////////////////////////////    
+///  An invisible window. Used to draw Pies onto.
+/////////////////////////////////////////////////////////////////////////
 
 public class PieWindow : Gtk.Window {
+
+    /////////////////////////////////////////////////////////////////////
+    /// Signal which gets emitted when the PieWindow is about to close.
+    /////////////////////////////////////////////////////////////////////
     
     public signal void on_closing();
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The owned renderer.
+    /////////////////////////////////////////////////////////////////////
 
     private PieRenderer renderer;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True, if the Pie is currently fading out.
+    /////////////////////////////////////////////////////////////////////
+    
     private bool closing = false;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A timer used for calculating the frame time.
+    /////////////////////////////////////////////////////////////////////
+    
     private GLib.Timer timer;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True, if the screen supports compositing.
+    /////////////////////////////////////////////////////////////////////
     
     private bool has_compositing = false;
     
+    /////////////////////////////////////////////////////////////////////
+    /// The background image used for fake transparency if
+    /// has_compositing is false.
+    /////////////////////////////////////////////////////////////////////
+    
     private Image background = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, sets up the window.
+    /////////////////////////////////////////////////////////////////////
 
     public PieWindow() {
         this.renderer = new PieRenderer();
@@ -46,19 +79,27 @@ public class PieWindow : Gtk.Window {
         this.icon_name = "gnome-pie";
         this.set_accept_focus(false);
         
+        // check for compositing
         if (this.screen.is_composited()) {
             this.set_colormap(this.screen.get_rgba_colormap());
             this.has_compositing = true;
         }
         
+        // set up event filter
         this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
                         Gdk.EventMask.KEY_RELEASE_MASK |
                         Gdk.EventMask.KEY_PRESS_MASK |
                         Gdk.EventMask.POINTER_MOTION_MASK);
 
+        // activate on left click
         this.button_release_event.connect ((e) => {
-            if (e.button == 1) this.activate_slice();
-            else               this.cancel();
+            if (e.button == 1 || this.renderer.turbo_mode) this.activate_slice();
+            return true;
+        });
+        
+         // cancel on right click
+        this.button_press_event.connect ((e) => {
+            if (e.button == 3) this.cancel();
             return true;
         });
         
@@ -72,32 +113,44 @@ public class PieWindow : Gtk.Window {
             return true;
         });
         
+        // activate on key release if turbo_mode is enabled
         this.key_release_event.connect((e) => {
             last_key = 0;
-            if (Config.global.turbo_mode)
+            if (this.renderer.turbo_mode)
                 this.activate_slice();
             else
                 this.handle_key_release(e.keyval);
             return true;
         });
         
+        // notify the renderer of mouse move events
         this.motion_notify_event.connect((e) => {
             this.renderer.on_mouse_move();
             return true;
         });
 
+        // draw the pie on expose
         this.expose_event.connect(this.draw);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads a Pie to be rendered.
+    /////////////////////////////////////////////////////////////////////
 
     public void load_pie(Pie pie) {
         this.renderer.load_pie(pie);
         this.set_window_position();
-        this.set_size_request(renderer.get_size(), renderer.get_size());
+        this.set_size_request(renderer.size, renderer.size);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Opens the window. load_pie should have been called before.
+    /////////////////////////////////////////////////////////////////////
     
     public void open() {
         this.realize();
         
+        // capture the background image if there is no compositing
         if (!this.has_compositing) {
             int x, y, width, height;
             this.get_position(out x, out y);
@@ -105,23 +158,31 @@ public class PieWindow : Gtk.Window {
             this.background = new Image.capture_screen(x, y, width+1, height+1);
         }
     
+        // capture the input focus
         this.show();
-        this.fix_focus();
+        FocusGrabber.grab(this);
 
+        // start the timer
         this.timer = new GLib.Timer();
         this.timer.start();
         this.queue_draw();
         
+        // the main draw loop
         Timeout.add((uint)(1000.0/Config.global.refresh_rate), () => {
             this.queue_draw();
             return this.visible;
         }); 
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Draw the Pie.
+    /////////////////////////////////////////////////////////////////////
 
     private bool draw(Gtk.Widget da, Gdk.EventExpose event) {    
         // clear the window
         var ctx = Gdk.cairo_create(this.window);
 
+        // paint the background image if there is no compositing
         if (this.has_compositing) {
             ctx.set_operator (Cairo.Operator.CLEAR);
             ctx.paint();
@@ -132,25 +193,33 @@ public class PieWindow : Gtk.Window {
             ctx.paint();
         }
         
+        // align the context to the center of the PieWindow
         ctx.translate(this.width_request*0.5, this.height_request*0.5);
-
+        
+        // get the mouse position
         double mouse_x = 0.0, mouse_y = 0.0;
         this.get_pointer(out mouse_x, out mouse_y);
         
+        // store the frame time
         double frame_time = this.timer.elapsed();
         this.timer.reset();
         
+        // render the Pie
         this.renderer.draw(frame_time, ctx, (int)(mouse_x - this.width_request*0.5),
                                             (int)(mouse_y - this.height_request*0.5));
         
         return true;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Activates the currently activate slice.
+    /////////////////////////////////////////////////////////////////////
+    
     private void activate_slice() {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            this.unfix_focus();
+            FocusGrabber.ungrab(this);
             this.renderer.activate();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
@@ -161,11 +230,15 @@ public class PieWindow : Gtk.Window {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Activates no slice and closes the PieWindow.
+    /////////////////////////////////////////////////////////////////////
+    
     private void cancel() {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            this.unfix_focus();
+            FocusGrabber.ungrab(this);
             this.renderer.cancel();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
@@ -176,15 +249,24 @@ public class PieWindow : Gtk.Window {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Sets the position of the window to the center of the screen or to
+    /// the mouse.
+    /////////////////////////////////////////////////////////////////////
+    
     private void set_window_position() {
         if(Config.global.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
         else                            this.set_position(Gtk.WindowPosition.CENTER);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Do some useful stuff when keys are pressed.
+    /////////////////////////////////////////////////////////////////////
+    
     private void handle_key_press(uint key) {
         if      (Gdk.keyval_name(key) == "Escape") this.cancel();
         else if (Gdk.keyval_name(key) == "Return") this.activate_slice();
-        else if (!Config.global.turbo_mode) {
+        else if (!this.renderer.turbo_mode) {
             if (Gdk.keyval_name(key) == "Up") this.renderer.select_up();
             else if (Gdk.keyval_name(key) == "Down") this.renderer.select_down();
             else if (Gdk.keyval_name(key) == "Left") this.renderer.select_left();
@@ -212,52 +294,15 @@ public class PieWindow : Gtk.Window {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Do some useful stuff when keys are released.
+    /////////////////////////////////////////////////////////////////////
+    
     private void handle_key_release(uint key) {
-        if (!Config.global.turbo_mode) {
+        if (!this.renderer.turbo_mode) {
             if (Gdk.keyval_name(key) == "Alt_L") this.renderer.show_hotkeys = false;
         }
     }
-    
-    // utilities for grabbing focus
-    // Code from Gnome-Do/Synapse 
-    private void fix_focus() {
-        uint32 timestamp = Gtk.get_current_event_time();
-        this.present_with_time(timestamp);
-        this.get_window().raise();
-        this.get_window().focus(timestamp);
-
-        int i = 0;
-        Timeout.add(100, () => {
-            if (++i >= 100) return false;
-            return !try_grab_window();
-        });
-    }
-    
-    // Code from Gnome-Do/Synapse 
-    private void unfix_focus() {
-        uint32 time = Gtk.get_current_event_time();
-        Gdk.pointer_ungrab(time);
-        Gdk.keyboard_ungrab(time);
-        Gtk.grab_remove(this);
-    }
-    
-    // Code from Gnome-Do/Synapse 
-    private bool try_grab_window() {
-        uint time = Gtk.get_current_event_time();
-        if (Gdk.pointer_grab(this.get_window(), true, Gdk.EventMask.BUTTON_PRESS_MASK | 
-                             Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
-                             null, null, time) == Gdk.GrabStatus.SUCCESS) {
-            
-            if (Gdk.keyboard_grab(this.get_window(), true, time) == Gdk.GrabStatus.SUCCESS) {
-                Gtk.grab_add(this);
-                return true;
-            } else {
-                Gdk.pointer_ungrab(time);
-                return false;
-            }
-        }
-        return false;
-    }  
 }
 
 }

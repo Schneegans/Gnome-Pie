@@ -115,7 +115,7 @@ namespace Pies {
         }
         
         // add a new Pie with the loaded properties
-        var pie = PieManager.create_persistent_pie(name, icon, hotkey, id);
+        var pie = PieManager.create_persistent_pie(name, icon, new Trigger.from_string(hotkey), id);
         
         // and parse all child elements
         for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {

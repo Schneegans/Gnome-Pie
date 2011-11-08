@@ -26,14 +26,59 @@ namespace GnomePie {
 
 public class PieRenderer : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// The index of the slice used for quick action. (The action which
+    /// gets executed when the user clicks on the middle of the pie)
+    /////////////////////////////////////////////////////////////////////
+
     public int quick_action { get; private set; }
+
+    /////////////////////////////////////////////////////////////////////
+    /// The index of the currently active slice.
+    /////////////////////////////////////////////////////////////////////    
+    
     public int active_slice { get; private set; }
+
+    /////////////////////////////////////////////////////////////////////
+    /// True, if the hot keys are currently displayed.
+    /////////////////////////////////////////////////////////////////////
+    
     public bool show_hotkeys { get; set; }
 
-    private int size;
+    /////////////////////////////////////////////////////////////////////
+    /// The width and height of the Pie in pixels.
+    /////////////////////////////////////////////////////////////////////
+
+    public int size { get; private set; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True if the pie should close when it's trigger is released.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool turbo_mode { get; private set; default=false; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// All SliceRenderers used to draw this Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     private Gee.ArrayList<SliceRenderer?> slices;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The renderer for the center of this pie.
+    /////////////////////////////////////////////////////////////////////
+    
     private CenterRenderer center;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True if the pie is currently navigated with the keyboard. This is
+    /// set to false as soon as the mouse moves.
+    /////////////////////////////////////////////////////////////////////
+    
     private bool key_board_control = false;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes members.
+    /////////////////////////////////////////////////////////////////////
     
     public PieRenderer() {
         this.slices = new Gee.ArrayList<SliceRenderer?>(); 
@@ -42,6 +87,10 @@ public class PieRenderer : GLib.Object {
         this.active_slice = -2;
         this.size = 0;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Loads an Pie. All members are initialized accordingly.
+    /////////////////////////////////////////////////////////////////////
     
     public void load_pie(Pie pie) {
         this.slices.clear();
@@ -61,6 +110,8 @@ public class PieRenderer : GLib.Object {
             }
         }
         
+        this.turbo_mode = PieManager.get_is_turbo(pie.id);
+        
         this.set_highlighted_slice(this.quick_action);
         
         this.size = (int)fmax(2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
@@ -74,11 +125,19 @@ public class PieRenderer : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Activates the currently active slice.
+    /////////////////////////////////////////////////////////////////////
+    
     public void activate() {
         if (this.active_slice >= 0 && this.active_slice < this.slices.size)
             slices[active_slice].activate();
         this.cancel();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Asks all renders to fade out.
+    /////////////////////////////////////////////////////////////////////
     
     public void cancel() {
         foreach (var slice in this.slices)
@@ -86,6 +145,11 @@ public class PieRenderer : GLib.Object {
             
         center.fade_out();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the up-key is pressed. Selects the next slice towards
+    /// the top. 
+    /////////////////////////////////////////////////////////////////////
     
     public void select_up() {
         int bottom = this.slice_count()/4;
@@ -99,6 +163,11 @@ public class PieRenderer : GLib.Object {
            this.set_highlighted_slice((this.active_slice-1+this.slice_count())%this.slice_count());
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the down-key is pressed. Selects the next slice
+    /// towards the bottom. 
+    /////////////////////////////////////////////////////////////////////
+    
     public void select_down() {
         int bottom = this.slice_count()/4;
         int top = this.slice_count()*3/4;
@@ -110,6 +179,11 @@ public class PieRenderer : GLib.Object {
         else if (this.active_slice != bottom)
            this.set_highlighted_slice((this.active_slice+1)%this.slice_count());
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the left-key is pressed. Selects the next slice
+    /// towards the left. 
+    /////////////////////////////////////////////////////////////////////
     
     public void select_left() {
         int left = this.slice_count()/2;
@@ -123,6 +197,11 @@ public class PieRenderer : GLib.Object {
            this.set_highlighted_slice(this.active_slice+1);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the right-key is pressed. Selects the next slice
+    /// towards the right. 
+    /////////////////////////////////////////////////////////////////////
+    
     public void select_right() {
         int left = this.slice_count()/2;
         int right = 0;
@@ -135,13 +214,17 @@ public class PieRenderer : GLib.Object {
            this.set_highlighted_slice((this.active_slice-1+this.slice_count())%this.slice_count());
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the amount of slices in this pie.
+    /////////////////////////////////////////////////////////////////////
+    
     public int slice_count() {
         return slices.size;
     }
     
-    public int get_size() {
-        return size;
-    }
+    /////////////////////////////////////////////////////////////////////
+    /// Draws the entire pie.
+    /////////////////////////////////////////////////////////////////////
     
     public void draw(double frame_time, Cairo.Context ctx, int mouse_x, int mouse_y) {
 	    double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
@@ -179,9 +262,17 @@ public class PieRenderer : GLib.Object {
 		    slice.draw(frame_time, ctx, angle, distance);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user moves the mouse.
+    /////////////////////////////////////////////////////////////////////
+    
     public void on_mouse_move() {
         this.key_board_control = false;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the currently active slice changes.
+    /////////////////////////////////////////////////////////////////////
     
     public void set_highlighted_slice(int index) {
         if (index != this.active_slice) {

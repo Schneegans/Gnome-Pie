@@ -18,60 +18,67 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// This type of Action "presses" a key stroke.
+/// A CellRenderer which opens a TriggerSelectWindow.
 /////////////////////////////////////////////////////////////////////////
 
-public class KeyAction : Action {
-
-    /////////////////////////////////////////////////////////////////////
-    /// Used to register this type of Action. It sets the display name
-    /// for this Action, whether it has a custom Icon/Name and the string
-    /// used in the pies.conf file for this kind of Actions.
-    /////////////////////////////////////////////////////////////////////
-
-    public static void register(out string name, out bool icon_name_editable, out string settings_name) {
-        name = _("Press hotkey");
-        icon_name_editable = true;
-        settings_name = "key";
-    }   
+public class CellRendererTrigger : Gtk.CellRendererText {
     
     /////////////////////////////////////////////////////////////////////
-    /// Stores the accelerator of this action.
+    /// This signal is emitted when the user selects another trigger.
     /////////////////////////////////////////////////////////////////////
     
-    public override string real_command { get; construct set; }
+    public signal void on_select(string path, Trigger trigger);
     
     /////////////////////////////////////////////////////////////////////
-    /// Returns a human readable form of the accelerator.
+    /// The trigger which can be set with this window.
     /////////////////////////////////////////////////////////////////////
     
-    public override string display_command { get {return key.label;} }
+    public string trigger { get; set; }
     
     /////////////////////////////////////////////////////////////////////
-    /// The simulated key which gets 'pressed' on execution.
-    /////////////////////////////////////////////////////////////////////
-    
-    public Key key { get; set; }
-
-    /////////////////////////////////////////////////////////////////////
-    /// C'tor, initializes all members.
+    /// The IconSelectWindow which is shown on click.
     /////////////////////////////////////////////////////////////////////
 
-    public KeyAction(string name, string icon, string command, bool is_quick_action = false) {
-        GLib.Object(name : name, icon : icon, real_command : command, is_quick_action : is_quick_action);
-    }
+    private TriggerSelectWindow select_window = null;
     
-    construct {
-        this.key = new Key(real_command);
+    /////////////////////////////////////////////////////////////////////
+    /// A helper variable, needed to emit the current path.
+    /////////////////////////////////////////////////////////////////////
+    
+    private string current_path = "";
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, creates a new CellRendererIcon.
+    /////////////////////////////////////////////////////////////////////
+    
+    public CellRendererTrigger() {
+        this.select_window = new TriggerSelectWindow();  
+    
+        this.select_window.on_select.connect((trigger) => {
+            this.trigger = trigger.name;
+            this.on_select(current_path, trigger);
+        });
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Presses the desired key.
+    /// Open the TriggerSelectWindow on click.
     /////////////////////////////////////////////////////////////////////
-
-    public override void activate() {
-        key.press();
+    
+    public override unowned Gtk.CellEditable start_editing(
+        Gdk.Event event, Gtk.Widget widget, string path, Gdk.Rectangle bg_area, 
+        Gdk.Rectangle cell_area, Gtk.CellRendererState flags) {
+        
+        this.current_path = path;
+        
+        this.select_window.set_transient_for((Gtk.Window)widget.get_toplevel());
+        this.select_window.set_modal(true);
+        this.select_window.set_trigger(new Trigger.from_string(this.trigger));
+                  
+        this.select_window.show();
+            
+        return base.start_editing(event, widget, path, bg_area, cell_area, flags);
     }
 }
 
 }
+

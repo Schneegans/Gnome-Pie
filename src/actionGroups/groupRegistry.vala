@@ -38,7 +38,6 @@ public class GroupRegistry : GLib.Object {
     public static Gee.HashMap<Type, string> icons { get; private set; }
     public static Gee.HashMap<Type, string> settings_names { get; private set; }
     
-    
     /////////////////////////////////////////////////////////////////////
     /// Registers all ActionGroup types.
     /////////////////////////////////////////////////////////////////////
@@ -77,6 +76,12 @@ public class GroupRegistry : GLib.Object {
         names.set(typeof(SessionGroup), name);
         icons.set(typeof(SessionGroup), icon);
         settings_names.set(typeof(SessionGroup), settings_name);
+        
+        WindowListGroup.register(out name, out icon, out settings_name);
+        types.add(typeof(WindowListGroup));
+        names.set(typeof(WindowListGroup), name);
+        icons.set(typeof(WindowListGroup), icon);
+        settings_names.set(typeof(WindowListGroup), settings_name);
         
 //        ClipboardGroup.register(out name, out icon, out settings_name);
 //        types.add(typeof(ClipboardGroup));

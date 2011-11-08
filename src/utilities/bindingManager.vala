@@ -112,6 +112,7 @@ public class BindingManager : GLib.Object {
  
             Keybinding binding = new Keybinding(trigger, id);
             bindings.add(binding);
+            display.flush();
         }
     }
     
@@ -138,6 +139,7 @@ public class BindingManager : GLib.Object {
         }
 
         bindings.remove_all(remove_bindings);
+        display.flush();
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -200,7 +202,7 @@ public class BindingManager : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Event filter method needed to fetch X.Events
+    /// Event filter method needed to fetch X.Events.
     /////////////////////////////////////////////////////////////////////
     
     private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event) { 
@@ -240,18 +242,52 @@ public class BindingManager : GLib.Object {
         return Gdk.FilterReturn.CONTINUE;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// This method is always called when a trigger is activated which is
+    /// delayed. Therefore on_press() is only emitted, when this method
+    /// is not called again within 300 milliseconds. Else a fake event is
+    /// sent in order to simulate the actual key which has been pressed.
+    /////////////////////////////////////////////////////////////////////
+    
     private void activate_delayed(Keybinding? binding , X.Event event) {
+    	// increase event count, so any waiting event will realize that
+    	// something happened in the meantime
         var current_count = ++this.delayed_count;
         
         if (binding == null && this.delayed_event != null) {
+        	// if the trigger is released and an event is currently waiting
+		    // simulate that the trigger has been pressed without any inter-
+		    // ference of Gnome-Pie
+            Gdk.Window rootwin = Gdk.get_default_root_window();
+       		X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
+       		
+       		// un bind the trigger, else we'll capture that event again ;)
+       		unbind(delayed_binding.id);
+       		
+       		if (this.delayed_binding.trigger.with_mouse) {
+       			// simulate mouse click
+       			X.Test.fake_button_event(display, this.delayed_event.xbutton.button, true, 0);
+            	X.Test.fake_button_event(display, this.delayed_event.xbutton.button, false, 0);
+       		} else {
+       			// simulate key press
+       			X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, true, 0);
+       			X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, false, 0);
+       		}
             
-            debug("resend");
+            display.flush();
+            
+            // bind it again
+            bind(delayed_binding.trigger, delayed_binding.id);
         } else if (binding != null) {
+        	// if the trigger has been pressed, store it and wait for any interuption
+        	// within the next 300 milliseconds
             this.delayed_event = event;
             this.delayed_binding = binding;
 
             Timeout.add(300, () => {
+            	// if nothing has been pressed in the meantime
                 if (current_count == this.delayed_count) {
+                	this.delayed_binding = null;
                     this.delayed_event = null;
                     on_press(binding.id);
                 }

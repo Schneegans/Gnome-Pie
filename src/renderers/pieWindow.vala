@@ -94,7 +94,12 @@ public class PieWindow : Gtk.Window {
         // activate on left click
         this.button_release_event.connect ((e) => {
             if (e.button == 1 || this.renderer.turbo_mode) this.activate_slice();
-            else if (e.button == 3)                        this.cancel();
+            return true;
+        });
+        
+         // cancel on right click
+        this.button_press_event.connect ((e) => {
+            if (e.button == 3) this.cancel();
             return true;
         });
         

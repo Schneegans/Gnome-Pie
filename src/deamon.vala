@@ -18,7 +18,6 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 /////////////////////////////////////////////////////////////////////
 /// TODO-List (need comments):
 /// PieList
-/// BindingManager
 /////////////////////////////////////////////////////////////////////
 
 namespace GnomePie {
@@ -104,12 +103,14 @@ public class Deamon : GLib.Object {
         if (app.is_running) {
             // inform the running instance of the pie to be opened
             if (open_pie != null) {
+            	message("Gnome-Pie is already running. Sending request to open pie " + open_pie + ".");
                 var data = new Unique.MessageData();
                 data.set_text(open_pie, open_pie.length);
                 app.send_message(Unique.Command.ACTIVATE, data);
                 return;
             } 
            
+            message("Gnome-Pie is already running. Sending request to open config menu.");
             app.send_message(Unique.Command.ACTIVATE, null);
             return;
         }

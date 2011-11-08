@@ -76,7 +76,8 @@ public class WindowListGroup : ActionGroup {
         var matcher = Bamf.Matcher.get_default();
 
         foreach (var window in windows) {
-            if (window.get_window_type() == Wnck.WindowType.NORMAL) {
+            if (window.get_window_type() == Wnck.WindowType.NORMAL
+            	&& !window.is_skip_pager() && !window.is_skip_tasklist()) {
                 var application = window.get_application();
                 var bamf_app = matcher.get_application_for_xid((uint32)window.get_xid());
                 

@@ -142,15 +142,13 @@ public class TriggerSelectWindow : Gtk.Dialog {
         	else if (id == 0) {
         		var assigned_id = PieManager.get_assigned_id(this.trigger);
     
-    			
 				if (this.trigger == this.original_trigger) {
 					// nothing did change
 					this.hide();
 				} else if (this.trigger.key_code == this.original_trigger.key_code
 						   && this.trigger.modifiers == this.original_trigger.modifiers
-						   && this.trigger.with_mouse == this.original_trigger.with_mouse
-						   && this.trigger.delayed == this.original_trigger.delayed) {
-					// only turbo mode changed, no need to check for double assignment
+						   && this.trigger.with_mouse == this.original_trigger.with_mouse) {
+					// only turbo and/or delayed mode changed, no need to check for double assignment
 					this.on_select(this.trigger);
 				    this.hide();
 				} else if (assigned_id != "") {

@@ -191,8 +191,8 @@ public class BindingManager : GLib.Object {
     
     public string get_assigned_id(Trigger trigger) {
         foreach (var binding in bindings) {
-            var first = binding.trigger.name.replace("[turbo]", "");
-            var second = trigger.name.replace("[turbo]", "");
+            var first = binding.trigger.name.replace("[turbo]", "").replace("[delayed]", "");
+            var second = trigger.name.replace("[turbo]", "").replace("[delayed]", "");
             if (first == second) {
                 return binding.id;
             }

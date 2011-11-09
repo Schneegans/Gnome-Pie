@@ -24,12 +24,37 @@ namespace GnomePie {
 public class GnomePieAboutDialog: Gtk.AboutDialog {
 
     public GnomePieAboutDialog () {
-        string[] devs = {"Simon Schneegans <code@simonschneegans.de>", 
-                         "Francesco Piccinno"};
-        string[] artists = {"Simon Schneegans <code@simonschneegans.de>"};
+    	string[] devs = {
+			"Simon Schneegans <code@simonschneegans.de>", 
+            "Francesco Piccinno <stack.box@gmail.com>"
+        };
+        string[] artists = {
+			"Simon Schneegans <code@simonschneegans.de>"
+        };
+    	string[] translators = {
+    		"DE\t\t Simon Schneegans <code@simonschneegans.de>",
+    		"IT\t\t Riccardo Traverso",
+    		"PT-BR\t Magnun Leno",
+    		"EN\t\t Simon Schneegans <code@simonschneegans.de>"
+    	};
+    	
+    	// sort translators
+    	GLib.List<string> translator_list = new GLib.List<string>();
+    	foreach (var translator in translators)
+    		translator_list.append(translator);
+    		
+    	translator_list.sort((a, b) => {
+    		return a.ascii_casecmp(b);
+    	});
+    	
+    	string translator_string = "";
+    	foreach (var translator in translator_list)
+	   		translator_string += translator + "\n";
+        
         GLib.Object (
             artists : artists,
             authors : devs,
+            translator_credits : translator_string,
             copyright : "Copyright (C) 2011 Simon Schneegans <code@simonschneegans.de>",
             program_name: "Gnome-Pie",
             logo_icon_name: "gnome-pie",

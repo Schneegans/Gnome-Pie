@@ -192,7 +192,7 @@ public class TriggerSelectWindow : Gtk.Dialog {
         Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
         var new_trigger = new Trigger.from_values((int)event.button, state, true, 
                                                   this.turbo.active, this.delayed.active);
-        if (new_trigger.name.contains("button1")) {
+        if (new_trigger.key_code == 1) {
             var dialog = new Gtk.MessageDialog((Gtk.Window)this.get_toplevel(), Gtk.DialogFlags.MODAL, 
                                                 Gtk.MessageType.WARNING, 
                                                 Gtk.ButtonsType.YES_NO, 

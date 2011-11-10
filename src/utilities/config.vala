@@ -155,16 +155,17 @@ public class Config : GLib.Object {
             // load global themes
             var d = Dir.open(Paths.global_themes);
             while ((name = d.read_name()) != null) {
-                var theme = new Theme(Paths.global_themes + "/" + name);
-                if (theme != null)
-                    themes.add(theme);
+	            var theme = new Theme(Paths.global_themes + "/" + name);
+	            
+	            if (theme.load())
+	            	themes.add(theme);
             }
             
             // load local themes
             d = Dir.open(Paths.local_themes);
             while ((name = d.read_name()) != null) {
                 var theme = new Theme(Paths.local_themes + "/" + name);
-                if (theme != null)
+                if (theme.load())
                     themes.add(theme);
             }
             
@@ -180,7 +181,6 @@ public class Config : GLib.Object {
             foreach (var t in themes) {
                 if (t.name == current) {
                     theme = t;
-                    theme.load_images();
                     break;
                 }
             }
@@ -188,6 +188,7 @@ public class Config : GLib.Object {
                 theme = themes[0];
                 warning("Theme \"" + current + "\" not found! Using fallback...");
             }
+            theme.load_images();
         }
         else error("No theme found!");
     }

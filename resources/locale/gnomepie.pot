@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-09 11:01+0100\n"
+"POT-Creation-Date: 2011-11-10 08:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,162 +17,24 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../src/pies/defaultConfig.vala:29
-msgid "Multimedia"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:30
-msgid "Next Track"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:31
-msgid "Stop"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:32
-msgid "Previous Track"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:33
-msgid "Play/Pause"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:36
-#: ../../src/gui/iconSelectWindow.vala:197
-msgid "Applications"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:45
-#: ../../src/actionGroups/bookmarkGroup.vala:35
-msgid "Bookmarks"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:50
-msgid "Session"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:54
-msgid "Main Menu"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:58
-msgid "Window"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:59
-msgid "Scale"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:60
-msgid "Minimize"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:61
-msgid "Close"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:62
-msgid "Maximize"
-msgstr ""
-
-#: ../../src/pies/defaultConfig.vala:63
-msgid "Restore"
-msgstr ""
-
 #: ../../src/actions/keyAction.vala:33
 msgid "Press hotkey"
-msgstr ""
-
-#: ../../src/actions/pieAction.vala:33
-msgid "Open Pie"
 msgstr ""
 
 #: ../../src/actions/appAction.vala:33
 msgid "Launch application"
 msgstr ""
 
-#: ../../src/actions/actionRegistry.vala:107
-msgid "Trash"
-msgstr ""
-
 #: ../../src/actions/uriAction.vala:33
 msgid "Open URI"
 msgstr ""
 
-#: ../../src/actionGroups/clipboardGroup.vala:63
-msgid "Clipboard"
+#: ../../src/actions/actionRegistry.vala:107
+msgid "Trash"
 msgstr ""
 
-#: ../../src/actionGroups/devicesGroup.vala:34
-msgid "Devices"
-msgstr ""
-
-#: ../../src/actionGroups/devicesGroup.vala:82
-msgid "Root"
-msgstr ""
-
-#: ../../src/actionGroups/windowListGroup.vala:33
-msgid "Window List"
-msgstr ""
-
-#: ../../src/actionGroups/menuGroup.vala:34
-msgid "Main menu"
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:34
-msgid "Session Control"
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:52
-msgid "Shutdown"
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:55
-msgid "Logout"
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:58
-msgid "Reboot"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:160
-msgid "Choose an Icon"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:196
-msgid "All icons"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:198
-msgid "Actions"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:199
-msgid "Places"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:200
-msgid "File types"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:201
-msgid "Emotes"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:202
-msgid "Miscellaneous"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:279
-msgid "Icon Theme"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:289
-msgid "All supported image formats"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:311
-msgid "Custom Icon"
+#: ../../src/actions/pieAction.vala:33
+msgid "Open Pie"
 msgstr ""
 
 #: ../../src/gui/triggerSelectWindow.vala:69
@@ -200,84 +62,17 @@ msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr ""
 
-#: ../../src/gui/triggerSelectWindow.vala:158
+#: ../../src/gui/triggerSelectWindow.vala:156
 msgid ""
 "This hotkey is already assigned to the pie \"%s\"! \n"
 "\n"
 "Please select another one or cancel your selection."
 msgstr ""
 
-#: ../../src/gui/triggerSelectWindow.vala:199
+#: ../../src/gui/triggerSelectWindow.vala:197
 msgid ""
 "It possible to make your system unusable if you bind a Pie to your left "
 "mouse button. Do you really want to do this?"
-msgstr ""
-
-#: ../../src/gui/themeList.vala:88
-msgid "by"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:851
-msgid "Slice group"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:135
-msgid "Icon"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:200
-msgid "Command"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:301 ../../src/gui/pieList.vala:707
-#: ../../src/gui/pieList.vala:867 ../../src/utilities/bindingManager.vala:156
-#: ../../src/utilities/trigger.vala:197 ../../src/utilities/trigger.vala:198
-msgid "Not bound"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:366
-msgid "Pie-ID / Action type"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:427
-msgid "Name"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:470
-msgid "Add new Pie"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:475
-msgid "Add new Slice"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:483
-msgid "Delete"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:619
-msgid "New Pie"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:666
-msgid "New Action"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:680
-msgid "You have to select a Pie to add a Slice to!"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:730
-msgid "You have to select a Pie or a Slice to delete!"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:741
-msgid ""
-"Do you really want to delete the selected Pie with all contained Slices?"
-msgstr ""
-
-#: ../../src/gui/pieList.vala:775
-msgid "Do you really want to delete the selected Slice?"
 msgstr ""
 
 #: ../../src/gui/preferences.vala:32
@@ -400,6 +195,159 @@ msgstr ""
 msgid "Moves the selected Slice up"
 msgstr ""
 
+#: ../../src/gui/themeList.vala:88
+msgid "by"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:851
+msgid "Slice group"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:135
+msgid "Icon"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:200
+msgid "Command"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:301 ../../src/gui/pieList.vala:707
+#: ../../src/gui/pieList.vala:867 ../../src/utilities/bindingManager.vala:156
+#: ../../src/utilities/trigger.vala:197 ../../src/utilities/trigger.vala:198
+msgid "Not bound"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:366
+msgid "Pie-ID / Action type"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:427
+msgid "Name"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:470
+msgid "Add new Pie"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:475
+msgid "Add new Slice"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:483
+msgid "Delete"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:619
+msgid "New Pie"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:666
+msgid "New Action"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:680
+msgid "You have to select a Pie to add a Slice to!"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:730
+msgid "You have to select a Pie or a Slice to delete!"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:741
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+
+#: ../../src/gui/pieList.vala:775
+msgid "Do you really want to delete the selected Slice?"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:160
+msgid "Choose an Icon"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:196
+msgid "All icons"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:197
+#: ../../src/pies/defaultConfig.vala:36
+msgid "Applications"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:198
+msgid "Actions"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:199
+msgid "Places"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:200
+msgid "File types"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:201
+msgid "Emotes"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:202
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:279
+msgid "Icon Theme"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:289
+msgid "All supported image formats"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:311
+msgid "Custom Icon"
+msgstr ""
+
+#: ../../src/actionGroups/windowListGroup.vala:33
+msgid "Window List"
+msgstr ""
+
+#: ../../src/actionGroups/menuGroup.vala:34
+msgid "Main menu"
+msgstr ""
+
+#: ../../src/actionGroups/clipboardGroup.vala:63
+msgid "Clipboard"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:34
+msgid "Session Control"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:52
+msgid "Shutdown"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:55
+msgid "Logout"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:58
+msgid "Reboot"
+msgstr ""
+
+#: ../../src/actionGroups/bookmarkGroup.vala:35
+#: ../../src/pies/defaultConfig.vala:45
+msgid "Bookmarks"
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:34
+msgid "Devices"
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:82
+msgid "Root"
+msgstr ""
+
 #: ../../src/utilities/trigger.vala:152
 msgid "Button %i"
 msgstr ""
@@ -422,4 +370,56 @@ msgstr ""
 
 #: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:185
 msgid "Delayed"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:29
+msgid "Multimedia"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:30
+msgid "Next Track"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:31
+msgid "Stop"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:32
+msgid "Previous Track"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:33
+msgid "Play/Pause"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:50
+msgid "Session"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:54
+msgid "Main Menu"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:58
+msgid "Window"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:59
+msgid "Scale"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:60
+msgid "Minimize"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:61
+msgid "Close"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:62
+msgid "Maximize"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:63
+msgid "Restore"
 msgstr ""

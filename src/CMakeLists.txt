@@ -80,3 +80,11 @@ install(
 		${CMAKE_INSTALL_PREFIX}/share/applications
 )
 
+# install manpage
+install(
+	FILES
+		${CMAKE_SOURCE_DIR}/resources/gnome-pie.1
+	DESTINATION
+		${CMAKE_INSTALL_PREFIX}/share/man/man1
+)
+

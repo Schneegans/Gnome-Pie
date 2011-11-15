@@ -261,7 +261,7 @@ public class BindingManager : GLib.Object {
             Gdk.Window rootwin = Gdk.get_default_root_window();
        		X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
        		
-       		// un bind the trigger, else we'll capture that event again ;)
+       		// unbind the trigger, else we'll capture that event again ;)
        		unbind(delayed_binding.id);
        		
        		if (this.delayed_binding.trigger.with_mouse) {

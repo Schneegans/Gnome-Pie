@@ -68,6 +68,13 @@ public class Image : GLib.Object {
         this.load_pixbuf(pixbuf);
     }
     
+    public Image.capture_screen(int posx, int posy, int width, int height) {
+        Gdk.Window root = Gdk.get_default_root_window();
+        Gdk.Pixbuf pixbuf = Gdk.pixbuf_get_from_drawable(null, root, null, posx, posy, 0, 0, width, height);
+
+        this.load_pixbuf(pixbuf);
+    }
+    
     /////////////////////////////////////////////////////////////////////
     /// Loads an image from the the given filename.
     /////////////////////////////////////////////////////////////////////
@@ -83,6 +90,7 @@ public class Image : GLib.Object {
             }
         } catch (GLib.Error e) {
             message("Error loading image file: %s", e.message);
+            this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);
         }
     }
     
@@ -101,6 +109,7 @@ public class Image : GLib.Object {
             }
         } catch (GLib.Error e) {
             message("Error loading image file: %s", e.message);
+            this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
         }
     }
     

@@ -1,0 +1,39 @@
+####################################################################
+#                 Translating Gnome-Pie                            #
+####################################################################
+
+It would be really cool if you could create a translation of Gnome-
+Pie into your language!
+
+It is quite easy and involves the following steps. All you need is the 
+locale string for your language. You can get it with the terminal
+command "echo $LANG".
+
+CREATING A NEW TRANSLATION
+
+1. Update the gnomepie.pot file
+	* navigate with a terminal to the directory "resources/locale"
+	* enter the command "./gen-pot.sh"
+2. Create your translation file
+	* enter the command "./gen-po.sh"
+	* follow instructions
+3. Translate to your language
+	* open the file "resources/locale/[your locale]/LC_MESSAGES/[your locale].po"
+	* create translations for every string in this file (write it after each "msgstr")
+4. Compile translations
+	* enter the command "./compile-po.sh"
+	  
+	  
+UPDATING AN EXISTENT TRANSLATION
+
+1. Update the gnomepie.pot file
+	* navigate with a terminal to the directory "resources/locale"
+	* enter the command "./gen-pot.sh"
+2. Updste your translation file
+	* enter the command "./update-po.sh"
+	* follow instructions
+3. Translate to your language
+	* open the file "/resources/locale/[your locale]/LC_MESSAGES/[your locale].po"
+	* create translations for every string in this file which don't have translations already
+4. Compile translations
+	* enter the command "./compile-po.sh"

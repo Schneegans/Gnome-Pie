@@ -71,8 +71,6 @@ public class Theme : GLib.Object {
         this.inactive_slice_layers = new Gee.ArrayList<SliceLayer?>();
         
         this.directory = dir;
-        
-        this.load();
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -80,7 +78,7 @@ public class Theme : GLib.Object {
     /// explicitly.
     /////////////////////////////////////////////////////////////////////
     
-    public void load() {
+    public bool load() {
         this.center_layers.clear();
         this.active_slice_layers.clear();
         this.inactive_slice_layers.clear();
@@ -90,15 +88,15 @@ public class Theme : GLib.Object {
         
         Xml.Doc* themeXML = Xml.Parser.parse_file(path);
         if (themeXML == null) {
-            warning("Error parsing theme: \"" + path + "\" not found!");
-            return;
+            warning("Failed to add theme: \"" + path + "\" not found!");
+            return false;
         }
 
         Xml.Node* root = themeXML->get_root_element();
         if (root == null) {
             delete themeXML;
-            warning("Invalid theme \"" + this.directory + "\": theme.xml is empty!");
-            return;
+            warning("Failed to add theme: \"theme.xml\" is empty!");
+            return false;
         }
         
         this.parse_root(root);
@@ -107,6 +105,8 @@ public class Theme : GLib.Object {
         Xml.Parser.cleanup();
         
         this.radius *= max_zoom;
+        
+        return true;
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -417,7 +417,7 @@ public class Theme : GLib.Object {
                             case "type":
                                 if (attr_content == "icon")
                                     is_icon = true;
-                                else if (attr_content == "icon")
+                                else if (attr_content != "file")
                                     warning("Invalid attribute content " + attr_content + " for attribute " + attr_name + " in <slice_layer> element!");
                                 break;
                             case "colorize":

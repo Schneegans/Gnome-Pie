@@ -16,13 +16,8 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 /////////////////////////////////////////////////////////////////////
-/// TODO-List:
-/// IconSelectWindow
+/// TODO-List (need comments):
 /// PieList
-/// PieWindow
-/// CenterRenderer
-/// SliceRenderer
-/// PieRenderer
 /////////////////////////////////////////////////////////////////////
 
 namespace GnomePie {
@@ -33,17 +28,21 @@ namespace GnomePie {
 /// only one instance of Gnome-Pie running.
 /////////////////////////////////////////////////////////////////////////
 	
-public class Deamon : GLib.Application {
-
+public class Deamon : GLib.Object {
+    
     /////////////////////////////////////////////////////////////////////
     /// The beginning of everything.
     /////////////////////////////////////////////////////////////////////
 
     public static int main(string[] args) {
+        Logger.init();
+        Gtk.init(ref args);
+        Paths.init();
+
         // create the Deamon and run it
-        var deamon = new GnomePie.Deamon(args);
+        var deamon = new GnomePie.Deamon();
         deamon.run(args);
-        
+
         return 0;
     }
     
@@ -54,58 +53,83 @@ public class Deamon : GLib.Application {
     private Indicator indicator = null;
     
     /////////////////////////////////////////////////////////////////////
-    /// Only true when the first instance of Gnome-Pie is launched.
+    /// Varaibles set by the commend line parser.
     /////////////////////////////////////////////////////////////////////
     
-    private bool need_init = true;
+    private static string open_pie = null;
+    private static bool reset = false;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Available command line options.
+    /////////////////////////////////////////////////////////////////////
+    
+    private const GLib.OptionEntry[] options = {
+        { "open", 'o', 0, GLib.OptionArg.STRING, out open_pie, 
+          "Open the Pie with the given ID", "ID" },
+        { "reset", 'r', 0, GLib.OptionArg.NONE, out reset, 
+          "Reset all options to default values" },
+        { null }
+    };
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor of the Deamon. It checks whether it's the firts running
-    /// instance of Gnome-Pie --- if so, start() is called, else the
-    /// start() method of the running instance is called.
+    /// instance of Gnome-Pie.
     /////////////////////////////////////////////////////////////////////
+    
+    public void run(string[] args) {
+        // create command line options
+        var context = new GLib.OptionContext("");
+        context.set_help_enabled(true);
+        context.add_main_entries(options, null);
+        context.add_group(Gtk.get_option_group (false));
 
-    public Deamon(string[] args) {
-        GLib.Object(application_id : "org.gnome.gnomepie", 
-                             flags : GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
-        // init gtk
-        Gtk.init(ref args);
+        try {
+            context.parse(ref args);
+        } catch(GLib.OptionError error) {
+            warning(error.message);
+        }
+        
+        if (this.reset) {
+            if (GLib.FileUtils.remove(Paths.pie_config) == 0)
+                message("Removed file \"%s\"", Paths.pie_config);
+            if (GLib.FileUtils.remove(Paths.settings) == 0)
+                message("Removed file \"%s\"", Paths.settings);
+            return;
+        }
+    
+        // create unique application
+        var app = new Unique.App("org.gnome.gnomepie", null);
 
-        this.command_line.connect(this.start);
-    }
+        if (app.is_running) {
+            // inform the running instance of the pie to be opened
+            if (open_pie != null) {
+            	message("Gnome-Pie is already running. Sending request to open pie " + open_pie + ".");
+                var data = new Unique.MessageData();
+                data.set_text(open_pie, open_pie.length);
+                app.send_message(Unique.Command.ACTIVATE, data);
+                return;
+            } 
+           
+            message("Gnome-Pie is already running. Sending request to open config menu.");
+            app.send_message(Unique.Command.ACTIVATE, null);
+            return;
+        }
+        
+        // wait for incoming messages
+        app.message_received.connect((cmd, data, event_time) => {
+            if (cmd == Unique.Command.ACTIVATE) {
+                var pie = data.get_text();
+                
+                if (pie != "") PieManager.open_pie(pie);
+                else           this.indicator.show_preferences();
+
+                return Unique.Response.OK;
+            }
+
+            return Unique.Response.PASSTHROUGH;
+        });
     
-    /////////////////////////////////////////////////////////////////////
-    /// This method of the running instance is called when it is launched
-    /// and everytime when another instance of Gnome-Pie is started.
-    /////////////////////////////////////////////////////////////////////
-    
-    private int start(GLib.ApplicationCommandLine line) {
-        // if this is called for the first instance
-        if (this.need_init) {
-            this.need_init = false;
-            this.init();
-            
-            // check for flags
-            this.evaluate_commandline(line, true);
-		
-		    // finished loading... so run the prog!
-		    message("Started happily...");
-		    Gtk.main();
-		} else {
-		     this.evaluate_commandline(line, false);
-		}
-		
-		return 0;
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Initializes everything which needs to be initialized.
-    /////////////////////////////////////////////////////////////////////
-    
-    private void init() {
         // init toolkits and static stuff
-        Logger.init();
-        Paths.init();
         Gdk.threads_init();
         ActionRegistry.init();
         GroupRegistry.init();
@@ -124,24 +148,14 @@ public class Deamon : GLib.Application {
         // connect SigHandlers
         Posix.signal(Posix.SIGINT, sig_handler);
 	    Posix.signal(Posix.SIGTERM, sig_handler);
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Opens the desired Pie if one is passed by a flag. If not but an
-    /// instance is already running, the preferences dialog is opened.
-    /////////////////////////////////////////////////////////////////////
-    
-    private void evaluate_commandline(GLib.ApplicationCommandLine line, bool is_first_launch) {
-        var args = line.get_arguments();
+	
+	    // finished loading... so run the prog!
+	    message("Started happily...");
 	    
-	    if (args.length == 3) {
-	        if (args[1] == "-o" || args[1] == "--open")
-	            PieManager.open_pie(args[2]);
-	        else
-	            warning("Unknown flag \"" + args[1] + "\" passed!");
-	    } else if (!is_first_launch) {
-	        this.indicator.show_preferences();
-	    }
+	    // open pie if neccessary
+	    if (open_pie != null) PieManager.open_pie(open_pie);
+	    
+	    Gtk.main();
     }
     
     /////////////////////////////////////////////////////////////////////

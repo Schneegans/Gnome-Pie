@@ -24,15 +24,44 @@ namespace GnomePie {
 public class GnomePieAboutDialog: Gtk.AboutDialog {
 
     public GnomePieAboutDialog () {
-        string[] devs = {"Simon Schneegans <simon.schneegans@uni-weimar.de>"};
-        string[] artists = devs;
+    	string[] devs = {
+			"Simon Schneegans <code@simonschneegans.de>", 
+            "Francesco Piccinno <stack.box@gmail.com>"
+        };
+        string[] artists = {
+			"Simon Schneegans <code@simonschneegans.de>"
+        };
+    	string[] translators = {
+    		"DE\t\t Simon Schneegans <code@simonschneegans.de>",
+    		"IT\t\t Riccardo Traverso <gr3yfox.fw@gmail.com>",
+    		"PT-BR\t Magnun Leno <magnun@codecommunity.org>",
+    		"EN\t\t Simon Schneegans <code@simonschneegans.de>",
+    		"KO\t\t Kim Boram <Boramism@gmail.com>"
+    	};
+    	
+    	// sort translators
+    	GLib.List<string> translator_list = new GLib.List<string>();
+    	foreach (var translator in translators)
+    		translator_list.append(translator);
+    		
+    	translator_list.sort((a, b) => {
+    		return a.ascii_casecmp(b);
+    	});
+    	
+    	string translator_string = "";
+    	foreach (var translator in translator_list)
+	   		translator_string += translator + "\n";
+        
         GLib.Object (
             artists : artists,
             authors : devs,
-            copyright : "Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>",
+            translator_credits : translator_string,
+            copyright : "Copyright (C) 2011 Simon Schneegans <code@simonschneegans.de>",
             program_name: "Gnome-Pie",
             logo_icon_name: "gnome-pie",
-            version: "0.1"
+            website: "http://www.simonschneegans.de/?page_id=12",
+            website_label: "www.gnome-pie.simonschneegans.de",
+            version: "0.3"
         );
     }
 }

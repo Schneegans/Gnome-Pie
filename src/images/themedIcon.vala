@@ -53,7 +53,7 @@ public class ThemedIcon : Image {
     /// Clears the cache.
     /////////////////////////////////////////////////////////////////////
     
-    static void clear_cache() {
+    public static void clear_cache() {
         active_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
         inactive_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
     }
@@ -89,7 +89,11 @@ public class ThemedIcon : Image {
             if (layer.is_icon) icon_size = layer.image.width();
         }
     
-        var icon = new Icon(icon_name, icon_size);
+        Image icon;
+        if (icon_name.contains("/"))
+            icon = new Image.from_file_at_size(icon_name, icon_size, icon_size);
+        else
+            icon = new Icon(icon_name, icon_size);
         
         var color = new Color.from_icon(icon);
         var ctx = this.context();
@@ -113,7 +117,10 @@ public class ThemedIcon : Image {
                 ctx.set_operator(Cairo.Operator.IN);
                 
                 if (layer.image.width() != icon_size) {
-                    icon = new Icon(icon_name, layer.image.width());
+                    if (icon_name.contains("/"))
+                        icon = new Image.from_file_at_size(icon_name, layer.image.width(), layer.image.width());
+                    else
+                        icon = new Icon(icon_name,layer.image.width());
                 }
                 
                 icon.paint_on(ctx);

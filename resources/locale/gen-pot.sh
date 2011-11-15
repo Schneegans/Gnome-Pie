@@ -6,8 +6,8 @@
 filelist=$( find ../../src/ -name '*.vala' -printf "%h/%f " )
 
 domain="gnomepie"
-version="0.1"
-copyright="Simon Schneegans <simon.schneegans@uni-weimar.de>"
+version="0.2"
+copyright="Simon Schneegans <code@simonschneegans.de>"
 
 xgettext --package-name $domain \
          --package-version $version \

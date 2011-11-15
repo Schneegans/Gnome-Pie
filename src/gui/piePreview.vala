@@ -34,7 +34,7 @@ class PiePreview : Gtk.DrawingArea {
         
         if (this.renderer == null) {
             this.renderer = new PieRenderer();
-            this.renderer.load_pie(PieManager.all_pies["896"]);
+            this.renderer.load_pie(PieManager.all_pies.values.to_array()[1]);
         }
         
         var ctx = Gdk.cairo_create(this.window);

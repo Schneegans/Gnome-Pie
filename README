@@ -5,6 +5,8 @@
 This is an experimantal attempt to create a visual application
 launcher for the Gnome Desktop.
 
+Homepage: http://gnome-pie.simonschneegans.de
+
 It is inspired by the an addon written for the game World of Warcraft.
 (http://go-hero.net/opie/)
 
@@ -12,8 +14,7 @@ It is inspired by the an addon written for the game World of Warcraft.
 #                   About this Branch                              #
 ####################################################################
 
-This is the master Branch of Gnome-Pie. A recent "stable" version 
-will be in here.
+This is the master branch of Gnome-Pie.
 
 ####################################################################
 #                           PPA                                    #
@@ -33,25 +34,40 @@ sudo apt-get install gnome-pie
 First of all, install all dependancies:
 
 sudo apt-get install libgtk2.0-dev libcairo2-dev libappindicator-dev
-libgee-dev libxml2-dev libxtst-dev libgnome-menu-dev valac cmake
+                     libgee-dev libxml2-dev libxtst-dev
+                     libgnome-menu-dev valac cmake libunique-dev
+                     libbamf-dev libwnck-dev
 
-Then build and launch Gnome-Pie by typing:
-
+Then build  Gnome-Pie by typing:
 ./make.sh
+
+Launch it with 
+./gnome-pie
+
+If you want to install it system wide use
+cd build && sudo make install
 
 ####################################################################
 #                          Usage                                   #
 ####################################################################
 
-Now you may launch it by Pressing <ctrl><Alt>F to open up the default 
-ring. Any customization via a GUI is not possible yet :D
-... but soon!
+Now you may launch it by Pressing <ctrl><Alt>A to open up a default 
+Pie with your default applications. There are some other Pies 
+defined --- just open up the configuration dialog by activating the
+appropriate entry in the appindicator menu or by launching gnome-pie
+for a second time. There you may configure the Pies to suit your
+needs.
+
+You can open Pies not only by presing their key stroke.
+Alternatively you may open any Pie by invoking gnome-pie --open 123
+where 123 is the ID of the desired Pie (which is displayed in the
+configuration dialog).
 
 ####################################################################
 #                        License                                   #
 ####################################################################
 
-Copyright (C) 2011 Simon Schneegans
+Copyright (C) 2011 Simon Schneegans <code@simonschneegans.de>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

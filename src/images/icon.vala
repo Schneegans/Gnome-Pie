@@ -47,7 +47,7 @@ public class Icon : Image {
     /// Clears the cache.
     /////////////////////////////////////////////////////////////////////
     
-    static void clear_cache() {
+    public static void clear_cache() {
         cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
     }
     
@@ -78,7 +78,7 @@ public class Icon : Image {
     /// Returns the filename for a given system icon.
     /////////////////////////////////////////////////////////////////////
     
-    private static string get_icon_file(string icon_name, int size) {
+    public static string get_icon_file(string icon_name, int size) {
         string result = "";
     
         var icon_theme = Gtk.IconTheme.get_default();

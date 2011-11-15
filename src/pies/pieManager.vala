@@ -38,6 +38,13 @@ public class PieManager : GLib.Object {
     private static BindingManager bindings;
     
     /////////////////////////////////////////////////////////////////////
+    /// True, if any pie has the current focus. If it is closing this
+    /// will be false already.
+    /////////////////////////////////////////////////////////////////////
+    
+    private static bool a_pie_is_opened = false;
+    
+    /////////////////////////////////////////////////////////////////////
     /// Initializes all Pies. They are loaded from the pies.conf file.
     /////////////////////////////////////////////////////////////////////
     
@@ -59,14 +66,22 @@ public class PieManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public static void open_pie(string id) {
-        Pie? pie = all_pies[id];
-        
-        if (pie != null) {
-            var window = new PieWindow();
-            window.load_pie(pie);
-            window.open();
-        } else {
-            warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");
+        if (!a_pie_is_opened) {
+            Pie? pie = all_pies[id];
+            
+            if (pie != null) {
+                a_pie_is_opened = true;
+                
+                var window = new PieWindow();
+                window.load_pie(pie);
+                window.open();
+                
+                window.on_closing.connect(() => {
+                    a_pie_is_opened = false;
+                });
+            } else {
+                warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");
+            }
         }
     }
     
@@ -88,6 +103,14 @@ public class PieManager : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
+    /// Returns true if the pie with the given id is in turbo mode.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static bool get_is_turbo(string id) {
+        return bindings.get_is_turbo(id);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Returns the name of the Pie with the given ID.
     /////////////////////////////////////////////////////////////////////
     
@@ -98,14 +121,25 @@ public class PieManager : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
+    /// Returns the name ID of the Pie bound to the given Trigger.
+    /// Returns "" if there is nothing bound to this trigger.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string get_assigned_id(Trigger trigger) {
+        return bindings.get_assigned_id(trigger);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Creates a new Pie which is displayed in the configuration dialog
     /// and gets saved.
     /////////////////////////////////////////////////////////////////////
     
-    public static Pie create_persistent_pie(string name, string icon_name, string hotkey, string? desired_id = null) {
+    public static Pie create_persistent_pie(string name, string icon_name, Trigger? hotkey, string? desired_id = null) {
         Pie pie = create_pie(name, icon_name, 100, 999, desired_id);
 
-        if (hotkey != "") bindings.bind(hotkey, pie.id);
+        if (hotkey != null) bindings.bind(hotkey, pie.id);
+        
+        create_launcher(pie.id);
         
         return pie;
     }
@@ -169,9 +203,44 @@ public class PieManager : GLib.Object {
             all_pies[id].on_remove();
             all_pies.unset(id);
             bindings.unbind(id);
+            
+            if (id.length == 3)
+                remove_launcher(id);
         }
         else {
             warning("Failed to remove pie with ID \"" + id + "\": ID does not exist!");
+        }
+    }
+    
+    private static void create_launcher(string id) {
+        if (all_pies.has_key(id)) {
+            Pie? pie = all_pies[id];
+            
+            string launcher_entry = 
+                "#!/usr/bin/env xdg-open\n" + 
+                "[Desktop Entry]\n" +
+                "Name=%s\n".printf(pie.name) +
+                "Exec=gnome-pie -o %s\n".printf(pie.id) +
+                "Encoding=UTF-8\n" +
+                "Type=Application\n" +
+                "Icon=%s\n".printf(pie.icon);
+
+            // create the launcher file
+            string launcher = Paths.launchers + "/%s.desktop".printf(pie.id);
+            
+            try {
+                FileUtils.set_contents(launcher, launcher_entry);
+                FileUtils.chmod(launcher, 0755);
+            } catch (Error e) {
+                warning(e.message);
+            }
+        }
+    }
+    
+    private static void remove_launcher(string id) {
+        string launcher = Paths.launchers + "/%s.desktop".printf(id);
+        if (FileUtils.test(launcher, FileTest.EXISTS)) {
+            FileUtils.remove(launcher);
         }
     }
 }

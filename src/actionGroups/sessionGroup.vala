@@ -49,6 +49,11 @@ public class SessionGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
     
     construct {
+//    	string iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.gnome.SessionManager", "/org/gnome/SessionManager");
+//		iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.Hal", "/org/freedesktop/Hal/devices/computer");
+//    	iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.kde.ksmserver", "/KSMServer");
+//    	iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager");
+    
         this.add_action(new AppAction(_("Shutdown"), "gnome-shutdown", 
             "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.RequestShutdown"));
             
@@ -60,9 +65,9 @@ public class SessionGroup : ActionGroup {
     }
     
     // TODO: check for available interfaces --- these may work too:
-    // dbus-send --print-reply --system --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown
+    // dbus-send --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown
     // dbus-send --print-reply --dest=org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout 0 2 2 
-    // dbus-send --system --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
+    // dbus-send --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
 }
 
 }

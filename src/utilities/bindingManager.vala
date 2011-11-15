@@ -267,14 +267,19 @@ public class BindingManager : GLib.Object {
        		if (this.delayed_binding.trigger.with_mouse) {
        			// simulate mouse click
        			X.Test.fake_button_event(display, this.delayed_event.xbutton.button, true, 0);
+       			display.flush();
+       			
             	X.Test.fake_button_event(display, this.delayed_event.xbutton.button, false, 0);
+            	display.flush();
+            	
        		} else {
        			// simulate key press
        			X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, true, 0);
+       			display.flush();
+       			
        			X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, false, 0);
+       			display.flush();
        		}
-            
-            display.flush();
             
             // bind it again
             bind(delayed_binding.trigger, delayed_binding.id);

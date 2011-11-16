@@ -129,9 +129,9 @@ public class BindingManager : GLib.Object {
             if(id == binding.id) {
                 foreach(uint lock_modifier in lock_modifiers) {
                     if (binding.trigger.with_mouse) {
-                        display.ungrab_button(binding.trigger.key_code, binding.trigger.modifiers, xid);
+                        display.ungrab_button(binding.trigger.key_code, binding.trigger.modifiers|lock_modifier, xid);
                     } else {
-                        display.ungrab_key(binding.trigger.key_code, binding.trigger.modifiers, xid);
+                        display.ungrab_key(binding.trigger.key_code, binding.trigger.modifiers|lock_modifier, xid);
                     } 
                 }
                 remove_bindings.add(binding);

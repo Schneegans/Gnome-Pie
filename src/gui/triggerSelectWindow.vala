@@ -188,6 +188,7 @@ public class TriggerSelectWindow : Gtk.Dialog {
     
     private bool on_area_clicked(Gdk.EventButton event) {
         Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
+        
         var new_trigger = new Trigger.from_values((int)event.button, state, true, 
                                                   this.turbo.active, this.delayed.active);
         if (new_trigger.key_code == 1) {

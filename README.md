@@ -11,7 +11,7 @@ It is inspired by an addon written for the game World of Warcraft.
 
 ## About this Branch
 
-This is the master branch of Gnome-Pie.
+The aim of this branch is to create a more intuitive an visually appealing configuration menu.
 
 ## Installing from a PPA
 

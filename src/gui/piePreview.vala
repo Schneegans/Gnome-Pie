@@ -26,8 +26,12 @@ class PiePreview : Gtk.DrawingArea {
     private PieRenderer renderer = null;
 
     public PiePreview() {
-        
         this.expose_event.connect(this.on_draw);
+    }
+    
+    public void set_pie(string id) {
+        this.renderer.load_pie(PieManager.all_pies[id]);
+       // this.queue_draw();
     }
     
     private bool on_draw(Gtk.Widget da, Gdk.EventExpose event) {
@@ -40,7 +44,7 @@ class PiePreview : Gtk.DrawingArea {
         var ctx = Gdk.cairo_create(this.window);
             ctx.translate(this.allocation.width*0.5, this.allocation.height*0.5);
         
-        this.renderer.draw(10.0, ctx, 0, 0);
+        this.renderer.draw(10000.0, ctx, 0, 0);
         
         return true;
     }

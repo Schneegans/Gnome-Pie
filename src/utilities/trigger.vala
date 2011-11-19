@@ -178,11 +178,11 @@ public class Trigger : GLib.Object {
             this.label_with_specials = this.label;
             
             if (this.turbo && this.delayed)
-                this.label_with_specials += ("\n<small><span weight='light'>" + _("Turbo") + " | " + _("Delayed") + "</span></small>");
+                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " | " + _("Delayed") + " ]</span></small>");
             else if (this.turbo)
-                this.label_with_specials += ("\n<small><span weight='light'>" + _("Turbo") + "</span></small>");
+                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " ]</span></small>");
             else if (this.delayed)
-                this.label_with_specials += ("\n<small><span weight='light'>" + _("Delayed") + "</span></small>");
+                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Delayed") + " ]</span></small>");
             
         } else {
             this.set_unbound();

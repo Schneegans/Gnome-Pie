@@ -110,7 +110,7 @@ public class BookmarkGroup : ActionGroup {
         }
         
         // add trash
-        this.add_action(ActionRegistry.new_for_uri("trash:///"));
+        this.add_action(ActionRegistry.new_for_uri("trash://"));
         
         // add desktop
         this.add_action(ActionRegistry.new_for_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP)));

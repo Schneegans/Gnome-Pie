@@ -129,9 +129,9 @@ public class BindingManager : GLib.Object {
             if(id == binding.id) {
                 foreach(uint lock_modifier in lock_modifiers) {
                     if (binding.trigger.with_mouse) {
-                        display.ungrab_button(binding.trigger.key_code, binding.trigger.modifiers, xid);
+                        display.ungrab_button(binding.trigger.key_code, binding.trigger.modifiers|lock_modifier, xid);
                     } else {
-                        display.ungrab_key(binding.trigger.key_code, binding.trigger.modifiers, xid);
+                        display.ungrab_key(binding.trigger.key_code, binding.trigger.modifiers|lock_modifier, xid);
                     } 
                 }
                 remove_bindings.add(binding);
@@ -261,20 +261,25 @@ public class BindingManager : GLib.Object {
             Gdk.Window rootwin = Gdk.get_default_root_window();
        		X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
        		
-       		// un bind the trigger, else we'll capture that event again ;)
+       		// unbind the trigger, else we'll capture that event again ;)
        		unbind(delayed_binding.id);
        		
        		if (this.delayed_binding.trigger.with_mouse) {
        			// simulate mouse click
        			X.Test.fake_button_event(display, this.delayed_event.xbutton.button, true, 0);
+       			display.flush();
+       			
             	X.Test.fake_button_event(display, this.delayed_event.xbutton.button, false, 0);
+            	display.flush();
+            	
        		} else {
        			// simulate key press
        			X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, true, 0);
+       			display.flush();
+       			
        			X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, false, 0);
+       			display.flush();
        		}
-            
-            display.flush();
             
             // bind it again
             bind(delayed_binding.trigger, delayed_binding.id);

@@ -23,7 +23,7 @@ namespace GnomePie {
 
 class PiePreview : Gtk.DrawingArea {
 
-    private PieRenderer renderer = null;
+    private PiePreviewRenderer renderer = null;
     
     /////////////////////////////////////////////////////////////////////
     /// A timer used for calculating the frame time.
@@ -32,7 +32,7 @@ class PiePreview : Gtk.DrawingArea {
     private GLib.Timer timer;
 
     public PiePreview() {
-        this.renderer = new PieRenderer();
+        this.renderer = new PiePreviewRenderer();
         this.expose_event.connect(this.on_draw);
         this.timer = new GLib.Timer();
         this.show.connect(this.timer.start);
@@ -47,12 +47,10 @@ class PiePreview : Gtk.DrawingArea {
         double frame_time = this.timer.elapsed();
         this.timer.reset();
         
-        if (this.renderer.finished_loading) {
-            var ctx = Gdk.cairo_create(this.window);
-            ctx.translate(this.allocation.width*0.5, this.allocation.height*0.5);
-            
-            this.renderer.draw(frame_time, ctx, 0, 0);
-        }
+        var ctx = Gdk.cairo_create(this.window);
+        ctx.translate(this.allocation.width*0.5, this.allocation.height*0.5);
+        
+        this.renderer.draw(frame_time, ctx);
         
         return true;
     }

@@ -2,4 +2,5 @@
 *.h
 build/*
 gnome-pie
-gnome-pie.deb
+Makefile
+.valencia

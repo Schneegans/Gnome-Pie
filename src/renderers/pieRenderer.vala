@@ -51,8 +51,6 @@ public class PieRenderer : GLib.Object {
 
     public int size { get; private set; }
     
-    public bool finished_loading { get; private set; default=false; }
-    
     /////////////////////////////////////////////////////////////////////
     /// True if the pie should close when it's trigger is released.
     /////////////////////////////////////////////////////////////////////
@@ -95,8 +93,6 @@ public class PieRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public void load_pie(Pie pie) {
-        this.finished_loading = false;
-        
         this.slices.clear();
     
         int count = 0;
@@ -127,8 +123,6 @@ public class PieRenderer : GLib.Object {
                 (((Config.global.theme.slice_radius + Config.global.theme.slice_gap)/tan(PI/slices.size)) 
                 + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom);
         }
-        
-        this.finished_loading = true;
     }
     
     /////////////////////////////////////////////////////////////////////

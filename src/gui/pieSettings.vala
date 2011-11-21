@@ -32,8 +32,12 @@ public class PieSettings : Gtk.VBox {
         this.spacing = 6;
         this.homogeneous = false;
         this.border_width = 12;
+        
+        // pie render container
+        var pie_preview = new PiePreview(); 
+        
+        this.pack_start(pie_preview, true, true);
             
-                
         // upper container
         var upper_hbox = new Gtk.HBox(false, 6);
             
@@ -45,6 +49,10 @@ public class PieSettings : Gtk.VBox {
                 // pie list
                 var pie_list = new PieList();
                     scroll.add(pie_list);
+                    
+                    pie_list.on_select.connect((id) => {
+                        pie_preview.set_pie(id);
+                    });
                     
             upper_hbox.pack_start(scroll, true, true);
     
@@ -90,14 +98,6 @@ public class PieSettings : Gtk.VBox {
             upper_hbox.pack_start(pie_vbox, false, false);
             
         this.pack_start(upper_hbox, false, false);
-
-        // pie render container
-        var pie_preview = new PiePreview(); 
-            pie_list.on_select.connect((id) => {
-                pie_preview.set_pie(id);
-            });
-        
-        this.pack_start(pie_preview, true, true);
         
         // bottom box
         var info_box = new Gtk.HBox (false, 6);
@@ -125,42 +125,6 @@ public class PieSettings : Gtk.VBox {
                 this.hide.connect(info_label.stop_slide_show);
                 
             info_box.pack_start (info_label);
-            
-            // add slice button  
-            var add_slice_button = new Gtk.Button();
-                add_slice_button.tooltip_text = _("Add a new slice.");
-
-                add_image = new Gtk.Image.from_stock(Gtk.Stock.ADD, Gtk.IconSize.BUTTON);
-                add_slice_button.add(add_image);
-                add_slice_button.clicked.connect (() => {
-                    debug("Add!");
-                });
-
-            info_box.pack_end(add_slice_button, false, false);
-            
-            // remove slice button
-            var del_slice_button = new Gtk.Button();
-                del_slice_button.tooltip_text = _("Delete the current slice.");
-
-                del_image = new Gtk.Image.from_stock(Gtk.Stock.DELETE, Gtk.IconSize.BUTTON);
-                del_slice_button.add(del_image);
-                del_slice_button.clicked.connect (() => {
-                    debug("Remove!");
-                });
-
-                info_box.pack_end(del_slice_button, false, false);
-                
-            // remove slice button
-            var edit_slice_button = new Gtk.Button();
-                edit_slice_button.tooltip_text = _("Delete the current slice.");
-
-                edit_image = new Gtk.Image.from_stock(Gtk.Stock.EDIT, Gtk.IconSize.BUTTON);
-                edit_slice_button.add(edit_image);
-                edit_slice_button.clicked.connect (() => {
-                    debug("Edit!");
-                });
-                
-            info_box.pack_end(edit_slice_button, false, false);
             
         this.pack_start(info_box, false, false);
         

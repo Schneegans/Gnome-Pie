@@ -20,7 +20,7 @@ using GLib.Math;
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-///  Renders a Slice of a Pie. According to the current theme.
+/// Renders a Slice of a Pie. According to the current theme.
 /////////////////////////////////////////////////////////////////////////
 
 public class SliceRenderer : GLib.Object {

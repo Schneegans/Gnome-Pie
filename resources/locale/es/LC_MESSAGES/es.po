@@ -1,0 +1,447 @@
+# Spanish translations for gnomepie package.
+# Copyright (C) 2011 Simon Schneegans <code@simonschneegans.de>
+# This file is distributed under the same license as the gnomepie package.
+# Eduardo Anabalon <lalo1412@gmail.com>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnomepie 0.2\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-11-10 08:00+0100\n"
+"PO-Revision-Date: 2011-11-20 19:11-0300\n"
+"Last-Translator: Eduardo Anabalon <lalo1412@gmail.com>\n"
+"Language-Team: Spanish\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../src/actions/keyAction.vala:33
+msgid "Press hotkey"
+msgstr "Presiona un atajo de teclado"
+
+#: ../../src/actions/appAction.vala:33
+msgid "Launch application"
+msgstr "Lanzar una aplicación"
+
+#: ../../src/actions/uriAction.vala:33
+msgid "Open URI"
+msgstr "Abrir URI"
+
+#: ../../src/actions/actionRegistry.vala:107
+msgid "Trash"
+msgstr "Basura"
+
+#: ../../src/actions/pieAction.vala:33
+msgid "Open Pie"
+msgstr "Abrir Pastel"
+
+#: ../../src/gui/triggerSelectWindow.vala:69
+msgid "Define an open-command"
+msgstr "Define un comando para abrir"
+
+#: ../../src/gui/triggerSelectWindow.vala:87
+msgid "Click here if you want to bind a mouse button!"
+msgstr "Click aquí si quieres enlazar un botón del ratón!"
+
+#: ../../src/gui/triggerSelectWindow.vala:102
+msgid "Turbo mode"
+msgstr "Modo turbo"
+
+#: ../../src/gui/triggerSelectWindow.vala:103
+msgid "If checked, the Pie will close when you release the chosen hot key."
+msgstr "El Pastel se cerrará cuando sueltes el atajo de teclado selecionado."
+
+#: ../../src/gui/triggerSelectWindow.vala:117
+msgid "Long press for activation"
+msgstr "Pulsación larga para activar"
+
+#: ../../src/gui/triggerSelectWindow.vala:118
+msgid ""
+"If checked, the Pie will only open if you press this hot key a bit longer."
+msgstr ""
+"El Pastel solo se abrirá si mantienes presionado el atajo de teclado un poco más."
+
+#: ../../src/gui/triggerSelectWindow.vala:156
+msgid ""
+"This hotkey is already assigned to the pie \"%s\"! \n"
+"\n"
+"Please select another one or cancel your selection."
+msgstr ""
+"Este atajo de teclado ya está asignado al pastel \"%s\"! \n"
+"\n"
+"Por favor seleciona otro o cancela la selección."
+
+#: ../../src/gui/triggerSelectWindow.vala:197
+msgid ""
+"It possible to make your system unusable if you bind a Pie to your left "
+"mouse button. Do you really want to do this?"
+msgstr ""
+"Es posible que su sistema sea inutilizable si se enlaza un Pastel al botón "
+"izquierdo del ratón. ¿Realmente quieres hacer esto?"
+
+#: ../../src/gui/preferences.vala:32
+msgid "Gnome-Pie - Settings"
+msgstr "Gnome-Pie - Configuraciones"
+
+#: ../../src/gui/preferences.vala:55
+msgid "Behavior"
+msgstr "Comportamiento"
+
+#: ../../src/gui/preferences.vala:65
+msgid "Startup on Login"
+msgstr "Arrancar al iniciar"
+
+#: ../../src/gui/preferences.vala:66
+msgid "If checked, Gnome-Pie will start when you log in."
+msgstr "Gnome-Pie arrancará al iniciar sesión."
+
+#: ../../src/gui/preferences.vala:72
+msgid "Show Indicator"
+msgstr "Mostrar Indicador"
+
+#: ../../src/gui/preferences.vala:73
+msgid ""
+"If checked, an indicator for easy access of the settings menu is shown in "
+"your panel."
+msgstr ""
+"Un indicador de acceso fácil al menú de configuraciones se mostrará "
+"en el panel."
+
+#: ../../src/gui/preferences.vala:79
+msgid "Open Pies at Mouse"
+msgstr "Abre los Pasteles sobre el Ratón"
+
+#: ../../src/gui/preferences.vala:80
+msgid ""
+"If checked, pies will open at your pointer. Otherwise they'll pop up in the "
+"middle of the screen."
+msgstr ""
+"Los pasteles abrirán sobre el puntero. De otra manera abrirán en el "
+"medio de la pantalla."
+
+#: ../../src/gui/preferences.vala:89
+msgid "Global Scale"
+msgstr "Escala Global"
+
+#: ../../src/gui/preferences.vala:126
+msgid "Themes"
+msgstr "Temas"
+
+#: ../../src/gui/preferences.vala:144
+msgid "General"
+msgstr "General"
+
+#: ../../src/gui/preferences.vala:149
+msgid "Pies"
+msgstr "Pasteles"
+
+#: ../../src/gui/preferences.vala:173
+msgid "You can right-click in the list for adding or removing entries."
+msgstr "Puedes hacer click derecho en la lista para añadir o remover entradas."
+
+#: ../../src/gui/preferences.vala:174
+msgid ""
+"You can reset Gnome-Pie to its default options with the terminal command "
+"\"gnome-pie --reset\"."
+msgstr ""
+"Puedes resetear Gnome-Pie a las opciones por defecto con el comando "
+"\"gnome-pie --reset\"."
+
+#: ../../src/gui/preferences.vala:175
+msgid ""
+"The radiobutton at the beginning of each slice-line indicates the "
+"QuickAction of the pie."
+msgstr ""
+"El radiobutton en el comienzo de cada linea de una rebanada indica "
+"el QuickAction del pastel."
+
+#: ../../src/gui/preferences.vala:176
+msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+msgstr "Los Pasteles pueden abrirse con el commando \"gnome-pie --open=ID\"."
+
+#: ../../src/gui/preferences.vala:177
+msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+msgstr "Siéntase libre de visitar la página principal de Gnome-Pie en %s!"
+
+#: ../../src/gui/preferences.vala:178
+msgid "You can drag'n'drop applications from your main menu to the list above."
+msgstr "Puedes arrastrar y soltar aplicaciones desde el menú principal a la lista."
+
+#: ../../src/gui/preferences.vala:179
+msgid "If you want to give some feedback, please write an e-mail to %s!"
+msgstr "Si quieres enviar un comentario, por favor escribe un e-mail a %s!"
+
+#: ../../src/gui/preferences.vala:180
+msgid ""
+"You may drag'n'drop URLs and bookmarks from your internet browser to the "
+"list above."
+msgstr ""
+"Puedes arrastrar y soltar URLs y marcadores desde tu navegador a la lista."
+
+#: ../../src/gui/preferences.vala:181
+msgid "Bugs can be reported at %s!"
+msgstr "Los errores pueden ser reportados en %s!"
+
+#: ../../src/gui/preferences.vala:182
+msgid ""
+"It's possible to drag'n'drop files and folders from your file browser to the "
+"list above."
+msgstr ""
+"Es posible arrastrar y soltar archivos y directorios desde tu explorador de archivos "
+"a la lista."
+
+#: ../../src/gui/preferences.vala:183
+msgid ""
+"It's recommended to keep your Pies small (at most 6-8 Slices). Else they "
+"will become hard to navigate."
+msgstr ""
+"Es recomendado mantener los Pasteles pequeños (a lo más 6-8 Rebanadas). De otra forma "
+"será difícil navegar entre ellos."
+
+#: ../../src/gui/preferences.vala:184
+msgid ""
+"In order to create a launcher for a Pie, drag the Pie from the list to your "
+"desktop!"
+msgstr ""
+"Con el fin de crear un lanzador para un Pastel, arrastra el Pastel desde la "
+"lista a tu escritorio!"
+
+#: ../../src/gui/preferences.vala:193
+msgid "Moves the selected Slice down"
+msgstr "Mueve la Rebanada seleccionada hacia abajo"
+
+#: ../../src/gui/preferences.vala:205
+msgid "Moves the selected Slice up"
+msgstr "Mueve la Rebanada seleccionada hacia arriba"
+
+#: ../../src/gui/themeList.vala:88
+msgid "by"
+msgstr "por"
+
+#: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:851
+msgid "Slice group"
+msgstr "Grupo de Rebanadas"
+
+#: ../../src/gui/pieList.vala:135
+msgid "Icon"
+msgstr "Icono"
+
+#: ../../src/gui/pieList.vala:200
+msgid "Command"
+msgstr "Comando"
+
+#: ../../src/gui/pieList.vala:301 ../../src/gui/pieList.vala:707
+#: ../../src/gui/pieList.vala:867 ../../src/utilities/bindingManager.vala:156
+#: ../../src/utilities/trigger.vala:197 ../../src/utilities/trigger.vala:198
+msgid "Not bound"
+msgstr "No encontrado"
+
+#: ../../src/gui/pieList.vala:366
+msgid "Pie-ID / Action type"
+msgstr "Pastel-ID / Tipo de acción"
+
+#: ../../src/gui/pieList.vala:427
+msgid "Name"
+msgstr "Nombre"
+
+#: ../../src/gui/pieList.vala:470
+msgid "Add new Pie"
+msgstr "Añadir un nuevo Pastel"
+
+#: ../../src/gui/pieList.vala:475
+msgid "Add new Slice"
+msgstr "Añadir una nueva Rebanada"
+
+#: ../../src/gui/pieList.vala:483
+msgid "Delete"
+msgstr "Borrar"
+
+#: ../../src/gui/pieList.vala:619
+msgid "New Pie"
+msgstr "Nuevo Pastel"
+
+#: ../../src/gui/pieList.vala:666
+msgid "New Action"
+msgstr "Nueva Acción"
+
+#: ../../src/gui/pieList.vala:680
+msgid "You have to select a Pie to add a Slice to!"
+msgstr "Debes seleccionar un Pastel para añadir una Rebanada!"
+
+#: ../../src/gui/pieList.vala:730
+msgid "You have to select a Pie or a Slice to delete!"
+msgstr "Debes seleccionar un Pastel o una Rebanada para borrar!"
+
+#: ../../src/gui/pieList.vala:741
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+"¿Realmente quieres borrar el Pastel seleccionado junto a todas sus Rebanadas?"
+
+#: ../../src/gui/pieList.vala:775
+msgid "Do you really want to delete the selected Slice?"
+msgstr "¿Realmente quieres borrar la Rebanada seleccionada?"
+
+#: ../../src/gui/iconSelectWindow.vala:160
+msgid "Choose an Icon"
+msgstr "Selecciona un icono"
+
+#: ../../src/gui/iconSelectWindow.vala:196
+msgid "All icons"
+msgstr "Todos los iconos"
+
+#: ../../src/gui/iconSelectWindow.vala:197
+#: ../../src/pies/defaultConfig.vala:36
+msgid "Applications"
+msgstr "Aplicaciones"
+
+#: ../../src/gui/iconSelectWindow.vala:198
+msgid "Actions"
+msgstr "Acciones"
+
+#: ../../src/gui/iconSelectWindow.vala:199
+msgid "Places"
+msgstr "Lugares"
+
+#: ../../src/gui/iconSelectWindow.vala:200
+msgid "File types"
+msgstr "Tipos de archivo"
+
+#: ../../src/gui/iconSelectWindow.vala:201
+msgid "Emotes"
+msgstr "Emotes"
+
+#: ../../src/gui/iconSelectWindow.vala:202
+msgid "Miscellaneous"
+msgstr "Misceláneos"
+
+#: ../../src/gui/iconSelectWindow.vala:279
+msgid "Icon Theme"
+msgstr "Tema de icono"
+
+#: ../../src/gui/iconSelectWindow.vala:289
+msgid "All supported image formats"
+msgstr "Todos los formatos de imágenes soportados"
+
+#: ../../src/gui/iconSelectWindow.vala:311
+msgid "Custom Icon"
+msgstr "Icono personalizado"
+
+#: ../../src/actionGroups/windowListGroup.vala:33
+msgid "Window List"
+msgstr "Lista de ventana"
+
+#: ../../src/actionGroups/menuGroup.vala:34
+msgid "Main menu"
+msgstr "Menú principal"
+
+#: ../../src/actionGroups/clipboardGroup.vala:63
+msgid "Clipboard"
+msgstr "Portapapeles"
+
+#: ../../src/actionGroups/sessionGroup.vala:34
+msgid "Session Control"
+msgstr "Control de Sesión"
+
+#: ../../src/actionGroups/sessionGroup.vala:52
+msgid "Shutdown"
+msgstr "Apagar"
+
+#: ../../src/actionGroups/sessionGroup.vala:55
+msgid "Logout"
+msgstr "Cerrar Sesión"
+
+#: ../../src/actionGroups/sessionGroup.vala:58
+msgid "Reboot"
+msgstr "Reiniciar"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:35
+#: ../../src/pies/defaultConfig.vala:45
+msgid "Bookmarks"
+msgstr "Marcadores"
+
+#: ../../src/actionGroups/devicesGroup.vala:34
+msgid "Devices"
+msgstr "Dispositivos"
+
+#: ../../src/actionGroups/devicesGroup.vala:82
+msgid "Root"
+msgstr "Root"
+
+#: ../../src/utilities/trigger.vala:152
+msgid "Button %i"
+msgstr "Botón %i"
+
+#: ../../src/utilities/trigger.vala:155
+msgid "LeftButton"
+msgstr "Botón Izquierdo"
+
+#: ../../src/utilities/trigger.vala:157
+msgid "RightButton"
+msgstr "Botón Derecho"
+
+#: ../../src/utilities/trigger.vala:159
+msgid "MiddleButton"
+msgstr "Botón Central"
+
+#: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:183
+msgid "Turbo"
+msgstr "Turbo"
+
+#: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:185
+msgid "Delayed"
+msgstr "Retrasado"
+
+#: ../../src/pies/defaultConfig.vala:29
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: ../../src/pies/defaultConfig.vala:30
+msgid "Next Track"
+msgstr "Pista Siguiente"
+
+#: ../../src/pies/defaultConfig.vala:31
+msgid "Stop"
+msgstr "Parar"
+
+#: ../../src/pies/defaultConfig.vala:32
+msgid "Previous Track"
+msgstr "Pista Anterior"
+
+#: ../../src/pies/defaultConfig.vala:33
+msgid "Play/Pause"
+msgstr "Reproducir/Pausa"
+
+#: ../../src/pies/defaultConfig.vala:50
+msgid "Session"
+msgstr "Sesión"
+
+#: ../../src/pies/defaultConfig.vala:54
+msgid "Main Menu"
+msgstr "Menú Principal"
+
+#: ../../src/pies/defaultConfig.vala:58
+msgid "Window"
+msgstr "Ventana"
+
+#: ../../src/pies/defaultConfig.vala:59
+msgid "Scale"
+msgstr "Escala"
+
+#: ../../src/pies/defaultConfig.vala:60
+msgid "Minimize"
+msgstr "Minimizar"
+
+#: ../../src/pies/defaultConfig.vala:61
+msgid "Close"
+msgstr "Cerrar"
+
+#: ../../src/pies/defaultConfig.vala:62
+msgid "Maximize"
+msgstr "Maximizar"
+
+#: ../../src/pies/defaultConfig.vala:63
+msgid "Restore"
+msgstr "Restaurar"

@@ -129,7 +129,7 @@ public class AnimatedValue : GLib.Object {
     public void update(double time) {
         this.state += time/this.duration;
         
-        if (state < 1) {
+        if (this.state < 1) {
         
             switch (this.type) {
                 case Type.LINEAR:
@@ -152,6 +152,7 @@ public class AnimatedValue : GLib.Object {
                 }
                 break;
             }
+            
         } else if (this.val != this.end) {
              this.val = this.end;
         }  

@@ -99,8 +99,7 @@ public class PieSettings : Gtk.VBox {
         
         this.pack_start(pie_preview, true, true);
         
-        
-         // bottom box
+        // bottom box
         var info_box = new Gtk.HBox (false, 6);
         
             // info image
@@ -164,6 +163,13 @@ public class PieSettings : Gtk.VBox {
             info_box.pack_end(edit_slice_button, false, false);
             
         this.pack_start(info_box, false, false);
+        
+        this.show.connect(() => {
+            Timeout.add((uint)(1000.0/Config.global.refresh_rate), () => {
+                pie_preview.queue_draw();
+                return this.visible;
+            }); 
+        });
         
     }
 }

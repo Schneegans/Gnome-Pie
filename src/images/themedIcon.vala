@@ -76,7 +76,7 @@ public class ThemedIcon : Image {
         var layers = active ? Config.global.theme.active_slice_layers : Config.global.theme.inactive_slice_layers;
         
         // get max size
-        int size = 0;
+        int size = 1;
         foreach (var layer in layers) {
             if (layer.image.width() > size) size = layer.image.width();
         }

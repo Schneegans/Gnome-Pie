@@ -65,14 +65,17 @@ public class Image : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public Image.from_pixbuf(Gdk.Pixbuf pixbuf) {
-        this.load_pixbuf(pixbuf);
+        if (pixbuf != null) this.load_pixbuf(pixbuf);
+        else                this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);
     }
     
     public Image.capture_screen(int posx, int posy, int width, int height) {
+        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
         Gdk.Window root = Gdk.get_default_root_window();
         Gdk.Pixbuf pixbuf = Gdk.pixbuf_get_from_drawable(null, root, null, posx, posy, 0, 0, width, height);
-
-        this.load_pixbuf(pixbuf);
+        
+        if (pixbuf != null)
+            this.load_pixbuf(pixbuf);
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -87,6 +90,7 @@ public class Image : GLib.Object {
                 this.load_pixbuf(pixbuf);
             } else {
                 warning("Failed to load " + filename + "!");
+                this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);
             }
         } catch (GLib.Error e) {
             message("Error loading image file: %s", e.message);
@@ -106,6 +110,7 @@ public class Image : GLib.Object {
                 this.load_pixbuf(pixbuf);
             } else {
                 warning("Failed to load " + filename + "!");
+                this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
             }
         } catch (GLib.Error e) {
             message("Error loading image file: %s", e.message);
@@ -148,7 +153,9 @@ public class Image : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public int width() {
-        return this.surface.get_width();
+        if (this.surface != null)
+            return this.surface.get_width();
+        return 0;
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -156,7 +163,9 @@ public class Image : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public int height() {
-        return this.surface.get_height();
+        if (this.surface != null)
+            return this.surface.get_height();
+        return 0;
     }
 }
 

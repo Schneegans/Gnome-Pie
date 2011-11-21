@@ -24,27 +24,35 @@ namespace GnomePie {
 class PiePreview : Gtk.DrawingArea {
 
     private PieRenderer renderer = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A timer used for calculating the frame time.
+    /////////////////////////////////////////////////////////////////////
+    
+    private GLib.Timer timer;
 
     public PiePreview() {
+        this.renderer = new PieRenderer();
         this.expose_event.connect(this.on_draw);
+        this.timer = new GLib.Timer();
+        this.show.connect(this.timer.start);
     }
     
     public void set_pie(string id) {
         this.renderer.load_pie(PieManager.all_pies[id]);
-       // this.queue_draw();
     }
     
-    private bool on_draw(Gtk.Widget da, Gdk.EventExpose event) {
+    private bool on_draw(Gtk.Widget da, Gdk.EventExpose event) { 
+        // store the frame time
+        double frame_time = this.timer.elapsed();
+        this.timer.reset();
         
-        if (this.renderer == null) {
-            this.renderer = new PieRenderer();
-            this.renderer.load_pie(PieManager.all_pies.values.to_array()[1]);
-        }
-        
-        var ctx = Gdk.cairo_create(this.window);
+        if (this.renderer.finished_loading) {
+            var ctx = Gdk.cairo_create(this.window);
             ctx.translate(this.allocation.width*0.5, this.allocation.height*0.5);
-        
-        this.renderer.draw(10000.0, ctx, 0, 0);
+            
+            this.renderer.draw(frame_time, ctx, 0, 0);
+        }
         
         return true;
     }

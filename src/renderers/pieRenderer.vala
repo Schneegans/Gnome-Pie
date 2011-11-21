@@ -51,6 +51,8 @@ public class PieRenderer : GLib.Object {
 
     public int size { get; private set; }
     
+    public bool finished_loading { get; private set; default=false; }
+    
     /////////////////////////////////////////////////////////////////////
     /// True if the pie should close when it's trigger is released.
     /////////////////////////////////////////////////////////////////////
@@ -93,6 +95,8 @@ public class PieRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public void load_pie(Pie pie) {
+        this.finished_loading = false;
+        
         this.slices.clear();
     
         int count = 0;
@@ -123,6 +127,8 @@ public class PieRenderer : GLib.Object {
                 (((Config.global.theme.slice_radius + Config.global.theme.slice_gap)/tan(PI/slices.size)) 
                 + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom);
         }
+        
+        this.finished_loading = true;
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -227,39 +233,41 @@ public class PieRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public void draw(double frame_time, Cairo.Context ctx, int mouse_x, int mouse_y) {
-	    double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
-	    double angle = 0.0;
+        if (this.size > 0) {
+	        double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
+	        double angle = 0.0;
 
-	    if (this.key_board_control) {
-	        angle = 2.0*PI*this.active_slice/(double)slice_count();
-	    } else {
-	    
-	        if (distance > 0) {
-	            angle = acos(mouse_x/distance);
-		        if (mouse_y < 0) 
-		            angle = 2*PI - angle;
-	        }
-	        
-	        int next_active_slice = this.active_slice;
-	        
-	        if (distance < Config.global.theme.active_radius
-	            && this.quick_action >= 0 && this.quick_action < this.slices.size) {
-	         
-	            next_active_slice = this.quick_action;   
-	            angle = 2.0*PI*quick_action/(double)slice_count();
-	        } else if (distance > Config.global.theme.active_radius && this.slice_count() > 0) {
-	            next_active_slice = (int)(angle*slices.size/(2*PI) + 0.5) % this.slice_count();
+	        if (this.key_board_control) {
+	            angle = 2.0*PI*this.active_slice/(double)slice_count();
 	        } else {
-	            next_active_slice = -1;
+	        
+	            if (distance > 0) {
+	                angle = acos(mouse_x/distance);
+		            if (mouse_y < 0) 
+		                angle = 2*PI - angle;
+	            }
+	            
+	            int next_active_slice = this.active_slice;
+	            
+	            if (distance < Config.global.theme.active_radius
+	                && this.quick_action >= 0 && this.quick_action < this.slices.size) {
+	             
+	                next_active_slice = this.quick_action;   
+	                angle = 2.0*PI*quick_action/(double)slice_count();
+	            } else if (distance > Config.global.theme.active_radius && this.slice_count() > 0) {
+	                next_active_slice = (int)(angle*slices.size/(2*PI) + 0.5) % this.slice_count();
+	            } else {
+	                next_active_slice = -1;
+	            }
+	        
+	            this.set_highlighted_slice(next_active_slice);
 	        }
-	    
-	        this.set_highlighted_slice(next_active_slice);
-	    }
 
-        center.draw(frame_time, ctx, angle, distance);
-	    
-	    foreach (var slice in this.slices)
-		    slice.draw(frame_time, ctx, angle, distance);
+            center.draw(frame_time, ctx, angle, distance);
+	        
+	        foreach (var slice in this.slices)
+		        slice.draw(frame_time, ctx, angle, distance);
+		}
     }
     
     /////////////////////////////////////////////////////////////////////

@@ -51,7 +51,7 @@ msgstr "Modo turbo"
 
 #: ../../src/gui/triggerSelectWindow.vala:103
 msgid "If checked, the Pie will close when you release the chosen hot key."
-msgstr "Si se selecciona, el Pastel se cerrará cuando sueltes el atajo de teclado selecionado."
+msgstr "El Pastel se cerrará cuando sueltes el atajo de teclado selecionado."
 
 #: ../../src/gui/triggerSelectWindow.vala:117
 msgid "Long press for activation"
@@ -61,7 +61,7 @@ msgstr "Pulsación larga para activar"
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr ""
-"Si se selecciona, el Pastel solo se abrirá si mantienes presionado el atajo de teclado un poco más."
+"El Pastel solo se abrirá si mantienes presionado el atajo de teclado un poco más."
 
 #: ../../src/gui/triggerSelectWindow.vala:156
 msgid ""
@@ -95,7 +95,7 @@ msgstr "Arrancar al iniciar"
 
 #: ../../src/gui/preferences.vala:66
 msgid "If checked, Gnome-Pie will start when you log in."
-msgstr "Si se selecciona, Gnome-Pie arrancará al iniciar sesión."
+msgstr "Gnome-Pie arrancará al iniciar sesión."
 
 #: ../../src/gui/preferences.vala:72
 msgid "Show Indicator"
@@ -106,7 +106,7 @@ msgid ""
 "If checked, an indicator for easy access of the settings menu is shown in "
 "your panel."
 msgstr ""
-"Si se selecciona, un indicador de acceso fácil al menú de configuraciones será mostrado "
+"Un indicador de acceso fácil al menú de configuraciones se mostrará "
 "en el panel."
 
 #: ../../src/gui/preferences.vala:79
@@ -118,7 +118,7 @@ msgid ""
 "If checked, pies will open at your pointer. Otherwise they'll pop up in the "
 "middle of the screen."
 msgstr ""
-"Si se selecciona, los pasteles abrirán sobre el puntero. De otra manera abrirán en el "
+"Los pasteles abrirán sobre el puntero. De otra manera abrirán en el "
 "medio de la pantalla."
 
 #: ../../src/gui/preferences.vala:89
@@ -222,7 +222,7 @@ msgstr "por"
 
 #: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:851
 msgid "Slice group"
-msgstr "Grupo de Rebanada"
+msgstr "Grupo de Rebanadas"
 
 #: ../../src/gui/pieList.vala:135
 msgid "Icon"

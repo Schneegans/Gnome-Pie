@@ -39,7 +39,7 @@ install(
 # install credits
 install(
 	FILES
-		${CMAKE_SOURCE_DIR}/README
+		${CMAKE_SOURCE_DIR}/README.md
 	DESTINATION
 		${CMAKE_INSTALL_PREFIX}/share/doc/gnome-pie
 )

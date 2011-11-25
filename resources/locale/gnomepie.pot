@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-21 00:58-0300\n"
+"POT-Creation-Date: 2011-11-25 00:32-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -373,11 +373,15 @@ msgid "Shutdown"
 msgstr ""
 
 #: ../../src/actionGroups/sessionGroup.vala:60
-msgid "Logout"
+msgid "Reboot"
 msgstr ""
 
 #: ../../src/actionGroups/sessionGroup.vala:63
-msgid "Reboot"
+msgid "Suspend"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Hibernate"
 msgstr ""
 
 #: ../../src/actionGroups/devicesGroup.vala:34

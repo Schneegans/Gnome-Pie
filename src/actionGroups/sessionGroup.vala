@@ -53,21 +53,21 @@ public class SessionGroup : ActionGroup {
 //		iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.Hal", "/org/freedesktop/Hal/devices/computer");
 //    	iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.kde.ksmserver", "/KSMServer");
 //    	iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager");
-    
-        //this.add_action(new AppAction(_("Shutdown"), "gnome-shutdown", 
-        //    "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.RequestShutdown"));
         
-        this.add_action(new AppAction(_("Shutdown"), "system-shutdown",
+        this.add_action(new AppAction(_("Shutdown"), "gnome-shutdown",
             "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown"));
         
-        this.add_action(new AppAction(_("Reboot"), "system-reboot",
+        this.add_action(new AppAction(_("Reboot"), "gnome-reboot",
             "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Reboot"));
+        
+        this.add_action(new AppAction(_("Suspend"), "gnome-suspend",
+            "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Suspend int32:1"));
+        
+        this.add_action(new AppAction(_("Hibernate"), "gnome-hibernate",
+            "dbus-send --system --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Hibernate"));
             
         //this.add_action(new AppAction(_("Logout"), "gnome-session-logout", 
         //    "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.Logout uint32:1"));
-            
-        //this.add_action(new AppAction(_("Reboot"), "gnome-session-reboot", 
-        //    "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.RequestReboot"));
     }
     
     // TODO: check for available interfaces --- these may work too:

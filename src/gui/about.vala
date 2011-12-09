@@ -37,7 +37,8 @@ public class GnomePieAboutDialog: Gtk.AboutDialog {
     		"PT-BR\t Magnun Leno <magnun@codecommunity.org>",
     		"EN\t\t Simon Schneegans <code@simonschneegans.de>",
     		"KO\t\t Kim Boram <Boramism@gmail.com>",
-            "ES\t\t Eduardo Anabalon <lalo1412@gmail.com>"
+            "ES\t\t Eduardo Anabalon <lalo1412@gmail.com>",
+            "FR\t\t Grégoire Bellon-Gervais <greggbg@gmail.com>"
     	};
     	
     	// sort translators

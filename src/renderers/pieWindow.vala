@@ -32,6 +32,19 @@ public class PieWindow : Gtk.Window {
     public signal void on_closing();
     
     /////////////////////////////////////////////////////////////////////
+    /// Signal which gets emitted when the PieWindow is closed.
+    /////////////////////////////////////////////////////////////////////
+    
+    public signal void on_closed();
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The background image used for fake transparency if
+    /// has_compositing is false.
+    /////////////////////////////////////////////////////////////////////
+    
+    public Image background { get; private set; default=null; }
+    
+    /////////////////////////////////////////////////////////////////////
     /// The owned renderer.
     /////////////////////////////////////////////////////////////////////
 
@@ -54,13 +67,6 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
     
     private bool has_compositing = false;
-    
-    /////////////////////////////////////////////////////////////////////
-    /// The background image used for fake transparency if
-    /// has_compositing is false.
-    /////////////////////////////////////////////////////////////////////
-    
-    private Image background = null;
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, sets up the window.
@@ -223,8 +229,8 @@ public class PieWindow : Gtk.Window {
             this.renderer.activate();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
+                this.on_closed();
                 this.destroy();
-                ThemedIcon.clear_cache();
                 return false;
             });
         }
@@ -242,8 +248,8 @@ public class PieWindow : Gtk.Window {
             this.renderer.cancel();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
+                this.on_closed();
                 this.destroy();
-                ThemedIcon.clear_cache();
                 return false;
             });
         }

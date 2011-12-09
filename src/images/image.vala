@@ -69,13 +69,30 @@ public class Image : GLib.Object {
         else                this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);
     }
     
-    public Image.capture_screen(int posx, int posy, int width, int height) {
-        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
+    /////////////////////////////////////////////////////////////////////
+    /// Captures a part of the screen.
+    /////////////////////////////////////////////////////////////////////
+    
+    public Image.capture_screen(int posx, int posy, int width, int height, bool hide_pies = true) {
         Gdk.Window root = Gdk.get_default_root_window();
         Gdk.Pixbuf pixbuf = Gdk.pixbuf_get_from_drawable(null, root, null, posx, posy, 0, 0, width, height);
+
+        this.load_pixbuf(pixbuf);
         
-        if (pixbuf != null)
-            this.load_pixbuf(pixbuf);
+        if (hide_pies) {
+            // check for opened pies
+            foreach (var window in PieManager.opened_windows) {
+                if (window.background != null) {
+                    int x=0, y=0, dx=0, dy=0;
+                    window.get_position(out x, out y);
+                    window.get_size(out dx, out dy);
+
+                    var ctx = this.context();
+                    ctx.translate((int)(x-posx + (dx+3)/2), (int)(y-posy + (dy+3)/2));                    
+                    window.background.paint_on(ctx);
+                }
+            }
+        }
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -135,7 +152,7 @@ public class Image : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public void paint_on(Cairo.Context ctx, double alpha = 1.0) {
-        ctx.set_source_surface(this.surface, -0.5*this.width()-1, -0.5*this.height()-1);
+        ctx.set_source_surface(this.surface, (int)(-0.5*this.width()-1), (int)(-0.5*this.height()-1));
         if (alpha >= 1.0) ctx.paint();
         else              ctx.paint_with_alpha(alpha);
     }
@@ -145,7 +162,7 @@ public class Image : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public Cairo.Context context() {
-        return new Cairo.Context(this.surface);;
+        return new Cairo.Context(this.surface);
     }
     
     /////////////////////////////////////////////////////////////////////

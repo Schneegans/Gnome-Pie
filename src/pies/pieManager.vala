@@ -31,6 +31,8 @@ public class PieManager : GLib.Object {
 
     public static Gee.HashMap<string, Pie?> all_pies { get; private set; }
     
+    public static Gee.HashSet<PieWindow?> opened_windows { get; private set; }
+    
     /////////////////////////////////////////////////////////////////////
     /// Stores all global hotkeys.
     /////////////////////////////////////////////////////////////////////
@@ -42,7 +44,7 @@ public class PieManager : GLib.Object {
     /// will be false already.
     /////////////////////////////////////////////////////////////////////
     
-    private static bool a_pie_is_opened = false;
+    private static bool a_pie_is_active = false;
     
     /////////////////////////////////////////////////////////////////////
     /// Initializes all Pies. They are loaded from the pies.conf file.
@@ -50,6 +52,7 @@ public class PieManager : GLib.Object {
     
     public static void init() {
         all_pies = new Gee.HashMap<string, Pie?>();
+        opened_windows = new Gee.HashSet<PieWindow?>();
         bindings = new BindingManager();
         
         // load all Pies from th pies.conf file
@@ -66,19 +69,27 @@ public class PieManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public static void open_pie(string id) {
-        if (!a_pie_is_opened) {
+        if (!a_pie_is_active) {
             Pie? pie = all_pies[id];
             
             if (pie != null) {
-                a_pie_is_opened = true;
+                a_pie_is_active = true;
                 
                 var window = new PieWindow();
                 window.load_pie(pie);
                 window.open();
                 
-                window.on_closing.connect(() => {
-                    a_pie_is_opened = false;
+                opened_windows.add(window);
+                
+                window.on_closed.connect(() => {
+                    opened_windows.remove(window);
                 });
+                
+                window.on_closing.connect(() => {
+                    a_pie_is_active = false;
+                });
+                
+                
             } else {
                 warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");
             }

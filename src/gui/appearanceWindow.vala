@@ -23,8 +23,10 @@ namespace GnomePie {
 
 public class AppearanceWindow : GLib.Object {
     
-    private Gtk.Window window = null;
-    private ThemeList theme_list = null;
+    private Gtk.Window? window = null;
+    private ThemeList? theme_list = null;
+    private Gtk.ToggleButton? indicator = null;
+    private Gtk.ToggleButton? autostart = null;
     
     public AppearanceWindow() {
         try {
@@ -41,6 +43,39 @@ public class AppearanceWindow : GLib.Object {
                 scroll_area.add(this.theme_list);
                 
             (builder.get_object("close-button") as Gtk.Button).clicked.connect(on_close_button_clicked);
+            
+            this.autostart = (builder.get_object("autostart-checkbox") as Gtk.ToggleButton);
+            this.autostart.toggled.connect(on_autostart_toggled);
+            
+            this.indicator = (builder.get_object("indicator-checkbox") as Gtk.ToggleButton);
+            this.indicator.toggled.connect(on_indicator_toggled);
+            
+            var scale_slider = (builder.get_object("scale-hscale") as Gtk.HScale);
+                scale_slider.set_range(0.5, 2.0);
+                scale_slider.set_increments(0.05, 0.25);
+                scale_slider.set_value(Config.global.global_scale);
+                
+                bool changing = false;
+                bool changed_again = false;
+
+                scale_slider.value_changed.connect(() => {
+                    if (!changing) {
+                        changing = true;
+                        Timeout.add(300, () => {
+                            if (changed_again) {
+                                changed_again = false;
+                                return true;
+                            }
+
+                            Config.global.global_scale = scale_slider.get_value();
+                            Config.global.load_themes(Config.global.theme.name);
+                            changing = false;
+                            return false;
+                        });
+                    } else {
+                        changed_again = true;
+                    }
+                });
                 
         } catch (GLib.Error e) {
             error("Could not load UI: %s\n", e.message);
@@ -52,11 +87,63 @@ public class AppearanceWindow : GLib.Object {
     }
     
     public void show() {
-        this.window.show_all();
+        this.indicator.active = Config.global.show_indicator;
+        this.autostart.active = Config.global.auto_start;
+    
+        this.window.show_all();        
     }
     
     private void on_close_button_clicked() {
         this.window.hide();
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates or deletes the autostart file. This code is inspired
+    /// by project synapse as well.
+    /////////////////////////////////////////////////////////////////////
+    
+    private void on_autostart_toggled(Gtk.ToggleButton check_box) {
+        bool active = check_box.active;
+        if (!active && FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
+            // delete the autostart file
+            FileUtils.remove (Paths.autostart);
+        }
+        else if (active && !FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
+            string autostart_entry = 
+                "#!/usr/bin/env xdg-open\n" + 
+                "[Desktop Entry]\n" +
+                "Name=Gnome-Pie\n" +
+                "Exec=gnome-pie\n" +
+                "Encoding=UTF-8\n" +
+                "Type=Application\n" +
+                "X-GNOME-Autostart-enabled=true\n" +
+                "Icon=gnome-pie\n";
+
+            // create the autostart file
+            string autostart_dir = GLib.Path.get_dirname(Paths.autostart);
+            if (!FileUtils.test(autostart_dir, FileTest.EXISTS | FileTest.IS_DIR)) {
+                DirUtils.create_with_parents(autostart_dir, 0755);
+            }
+            
+            try {
+                FileUtils.set_contents(Paths.autostart, autostart_entry);
+                FileUtils.chmod(Paths.autostart, 0755);
+            } catch (Error e) {
+                var d = new Gtk.MessageDialog (this.window, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
+                                           "%s", e.message);
+                d.run ();
+                d.destroy ();
+            }
+        }
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Shows or hides the indicator.
+    /////////////////////////////////////////////////////////////////////
+    
+    private void on_indicator_toggled(Gtk.ToggleButton check_box) {
+        var check = check_box as Gtk.CheckButton;
+        Config.global.show_indicator = check.active;
     }
 }
 

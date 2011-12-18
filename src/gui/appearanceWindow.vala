@@ -18,26 +18,29 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// A window which allows selection of an Icon of the user's current icon 
-/// theme. Custom icons/images can be selested as well. Loading of icons
-/// happens in an extra thread and a spinner is displayed while loading.
+/// The Gtk settings menu of Gnome-Pie.
 /////////////////////////////////////////////////////////////////////////
 
-public class IconSelectWindow : GLib.Object {
-
-   private Gtk.Window window = null;
+public class AppearanceWindow : GLib.Object {
     
-    public IconSelectWindow() {
+    private Gtk.Window window = null;
+    private ThemeList theme_list = null;
+    
+    public AppearanceWindow() {
         try {
         
             Gtk.Builder builder = new Gtk.Builder();
 
-            builder.add_from_file (Paths.ui_files + "/icon_select.ui");
+            builder.add_from_file (Paths.ui_files + "/appearance.ui");
 
             this.window = builder.get_object("window") as Gtk.Window;
             
-            (builder.get_object("ok-button") as Gtk.Button).clicked.connect(on_ok_button_clicked);
-            (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(on_cancel_button_clicked);
+            this.theme_list = new ThemeList();
+            
+            var scroll_area = builder.get_object("theme-scrolledwindow") as Gtk.ScrolledWindow;
+                scroll_area.add(this.theme_list);
+                
+            (builder.get_object("close-button") as Gtk.Button).clicked.connect(on_close_button_clicked);
                 
         } catch (GLib.Error e) {
             error("Could not load UI: %s\n", e.message);
@@ -50,13 +53,9 @@ public class IconSelectWindow : GLib.Object {
     
     public void show() {
         this.window.show_all();
-    }  
-    
-    private void on_ok_button_clicked() {
-        this.window.hide();
     }
     
-    private void on_cancel_button_clicked() {
+    private void on_close_button_clicked() {
         this.window.hide();
     }
 }

@@ -1,21 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
-  <object class="GtkListStore" id="pies-list">
-    <columns>
-      <!-- column-name id -->
-      <column type="gchararray"/>
-      <!-- column-name name -->
-      <column type="gchararray"/>
-      <!-- column-name icon -->
-      <column type="GdkPixbuf"/>
-    </columns>
-  </object>
   <object class="GtkWindow" id="window">
     <property name="width_request">600</property>
     <property name="height_request">475</property>
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Gnome-Pie Settings</property>
     <property name="resizable">False</property>
+    <property name="window_position">center</property>
     <property name="has_resize_grip">False</property>
     <child>
       <object class="GtkVBox" id="vbox2">
@@ -53,9 +45,8 @@
                               <object class="GtkLabel" id="change-theme-label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xpad">10</property>
-                                <property name="ypad">2</property>
-                                <property name="label" translatable="yes">Change Theme ...</property>
+                                <property name="xpad">6</property>
+                                <property name="label" translatable="yes">Appearance Options ...</property>
                               </object>
                             </child>
                           </object>
@@ -135,21 +126,13 @@
                     <property name="can_focus">False</property>
                     <child>
                       <object class="GtkScrolledWindow" id="pies-scrolledwindow">
+                        <property name="width_request">170</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
                         <property name="shadow_type">in</property>
                         <child>
-                          <object class="GtkTreeView" id="pies-treeview">
-                            <property name="width_request">170</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="model">pies-list</property>
-                            <property name="headers_visible">False</property>
-                            <child internal-child="selection">
-                              <object class="GtkTreeSelection" id="treeview-selection1"/>
-                            </child>
-                          </object>
+                          <placeholder/>
                         </child>
                       </object>
                       <packing>
@@ -165,7 +148,7 @@
                         <property name="toolbar_style">icons</property>
                         <property name="icon_size">1</property>
                         <child>
-                          <object class="GtkToolButton" id="pie-add-button">
+                          <object class="GtkToolButton" id="add-pie-button">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="use_action_appearance">False</property>
@@ -178,7 +161,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkToolButton" id="pie-remove-button">
+                          <object class="GtkToolButton" id="remove-pie-button">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="use_action_appearance">False</property>
@@ -213,7 +196,6 @@
                       <object class="GtkHBox" id="hbox2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="valign">start</property>
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkButton" id="icon-button">
@@ -225,8 +207,6 @@
                               <object class="GtkImage" id="icon">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xpad">2</property>
-                                <property name="ypad">2</property>
                                 <property name="pixel_size">48</property>
                                 <property name="icon_name">preferences-desktop-wallpaper</property>
                               </object>
@@ -288,8 +268,7 @@
                                   <object class="GtkLabel" id="rename-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xpad">10</property>
-                                    <property name="ypad">2</property>
+                                    <property name="xpad">6</property>
                                     <property name="label" translatable="yes">Rename Slice ...</property>
                                   </object>
                                 </child>
@@ -310,8 +289,7 @@
                                   <object class="GtkLabel" id="assign-key-label">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="xpad">10</property>
-                                    <property name="ypad">2</property>
+                                    <property name="xpad">6</property>
                                     <property name="label" translatable="yes">Assign Key...</property>
                                   </object>
                                 </child>
@@ -371,13 +349,11 @@
                             <property name="receives_default">True</property>
                             <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
-                            <signal name="clicked" handler="window_on_add_slice_button_clicked" swapped="no"/>
                             <child>
                               <object class="GtkLabel" id="add-slice-label">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="xpad">10</property>
-                                <property name="ypad">2</property>
+                                <property name="xpad">6</property>
                                 <property name="label" translatable="yes">Add Slice ...</property>
                               </object>
                             </child>

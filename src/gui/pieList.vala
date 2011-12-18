@@ -31,7 +31,7 @@ class PieList : Gtk.TreeView {
     
     private Gtk.ListStore data;
     
-    private enum DataPos {ICON, NAME, HOTKEY, ID}
+    private enum DataPos {ICON, NAME, ID}
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, constructs the Widget.
@@ -40,30 +40,27 @@ class PieList : Gtk.TreeView {
     public PieList() {
         GLib.Object();
         
-        this.data = new Gtk.ListStore(4, typeof(Gdk.Pixbuf),   
-                                         typeof(string),
+        this.data = new Gtk.ListStore(3, typeof(Gdk.Pixbuf),   
                                          typeof(string),
                                          typeof(string));
         base.set_model(this.data);
         base.set_headers_visible(false);
-        base.set_rules_hint(true);
         base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
+        this.width_request = 170;
         
         var main_column = new Gtk.TreeViewColumn();
             var icon_render = new Gtk.CellRendererPixbuf();
+                icon_render.xpad = 4;
+                icon_render.ypad = 4;
                 main_column.pack_start(icon_render, false);
         
             var name_render = new Gtk.CellRendererText();
                 main_column.pack_start(name_render, true);
-                
-            var trigger_render = new Gtk.CellRendererText();
-                main_column.pack_start(trigger_render, true);
         
         base.append_column(main_column);
         
         main_column.add_attribute(icon_render, "pixbuf", DataPos.ICON);
         main_column.add_attribute(name_render, "markup", DataPos.NAME);
-        main_column.add_attribute(trigger_render, "markup", DataPos.HOTKEY);
         
         this.get_selection().changed.connect(() => {
             Gtk.TreeIter active;
@@ -85,8 +82,7 @@ class PieList : Gtk.TreeView {
             Gtk.TreeIter last;
             this.data.append(out last);
             this.data.set(last, DataPos.ICON, this.load_icon(pie.icon, 24), 
-                                DataPos.NAME, "<b>" + pie.name + "</b>",
-                                DataPos.HOTKEY, PieManager.get_accelerator_label_of(pie.id),
+                                DataPos.NAME, pie.name,
                                 DataPos.ID, pie.id); 
         }
     }

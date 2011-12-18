@@ -21,9 +21,9 @@ namespace GnomePie {
 /// A simple about Dialog.
 /////////////////////////////////////////////////////////////////////////
 
-public class GnomePieAboutDialog: Gtk.AboutDialog {
+public class AboutWindow: Gtk.AboutDialog {
 
-    public GnomePieAboutDialog () {
+    public AboutWindow () {
     	string[] devs = {
 			"Simon Schneegans <code@simonschneegans.de>", 
             "Francesco Piccinno <stack.box@gmail.com>"

@@ -23,16 +23,16 @@ namespace GnomePie {
 /// happens in an extra thread and a spinner is displayed while loading.
 /////////////////////////////////////////////////////////////////////////
 
-public class IconSelectWindow : GLib.Object {
+public class NewSliceWindow : GLib.Object {
 
    private Gtk.Window window = null;
     
-    public IconSelectWindow() {
+    public NewSliceWindow() {
         try {
         
             Gtk.Builder builder = new Gtk.Builder();
 
-            builder.add_from_file (Paths.ui_files + "/icon_select.ui");
+            builder.add_from_file (Paths.ui_files + "/slice_select.ui");
 
             this.window = builder.get_object("window") as Gtk.Window;
             
@@ -50,7 +50,7 @@ public class IconSelectWindow : GLib.Object {
     
     public void show() {
         this.window.show_all();
-    }  
+    }
     
     private void on_ok_button_clicked() {
         this.window.hide();
@@ -58,7 +58,7 @@ public class IconSelectWindow : GLib.Object {
     
     private void on_cancel_button_clicked() {
         this.window.hide();
-    }
+    }    
 }
 
 }

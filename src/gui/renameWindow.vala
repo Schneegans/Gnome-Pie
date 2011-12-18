@@ -23,16 +23,16 @@ namespace GnomePie {
 /// happens in an extra thread and a spinner is displayed while loading.
 /////////////////////////////////////////////////////////////////////////
 
-public class IconSelectWindow : GLib.Object {
+public class RenameWindow : GLib.Object {
 
    private Gtk.Window window = null;
     
-    public IconSelectWindow() {
+    public RenameWindow() {
         try {
         
             Gtk.Builder builder = new Gtk.Builder();
 
-            builder.add_from_file (Paths.ui_files + "/icon_select.ui");
+            builder.add_from_file (Paths.ui_files + "/rename_pie.ui");
 
             this.window = builder.get_object("window") as Gtk.Window;
             

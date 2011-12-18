@@ -38,7 +38,7 @@ public class Indicator : GLib.Object {
     /// The Preferences Menu of Gnome-Pie.
     /////////////////////////////////////////////////////////////////////
 
-    private Preferences prefs { private get; private set; }
+    private PreferencesWindow prefs { private get; private set; }
 
     /////////////////////////////////////////////////////////////////////
     /// Returns true, when the indicator is currently visible.
@@ -102,7 +102,7 @@ public class Indicator : GLib.Object {
             var menu = this.menu;
         #endif
 
-        this.prefs = new Preferences();
+        this.prefs = new PreferencesWindow();
 
         // preferences item
         var item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.PREFERENCES, null);
@@ -117,7 +117,7 @@ public class Indicator : GLib.Object {
         item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.ABOUT, null);
         item.show();
         item.activate.connect(() => {
-            var about = new GnomePieAboutDialog();
+            var about = new AboutWindow();
             about.run();
             about.destroy();
         });

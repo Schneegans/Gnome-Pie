@@ -60,6 +60,13 @@ public class Paths : GLib.Object {
     public static string locales { get; private set; default=""; }
     
     /////////////////////////////////////////////////////////////////////
+    /// The directory containing UI declaration files
+    /// usually /usr/share/gnome-pie/ui/.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string ui_files { get; private set; default=""; }
+    
+    /////////////////////////////////////////////////////////////////////
     /// The autostart file of gnome-pie_config
     /// usually ~/.config/autostart/gnome-pie.desktop.
     /////////////////////////////////////////////////////////////////////
@@ -111,6 +118,7 @@ public class Paths : GLib.Object {
         }
         
         global_themes = default_dir.get_path() + "/themes";
+        ui_files = default_dir.get_path() + "/ui";
         
         // get locales path
         var locale_dir = GLib.File.new_for_path("/usr/share/locale/de/LC_MESSAGES/gnomepie.mo");
@@ -204,7 +212,10 @@ public class Paths : GLib.Object {
             warning("Failed to find launchers directory!");
             
         if (!GLib.File.new_for_path(global_themes).query_exists()) 
-            warning("Failed to find global themes directory!");     
+            warning("Failed to find global themes directory!");   
+            
+        if (!GLib.File.new_for_path(ui_files).query_exists()) 
+            warning("Failed to find UI files directory!");     
     }    
 }
 

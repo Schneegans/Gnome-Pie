@@ -36,10 +36,13 @@ class PiePreview : Gtk.DrawingArea {
         this.expose_event.connect(this.on_draw);
         this.timer = new GLib.Timer();
         this.show.connect(this.timer.start);
+        
+        this.set_size_request(900, 900);
     }
     
     public void set_pie(string id) {
         this.renderer.load_pie(PieManager.all_pies[id]);
+        this.queue_draw();
     }
     
     private bool on_draw(Gtk.Widget da, Gdk.EventExpose event) { 

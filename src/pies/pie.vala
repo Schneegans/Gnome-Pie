@@ -29,14 +29,14 @@ public class Pie : GLib.Object {
     /// The name of this Pie. It has not to be unique.
     /////////////////////////////////////////////////////////////////////
     
-    public string name { get; construct; }
+    public string name { get; set; }
     
     /////////////////////////////////////////////////////////////////////
     /// The name of the icon to be used for this Pie. It should exist in
     /// the users current icon theme, else a standard icon will be used.
     /////////////////////////////////////////////////////////////////////
     
-    public string icon { get; construct; }
+    public string icon { get; set; }
     
     /////////////////////////////////////////////////////////////////////
     /// The ID of this Pie. It has to be unique among all Pies. This ID

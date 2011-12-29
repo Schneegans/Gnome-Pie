@@ -71,6 +71,11 @@ class PieList : Gtk.TreeView {
             }
         });
         
+        reload_all();
+    }
+    
+    public void reload_all() {
+        data.clear();
         foreach (var pie in PieManager.all_pies.entries) {
             this.load_pie(pie.value);
         }

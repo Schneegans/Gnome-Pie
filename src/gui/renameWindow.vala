@@ -25,8 +25,12 @@ namespace GnomePie {
 
 public class RenameWindow : GLib.Object {
 
-   private Gtk.Window window = null;
+    private Gtk.Window window = null;
+    private Gtk.Entry entry = null;
+    private string selected_id = "";
     
+    public signal void on_ok(string new_name);
+     
     public RenameWindow() {
         try {
         
@@ -34,7 +38,8 @@ public class RenameWindow : GLib.Object {
 
             builder.add_from_file (Paths.ui_files + "/rename_pie.ui");
 
-            this.window = builder.get_object("window") as Gtk.Window;
+            window = builder.get_object("window") as Gtk.Window;
+            entry = builder.get_object("name-entry") as Gtk.Entry;
             
             (builder.get_object("ok-button") as Gtk.Button).clicked.connect(on_ok_button_clicked);
             (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(on_cancel_button_clicked);
@@ -52,7 +57,12 @@ public class RenameWindow : GLib.Object {
         this.window.show_all();
     }  
     
+    public void set_pie(string id) {
+        entry.text = PieManager.get_name_of(id);
+    }
+    
     private void on_ok_button_clicked() {
+        this.on_ok(entry.text);
         this.window.hide();
     }
     

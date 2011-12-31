@@ -24,52 +24,78 @@ ensure_vala_version("0.11.0" MINIMUM)
 ################################################################
 
 find_package(PkgConfig)
+
+# check whether GTK3 is supported
+pkg_check_modules(GTK3 gtk+-3.0)
+
+if (${GTK3_FOUND})
+    pkg_check_modules(INDICATOR3 appindicator3-0.1)
+    pkg_check_modules(UNIQUE REQUIRED unique-3.0)
+    pkg_check_modules(WNCK REQUIRED libwnck-3.0)
+    pkg_check_modules(BAMF REQUIRED libbamf3)
+else (${GTK3_FOUND})
+    pkg_check_modules(GTK2 REQUIRED gtk+-2.0)
+    pkg_check_modules(INDICATOR appindicator-0.1)
+    pkg_check_modules(UNIQUE REQUIRED unique-1.0)
+    pkg_check_modules(WNCK REQUIRED libwnck-1.0)
+    pkg_check_modules(BAMF REQUIRED libbamf)
+endif (${GTK3_FOUND})
+
 pkg_check_modules(GIO REQUIRED gio-unix-2.0)
-pkg_check_modules(GTK REQUIRED gtk+-2.0)
 pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-1.0)
 pkg_check_modules(X11 REQUIRED x11)
-pkg_check_modules(INDICATOR appindicator-0.1)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
-pkg_check_modules(UNIQUE REQUIRED unique-1.0)
-pkg_check_modules(BAMF REQUIRED libbamf)
-pkg_check_modules(WNCK REQUIRED libwnck-1.0)
 pkg_check_modules(GMENU3 libgnome-menu-3.0)
 
 find_library(M_LIB m)
 
 set(CFLAGS
     ${GIO_CFLAGS}
-    ${GTK_CFLAGS} ${GTK_CFLAGS_OTHER}
+    ${GTK2_CFLAGS} ${GTK2_CFLAGS_OTHER}
+    ${GTK3_CFLAGS} ${GTK3_CFLAGS_OTHER}
     ${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
     ${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
     ${X11_CFLAGS} ${X11_CFLAGS_OTHER}
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE
     -DGETTEXT_PACKAGE="gnomepie"
-	#-s -O3
-	-g
+	-s -O3
+	#-g
 )
 
+# fallback to gtk2 if gtk3 wasn't found
+if (${GTK3_FOUND})
+    LIST(APPEND CFLAGS -DHAVE_GTK_3)
+endif (${GTK3_FOUND})
+
+# fallback to gnome-menus2 if gnome-menus3 wasn't found
 if (${GMENU3_FOUND})
     LIST(APPEND CFLAGS -DHAVE_GMENU_3)
 else (${GMENU3_FOUND})
     pkg_check_modules(GMENU REQUIRED libgnome-menu)
 endif (${GMENU3_FOUND})
 
+# notify application of presence of libappindicator
 if (${INDICATOR_FOUND})
     LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
 endif (${INDICATOR_FOUND})
+
+if (${INDICATOR3_FOUND})
+    LIST(APPEND CFLAGS -DHAVE_APPINDICATOR3)
+endif (${INDICATOR3_FOUND})
 
 add_definitions(${CFLAGS})
 
 set(LIBS
     ${GIO_LIBRARIES}
-	${GTK_LIBRARIES}
+	${GTK2_LIBRARIES}
+	${GTK3_LIBRARIES}
 	${CAIRO_LIBRARIES}
 	${GEE_LIBRARIES}
 	${INDICATOR_LIBRARIES}
+	${INDICATOR3_LIBRARIES}
 	${XML_LIBRARIES}
 	${XTST_LIBRARIES}
 	${GMENU_LIBRARIES}
@@ -84,10 +110,12 @@ link_libraries(${LIBS})
 
 set(LIB_PATHS
     ${GIO_LIBRARY_DIRS}
-	${GTK_LIBRARY_DIRS}
+	${GTK2_LIBRARY_DIRS}
+	${GTK3_LIBRARY_DIRS}
 	${CAIRO_LIBRARY_DIRS}
 	${GEE_LIBRARY_DIRS}
 	${INDICATOR_LIBRARY_DIRS}
+	${INDICATOR3_LIBRARY_DIRS}
 	${XML_LIBRARY_DIRS}
 	${XTST_LIBRARY_DIRS}
 	${GMENU_LIBRARY_DIRS}
@@ -101,10 +129,12 @@ link_directories(${LIB_PATHS})
 
 set(INCLUDE_PATHS
     ${GIO_INCLUDE_DIRS}
-	${GTK_INCLUDE_DIRS}
+	${GTK2_INCLUDE_DIRS}
+	${GTK3_INCLUDE_DIRS}
 	${CAIRO_INCLUDE_DIRS}
 	${GEE_INCLUDE_DIRS}
 	${INDICATOR_INCLUDE_DIRS}
+	${INDICATOR3_INCLUDE_DIRS}
 	${XML_INCLUDE_DIRS}
 	${XTST_INCLUDE_DIRS}	
 	${GMENU_INCLUDE_DIRS}
@@ -123,8 +153,6 @@ include_directories(${INCLUDE_PATHS})
 set(EXECUTABLE_OUTPUT_PATH ${gnomepie_SOURCE_DIR})
 
 set(VALA_PKGS
-  gtk+-2.0
-  gdk-x11-2.0
   cairo
   gee-1.0
   x11
@@ -132,20 +160,35 @@ set(VALA_PKGS
   posix
   libxml-2.0
   xtst
-  unique-1.0
-  bamf
-  libwnck-1.0
 )
 
 if (${INDICATOR_FOUND})
     LIST(APPEND VALA_PKGS appindicator-0.1)
 endif (${INDICATOR_FOUND})
 
+if (${INDICATOR3_FOUND})
+    LIST(APPEND VALA_PKGS appindicator3-0.1)
+endif (${INDICATOR3_FOUND})
+
 if (${GMENU3_FOUND})
     LIST(APPEND VALA_PKGS libgnome-menu-3.0)
 else (${GMENU3_FOUND})
     LIST(APPEND VALA_PKGS libgnome-menu)
 endif (${GMENU3_FOUND})
+
+if (${GTK3_FOUND})
+    LIST(APPEND VALA_PKGS gtk+-3.0)
+    LIST(APPEND VALA_PKGS gdk-x11-3.0)
+    LIST(APPEND VALA_PKGS libbamf3)
+    LIST(APPEND VALA_PKGS libwnck-3.0)
+    LIST(APPEND VALA_PKGS unique-3.0)
+else (${GTK3_FOUND})
+    LIST(APPEND VALA_PKGS gtk+-2.0)
+    LIST(APPEND VALA_PKGS gdk-x11-2.0)
+    LIST(APPEND VALA_PKGS bamf)
+    LIST(APPEND VALA_PKGS libwnck-1.0)
+    LIST(APPEND VALA_PKGS unique-1.0)
+endif (${GTK3_FOUND})
 
 add_subdirectory(src)
 
@@ -170,10 +213,12 @@ message( "Summary:" )
 message( "  EXECUTABLE_OUTPUT_PATH = ${EXECUTABLE_OUTPUT_PATH}" )
 message( "  VALA_EXECUTABLE = ${VALA_EXECUTABLE}" )
 message( "Libs:" )
-message( "  GTK_LIBRARIES = ${GTK_LIBRARIES}" )
+message( "  GTK2_LIBRARIES = ${GTK2_LIBRARIES}" )
+message( "  GTK3_LIBRARIES = ${GTK3_LIBRARIES}" )
 message( "  CAIRO_LIBRARIES = ${CAIRO_LIBRARIES}" )
 message( "  GEE_LIBRARIES = ${GEE_LIBRARIES}" )
 message( "  INDICATOR_LIBRARIES = ${INDICATOR_LIBRARIES}" )
+message( "  INDICATOR3_LIBRARIES = ${INDICATOR3_LIBRARIES}" )
 message( "  XML_LIBRARIES = ${XML_LIBRARIES}" )
 message( "  XTST_LIBRARIES = ${XTST_LIBRARIES}" )
 message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )

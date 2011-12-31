@@ -9,6 +9,10 @@ if (${INDICATOR_FOUND})
   SET(DEFINES --define HAVE_APPINDICATOR)
 endif(${INDICATOR_FOUND})
 
+if (${GTK3_FOUND})
+  SET(DEFINES --define HAVE_GTK_3)
+endif(${GTK3_FOUND})
+
 if (${GMENU3_FOUND})
     LIST(APPEND DEFINES --define HAVE_GMENU_3)
 endif (${GMENU3_FOUND})
@@ -59,6 +63,14 @@ install(
 install(
 	DIRECTORY
 		${CMAKE_SOURCE_DIR}/resources/themes
+	DESTINATION
+		${CMAKE_INSTALL_PREFIX}/share/gnome-pie
+)
+
+# install UI files
+install(
+	DIRECTORY
+		${CMAKE_SOURCE_DIR}/resources/ui
 	DESTINATION
 		${CMAKE_INSTALL_PREFIX}/share/gnome-pie
 )

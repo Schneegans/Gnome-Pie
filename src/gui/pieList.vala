@@ -43,6 +43,9 @@ class PieList : Gtk.TreeView {
         this.data = new Gtk.ListStore(3, typeof(Gdk.Pixbuf),   
                                          typeof(string),
                                          typeof(string));
+                                         
+        this.data.set_sort_column_id(1, Gtk.SortType.ASCENDING);
+        
         base.set_model(this.data);
         base.set_headers_visible(false);
         base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
@@ -79,6 +82,33 @@ class PieList : Gtk.TreeView {
         foreach (var pie in PieManager.all_pies.entries) {
             this.load_pie(pie.value);
         }
+    }
+    
+    public void select_first() {
+        Gtk.TreeIter active;
+        
+        if(this.data.get_iter_first(out active) ) {
+            this.get_selection().select_iter(active);
+            string id = "";
+            this.data.get(active, DataPos.ID, out id);
+            this.on_select(id);
+        } else {
+            this.on_select("");
+        }
+    }
+    
+    public void select(string id) {
+        this.data.foreach((model, path, iter) => {
+            string pie_id;
+            this.data.get(iter, DataPos.ID, out pie_id);
+            
+            if (id == pie_id) {
+                this.get_selection().select_iter(iter);
+                return true;
+            }
+            
+            return false;
+        });
     }
     
     // loads one given pie to the list

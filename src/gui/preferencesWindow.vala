@@ -77,6 +77,8 @@ public class PreferencesWindow : GLib.Object {
             (builder.get_object("icon-button") as Gtk.Button).clicked.connect(on_icon_button_clicked);
             (builder.get_object("rename-button") as Gtk.Button).clicked.connect(on_rename_button_clicked);
             (builder.get_object("add-slice-button") as Gtk.Button).clicked.connect(on_add_slice_button_clicked);
+            (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
+            (builder.get_object("remove-pie-button") as Gtk.ToolButton).clicked.connect(on_remove_pie_button_clicked);
             
             window.hide.connect(() => {
                 // save settings on close
@@ -90,18 +92,27 @@ public class PreferencesWindow : GLib.Object {
     }
     
     public void show() {
+        pie_list.select_first();
         window.show_all();
     }
     
     private void on_pie_select(string id) {
         selected_id = id;
-        var pie = PieManager.all_pies[selected_id];
         
-        id_label.label = _("ID: %s").printf(pie.id);
-        name_label.label = PieManager.get_name_of(pie.id);
-        hotkey_label.set_markup(PieManager.get_accelerator_label_of(pie.id));
-        icon.icon_name = pie.icon;
-        preview.set_pie(id);
+        if (id == "") {
+            id_label.label = "";
+            name_label.label = _("No Pie selected.");
+            hotkey_label.set_markup("");
+            icon.icon_name = "application-default-icon";
+            preview.set_pie(id);
+        } else {
+            var pie = PieManager.all_pies[selected_id];
+            id_label.label = _("ID: %s").printf(pie.id);
+            name_label.label = PieManager.get_name_of(pie.id);
+            hotkey_label.set_markup(PieManager.get_accelerator_label_of(pie.id));
+            icon.icon_name = pie.icon;
+            preview.set_pie(id);
+        }
     }
     
     private void on_add_slice_button_clicked(Gtk.Button button) {
@@ -112,12 +123,29 @@ public class PreferencesWindow : GLib.Object {
         new_slice_window.show();
     }
     
-    private void on_add_pie_button_clicked(Gtk.Button button) {
-        debug("add pie");
+    private void on_add_pie_button_clicked(Gtk.ToolButton button) {
+        var new_pie = PieManager.create_persistent_pie(_("New Pie"), "application-default-icon", null);
+        pie_list.reload_all();
+        pie_list.select(new_pie.id);
     }
     
-    private void on_remove_pie_button_clicked(Gtk.Button button) {
-        debug("remove pie");
+    private void on_remove_pie_button_clicked(Gtk.ToolButton button) {
+        if (selected_id != "") {
+            var dialog = new Gtk.MessageDialog((Gtk.Window)this.window.get_toplevel(), Gtk.DialogFlags.MODAL,
+                         Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
+                         _("Do you really want to delete the selected Pie with all contained Slices?"));
+                                                     
+            dialog.response.connect((response) => {
+                if (response == Gtk.ResponseType.YES) {
+                    PieManager.remove_pie(selected_id);
+                    pie_list.reload_all();
+                    pie_list.select_first();
+                }
+            });
+            
+            dialog.run();
+            dialog.destroy();
+        }
     }
     
     private void on_rename_button_clicked(Gtk.Button button) {

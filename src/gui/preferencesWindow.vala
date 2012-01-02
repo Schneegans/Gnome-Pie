@@ -159,8 +159,16 @@ public class PreferencesWindow : GLib.Object {
     }
     
     private void on_icon_button_clicked(Gtk.Button button) {
-        if (icon_window == null)
+        if (icon_window == null) {
             icon_window = new IconSelectWindow();
+            
+            icon_window.on_ok.connect((icon) => {
+                var pie = PieManager.all_pies[selected_id];
+                pie.icon = icon;
+                this.icon.icon_name = icon;
+                pie_list.reload_all();
+            });
+        }
         
         icon_window.set_parent(window);
         icon_window.show();

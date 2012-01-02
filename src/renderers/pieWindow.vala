@@ -145,7 +145,7 @@ public class PieWindow : Gtk.Window {
 
     public void load_pie(Pie pie) {
         this.renderer.load_pie(pie);
-        this.set_window_position();
+        this.set_window_position(pie);
         this.set_size_request(renderer.size, renderer.size);
     }
     
@@ -260,9 +260,9 @@ public class PieWindow : Gtk.Window {
     /// the mouse.
     /////////////////////////////////////////////////////////////////////
     
-    private void set_window_position() {
-        if(Config.global.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
-        else                            this.set_position(Gtk.WindowPosition.CENTER);
+    private void set_window_position(Pie pie) {
+        if(PieManager.get_is_centered(pie.id)) this.set_position(Gtk.WindowPosition.CENTER);
+        else                                   this.set_position(Gtk.WindowPosition.MOUSE);
     }
     
     /////////////////////////////////////////////////////////////////////

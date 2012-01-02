@@ -101,7 +101,7 @@
             </child>
             <child>
               <object class="GtkCheckButton" id="center-check">
-                <property name="label" translatable="yes">Open at pointer</property>
+                <property name="label" translatable="yes">Open Pie centered on the screen</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>

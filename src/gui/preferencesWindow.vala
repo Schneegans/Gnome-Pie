@@ -137,10 +137,16 @@ public class PreferencesWindow : GLib.Object {
     }
     
     private void on_key_button_clicked(Gtk.Button button) {
-        if (trigger_window == null)
+        if (trigger_window == null) {
             trigger_window = new TriggerSelectWindow();
+            trigger_window.on_ok.connect((trigger) => {
+                PieManager.bind_trigger(trigger, selected_id);
+                hotkey_label.set_markup(trigger.label_with_specials);
+            });
+        }
         
         trigger_window.set_parent(window);
+        trigger_window.set_pie(selected_id);
         trigger_window.show();
     }
     

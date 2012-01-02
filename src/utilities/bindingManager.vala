@@ -185,6 +185,20 @@ public class BindingManager : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
+    /// Returns whether the pie with the given ID opens centered.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool get_is_centered(string id) {
+        foreach (var binding in bindings) {
+            if (binding.id == id) {
+                return binding.trigger.centered;
+            }
+        }
+        
+        return false;
+    }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Returns the name ID of the Pie bound to the given Trigger.
     /// Returns "" if there is nothing bound to this trigger.
     /////////////////////////////////////////////////////////////////////

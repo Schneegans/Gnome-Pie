@@ -113,12 +113,26 @@ public class PieManager : GLib.Object {
         return bindings.get_accelerator_label_of(id);
     }
     
+    public static void bind_trigger(Trigger trigger, string id) {
+        bindings.unbind(id);
+        bindings.bind(trigger, id);
+    }
+    
     /////////////////////////////////////////////////////////////////////
     /// Returns true if the pie with the given id is in turbo mode.
     /////////////////////////////////////////////////////////////////////
     
     public static bool get_is_turbo(string id) {
         return bindings.get_is_turbo(id);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns true if the pie with the given id opens in the middle of
+    /// the screen.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static bool get_is_centered(string id) {
+        return bindings.get_is_centered(id);
     }
     
     /////////////////////////////////////////////////////////////////////

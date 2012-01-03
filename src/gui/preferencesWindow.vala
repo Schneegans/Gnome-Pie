@@ -154,6 +154,7 @@ public class PreferencesWindow : GLib.Object {
             rename_window.on_ok.connect((name) => {
                 var pie = PieManager.all_pies[selected_id];
                 pie.name = name;
+                PieManager.create_launcher(pie.id);
                 name_label.label = name;
                 pie_list.reload_all();
             });
@@ -193,6 +194,7 @@ public class PreferencesWindow : GLib.Object {
             icon_window.on_ok.connect((icon) => {
                 var pie = PieManager.all_pies[selected_id];
                 pie.icon = icon;
+                PieManager.create_launcher(pie.id);
                 this.icon.icon_name = icon;
                 pie_list.reload_all();
             });

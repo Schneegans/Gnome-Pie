@@ -237,7 +237,7 @@ public class PieManager : GLib.Object {
         }
     }
     
-    private static void create_launcher(string id) {
+    public static void create_launcher(string id) {
         if (all_pies.has_key(id)) {
             Pie? pie = all_pies[id];
             

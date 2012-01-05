@@ -55,6 +55,7 @@ public class Theme : GLib.Object {
     public int    caption_height   {get; private set; default=100;}
     public double caption_position {get; private set; default=0.0;}
     public Color  caption_color    {get; private set; default=new Color();}
+    public Icon   preview_icon     {get; private set; default=new Icon("gnome-pie", 36);}
     
     public Gee.ArrayList<CenterLayer?> center_layers         {get; private set;}
     public Gee.ArrayList<SliceLayer?>  active_slice_layers   {get; private set;}
@@ -82,6 +83,8 @@ public class Theme : GLib.Object {
         this.center_layers.clear();
         this.active_slice_layers.clear();
         this.inactive_slice_layers.clear();
+        
+        this.preview_icon = new Icon(this.directory + "/preview.png", 36);
     
         Xml.Parser.init();
         string path = this.directory + "/theme.xml";

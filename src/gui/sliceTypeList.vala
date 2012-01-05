@@ -21,10 +21,10 @@ namespace GnomePie {
 /// 
 /////////////////////////////////////////////////////////////////////////
 
-class PieList : Gtk.TreeView {
+class SliceTypeList : Gtk.TreeView {
 
     /////////////////////////////////////////////////////////////////////
-    /// The currently selected row.
+    /// 
     /////////////////////////////////////////////////////////////////////
     
     public signal void on_select(string id);
@@ -37,7 +37,7 @@ class PieList : Gtk.TreeView {
     /// C'tor, constructs the Widget.
     /////////////////////////////////////////////////////////////////////
 
-    public PieList() {
+    public SliceTypeList() {
         GLib.Object();
         
         this.data = new Gtk.ListStore(3, typeof(Gdk.Pixbuf),   
@@ -53,8 +53,6 @@ class PieList : Gtk.TreeView {
         
         var main_column = new Gtk.TreeViewColumn();
             var icon_render = new Gtk.CellRendererPixbuf();
-                icon_render.xpad = 4;
-                icon_render.ypad = 4;
                 main_column.pack_start(icon_render, false);
         
             var name_render = new Gtk.CellRendererText();
@@ -64,12 +62,6 @@ class PieList : Gtk.TreeView {
         
         main_column.add_attribute(icon_render, "pixbuf", DataPos.ICON);
         main_column.add_attribute(name_render, "markup", DataPos.NAME);
-        
-        // setup drag'n'drop
-        Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
-        Gtk.TargetEntry[] entries = { uri_source };
-        this.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
-        this.drag_data_get.connect(this.on_dnd_source);
         
         this.get_selection().changed.connect(() => {
             Gtk.TreeIter active;
@@ -85,16 +77,38 @@ class PieList : Gtk.TreeView {
     
     public void reload_all() {
         Gtk.TreeIter active;
-        string id = "";
+        string current_id = "";
         if (this.get_selection().get_selected(null, out active))
-            this.data.get(active, DataPos.ID, out id);
+            this.data.get(active, DataPos.ID, out current_id);
     
         data.clear();
-        foreach (var pie in PieManager.all_pies.entries) {
-            this.load_pie(pie.value);
+        
+        foreach (var action_type in ActionRegistry.types) {
+            var description = ActionRegistry.descriptions[action_type];
+            
+            Gtk.TreeIter current;
+            data.append(out current);
+            var icon = new Icon(description.icon, 36);
+            data.set(current, DataPos.ICON, icon.to_pixbuf()); 
+            data.set(current, DataPos.NAME, "<b>" + description.name + "</b>\n"
+                                 + "<small>" + description.description + "</small>"); 
+            data.set(current, DataPos.ID, description.id); 
         }
         
-        select(id);
+        foreach (var group_type in GroupRegistry.types) {
+            var description = GroupRegistry.descriptions[group_type];
+            
+            Gtk.TreeIter current;
+            data.append(out current);
+            var icon = new Icon(description.icon, 36);
+            data.set(current, DataPos.ICON, icon.to_pixbuf()); 
+            data.set(current, DataPos.NAME, "<b>" + description.name + "</b>\n"
+                                 + "<small>" + description.description + "</small>"); 
+            data.set(current, DataPos.ID, description.id); 
+        }
+        
+        select_first();
+        select(current_id);
     }
     
     public void select_first() {
@@ -122,27 +136,6 @@ class PieList : Gtk.TreeView {
             
             return false;
         });
-    }
-    
-    // loads one given pie to the list
-    private void load_pie(Pie pie) {
-        if (pie.id.length == 3) {
-            Gtk.TreeIter last;
-            this.data.append(out last);
-            var icon = new Icon(pie.icon, 24);
-            this.data.set(last, DataPos.ICON, icon.to_pixbuf(), 
-                                DataPos.NAME, pie.name,
-                                DataPos.ID, pie.id); 
-        }
-    }
-    
-    private void on_dnd_source(Gdk.DragContext context, Gtk.SelectionData selection_data, uint info, uint time_) {
-        Gtk.TreeIter selected;
-        if (this.get_selection().get_selected(null, out selected)) {
-            string id = "";
-            this.data.get(selected, DataPos.ID, out id);
-            selection_data.set_uris({"file://" + Paths.launchers + "/" + id + ".desktop"});
-        }
     }
 }
 

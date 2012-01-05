@@ -89,7 +89,7 @@ public class PieRenderer : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Loads an Pie. All members are initialized accordingly.
+    /// Loads a Pie. All members are initialized accordingly.
     /////////////////////////////////////////////////////////////////////
     
     public void load_pie(Pie pie) {

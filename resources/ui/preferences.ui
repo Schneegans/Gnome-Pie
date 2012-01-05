@@ -284,6 +284,44 @@
                               </packing>
                             </child>
                             <child>
+                              <object class="GtkLabel" id="help-label1">
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;This Pie is empty!&lt;/b&gt;&lt;/big&gt;
+
+Start adding Slices to it!
+
+This can be done by dragging stuff here. You can try a lot! For example application launchers or folders. Even URLs from your browser are possible... 
+
+For manual and advanced configuration use the button below.</property>
+                                <property name="use_markup">True</property>
+                                <property name="justify">center</property>
+                                <property name="wrap">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="help-label2">
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;You have no Pies!&lt;/b&gt;&lt;/big&gt;
+
+Start by creating one!
+
+This can be done by clicking on the tiny little plus sign in the lower left corner.</property>
+                                <property name="use_markup">True</property>
+                                <property name="justify">center</property>
+                                <property name="wrap">True</property>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
                               <object class="GtkHBox" id="hbox5">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
@@ -328,7 +366,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">1</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                           </object>

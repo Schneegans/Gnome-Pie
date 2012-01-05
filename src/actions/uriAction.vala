@@ -29,10 +29,13 @@ public class UriAction : Action {
     /// used in the pies.conf file for this kind of Actions.
     /////////////////////////////////////////////////////////////////////
     
-    public static void register(out string name, out bool icon_name_editable, out string settings_name) {
-        name = _("Open URI");
-        icon_name_editable = true;
-        settings_name = "uri";
+    public static void register(out ActionRegistry.TypeDescription description) {
+        description = ActionRegistry.TypeDescription();
+        description.name = _("Open URI");
+        description.icon = "web-browser";
+        description.description = _("Opens a given location. You may use URL's or files paths.");
+        description.icon_name_editable = true;
+        description.id = "uri";
     }
     
     /////////////////////////////////////////////////////////////////////

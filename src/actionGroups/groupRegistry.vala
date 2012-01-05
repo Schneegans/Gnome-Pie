@@ -34,9 +34,14 @@ public class GroupRegistry : GLib.Object {
     /// an icon name and a name for the pies.conf file with it's type.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.HashMap<Type, string> names { get; private set; }
-    public static Gee.HashMap<Type, string> icons { get; private set; }
-    public static Gee.HashMap<Type, string> settings_names { get; private set; }
+    public static Gee.HashMap<Type, TypeDescription?> descriptions { get; private set; }
+    
+    public struct TypeDescription {
+        public string name { get; set; }
+        public string icon { get; set; }
+        public string description { get; set; }
+        public string id { get; set; }
+    }
     
     /////////////////////////////////////////////////////////////////////
     /// Registers all ActionGroup types.
@@ -44,50 +49,29 @@ public class GroupRegistry : GLib.Object {
     
     public static void init() {
         types = new Gee.ArrayList<Type>();
+        descriptions = new Gee.HashMap<Type, TypeDescription?>();
     
-        names = new Gee.HashMap<Type, string>();
-        icons = new Gee.HashMap<Type, string>();
-        settings_names = new Gee.HashMap<Type, string>();
-    
-        string name = "";
-        string icon = "";
-        string settings_name = "";
+        TypeDescription type_description;
         
-        BookmarkGroup.register(out name, out icon, out settings_name);
+        BookmarkGroup.register(out type_description);
         types.add(typeof(BookmarkGroup));
-        names.set(typeof(BookmarkGroup), name);
-        icons.set(typeof(BookmarkGroup), icon);
-        settings_names.set(typeof(BookmarkGroup), settings_name);
+        descriptions.set(typeof(BookmarkGroup), type_description);
         
-        DevicesGroup.register(out name, out icon, out settings_name);
+        DevicesGroup.register(out type_description);
         types.add(typeof(DevicesGroup));
-        names.set(typeof(DevicesGroup), name);
-        icons.set(typeof(DevicesGroup), icon);
-        settings_names.set(typeof(DevicesGroup), settings_name);
+        descriptions.set(typeof(DevicesGroup), type_description);
         
-        MenuGroup.register(out name, out icon, out settings_name);
+        MenuGroup.register(out type_description);
         types.add(typeof(MenuGroup));
-        names.set(typeof(MenuGroup), name);
-        icons.set(typeof(MenuGroup), icon);
-        settings_names.set(typeof(MenuGroup), settings_name);
+        descriptions.set(typeof(MenuGroup), type_description);
         
-        SessionGroup.register(out name, out icon, out settings_name);
+        SessionGroup.register(out type_description);
         types.add(typeof(SessionGroup));
-        names.set(typeof(SessionGroup), name);
-        icons.set(typeof(SessionGroup), icon);
-        settings_names.set(typeof(SessionGroup), settings_name);
+        descriptions.set(typeof(SessionGroup), type_description);
         
-        WindowListGroup.register(out name, out icon, out settings_name);
+        WindowListGroup.register(out type_description);
         types.add(typeof(WindowListGroup));
-        names.set(typeof(WindowListGroup), name);
-        icons.set(typeof(WindowListGroup), icon);
-        settings_names.set(typeof(WindowListGroup), settings_name);
-        
-//        ClipboardGroup.register(out name, out icon, out settings_name);
-//        types.add(typeof(ClipboardGroup));
-//        names.set(typeof(ClipboardGroup), name);
-//        icons.set(typeof(ClipboardGroup), icon);
-//        settings_names.set(typeof(ClipboardGroup), settings_name);
+        descriptions.set(typeof(WindowListGroup), type_description);
     }
 }
 

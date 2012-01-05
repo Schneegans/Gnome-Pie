@@ -29,10 +29,13 @@ public class AppAction : Action {
     /// used in the pies.conf file for this kind of Actions.
     /////////////////////////////////////////////////////////////////////
 
-    public static void register(out string name, out bool icon_name_editable, out string settings_name) {
-        name = _("Launch application");
-        icon_name_editable = true;
-        settings_name = "app";
+    public static void register(out ActionRegistry.TypeDescription description) {
+        description = ActionRegistry.TypeDescription();
+        description.name = _("Launch application");
+        description.icon = "application-x-executable";
+        description.description = _("Executes the given command.");
+        description.icon_name_editable = true;
+        description.id = "app";
     }
     
     /////////////////////////////////////////////////////////////////////

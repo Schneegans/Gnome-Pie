@@ -23,8 +23,11 @@ namespace GnomePie {
 
 public class PreferencesWindow : GLib.Object {
 
+    private Gtk.Builder builder = null;
+
     private string selected_id = "";
     
+    private Gtk.VBox? preview_box = null;
     private PiePreview? preview = null;
     private PieList? pie_list = null;
     
@@ -32,6 +35,8 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.Label? id_label = null;
     private Gtk.Label? name_label = null;
     private Gtk.Label? hotkey_label = null;
+    private Gtk.Label? help_label1 = null;
+    private Gtk.Label? help_label2 = null;
     private Gtk.Image? icon = null;
     
     private AppearanceWindow? appearance_window = null;
@@ -42,7 +47,7 @@ public class PreferencesWindow : GLib.Object {
     
     public PreferencesWindow() {
         try {
-            Gtk.Builder builder = new Gtk.Builder();
+            this.builder = new Gtk.Builder();
 
             builder.add_from_file (Paths.ui_files + "/preferences.ui");
 
@@ -64,12 +69,14 @@ public class PreferencesWindow : GLib.Object {
             
             preview = new PiePreview();
             
-            var preview_box = builder.get_object("preview") as Gtk.VBox;
+            preview_box = builder.get_object("preview") as Gtk.VBox;
             preview_box.pack_start(preview, true, true);
             
             id_label = builder.get_object("id-label") as Gtk.Label;
             name_label = builder.get_object("pie-name-label") as Gtk.Label;
             hotkey_label = builder.get_object("hotkey-label") as Gtk.Label;
+            help_label1 = builder.get_object("help-label1") as Gtk.Label;
+            help_label2 = builder.get_object("help-label2") as Gtk.Label;
             icon = builder.get_object("icon") as Gtk.Image;
                     
             (builder.get_object("theme-button") as Gtk.Button).clicked.connect(on_theme_button_clicked);
@@ -85,6 +92,8 @@ public class PreferencesWindow : GLib.Object {
                 Config.global.save();
                 Pies.save();
             });
+            
+            this.window.delete_event.connect(this.window.hide_on_delete);
                 
         } catch (GLib.Error e) {
             error("Could not load UI: %s\n", e.message);
@@ -92,26 +101,38 @@ public class PreferencesWindow : GLib.Object {
     }
     
     public void show() {
-        pie_list.select_first();
+        preview.draw_loop();
         window.show_all();
+        pie_list.select_first();
     }
     
     private void on_pie_select(string id) {
         selected_id = id;
+        
+        help_label1.hide();
+        help_label2.hide();
+        preview_box.hide();
         
         if (id == "") {
             id_label.label = "";
             name_label.label = _("No Pie selected.");
             hotkey_label.set_markup("");
             icon.icon_name = "application-default-icon";
-            preview.set_pie(id);
+
+            help_label2.show();
         } else {
             var pie = PieManager.all_pies[selected_id];
             id_label.label = _("ID: %s").printf(pie.id);
             name_label.label = PieManager.get_name_of(pie.id);
             hotkey_label.set_markup(PieManager.get_accelerator_label_of(pie.id));
             icon.icon_name = pie.icon;
-            preview.set_pie(id);
+            
+            if (pie.action_groups.size > 0) {
+                preview.set_pie(id);
+                preview_box.show();
+            } else {
+                help_label1.show();
+            }
         }
     }
     

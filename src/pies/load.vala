@@ -178,7 +178,7 @@ namespace Pies {
         
         // create a new Action according to the loaded type
         foreach (var action_type in ActionRegistry.types) {
-            if (ActionRegistry.settings_names[action_type] == type) {
+            if (ActionRegistry.descriptions[action_type].id == type) {
             
                 action = GLib.Object.new(action_type, "name", name, 
                                                       "icon", icon, 
@@ -217,7 +217,7 @@ namespace Pies {
         
         // create a new ActionGroup according to the loaded type
         foreach (var group_type in GroupRegistry.types) {
-            if (GroupRegistry.settings_names[group_type] == type) {
+            if (GroupRegistry.descriptions[group_type].id == type) {
                 group = GLib.Object.new(group_type, "parent_id", pie.id) as ActionGroup;
                 break;
             } 

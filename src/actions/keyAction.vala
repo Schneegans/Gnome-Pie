@@ -29,10 +29,13 @@ public class KeyAction : Action {
     /// used in the pies.conf file for this kind of Actions.
     /////////////////////////////////////////////////////////////////////
 
-    public static void register(out string name, out bool icon_name_editable, out string settings_name) {
-        name = _("Press hotkey");
-        icon_name_editable = true;
-        settings_name = "key";
+    public static void register(out ActionRegistry.TypeDescription description) {
+        description = ActionRegistry.TypeDescription();
+        description.name = _("Press hotkey");
+        description.icon = "preferences-desktop-keyboard-shortcuts";
+        description.description = _("Simulates the activation of a hotkey.");
+        description.icon_name_editable = true;
+        description.id = "key";
     }   
     
     /////////////////////////////////////////////////////////////////////

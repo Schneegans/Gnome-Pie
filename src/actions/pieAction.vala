@@ -29,10 +29,13 @@ public class PieAction : Action {
     /// used in the pies.conf file for this kind of Actions.
     /////////////////////////////////////////////////////////////////////
 
-    public static void register(out string name, out bool icon_name_editable, out string settings_name) {
-        name = _("Open Pie");
-        icon_name_editable = false;
-        settings_name = "pie";
+    public static void register(out ActionRegistry.TypeDescription description) {
+        description = ActionRegistry.TypeDescription();
+        description.name = _("Open Pie");
+        description.icon = "gnome-pie";
+        description.description = _("Opens another Pie of Gnome-Pie. You may create sub menus this way.");
+        description.icon_name_editable = false;
+        description.id = "pie";
     }
     
     /////////////////////////////////////////////////////////////////////

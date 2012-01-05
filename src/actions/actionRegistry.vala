@@ -35,9 +35,15 @@ public class ActionRegistry : GLib.Object {
     /// file with it's type.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.HashMap<Type, string> names { get; private set; }
-    public static Gee.HashMap<Type, bool> icon_name_editables { get; private set; }
-    public static Gee.HashMap<Type, string> settings_names { get; private set; }
+    public static Gee.HashMap<Type, TypeDescription?> descriptions { get; private set; }
+    
+    public struct TypeDescription {
+        public string name { get; set; }
+        public string icon { get; set; }
+        public string description { get; set; }
+        public string id { get; set; }
+        public bool icon_name_editable { get; set; }
+    }
     
     /////////////////////////////////////////////////////////////////////
     /// Registers all Action types.
@@ -45,38 +51,25 @@ public class ActionRegistry : GLib.Object {
     
     public static void init() {
         types = new Gee.ArrayList<Type>();
+        descriptions = new Gee.HashMap<Type, TypeDescription?>();
     
-        names = new Gee.HashMap<Type, string>();
-        icon_name_editables = new Gee.HashMap<Type, bool>();
-        settings_names = new Gee.HashMap<Type, string>();
-    
-        string name = "";
-        bool icon_name_editable = true;
-        string settings_name = "";
+        TypeDescription type_description;
         
-        AppAction.register(out name, out icon_name_editable, out settings_name);
+        AppAction.register(out type_description);
         types.add(typeof(AppAction));
-        names.set(typeof(AppAction), name);
-        icon_name_editables.set(typeof(AppAction), icon_name_editable);
-        settings_names.set(typeof(AppAction), settings_name);
+        descriptions.set(typeof(AppAction), type_description);
         
-        KeyAction.register(out name, out icon_name_editable, out settings_name);
+        KeyAction.register(out type_description);
         types.add(typeof(KeyAction));
-        names.set(typeof(KeyAction), name);
-        icon_name_editables.set(typeof(KeyAction), icon_name_editable);
-        settings_names.set(typeof(KeyAction), settings_name);
+        descriptions.set(typeof(KeyAction), type_description);
         
-        PieAction.register(out name, out icon_name_editable, out settings_name);
+        PieAction.register(out type_description);
         types.add(typeof(PieAction));
-        names.set(typeof(PieAction), name);
-        icon_name_editables.set(typeof(PieAction), icon_name_editable);
-        settings_names.set(typeof(PieAction), settings_name);
+        descriptions.set(typeof(PieAction), type_description);
         
-        UriAction.register(out name, out icon_name_editable, out settings_name);
+        UriAction.register(out type_description);
         types.add(typeof(UriAction));
-        names.set(typeof(UriAction), name);
-        icon_name_editables.set(typeof(UriAction), icon_name_editable);
-        settings_names.set(typeof(UriAction), settings_name);
+        descriptions.set(typeof(UriAction), type_description);
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -192,7 +185,7 @@ public class ActionRegistry : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public static Action? default_for_uri(string uri) {
-        var info = AppInfo. get_default_for_uri_scheme(uri);
+        var info = AppInfo.get_default_for_uri_scheme(uri);
         return new_for_app_info(info);
     }
 }

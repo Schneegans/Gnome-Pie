@@ -30,20 +30,38 @@ class PiePreview : Gtk.DrawingArea {
     /////////////////////////////////////////////////////////////////////
     
     private GLib.Timer timer;
+    
+    private bool drawing = false;
 
     public PiePreview() {
         this.renderer = new PiePreviewRenderer();
         this.expose_event.connect(this.on_draw);
         this.timer = new GLib.Timer();
-        this.show.connect(this.timer.start);
         
         this.set_size_request(900, 900);
+        
+        Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
+        Gtk.TargetEntry[] entries = { uri_source };
+        Gtk.drag_source_set(this, Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
+        
+        this.drag_begin.connect(this.start_drag);
     }
     
     public void set_pie(string id) {
         this.renderer.load_pie(PieManager.all_pies[id]);
-        this.queue_draw();
     }
+    
+    public void draw_loop() {
+        this.drawing = true;
+        this.timer.start();
+        this.queue_draw();
+        
+        GLib.Timeout.add((uint)(1000.0/Config.global.refresh_rate), () => {
+            this.queue_draw();
+            return this.get_toplevel().visible;
+        });
+    }
+
     
     private bool on_draw(Gtk.Widget da, Gdk.EventExpose event) { 
         // store the frame time
@@ -56,6 +74,11 @@ class PiePreview : Gtk.DrawingArea {
         this.renderer.draw(frame_time, ctx);
         
         return true;
+    }
+    
+    private void start_drag(Gdk.DragContext ctx) {
+        var pixbuf = this.renderer.slices[0].icon.to_pixbuf();
+        Gtk.drag_set_icon_pixbuf(ctx, pixbuf, 0, 0);
     }
    
 }

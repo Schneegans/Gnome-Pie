@@ -23,51 +23,44 @@ namespace GnomePie {
 /// 
 /////////////////////////////////////////////////////////////////////////
 
-public class SlicePreviewRenderer : GLib.Object {
+public class PiePreviewRenderer : GLib.Object {
     
-    private Image icon;
-
-    private unowned PiePreviewRenderer parent;    
+    public Gee.ArrayList<SlicePreviewRenderer?> slices;
     
     /////////////////////////////////////////////////////////////////////
-    /// The index of this slice in a pie. Clockwise assigned, starting
-    /// from the right-most slice.
+    /// C'tor, initializes members.
     /////////////////////////////////////////////////////////////////////
     
-    private int position;
-
-    public SlicePreviewRenderer(PiePreviewRenderer parent) {
-        this.parent = parent;
+    public PiePreviewRenderer() {
+        this.slices = new Gee.ArrayList<SlicePreviewRenderer?>(); 
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Loads an Action. All members are initialized accordingly.
+    /// Loads an Pie. All members are initialized accordingly.
     /////////////////////////////////////////////////////////////////////
-
-    public void load(Action action, int position) {
-        this.position = position;
-        this.icon = new ThemedIcon(action.icon, true);
+    
+    public void load_pie(Pie pie) {
+        this.slices.clear();
+    
+        foreach (var group in pie.action_groups) {
+            foreach (var action in group.actions) {
+                var renderer = new SlicePreviewRenderer(this);
+                this.slices.add(renderer);
+                renderer.load(action);
+            }
+        }
+        
+        for (int i=0; i<this.slice_count(); ++i)
+            this.slices[i].set_position(i);
     }
     
-    /////////////////////////////////////////////////////////////////////
-    /// Draws all layers of the slice.
-    /////////////////////////////////////////////////////////////////////
-
+    public int slice_count() {
+        return slices.size;
+    }
+    
     public void draw(double frame_time, Cairo.Context ctx) {
-	    double direction = 2.0 * PI * position/parent.slice_count();
-        
-        ctx.save();
-        
-        // distance from the center
-        double radius = 100;
-        
-        // transform the context
-        ctx.translate(cos(direction)*radius, sin(direction)*radius);
-    
-        // paint the image
-        icon.paint_on(ctx);
-            
-        ctx.restore();
+        foreach (var slice in this.slices)
+            slice.draw(frame_time, ctx);
     }
 }
 

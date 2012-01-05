@@ -80,7 +80,17 @@ public class Icon : Image {
     
     public static string get_icon_file(string icon_name, int size) {
         string result = "";
-    
+        
+        if (icon_name.contains("/")) {
+            var file = GLib.File.new_for_path(icon_name);
+            if(file.query_exists())
+                return icon_name;
+            
+            warning("Icon \"" + icon_name + "\" not found! Using default icon...");
+            icon_name = "application-default-icon";
+        }
+            
+        
         var icon_theme = Gtk.IconTheme.get_default();
         var file = icon_theme.lookup_icon(icon_name, size, 0);
         if (file != null) result = file.get_filename();

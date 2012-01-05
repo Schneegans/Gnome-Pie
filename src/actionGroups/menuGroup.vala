@@ -30,10 +30,12 @@ public class MenuGroup : ActionGroup {
     /// the pies.conf file for this kind of ActionGroups.
     /////////////////////////////////////////////////////////////////////
     
-    public static void register(out string name, out string icon, out string settings_name) {
-        name = _("Main menu");
-        icon = "gnome-main-menu";
-        settings_name = "menu";
+    public static void register(out GroupRegistry.TypeDescription description) {
+        description = GroupRegistry.TypeDescription();
+        description.name = _("Main menu");
+        description.icon = "gnome-main-menu";
+        description.description = _("Displays your main menu structure.");
+        description.id = "menu";
     }
     
     /////////////////////////////////////////////////////////////////////

@@ -25,7 +25,9 @@ namespace GnomePie {
 
 public class NewSliceWindow : GLib.Object {
 
-   private Gtk.Window window = null;
+    private SliceTypeList slice_type_list = null;
+    
+    private Gtk.Window window = null;
     
     public NewSliceWindow() {
         try {
@@ -33,6 +35,11 @@ public class NewSliceWindow : GLib.Object {
             Gtk.Builder builder = new Gtk.Builder();
 
             builder.add_from_file (Paths.ui_files + "/slice_select.ui");
+            
+            this.slice_type_list = new SliceTypeList();
+            
+            var scroll_area = builder.get_object("slice-scrolledwindow") as Gtk.ScrolledWindow;
+                scroll_area.add(this.slice_type_list);
 
             this.window = builder.get_object("window") as Gtk.Window;
             

@@ -27,11 +27,11 @@ class SliceTypeList : Gtk.TreeView {
     /// 
     /////////////////////////////////////////////////////////////////////
     
-    public signal void on_select(string id);
+    public signal void on_select(string id, string icon_name);
     
     private Gtk.ListStore data;
     
-    private enum DataPos {ICON, NAME, ID}
+    private enum DataPos {ICON, ICON_NAME, NAME, ID}
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, constructs the Widget.
@@ -40,11 +40,12 @@ class SliceTypeList : Gtk.TreeView {
     public SliceTypeList() {
         GLib.Object();
         
-        this.data = new Gtk.ListStore(3, typeof(Gdk.Pixbuf),   
+        this.data = new Gtk.ListStore(4, typeof(Gdk.Pixbuf),   
+                                         typeof(string),
                                          typeof(string),
                                          typeof(string));
                                          
-        this.data.set_sort_column_id(1, Gtk.SortType.ASCENDING);
+        this.data.set_sort_column_id(2, Gtk.SortType.ASCENDING);
         
         base.set_model(this.data);
         base.set_headers_visible(false);
@@ -67,8 +68,10 @@ class SliceTypeList : Gtk.TreeView {
             Gtk.TreeIter active;
             if (this.get_selection().get_selected(null, out active)) {
                 string id = "";
+                string icon = "";
                 this.data.get(active, DataPos.ID, out id);
-                this.on_select(id);
+                this.data.get(active, DataPos.ICON_NAME, out icon);
+                this.on_select(id, icon);
             }
         });
         
@@ -90,6 +93,7 @@ class SliceTypeList : Gtk.TreeView {
             data.append(out current);
             var icon = new Icon(description.icon, 36);
             data.set(current, DataPos.ICON, icon.to_pixbuf()); 
+            data.set(current, DataPos.ICON_NAME, description.icon); 
             data.set(current, DataPos.NAME, "<b>" + description.name + "</b>\n"
                                  + "<small>" + description.description + "</small>"); 
             data.set(current, DataPos.ID, description.id); 
@@ -102,6 +106,7 @@ class SliceTypeList : Gtk.TreeView {
             data.append(out current);
             var icon = new Icon(description.icon, 36);
             data.set(current, DataPos.ICON, icon.to_pixbuf()); 
+            data.set(current, DataPos.ICON_NAME, description.icon);
             data.set(current, DataPos.NAME, "<b>" + description.name + "</b>\n"
                                  + "<small>" + description.description + "</small>"); 
             data.set(current, DataPos.ID, description.id); 
@@ -117,10 +122,12 @@ class SliceTypeList : Gtk.TreeView {
         if(this.data.get_iter_first(out active) ) {
             this.get_selection().select_iter(active);
             string id = "";
+            string icon = "";
             this.data.get(active, DataPos.ID, out id);
-            this.on_select(id);
+            this.data.get(active, DataPos.ICON_NAME, out icon);
+            this.on_select(id, icon);
         } else {
-            this.on_select("");
+            this.on_select("", "application-default-icon");
         }
     }
     

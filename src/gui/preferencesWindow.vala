@@ -125,7 +125,11 @@ public class PreferencesWindow : GLib.Object {
             id_label.label = _("ID: %s").printf(pie.id);
             name_label.label = PieManager.get_name_of(pie.id);
             hotkey_label.set_markup(PieManager.get_accelerator_label_of(pie.id));
-            icon.icon_name = pie.icon;
+            
+            if (pie.icon.contains("/"))
+                    this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(pie.icon, this.icon.get_pixel_size(), this.icon.get_pixel_size(), true);
+                else
+                    this.icon.icon_name = pie.icon;
             
             if (pie.action_groups.size > 0) {
                 preview.set_pie(id);
@@ -216,7 +220,8 @@ public class PreferencesWindow : GLib.Object {
                 var pie = PieManager.all_pies[selected_id];
                 pie.icon = icon;
                 PieManager.create_launcher(pie.id);
-                this.icon.icon_name = icon;
+                
+            
                 pie_list.reload_all();
             });
         }

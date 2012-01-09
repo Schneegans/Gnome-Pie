@@ -94,11 +94,11 @@ public class TriggerSelectWindow : GLib.Object {
             this.window.button_press_event.connect(this.on_button_press);
             
             this.window.show.connect_after(() => {
-                FocusGrabber.grab(this.window);
+                FocusGrabber.grab(this.window.get_window());
             });
             
             this.window.hide.connect(() => {
-                FocusGrabber.ungrab(this.window);
+                FocusGrabber.ungrab();
             });
                 
         } catch (GLib.Error e) {

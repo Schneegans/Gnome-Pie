@@ -55,16 +55,38 @@ public class Key : GLib.Object {
     private Gdk.ModifierType modifiers;
     
     /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members to defaults.
+    /////////////////////////////////////////////////////////////////////
+    
+    public Key() {
+        this.accelerator = "";
+        this.modifiers = 0;
+        this.key_code = 0;
+        this.label = _("Not bound");
+    }
+    
+    /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
     /////////////////////////////////////////////////////////////////////
     
-    public Key(string stroke) {
+    public Key.from_string(string stroke) {
         this.accelerator = stroke;
         
         uint keysym;
         Gtk.accelerator_parse(stroke, out keysym, out this.modifiers);
         this.key_code = display.keysym_to_keycode(keysym);
         this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, initializes all members.
+    /////////////////////////////////////////////////////////////////////
+    
+    public Key.from_values(uint keysym, Gdk.ModifierType modifiers) {
+        this.accelerator = Gtk.accelerator_name(keysym, modifiers);
+        this.label = Gtk.accelerator_get_label(keysym, modifiers);
+        this.key_code = display.keysym_to_keycode(keysym);
+        this.modifiers = modifiers;
     }
     
     /////////////////////////////////////////////////////////////////////

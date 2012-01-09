@@ -65,7 +65,7 @@ public class KeyAction : Action {
     }
     
     construct {
-        this.key = new Key(real_command);
+        this.key = new Key.from_string(real_command);
     }
     
     /////////////////////////////////////////////////////////////////////

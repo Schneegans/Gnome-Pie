@@ -127,9 +127,9 @@ public class PreferencesWindow : GLib.Object {
             hotkey_label.set_markup(PieManager.get_accelerator_label_of(pie.id));
             
             if (pie.icon.contains("/"))
-                    this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(pie.icon, this.icon.get_pixel_size(), this.icon.get_pixel_size(), true);
-                else
-                    this.icon.icon_name = pie.icon;
+                this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(pie.icon, this.icon.get_pixel_size(), this.icon.get_pixel_size(), true);
+            else
+                this.icon.icon_name = pie.icon;
             
             if (pie.action_groups.size > 0) {
                 preview.set_pie(id);
@@ -141,8 +141,8 @@ public class PreferencesWindow : GLib.Object {
     }
     
     private void on_add_slice_button_clicked(Gtk.Button button) {
-        if (new_slice_window == null)
-            new_slice_window = new NewSliceWindow();
+        if (new_slice_window == null) new_slice_window = new NewSliceWindow();
+        else                          new_slice_window.reload();
         
         new_slice_window.set_parent(this.window);
         new_slice_window.show();
@@ -220,8 +220,6 @@ public class PreferencesWindow : GLib.Object {
                 var pie = PieManager.all_pies[selected_id];
                 pie.icon = icon;
                 PieManager.create_launcher(pie.id);
-                
-            
                 pie_list.reload_all();
             });
         }

@@ -28,41 +28,40 @@ public class FocusGrabber : GLib.Object {
     /// Code from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
-    public static void grab(Gtk.Window window) {
-        window.present_with_time(Gdk.CURRENT_TIME);
-        window.get_window().raise();
-        window.get_window().focus(Gdk.CURRENT_TIME);
+    public static void grab(Gdk.Window window, bool keyboard = true, bool pointer = true) {
+        if (keyboard || pointer) {
+            window.raise();
+            window.focus(Gdk.CURRENT_TIME);
 
-        int i = 0;
-        Timeout.add(100, () => {
-            if (++i >= 100) return false;
-            return !try_grab_window(window);
-        });
+            int i = 0;
+            Timeout.add(100, () => {
+                if (++i >= 100) return false;
+                return !try_grab_window(window, keyboard, pointer);
+            });
+        }
     }
     
     /////////////////////////////////////////////////////////////////////
     /// Code from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
-    public static void ungrab(Gtk.Window window) {
-        Gdk.pointer_ungrab(Gdk.CURRENT_TIME);
-        Gdk.keyboard_ungrab(Gdk.CURRENT_TIME);
-        Gtk.grab_remove(window);
+    public static void ungrab(bool keyboard = true, bool pointer = true) {
+        if (pointer)  Gdk.pointer_ungrab(Gdk.CURRENT_TIME);
+        if (keyboard) Gdk.keyboard_ungrab(Gdk.CURRENT_TIME);
     }
     
     /////////////////////////////////////////////////////////////////////
     /// Code from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
-    private static bool try_grab_window(Gtk.Window window) {
-        if (Gdk.pointer_grab(window.get_window(), true, Gdk.EventMask.BUTTON_PRESS_MASK | 
+    private static bool try_grab_window(Gdk.Window window, bool keyboard, bool pointer) {
+        if (!pointer || Gdk.pointer_grab(window, true, Gdk.EventMask.BUTTON_PRESS_MASK | 
                              Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
                              null, null, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
             
-            if (Gdk.keyboard_grab(window.get_window(), true, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
-                Gtk.grab_add(window);
+            if (!keyboard || Gdk.keyboard_grab(window, true, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
                 return true;
-            } else {
+            } else if (pointer) {
                 Gdk.pointer_ungrab(Gdk.CURRENT_TIME);
                 return false;
             }

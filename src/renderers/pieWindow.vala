@@ -166,7 +166,7 @@ public class PieWindow : Gtk.Window {
     
         // capture the input focus
         this.show();
-        FocusGrabber.grab(this);
+        FocusGrabber.grab(this.get_window());
 
         // start the timer
         this.timer = new GLib.Timer();
@@ -225,7 +225,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            FocusGrabber.ungrab(this);
+            FocusGrabber.ungrab();
             this.renderer.activate();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
@@ -244,7 +244,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            FocusGrabber.ungrab(this);
+            FocusGrabber.ungrab();
             this.renderer.cancel();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {

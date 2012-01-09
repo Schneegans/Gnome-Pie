@@ -39,6 +39,8 @@ public class NewSliceWindow : GLib.Object {
     private Gtk.HBox hotkey_box = null;
     private Gtk.HBox uri_box = null;
     private Gtk.Image icon = null;
+    private PieComboList pie_select = null;
+    private HotkeySelectButton key_select = null;
     
     public NewSliceWindow() {
         try {
@@ -91,7 +93,16 @@ public class NewSliceWindow : GLib.Object {
             this.icon_button = builder.get_object("icon-button") as Gtk.Button;
             this.no_options_box = builder.get_object("no-options-box") as Gtk.VBox;
             this.pie_box = builder.get_object("pie-box") as Gtk.HBox;
+            this.pie_select = new PieComboList();
+            this.pie_box.pack_start(this.pie_select, false, true);
+                
             this.hotkey_box = builder.get_object("hotkey-box") as Gtk.HBox;
+            this.key_select = new HotkeySelectButton();
+            this.hotkey_box.pack_start(this.key_select, false, true);
+            this.key_select.on_select.connect((key) => {
+                debug(key.label);
+            });
+            
             this.uri_box = builder.get_object("uri-box") as Gtk.HBox;
             this.icon = builder.get_object("icon") as Gtk.Image;            
             
@@ -116,6 +127,11 @@ public class NewSliceWindow : GLib.Object {
     
     public void show() {
         this.window.show_all();
+        this.slice_type_list.select_first();
+    }
+    
+    public void reload() {
+        this.pie_select.reload();
     }
     
     public void set_action(ActionGroup action) {

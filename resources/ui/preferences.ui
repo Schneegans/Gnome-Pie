@@ -83,75 +83,50 @@
             <property name="border_width">10</property>
             <property name="spacing">10</property>
             <child>
-              <object class="GtkHBox" id="hbox4">
+              <object class="GtkTable" id="table1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="spacing">10</property>
+                <property name="n_rows">2</property>
+                <property name="n_columns">2</property>
+                <property name="column_spacing">6</property>
                 <child>
-                  <object class="GtkVBox" id="vbox3">
+                  <object class="GtkToolbar" id="pies-toolbar">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="toolbar_style">icons</property>
+                    <property name="icon_size">1</property>
                     <child>
-                      <object class="GtkScrolledWindow" id="pies-scrolledwindow">
-                        <property name="width_request">170</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">never</property>
-                        <property name="shadow_type">in</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">True</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkToolbar" id="pies-toolbar">
+                      <object class="GtkToolButton" id="add-pie-button">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="toolbar_style">icons</property>
-                        <property name="icon_size">1</property>
-                        <child>
-                          <object class="GtkToolButton" id="add-pie-button">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="icon_name">list-add-symbolic</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="homogeneous">True</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkToolButton" id="remove-pie-button">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
-                            <property name="use_underline">True</property>
-                            <property name="icon_name">list-remove-symbolic</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="homogeneous">True</property>
-                          </packing>
-                        </child>
+                        <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="icon_name">list-add-symbolic</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
+                        <property name="homogeneous">True</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToolButton" id="remove-pie-button">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="use_action_appearance">False</property>
+                        <property name="use_underline">True</property>
+                        <property name="icon_name">list-remove-symbolic</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="homogeneous">True</property>
                       </packing>
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                    <property name="x_options">GTK_FILL</property>
+                    <property name="y_options">GTK_FILL</property>
                   </packing>
                 </child>
                 <child>
@@ -264,79 +239,34 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
+                        <property name="shadow_type">in</property>
                         <child>
-                          <object class="GtkVBox" id="preview-box">
+                          <object class="GtkVBox" id="pie-edit-box">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="border_width">2</property>
                             <child>
-                              <object class="GtkVBox" id="preview">
+                              <object class="GtkVBox" id="no-slice-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="border_width">2</property>
                                 <child>
-                                  <placeholder/>
-                                </child>
-                              </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="help-label1">
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;This Pie is empty!&lt;/b&gt;&lt;/big&gt;
+                                  <object class="GtkLabel" id="no-slice-label">
+                                    <property name="can_focus">False</property>
+                                    <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;This Pie is empty!&lt;/b&gt;&lt;/big&gt;
 
 Start adding Slices to it!
 
-This can be done by dragging stuff here. You can try a lot! For example application launchers or folders. Even URLs from your browser are possible... 
+This can be done by dragging stuff to the plus sign below. You can try a lot! For example application launchers or folders. Even URLs from your browser are possible... 
 
-For manual and advanced configuration use the button below.</property>
-                                <property name="use_markup">True</property>
-                                <property name="justify">center</property>
-                                <property name="wrap">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="help-label2">
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;You have no Pies!&lt;/b&gt;&lt;/big&gt;
-
-Start by creating one!
-
-This can be done by clicking on the tiny little plus sign in the lower left corner.</property>
-                                <property name="use_markup">True</property>
-                                <property name="justify">center</property>
-                                <property name="wrap">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                                <property name="position">2</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkHBox" id="hbox5">
-                                <property name="visible">True</property>
-                                <property name="can_focus">False</property>
-                                <child>
-                                  <object class="GtkLabel" id="id-label">
-                                    <property name="visible">True</property>
-                                    <property name="sensitive">False</property>
-                                    <property name="can_focus">False</property>
-                                    <property name="yalign">0.89999997615814209</property>
+For manual and advanced configuration click on the plus sign.</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">fill</property>
+                                    <property name="wrap">True</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
-                                    <property name="padding">2</property>
-                                    <property name="pack_type">end</property>
                                     <property name="position">0</property>
                                   </packing>
                                 </child>
@@ -346,27 +276,60 @@ This can be done by clicking on the tiny little plus sign in the lower left corn
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="use_action_appearance">False</property>
-                                    <property name="use_underline">True</property>
+                                    <property name="relief">none</property>
                                     <child>
-                                      <object class="GtkLabel" id="add-slice-label">
+                                      <object class="GtkImage" id="image3">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="xpad">6</property>
-                                        <property name="label" translatable="yes">Add Slice ...</property>
+                                        <property name="stock">gtk-add</property>
+                                        <property name="icon-size">6</property>
                                       </object>
                                     </child>
                                   </object>
                                   <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
+                                    <property name="expand">True</property>
+                                    <property name="fill">False</property>
+                                    <property name="padding">6</property>
                                     <property name="position">1</property>
                                   </packing>
                                 </child>
                               </object>
                               <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="no-pie-label">
+                                <property name="can_focus">False</property>
+                                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;You have no Pies!&lt;/b&gt;&lt;/big&gt;
+
+Start by creating one!
+
+This can be done by clicking on the tiny little plus sign in the lower left corner.</property>
+                                <property name="use_markup">True</property>
+                                <property name="justify">fill</property>
+                                <property name="wrap">True</property>
+                              </object>
+                              <packing>
                                 <property name="expand">False</property>
                                 <property name="fill">True</property>
-                                <property name="position">4</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkVBox" id="preview-box">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">True</property>
+                                <property name="fill">True</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                           </object>
@@ -383,16 +346,48 @@ This can be done by clicking on the tiny little plus sign in the lower left corn
                     </child>
                   </object>
                   <packing>
-                    <property name="expand">True</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="id-label">
+                    <property name="visible">True</property>
+                    <property name="sensitive">False</property>
+                    <property name="can_focus">False</property>
+                    <property name="xalign">0</property>
+                    <property name="label" translatable="yes">ID</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
+                    <property name="x_options">GTK_FILL</property>
+                    <property name="y_options">GTK_FILL</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="pies-scrolledwindow">
+                    <property name="width_request">170</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">never</property>
+                    <property name="shadow_type">in</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="x_options">GTK_FILL</property>
+                    <property name="y_options">GTK_FILL</property>
                   </packing>
                 </child>
               </object>
               <packing>
                 <property name="expand">True</property>
                 <property name="fill">True</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </object>

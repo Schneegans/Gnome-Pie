@@ -24,6 +24,7 @@ namespace GnomePie {
 class PiePreview : Gtk.DrawingArea {
 
     private PiePreviewRenderer renderer = null;
+    private NewSliceWindow? new_slice_window = null;
     
     /////////////////////////////////////////////////////////////////////
     /// A timer used for calculating the frame time.
@@ -37,17 +38,42 @@ class PiePreview : Gtk.DrawingArea {
         this.renderer = new PiePreviewRenderer();
         this.expose_event.connect(this.on_draw);
         this.timer = new GLib.Timer();
-        
-        this.set_size_request(900, 900);
+        this.set_events(Gdk.EventMask.POINTER_MOTION_MASK 
+                      | Gdk.EventMask.LEAVE_NOTIFY_MASK
+                      | Gdk.EventMask.ENTER_NOTIFY_MASK);
         
         Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
         Gtk.TargetEntry[] entries = { uri_source };
         Gtk.drag_source_set(this, Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
+        Gtk.drag_dest_set(this, Gtk.DestDefaults.ALL, entries, Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
         
+        this.motion_notify_event.connect(this.on_mouse_move);
+        this.drag_motion.connect(this.on_drag_move);
         this.drag_begin.connect(this.start_drag);
+        this.leave_notify_event.connect(this.on_mouse_leave);
+        this.enter_notify_event.connect(this.on_mouse_enter);
+        this.button_release_event.connect(this.on_button_release);
+        this.button_press_event.connect(this.on_button_press);
+        
+        this.renderer.on_edit_slice.connect((pos) => {
+            if (new_slice_window == null) new_slice_window = new NewSliceWindow();
+            else                          new_slice_window.reload();
+            
+            new_slice_window.set_parent(this.get_toplevel() as Gtk.Window);
+            new_slice_window.show();
+        });
+        
+        this.renderer.on_add_slice.connect((pos) => {
+            if (new_slice_window == null) new_slice_window = new NewSliceWindow();
+            else                          new_slice_window.reload();
+            
+            new_slice_window.set_parent(this.get_toplevel() as Gtk.Window);
+            new_slice_window.show();
+        });
     }
     
     public void set_pie(string id) {
+//        this.window.set_background(Gtk.rc_get_style(this).light[0]);
         this.renderer.load_pie(PieManager.all_pies[id]);
     }
     
@@ -73,6 +99,39 @@ class PiePreview : Gtk.DrawingArea {
         
         this.renderer.draw(frame_time, ctx);
         
+        return true;
+    }
+    
+    public bool on_mouse_leave(Gdk.EventCrossing event) {
+        this.renderer.on_mouse_leave(event.x, event.y);
+        return true;
+    }
+    
+    public bool on_mouse_enter(Gdk.EventCrossing event) {
+        this.renderer.on_mouse_enter(event.x, event.y);
+        return true;
+    }
+    
+    private bool on_mouse_move(Gdk.EventMotion event) {
+        this.renderer.set_dnd_mode(false);
+        this.renderer.on_mouse_move(event.x-this.allocation.width*0.5, event.y-this.allocation.height*0.5);
+        return true;
+    }
+    
+    private bool on_button_press() {
+        this.renderer.on_button_press();
+        return true;
+    }
+    
+    private bool on_button_release() {
+        if (!this.renderer.drag_n_drop_mode) 
+            this.renderer.on_button_release();
+        return true;
+    }
+    
+    private bool on_drag_move(Gdk.DragContext ctx, int x, int y, uint time) {
+        this.renderer.set_dnd_mode(true);
+        this.renderer.on_mouse_move(x-this.allocation.width*0.5, y-this.allocation.height*0.5);
         return true;
     }
     

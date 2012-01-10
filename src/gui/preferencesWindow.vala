@@ -27,7 +27,6 @@ public class PreferencesWindow : GLib.Object {
 
     private string selected_id = "";
     
-    private Gtk.VBox? preview_box = null;
     private PiePreview? preview = null;
     private PieList? pie_list = null;
     
@@ -35,15 +34,15 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.Label? id_label = null;
     private Gtk.Label? name_label = null;
     private Gtk.Label? hotkey_label = null;
-    private Gtk.Label? help_label1 = null;
-    private Gtk.Label? help_label2 = null;
+    private Gtk.Label? no_pie_label = null;
+    private Gtk.VBox? no_slice_box = null;
+    private Gtk.VBox? preview_box = null;
     private Gtk.Image? icon = null;
     
     private AppearanceWindow? appearance_window = null;
     private TriggerSelectWindow? trigger_window = null;
     private IconSelectWindow? icon_window = null;
     private RenameWindow? rename_window = null;
-    private NewSliceWindow? new_slice_window = null;
     
     public PreferencesWindow() {
         try {
@@ -69,21 +68,20 @@ public class PreferencesWindow : GLib.Object {
             
             preview = new PiePreview();
             
-            preview_box = builder.get_object("preview") as Gtk.VBox;
+            preview_box = builder.get_object("preview-box") as Gtk.VBox;
             preview_box.pack_start(preview, true, true);
             
             id_label = builder.get_object("id-label") as Gtk.Label;
             name_label = builder.get_object("pie-name-label") as Gtk.Label;
             hotkey_label = builder.get_object("hotkey-label") as Gtk.Label;
-            help_label1 = builder.get_object("help-label1") as Gtk.Label;
-            help_label2 = builder.get_object("help-label2") as Gtk.Label;
+            no_pie_label = builder.get_object("no-pie-label") as Gtk.Label;
+            no_slice_box = builder.get_object("no-slice-box") as Gtk.VBox;
             icon = builder.get_object("icon") as Gtk.Image;
                     
             (builder.get_object("theme-button") as Gtk.Button).clicked.connect(on_theme_button_clicked);
             (builder.get_object("key-button") as Gtk.Button).clicked.connect(on_key_button_clicked);
             (builder.get_object("icon-button") as Gtk.Button).clicked.connect(on_icon_button_clicked);
             (builder.get_object("rename-button") as Gtk.Button).clicked.connect(on_rename_button_clicked);
-            (builder.get_object("add-slice-button") as Gtk.Button).clicked.connect(on_add_slice_button_clicked);
             (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
             (builder.get_object("remove-pie-button") as Gtk.ToolButton).clicked.connect(on_remove_pie_button_clicked);
             
@@ -109,8 +107,8 @@ public class PreferencesWindow : GLib.Object {
     private void on_pie_select(string id) {
         selected_id = id;
         
-        help_label1.hide();
-        help_label2.hide();
+        no_slice_box.hide();
+        no_pie_label.hide();
         preview_box.hide();
         
         if (id == "") {
@@ -119,7 +117,7 @@ public class PreferencesWindow : GLib.Object {
             hotkey_label.set_markup("");
             icon.icon_name = "application-default-icon";
 
-            help_label2.show();
+            no_pie_label.show();
         } else {
             var pie = PieManager.all_pies[selected_id];
             id_label.label = _("ID: %s").printf(pie.id);
@@ -135,17 +133,10 @@ public class PreferencesWindow : GLib.Object {
                 preview.set_pie(id);
                 preview_box.show();
             } else {
-                help_label1.show();
+                no_slice_box.show();
+                preview.set_pie(id);
             }
         }
-    }
-    
-    private void on_add_slice_button_clicked(Gtk.Button button) {
-        if (new_slice_window == null) new_slice_window = new NewSliceWindow();
-        else                          new_slice_window.reload();
-        
-        new_slice_window.set_parent(this.window);
-        new_slice_window.show();
     }
     
     private void on_add_pie_button_clicked(Gtk.ToolButton button) {

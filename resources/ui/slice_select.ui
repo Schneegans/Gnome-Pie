@@ -345,11 +345,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="ok-button">
-                    <property name="label">Add Slice</property>
+                    <property name="label">gtk-ok</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="use_action_appearance">False</property>
+                    <property name="use_stock">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>

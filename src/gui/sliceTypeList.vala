@@ -138,6 +138,9 @@ class SliceTypeList : Gtk.TreeView {
             
             if (id == pie_id) {
                 this.get_selection().select_iter(iter);
+                string icon = "";
+                this.data.get(iter, DataPos.ICON_NAME, out icon);
+                this.on_select(pie_id, icon);
                 return true;
             }
             

@@ -33,6 +33,7 @@ class PiePreview : Gtk.DrawingArea {
     private GLib.Timer timer;
     
     private bool drawing = false;
+    private string current_id = "";
 
     public PiePreview() {
         this.renderer = new PiePreviewRenderer();
@@ -55,25 +56,61 @@ class PiePreview : Gtk.DrawingArea {
         this.button_release_event.connect(this.on_button_release);
         this.button_press_event.connect(this.on_button_press);
         
-        this.renderer.on_edit_slice.connect((pos) => {
-            if (new_slice_window == null) new_slice_window = new NewSliceWindow();
-            else                          new_slice_window.reload();
+        this.new_slice_window = new NewSliceWindow();
+        this.new_slice_window.on_select.connect((new_action, as_new_slice, at_position) => {
+            var pie = PieManager.all_pies[this.current_id];
             
-            new_slice_window.set_parent(this.get_toplevel() as Gtk.Window);
-            new_slice_window.show();
+            if (as_new_slice) {
+                pie.add_group(new_action, at_position+1);
+                this.renderer.add_group(new_action, at_position+1);
+            } else {
+                pie.update_group(new_action, at_position);
+                this.renderer.update_group(new_action, at_position);
+            }
+        });
+        
+        this.renderer.on_edit_slice.connect((pos) => {
+            this.new_slice_window.reload();
+            
+            this.new_slice_window.set_parent(this.get_toplevel() as Gtk.Window);
+            this.new_slice_window.show();
+            
+            var pie = PieManager.all_pies[this.current_id];
+            this.new_slice_window.set_action(pie.action_groups[pos], pos);
         });
         
         this.renderer.on_add_slice.connect((pos) => {
-            if (new_slice_window == null) new_slice_window = new NewSliceWindow();
-            else                          new_slice_window.reload();
+            this.new_slice_window.reload();
             
-            new_slice_window.set_parent(this.get_toplevel() as Gtk.Window);
-            new_slice_window.show();
+            this.new_slice_window.set_parent(this.get_toplevel() as Gtk.Window);
+            this.new_slice_window.show();
+            
+            this.new_slice_window.set_default(this.current_id, pos);
+        });
+        
+        this.renderer.on_remove_slice.connect((pos) => {
+            
+            var dialog = new Gtk.MessageDialog(this.get_toplevel() as Gtk.Window, Gtk.DialogFlags.MODAL,
+                         Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
+                         _("Do you really want to delete this Slice?"));
+                                                     
+            dialog.response.connect((response) => {
+                if (response == Gtk.ResponseType.YES) {
+                    var pie = PieManager.all_pies[this.current_id];
+            
+                    pie.remove_group(pos);
+                    this.renderer.remove_group(pos);
+                }
+            });
+            
+            dialog.run();
+            dialog.destroy();
         });
     }
     
     public void set_pie(string id) {
-//        this.window.set_background(Gtk.rc_get_style(this).light[0]);
+        this.current_id = id;
+        this.window.set_background(Gtk.rc_get_style(this).light[0]);
         this.renderer.load_pie(PieManager.all_pies[id]);
     }
     

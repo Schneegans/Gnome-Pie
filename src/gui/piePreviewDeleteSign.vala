@@ -23,28 +23,22 @@ namespace GnomePie {
 /// 
 /////////////////////////////////////////////////////////////////////////
 
-public class PiePreviewAddSign : GLib.Object {
+public class PiePreviewDeleteSign : GLib.Object {
 
-    public signal void on_clicked(int position);
+    public signal void on_clicked();
     
     public Image icon { get; private set; }
-    public bool visible { get; private set; default=false; }
     
-    private double position = 0;
+    private const int radius = 24;
+    private const double globale_scale = 0.8;
 
-    private unowned PiePreviewRenderer parent;  
-    
-    private double time = 0;
-    private double max_size = 0; 
-    private double angle = 0; 
-    private AnimatedValue size; 
+    private bool visible = false;
+    private AnimatedValue size;
     private AnimatedValue alpha; 
     private AnimatedValue activity; 
     private AnimatedValue clicked; 
 
-    public PiePreviewAddSign(PiePreviewRenderer parent) {
-        this.parent = parent;
-        
+    public PiePreviewDeleteSign() {
         this.size = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 0, 0, 0, 2.0);
         this.alpha = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 0, 0, 0, 0.0);
         this.activity = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, -3, -3, 0, 0.0);
@@ -56,42 +50,29 @@ public class PiePreviewAddSign : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void load() {
-        this.icon = new Icon("add", 36);
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// 
-    /////////////////////////////////////////////////////////////////////
-
-    public void set_position(int position) {
-        double new_position = position;
-        
-        if (!this.parent.drag_n_drop_mode)
-            new_position += 0.5;
-
-        this.position = new_position;
-        this.angle = 2.0 * PI * new_position/parent.slice_count();
+        this.icon = new Icon("stock_delete", radius*2);
     }
     
     public void show() {
-        this.visible = true;
-        this.size.reset_target(this.max_size, 0.3); 
-        this.alpha.reset_target(1.0, 0.3);   
+        if (!this.visible) {
+            this.visible = true;
+            this.alpha.reset_target(1.0, 0.3);   
+        }
     }
     
     public void hide() {
-        this.visible = false;
-        this.size.reset_target(0.0, 0.3); 
-        this.alpha.reset_target(0.0, 0.3);     
+        if (this.visible) {
+            this.visible = false;
+            this.alpha.reset_target(0.0, 0.3);     
+        }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// 
     /////////////////////////////////////////////////////////////////////
 
     public void set_size(double size) {
-        this.max_size = size;
-        this.size.reset_target(size, 0.5);
+        this.size.reset_target(size, 0.2);
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -99,55 +80,45 @@ public class PiePreviewAddSign : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void draw(double frame_time, Cairo.Context ctx) {
-
-        this.time += frame_time;
-        
         this.size.update(frame_time);
         this.alpha.update(frame_time);
         this.activity.update(frame_time);
         this.clicked.update(frame_time);
         
-        if (this.alpha.val*this.activity.val > 0) {
+        if (this.alpha.val > 0) {
             ctx.save();
             
-            // distance from the center
-            double radius = 120;
-            
             // transform the context
-            ctx.translate(cos(this.angle)*radius, sin(this.angle)*radius);
-            double scale = this.size.val*this.clicked.val 
-                         + this.activity.val*0.07
-                         + GLib.Math.sin(this.time*10)*0.03*this.activity.val
-                         - 0.1;
+            double scale = (this.size.val*this.clicked.val 
+                         + this.activity.val*0.2 - 0.2)*globale_scale;
             ctx.scale(scale, scale);
         
             // paint the image
-            icon.paint_on(ctx, this.alpha.val*this.activity.val);
+            icon.paint_on(ctx, this.alpha.val);
                 
             ctx.restore();
         }
     }
     
-    public void on_mouse_move(double angle) {
-        double direction = 2.0 * PI * position/parent.slice_count();
-        double diff = fabs(angle-direction);
-        
-        if (diff > PI)
-	        diff = 2 * PI - diff;
-	    
-	    if (diff < 0.5*PI/parent.slice_count()) this.activity.reset_target(1.0, 1.0);
-        else                                    this.activity.reset_target(-3.0, 1.5);
+    public void on_mouse_move(double x, double y) {
+	    if (GLib.Math.fabs(x) <= radius*globale_scale && GLib.Math.fabs(y) <= radius*globale_scale) 
+	        this.activity.reset_target(1.0, 0.2);
+        else 
+            this.activity.reset_target(0.0, 0.2);
     }
     
-    public void on_button_press() {
-        if (this.activity.end == 1.0)
+    public bool on_button_press() {
+        if (this.activity.end == 1.0) {
             this.clicked.reset_target(0.9, 0.1);
+            return true;
+        }
+        return false;
     }
     
     public void on_button_release() {
         if (this.clicked.end == 0.9) {
             this.clicked.reset_target(1.0, 0.1);
-            this.on_clicked((int)this.position);
+            this.on_clicked();
         }
     }
 }

@@ -29,7 +29,7 @@ public class PiePreviewDeleteSign : GLib.Object {
     
     public Image icon { get; private set; }
     
-    private const int radius = 24;
+    private const int radius = 18;
     private const double globale_scale = 0.8;
 
     private bool visible = false;

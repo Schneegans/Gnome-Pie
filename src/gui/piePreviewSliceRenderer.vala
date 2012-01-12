@@ -28,7 +28,7 @@ public class PiePreviewSliceRenderer : GLib.Object {
     public signal void on_clicked(int position);
     public signal void on_remove(int position);
     
-    public Image icon { get; private set; }
+    public Icon icon { get; private set; }
     public ActionGroup action_group { get; private set; }
 
     private unowned PiePreviewRenderer parent;  
@@ -43,8 +43,8 @@ public class PiePreviewSliceRenderer : GLib.Object {
     // distance from the center
     private double pie_radius = 120;
     private double radius = 24;
-    private const double delete_x = 18;
-    private const double delete_y = -18;
+    private const double delete_x = 15;
+    private const double delete_y = -15;
     
     /////////////////////////////////////////////////////////////////////
     /// The index of this slice in a pie. Clockwise assigned, starting
@@ -86,12 +86,15 @@ public class PiePreviewSliceRenderer : GLib.Object {
     /// 
     /////////////////////////////////////////////////////////////////////
 
-    public void set_position(int position) {
+    public void set_position(int position, bool smoothly = true) {
         double direction = 2.0 * PI * position/parent.slice_count();
         
         if (direction != this.angle.end) {
             this.position = position;
-            this.angle.reset_target(direction, 0.5);
+            this.angle.reset_target(direction, smoothly ? 0.5 : 0.0);
+            
+            if (!smoothly)
+                this.angle.update(1.0);
         }
     }
     
@@ -136,14 +139,16 @@ public class PiePreviewSliceRenderer : GLib.Object {
         ctx.restore();
     }
     
-    public void on_mouse_move(double angle, double x, double y) {
+    public bool on_mouse_move(double angle, double x, double y) {
         double direction = 2.0 * PI * position/parent.slice_count();
         double diff = fabs(angle-direction);
         
         if (diff > PI)
 	        diff = 2 * PI - diff;
+	        
+	    bool active = diff < 0.5*PI/parent.slice_count();
 	    
-	    if (diff < 0.5*PI/parent.slice_count()) {
+	    if (active) {
 	        this.activity.reset_target(1.0, 0.3);
 	        this.delete_sign.show();
         } else {
@@ -159,6 +164,8 @@ public class PiePreviewSliceRenderer : GLib.Object {
         double own_y = sin(this.angle.val)*pie_radius;
         this.delete_sign.on_mouse_move(x - own_x - delete_x*this.size.val, 
                                        y - own_y - delete_y*this.size.val);
+                                       
+        return active;
     }
     
     public void on_button_press() {

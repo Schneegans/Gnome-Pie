@@ -71,11 +71,13 @@ public class TipViewer : Gtk.Label {
         this.fg = this.get_style().fg[0];
         this.bg = this.get_style().bg[0];
         
-        this.alpha = new AnimatedValue.linear(1.0, 0.0, this.fade_time);
+        this.alpha = new AnimatedValue.linear(0.8, 0.0, this.fade_time);
         
         this.set_alignment (0.0f, 0.5f);
         this.wrap = true;
+        this.width_chars = 60;
         this.set_use_markup(true);
+        //this.set_ellipsize(Pango.EllipsizeMode.END);
         this.modify_font(Pango.FontDescription.from_string("9"));
         
         this.set_random_tip();
@@ -115,13 +117,13 @@ public class TipViewer : Gtk.Label {
     /////////////////////////////////////////////////////////////////////
     
     private void fade_in() {
-        this.alpha = new AnimatedValue.linear(this.alpha.val, 1.0, this.fade_time);
+        this.alpha = new AnimatedValue.linear(this.alpha.val, 0.8, this.fade_time);
         
         GLib.Timeout.add((uint)(1000.0/this.frame_rate), () => {
             this.alpha.update(1.0/this.frame_rate);
             this.update_label();
             
-            return (this.alpha.val != 1.0);
+            return (this.alpha.val != 0.8);
         });
     }
     

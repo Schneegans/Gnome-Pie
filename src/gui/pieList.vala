@@ -67,7 +67,8 @@ class PieList : Gtk.TreeView {
         
         // setup drag'n'drop
         Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
-        Gtk.TargetEntry[] entries = { uri_source };
+        Gtk.TargetEntry pie_source = {"text/plain", Gtk.TargetFlags.SAME_APP, 0};
+        Gtk.TargetEntry[] entries = { uri_source, pie_source };
         this.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
         this.drag_data_get.connect(this.on_dnd_source);
         
@@ -141,7 +142,8 @@ class PieList : Gtk.TreeView {
         if (this.get_selection().get_selected(null, out selected)) {
             string id = "";
             this.data.get(selected, DataPos.ID, out id);
-            selection_data.set_uris({"file://" + Paths.launchers + "/" + id + ".desktop"});
+            //selection_data.set_uris({"file://" + Paths.launchers + "/" + id + ".desktop"});
+            selection_data.set_text(id, id.length);
         }
     }
 }

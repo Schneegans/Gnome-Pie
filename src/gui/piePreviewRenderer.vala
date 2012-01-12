@@ -32,8 +32,10 @@ public class PiePreviewRenderer : GLib.Object {
     public Gee.ArrayList<PiePreviewSliceRenderer?> slices;
     public bool drag_n_drop_mode { get; private set; default=false; }
     
+    private PiePreviewSliceRenderer hidden_group = null;
     private PiePreviewAddSign add_sign = null;
     private double angle = 0.0;
+    private int active_slice = -1;
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes members.
@@ -71,17 +73,34 @@ public class PiePreviewRenderer : GLib.Object {
         }
         
         this.update_sizes();
-        this.update_positions();
+        this.update_positions(false);
     }
     
     public void set_dnd_mode(bool dnd) {
-        this.drag_n_drop_mode = dnd;
+        if (this.drag_n_drop_mode != dnd) {
+            this.drag_n_drop_mode = dnd;
+            this.update_positions();
+            this.update_sizes();
+        }
     }
     
     public int slice_count() {
         if (this.drag_n_drop_mode) return slices.size+1;
         
         return slices.size;
+    }
+    
+    public int get_active_slice() {
+        if (this.drag_n_drop_mode)
+            return (int)(this.angle/(2*PI)*this.slice_count() + 0.5) % this.slice_count();
+        return this.active_slice;
+    }
+    
+    public Icon get_active_icon() {
+        if (this.active_slice >= 0 && this.active_slice < this.slices.size)
+            return this.slices[this.active_slice].icon;
+        else
+            return new Icon("", 24);
     }
     
     public void draw(double frame_time, Cairo.Context ctx) {
@@ -93,20 +112,22 @@ public class PiePreviewRenderer : GLib.Object {
     
     public void on_mouse_leave(double x, double y) {
         this.add_sign.hide();
-        this.on_mouse_move(x, y);
     }
     
     public void on_mouse_enter(double x, double y) {
         this.add_sign.show();
-        this.on_mouse_move(x, y);
     }
     
     public void on_mouse_move(double x, double y) {
         this.angle = acos(x/sqrt(x*x + y*y));
         if (y < 0) this.angle = 2*PI - this.angle;
     
-        foreach (var slice in this.slices)
-            slice.on_mouse_move(this.angle, x, y);
+        if (!this.drag_n_drop_mode)
+            this.active_slice = -1;
+        
+        for (int i=0; i<this.slices.size; ++i)
+            if (slices[i].on_mouse_move(this.angle, x, y) && !this.drag_n_drop_mode)
+                this.active_slice = i;
             
         this.add_sign.on_mouse_move(this.angle);
         
@@ -126,34 +147,9 @@ public class PiePreviewRenderer : GLib.Object {
     }
     
     public void add_group(ActionGroup group, int at_position = -1) {
-        if (at_position < 0 || at_position >= this.slices.size) {
-            var renderer = new PiePreviewSliceRenderer(this);
-            this.slices.add(renderer);
-            renderer.load(group);
-            
-            renderer.on_clicked.connect((pos) => {
-                this.on_edit_slice(pos);
-            });
-            
-            renderer.on_remove.connect((pos) => {
-                this.on_remove_slice(pos);
-            });
-            
-        } else {
-            var renderer = new PiePreviewSliceRenderer(this);
-            this.slices.insert(at_position, renderer);
-            renderer.load(group);
-            
-            renderer.on_clicked.connect((pos) => {
-                this.on_edit_slice(pos);
-            });
-            
-            renderer.on_remove.connect((pos) => {
-                this.on_remove_slice(pos);
-            });
-        }
-        this.update_positions();
-        this.update_sizes();
+        var renderer = new PiePreviewSliceRenderer(this);
+        renderer.load(group);
+        this.add_slice_renderer(renderer, at_position);
     }
     
     public void remove_group(int index) {
@@ -161,6 +157,20 @@ public class PiePreviewRenderer : GLib.Object {
             this.slices.remove_at(index);
             this.update_positions();
             this.update_sizes();
+        }
+    }
+    
+    public void hide_group(int index) {
+        if (this.slices.size > index) {
+            this.hidden_group = this.slices[index];
+            this.remove_group(index);
+        }
+    }
+    
+    public void show_hidden_group_at(int index) {
+        if (this.slices.size >= index && this.hidden_group != null) {
+            this.hidden_group.set_position(index, false);
+            this.add_slice_renderer(this.hidden_group, index);
         }
     }
     
@@ -184,19 +194,46 @@ public class PiePreviewRenderer : GLib.Object {
                 this.on_edit_slice(pos);
             });
             
-            this.update_positions();
+            this.update_positions(false);
             this.update_sizes();
         }
     }
     
-    private void update_positions() {
+    private void add_slice_renderer(PiePreviewSliceRenderer renderer, int at_position) {
+        if (at_position < 0 || at_position >= this.slices.size) {
+            this.slices.add(renderer);
+            
+            renderer.on_clicked.connect((pos) => {
+                this.on_edit_slice(pos);
+            });
+            
+            renderer.on_remove.connect((pos) => {
+                this.on_remove_slice(pos);
+            });
+            
+        } else {
+            this.slices.insert(at_position, renderer);
+            
+            renderer.on_clicked.connect((pos) => {
+                this.on_edit_slice(pos);
+            });
+            
+            renderer.on_remove.connect((pos) => {
+                this.on_remove_slice(pos);
+            });
+        }
+        this.update_positions();
+        this.update_sizes();
+    }
+    
+    private void update_positions(bool smoothly = true) {
         if (this.add_sign.visible) {
             int add_position = 0;
             add_position = (int)(this.angle/(2*PI)*this.slice_count()) % this.slice_count();
             this.add_sign.set_position(add_position);
             
             for (int i=0; i<this.slices.size; ++i) {
-                this.slices[i].set_position(i);
+                this.slices[i].set_position(i, smoothly);
             }
         
         } else if (this.drag_n_drop_mode) {
@@ -204,11 +241,11 @@ public class PiePreviewRenderer : GLib.Object {
             add_position = (int)(this.angle/(2*PI)*this.slice_count() + 0.5) % this.slice_count();
 
             for (int i=0; i<this.slices.size; ++i) {
-                this.slices[i].set_position(i >= add_position ? i+1 : i);
+                this.slices[i].set_position(i >= add_position ? i+1 : i, smoothly);
             }
         } else {
             for (int i=0; i<this.slices.size; ++i) {
-                this.slices[i].set_position(i);
+                this.slices[i].set_position(i, smoothly);
             }
         }
     }

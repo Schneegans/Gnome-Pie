@@ -33,7 +33,11 @@ class PiePreview : Gtk.DrawingArea {
     private GLib.Timer timer;
     
     private bool drawing = false;
+    private bool drag_enabled = false;
     private string current_id = "";
+    
+    private int drag_start_index = -1;
+    private int drag_end_index = -1;
 
     public PiePreview() {
         this.renderer = new PiePreviewRenderer();
@@ -43,18 +47,34 @@ class PiePreview : Gtk.DrawingArea {
                       | Gdk.EventMask.LEAVE_NOTIFY_MASK
                       | Gdk.EventMask.ENTER_NOTIFY_MASK);
         
-        Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
-        Gtk.TargetEntry[] entries = { uri_source };
-        Gtk.drag_source_set(this, Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
-        Gtk.drag_dest_set(this, Gtk.DestDefaults.ALL, entries, Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
+        // setup drag and drop
+        this.enable_drag_source();
         
-        this.motion_notify_event.connect(this.on_mouse_move);
+        Gtk.TargetEntry uri_dest = {"text/uri-list", 0, 0};
+        Gtk.TargetEntry pie_dest = {"text/plain", Gtk.TargetFlags.SAME_APP, 0};
+        Gtk.TargetEntry slice_dest = {"text/plain", Gtk.TargetFlags.SAME_WIDGET, 0};
+        Gtk.TargetEntry[] destinations = { uri_dest, pie_dest, slice_dest };
+        Gtk.drag_dest_set(this, Gtk.DestDefaults.ALL, destinations, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
+        
+        
+        
+        this.drag_begin.connect(this.on_start_drag);
+        this.drag_end.connect(this.on_end_drag);
+        this.drag_data_received.connect(this.on_dnd_received);
+        this.drag_data_get.connect(this.on_dnd_source);
+        
+        
+        
+        // connect mouse events
         this.drag_motion.connect(this.on_drag_move);
-        this.drag_begin.connect(this.start_drag);
         this.leave_notify_event.connect(this.on_mouse_leave);
-        this.enter_notify_event.connect(this.on_mouse_enter);
-        this.button_release_event.connect(this.on_button_release);
-        this.button_press_event.connect(this.on_button_press);
+        this.enter_notify_event.connect(this.on_mouse_enter);  
+        this.motion_notify_event.connect_after(this.on_mouse_move);
+        this.button_release_event.connect_after(this.on_button_release);
+        this.button_press_event.connect_after(this.on_button_press);
+        
+        
+        
         
         this.new_slice_window = new NewSliceWindow();
         this.new_slice_window.on_select.connect((new_action, as_new_slice, at_position) => {
@@ -110,7 +130,7 @@ class PiePreview : Gtk.DrawingArea {
     
     public void set_pie(string id) {
         this.current_id = id;
-        this.window.set_background(Gtk.rc_get_style(this).light[0]);
+       // this.window.set_background(Gtk.rc_get_style(this).light[0]);
         this.renderer.load_pie(PieManager.all_pies[id]);
     }
     
@@ -152,6 +172,10 @@ class PiePreview : Gtk.DrawingArea {
     private bool on_mouse_move(Gdk.EventMotion event) {
         this.renderer.set_dnd_mode(false);
         this.renderer.on_mouse_move(event.x-this.allocation.width*0.5, event.y-this.allocation.height*0.5);
+        
+        if (this.renderer.get_active_slice() < 0) this.disable_drag_source();
+        else                                      this.enable_drag_source();
+        
         return true;
     }
     
@@ -172,9 +196,68 @@ class PiePreview : Gtk.DrawingArea {
         return true;
     }
     
-    private void start_drag(Gdk.DragContext ctx) {
-        var pixbuf = this.renderer.slices[0].icon.to_pixbuf();
-        Gtk.drag_set_icon_pixbuf(ctx, pixbuf, 0, 0);
+    private void on_start_drag(Gdk.DragContext ctx) {
+        this.drag_start_index = this.renderer.get_active_slice();
+        var icon = this.renderer.get_active_icon();
+        var pixbuf = icon.to_pixbuf();
+
+        this.renderer.hide_group(this.drag_start_index);
+        Gtk.drag_set_icon_pixbuf(ctx, pixbuf, icon.size()/2, icon.size()/2);
+        
+        this.renderer.set_dnd_mode(true);
+    }
+    
+    private void on_end_drag(Gdk.DragContext context) {
+        if (context.targets != null) {
+
+            context.targets.foreach((target) => {
+                Gdk.Atom target_type = (Gdk.Atom)target;
+                if (target_type.name() == "text/plain") {
+                    var pie = PieManager.all_pies[this.current_id];
+                    pie.move_group(this.drag_start_index, this.renderer.get_active_slice());
+                    
+                    this.renderer.show_hidden_group_at(this.renderer.get_active_slice());
+                }
+            });
+        }
+        
+        this.renderer.set_dnd_mode(false);
+    }
+    
+    private void on_dnd_received(Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint info, uint time_) {
+        this.renderer.set_dnd_mode(false);
+        
+        if (context.targets != null) {
+        
+            //if (selection_data.targets_include_text()) {
+                string text = selection_data.get_text();
+                debug("insert pie: " + text);
+//            } else if (selection_data.targets_include_text()) {
+//                foreach (var uri in selection_data.get_uris())
+//                        debug("insert uri: " + uri);
+//            }
+        }
+    }
+    
+    private void on_dnd_source(Gdk.DragContext context, Gtk.SelectionData selection_data, uint info, uint time_) {
+       // selection_data.set_text("huhu", 4);
+
+    }
+    
+    private void enable_drag_source() {
+        if (!this.drag_enabled) {
+            this.drag_enabled = true;
+            Gtk.TargetEntry slice_source = {"text/plain", Gtk.TargetFlags.SAME_WIDGET | Gtk.TargetFlags.SAME_APP, 0};
+            Gtk.TargetEntry[] sources = { slice_source };
+            Gtk.drag_source_set(this, Gdk.ModifierType.BUTTON1_MASK, sources, Gdk.DragAction.MOVE);
+        }
+    }
+    
+    private void disable_drag_source() {
+        if (this.drag_enabled) {
+            this.drag_enabled = false;
+            Gtk.drag_source_unset(this);
+        }
     }
    
 }

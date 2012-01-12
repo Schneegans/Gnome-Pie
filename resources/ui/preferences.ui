@@ -227,6 +227,21 @@
                             <property name="position">1</property>
                           </packing>
                         </child>
+                        <child>
+                          <object class="GtkLabel" id="id-label">
+                            <property name="visible">True</property>
+                            <property name="sensitive">False</property>
+                            <property name="can_focus">False</property>
+                            <property name="xalign">0</property>
+                            <property name="yalign">0.11999999731779099</property>
+                            <property name="label" translatable="yes">ID</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">False</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -239,7 +254,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
-                        <property name="shadow_type">in</property>
+                        <property name="shadow_type">none</property>
                         <child>
                           <object class="GtkVBox" id="pie-edit-box">
                             <property name="visible">True</property>
@@ -351,23 +366,6 @@ This can be done by clicking on the tiny little plus sign in the lower left corn
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="id-label">
-                    <property name="visible">True</property>
-                    <property name="sensitive">False</property>
-                    <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
-                    <property name="label" translatable="yes">ID</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="right_attach">2</property>
-                    <property name="top_attach">1</property>
-                    <property name="bottom_attach">2</property>
-                    <property name="x_options">GTK_FILL</property>
-                    <property name="y_options">GTK_FILL</property>
-                  </packing>
-                </child>
-                <child>
                   <object class="GtkScrolledWindow" id="pies-scrolledwindow">
                     <property name="width_request">170</property>
                     <property name="visible">True</property>
@@ -379,6 +377,27 @@ This can be done by clicking on the tiny little plus sign in the lower left corn
                     </child>
                   </object>
                   <packing>
+                    <property name="x_options">GTK_FILL</property>
+                    <property name="y_options">GTK_FILL</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHBox" id="tips-box">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="right_attach">2</property>
+                    <property name="top_attach">1</property>
+                    <property name="bottom_attach">2</property>
                     <property name="x_options">GTK_FILL</property>
                     <property name="y_options">GTK_FILL</property>
                   </packing>

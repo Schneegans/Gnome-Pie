@@ -85,14 +85,19 @@ public class PiePreviewRenderer : GLib.Object {
     }
     
     public int slice_count() {
-        if (this.drag_n_drop_mode) return slices.size+1;
+        if (this.drag_n_drop_mode && !(this.slices.size == 0)) 
+            return slices.size+1;
         
         return slices.size;
     }
     
     public int get_active_slice() {
+        if (this.slices.size == 0)
+            return 0;
+    
         if (this.drag_n_drop_mode)
             return (int)(this.angle/(2*PI)*this.slice_count() + 0.5) % this.slice_count();
+            
         return this.active_slice;
     }
     
@@ -222,30 +227,32 @@ public class PiePreviewRenderer : GLib.Object {
                 this.on_remove_slice(pos);
             });
         }
-        this.update_positions();
+        this.update_positions(false);
         this.update_sizes();
     }
     
     private void update_positions(bool smoothly = true) {
-        if (this.add_sign.visible) {
-            int add_position = 0;
-            add_position = (int)(this.angle/(2*PI)*this.slice_count()) % this.slice_count();
-            this.add_sign.set_position(add_position);
+        if (this.slices.size > 0) {
+            if (this.add_sign.visible) {
+                int add_position = 0;
+                add_position = (int)(this.angle/(2*PI)*this.slice_count()) % this.slice_count();
+                this.add_sign.set_position(add_position);
+                
+                for (int i=0; i<this.slices.size; ++i) {
+                    this.slices[i].set_position(i, smoothly);
+                }
             
-            for (int i=0; i<this.slices.size; ++i) {
-                this.slices[i].set_position(i, smoothly);
-            }
-        
-        } else if (this.drag_n_drop_mode) {
-            int add_position = 0;
-            add_position = (int)(this.angle/(2*PI)*this.slice_count() + 0.5) % this.slice_count();
+            } else if (this.drag_n_drop_mode) {
+                int add_position = 0;
+                add_position = (int)(this.angle/(2*PI)*this.slice_count() + 0.5) % this.slice_count();
 
-            for (int i=0; i<this.slices.size; ++i) {
-                this.slices[i].set_position(i >= add_position ? i+1 : i, smoothly);
-            }
-        } else {
-            for (int i=0; i<this.slices.size; ++i) {
-                this.slices[i].set_position(i, smoothly);
+                for (int i=0; i<this.slices.size; ++i) {
+                    this.slices[i].set_position(i >= add_position ? i+1 : i, smoothly);
+                }
+            } else {
+                for (int i=0; i<this.slices.size; ++i) {
+                    this.slices[i].set_position(i, smoothly);
+                }
             }
         }
     }

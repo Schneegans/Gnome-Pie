@@ -31,7 +31,7 @@ class PieList : Gtk.TreeView {
     
     private Gtk.ListStore data;
     
-    private enum DataPos {ICON, NAME, ID}
+    private enum DataPos {ICON, ICON_NAME, NAME, ID}
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, constructs the Widget.
@@ -40,16 +40,19 @@ class PieList : Gtk.TreeView {
     public PieList() {
         GLib.Object();
         
-        this.data = new Gtk.ListStore(3, typeof(Gdk.Pixbuf),   
+        this.data = new Gtk.ListStore(4, typeof(Gdk.Pixbuf),   
+                                         typeof(string),
                                          typeof(string),
                                          typeof(string));
                                          
-        this.data.set_sort_column_id(1, Gtk.SortType.ASCENDING);
+        this.data.set_sort_column_id(DataPos.NAME, Gtk.SortType.ASCENDING);
         
-        base.set_model(this.data);
-        base.set_headers_visible(false);
-        base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
+        this.set_model(this.data);
+        this.set_headers_visible(false);
+        this.set_grid_lines(Gtk.TreeViewGridLines.NONE);
         this.width_request = 170;
+        
+        this.set_events(Gdk.EventMask.POINTER_MOTION_MASK);
         
         var main_column = new Gtk.TreeViewColumn();
             var icon_render = new Gtk.CellRendererPixbuf();
@@ -67,10 +70,12 @@ class PieList : Gtk.TreeView {
         
         // setup drag'n'drop
         Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
-        Gtk.TargetEntry pie_source = {"text/plain", Gtk.TargetFlags.SAME_APP, 0};
-        Gtk.TargetEntry[] entries = { uri_source, pie_source };
+        Gtk.TargetEntry[] entries = { uri_source };
         this.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
+        //this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
         this.drag_data_get.connect(this.on_dnd_source);
+        //this.drag_begin.connect_after(this.on_start_drag);
+        //this.drag_motion.connect(this.on_drag_move);
         
         this.get_selection().changed.connect(() => {
             Gtk.TreeIter active;
@@ -132,6 +137,7 @@ class PieList : Gtk.TreeView {
             this.data.append(out last);
             var icon = new Icon(pie.icon, 24);
             this.data.set(last, DataPos.ICON, icon.to_pixbuf(), 
+                                DataPos.ICON_NAME, pie.icon,
                                 DataPos.NAME, pie.name,
                                 DataPos.ID, pie.id); 
         }
@@ -142,9 +148,27 @@ class PieList : Gtk.TreeView {
         if (this.get_selection().get_selected(null, out selected)) {
             string id = "";
             this.data.get(selected, DataPos.ID, out id);
-            //selection_data.set_uris({"file://" + Paths.launchers + "/" + id + ".desktop"});
-            selection_data.set_text(id, id.length);
+            selection_data.set_uris({"file://" + Paths.launchers + "/" + id + ".desktop"});
         }
+    }
+    
+    private void on_start_drag(Gdk.DragContext ctx) {
+        Gtk.TreeIter selected;
+        if (this.get_selection().get_selected(null, out selected)) {
+            string icon_name = "";
+            this.data.get(selected, DataPos.ICON_NAME, out icon_name);
+            
+            var icon = new Icon(icon_name, 48);
+            var pixbuf = icon.to_pixbuf();
+            Gtk.drag_set_icon_pixbuf(ctx, pixbuf, icon.size()/2, icon.size()/2);
+        }
+        
+    }
+    
+    private bool on_drag_move(Gdk.DragContext ctx, int x, int y, uint time) {
+        //this.select_cursor_row(false);
+        debug("hu");
+        return true;
     }
 }
 

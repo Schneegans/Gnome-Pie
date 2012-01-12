@@ -107,7 +107,20 @@ public class PiePreviewAddSign : GLib.Object {
         this.activity.update(frame_time);
         this.clicked.update(frame_time);
         
-        if (this.alpha.val*this.activity.val > 0) {
+        if (this.parent.slice_count() == 0) {
+            ctx.save();
+            
+            double scale = this.clicked.val 
+                         + GLib.Math.sin(this.time*10)*0.02*this.alpha.val
+                         + this.alpha.val*0.08 - 0.1;
+            ctx.scale(scale, scale);
+        
+            // paint the image
+            icon.paint_on(ctx);
+                
+            ctx.restore();
+            
+        } else if (this.alpha.val*this.activity.val > 0) {
             ctx.save();
             
             // distance from the center

@@ -77,10 +77,10 @@ public class Pie : GLib.Object {
     /// Adds an Action to this Pie.
     /////////////////////////////////////////////////////////////////////
     
-    public void add_action(Action action) {
+    public void add_action(Action action, int at_position = -1) {
         var group = new ActionGroup(this.id);
             group.add_action(action);
-        this.add_group(group);
+        this.add_group(group, at_position);
     }
     
     /////////////////////////////////////////////////////////////////////

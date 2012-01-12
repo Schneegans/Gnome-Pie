@@ -23,6 +23,9 @@ namespace GnomePie {
 
 class PiePreview : Gtk.DrawingArea {
 
+    public signal void on_last_slice_removed();
+    public signal void on_first_slice_added();
+
     private PiePreviewRenderer renderer = null;
     private NewSliceWindow? new_slice_window = null;
     
@@ -51,19 +54,13 @@ class PiePreview : Gtk.DrawingArea {
         this.enable_drag_source();
         
         Gtk.TargetEntry uri_dest = {"text/uri-list", 0, 0};
-        Gtk.TargetEntry pie_dest = {"text/plain", Gtk.TargetFlags.SAME_APP, 0};
         Gtk.TargetEntry slice_dest = {"text/plain", Gtk.TargetFlags.SAME_WIDGET, 0};
-        Gtk.TargetEntry[] destinations = { uri_dest, pie_dest, slice_dest };
+        Gtk.TargetEntry[] destinations = { uri_dest, slice_dest };
         Gtk.drag_dest_set(this, Gtk.DestDefaults.ALL, destinations, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
-        
-        
         
         this.drag_begin.connect(this.on_start_drag);
         this.drag_end.connect(this.on_end_drag);
         this.drag_data_received.connect(this.on_dnd_received);
-        this.drag_data_get.connect(this.on_dnd_source);
-        
-        
         
         // connect mouse events
         this.drag_motion.connect(this.on_drag_move);
@@ -73,9 +70,6 @@ class PiePreview : Gtk.DrawingArea {
         this.button_release_event.connect_after(this.on_button_release);
         this.button_press_event.connect_after(this.on_button_press);
         
-        
-        
-        
         this.new_slice_window = new NewSliceWindow();
         this.new_slice_window.on_select.connect((new_action, as_new_slice, at_position) => {
             var pie = PieManager.all_pies[this.current_id];
@@ -83,6 +77,9 @@ class PiePreview : Gtk.DrawingArea {
             if (as_new_slice) {
                 pie.add_group(new_action, at_position+1);
                 this.renderer.add_group(new_action, at_position+1);
+                
+                if (this.renderer.slice_count() == 1)
+                    this.on_first_slice_added();
             } else {
                 pie.update_group(new_action, at_position);
                 this.renderer.update_group(new_action, at_position);
@@ -120,6 +117,9 @@ class PiePreview : Gtk.DrawingArea {
             
                     pie.remove_group(pos);
                     this.renderer.remove_group(pos);
+                    
+                    if (this.renderer.slice_count() == 0)
+                        this.on_last_slice_removed();
                 }
             });
             
@@ -208,6 +208,7 @@ class PiePreview : Gtk.DrawingArea {
     }
     
     private void on_end_drag(Gdk.DragContext context) {
+        this.renderer.set_dnd_mode(false);
         if (context.targets != null) {
 
             context.targets.foreach((target) => {
@@ -220,27 +221,21 @@ class PiePreview : Gtk.DrawingArea {
                 }
             });
         }
-        
-        this.renderer.set_dnd_mode(false);
     }
     
     private void on_dnd_received(Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint info, uint time_) {
-        this.renderer.set_dnd_mode(false);
+        var pie = PieManager.all_pies[this.current_id];
+        int position = this.renderer.get_active_slice();
         
-        if (context.targets != null) {
-        
-            //if (selection_data.targets_include_text()) {
-                string text = selection_data.get_text();
-                debug("insert pie: " + text);
-//            } else if (selection_data.targets_include_text()) {
-//                foreach (var uri in selection_data.get_uris())
-//                        debug("insert uri: " + uri);
-//            }
+        foreach (var uri in selection_data.get_uris()) {
+            pie.add_action(ActionRegistry.new_for_uri(uri), position);
+            this.renderer.add_group(pie.action_groups[position], position);
+            
+            if (this.renderer.slices.size == 1)
+                this.on_first_slice_added();
         }
-    }
-    
-    private void on_dnd_source(Gdk.DragContext context, Gtk.SelectionData selection_data, uint info, uint time_) {
-       // selection_data.set_text("huhu", 4);
+        
+        this.renderer.set_dnd_mode(false);
 
     }
     

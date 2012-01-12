@@ -35,7 +35,7 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.Label? name_label = null;
     private Gtk.Label? hotkey_label = null;
     private Gtk.Label? no_pie_label = null;
-    private Gtk.VBox? no_slice_box = null;
+    private Gtk.Label? no_slice_label = null;
     private Gtk.VBox? preview_box = null;
     private Gtk.Image? icon = null;
     
@@ -67,11 +67,17 @@ public class PreferencesWindow : GLib.Object {
             scroll_area.add(pie_list);
             
             preview = new PiePreview();
+            preview.on_first_slice_added.connect(() => {
+                this.no_slice_label.hide();
+            });
+            
+            preview.on_last_slice_removed.connect(() => {
+                this.no_slice_label.show();
+            });
             
             preview_box = builder.get_object("preview-box") as Gtk.VBox;
             preview_box.pack_start(preview, true, true);
             
-
             var tips_box = builder.get_object("tips-box") as Gtk.HBox;
             
                 // info image
@@ -102,7 +108,7 @@ public class PreferencesWindow : GLib.Object {
             name_label = builder.get_object("pie-name-label") as Gtk.Label;
             hotkey_label = builder.get_object("hotkey-label") as Gtk.Label;
             no_pie_label = builder.get_object("no-pie-label") as Gtk.Label;
-            no_slice_box = builder.get_object("no-slice-box") as Gtk.VBox;
+            no_slice_label = builder.get_object("no-slice-label") as Gtk.Label;
             icon = builder.get_object("icon") as Gtk.Image;
                     
             (builder.get_object("theme-button") as Gtk.Button).clicked.connect(on_theme_button_clicked);
@@ -134,7 +140,7 @@ public class PreferencesWindow : GLib.Object {
     private void on_pie_select(string id) {
         selected_id = id;
         
-        no_slice_box.hide();
+        no_slice_label.hide();
         no_pie_label.hide();
         preview_box.hide();
         
@@ -156,12 +162,11 @@ public class PreferencesWindow : GLib.Object {
             else
                 this.icon.icon_name = pie.icon;
             
-            if (pie.action_groups.size > 0) {
-                preview.set_pie(id);
-                preview_box.show();
-            } else {
-                no_slice_box.show();
-                preview.set_pie(id);
+            preview.set_pie(id);
+            preview_box.show();
+            
+            if (pie.action_groups.size == 0) {
+                no_slice_label.show();
             }
         }
     }

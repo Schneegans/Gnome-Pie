@@ -30,6 +30,7 @@ public class PiePreviewSliceRenderer : GLib.Object {
     
     public Icon icon { get; private set; }
     public ActionGroup action_group { get; private set; }
+    public string name { get; private set; default=""; }
 
     private unowned PiePreviewRenderer parent;  
     
@@ -77,8 +78,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
         // if it's a custom ActionGroup
         if (group.get_type().depth() == 2 && group.actions.size > 0) {
             this.icon = new Icon(group.actions[0].icon, (int)(radius*2));
+            this.name = group.actions[0].name;
         } else {
             this.icon = new Icon(GroupRegistry.descriptions[group.get_type()].icon, (int)(radius*2));
+            this.name = GroupRegistry.descriptions[group.get_type()].name;
         }
     }
     

@@ -31,11 +31,15 @@ public class PiePreviewRenderer : GLib.Object {
     
     public Gee.ArrayList<PiePreviewSliceRenderer?> slices;
     public bool drag_n_drop_mode { get; private set; default=false; }
+    public PiePreviewSliceRenderer hidden_group { get; private set; default=null; }
     
-    private PiePreviewSliceRenderer hidden_group = null;
+    private PiePreviewCenter center_renderer = null;
+    
     private PiePreviewAddSign add_sign = null;
     private double angle = 0.0;
     private int active_slice = -1;
+    
+    private enum CenterDisplay { NONE, ACTIVE_SLICE, DROP, ADD }
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes members.
@@ -43,6 +47,7 @@ public class PiePreviewRenderer : GLib.Object {
     
     public PiePreviewRenderer() {
         this.slices = new Gee.ArrayList<PiePreviewSliceRenderer?>(); 
+        this.center_renderer = new PiePreviewCenter();
         this.add_sign = new PiePreviewAddSign(this);
         this.add_sign.load();
         
@@ -110,17 +115,21 @@ public class PiePreviewRenderer : GLib.Object {
     
     public void draw(double frame_time, Cairo.Context ctx) {
         this.add_sign.draw(frame_time, ctx);
+        this.center_renderer.draw(frame_time, ctx);
         
         foreach (var slice in this.slices)
             slice.draw(frame_time, ctx);
     }
     
-    public void on_mouse_leave(double x, double y) {
+    public void on_mouse_leave() {
         this.add_sign.hide();
+        this.update_positions();
+        this.update_center(CenterDisplay.NONE);
     }
     
-    public void on_mouse_enter(double x, double y) {
+    public void on_mouse_enter() {
         this.add_sign.show();
+        this.update_positions();
     }
     
     public void on_mouse_move(double x, double y) {
@@ -131,8 +140,12 @@ public class PiePreviewRenderer : GLib.Object {
             this.active_slice = -1;
         
         for (int i=0; i<this.slices.size; ++i)
-            if (slices[i].on_mouse_move(this.angle, x, y) && !this.drag_n_drop_mode)
+            if (slices[i].on_mouse_move(this.angle, x, y) && !this.drag_n_drop_mode) 
                 this.active_slice = i;
+        
+        if (this.drag_n_drop_mode)      this.update_center(CenterDisplay.DROP);
+        else if (this.active_slice < 0) this.update_center(CenterDisplay.ADD);
+        else                            this.update_center(CenterDisplay.ACTIVE_SLICE);
             
         this.add_sign.on_mouse_move(this.angle);
         
@@ -169,6 +182,7 @@ public class PiePreviewRenderer : GLib.Object {
         if (this.slices.size > index) {
             this.hidden_group = this.slices[index];
             this.remove_group(index);
+
         }
     }
     
@@ -176,16 +190,7 @@ public class PiePreviewRenderer : GLib.Object {
         if (this.slices.size >= index && this.hidden_group != null) {
             this.hidden_group.set_position(index, false);
             this.add_slice_renderer(this.hidden_group, index);
-        }
-    }
-    
-    public void move_group(int from, int to) {
-        if (this.slices.size > from && this.slices.size > to) {
-            var tmp = this.slices[from];
-            this.remove_group(from);
-            this.slices.insert(to, tmp);
-            this.update_positions();
-            this.update_sizes();
+            this.hidden_group = null;
         }
     }
     
@@ -249,10 +254,15 @@ public class PiePreviewRenderer : GLib.Object {
                 for (int i=0; i<this.slices.size; ++i) {
                     this.slices[i].set_position(i >= add_position ? i+1 : i, smoothly);
                 }
+                
+                this.update_center(CenterDisplay.DROP);
+                
             } else {
                 for (int i=0; i<this.slices.size; ++i) {
                     this.slices[i].set_position(i, smoothly);
                 }
+                
+                this.update_center(CenterDisplay.ACTIVE_SLICE);
             }
         }
     }
@@ -264,6 +274,29 @@ public class PiePreviewRenderer : GLib.Object {
         
         for (int i=0; i<this.slices.size; ++i) 
             this.slices[i].set_size(size);
+    }
+    
+    private void update_center(CenterDisplay display) {
+        switch (display) {
+            case CenterDisplay.ACTIVE_SLICE:
+                if (this.active_slice >= 0 && this.active_slice < this.slices.size)
+                    this.center_renderer.set_text("<b>" + slices[this.active_slice].name + "</b>\n<small>" 
+                                            + _("Click to edit") + "\n" + _("Drag to move") + "</small>");
+                break;
+            case CenterDisplay.ADD:
+                this.center_renderer.set_text("<small>" + _("Click to add a new Slice") + "</small>");
+                break;
+            case CenterDisplay.DROP:
+                if (hidden_group == null)
+                    this.center_renderer.set_text("<small>" + _("Drop to add as new Slice") + "</small>");
+                else
+                    this.center_renderer.set_text("<b>" + this.hidden_group.name + "</b>\n<small>"
+                                            + _("Drop to move Slice") + "</small>");
+                break;
+            default:
+                this.center_renderer.set_text("");
+                break;
+        }
     }
 }
 

@@ -55,12 +55,37 @@ public class RenderedText : Image {
     /// C'tor, creates a new image representation of a string.
     /////////////////////////////////////////////////////////////////////
     
-    public RenderedText(string text, int width, int height, string font) {
-        var cached = this.cache.get("%s@%ux%u:%s".printf(text, width, height, font));
+    public RenderedText(string text, int width, int height, string font,
+                        Color color = Config.global.theme.caption_color,
+                            double scale = Config.global.global_scale) {
+                        
+        var cached = this.cache.get("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
+                                                               color.r, color.g, color.b, color.a));
         
         if (cached == null) {
-            this.render_text(text, width, height, font);
-            this.cache.set("%s@%ux%u:%s".printf(text, width, height, font), this.surface);
+            this.render_text(text, width, height, font, color);
+            this.cache.set("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
+                                                 color.r, color.g, color.b, color.a), this.surface);
+        } else {
+            this.surface = cached;
+        }
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, creates a new image representation of a string.
+    /////////////////////////////////////////////////////////////////////
+    
+    public RenderedText.with_markup(string text, int width, int height, string font,
+                        Color color = Config.global.theme.caption_color,
+                            double scale = Config.global.global_scale) {
+                        
+        var cached = this.cache.get("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
+                                                               color.r, color.g, color.b, color.a));
+        
+        if (cached == null) {
+            this.render_markup(text, width, height, font, color);
+            this.cache.set("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
+                                                 color.r, color.g, color.b, color.a), this.surface);
         } else {
             this.surface = cached;
         }
@@ -70,20 +95,22 @@ public class RenderedText : Image {
     /// Creates a new transparent image, with text written onto.
     /////////////////////////////////////////////////////////////////////
     
-    public void render_text(string text, int width, int height, string font) {
+    public void render_text(string text, int width, int height, string font, 
+                            Color color = Config.global.theme.caption_color,
+                            double scale = Config.global.global_scale) {
+                            
         this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
 
         var ctx = this.context();
         
-        // set the color as specified in the current theme
-        Color color = Config.global.theme.caption_color;
+        // set the color
         ctx.set_source_rgb(color.r, color.g, color.g);
         
         var layout = Pango.cairo_create_layout(ctx);        
         layout.set_width(Pango.units_from_double(width));
         
         var font_description = Pango.FontDescription.from_string(font);
-        font_description.set_size((int)(font_description.get_size() * Config.global.global_scale));
+        font_description.set_size((int)(font_description.get_size() * scale));
         
         layout.set_font_description(font_description);
         layout.set_text(text, -1);
@@ -94,6 +121,41 @@ public class RenderedText : Image {
             broken_string = broken_string.concat(text.substring(line.start_index, line.length), "\n");
         }
         layout.set_text(broken_string, broken_string.length-1);
+        
+        layout.set_ellipsize(Pango.EllipsizeMode.END);
+        layout.set_alignment(Pango.Alignment.CENTER);
+        
+        Pango.Rectangle extents;
+        layout.get_pixel_extents(null, out extents);
+        ctx.move_to(0, (int)(0.5*(height - extents.height)));
+        
+        Pango.cairo_update_layout(ctx, layout);
+        Pango.cairo_show_layout(ctx, layout);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a new transparent image, with text written onto.
+    /////////////////////////////////////////////////////////////////////
+    
+    public void render_markup(string text, int width, int height, string font, 
+                            Color color = Config.global.theme.caption_color,
+                            double scale = Config.global.global_scale) {
+                            
+        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
+
+        var ctx = this.context();
+        
+        // set the color 
+        ctx.set_source_rgb(color.r, color.g, color.g);
+        
+        var layout = Pango.cairo_create_layout(ctx);        
+        layout.set_width(Pango.units_from_double(width));
+        
+        var font_description = Pango.FontDescription.from_string(font);
+        font_description.set_size((int)(font_description.get_size() * scale));
+        
+        layout.set_font_description(font_description);
+        layout.set_markup(text, -1);
         
         layout.set_ellipsize(Pango.EllipsizeMode.END);
         layout.set_alignment(Pango.Alignment.CENTER);

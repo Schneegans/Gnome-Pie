@@ -152,7 +152,7 @@ class PiePreview : Gtk.DrawingArea {
         this.timer.reset();
         
         var ctx = Gdk.cairo_create(this.window);
-        ctx.translate(this.allocation.width*0.5, this.allocation.height*0.5);
+        ctx.translate((int)(this.allocation.width*0.5), (int)(this.allocation.height*0.5));
         
         this.renderer.draw(frame_time, ctx);
         
@@ -160,12 +160,12 @@ class PiePreview : Gtk.DrawingArea {
     }
     
     public bool on_mouse_leave(Gdk.EventCrossing event) {
-        this.renderer.on_mouse_leave(event.x, event.y);
+        this.renderer.on_mouse_leave();
         return true;
     }
     
     public bool on_mouse_enter(Gdk.EventCrossing event) {
-        this.renderer.on_mouse_enter(event.x, event.y);
+        this.renderer.on_mouse_enter();
         return true;
     }
     
@@ -208,24 +208,29 @@ class PiePreview : Gtk.DrawingArea {
     }
     
     private void on_end_drag(Gdk.DragContext context) {
-        this.renderer.set_dnd_mode(false);
+        
         if (context.targets != null) {
+        
+            int target_index = this.renderer.get_active_slice();
+            this.renderer.set_dnd_mode(false);
 
             context.targets.foreach((target) => {
                 Gdk.Atom target_type = (Gdk.Atom)target;
                 if (target_type.name() == "text/plain") {
                     var pie = PieManager.all_pies[this.current_id];
-                    pie.move_group(this.drag_start_index, this.renderer.get_active_slice());
-                    
-                    this.renderer.show_hidden_group_at(this.renderer.get_active_slice());
+                    pie.move_group(this.drag_start_index, target_index);
+                    this.renderer.show_hidden_group_at(target_index);
                 }
             });
-        }
+        }  
     }
     
-    private void on_dnd_received(Gdk.DragContext context, int x, int y, Gtk.SelectionData selection_data, uint info, uint time_) {
+    private void on_dnd_received(Gdk.DragContext context, int x, int y, 
+                                 Gtk.SelectionData selection_data, uint info, uint time_) {
+                                 
         var pie = PieManager.all_pies[this.current_id];
         int position = this.renderer.get_active_slice();
+        this.renderer.set_dnd_mode(false);
         
         foreach (var uri in selection_data.get_uris()) {
             pie.add_action(ActionRegistry.new_for_uri(uri), position);
@@ -234,9 +239,6 @@ class PiePreview : Gtk.DrawingArea {
             if (this.renderer.slices.size == 1)
                 this.on_first_slice_added();
         }
-        
-        this.renderer.set_dnd_mode(false);
-
     }
     
     private void enable_drag_source() {

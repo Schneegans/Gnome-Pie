@@ -40,7 +40,6 @@ class PiePreview : Gtk.DrawingArea {
     private string current_id = "";
     
     private int drag_start_index = -1;
-    private int drag_end_index = -1;
 
     public PiePreview() {
         this.renderer = new PiePreviewRenderer();

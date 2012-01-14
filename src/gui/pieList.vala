@@ -166,12 +166,6 @@ class PieList : Gtk.TreeView {
         }
         
     }
-    
-    private bool on_drag_move(Gdk.DragContext ctx, int x, int y, uint time) {
-        //this.select_cursor_row(false);
-        debug("hu");
-        return true;
-    }
 }
 
 }

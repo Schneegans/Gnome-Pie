@@ -27,7 +27,6 @@ public class RenameWindow : GLib.Object {
 
     private Gtk.Window window = null;
     private Gtk.Entry entry = null;
-    private string selected_id = "";
     
     public signal void on_ok(string new_name);
      

@@ -48,8 +48,8 @@ set(CFLAGS
 	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
 	-DWNCK_I_KNOW_THIS_IS_UNSTABLE
     -DGETTEXT_PACKAGE="gnomepie"
-	#-s -O3
-	-g
+	-s -O3 -w
+#	-g
 )
 
 if (${GMENU3_FOUND})

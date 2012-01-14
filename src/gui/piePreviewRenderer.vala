@@ -176,7 +176,6 @@ public class PiePreviewRenderer : GLib.Object {
     
     public void remove_group(int index) {
         if (this.slices.size > index) {
-            var removed = this.slices[index];
             this.slices.remove_at(index);
             this.update_positions();
             this.update_sizes();

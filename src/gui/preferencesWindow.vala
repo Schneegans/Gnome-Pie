@@ -176,7 +176,12 @@ public class PreferencesWindow : GLib.Object {
             hotkey_label.set_markup(PieManager.get_accelerator_label_of(pie.id));
             
             if (pie.icon.contains("/"))
-                this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(pie.icon, this.icon.get_pixel_size(), this.icon.get_pixel_size(), true);
+                try {
+                    this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(pie.icon, this.icon.get_pixel_size(), 
+                                                                         this.icon.get_pixel_size(), true);
+                } catch (GLib.Error error) {
+                    warning(error.message);
+                }
             else
                 this.icon.icon_name = pie.icon;
             

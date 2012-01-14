@@ -293,8 +293,12 @@ public class NewSliceWindow : GLib.Object {
     
     private void set_icon(string icon) {
         if (icon.contains("/"))
-            this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(icon, this.icon.get_pixel_size(), 
-                                                                       this.icon.get_pixel_size(), true);
+            try {
+                this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(icon, this.icon.get_pixel_size(), 
+                                                                     this.icon.get_pixel_size(), true);
+            } catch (GLib.Error error) {
+                warning(error.message);
+            }
         else
             this.icon.icon_name = icon;
             

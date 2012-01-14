@@ -169,7 +169,7 @@ public class ActionRegistry : GLib.Object {
     public static Action? new_for_desktop_file(string file_name) {
         // check whether its a desktop file to open one of Gnome-Pie's pies
         if (file_name.has_prefix(Paths.launchers)) {
-            string id = file_name.substring((long)file_name.size() - 11, 3);
+            string id = file_name.substring((long)file_name.length - 11, 3);
             return new PieAction(id);
         }
         

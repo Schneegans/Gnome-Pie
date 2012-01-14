@@ -71,6 +71,7 @@ public class PiePreviewRenderer : GLib.Object {
             this.connect_siganls(renderer);
         }
         
+        this.active_slice = -1;
         this.update_sizes();
         this.update_positions(false);
     }
@@ -119,6 +120,9 @@ public class PiePreviewRenderer : GLib.Object {
         this.add_sign.hide();
         this.update_positions();
         this.update_center(CenterDisplay.NONE);
+        
+        foreach (var slice in this.slices)
+            slice.on_mouse_leave();
     }
     
     public void on_mouse_enter() {
@@ -258,7 +262,8 @@ public class PiePreviewRenderer : GLib.Object {
                     this.slices[i].set_position(i, smoothly);
                 }
                 
-                this.update_center(CenterDisplay.ACTIVE_SLICE);
+                if (this.active_slice < 0)  this.update_center(CenterDisplay.NONE);
+                else                        this.update_center(CenterDisplay.ACTIVE_SLICE);
             }
         }
     }

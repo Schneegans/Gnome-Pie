@@ -74,7 +74,7 @@ class PieList : Gtk.TreeView {
         this.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
         //this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
         this.drag_data_get.connect(this.on_dnd_source);
-        //this.drag_begin.connect_after(this.on_start_drag);
+        this.drag_begin.connect_after(this.on_start_drag);
         //this.drag_motion.connect(this.on_drag_move);
         
         this.get_selection().changed.connect(() => {

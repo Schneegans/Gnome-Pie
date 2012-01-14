@@ -176,6 +176,11 @@ public class PiePreviewSliceRenderer : GLib.Object {
         return active;
     }
     
+    public void on_mouse_leave() {
+        this.activity.reset_target(0.0, 0.3);
+        this.delete_sign.hide();
+    }
+    
     public void on_button_press() {
         bool delete_pressed = this.delete_sign.on_button_press();
     

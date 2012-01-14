@@ -182,14 +182,18 @@ public class PiePreviewSliceRenderer : GLib.Object {
     }
     
     public void on_button_press() {
-        bool delete_pressed = this.delete_sign.on_button_press();
+        bool delete_pressed = false;
+        if (this.activity.end == 1.0)
+            delete_pressed = this.delete_sign.on_button_press();
     
         if (!delete_pressed && this.activity.end == 1.0)
             this.clicked.reset_target(0.9, 0.1);
     }
     
     public void on_button_release() {
-        bool deleted = this.delete_sign.on_button_release();
+        bool deleted = false;
+        if (this.activity.end == 1.0)
+            deleted = this.delete_sign.on_button_release();
         
         if (!deleted && this.clicked.end == 0.9) {
             this.clicked.reset_target(1.0, 0.1);

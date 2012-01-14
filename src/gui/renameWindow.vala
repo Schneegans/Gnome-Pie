@@ -41,6 +41,8 @@ public class RenameWindow : GLib.Object {
             window = builder.get_object("window") as Gtk.Window;
             entry = builder.get_object("name-entry") as Gtk.Entry;
             
+            entry.activate.connect(this.on_ok_button_clicked);
+            
             (builder.get_object("ok-button") as Gtk.Button).clicked.connect(on_ok_button_clicked);
             (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(on_cancel_button_clicked);
                 
@@ -55,6 +57,7 @@ public class RenameWindow : GLib.Object {
     
     public void show() {
         this.window.show_all();
+        this.entry.is_focus = true;
     }  
     
     public void set_pie(string id) {

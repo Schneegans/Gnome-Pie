@@ -279,6 +279,7 @@ public class IconSelectWindow : GLib.Object {
     
     public void show() {
         this.window.show_all();
+        this.spinner.hide();
         
         if (this.need_reload) {
             this.need_reload = false;
@@ -411,7 +412,7 @@ public class IconSelectWindow : GLib.Object {
         
         // hide the spinner
         if (spinner != null)
-            spinner.visible = this.loading;
+            spinner.visible = false;
 
         return null;
     }

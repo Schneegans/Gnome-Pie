@@ -55,7 +55,9 @@ public class UriAction : Action {
     /////////////////////////////////////////////////////////////////////
 
     public UriAction(string name, string icon, string command, bool is_quickaction = false) {
-        GLib.Object(name : name, icon : icon, real_command : command, is_quickaction : is_quickaction);
+        GLib.Object(name : name, icon : icon, 
+                    real_command : command.has_prefix("www") ? "http://" + command : command, 
+                    is_quickaction : is_quickaction);
     }
 
     /////////////////////////////////////////////////////////////////////

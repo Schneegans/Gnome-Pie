@@ -40,6 +40,10 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.Image? icon = null;
     private Gtk.EventBox? preview_background = null;
     
+    private Gtk.Button? icon_button = null;
+    private Gtk.Button? name_button = null;
+    private Gtk.Button? hotkey_button = null;
+    
     private AppearanceWindow? appearance_window = null;
     private TriggerSelectWindow? trigger_window = null;
     private IconSelectWindow? icon_window = null;
@@ -114,9 +118,16 @@ public class PreferencesWindow : GLib.Object {
             preview_background = builder.get_object("preview-background") as Gtk.EventBox;
                     
             (builder.get_object("theme-button") as Gtk.Button).clicked.connect(on_theme_button_clicked);
-            (builder.get_object("key-button") as Gtk.Button).clicked.connect(on_key_button_clicked);
-            (builder.get_object("icon-button") as Gtk.Button).clicked.connect(on_icon_button_clicked);
-            (builder.get_object("rename-button") as Gtk.Button).clicked.connect(on_rename_button_clicked);
+            
+            this.hotkey_button = builder.get_object("key-button") as Gtk.Button;
+            this.hotkey_button.clicked.connect(on_key_button_clicked);
+            
+            this.icon_button = builder.get_object("icon-button") as Gtk.Button;
+            this.icon_button.clicked.connect(on_icon_button_clicked);
+            
+            this.name_button = builder.get_object("rename-button") as Gtk.Button;
+            this.name_button.clicked.connect(on_rename_button_clicked);
+            
             (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
             (builder.get_object("remove-pie-button") as Gtk.ToolButton).clicked.connect(on_remove_pie_button_clicked);
             
@@ -147,6 +158,10 @@ public class PreferencesWindow : GLib.Object {
         no_pie_label.hide();
         preview_box.hide();
         
+        this.name_button.sensitive = false;
+        this.hotkey_button.sensitive = false;
+        this.icon_button.sensitive = false;
+        
         if (id == "") {
             id_label.label = "";
             name_label.label = _("No Pie selected.");
@@ -171,6 +186,10 @@ public class PreferencesWindow : GLib.Object {
             if (pie.action_groups.size == 0) {
                 no_slice_label.show();
             }
+            
+            this.name_button.sensitive = true;
+            this.hotkey_button.sensitive = true;
+            this.icon_button.sensitive = true;
         }
     }
     

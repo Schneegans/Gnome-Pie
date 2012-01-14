@@ -47,12 +47,12 @@ public class PiePreviewCenter : GLib.Object {
             var style = new Gtk.Style();
             
             this.old_text = this.text;
-            this.text = new RenderedText.with_markup(text, 180, 180, style.font_desc.get_family()+" 8", 
+            this.text = new RenderedText.with_markup(text, 180, 180, style.font_desc.get_family()+" 10", 
                                                      new Color.from_gdk(style.fg[0]), 1.0);
             this.current_text = text;
             
             this.blend.reset_target(0.0, 0.0);
-            this.blend.reset_target(1.0, 0.05);
+            this.blend.reset_target(1.0, 0.1);
         }
     }
     

@@ -61,6 +61,8 @@ class PieList : Gtk.TreeView {
                 main_column.pack_start(icon_render, false);
         
             var name_render = new Gtk.CellRendererText();
+                name_render.ellipsize = Pango.EllipsizeMode.END;
+                name_render.ellipsize_set = true;
                 main_column.pack_start(name_render, true);
         
         base.append_column(main_column);

@@ -82,8 +82,8 @@ public class PieAction : Action {
     /// C'tor, initializes all members.
     /////////////////////////////////////////////////////////////////////
 
-    public PieAction(string id, bool is_quick_action = false) {
-        GLib.Object(name : "", icon : "", real_command : id, is_quick_action : is_quick_action);
+    public PieAction(string id, bool is_quickaction = false) {
+        GLib.Object(name : "", icon : "", real_command : id, is_quickaction : is_quickaction);
     }
     
     /////////////////////////////////////////////////////////////////////

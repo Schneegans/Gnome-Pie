@@ -74,6 +74,9 @@ class PiePreview : Gtk.DrawingArea {
         this.new_slice_window.on_select.connect((new_action, as_new_slice, at_position) => {
             var pie = PieManager.all_pies[this.current_id];
             
+            if (new_action.has_quickaction())
+                renderer.disable_quickactions();
+            
             if (as_new_slice) {
                 pie.add_group(new_action, at_position+1);
                 this.renderer.add_group(new_action, at_position+1);
@@ -130,7 +133,7 @@ class PiePreview : Gtk.DrawingArea {
     
     public void set_pie(string id) {
         this.current_id = id;
-       // this.window.set_background(Gtk.rc_get_style(this).light[0]);
+        this.window.set_background(Gtk.rc_get_style(this).light[0]);
         this.renderer.load_pie(PieManager.all_pies[id]);
     }
     

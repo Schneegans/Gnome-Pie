@@ -47,8 +47,8 @@ public class SigAction : Action {
     /// C'tor, initializes all members.
     /////////////////////////////////////////////////////////////////////
 
-    public SigAction(string name, string icon, string command, bool is_quick_action = false) {
-        GLib.Object(name : name, icon : icon, real_command : command, is_quick_action : is_quick_action);
+    public SigAction(string name, string icon, string command, bool is_quickaction = false) {
+        GLib.Object(name : name, icon : icon, real_command : command, is_quickaction : is_quickaction);
     }
 
     /////////////////////////////////////////////////////////////////////

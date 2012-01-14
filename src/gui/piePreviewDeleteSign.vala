@@ -100,11 +100,18 @@ public class PiePreviewDeleteSign : GLib.Object {
         }
     }
     
-    public void on_mouse_move(double x, double y) {
-	    if (GLib.Math.fabs(x) <= radius*globale_scale && GLib.Math.fabs(y) <= radius*globale_scale) 
+    public bool on_mouse_move(double x, double y) {
+        if (this.clicked.end == 0.9) {
+            this.clicked.reset_target(1.0, 0.1);
+        }
+    
+	    if (GLib.Math.fabs(x) <= radius*globale_scale && GLib.Math.fabs(y) <= radius*globale_scale) {
 	        this.activity.reset_target(1.0, 0.2);
-        else 
-            this.activity.reset_target(0.0, 0.2);
+	        return true;
+        } 
+        
+        this.activity.reset_target(0.0, 0.2);
+        return false;
     }
     
     public bool on_button_press() {
@@ -115,11 +122,14 @@ public class PiePreviewDeleteSign : GLib.Object {
         return false;
     }
     
-    public void on_button_release() {
+    public bool on_button_release() {
         if (this.clicked.end == 0.9) {
             this.clicked.reset_target(1.0, 0.1);
             this.on_clicked();
+            
+            return true;
         }
+        return false;
     }
 }
 

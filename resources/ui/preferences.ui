@@ -254,63 +254,68 @@
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label_xalign">0</property>
-                        <property name="shadow_type">in</property>
                         <child>
-                          <object class="GtkVBox" id="pie-edit-box">
+                          <object class="GtkEventBox" id="preview-background">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="border_width">2</property>
                             <child>
-                              <object class="GtkLabel" id="no-slice-label">
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;This Pie is empty!&lt;/b&gt;&lt;/big&gt;
-
-Start adding Slices to it!
-
-This can be done by dragging stuff to the plus sign below. You can try a lot! For example application launchers or folders. Even URLs from your browser are possible... 
-
-For manual and advanced configuration click on the plus sign.</property>
-                                <property name="use_markup">True</property>
-                                <property name="justify">fill</property>
-                                <property name="wrap">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="no-pie-label">
-                                <property name="can_focus">False</property>
-                                <property name="label" translatable="yes">&lt;big&gt;&lt;b&gt;You have no Pies!&lt;/b&gt;&lt;/big&gt;
-
-Start by creating one!
-
-This can be done by clicking on the tiny little plus sign in the lower left corner.</property>
-                                <property name="use_markup">True</property>
-                                <property name="justify">fill</property>
-                                <property name="wrap">True</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">True</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkVBox" id="preview-box">
+                              <object class="GtkVBox" id="pie-edit-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="border_width">2</property>
                                 <child>
-                                  <placeholder/>
+                                  <object class="GtkLabel" id="no-slice-label">
+                                    <property name="can_focus">False</property>
+                                    <property name="xpad">6</property>
+                                    <property name="ypad">6</property>
+                                    <property name="label" translatable="yes">&lt;b&gt;&lt;big&gt;This Pie is empty!&lt;/big&gt;
+
+Start adding Slices to it!&lt;/b&gt; This can be done by dragging stuff to the plus sign below. You can try a lot! For example application launchers or folders. Even URLs from your browser are possible... 
+
+For manual and advanced configuration click on the plus sign.</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">fill</property>
+                                    <property name="wrap">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkLabel" id="no-pie-label">
+                                    <property name="can_focus">False</property>
+                                    <property name="xpad">6</property>
+                                    <property name="ypad">6</property>
+                                    <property name="label" translatable="yes">&lt;b&gt;&lt;big&gt;You have no Pies!&lt;/big&gt;
+
+Start by creating one! &lt;/b&gt; This can be done by clicking on the tiny little plus sign in the lower left corner.</property>
+                                    <property name="use_markup">True</property>
+                                    <property name="justify">fill</property>
+                                    <property name="wrap">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkVBox" id="preview-box">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">False</property>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">True</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">2</property>
+                                  </packing>
                                 </child>
                               </object>
-                              <packing>
-                                <property name="expand">True</property>
-                                <property name="fill">True</property>
-                                <property name="position">2</property>
-                              </packing>
                             </child>
                           </object>
                         </child>

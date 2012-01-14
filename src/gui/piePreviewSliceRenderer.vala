@@ -31,6 +31,7 @@ public class PiePreviewSliceRenderer : GLib.Object {
     public Icon icon { get; private set; }
     public ActionGroup action_group { get; private set; }
     public string name { get; private set; default=""; }
+    public bool delete_hovered { get; private set; default=false; }
 
     private unowned PiePreviewRenderer parent;  
     
@@ -42,10 +43,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
     private AnimatedValue clicked; 
     
     // distance from the center
-    private double pie_radius = 120;
-    private double radius = 24;
-    private const double delete_x = 15;
-    private const double delete_y = -15;
+    private const double pie_radius = 126;
+    private const double radius = 24;
+    private const double delete_x = 13;
+    private const double delete_y = -13;
     
     /////////////////////////////////////////////////////////////////////
     /// The index of this slice in a pie. Clockwise assigned, starting
@@ -110,6 +111,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
         this.delete_sign.set_size(size);
     }
     
+    public void disable_quickactions() {
+        this.action_group.disable_quickactions();
+    }
+    
     /////////////////////////////////////////////////////////////////////
     /// Draws all layers of the slice.
     /////////////////////////////////////////////////////////////////////
@@ -159,14 +164,14 @@ public class PiePreviewSliceRenderer : GLib.Object {
             this.delete_sign.hide();
         }                                  
         
-        if (this.clicked.end == 0.8) {
+        if (this.clicked.end == 0.9) {
             this.clicked.reset_target(1.0, 0.1);
         }
         
         double own_x = cos(this.angle.val)*pie_radius;
         double own_y = sin(this.angle.val)*pie_radius;
-        this.delete_sign.on_mouse_move(x - own_x - delete_x*this.size.val, 
-                                       y - own_y - delete_y*this.size.val);
+        this.delete_hovered = this.delete_sign.on_mouse_move(x - own_x - delete_x*this.size.val, 
+                                                             y - own_y - delete_y*this.size.val);
                                        
         return active;
     }
@@ -179,9 +184,9 @@ public class PiePreviewSliceRenderer : GLib.Object {
     }
     
     public void on_button_release() {
-        this.delete_sign.on_button_release();
+        bool deleted = this.delete_sign.on_button_release();
         
-        if (this.clicked.end == 0.9) {
+        if (!deleted && this.clicked.end == 0.9) {
             this.clicked.reset_target(1.0, 0.1);
             this.on_clicked(this.position);
         }

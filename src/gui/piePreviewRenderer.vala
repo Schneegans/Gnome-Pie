@@ -39,7 +39,7 @@ public class PiePreviewRenderer : GLib.Object {
     private double angle = 0.0;
     private int active_slice = -1;
     
-    private enum CenterDisplay { NONE, ACTIVE_SLICE, DROP, ADD }
+    private enum CenterDisplay { NONE, ACTIVE_SLICE, DROP, ADD, DELETE }
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes members.
@@ -47,7 +47,7 @@ public class PiePreviewRenderer : GLib.Object {
     
     public PiePreviewRenderer() {
         this.slices = new Gee.ArrayList<PiePreviewSliceRenderer?>(); 
-        this.center_renderer = new PiePreviewCenter();
+        this.center_renderer = new PiePreviewCenter(this);
         this.add_sign = new PiePreviewAddSign(this);
         this.add_sign.load();
         
@@ -65,16 +65,10 @@ public class PiePreviewRenderer : GLib.Object {
     
         foreach (var group in pie.action_groups) {
             var renderer = new PiePreviewSliceRenderer(this);
-            this.slices.add(renderer);
             renderer.load(group);
             
-            renderer.on_clicked.connect((pos) => {
-                this.on_edit_slice(pos);
-            });
-            
-            renderer.on_remove.connect((pos) => {
-                this.on_remove_slice(pos);
-            });
+            this.add_slice_renderer(renderer);
+            this.connect_siganls(renderer);
         }
         
         this.update_sizes();
@@ -139,12 +133,17 @@ public class PiePreviewRenderer : GLib.Object {
         if (!this.drag_n_drop_mode)
             this.active_slice = -1;
         
+        bool delete_hovered = false;
+        
         for (int i=0; i<this.slices.size; ++i)
-            if (slices[i].on_mouse_move(this.angle, x, y) && !this.drag_n_drop_mode) 
+            if (slices[i].on_mouse_move(this.angle, x, y) && !this.drag_n_drop_mode) {
                 this.active_slice = i;
+                delete_hovered = slices[i].delete_hovered;
+            }
         
         if (this.drag_n_drop_mode)      this.update_center(CenterDisplay.DROP);
         else if (this.active_slice < 0) this.update_center(CenterDisplay.ADD);
+        else if (delete_hovered)        this.update_center(CenterDisplay.DELETE);
         else                            this.update_center(CenterDisplay.ACTIVE_SLICE);
             
         this.add_sign.on_mouse_move(this.angle);
@@ -168,10 +167,12 @@ public class PiePreviewRenderer : GLib.Object {
         var renderer = new PiePreviewSliceRenderer(this);
         renderer.load(group);
         this.add_slice_renderer(renderer, at_position);
+        this.connect_siganls(renderer);
     }
     
     public void remove_group(int index) {
         if (this.slices.size > index) {
+            var removed = this.slices[index];
             this.slices.remove_at(index);
             this.update_positions();
             this.update_sizes();
@@ -182,7 +183,6 @@ public class PiePreviewRenderer : GLib.Object {
         if (this.slices.size > index) {
             this.hidden_group = this.slices[index];
             this.remove_group(index);
-
         }
     }
     
@@ -200,40 +200,36 @@ public class PiePreviewRenderer : GLib.Object {
             this.slices.set(index, renderer);
             renderer.load(group);
             
-            renderer.on_clicked.connect((pos) => {
-                this.on_edit_slice(pos);
-            });
+            this.connect_siganls(renderer);
             
             this.update_positions(false);
             this.update_sizes();
         }
     }
     
-    private void add_slice_renderer(PiePreviewSliceRenderer renderer, int at_position) {
-        if (at_position < 0 || at_position >= this.slices.size) {
+    public void disable_quickactions() {
+        foreach (var slice in this.slices)
+            slice.disable_quickactions();
+    }
+    
+    private void add_slice_renderer(PiePreviewSliceRenderer renderer, int at_position = -1) {
+        if (at_position < 0 || at_position >= this.slices.size)
             this.slices.add(renderer);
-            
-            renderer.on_clicked.connect((pos) => {
-                this.on_edit_slice(pos);
-            });
-            
-            renderer.on_remove.connect((pos) => {
-                this.on_remove_slice(pos);
-            });
-            
-        } else {
+        else
             this.slices.insert(at_position, renderer);
-            
-            renderer.on_clicked.connect((pos) => {
-                this.on_edit_slice(pos);
-            });
-            
-            renderer.on_remove.connect((pos) => {
-                this.on_remove_slice(pos);
-            });
-        }
+        
         this.update_positions(false);
         this.update_sizes();
+    }
+    
+    private void connect_siganls(PiePreviewSliceRenderer renderer) {
+        renderer.on_clicked.connect((pos) => {
+            this.on_edit_slice(pos);
+        });
+        
+        renderer.on_remove.connect((pos) => {
+            this.on_remove_slice(pos);
+        });
     }
     
     private void update_positions(bool smoothly = true) {
@@ -268,7 +264,9 @@ public class PiePreviewRenderer : GLib.Object {
     }
         
     private void update_sizes() {
-        double size = this.slice_count() > 8 ? (1.0 - (this.slice_count() - 8)/16.0) : 1.0;
+        double size = 1.0;
+        if (this.slice_count() > 20)     size = 0.5;
+        else if (this.slice_count() > 8) size = 1.0 - (double)(this.slice_count() - 8)/24.0;
         
         this.add_sign.set_size(size);
         
@@ -292,6 +290,11 @@ public class PiePreviewRenderer : GLib.Object {
                 else
                     this.center_renderer.set_text("<b>" + this.hidden_group.name + "</b>\n<small>"
                                             + _("Drop to move Slice") + "</small>");
+                break;
+            case CenterDisplay.DELETE:
+                if (this.active_slice >= 0 && this.active_slice < this.slices.size)
+                    this.center_renderer.set_text("<b>" + slices[this.active_slice].name + "</b>\n<small>" 
+                                            + _("Click to delete") + "\n" + _("Drag to move") + "</small>");
                 break;
             default:
                 this.center_renderer.set_text("");

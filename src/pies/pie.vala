@@ -87,7 +87,12 @@ public class Pie : GLib.Object {
     /// Adds an ActionGroup to this Pie.
     /////////////////////////////////////////////////////////////////////
     
-    public void add_group(ActionGroup group, int at_position = -1) {
+    public void add_group(ActionGroup group, int at_position = -1) {     
+        if (group.has_quickaction()) {
+            foreach (var action_group in action_groups)
+                action_group.disable_quickactions();
+        }
+            
         if (at_position < 0 || at_position >= this.action_groups.size) 
             this.action_groups.add(group);
         else

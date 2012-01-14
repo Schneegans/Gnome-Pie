@@ -31,7 +31,10 @@ public class PiePreviewCenter : GLib.Object {
     private string current_text = null;
     private AnimatedValue blend; 
     
-    public PiePreviewCenter() {
+    private unowned PiePreviewRenderer parent;  
+    
+    public PiePreviewCenter(PiePreviewRenderer parent) {
+        this.parent = parent;
         this.blend = new AnimatedValue.linear(0, 0, 0);
         
         this.text = new RenderedText("", 1, 1, "");
@@ -62,6 +65,9 @@ public class PiePreviewCenter : GLib.Object {
         this.blend.update(frame_time);
         
         ctx.save();
+        
+        if (this.parent.slice_count() == 0) 
+            ctx.translate(0, 40);
         
         this.old_text.paint_on(ctx, 1-this.blend.val);
         this.text.paint_on(ctx, this.blend.val);

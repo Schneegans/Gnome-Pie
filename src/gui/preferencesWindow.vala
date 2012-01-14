@@ -38,6 +38,7 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.Label? no_slice_label = null;
     private Gtk.VBox? preview_box = null;
     private Gtk.Image? icon = null;
+    private Gtk.EventBox? preview_background = null;
     
     private AppearanceWindow? appearance_window = null;
     private TriggerSelectWindow? trigger_window = null;
@@ -110,6 +111,7 @@ public class PreferencesWindow : GLib.Object {
             no_pie_label = builder.get_object("no-pie-label") as Gtk.Label;
             no_slice_label = builder.get_object("no-slice-label") as Gtk.Label;
             icon = builder.get_object("icon") as Gtk.Image;
+            preview_background = builder.get_object("preview-background") as Gtk.EventBox;
                     
             (builder.get_object("theme-button") as Gtk.Button).clicked.connect(on_theme_button_clicked);
             (builder.get_object("key-button") as Gtk.Button).clicked.connect(on_key_button_clicked);
@@ -135,6 +137,7 @@ public class PreferencesWindow : GLib.Object {
         preview.draw_loop();
         window.show_all();
         pie_list.select_first();
+        preview_background.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this.window).light[0]);
     }
     
     private void on_pie_select(string id) {

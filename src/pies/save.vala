@@ -61,7 +61,7 @@ namespace Pies {
                                 writer.write_attribute("icon", action.icon);
                             }
                             writer.write_attribute("command", action.real_command);
-                            writer.write_attribute("quickAction", action.is_quick_action ? "true" : "false");
+                            writer.write_attribute("quickAction", action.is_quickaction ? "true" : "false");
                             writer.end_element();
                         }
                     } else {

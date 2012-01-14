@@ -43,7 +43,7 @@ public class NewSliceWindow : GLib.Object {
     private Gtk.Entry name_entry = null;
     private Gtk.Entry command_entry = null;
     private Gtk.Entry uri_entry = null;
-    private Gtk.CheckButton quick_action_checkbutton = null;
+    private Gtk.CheckButton quickaction_checkbutton = null;
     
     private PieComboList pie_select = null;
     private HotkeySelectButton key_select = null;
@@ -141,7 +141,7 @@ public class NewSliceWindow : GLib.Object {
             this.name_entry = builder.get_object("name-entry") as Gtk.Entry;
             this.uri_entry = builder.get_object("uri-entry") as Gtk.Entry;
             this.command_entry = builder.get_object("command-entry") as Gtk.Entry;
-            this.quick_action_checkbutton = builder.get_object("quick-action-checkbutton") as Gtk.CheckButton;
+            this.quickaction_checkbutton = builder.get_object("quick-action-checkbutton") as Gtk.CheckButton;
             
             this.quickaction_box = builder.get_object("quickaction-box") as Gtk.HBox;
             this.icon = builder.get_object("icon") as Gtk.Image;            
@@ -188,7 +188,7 @@ public class NewSliceWindow : GLib.Object {
             this.select_type(type);
             
             this.set_icon(action.icon);
-            this.quick_action_checkbutton.active = action.is_quick_action;
+            this.quickaction_checkbutton.active = action.is_quickaction;
             this.name_entry.text = action.name;
             
             switch (type) {
@@ -250,24 +250,24 @@ public class NewSliceWindow : GLib.Object {
                 group = new ActionGroup(this.current_id);
                 group.add_action(new AppAction(this.name_entry.text, this.current_icon, 
                                                this.command_entry.text, 
-                                               this.quick_action_checkbutton.active));
+                                               this.quickaction_checkbutton.active));
                 break;
             case "key":
                 group = new ActionGroup(this.current_id);
                 group.add_action(new KeyAction(this.name_entry.text, this.current_icon, 
                                                this.current_hotkey, 
-                                               this.quick_action_checkbutton.active));
+                                               this.quickaction_checkbutton.active));
                 break;
             case "pie":
                 group = new ActionGroup(this.current_id);
                 group.add_action(new PieAction(this.current_pie_to_open, 
-                                               this.quick_action_checkbutton.active));
+                                               this.quickaction_checkbutton.active));
                 break;
             case "uri":
                 group = new ActionGroup(this.current_id);
                 group.add_action(new UriAction(this.name_entry.text, this.current_icon, 
                                                this.uri_entry.text, 
-                                               this.quick_action_checkbutton.active));
+                                               this.quickaction_checkbutton.active));
                 break;
         }
         

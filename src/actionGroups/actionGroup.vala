@@ -70,6 +70,19 @@ public class ActionGroup : GLib.Object {
     public void delete_all() {
         actions.clear();
     }
+    
+    public void disable_quickactions() {
+        foreach (var action in actions)
+            action.is_quickaction = false;
+    }
+    
+    public bool has_quickaction() {
+        foreach (var action in actions)
+            if (action.is_quickaction)
+                return true;
+                
+        return false;
+    }
 }
 
 }

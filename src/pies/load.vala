@@ -80,7 +80,7 @@ namespace Pies {
         string name = "";
         string icon = "";
         string id = "";
-        int quick_action = -1;
+        int quickaction = -1;
         
         // parse all attributes of this node
         for (Xml.Attr* attribute = node->properties; attribute != null; attribute = attribute->next) {
@@ -92,7 +92,7 @@ namespace Pies {
                     hotkey = attr_content;
                     break;
                 case "quickaction":
-                    quick_action = int.parse(attr_content);
+                    quickaction = int.parse(attr_content);
                     break;
                 case "name":
                     name = attr_content;
@@ -145,7 +145,7 @@ namespace Pies {
         string icon="";
         string command="";
         string type="";
-        bool quick_action = false;
+        bool quickaction = false;
         
         // parse all attributes of this node
         for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
@@ -166,7 +166,7 @@ namespace Pies {
                     type = attr_content;
                     break;
                 case "quickaction":
-                    quick_action = bool.parse(attr_content);
+                    quickaction = bool.parse(attr_content);
                     break;
                 default:
                     warning("Invalid attribute \"" + attr_name + "\" in <slice> element in pies.conf!");
@@ -183,7 +183,7 @@ namespace Pies {
                 action = GLib.Object.new(action_type, "name", name, 
                                                       "icon", icon, 
                                               "real_command", command, 
-                                           "is_quick_action", quick_action) as Action;
+                                           "is_quickaction", quickaction) as Action;
                 break;
             } 
         }

@@ -32,7 +32,7 @@ public class DevicesGroup : ActionGroup {
     
     public static void register(out GroupRegistry.TypeDescription description) {
         description = GroupRegistry.TypeDescription();
-        description.name = _("Slice group: Devices");
+        description.name = _("Group: Devices");
         description.icon = "harddrive";
         description.description = _("Shows a Slice for each plugged in devices, like USB-Sticks.");
         description.id = "devices";

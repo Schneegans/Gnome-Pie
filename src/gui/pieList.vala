@@ -30,6 +30,14 @@ class PieList : Gtk.TreeView {
     public signal void on_select(string id);
     
     private Gtk.ListStore data;
+    private Gtk.TreeIter? drag_start = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Two members needed to avoid useless, frequent changes of the 
+    /// stored Actions.
+    /////////////////////////////////////////////////////////////////////
+
+    private uint last_hover = 0;
     
     private enum DataPos {ICON, ICON_NAME, NAME, ID}
 
@@ -51,6 +59,7 @@ class PieList : Gtk.TreeView {
         this.set_headers_visible(false);
         this.set_grid_lines(Gtk.TreeViewGridLines.NONE);
         this.width_request = 170;
+        this.set_enable_search(false);
         
         this.set_events(Gdk.EventMask.POINTER_MOTION_MASK);
         
@@ -74,10 +83,13 @@ class PieList : Gtk.TreeView {
         Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
         Gtk.TargetEntry[] entries = { uri_source };
         this.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
-        //this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
+        this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
         this.drag_data_get.connect(this.on_dnd_source);
         this.drag_begin.connect_after(this.on_start_drag);
-        //this.drag_motion.connect(this.on_drag_move);
+        this.drag_motion.connect(this.on_drag_move);
+        this.drag_leave.connect(() => {
+            this.last_hover = 0;
+        });
         
         this.get_selection().changed.connect(() => {
             Gtk.TreeIter active;
@@ -146,25 +158,49 @@ class PieList : Gtk.TreeView {
     }
     
     private void on_dnd_source(Gdk.DragContext context, Gtk.SelectionData selection_data, uint info, uint time_) {
-        Gtk.TreeIter selected;
-        if (this.get_selection().get_selected(null, out selected)) {
+        if (this.drag_start != null) {
             string id = "";
-            this.data.get(selected, DataPos.ID, out id);
+            this.data.get(this.drag_start, DataPos.ID, out id);
             selection_data.set_uris({"file://" + Paths.launchers + "/" + id + ".desktop"});
         }
     }
     
     private void on_start_drag(Gdk.DragContext ctx) {
-        Gtk.TreeIter selected;
-        if (this.get_selection().get_selected(null, out selected)) {
+        if (this.get_selection().get_selected(null, out this.drag_start)) {
             string icon_name = "";
-            this.data.get(selected, DataPos.ICON_NAME, out icon_name);
+            this.data.get(this.drag_start, DataPos.ICON_NAME, out icon_name);
             
             var icon = new Icon(icon_name, 48);
             var pixbuf = icon.to_pixbuf();
             Gtk.drag_set_icon_pixbuf(ctx, pixbuf, icon.size()/2, icon.size()/2);
         }
+    }
+    
+    private bool on_drag_move(Gdk.DragContext context, int x, int y, uint time) {
+    
+        Gtk.TreeViewDropPosition position;
+        Gtk.TreePath path;
         
+        if (!this.get_dest_row_at_pos(x, y, out path, out position))
+            return false;
+        
+        if (position == Gtk.TreeViewDropPosition.BEFORE)
+            this.set_drag_dest_row(path, Gtk.TreeViewDropPosition.INTO_OR_BEFORE);
+        else if (position == Gtk.TreeViewDropPosition.AFTER)
+            this.set_drag_dest_row(path, Gtk.TreeViewDropPosition.INTO_OR_AFTER);
+
+        Gdk.drag_status(context, context.suggested_action, time);
+        
+        // avoid too frequent selection...
+        this.last_hover = time;
+        
+        GLib.Timeout.add(300, () => {
+            if (this.last_hover == time)
+                this.get_selection().select_path(path); 
+            return false;
+        });
+        
+        return true;
     }
 }
 

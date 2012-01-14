@@ -61,7 +61,7 @@ public class ClipboardGroup : ActionGroup {
     
     public static void register(out GroupRegistry.TypeDescription description) {
         description = GroupRegistry.TypeDescription();
-        description.name = _("Slice group: Clipboard");
+        description.name = _("Group: Clipboard");
         description.icon = "edit-paste";
         description.description = _("Manages your Clipboard.");
         description.id = "clipboard";

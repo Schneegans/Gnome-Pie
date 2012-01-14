@@ -141,6 +141,9 @@ class SliceTypeList : Gtk.TreeView {
                 string icon = "";
                 this.data.get(iter, DataPos.ICON_NAME, out icon);
                 this.on_select(pie_id, icon);
+                this.scroll_to_cell(path, null, true, 0.5f, 0.5f);
+                this.has_focus = true;
+                
                 return true;
             }
             

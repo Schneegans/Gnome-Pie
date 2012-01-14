@@ -31,7 +31,7 @@ public class WindowListGroup : ActionGroup {
     
     public static void register(out GroupRegistry.TypeDescription description) {
         description = GroupRegistry.TypeDescription();
-        description.name = _("Slice group: Window List");
+        description.name = _("Group: Window List");
         description.icon = "window-manager";
         description.description = _("Shows a Slice for each of your opened Windows. Almost like Alt-Tab.");
         description.id = "window_list";

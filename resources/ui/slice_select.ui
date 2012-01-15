@@ -86,7 +86,7 @@
                               <object class="GtkImage" id="icon">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
-                                <property name="pixel_size">92</property>
+                                <property name="pixel_size">72</property>
                                 <property name="icon_name">application-default-icon</property>
                               </object>
                             </child>
@@ -101,7 +101,6 @@
                           <object class="GtkVBox" id="options-box">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="spacing">2</property>
                             <property name="homogeneous">True</property>
                             <child>
                               <object class="GtkVBox" id="no-options-box">
@@ -111,6 +110,7 @@
                                   <object class="GtkLabel" id="label3">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="xalign">0</property>
                                     <property name="label" translatable="yes">There are no options for this Slice type.</property>
                                   </object>
                                   <packing>
@@ -151,7 +151,7 @@
                                     <property name="invisible_char">•</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">True</property>
+                                    <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
                                   </packing>
@@ -189,7 +189,7 @@
                                     <property name="invisible_char_set">True</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">True</property>
+                                    <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
                                   </packing>
@@ -227,7 +227,7 @@
                                     <property name="invisible_char_set">True</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">True</property>
+                                    <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
                                   </packing>
@@ -263,7 +263,7 @@
                               </object>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="fill">True</property>
+                                <property name="fill">False</property>
                                 <property name="position">4</property>
                               </packing>
                             </child>
@@ -291,7 +291,7 @@
                               </object>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="fill">True</property>
+                                <property name="fill">False</property>
                                 <property name="position">5</property>
                               </packing>
                             </child>

@@ -77,18 +77,44 @@ public class Pie : GLib.Object {
     /// Adds an Action to this Pie.
     /////////////////////////////////////////////////////////////////////
     
-    public void add_action(Action action) {
+    public void add_action(Action action, int at_position = -1) {
         var group = new ActionGroup(this.id);
             group.add_action(action);
-        this.add_group(group);
+        this.add_group(group, at_position);
     }
     
     /////////////////////////////////////////////////////////////////////
     /// Adds an ActionGroup to this Pie.
     /////////////////////////////////////////////////////////////////////
     
-    public void add_group(ActionGroup group) {
-        this.action_groups.add(group);
+    public void add_group(ActionGroup group, int at_position = -1) {     
+        if (group.has_quickaction()) {
+            foreach (var action_group in action_groups)
+                action_group.disable_quickactions();
+        }
+            
+        if (at_position < 0 || at_position >= this.action_groups.size) 
+            this.action_groups.add(group);
+        else
+            this.action_groups.insert(at_position, group);
+    }
+    
+    public void remove_group(int index) {
+        if (this.action_groups.size > index)
+            this.action_groups.remove_at(index);
+    }
+    
+    public void move_group(int from, int to) {
+        if (this.action_groups.size > from && this.action_groups.size > to) {
+            var tmp = this.action_groups[from];
+            this.remove_group(from);
+            this.add_group(tmp, to);
+        }
+    }
+    
+    public void update_group(ActionGroup group, int index) {
+        if (this.action_groups.size > index)
+            this.action_groups.set(index, group);
     }
 }
 

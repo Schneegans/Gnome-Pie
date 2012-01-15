@@ -100,7 +100,11 @@ public class Deamon : GLib.Object {
         // create unique application
         var app = new Unique.App("org.gnome.gnomepie", null);
 
-        if (app.is_running) {
+        #if HAVE_GTK_3
+            if (app.is_running()) {
+        #else
+            if (app.is_running) {
+        #endif
             // inform the running instance of the pie to be opened
             if (open_pie != null) {
             	message("Gnome-Pie is already running. Sending request to open pie " + open_pie + ".");

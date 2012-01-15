@@ -87,7 +87,9 @@ public class PieWindow : Gtk.Window {
         
         // check for compositing
         if (this.screen.is_composited()) {
-            this.set_colormap(this.screen.get_rgba_colormap());
+            #if !HAVE_GTK_3
+                this.set_colormap(this.screen.get_rgba_colormap());
+            #endif
             this.has_compositing = true;
         }
         
@@ -136,7 +138,11 @@ public class PieWindow : Gtk.Window {
         });
 
         // draw the pie on expose
-        this.expose_event.connect(this.draw);
+        #if HAVE_GTK_3
+            this.draw.connect(this.draw_window);
+        #else
+            this.expose_event.connect(this.draw_window);
+        #endif
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -145,7 +151,7 @@ public class PieWindow : Gtk.Window {
 
     public void load_pie(Pie pie) {
         this.renderer.load_pie(pie);
-        this.set_window_position();
+        this.set_window_position(pie);
         this.set_size_request(renderer.size, renderer.size);
     }
     
@@ -166,7 +172,7 @@ public class PieWindow : Gtk.Window {
     
         // capture the input focus
         this.show();
-        FocusGrabber.grab(this);
+        FocusGrabber.grab(this.get_window());
 
         // start the timer
         this.timer = new GLib.Timer();
@@ -184,10 +190,13 @@ public class PieWindow : Gtk.Window {
     /// Draw the Pie.
     /////////////////////////////////////////////////////////////////////
 
-    private bool draw(Gtk.Widget da, Gdk.EventExpose event) {    
-        // clear the window
-        var ctx = Gdk.cairo_create(this.window);
-
+    #if HAVE_GTK_3
+        private bool draw_window(Cairo.Context ctx) { 
+    #else
+        private bool draw_window(Gtk.Widget da, Gdk.EventExpose event) {    
+            // clear the window
+            var ctx = Gdk.cairo_create(this.get_window());
+    #endif
         // paint the background image if there is no compositing
         if (this.has_compositing) {
             ctx.set_operator (Cairo.Operator.CLEAR);
@@ -225,7 +234,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            FocusGrabber.ungrab(this);
+            FocusGrabber.ungrab();
             this.renderer.activate();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
@@ -244,7 +253,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            FocusGrabber.ungrab(this);
+            FocusGrabber.ungrab();
             this.renderer.cancel();
             
             Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
@@ -260,9 +269,9 @@ public class PieWindow : Gtk.Window {
     /// the mouse.
     /////////////////////////////////////////////////////////////////////
     
-    private void set_window_position() {
-        if(Config.global.open_at_mouse) this.set_position(Gtk.WindowPosition.MOUSE);
-        else                            this.set_position(Gtk.WindowPosition.CENTER);
+    private void set_window_position(Pie pie) {
+        if(PieManager.get_is_centered(pie.id)) this.set_position(Gtk.WindowPosition.CENTER);
+        else                                   this.set_position(Gtk.WindowPosition.MOUSE);
     }
     
     /////////////////////////////////////////////////////////////////////

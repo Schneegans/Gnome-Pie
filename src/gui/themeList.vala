@@ -28,6 +28,8 @@ class ThemeList : Gtk.TreeView {
     /////////////////////////////////////////////////////////////////////
 
     private Gtk.TreeIter active { private get; private set; }
+    
+    private enum DataPos {ICON, NAME}
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, constructs the Widget.
@@ -36,58 +38,48 @@ class ThemeList : Gtk.TreeView {
     public ThemeList() {
         GLib.Object();
         
-        var data = new Gtk.ListStore(2, typeof(bool),    // selected
-                                        typeof(string)); // description
+        var data = new Gtk.ListStore(2, typeof(Gdk.Pixbuf), 
+                                        typeof(string));
         base.set_model(data);
         base.set_headers_visible(false);
-        base.set_rules_hint(true);
         base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
         
         var main_column = new Gtk.TreeViewColumn();
-            var check_render = new Gtk.CellRendererToggle();
-                check_render.set_radio(true);
-                check_render.set_activatable(true);
-                main_column.pack_start(check_render, false);
-                
-                // switch the theme if the entry has been toggled
-                check_render.toggled.connect((r, path) => {
-                    Gtk.TreeIter toggled;
-                    data.get_iter(out toggled, new Gtk.TreePath.from_string(path));
-                    
-                    if (toggled != this.active) {
-                        Timeout.add(10, () => {
-                            int index = int.parse(path);
-                            Config.global.theme = Config.global.themes[index];
-                            Config.global.theme.load();
-                            Config.global.theme.load_images();
-                            return false;
-                        });
-                        
-                        data.set(this.active, 0, false); 
-                        data.set(toggled, 0, true);
-                        
-                        this.active = toggled;
-                    }
-                });
+
+            var icon_render = new Gtk.CellRendererPixbuf();
+                main_column.pack_start(icon_render, false);
         
             var theme_render = new Gtk.CellRendererText();
                 main_column.pack_start(theme_render, true);
         
         base.append_column(main_column);
         
-        main_column.add_attribute(check_render, "active", 0);
-        main_column.add_attribute(theme_render, "markup", 1);
+        main_column.add_attribute(icon_render, "pixbuf", DataPos.ICON);
+        main_column.add_attribute(theme_render, "markup", DataPos.NAME);
+        
+        this.get_selection().changed.connect(() => {
+            Gtk.TreeIter active;
+            if (this.get_selection().get_selected(null, out active)) {
+                Timeout.add(10, () => {
+                    int index = int.parse(data.get_path(active).to_string());
+                    Config.global.theme = Config.global.themes[index];
+                    Config.global.theme.load();
+                    Config.global.theme.load_images();
+                    return false;
+                });  
+            }
+        });
         
         // load all themes into the list
         var themes = Config.global.themes;
         foreach(var theme in themes) {
             Gtk.TreeIter current;
             data.append(out current);
-            data.set(current, 0, theme == Config.global.theme); 
-            data.set(current, 1, "<b>" + theme.name + "</b><small>  -  " + theme.description + "\n"
-                                 + "<i>" + _("By") + " " + theme.author + "</i></small>"); 
+            data.set(current, DataPos.ICON, theme.preview_icon.to_pixbuf()); 
+            data.set(current, DataPos.NAME, "<b>"+theme.name+"</b><small>  -  "+theme.description+"\n"
+                                           +"<i>"+_("By")+" "+theme.author+"</i></small>"); 
             if(theme == Config.global.theme)
-                this.active = current;
+                get_selection().select_iter(current);
         }  
     }
 }

@@ -31,7 +31,7 @@ public class PieRenderer : GLib.Object {
     /// gets executed when the user clicks on the middle of the pie)
     /////////////////////////////////////////////////////////////////////
 
-    public int quick_action { get; private set; }
+    public int quickaction { get; private set; }
 
     /////////////////////////////////////////////////////////////////////
     /// The index of the currently active slice.
@@ -83,13 +83,13 @@ public class PieRenderer : GLib.Object {
     public PieRenderer() {
         this.slices = new Gee.ArrayList<SliceRenderer?>(); 
         this.center = new CenterRenderer(this);
-        this.quick_action = -1;
+        this.quickaction = -1;
         this.active_slice = -2;
         this.size = 0;
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Loads an Pie. All members are initialized accordingly.
+    /// Loads a Pie. All members are initialized accordingly.
     /////////////////////////////////////////////////////////////////////
     
     public void load_pie(Pie pie) {
@@ -102,8 +102,8 @@ public class PieRenderer : GLib.Object {
                 this.slices.add(renderer);
                 renderer.load(action, slices.size-1);
                 
-                if (action.is_quick_action) {
-                    this.quick_action = count;
+                if (action.is_quickaction) {
+                    this.quickaction = count;
                 }
                 
                 ++count;
@@ -112,7 +112,7 @@ public class PieRenderer : GLib.Object {
         
         this.turbo_mode = PieManager.get_is_turbo(pie.id);
         
-        this.set_highlighted_slice(this.quick_action);
+        this.set_highlighted_slice(this.quickaction);
         
         this.size = (int)fmax(2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
                               2*Config.global.theme.center_radius);
@@ -244,10 +244,10 @@ public class PieRenderer : GLib.Object {
 	            int next_active_slice = this.active_slice;
 	            
 	            if (distance < Config.global.theme.active_radius
-	                && this.quick_action >= 0 && this.quick_action < this.slices.size) {
+	                && this.quickaction >= 0 && this.quickaction < this.slices.size) {
 	             
-	                next_active_slice = this.quick_action;   
-	                angle = 2.0*PI*quick_action/(double)slice_count();
+	                next_active_slice = this.quickaction;   
+	                angle = 2.0*PI*quickaction/(double)slice_count();
 	            } else if (distance > Config.global.theme.active_radius && this.slice_count() > 0) {
 	                next_active_slice = (int)(angle*slices.size/(2*PI) + 0.5) % this.slice_count();
 	            } else {
@@ -280,8 +280,8 @@ public class PieRenderer : GLib.Object {
         if (index != this.active_slice) {
             if (index >= 0 && index < this.slice_count()) 
                 this.active_slice = index;
-            else if (this.quick_action >= 0)
-                this.active_slice = this.quick_action;
+            else if (this.quickaction >= 0)
+                this.active_slice = this.quickaction;
             else
                 this.active_slice = -1;
             

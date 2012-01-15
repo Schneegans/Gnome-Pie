@@ -116,10 +116,16 @@ public class AnimatedValue : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public void reset_target(double end, double duration) {
-        this.start = this.val;
         this.end = end;
         this.duration = duration;
-        this.state = 0.0;
+        this.start = this.val;
+        
+        if (duration == 0.0) {
+            this.val = end;
+            this.state = 1.0;
+        } else {
+            this.state = 0.0;
+        }
     }
     
     /////////////////////////////////////////////////////////////////////

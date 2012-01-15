@@ -75,7 +75,12 @@ public class Image : GLib.Object {
     
     public Image.capture_screen(int posx, int posy, int width, int height, bool hide_pies = true) {
         Gdk.Window root = Gdk.get_default_root_window();
-        Gdk.Pixbuf pixbuf = Gdk.pixbuf_get_from_drawable(null, root, null, posx, posy, 0, 0, width, height);
+        #if HAVE_GTK_3
+            Gdk.Pixbuf pixbuf = Gdk.pixbuf_get_from_window(root, posx, posy, width, height);
+        #else
+            Gdk.Pixbuf pixbuf = Gdk.pixbuf_get_from_drawable(null, root, null, posx, posy, 0, 0, width, height);
+        #endif
+
 
         this.load_pixbuf(pixbuf);
         
@@ -155,6 +160,23 @@ public class Image : GLib.Object {
         ctx.set_source_surface(this.surface, (int)(-0.5*this.width()-1), (int)(-0.5*this.height()-1));
         if (alpha >= 1.0) ctx.paint();
         else              ctx.paint_with_alpha(alpha);
+    }
+    
+    public Gdk.Pixbuf to_pixbuf() {
+        var pixbuf = new Gdk.Pixbuf.from_data(surface.get_data(), Gdk.Colorspace.RGB, true, 8, 
+                                              width(), height(), surface.get_stride(), null);
+        
+        pixbuf = pixbuf.copy();
+                                       
+        // funny stuff here --- need to swap Red end Blue because Cairo and Gdk are different...
+        uint8* p = pixbuf.pixels;
+        for (int i=0; i<width()*height()*4-4; i+=4) {
+            var tmp = *(p + i);
+            *(p + i) = *(p + i + 2);
+            *(p + i + 2) = tmp;
+        }
+		
+		return pixbuf;
     }
     
     /////////////////////////////////////////////////////////////////////

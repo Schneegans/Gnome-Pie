@@ -42,14 +42,14 @@ public abstract class Action : GLib.Object {
     /// The name of the Action.
     /////////////////////////////////////////////////////////////////////  
 
-    public virtual string name { get; protected set; }
+    public virtual string name { get; set; }
     
     /////////////////////////////////////////////////////////////////////
     /// The name of the icon of this Action. It should be in the users
     /// current icon theme.
     /////////////////////////////////////////////////////////////////////
     
-    public virtual string icon { get; protected set; }
+    public virtual string icon { get; set; }
     
     /////////////////////////////////////////////////////////////////////
     /// True, if this Action is the quickAction of the associated Pie.
@@ -57,14 +57,14 @@ public abstract class Action : GLib.Object {
     /// the center of a Pie.
     /////////////////////////////////////////////////////////////////////
     
-    public virtual bool is_quick_action { get; protected set; }
+    public virtual bool is_quickaction { get; set; }
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
     /////////////////////////////////////////////////////////////////////
 
-    public Action(string name, string icon, bool is_quick_action) {
-        GLib.Object(name : name, icon : icon, is_quick_action : is_quick_action);
+    public Action(string name, string icon, bool is_quickaction) {
+        GLib.Object(name : name, icon : icon, is_quickaction : is_quickaction);
     }
 
     /////////////////////////////////////////////////////////////////////

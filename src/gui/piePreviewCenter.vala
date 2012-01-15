@@ -23,49 +23,54 @@ namespace GnomePie {
 /// 
 /////////////////////////////////////////////////////////////////////////
 
-public class SlicePreviewRenderer : GLib.Object {
+public class PiePreviewCenter : GLib.Object {
     
-    private Image icon;
-
-    private unowned PiePreviewRenderer parent;    
+    private RenderedText text = null;
+    private RenderedText old_text = null;
     
-    /////////////////////////////////////////////////////////////////////
-    /// The index of this slice in a pie. Clockwise assigned, starting
-    /// from the right-most slice.
-    /////////////////////////////////////////////////////////////////////
+    private string current_text = null;
+    private AnimatedValue blend; 
     
-    private int position;
-
-    public SlicePreviewRenderer(PiePreviewRenderer parent) {
+    private unowned PiePreviewRenderer parent;  
+    
+    public PiePreviewCenter(PiePreviewRenderer parent) {
         this.parent = parent;
+        this.blend = new AnimatedValue.linear(0, 0, 0);
+        
+        this.text = new RenderedText("", 1, 1, "");
+        this.old_text = text;
+    }
+    
+    public void set_text(string text) {
+        if (text != this.current_text) {
+            
+            var style = new Gtk.Style();
+            
+            this.old_text = this.text;
+            this.text = new RenderedText.with_markup(text, 180, 180, style.font_desc.get_family()+" 10", 
+                                                     new Color.from_gdk(style.fg[0]), 1.0);
+            this.current_text = text;
+            
+            this.blend.reset_target(0.0, 0.0);
+            this.blend.reset_target(1.0, 0.1);
+        }
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Loads an Action. All members are initialized accordingly.
-    /////////////////////////////////////////////////////////////////////
-
-    public void load(Action action, int position) {
-        this.position = position;
-        this.icon = new ThemedIcon(action.icon, true);
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Draws all layers of the slice.
+    /// 
     /////////////////////////////////////////////////////////////////////
 
     public void draw(double frame_time, Cairo.Context ctx) {
-	    double direction = 2.0 * PI * position/parent.slice_count();
+
+        this.blend.update(frame_time);
         
         ctx.save();
         
-        // distance from the center
-        double radius = 100;
+        if (this.parent.slice_count() == 0) 
+            ctx.translate(0, 40);
         
-        // transform the context
-        ctx.translate(cos(direction)*radius, sin(direction)*radius);
-    
-        // paint the image
-        icon.paint_on(ctx);
+        this.old_text.paint_on(ctx, 1-this.blend.val);
+        this.text.paint_on(ctx, this.blend.val);
             
         ctx.restore();
     }

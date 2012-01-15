@@ -28,45 +28,87 @@ public class FocusGrabber : GLib.Object {
     /// Code from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
-    public static void grab(Gtk.Window window) {
-        window.present_with_time(Gdk.CURRENT_TIME);
-        window.get_window().raise();
-        window.get_window().focus(Gdk.CURRENT_TIME);
+    public static void grab(Gdk.Window window, bool keyboard = true, bool pointer = true) {
+        if (keyboard || pointer) {
+            window.raise();
+            window.focus(Gdk.CURRENT_TIME);
 
-        int i = 0;
-        Timeout.add(100, () => {
-            if (++i >= 100) return false;
-            return !try_grab_window(window);
-        });
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Code from Gnome-Do/Synapse.
-    /////////////////////////////////////////////////////////////////////
-    
-    public static void ungrab(Gtk.Window window) {
-        Gdk.pointer_ungrab(Gdk.CURRENT_TIME);
-        Gdk.keyboard_ungrab(Gdk.CURRENT_TIME);
-        Gtk.grab_remove(window);
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Code from Gnome-Do/Synapse.
-    /////////////////////////////////////////////////////////////////////
-    
-    private static bool try_grab_window(Gtk.Window window) {
-        if (Gdk.pointer_grab(window.get_window(), true, Gdk.EventMask.BUTTON_PRESS_MASK | 
-                             Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
-                             null, null, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
-            
-            if (Gdk.keyboard_grab(window.get_window(), true, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
-                Gtk.grab_add(window);
-                return true;
-            } else {
-                Gdk.pointer_ungrab(Gdk.CURRENT_TIME);
-                return false;
-            }
+            int i = 0;
+            Timeout.add(100, () => {
+                if (++i >= 100) return false;
+                return !try_grab_window(window, keyboard, pointer);
+            });
         }
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Code from Gnome-Do/Synapse.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static void ungrab(bool keyboard = true, bool pointer = true) {
+        #if HAVE_GTK_3
+        
+            var display = Gdk.Display.get_default();
+            var manager = display.get_device_manager();
+            
+            unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+            foreach(var device in list) {
+                if ((device.has_cursor && pointer) || (!device.has_cursor && keyboard))
+                    device.ungrab(Gdk.CURRENT_TIME);
+            }
+            
+        #else
+        
+            if (pointer)  Gdk.pointer_ungrab(Gdk.CURRENT_TIME);
+            if (keyboard) Gdk.keyboard_ungrab(Gdk.CURRENT_TIME);
+            
+        #endif
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Code from Gnome-Do/Synapse.
+    /////////////////////////////////////////////////////////////////////
+    
+    private static bool try_grab_window(Gdk.Window window, bool keyboard, bool pointer) {
+        #if HAVE_GTK_3
+        
+            var display = Gdk.Display.get_default();
+            var manager = display.get_device_manager();
+            
+            bool grabbed_all = true;
+            
+            unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+            foreach(var device in list) {
+                if ((device.has_cursor && pointer) || (!device.has_cursor && keyboard)) {
+                    var status = device.grab(window, Gdk.GrabOwnership.APPLICATION, true, Gdk.EventMask.BUTTON_PRESS_MASK | 
+                                             Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
+                                             null, Gdk.CURRENT_TIME);
+                    
+                    if (status != Gdk.GrabStatus.SUCCESS)
+                        grabbed_all = false;
+                }
+            }
+            
+            if (grabbed_all)
+                return true;
+            
+            ungrab(keyboard, pointer);
+            
+        #else
+        
+            if (!pointer || Gdk.pointer_grab(window, true, Gdk.EventMask.BUTTON_PRESS_MASK | 
+                                 Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
+                                 null, null, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
+                
+                if (!keyboard || Gdk.keyboard_grab(window, true, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
+                    return true;
+                } else if (pointer) {
+                    ungrab(false, true);
+                    return false;
+                }
+            }
+        #endif
+        
         return false;
     }  
 }

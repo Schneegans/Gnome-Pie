@@ -91,9 +91,8 @@ public class BindingManager : GLib.Object {
      
     public void bind(Trigger trigger, string id) {
         if(trigger.key_code != 0) {
-            Gdk.Window rootwin = Gdk.get_default_root_window();
-            X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
-            X.ID xid = Gdk.x11_drawable_get_xid(rootwin);
+            X.Display display = new X.Display();
+            X.ID xid = display.default_root_window();
         
             Gdk.error_trap_push();
  
@@ -121,9 +120,9 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
  
     public void unbind(string id) {
-        Gdk.Window rootwin = Gdk.get_default_root_window();
-        X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
-        X.ID xid = Gdk.x11_drawable_get_xid(rootwin);
+        X.Display display = new X.Display();
+        X.ID xid = display.default_root_window();
+            
         Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
         foreach(var binding in bindings) {
             if(id == binding.id) {
@@ -178,6 +177,20 @@ public class BindingManager : GLib.Object {
         foreach (var binding in bindings) {
             if (binding.id == id) {
                 return binding.trigger.turbo;
+            }
+        }
+        
+        return false;
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns whether the pie with the given ID opens centered.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool get_is_centered(string id) {
+        foreach (var binding in bindings) {
+            if (binding.id == id) {
+                return binding.trigger.centered;
             }
         }
         
@@ -258,8 +271,7 @@ public class BindingManager : GLib.Object {
         	// if the trigger is released and an event is currently waiting
 		    // simulate that the trigger has been pressed without any inter-
 		    // ference of Gnome-Pie
-            Gdk.Window rootwin = Gdk.get_default_root_window();
-       		X.Display display = Gdk.x11_drawable_get_xdisplay(rootwin);
+       		X.Display display = new X.Display();
        		
        		// unbind the trigger, else we'll capture that event again ;)
        		unbind(delayed_binding.id);

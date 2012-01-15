@@ -81,6 +81,12 @@ public class Trigger : GLib.Object {
     public bool delayed { get; private set; default=false; }
     
     /////////////////////////////////////////////////////////////////////
+    /// True if the pie opens in the middle of the screen.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool centered { get; private set; default=false; }
+    
+    /////////////////////////////////////////////////////////////////////
     /// C'tor, creates a new, "unbound" Trigger.
     /////////////////////////////////////////////////////////////////////
     
@@ -93,7 +99,7 @@ public class Trigger : GLib.Object {
     /// in this format: "[option(s)]<modifier(s)>button" where
     /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
     /// something like "s", "F4" or "button0" and "[option]" is either
-    /// "[turbo]" or "["delayed"]".
+    /// "[turbo]", "[centered]" or "["delayed"]".
     /////////////////////////////////////////////////////////////////////
     
     public Trigger.from_string(string trigger) {
@@ -105,9 +111,12 @@ public class Trigger : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public Trigger.from_values(uint key_sym, Gdk.ModifierType modifiers, 
-                               bool with_mouse, bool turbo, bool delayed ) {
+                               bool with_mouse, bool turbo, bool delayed,
+                               bool centered ) {
         
-        string trigger = (turbo ? "[turbo]" : "") + (delayed ? "[delayed]" : "");
+        string trigger = (turbo ? "[turbo]" : "")
+                       + (delayed ? "[delayed]" : "")
+                       + (centered ? "[centered]" : "");
         
         if (with_mouse) {
             trigger += Gtk.accelerator_name(0, modifiers) + "button%u".printf(key_sym);
@@ -123,7 +132,7 @@ public class Trigger : GLib.Object {
     /// in this format: "[option(s)]<modifier(s)>button" where
     /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
     /// something like "s", "F4" or "button0" and "[option]" is either
-    /// "[turbo]" or "["delayed"]".
+    /// "[turbo]", "[centered]" or "["delayed"]".
     /////////////////////////////////////////////////////////////////////
     
     public void parse_string(string trigger) {
@@ -135,10 +144,12 @@ public class Trigger : GLib.Object {
             
             this.turbo = check_string.contains("[turbo]");
             this.delayed = check_string.contains("[delayed]");
+            this.centered = check_string.contains("[centered]");
             
             // remove optional arguments
             check_string = check_string.replace("[turbo]", "");
             check_string = check_string.replace("[delayed]", "");
+            check_string = check_string.replace("[centered]", "");
             
             int button = this.get_mouse_button(check_string);
             if (button > 0) {
@@ -177,12 +188,20 @@ public class Trigger : GLib.Object {
             
             this.label_with_specials = this.label;
             
-            if (this.turbo && this.delayed)
+            if (this.turbo && this.delayed && this.centered)
+                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " | " + _("Delayed") + " | " + _("Centered") + " ]</span></small>");
+            else if (this.turbo && this.centered)
+                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " | " + _("Centered") + " ]</span></small>");
+            else if (this.turbo && this.delayed)
                 this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " | " + _("Delayed") + " ]</span></small>");
+            else if (this.centered && this.delayed)
+                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Delayed") + " | " + _("Centered") + " ]</span></small>");
             else if (this.turbo)
                 this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " ]</span></small>");
             else if (this.delayed)
                 this.label_with_specials += ("  <small><span weight='light'>[ " + _("Delayed") + " ]</span></small>");
+            else if (this.centered)
+                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Centered") + " ]</span></small>");
             
         } else {
             this.set_unbound();
@@ -216,6 +235,7 @@ public class Trigger : GLib.Object {
         // remove optional arguments
         check_string = check_string.replace("[turbo]", "");
         check_string = check_string.replace("[delayed]", "");
+        check_string = check_string.replace("[centered]", "");
          
         if (this.get_mouse_button(check_string) > 0) {
             // it seems to be a valid mouse-trigger so replace button part,

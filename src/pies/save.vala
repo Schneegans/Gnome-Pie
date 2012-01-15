@@ -55,18 +55,18 @@ namespace Pies {
                     if (group.get_type().depth() == 2) {
                         foreach (var action in group.actions) {
                             writer.start_element("slice");
-                            writer.write_attribute("type", ActionRegistry.settings_names[action.get_type()]);
-                            if (ActionRegistry.icon_name_editables[action.get_type()]) {
+                            writer.write_attribute("type", ActionRegistry.descriptions[action.get_type()].id);
+                            if (ActionRegistry.descriptions[action.get_type()].icon_name_editable) {
                                 writer.write_attribute("name", action.name);
                                 writer.write_attribute("icon", action.icon);
                             }
                             writer.write_attribute("command", action.real_command);
-                            writer.write_attribute("quickAction", action.is_quick_action ? "true" : "false");
+                            writer.write_attribute("quickAction", action.is_quickaction ? "true" : "false");
                             writer.end_element();
                         }
                     } else {
                         writer.start_element("group");
-                            writer.write_attribute("type", GroupRegistry.settings_names[group.get_type()]);
+                            writer.write_attribute("type", GroupRegistry.descriptions[group.get_type()].id);
                         writer.end_element();
                     }
                 }

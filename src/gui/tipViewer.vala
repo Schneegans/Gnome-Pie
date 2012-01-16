@@ -73,7 +73,7 @@ public class TipViewer : Gtk.Label {
         
         this.alpha = new AnimatedValue.linear(0.8, 0.0, this.fade_time);
         
-        this.set_alignment (0.0f, 0.5f);
+        this.set_alignment (1.0f, 0.5f);
         this.wrap = true;
         this.width_chars = 60;
         this.set_use_markup(true);

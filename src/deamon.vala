@@ -135,12 +135,18 @@ public class Deamon : GLib.Object {
     
         // init toolkits and static stuff
         Gdk.threads_init();
+        
         ActionRegistry.init();
         GroupRegistry.init();
+        
+        debug("-2");
+        
         PieManager.init();
         Icon.init();
         ThemedIcon.init();
         RenderedText.init();
+    
+        debug("-1");
     
         // init locale support
         Intl.bindtextdomain ("gnomepie", Paths.locales);

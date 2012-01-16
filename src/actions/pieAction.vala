@@ -30,7 +30,7 @@ public class PieAction : Action {
     /////////////////////////////////////////////////////////////////////
 
     public static void register(out ActionRegistry.TypeDescription description) {
-        description = ActionRegistry.TypeDescription();
+        description = new ActionRegistry.TypeDescription();
         description.name = _("Open Pie");
         description.icon = "gnome-pie";
         description.description = _("Opens another Pie of Gnome-Pie. You may create sub menus this way.");

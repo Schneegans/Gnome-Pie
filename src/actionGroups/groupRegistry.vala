@@ -36,11 +36,11 @@ public class GroupRegistry : GLib.Object {
     
     public static Gee.HashMap<Type, TypeDescription?> descriptions { get; private set; }
     
-    public struct TypeDescription {
-        public string name { get; set; }
-        public string icon { get; set; }
-        public string description { get; set; }
-        public string id { get; set; }
+    public class TypeDescription {
+        public string name { get; set; default=""; }
+        public string icon { get; set; default=""; }
+        public string description { get; set; default=""; }
+        public string id { get; set; default=""; }
     }
     
     /////////////////////////////////////////////////////////////////////

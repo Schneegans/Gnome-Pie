@@ -31,7 +31,7 @@ public class MenuGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
     
     public static void register(out GroupRegistry.TypeDescription description) {
-        description = GroupRegistry.TypeDescription();
+        description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Main menu");
         description.icon = "gnome-main-menu";
         description.description = _("Displays your main menu structure.");

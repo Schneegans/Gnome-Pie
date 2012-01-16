@@ -28,7 +28,7 @@ public class FocusGrabber : GLib.Object {
     /// Code from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
-    public static void grab(Gdk.Window window, bool keyboard = true, bool pointer = true) {
+    public static void grab(Gdk.Window window, bool keyboard = true, bool pointer = true, bool owner_events = true) {
         if (keyboard || pointer) {
             window.raise();
             window.focus(Gdk.CURRENT_TIME);
@@ -36,7 +36,7 @@ public class FocusGrabber : GLib.Object {
             int i = 0;
             Timeout.add(100, () => {
                 if (++i >= 100) return false;
-                return !try_grab_window(window, keyboard, pointer);
+                return !try_grab_window(window, keyboard, pointer, owner_events);
             });
         }
     }
@@ -53,7 +53,9 @@ public class FocusGrabber : GLib.Object {
             
             unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
             foreach(var device in list) {
-                if ((device.has_cursor && pointer) || (!device.has_cursor && keyboard))
+                if ((device.input_source == Gdk.InputSource.KEYBOARD && keyboard)
+                 || (device.input_source != Gdk.InputSource.KEYBOARD && pointer)) 
+                 
                     device.ungrab(Gdk.CURRENT_TIME);
             }
             
@@ -69,7 +71,7 @@ public class FocusGrabber : GLib.Object {
     /// Code from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
-    private static bool try_grab_window(Gdk.Window window, bool keyboard, bool pointer) {
+    private static bool try_grab_window(Gdk.Window window, bool keyboard, bool pointer, bool owner_events) {
         #if HAVE_GTK_3
         
             var display = Gdk.Display.get_default();
@@ -79,10 +81,11 @@ public class FocusGrabber : GLib.Object {
             
             unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
             foreach(var device in list) {
-                if ((device.has_cursor && pointer) || (!device.has_cursor && keyboard)) {
-                    var status = device.grab(window, Gdk.GrabOwnership.APPLICATION, true, Gdk.EventMask.BUTTON_PRESS_MASK | 
-                                             Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
-                                             null, Gdk.CURRENT_TIME);
+                if ((device.input_source == Gdk.InputSource.KEYBOARD && keyboard) 
+                 || (device.input_source != Gdk.InputSource.KEYBOARD && pointer)) {
+                 
+                    var status = device.grab(window, Gdk.GrabOwnership.NONE, owner_events, 
+                                             Gdk.EventMask.ALL_EVENTS_MASK, null, Gdk.CURRENT_TIME);
                     
                     if (status != Gdk.GrabStatus.SUCCESS)
                         grabbed_all = false;
@@ -96,11 +99,10 @@ public class FocusGrabber : GLib.Object {
             
         #else
         
-            if (!pointer || Gdk.pointer_grab(window, true, Gdk.EventMask.BUTTON_PRESS_MASK | 
-                                 Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
+            if (!pointer || Gdk.pointer_grab(window, owner_events, Gdk.EventMask.ALL_EVENTS_MASK,
                                  null, null, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
                 
-                if (!keyboard || Gdk.keyboard_grab(window, true, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
+                if (!keyboard || Gdk.keyboard_grab(window, owner_events, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
                     return true;
                 } else if (pointer) {
                     ungrab(false, true);

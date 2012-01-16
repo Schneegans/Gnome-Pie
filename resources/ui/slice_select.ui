@@ -101,7 +101,6 @@
                           <object class="GtkVBox" id="options-box">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="homogeneous">True</property>
                             <child>
                               <object class="GtkVBox" id="no-options-box">
                                 <property name="visible">True</property>

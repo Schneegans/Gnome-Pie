@@ -127,7 +127,7 @@ public class NewSliceWindow : GLib.Object {
                 this.current_pie_to_open = id;
             });
             
-            this.pie_box.pack_start(this.pie_select, false, true);
+            this.pie_box.pack_start(this.pie_select, true, true);
                 
             this.hotkey_box = builder.get_object("hotkey-box") as Gtk.HBox;
             this.key_select = new HotkeySelectButton();

@@ -31,7 +31,7 @@ public class SessionGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
     
     public static void register(out GroupRegistry.TypeDescription description) {
-        description = GroupRegistry.TypeDescription();
+        description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Session Control");
         description.icon = "gnome-logout";
         description.description = _("Shows a Slice for Shutdown, Reboot, and Hibernate.");

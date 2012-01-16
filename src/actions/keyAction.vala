@@ -30,7 +30,7 @@ public class KeyAction : Action {
     /////////////////////////////////////////////////////////////////////
 
     public static void register(out ActionRegistry.TypeDescription description) {
-        description = ActionRegistry.TypeDescription();
+        description = new ActionRegistry.TypeDescription();
         description.name = _("Press hotkey");
         description.icon = "preferences-desktop-keyboard-shortcuts";
         description.description = _("Simulates the activation of a hotkey.");

@@ -79,7 +79,7 @@ public class PieWindow : Gtk.Window {
         this.set_skip_taskbar_hint(true);
         this.set_skip_pager_hint(true);
         this.set_keep_above(true);
-        this.set_type_hint(Gdk.WindowTypeHint.SPLASHSCREEN);
+        this.set_type_hint(Gdk.WindowTypeHint.UTILITY);
         this.set_decorated(false);
         this.set_resizable(false);
         this.icon_name = "gnome-pie";
@@ -87,7 +87,9 @@ public class PieWindow : Gtk.Window {
         
         // check for compositing
         if (this.screen.is_composited()) {
-            #if !HAVE_GTK_3
+            #if HAVE_GTK_3
+                this.set_visual(this.screen.get_rgba_visual());
+            #else
                 this.set_colormap(this.screen.get_rgba_colormap());
             #endif
             this.has_compositing = true;
@@ -136,6 +138,10 @@ public class PieWindow : Gtk.Window {
             this.renderer.on_mouse_move();
             return true;
         });
+        
+        this.show.connect_after(() => {
+            FocusGrabber.grab(this.get_window(), true, true, false);
+        });
 
         // draw the pie on expose
         #if HAVE_GTK_3
@@ -172,7 +178,6 @@ public class PieWindow : Gtk.Window {
     
         // capture the input focus
         this.show();
-        FocusGrabber.grab(this.get_window());
 
         // start the timer
         this.timer = new GLib.Timer();

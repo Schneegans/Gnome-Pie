@@ -42,6 +42,8 @@ class PiePreview : Gtk.DrawingArea {
     private int drag_start_index = -1;
 
     public PiePreview() {
+        debug("1");
+    
         this.renderer = new PiePreviewRenderer();
     
         #if HAVE_GTK_3
@@ -49,6 +51,8 @@ class PiePreview : Gtk.DrawingArea {
         #else
             this.expose_event.connect(this.on_draw);
         #endif
+        
+        debug("2");
     
         this.timer = new GLib.Timer();
         this.set_events(Gdk.EventMask.POINTER_MOTION_MASK 
@@ -134,11 +138,13 @@ class PiePreview : Gtk.DrawingArea {
             dialog.run();
             dialog.destroy();
         });
+        
+        debug("3");
     }
     
     public void set_pie(string id) {
         this.current_id = id;
-        this.get_window().set_background(Gtk.rc_get_style(this).light[0]);
+        this.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this).light[0]);
         this.renderer.load_pie(PieManager.all_pies[id]);
     }
     

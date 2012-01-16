@@ -30,7 +30,7 @@ public class UriAction : Action {
     /////////////////////////////////////////////////////////////////////
     
     public static void register(out ActionRegistry.TypeDescription description) {
-        description = ActionRegistry.TypeDescription();
+        description = new ActionRegistry.TypeDescription();
         description.name = _("Open URI");
         description.icon = "web-browser";
         description.description = _("Opens a given location. You may use URL's or files paths.");

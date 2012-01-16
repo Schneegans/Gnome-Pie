@@ -43,6 +43,7 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.Button? icon_button = null;
     private Gtk.Button? name_button = null;
     private Gtk.Button? hotkey_button = null;
+    private Gtk.ToolButton? remove_pie_button = null;
     
     private AppearanceWindow? appearance_window = null;
     private TriggerSelectWindow? trigger_window = null;
@@ -51,6 +52,7 @@ public class PreferencesWindow : GLib.Object {
     
     public PreferencesWindow() {
         try {
+            debug("0");
             this.builder = new Gtk.Builder();
 
             builder.add_from_file (Paths.ui_files + "/preferences.ui");
@@ -86,28 +88,28 @@ public class PreferencesWindow : GLib.Object {
             var tips_box = builder.get_object("tips-box") as Gtk.HBox;
             
                 // info image
-                var info_image = new Gtk.Image.from_stock (Gtk.Stock.INFO, Gtk.IconSize.MENU);
-                    tips_box.pack_start (info_image, false, false);
+//                var info_image = new Gtk.Image.from_stock (Gtk.Stock.INFO, Gtk.IconSize.MENU);
+//                    tips_box.pack_end (info_image, false, false);
 
                 // info label
-                var info_label = new TipViewer({
-                        _("You can right-click in the list for adding or removing entries."),
-                        _("You can reset Gnome-Pie to its default options with the terminal command \"gnome-pie --reset\"."),
-                        _("The radiobutton at the beginning of each slice-line indicates the QuickAction of the pie."),
-                        _("Pies can be opened with the terminal command \"gnome-pie --open=ID\"."),
-                        _("Feel free to visit Gnome-Pie's homepage at %s!").printf("<a href='http://gnome-pie.simonschneegans.de'>gnome-pie.simonschneegans.de</a>"),
-                        _("You can drag'n'drop applications from your main menu to the list above."),
-                        _("If you want to give some feedback, please write an e-mail to %s!").printf("<a href='mailto:code@simonschneegans.de'>code@simonschneegans.de</a>"),
-                        _("You may drag'n'drop URLs and bookmarks from your internet browser to the list above."),
-                        _("Bugs can be reported at %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie'>Github</a>"),
-                        _("It's possible to drag'n'drop files and folders from your file browser to the list above."),
-                        _("It's recommended to keep your Pies small (at most 6-8 Slices). Else they will become hard to navigate."),
-                        _("In order to create a launcher for a Pie, drag the Pie from the list to your desktop!")
-                    });
-                    this.window.show.connect(info_label.start_slide_show);
-                    this.window.hide.connect(info_label.stop_slide_show);
-                    
-                tips_box.pack_start(info_label, true, true);
+//                var info_label = new TipViewer({
+//                        _("You can right-click in the list for adding or removing entries."),
+//                        _("You can reset Gnome-Pie to its default options with the terminal command \"gnome-pie --reset\"."),
+//                        _("The radiobutton at the beginning of each slice-line indicates the QuickAction of the pie."),
+//                        _("Pies can be opened with the terminal command \"gnome-pie --open=ID\"."),
+//                        _("Feel free to visit Gnome-Pie's homepage at %s!").printf("<a href='http:gnome-pie.simonschneegans.de'>gnome-pie.simonschneegans.de</a>"),
+//                        _("You can drag'n'drop applications from your main menu to the list above."),
+//                        _("If you want to give some feedback, please write an e-mail to %s!").printf("<a href='mailto:code@simonschneegans.de'>code@simonschneegans.de</a>"),
+//                        _("You may drag'n'drop URLs and bookmarks from your internet browser to the list above."),
+//                        _("Bugs can be reported at %s!").printf("<a href='https:github.com/Simmesimme/Gnome-Pie'>Github</a>"),
+//                        _("It's possible to drag'n'drop files and folders from your file browser to the list above."),
+//                        _("It's recommended to keep your Pies small (at most 6-8 Slices). Else they will become hard to navigate."),
+//                        _("In order to create a launcher for a Pie, drag the Pie from the list to your desktop!")
+//                    });
+//                    this.window.show.connect(info_label.start_slide_show);
+//                    this.window.hide.connect(info_label.stop_slide_show);
+//                    
+//                tips_box.pack_start(info_label, true, true);
             
             id_label = builder.get_object("id-label") as Gtk.Label;
             name_label = builder.get_object("pie-name-label") as Gtk.Label;
@@ -128,8 +130,10 @@ public class PreferencesWindow : GLib.Object {
             this.name_button = builder.get_object("rename-button") as Gtk.Button;
             this.name_button.clicked.connect(on_rename_button_clicked);
             
+            this.remove_pie_button = builder.get_object("remove-pie-button") as Gtk.ToolButton;
+            this.remove_pie_button.clicked.connect(on_remove_pie_button_clicked);
+            
             (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
-            (builder.get_object("remove-pie-button") as Gtk.ToolButton).clicked.connect(on_remove_pie_button_clicked);
             
             window.hide.connect(() => {
                 // save settings on close
@@ -161,6 +165,7 @@ public class PreferencesWindow : GLib.Object {
         this.name_button.sensitive = false;
         this.hotkey_button.sensitive = false;
         this.icon_button.sensitive = false;
+        this.remove_pie_button.sensitive = false;
         
         if (id == "") {
             id_label.label = "";
@@ -195,6 +200,7 @@ public class PreferencesWindow : GLib.Object {
             this.name_button.sensitive = true;
             this.hotkey_button.sensitive = true;
             this.icon_button.sensitive = true;
+            this.remove_pie_button.sensitive = true;
         }
     }
     

@@ -60,7 +60,7 @@ public class ClipboardGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
     
     public static void register(out GroupRegistry.TypeDescription description) {
-        description = GroupRegistry.TypeDescription();
+        description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Clipboard");
         description.icon = "edit-paste";
         description.description = _("Manages your Clipboard.");

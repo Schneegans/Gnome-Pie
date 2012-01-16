@@ -30,7 +30,7 @@ public class AppAction : Action {
     /////////////////////////////////////////////////////////////////////
 
     public static void register(out ActionRegistry.TypeDescription description) {
-        description = ActionRegistry.TypeDescription();
+        description = new ActionRegistry.TypeDescription();
         description.name = _("Launch application");
         description.icon = "application-x-executable";
         description.description = _("Executes the given command.");

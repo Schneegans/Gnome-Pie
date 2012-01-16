@@ -37,12 +37,12 @@ public class ActionRegistry : GLib.Object {
     
     public static Gee.HashMap<Type, TypeDescription?> descriptions { get; private set; }
     
-    public struct TypeDescription {
-        public string name { get; set; }
-        public string icon { get; set; }
-        public string description { get; set; }
-        public string id { get; set; }
-        public bool icon_name_editable { get; set; }
+    public class TypeDescription {
+        public string name { get; set; default=""; }
+        public string icon { get; set; default=""; }
+        public string description { get; set; default=""; }
+        public string id { get; set; default=""; }
+        public bool icon_name_editable { get; set; default=false; }
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -53,21 +53,27 @@ public class ActionRegistry : GLib.Object {
         types = new Gee.ArrayList<Type>();
         descriptions = new Gee.HashMap<Type, TypeDescription?>();
     
-        TypeDescription type_description;
+        TypeDescription type_description = null;
         
         AppAction.register(out type_description);
+        
+        if (type_description == null) debug("ysdvxdfv");
+        
         types.add(typeof(AppAction));
         descriptions.set(typeof(AppAction), type_description);
         
         KeyAction.register(out type_description);
+        if (type_description == null) debug("ysdvxdfv");
         types.add(typeof(KeyAction));
         descriptions.set(typeof(KeyAction), type_description);
         
         PieAction.register(out type_description);
+        if (type_description == null) debug("ysdvxdfv");
         types.add(typeof(PieAction));
         descriptions.set(typeof(PieAction), type_description);
         
         UriAction.register(out type_description);
+        if (type_description == null) debug("ysdvxdfv");
         types.add(typeof(UriAction));
         descriptions.set(typeof(UriAction), type_description);
     }

@@ -91,8 +91,8 @@ public class BindingManager : GLib.Object {
      
     public void bind(Trigger trigger, string id) {
         if(trigger.key_code != 0) {
-            X.Display display = new X.Display();
-            X.ID xid = display.default_root_window();
+            X.Display display = Gdk.x11_get_default_xdisplay();
+            X.ID xid = Gdk.x11_get_default_root_xwindow();
         
             Gdk.error_trap_push();
  
@@ -120,8 +120,8 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
  
     public void unbind(string id) {
-        X.Display display = new X.Display();
-        X.ID xid = display.default_root_window();
+        X.Display display = Gdk.x11_get_default_xdisplay();
+        X.ID xid = Gdk.x11_get_default_root_xwindow();
             
         Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
         foreach(var binding in bindings) {
@@ -271,7 +271,7 @@ public class BindingManager : GLib.Object {
         	// if the trigger is released and an event is currently waiting
 		    // simulate that the trigger has been pressed without any inter-
 		    // ference of Gnome-Pie
-       		X.Display display = new X.Display();
+       		X.Display display = Gdk.x11_get_default_xdisplay();
        		
        		// unbind the trigger, else we'll capture that event again ;)
        		unbind(delayed_binding.id);

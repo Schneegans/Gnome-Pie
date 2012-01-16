@@ -59,12 +59,13 @@ public class ClipboardGroup : ActionGroup {
     /// the pies.conf file for this kind of ActionGroups.
     /////////////////////////////////////////////////////////////////////
     
-    public static void register(out GroupRegistry.TypeDescription description) {
-        description = new GroupRegistry.TypeDescription();
+    public static GroupRegistry.TypeDescription register() {
+        var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Clipboard");
         description.icon = "edit-paste";
         description.description = _("Manages your Clipboard.");
         description.id = "clipboard";
+        return description;
     }
     
     /////////////////////////////////////////////////////////////////////

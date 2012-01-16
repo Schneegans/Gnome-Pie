@@ -64,7 +64,7 @@ public class SlicePreviewRenderer : GLib.Object {
         if (group.get_type().depth() == 2 && group.actions.size > 0) {
             this.icon = new Icon(group.actions[0].icon, 48);
         } else {
-            this.icon = new Icon(GroupRegistry.descriptions[group.get_type()].icon, 48);
+            this.icon = new Icon(GroupRegistry.descriptions[group.get_type().name()].icon, 48);
         }
     }
     

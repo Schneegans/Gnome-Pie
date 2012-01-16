@@ -30,12 +30,13 @@ public class SessionGroup : ActionGroup {
     /// the pies.conf file for this kind of ActionGroups.
     /////////////////////////////////////////////////////////////////////
     
-    public static void register(out GroupRegistry.TypeDescription description) {
-        description = new GroupRegistry.TypeDescription();
+    public static GroupRegistry.TypeDescription register() {
+        var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Session Control");
         description.icon = "gnome-logout";
         description.description = _("Shows a Slice for Shutdown, Reboot, and Hibernate.");
         description.id = "session";
+        return description;
     }
     
     /////////////////////////////////////////////////////////////////////

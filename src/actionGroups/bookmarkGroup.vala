@@ -31,12 +31,13 @@ public class BookmarkGroup : ActionGroup {
     /// the pies.conf file for this kind of ActionGroups.
     /////////////////////////////////////////////////////////////////////
     
-    public static void register(out GroupRegistry.TypeDescription description) {
-        description = new GroupRegistry.TypeDescription();
+    public static GroupRegistry.TypeDescription register() {
+        var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Bookmarks");
         description.icon = "user-bookmarks";
         description.description = _("Shows a Slice for each of your directory Bookmarks.");
         description.id = "bookmarks";
+        return description;
     }
 
     /////////////////////////////////////////////////////////////////////

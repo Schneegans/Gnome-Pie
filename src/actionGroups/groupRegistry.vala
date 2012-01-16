@@ -27,14 +27,14 @@ public class GroupRegistry : GLib.Object {
     /// A list containing all available ActionGroup types.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.ArrayList<Type> types { get; private set; }
+    public static Gee.ArrayList<string> types { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Three maps associating a displayable name for each ActionGroup, 
     /// an icon name and a name for the pies.conf file with it's type.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.HashMap<Type, TypeDescription?> descriptions { get; private set; }
+    public static Gee.HashMap<string, TypeDescription?> descriptions { get; private set; }
     
     public class TypeDescription {
         public string name { get; set; default=""; }
@@ -48,30 +48,42 @@ public class GroupRegistry : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public static void init() {
-        types = new Gee.ArrayList<Type>();
-        descriptions = new Gee.HashMap<Type, TypeDescription?>();
+        types = new Gee.ArrayList<string>();
+        descriptions = new Gee.HashMap<string, TypeDescription?>();
     
         TypeDescription type_description;
         
-        BookmarkGroup.register(out type_description);
-        types.add(typeof(BookmarkGroup));
-        descriptions.set(typeof(BookmarkGroup), type_description);
+        type_description = BookmarkGroup.register();
+        types.add(typeof(BookmarkGroup).name());
+        descriptions.set(typeof(BookmarkGroup).name(), type_description);
         
-        DevicesGroup.register(out type_description);
-        types.add(typeof(DevicesGroup));
-        descriptions.set(typeof(DevicesGroup), type_description);
+        type_description = DevicesGroup.register();
+        types.add(typeof(DevicesGroup).name());
+        descriptions.set(typeof(DevicesGroup).name(), type_description);
         
-        MenuGroup.register(out type_description);
-        types.add(typeof(MenuGroup));
-        descriptions.set(typeof(MenuGroup), type_description);
+        type_description = MenuGroup.register();
+        types.add(typeof(MenuGroup).name());
+        descriptions.set(typeof(MenuGroup).name(), type_description);
         
-        SessionGroup.register(out type_description);
-        types.add(typeof(SessionGroup));
-        descriptions.set(typeof(SessionGroup), type_description);
+        type_description = SessionGroup.register();
+        types.add(typeof(SessionGroup).name());
+        descriptions.set(typeof(SessionGroup).name(), type_description);
         
-        WindowListGroup.register(out type_description);
-        types.add(typeof(WindowListGroup));
-        descriptions.set(typeof(WindowListGroup), type_description);
+        type_description = WindowListGroup.register();
+        types.add(typeof(WindowListGroup).name());
+        descriptions.set(typeof(WindowListGroup).name(), type_description);
+    }
+    
+    public static ActionGroup? create_group(string type_id, string parent_id) {
+        switch (type_id) {
+            case "bookmarks": return new BookmarkGroup(parent_id);
+            case "devices": return new DevicesGroup(parent_id);
+            case "menu": return new MenuGroup(parent_id);
+            case "session": return new SessionGroup(parent_id);
+            case "window_list": return new WindowListGroup(parent_id);
+        }
+        
+        return null;
     }
 }
 

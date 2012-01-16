@@ -30,12 +30,13 @@ public class DevicesGroup : ActionGroup {
     /// the pies.conf file for this kind of ActionGroups.
     /////////////////////////////////////////////////////////////////////
     
-    public static void register(out GroupRegistry.TypeDescription description) {
-        description = new GroupRegistry.TypeDescription();
+    public static GroupRegistry.TypeDescription register() {
+        var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Devices");
         description.icon = "harddrive";
         description.description = _("Shows a Slice for each plugged in devices, like USB-Sticks.");
         description.id = "devices";
+        return description;
     }
 
     /////////////////////////////////////////////////////////////////////

@@ -27,7 +27,7 @@ public class ActionRegistry : GLib.Object {
     /// A list containing all available Action types.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.ArrayList<Type> types { get; private set; }
+    public static Gee.ArrayList<string> types { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Three maps associating a displayable name for each Action, 
@@ -35,7 +35,7 @@ public class ActionRegistry : GLib.Object {
     /// file with it's type.
     /////////////////////////////////////////////////////////////////////
     
-    public static Gee.HashMap<Type, TypeDescription?> descriptions { get; private set; }
+    public static Gee.HashMap<string, TypeDescription?> descriptions { get; private set; }
     
     public class TypeDescription {
         public string name { get; set; default=""; }
@@ -50,32 +50,37 @@ public class ActionRegistry : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public static void init() {
-        types = new Gee.ArrayList<Type>();
-        descriptions = new Gee.HashMap<Type, TypeDescription?>();
+        types = new Gee.ArrayList<string>();
+        descriptions = new Gee.HashMap<string, TypeDescription?>();
     
-        TypeDescription type_description = null;
+        TypeDescription type_description;
         
-        AppAction.register(out type_description);
+        types.add(typeof(AppAction).name());
+        type_description = AppAction.register();
+        descriptions.set(typeof(AppAction).name(), type_description);
         
-        if (type_description == null) debug("ysdvxdfv");
+        types.add(typeof(KeyAction).name());
+        type_description = KeyAction.register();
+        descriptions.set(typeof(KeyAction).name(), type_description);
         
-        types.add(typeof(AppAction));
-        descriptions.set(typeof(AppAction), type_description);
+        types.add(typeof(PieAction).name());
+        type_description = PieAction.register();
+        descriptions.set(typeof(PieAction).name(), type_description);
         
-        KeyAction.register(out type_description);
-        if (type_description == null) debug("ysdvxdfv");
-        types.add(typeof(KeyAction));
-        descriptions.set(typeof(KeyAction), type_description);
+        types.add(typeof(UriAction).name());
+        type_description = UriAction.register();
+        descriptions.set(typeof(UriAction).name(), type_description);
+    }
+    
+    public static Action? create_action(string type_id, string name, string icon, string command, bool quickaction) {
+        switch (type_id) {
+            case "app": return new AppAction(name, icon, command, quickaction);
+            case "key": return new KeyAction(name, icon, command, quickaction);
+            case "uri": return new UriAction(name, icon, command, quickaction);
+            case "pie": return new PieAction(command, quickaction);
+        }
         
-        PieAction.register(out type_description);
-        if (type_description == null) debug("ysdvxdfv");
-        types.add(typeof(PieAction));
-        descriptions.set(typeof(PieAction), type_description);
-        
-        UriAction.register(out type_description);
-        if (type_description == null) debug("ysdvxdfv");
-        types.add(typeof(UriAction));
-        descriptions.set(typeof(UriAction), type_description);
+        return null;
     }
     
     /////////////////////////////////////////////////////////////////////

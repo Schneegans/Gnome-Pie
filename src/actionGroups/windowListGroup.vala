@@ -29,12 +29,13 @@ public class WindowListGroup : ActionGroup {
     /// the pies.conf file for this kind of ActionGroups.
     /////////////////////////////////////////////////////////////////////
     
-    public static void register(out GroupRegistry.TypeDescription description) {
-        description = new GroupRegistry.TypeDescription();
+    public static GroupRegistry.TypeDescription register() {
+        var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Window List");
         description.icon = "window-manager";
         description.description = _("Shows a Slice for each of your opened Windows. Almost like Alt-Tab.");
         description.id = "window_list";
+        return description;
     }
 
     /////////////////////////////////////////////////////////////////////

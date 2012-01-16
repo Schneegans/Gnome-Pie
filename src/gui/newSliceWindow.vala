@@ -184,7 +184,7 @@ public class NewSliceWindow : GLib.Object {
         
         if (group.get_type().depth() == 2) {
             var action = group.actions[0];
-            type = ActionRegistry.descriptions[action.get_type()].id;
+            type = ActionRegistry.descriptions[action.get_type().name()].id;
             this.select_type(type);
             
             this.set_icon(action.icon);
@@ -210,7 +210,7 @@ public class NewSliceWindow : GLib.Object {
             }
             
         } else {
-            type = GroupRegistry.descriptions[group.get_type()].id;
+            type = GroupRegistry.descriptions[group.get_type().name()].id;
             this.select_type(type);
         }
     }

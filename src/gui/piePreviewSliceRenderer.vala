@@ -81,8 +81,8 @@ public class PiePreviewSliceRenderer : GLib.Object {
             this.icon = new Icon(group.actions[0].icon, (int)(radius*2));
             this.name = group.actions[0].name;
         } else {
-            this.icon = new Icon(GroupRegistry.descriptions[group.get_type()].icon, (int)(radius*2));
-            this.name = GroupRegistry.descriptions[group.get_type()].name;
+            this.icon = new Icon(GroupRegistry.descriptions[group.get_type().name()].icon, (int)(radius*2));
+            this.name = GroupRegistry.descriptions[group.get_type().name()].name;
         }
     }
     

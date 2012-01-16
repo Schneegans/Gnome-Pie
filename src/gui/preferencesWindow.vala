@@ -52,7 +52,6 @@ public class PreferencesWindow : GLib.Object {
     
     public PreferencesWindow() {
         try {
-            debug("0");
             this.builder = new Gtk.Builder();
 
             builder.add_from_file (Paths.ui_files + "/preferences.ui");
@@ -85,7 +84,7 @@ public class PreferencesWindow : GLib.Object {
             preview_box = builder.get_object("preview-box") as Gtk.VBox;
             preview_box.pack_start(preview, true, true);
             
-            var tips_box = builder.get_object("tips-box") as Gtk.HBox;
+//            var tips_box = builder.get_object("tips-box") as Gtk.HBox;
             
                 // info image
 //                var info_image = new Gtk.Image.from_stock (Gtk.Stock.INFO, Gtk.IconSize.MENU);
@@ -119,7 +118,7 @@ public class PreferencesWindow : GLib.Object {
             icon = builder.get_object("icon") as Gtk.Image;
             preview_background = builder.get_object("preview-background") as Gtk.EventBox;
                     
-            (builder.get_object("theme-button") as Gtk.Button).clicked.connect(on_theme_button_clicked);
+            (builder.get_object("theme-button") as Gtk.ToolButton).clicked.connect(on_theme_button_clicked);
             
             this.hotkey_button = builder.get_object("key-button") as Gtk.Button;
             this.hotkey_button.clicked.connect(on_key_button_clicked);
@@ -260,7 +259,7 @@ public class PreferencesWindow : GLib.Object {
         trigger_window.show();
     }
     
-    private void on_theme_button_clicked(Gtk.Button button) {
+    private void on_theme_button_clicked(Gtk.ToolButton button) {
         if (appearance_window == null)
             appearance_window = new AppearanceWindow();
         

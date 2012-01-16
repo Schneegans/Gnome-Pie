@@ -55,8 +55,8 @@ namespace Pies {
                     if (group.get_type().depth() == 2) {
                         foreach (var action in group.actions) {
                             writer.start_element("slice");
-                            writer.write_attribute("type", ActionRegistry.descriptions[action.get_type()].id);
-                            if (ActionRegistry.descriptions[action.get_type()].icon_name_editable) {
+                            writer.write_attribute("type", ActionRegistry.descriptions[action.get_type().name()].id);
+                            if (ActionRegistry.descriptions[action.get_type().name()].icon_name_editable) {
                                 writer.write_attribute("name", action.name);
                                 writer.write_attribute("icon", action.icon);
                             }
@@ -66,7 +66,7 @@ namespace Pies {
                         }
                     } else {
                         writer.start_element("group");
-                            writer.write_attribute("type", GroupRegistry.descriptions[group.get_type()].id);
+                            writer.write_attribute("type", GroupRegistry.descriptions[group.get_type().name()].id);
                         writer.end_element();
                     }
                 }

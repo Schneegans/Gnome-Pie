@@ -124,8 +124,8 @@ public class Deamon : GLib.Object {
             if (cmd == Unique.Command.ACTIVATE) {
                 var pie = data.get_text();
                 
-                if (pie != "") PieManager.open_pie(pie);
-                else           this.indicator.show_preferences();
+                if (pie != null && pie != "") PieManager.open_pie(pie);
+                else                          this.indicator.show_preferences();
 
                 return Unique.Response.OK;
             }

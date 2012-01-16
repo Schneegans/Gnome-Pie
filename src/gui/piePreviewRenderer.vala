@@ -261,8 +261,6 @@ public class PiePreviewRenderer : GLib.Object {
                     this.slices[i].set_position(i, smoothly);
                 }
                 
-                debug("%i", this.active_slice);
-                
                 if (this.active_slice < 0)  this.update_center(CenterDisplay.NONE);
                 else                        this.update_center(CenterDisplay.ACTIVE_SLICE);
             }

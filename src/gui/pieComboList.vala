@@ -29,6 +29,8 @@ class PieComboList : Gtk.ComboBox {
     
     public signal void on_select(string id);
     
+    public string current_id { get; private set; default=""; }
+    
     private Gtk.ListStore data;
     
     private enum DataPos {ICON, NAME, ID}
@@ -64,6 +66,7 @@ class PieComboList : Gtk.ComboBox {
                 string id = "";
                 this.data.get(active, DataPos.ID, out id);
                 this.on_select(id);
+                this.current_id = id;
             }
         });
         
@@ -93,8 +96,10 @@ class PieComboList : Gtk.ComboBox {
             string id = "";
             this.data.get(active, DataPos.ID, out id);
             this.on_select(id);
+            this.current_id = id;
         } else {
             this.on_select("");
+            this.current_id = "";
         }
     }
     

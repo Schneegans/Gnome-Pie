@@ -50,7 +50,7 @@ class SliceTypeList : Gtk.TreeView {
         base.set_model(this.data);
         base.set_headers_visible(false);
         base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
-        this.width_request = 170;
+        this.height_request = 170;
         
         var main_column = new Gtk.TreeViewColumn();
             var icon_render = new Gtk.CellRendererPixbuf();

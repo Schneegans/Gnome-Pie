@@ -104,7 +104,7 @@ public class NewSliceWindow : GLib.Object {
                     case "pie":
                         this.pie_box.show();
                         this.quickaction_box.show();
-                        this.set_icon(icon);
+                        this.set_icon(PieManager.all_pies[this.pie_select.current_id].icon);
                         break;
                     case "uri":
                         this.name_box.show();
@@ -125,6 +125,7 @@ public class NewSliceWindow : GLib.Object {
             this.pie_select = new PieComboList();
             this.pie_select.on_select.connect((id) => {
                 this.current_pie_to_open = id;
+                this.set_icon(PieManager.all_pies[id].icon);
             });
             
             this.pie_box.pack_start(this.pie_select, true, true);

@@ -152,12 +152,13 @@ public class PiePreviewAddSign : GLib.Object {
         else                                    this.activity.reset_target(-3.0, 1.5);
     }
     
-    public void on_button_press() {
-        if (this.activity.end == 1.0)
+    public void on_button_press(double x, double y) {
+        if (this.activity.end == 1.0) {
             this.clicked.reset_target(0.9, 0.1);
+        }
     }
     
-    public void on_button_release() {
+    public void on_button_release(double x, double y) {
         if (this.clicked.end == 0.9) {
             this.clicked.reset_target(1.0, 0.1);
             this.on_clicked((int)this.position);

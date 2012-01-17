@@ -245,7 +245,7 @@ public class PieManager : GLib.Object {
                 "#!/usr/bin/env xdg-open\n" + 
                 "[Desktop Entry]\n" +
                 "Name=%s\n".printf(pie.name) +
-                "Exec=gnome-pie -o %s\n".printf(pie.id) +
+                "Exec=%s -o %s\n".printf(Paths.executable, pie.id) +
                 "Encoding=UTF-8\n" +
                 "Type=Application\n" +
                 "Icon=%s\n".printf(pie.icon);

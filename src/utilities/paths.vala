@@ -81,26 +81,33 @@ public class Paths : GLib.Object {
     public static string launchers { get; private set; default=""; }
     
     /////////////////////////////////////////////////////////////////////
+    /// The path to the executable.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string executable { get; private set; default=""; }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Initializes all values above.
     /////////////////////////////////////////////////////////////////////
     
     public static void init() {
     
-        // append resources to icon search path to icon theme, if neccasary
+        // get path of executable
         try {
-            var icon_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
-                        GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources");
-                        
-            if (icon_dir.query_exists()) {
-                string path = icon_dir.get_path();
-                Gtk.IconTheme.get_default().append_search_path(path);
-            }
-            
-            Gtk.IconTheme.get_default().append_search_path("/usr/share/pixmaps/");
-            
+            executable = GLib.File.new_for_path(GLib.FileUtils.read_link("/proc/self/exe")).get_path();
         } catch (GLib.FileError e) {
             warning("Failed to get path of executable!");
         }
+    
+        // append resources to icon search path to icon theme, if neccasary
+        var icon_dir = GLib.File.new_for_path(GLib.Path.get_dirname(executable)).get_child("resources");
+                    
+        if (icon_dir.query_exists()) {
+            string path = icon_dir.get_path();
+            Gtk.IconTheme.get_default().append_search_path(path);
+        }
+        
+        Gtk.IconTheme.get_default().append_search_path("/usr/share/pixmaps/");
     
         // get global paths
         var default_dir = GLib.File.new_for_path("/usr/share/gnome-pie/");
@@ -108,12 +115,8 @@ public class Paths : GLib.Object {
             default_dir = GLib.File.new_for_path("/usr/local/share/gnome-pie/");
             
             if(!default_dir.query_exists()) {
-                try {
-                    default_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
-                        GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources");
-                } catch (GLib.FileError e) {
-                    warning("Failed to get path of executable!");
-                }
+                default_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
+                    executable)).get_child("resources");
             }
         }
         
@@ -129,22 +132,12 @@ public class Paths : GLib.Object {
             if(locale_dir.query_exists()) {
                 locale_dir = GLib.File.new_for_path("/usr/local/share/locale");
             } else {
-            
-                try {
-                    locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
-                        GLib.FileUtils.read_link("/proc/self/exe"))).get_child(
-                        "resources/locale/de/LC_MESSAGES/gnomepie.mo");
-                } catch (GLib.FileError e) {
-                    warning("Failed to get path of executable!");
-                }
+                locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
+                    executable)).get_child("resources/locale/de/LC_MESSAGES/gnomepie.mo");
                 
                 if(locale_dir.query_exists()) {
-                    try {
-                        locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
-                            GLib.FileUtils.read_link("/proc/self/exe"))).get_child("resources/locale");
-                    } catch (GLib.FileError e) {
-                        warning("Failed to get path of executable!");
-                    }
+                    locale_dir = GLib.File.new_for_path(GLib.Path.get_dirname(
+                        executable)).get_child("resources/locale");
                 }
             }
         }

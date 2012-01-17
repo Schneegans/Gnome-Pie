@@ -47,6 +47,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
     private const double radius = 24;
     private const double delete_x = 13;
     private const double delete_y = -13;
+    private const double click_cancel_treshold = 5;
+    
+    private double clicked_x = 0.0;
+    private double clicked_y = 0.0;
     
     /////////////////////////////////////////////////////////////////////
     /// The index of this slice in a pie. Clockwise assigned, starting
@@ -165,7 +169,9 @@ public class PiePreviewSliceRenderer : GLib.Object {
         }                                  
         
         if (this.clicked.end == 0.9) {
-            this.clicked.reset_target(1.0, 0.1);
+            double dist = GLib.Math.pow(x-this.clicked_x, 2) + GLib.Math.pow(y-this.clicked_y, 2);
+            if (dist > this.click_cancel_treshold*this.click_cancel_treshold)
+                this.clicked.reset_target(1.0, 0.1);
         }
         
         double own_x = cos(this.angle.val)*pie_radius;
@@ -181,19 +187,26 @@ public class PiePreviewSliceRenderer : GLib.Object {
         this.delete_sign.hide();
     }
     
-    public void on_button_press() {
+    public void on_button_press(double x, double y) {
         bool delete_pressed = false;
-        if (this.activity.end == 1.0)
-            delete_pressed = this.delete_sign.on_button_press();
+        if (this.activity.end == 1.0) {
+            double own_x = cos(this.angle.val)*pie_radius;
+            double own_y = sin(this.angle.val)*pie_radius;
+            delete_pressed = this.delete_sign.on_button_press(x - own_x - delete_x*this.size.val, 
+                                                              y - own_y - delete_y*this.size.val);
+        }
     
-        if (!delete_pressed && this.activity.end == 1.0)
+        if (!delete_pressed && this.activity.end == 1.0) {
             this.clicked.reset_target(0.9, 0.1);
+            this.clicked_x = x;
+            this.clicked_y = y;
+        }
     }
     
-    public void on_button_release() {
+    public void on_button_release(double x, double y) {
         bool deleted = false;
         if (this.activity.end == 1.0)
-            deleted = this.delete_sign.on_button_release();
+            deleted = this.delete_sign.on_button_release(x, y);
         
         if (!deleted && this.clicked.end == 0.9) {
             this.clicked.reset_target(1.0, 0.1);

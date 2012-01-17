@@ -37,6 +37,11 @@ public class PiePreviewDeleteSign : GLib.Object {
     private AnimatedValue alpha; 
     private AnimatedValue activity; 
     private AnimatedValue clicked; 
+    
+    private const double click_cancel_treshold = 5;
+    
+    private double clicked_x = 0.0;
+    private double clicked_y = 0.0;
 
     public PiePreviewDeleteSign() {
         this.size = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 0, 0, 0, 2.0);
@@ -102,7 +107,9 @@ public class PiePreviewDeleteSign : GLib.Object {
     
     public bool on_mouse_move(double x, double y) {
         if (this.clicked.end == 0.9) {
-            this.clicked.reset_target(1.0, 0.1);
+            double dist = GLib.Math.pow(x-this.clicked_x, 2) + GLib.Math.pow(y-this.clicked_y, 2);
+            if (dist > this.click_cancel_treshold*this.click_cancel_treshold)
+                this.clicked.reset_target(1.0, 0.1);
         }
     
 	    if (GLib.Math.fabs(x) <= radius*globale_scale && GLib.Math.fabs(y) <= radius*globale_scale) {
@@ -114,15 +121,17 @@ public class PiePreviewDeleteSign : GLib.Object {
         return false;
     }
     
-    public bool on_button_press() {
+    public bool on_button_press(double x, double y) {
         if (this.activity.end == 1.0) {
             this.clicked.reset_target(0.9, 0.1);
+            this.clicked_x = x;
+            this.clicked_y = y;
             return true;
         }
         return false;
     }
     
-    public bool on_button_release() {
+    public bool on_button_release(double x, double y) {
         if (this.clicked.end == 0.9) {
             this.clicked.reset_target(1.0, 0.1);
             this.on_clicked();

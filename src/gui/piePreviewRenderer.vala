@@ -39,6 +39,9 @@ public class PiePreviewRenderer : GLib.Object {
     private double angle = 0.0;
     private int active_slice = -1;
     
+    private double mouse_x = 0.0;
+    private double mouse_y = 0.0;
+    
     private enum CenterDisplay { NONE, ACTIVE_SLICE, DROP, ADD, DELETE }
     
     /////////////////////////////////////////////////////////////////////
@@ -131,6 +134,9 @@ public class PiePreviewRenderer : GLib.Object {
     }
     
     public void on_mouse_move(double x, double y) {
+        this.mouse_x = x;
+        this.mouse_y = y;
+        
         this.angle = acos(x/sqrt(x*x + y*y));
         if (y < 0) this.angle = 2*PI - this.angle;
     
@@ -157,14 +163,14 @@ public class PiePreviewRenderer : GLib.Object {
     
     public void on_button_press() {
         for (int i=0; i<this.slices.size; ++i)
-            this.slices[i].on_button_press();
-        this.add_sign.on_button_press();
+            this.slices[i].on_button_press(this.mouse_x, this.mouse_y);
+        this.add_sign.on_button_press(this.mouse_x, this.mouse_y);
     }
     
     public void on_button_release() {
         for (int i=0; i<this.slices.size; ++i)
-            this.slices[i].on_button_release();
-        this.add_sign.on_button_release();
+            this.slices[i].on_button_release(this.mouse_x, this.mouse_y);
+        this.add_sign.on_button_release(this.mouse_x, this.mouse_y);
     }
     
     public void add_group(ActionGroup group, int at_position = -1) {

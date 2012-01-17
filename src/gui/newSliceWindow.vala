@@ -130,10 +130,10 @@ public class NewSliceWindow : GLib.Object {
             this.pie_box.pack_start(this.pie_select, true, true);
                 
             this.hotkey_box = builder.get_object("hotkey-box") as Gtk.HBox;
-            this.key_select = new HotkeySelectButton();
+            this.key_select = new HotkeySelectButton(true);
             this.hotkey_box.pack_start(this.key_select, false, true);
-            this.key_select.on_select.connect((key) => {
-                this.current_hotkey = key.accelerator;
+            this.key_select.on_select.connect((trigger) => {
+                this.current_hotkey = trigger.name;
             });
             
             this.uri_box = builder.get_object("uri-box") as Gtk.HBox;
@@ -169,7 +169,7 @@ public class NewSliceWindow : GLib.Object {
         this.window.show_all();
         this.slice_type_list.select_first();
         this.pie_select.select_first();
-        this.key_select.set_key(new Key());
+        this.key_select.set_trigger(new Trigger());
     }
     
     public void reload() {
@@ -198,7 +198,7 @@ public class NewSliceWindow : GLib.Object {
                     break;
                 case "key":
                     this.current_custom_icon = action.icon;
-                    this.key_select.set_key(new Key.from_string(action.real_command));
+                    this.key_select.set_trigger(new Trigger.from_string(action.real_command));
                     break;
                 case "pie":
                     this.pie_select.select(action.real_command);
@@ -221,7 +221,7 @@ public class NewSliceWindow : GLib.Object {
         this.current_custom_icon = "";
         this.select_type("app");
         this.current_id = pie_id;
-        this.key_select.set_key(new Key());
+        this.key_select.set_trigger(new Trigger());
         this.pie_select.select_first();
         this.name_entry.text = _("Rename me!");
         this.command_entry.text = "";

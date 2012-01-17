@@ -33,11 +33,13 @@ public class FocusGrabber : GLib.Object {
             window.raise();
             window.focus(Gdk.CURRENT_TIME);
 
-            int i = 0;
-            Timeout.add(100, () => {
-                if (++i >= 100) return false;
-                return !try_grab_window(window, keyboard, pointer, owner_events);
-            });
+            if (!try_grab_window(window, keyboard, pointer, owner_events)) {
+                int i = 0;
+                Timeout.add(100, () => {
+                    if (++i >= 100) return false;
+                    return !try_grab_window(window, keyboard, pointer, owner_events);
+                });
+            }
         }
     }
     
@@ -84,7 +86,7 @@ public class FocusGrabber : GLib.Object {
                 if ((device.input_source == Gdk.InputSource.KEYBOARD && keyboard) 
                  || (device.input_source != Gdk.InputSource.KEYBOARD && pointer)) {
                  
-                    var status = device.grab(window, Gdk.GrabOwnership.NONE, owner_events, 
+                    var status = device.grab(window, Gdk.GrabOwnership.APPLICATION, owner_events, 
                                              Gdk.EventMask.ALL_EVENTS_MASK, null, Gdk.CURRENT_TIME);
                     
                     if (status != Gdk.GrabStatus.SUCCESS)
@@ -99,7 +101,8 @@ public class FocusGrabber : GLib.Object {
             
         #else
         
-            if (!pointer || Gdk.pointer_grab(window, owner_events, Gdk.EventMask.ALL_EVENTS_MASK,
+            if (!pointer || Gdk.pointer_grab(window, owner_events, Gdk.EventMask.BUTTON_PRESS_MASK |
+                                             Gdk.EventMask.BUTTON_RELEASE_MASK | Gdk.EventMask.POINTER_MOTION_MASK,
                                  null, null, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {
                 
                 if (!keyboard || Gdk.keyboard_grab(window, owner_events, Gdk.CURRENT_TIME) == Gdk.GrabStatus.SUCCESS) {

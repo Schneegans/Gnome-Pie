@@ -29,13 +29,15 @@ public class HotkeySelectButton : Gtk.ToggleButton {
     /// This signal is emitted when the user selects a new hot key.
     /////////////////////////////////////////////////////////////////////
     
-    public signal void on_select(Key key);
+    public signal void on_select(Trigger trigger);
     
     /////////////////////////////////////////////////////////////////////
     /// 
     /////////////////////////////////////////////////////////////////////
     
-    private Key key = null;
+    private Trigger trigger = null;
+     
+    private bool enable_mouse = false;
     
     /////////////////////////////////////////////////////////////////////
     /// These modifiers are ignored.
@@ -49,49 +51,66 @@ public class HotkeySelectButton : Gtk.ToggleButton {
     /// C'tor, constructs a new TriggerSelectWindow.
     /////////////////////////////////////////////////////////////////////
     
-    public HotkeySelectButton() {
-        this.toggled.connect_after(() => {
+    public HotkeySelectButton(bool enable_mouse) {
+        this.enable_mouse = enable_mouse;
+    
+        this.toggled.connect(() => {
             if (this.active) {
                 this.set_label(_("Press a hotkey ..."));
-                FocusGrabber.grab(this.get_window(), true, false);
+                Gtk.grab_add(this);
+                FocusGrabber.grab(this.get_window(), true, true, true);
             }
         });
         
-        this.focus_out_event.connect(() => {
+        this.button_press_event.connect((event) => {
             if (this.active) {
+                Gtk.Allocation rect;
+                this.get_allocation(out rect);
+                if (event.x < rect.x || event.x > rect.x + rect.width
+                 || event.y < rect.y || event.y > rect.y + rect.height) {
+                 
+                    this.cancel();
+                    return true;
+                }
+            }
+            
+            if (this.active && this.enable_mouse) {
+                Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
+                var new_trigger = new Trigger.from_values((int)event.button, state, true,
+                                                          false, false, false);
+                                                          
+                if (new_trigger.key_code != 1) this.update_trigger(new_trigger);
+                else                           this.cancel();
+                
+                return true;
+            } else if (this.active) {
                 this.cancel();
                 return true;
             }
-            return false;
-        });
-        
-        this.button_press_event.connect(() => {
-            if (this.active) {
-                this.cancel();
-                return true;
-            }
+            
             return false;
         });
         
         this.key_press_event.connect(this.on_key_press);
-        this.set_key(new Key());
+        this.set_trigger(new Trigger());
     }
     
-    public void set_key(Key key) {
-        this.key = key;
-        this.set_label(key.label);
+    public void set_trigger(Trigger trigger) {
+        this.trigger = trigger;
+        this.set_label(trigger.label);
     }
     
     private void cancel() {
-        this.set_label(key.label);
+        this.set_label(trigger.label);
         this.set_active(false);
-        FocusGrabber.ungrab(true, false);
+        Gtk.grab_remove(this);
+        FocusGrabber.ungrab(true, true);
     }
     
-    private void update_key(Key key) {
-        if (this.key.accelerator != key.accelerator) {
-            this.key = key;
-            this.on_select(this.key);
+    private void update_trigger(Trigger trigger) {
+        if (this.trigger.name != trigger.name) {
+            this.set_trigger(trigger);
+            this.on_select(this.trigger);
         }
         
         this.cancel();
@@ -106,17 +125,16 @@ public class HotkeySelectButton : Gtk.ToggleButton {
             if (Gdk.keyval_name(event.keyval) == "Escape") {
                 this.cancel();
             } else if (Gdk.keyval_name(event.keyval) == "BackSpace") {
-                this.update_key(new Key());
+                this.update_trigger(new Trigger());
             } else if (event.is_modifier == 0) {
                 Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
-                this.update_key(new Key.from_values(event.keyval, state));
+                this.update_trigger(new Trigger.from_values(event.keyval, state, false, false, false, false));
             }
             
             return true;
         }
         return false;
     }
-    
 }
 
 }

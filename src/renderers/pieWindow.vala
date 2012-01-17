@@ -140,6 +140,7 @@ public class PieWindow : Gtk.Window {
         });
         
         this.show.connect_after(() => {
+            Gtk.grab_add(this);
             FocusGrabber.grab(this.get_window(), true, true, false);
         });
 
@@ -239,6 +240,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
+            Gtk.grab_remove(this);
             FocusGrabber.ungrab();
             this.renderer.activate();
             
@@ -258,6 +260,7 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
+            Gtk.grab_remove(this);
             FocusGrabber.ungrab();
             this.renderer.cancel();
             

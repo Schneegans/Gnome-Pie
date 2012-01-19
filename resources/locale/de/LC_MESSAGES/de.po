@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-08 18:03+0100\n"
+"POT-Creation-Date: 2012-01-19 08:37+0100\n"
 "PO-Revision-Date: 2011-08-25 21:04+0200\n"
-"Last-Translator: Simon Schneegans <simon.schneegans@uni-weimar.de>\n"
+"Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -17,369 +17,252 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../../src/actions/keyAction.vala:33
+#: ../../src/actions/keyAction.vala:34
 msgid "Press hotkey"
 msgstr "Tastenkombination"
 
-#: ../../src/actions/appAction.vala:33
+#: ../../src/actions/keyAction.vala:36
+msgid "Simulates the activation of a hotkey."
+msgstr "Simuliert einen Tastendruck."
+
+#: ../../src/actions/appAction.vala:34
 msgid "Launch application"
 msgstr "Programm ausführen"
 
-#: ../../src/actions/uriAction.vala:33
+#: ../../src/actions/appAction.vala:36
+msgid "Executes the given command."
+msgstr "Führt einen gegebenen Befehl aus."
+
+#: ../../src/actions/uriAction.vala:34
 msgid "Open URI"
 msgstr "URI öffnen"
 
-#: ../../src/actions/actionRegistry.vala:107
+#: ../../src/actions/uriAction.vala:36
+msgid "Opens a given location. You may use URL's or files paths."
+msgstr "Öffnet URLs oder Dateipfade."
+
+#: ../../src/actions/actionRegistry.vala:111
 msgid "Trash"
 msgstr "Müll"
 
-#: ../../src/actions/pieAction.vala:33
+#: ../../src/actions/pieAction.vala:34
 msgid "Open Pie"
 msgstr "Pie öffnen"
 
-#: ../../src/gui/triggerSelectWindow.vala:69
-msgid "Define an open-command"
-msgstr "Einen Hotkey festlegen"
+#: ../../src/actions/pieAction.vala:36
+msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
+msgstr ""
+"Öffnet einen anderen Pie. Auf diese Art können Submenüs erstellt werden."
 
-#: ../../src/gui/triggerSelectWindow.vala:87
-msgid "Click here if you want to bind a mouse button!"
-msgstr "Klicke hier um eine Maustaste zu binden"
-
-#: ../../src/gui/triggerSelectWindow.vala:102
-msgid "Turbo mode"
-msgstr "Turbo-Mode"
-
-#: ../../src/gui/triggerSelectWindow.vala:103
-msgid "If checked, the Pie will close when you release the chosen hot key."
-msgstr "Falls aktiviert schließt sich der Pie wieder automatisch, wenn der Hotkey losgelassen wird."
-
-#: ../../src/gui/triggerSelectWindow.vala:117
-msgid "Long press for activation"
-msgstr "Verzögerte Aktivierung"
-
-#: ../../src/gui/triggerSelectWindow.vala:118
-msgid ""
-"If checked, the Pie will only open if you press this hot key a bit longer."
-msgstr "Falls aktiviert wird sich der Pie erst öffnen, wenn der Hotkey länger gedrückt gehalten wird."
-
-#: ../../src/gui/triggerSelectWindow.vala:158
+#: ../../src/gui/triggerSelectWindow.vala:142
 msgid ""
 "This hotkey is already assigned to the pie \"%s\"! \n"
 "\n"
 "Please select another one or cancel your selection."
-msgstr "Dieser Hotkey ist schon dem Pie \"%s\" zugeordnet!\n Bitte wähle einen anderen!"
-
-#: ../../src/gui/triggerSelectWindow.vala:199
-msgid ""
-"It possible to make your system unusable if you bind a Pie to your left "
-"mouse button. Do you really want to do this?"
-msgstr "Wahrscheinlich machst du dein System unbenutzbar, wenn du die linke Maustaste bindest. Willst du das wirklich?"
-
-#: ../../src/gui/preferences.vala:32
-msgid "Gnome-Pie - Settings"
-msgstr "Gnome-Pie - Einstellungen"
-
-#: ../../src/gui/preferences.vala:55
-msgid "Behavior"
-msgstr "Verhalten"
-
-#: ../../src/gui/preferences.vala:65
-msgid "Startup on Login"
-msgstr "Beim Anmelden automatisch ausführen"
-
-#: ../../src/gui/preferences.vala:66
-msgid "If checked, Gnome-Pie will start when you log in."
-msgstr "Durch Aktivierung dieser Option wird Gnome-Pie automatisch starten, wenn du dich anmeldest."
-
-#: ../../src/gui/preferences.vala:72
-msgid "Show Indicator"
-msgstr "Benachrichtigungssymbol anzeigen"
-
-#: ../../src/gui/preferences.vala:73
-msgid ""
-"If checked, an indicator for easy access of the settings menu is shown in "
-"your panel."
-msgstr "Durch Aktivierung wird ein Indikator in deinem Panel angezeigt."
-
-#: ../../src/gui/preferences.vala:79
-msgid "Open Pies at Mouse"
-msgstr "Pies an der Maus öffnen"
-
-#: ../../src/gui/preferences.vala:80
-msgid ""
-"If checked, pies will open at your pointer. Otherwise they'll pop up in the "
-"middle of the screen."
-msgstr "Wenn aktiviert öffnen sich die Pies direkt an der Maus. Sonst öffnen sie sich in der Mitte des Bildschirms."
-
-#: ../../src/gui/preferences.vala:89
-msgid "Global Scale"
-msgstr "Skalierungsfaktor"
-
-#: ../../src/gui/preferences.vala:126
-msgid "Themes"
-msgstr "Themen"
-
-#: ../../src/gui/preferences.vala:144
-msgid "General"
-msgstr "Allgemein"
-
-#: ../../src/gui/preferences.vala:149
-msgid "Pies"
-msgstr "Pies"
-
-#: ../../src/gui/preferences.vala:173
-msgid "You can right-click in the list for adding or removing entries."
 msgstr ""
-"Zum Löschen und Hinzufügen von Einträgen kannst \n"
-"du mit der rechten Maustaste in die Liste klicken."
+"Dieser Hotkey ist schon dem Pie \"%s\" zugeordnet!\n"
+" Bitte wähle einen anderen!"
 
-#: ../../src/gui/preferences.vala:174
-msgid ""
-"You can reset Gnome-Pie to its default options with the terminal command "
-"\"gnome-pie --reset\"."
-msgstr "Du kannst Gnome-Pie mit dem Terminalbefehl \"gnome-pie --reset\" auf die Standardeinstellungen zurücksetzen."
+#: ../../src/gui/preferencesWindow.vala:145
+msgid "No Pie selected."
+msgstr "Kein Pie gewählt."
 
-#: ../../src/gui/preferences.vala:175
-msgid ""
-"The radiobutton at the beginning of each slice-line indicates the "
-"QuickAction of the pie."
-msgstr "Der Auswahlknopf vor jeder Slice zeigt die QuickAction jeder Pie an."
-
-#: ../../src/gui/preferences.vala:176
-msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
-msgstr "Pies können mit dem Befehl \"gnome-pie --open=ID\" geöffnet werden."
-
-#: ../../src/gui/preferences.vala:177
-msgid "Feel free to visit Gnome-Pie's homepage at %s!"
-msgstr "Besuche Gnome-Pies Homepage auf %s!"
-
-#: ../../src/gui/preferences.vala:178
-msgid "You can drag'n'drop applications from your main menu to the list above."
-msgstr "Du kannst Anwendungen von deinem Hauptmenü in die obige Liste ziehen."
-
-#: ../../src/gui/preferences.vala:179
-msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr "Wenn du Feedback geben willst, schick eine E-Mail an %s!"
-
-#: ../../src/gui/preferences.vala:180
-msgid ""
-"You may drag'n'drop URLs and bookmarks from your internet browser to the "
-"list above."
-msgstr "Du kannst URLs und Links aus deinem Internet-Browser in die Liste ziehen."
-
-#: ../../src/gui/preferences.vala:181
-msgid "Bugs can be reported at %s!"
-msgstr "Bugs können auf %s gemeldet werden!"
-
-#: ../../src/gui/preferences.vala:182
-msgid ""
-"It's possible to drag'n'drop files and folders from your file browser to the "
-"list above."
-msgstr "Es ist möglich Dateien und Verzeichnisse aus deinem Datei-Browser in die Liste zu ziehen!"
-
-#: ../../src/gui/preferences.vala:183
-msgid ""
-"It's recommended to keep your Pies small (at most 6-8 Slices). Else they "
-"will become hard to navigate."
-msgstr "Es ist empfehlenswert, nur maximal acht Slices pro Pie zu verwenden. Sonst wird die Navigation schwierig."
-
-#: ../../src/gui/preferences.vala:184
-msgid ""
-"In order to create a launcher for a Pie, drag the Pie from the list to your "
-"desktop!"
-msgstr "Du kannst Launcher für Pies erstellen. Ziehe sie dazu von obiger Liste auf deinen Desktop!"
-
-#: ../../src/gui/preferences.vala:193
-msgid "Moves the selected Slice down"
-msgstr ""
-"Verschiebt die gewählte Slice nach unten."
-
-#: ../../src/gui/preferences.vala:205
-msgid "Moves the selected Slice up"
-msgstr ""
-"Verschiebt die gewählte Slice nach oben."
-
-#: ../../src/gui/themeList.vala:88
-msgid "by"
-msgstr "von"
-
-#: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:850
-msgid "Slice group"
-msgstr "Slice-Gruppe"
-
-#: ../../src/gui/pieList.vala:135
-msgid "Icon"
-msgstr "Symbol"
-
-#: ../../src/gui/pieList.vala:200
-msgid "Command"
-msgstr "Kommando"
-
-#: ../../src/gui/pieList.vala:301 ../../src/gui/pieList.vala:706
-#: ../../src/gui/pieList.vala:866 ../../src/utilities/bindingManager.vala:156
-#: ../../src/utilities/trigger.vala:197 ../../src/utilities/trigger.vala:198
-msgid "Not bound"
-msgstr "Nicht zugewiesen"
-
-#: ../../src/gui/pieList.vala:366
-msgid "Pie-ID / Action type"
-msgstr "Pie-ID / Slicetyp"
-
-#: ../../src/gui/pieList.vala:427
-msgid "Name"
-msgstr "Name"
-
-#: ../../src/gui/pieList.vala:470
-msgid "Add new Pie"
-msgstr "Pie hinzufügen"
-
-#: ../../src/gui/pieList.vala:475
-msgid "Add new Slice"
-msgstr "Slice hinzufügen"
-
-#: ../../src/gui/pieList.vala:483
-msgid "Delete"
-msgstr "Eintrag löschen"
-
-#: ../../src/gui/pieList.vala:618
+#: ../../src/gui/preferencesWindow.vala:181
 msgid "New Pie"
 msgstr "Neuer Pie"
 
-#: ../../src/gui/pieList.vala:665
-msgid "New Action"
-msgstr "Neue Slice"
-
-#: ../../src/gui/pieList.vala:679
-msgid "You have to select a Pie to add a Slice to!"
-msgstr ""
-"Es muss ein Pie ausgewählt sein, zu dem eine Slice hinzugefügt werden soll!"
-
-#: ../../src/gui/pieList.vala:729
-msgid "You have to select a Pie or a Slice to delete!"
-msgstr "Es muss etwas ausgewählt sein, das gelöscht werden soll!"
-
-#: ../../src/gui/pieList.vala:740
+#: ../../src/gui/preferencesWindow.vala:190
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "Soll dieser Pie wirklich mit allen Slices gelöscht werden?"
 
-#: ../../src/gui/pieList.vala:774
-msgid "Do you really want to delete the selected Slice?"
+#: ../../src/gui/newSliceWindow.vala:227
+msgid "Rename me!"
+msgstr "Benenne mich!"
+
+#: ../../src/gui/piePreviewRenderer.vala:292
+msgid "Click to edit"
+msgstr "Editieren durch klicken"
+
+#: ../../src/gui/piePreviewRenderer.vala:292
+#: ../../src/gui/piePreviewRenderer.vala:307
+msgid "Drag to move"
+msgstr "Verschieben durch ziehen"
+
+#: ../../src/gui/piePreviewRenderer.vala:295
+msgid "Click to add a new Slice"
+msgstr "Neue Slice durch Klicken hinzufügen"
+
+#: ../../src/gui/piePreviewRenderer.vala:299
+msgid "Drop to add as new Slice"
+msgstr "Als neue Slice hinzuzufügen"
+
+#: ../../src/gui/piePreviewRenderer.vala:302
+msgid "Drop to move Slice"
+msgstr "Slice verschieben"
+
+#: ../../src/gui/piePreviewRenderer.vala:307
+msgid "Click to delete"
+msgstr "Löschen durch klicken"
+
+#: ../../src/gui/triggerSelectButton.vala:59
+msgid "Press a hotkey ..."
+msgstr "Wählen..."
+
+#: ../../src/gui/piePreview.vala:120
+msgid "Do you really want to delete this Slice?"
 msgstr "Soll die ausgewählte Slice wirklich gelöscht werden?"
 
-#: ../../src/gui/iconSelectWindow.vala:160
-msgid "Choose an Icon"
-msgstr "Wähle ein Symbol"
+#: ../../src/gui/themeList.vala:48
+msgid "Themes"
+msgstr "Themen"
 
-#: ../../src/gui/iconSelectWindow.vala:196
+#: ../../src/gui/themeList.vala:80
+msgid "By"
+msgstr "Von"
+
+#: ../../src/gui/sliceTypeList.vala:56
+msgid "Slice types"
+msgstr "Slice-Typen"
+
+#: ../../src/gui/iconSelectWindow.vala:175
 msgid "All icons"
 msgstr "Alle Symbole"
 
-#: ../../src/gui/iconSelectWindow.vala:197
+#: ../../src/gui/iconSelectWindow.vala:176
 #: ../../src/pies/defaultConfig.vala:36
 msgid "Applications"
 msgstr "Anwendungen"
 
-#: ../../src/gui/iconSelectWindow.vala:198
+#: ../../src/gui/iconSelectWindow.vala:177
 msgid "Actions"
 msgstr "Aktionen"
 
-#: ../../src/gui/iconSelectWindow.vala:199
+#: ../../src/gui/iconSelectWindow.vala:178
 msgid "Places"
 msgstr "Orte"
 
-#: ../../src/gui/iconSelectWindow.vala:200
+#: ../../src/gui/iconSelectWindow.vala:179
 msgid "File types"
 msgstr "Dateitypen"
 
-#: ../../src/gui/iconSelectWindow.vala:201
+#: ../../src/gui/iconSelectWindow.vala:180
 msgid "Emotes"
 msgstr "Smilies"
 
-#: ../../src/gui/iconSelectWindow.vala:202
+#: ../../src/gui/iconSelectWindow.vala:181
 msgid "Miscellaneous"
 msgstr "Sonstige"
 
-#: ../../src/gui/iconSelectWindow.vala:279
-msgid "Icon Theme"
-msgstr "Symbolthema"
-
-#: ../../src/gui/iconSelectWindow.vala:289
+#: ../../src/gui/iconSelectWindow.vala:254
 msgid "All supported image formats"
 msgstr "Alle unterstützten Bildformate"
 
-#: ../../src/gui/iconSelectWindow.vala:311
-msgid "Custom Icon"
-msgstr "Benutzerdefiniertes Symbol"
+#: ../../src/actionGroups/windowListGroup.vala:34
+msgid "Group: Window List"
+msgstr "Gruppe: Fensterliste"
 
-#: ../../src/actionGroups/windowListGroup.vala:33
-msgid "Window List"
-msgstr "Fensterliste"
+#: ../../src/actionGroups/windowListGroup.vala:36
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
+msgstr "Zeigt eine Slice für jedes geöffnete Fenster an."
 
-#: ../../src/actionGroups/menuGroup.vala:34
-msgid "Main menu"
-msgstr "Hauptmenü"
+#: ../../src/actionGroups/menuGroup.vala:35
+msgid "Group: Main menu"
+msgstr "Gruppe: Hauptmenü"
 
-#: ../../src/actionGroups/clipboardGroup.vala:63
-msgid "Clipboard"
-msgstr "Zwischenablage"
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr "Zeigt das Hauptmenü an."
 
-#: ../../src/actionGroups/sessionGroup.vala:34
-msgid "Session Control"
-msgstr "Sitzung"
+#: ../../src/actionGroups/clipboardGroup.vala:64
+msgid "Group: Clipboard"
+msgstr "Gruppe: Zwischenablage"
 
-#: ../../src/actionGroups/sessionGroup.vala:52
+#: ../../src/actionGroups/clipboardGroup.vala:66
+msgid "Manages your Clipboard."
+msgstr "Verwaltet die Zwischenablage."
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+msgid "Group: Session Control"
+msgstr "Gruppe: Sitzung"
+
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
+msgstr ""
+"Zeigt eine Slice für Herunterfahren, Neustarten und den Ruhezustand an."
+
+#: ../../src/actionGroups/sessionGroup.vala:60
 msgid "Shutdown"
 msgstr "Herunterfahren"
 
-#: ../../src/actionGroups/sessionGroup.vala:55
+#: ../../src/actionGroups/sessionGroup.vala:63
 msgid "Logout"
 msgstr "Ausloggen"
 
-#: ../../src/actionGroups/sessionGroup.vala:58
+#: ../../src/actionGroups/sessionGroup.vala:66
 msgid "Reboot"
 msgstr "Neustarten"
 
-#: ../../src/actionGroups/bookmarkGroup.vala:35
-#: ../../src/pies/defaultConfig.vala:45
-msgid "Bookmarks"
-msgstr "Lesezeichen"
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+msgid "Group: Bookmarks"
+msgstr "Gruppe: Lesezeichen"
 
-#: ../../src/actionGroups/devicesGroup.vala:34
-msgid "Devices"
-msgstr "Laufwerke"
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
+msgstr "Zeigt eine Slice für jedes Ordner-Lesezeichen an."
 
-#: ../../src/actionGroups/devicesGroup.vala:82
+#: ../../src/actionGroups/devicesGroup.vala:35
+msgid "Group: Devices"
+msgstr "Gruppe: Laufwerke"
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr ""
+"Zeigt eine Gruppe für jedes angeschlossene Gerät, wie z. B. USB_Sticks, an. "
+
+#: ../../src/actionGroups/devicesGroup.vala:85
 msgid "Root"
 msgstr "Dateisystem"
 
-#: ../../src/utilities/trigger.vala:152
+#: ../../src/utilities/bindingManager.vala:155 ../../src/utilities/key.vala:65
+#: ../../src/utilities/trigger.vala:216 ../../src/utilities/trigger.vala:217
+msgid "Not bound"
+msgstr "Nicht zugewiesen"
+
+#: ../../src/utilities/trigger.vala:163
 msgid "Button %i"
 msgstr "Taste %i"
 
-#: ../../src/utilities/trigger.vala:155
+#: ../../src/utilities/trigger.vala:166
 msgid "LeftButton"
 msgstr "MausLinks"
 
-#: ../../src/utilities/trigger.vala:157
+#: ../../src/utilities/trigger.vala:168
 msgid "RightButton"
 msgstr "MausRechts"
 
-#: ../../src/utilities/trigger.vala:159
+#: ../../src/utilities/trigger.vala:170
 msgid "MiddleButton"
 msgstr "Mausrad"
 
-#: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:183
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
+#: ../../src/utilities/trigger.vala:196 ../../src/utilities/trigger.vala:200
 msgid "Turbo"
 msgstr "Turbo"
 
-#: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:185
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
+#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:202
 msgid "Delayed"
 msgstr "Verzögert"
 
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
+#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:204
+msgid "Centered"
+msgstr "Zentriert"
+
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
-msgstr ""
+msgstr "Multimedia"
 
 #: ../../src/pies/defaultConfig.vala:30
 msgid "Next Track"
@@ -396,6 +279,10 @@ msgstr "Vorheriger Titel"
 #: ../../src/pies/defaultConfig.vala:33
 msgid "Play/Pause"
 msgstr "Play/Pause"
+
+#: ../../src/pies/defaultConfig.vala:45
+msgid "Bookmarks"
+msgstr "Lesezeichen"
 
 #: ../../src/pies/defaultConfig.vala:50
 msgid "Session"
@@ -429,5 +316,171 @@ msgstr "Maximieren"
 msgid "Restore"
 msgstr "Wiederherstellen"
 
-#~ msgid "Click to activate a Slice"
-#~ msgstr "Klicken um Slices zu aktivieren"
+#: ../ui/icon_select.ui:8
+msgid "Select an icon"
+msgstr "Wähle ein Symbol"
+
+#: ../ui/icon_select.ui:84
+msgid "Icon Theme"
+msgstr "Symbolthema"
+
+#: ../ui/icon_select.ui:105
+msgid "Custom Icon"
+msgstr "Benutzerdefiniertes Symbol"
+
+#: ../ui/appearance.ui:8
+msgid "General Options"
+msgstr "Allgemeine Einstellungen"
+
+#: ../ui/appearance.ui:46
+msgid "Start Gnome-Pie on login"
+msgstr "Beim Anmelden automatisch ausführen"
+
+#: ../ui/appearance.ui:50
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr "Wenn aktiviert, startet Gnome-Pie im Hintergrund beim Anmelden."
+
+#: ../ui/appearance.ui:63
+msgid "Display panel icon "
+msgstr "Zeige ein Symbol im Panel"
+
+#: ../ui/appearance.ui:67
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr "Falls nicht aktiviert, kann dieses Menü durch ein nochmaliges starten von Gnome-Pie geöffnet werden."
+
+#: ../ui/appearance.ui:87
+msgid "Global scale"
+msgstr "Skalierungsfaktor"
+
+#: ../ui/appearance.ui:125
+msgid "<b>Appearance and behavior</b>"
+msgstr "<b>Erscheinungsbild and Verhalten</b>"
+
+#: ../ui/trigger_select.ui:8
+msgid "Pie Settings"
+msgstr "Gnome-Pie - Einstellungen"
+
+#: ../ui/trigger_select.ui:44
+msgid "It's possible to bind mouse buttons as well!"
+msgstr "Es ist auch möglich, Maustasten zu binden!"
+
+#: ../ui/trigger_select.ui:76
+msgid "Turbo mode"
+msgstr "Turbo-Mode"
+
+#: ../ui/trigger_select.ui:80
+msgid "If checked, the Pie will close when you release the chosen hot key."
+msgstr ""
+"Falls aktiviert schließt sich der Pie wieder automatisch, wenn der Hotkey "
+"losgelassen wird."
+
+#: ../ui/trigger_select.ui:93
+msgid "Long press for activation"
+msgstr "Verzögerte Aktivierung"
+
+#: ../ui/trigger_select.ui:97
+msgid ""
+"If checked, the Pie will only open if you press this hot key a bit longer."
+msgstr ""
+"Falls aktiviert, wird sich der Pie erst öffnen, wenn der Hotkey länger "
+"gedrückt gehalten wird."
+
+#: ../ui/trigger_select.ui:110
+msgid "Open Pie centered on the screen"
+msgstr "Zentriert auf dem Bildschirm öffnen"
+
+#: ../ui/trigger_select.ui:114
+msgid ""
+"If checked, the Pie will open in the middle of your screen. Else it will pop "
+"up at your pointer."
+msgstr ""
+"Falls aktiviert, wird sich der Pie nicht an der Maus, sondern in der Mitte "
+"des Bildschirms öffnen."
+
+#: ../ui/trigger_select.ui:133
+msgid "<b>Activation options</b>"
+msgstr "<b>Aktivierungsoptionen</b>"
+
+#: ../ui/slice_select.ui:8
+msgid "Appearance Options"
+msgstr "Erscheinungsbild"
+
+#: ../ui/slice_select.ui:95
+msgid "There are no options for this Slice type."
+msgstr "Es gibt keine Otionen für diesen Slice-Typ."
+
+#: ../ui/slice_select.ui:121
+msgid "Name of the Slice "
+msgstr "Name"
+
+#: ../ui/slice_select.ui:159
+msgid "URI to open"
+msgstr "URI"
+
+#: ../ui/slice_select.ui:197
+msgid "Command to execute"
+msgstr "Befehl"
+
+#: ../ui/slice_select.ui:235
+msgid "Hotkey to press"
+msgstr "Tastenkomination"
+
+#: ../ui/slice_select.ui:264
+msgid "Pie to open"
+msgstr "Pie"
+
+#: ../ui/slice_select.ui:293
+msgid "Is Quick Action"
+msgstr "Ist Quick Action"
+
+#: ../ui/slice_select.ui:306
+msgid "This Slice will be executed when you click in the middle of the Pie."
+msgstr "Diese Slice wird aktiviert, falls du in die Mitte des Pies klickst."
+
+#: ../ui/slice_select.ui:339
+msgid "<b>Slice options</b>"
+msgstr "<b>Slice-Optionen</b>"
+
+#: ../ui/preferences.ui:8
+msgid "Gnome-Pie Settings"
+msgstr "Gnome-Pie - Einstellungen"
+
+#: ../ui/preferences.ui:27
+msgid "General Settings"
+msgstr "Allgemeine Einstellungen"
+
+#: ../ui/preferences.ui:261
+msgid ""
+"<b><big>This Pie is empty!</big>\n"
+"\n"
+"Start adding Slices to it!</b> This can be done by dragging stuff to the "
+"plus sign below. You can try a lot! For example application launchers or "
+"folders. Even URLs from your browser are possible... \n"
+"\n"
+"For manual and advanced configuration click on the plus sign."
+msgstr ""
+"<b><big>Der Pie ist leer!</big>\n"
+"\n"
+"Füge Slices hinzu!</b> Du kannst viele verschieden Dinge zu dem Pluszeichen "
+"ziehen! Zum Beispiel Anwendungsstarter aus deinem Menü, Dateien oder sogar "
+"URLs aus dem  Browser... \n"
+"\n"
+"Zur manuellen und fortgeschrittenen Konfiguration klicke auf das Symbol."
+
+#: ../ui/preferences.ui:282
+msgid ""
+"<b><big>You have no Pies!</big>\n"
+"\n"
+"Start by creating one! </b> This can be done by clicking on the tiny little "
+"plus sign in the lower left corner."
+msgstr ""
+"<b><big>Du hast keine Pies!</big>\n"
+"\n"
+"Erstelle einen neuen! </b> Klicke dazu einfach auf das kleine Pluszeichen "
+"unter der leeren Liste auf der linken Seite."
+
+#: ../ui/rename_pie.ui:6
+msgid "Rename a Pie"
+msgstr "Pie umbenennen"

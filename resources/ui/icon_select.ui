@@ -50,7 +50,6 @@
                       <object class="GtkEntry" id="filter-entry">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="invisible_char">•</property>
                         <property name="primary_icon_stock">gtk-find</property>
                         <property name="secondary_icon_stock">gtk-clear</property>
                         <property name="primary_icon_activatable">False</property>
@@ -65,6 +64,7 @@
                       <object class="GtkScrolledWindow" id="icon-scrolledwindow">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="shadow_type">in</property>
                         <child>
                           <placeholder/>
                         </child>
@@ -153,11 +153,12 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="ok-button">
-                    <property name="label">Set Icon</property>
+                    <property name="label">gtk-ok</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="use_action_appearance">False</property>
+                    <property name="use_stock">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>

@@ -41,11 +41,11 @@ class ThemeList : Gtk.TreeView {
         var data = new Gtk.ListStore(2, typeof(Gdk.Pixbuf), 
                                         typeof(string));
         base.set_model(data);
-        base.set_headers_visible(false);
+        base.set_headers_visible(true);
         base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
         
         var main_column = new Gtk.TreeViewColumn();
-
+            main_column.title = _("Themes");
             var icon_render = new Gtk.CellRendererPixbuf();
                 main_column.pack_start(icon_render, false);
         

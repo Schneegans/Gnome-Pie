@@ -48,11 +48,12 @@ class SliceTypeList : Gtk.TreeView {
         this.data.set_sort_column_id(2, Gtk.SortType.ASCENDING);
         
         base.set_model(this.data);
-        base.set_headers_visible(false);
+        base.set_headers_visible(true);
         base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
         this.height_request = 170;
         
         var main_column = new Gtk.TreeViewColumn();
+            main_column.title = _("Slice types");
             var icon_render = new Gtk.CellRendererPixbuf();
                 main_column.pack_start(icon_render, false);
         

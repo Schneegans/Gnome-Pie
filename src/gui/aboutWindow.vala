@@ -32,13 +32,13 @@ public class AboutWindow: Gtk.AboutDialog {
 			"Simon Schneegans <code@simonschneegans.de>"
         };
     	string[] translators = {
-    		"DE\t\t Simon Schneegans <code@simonschneegans.de>",
-    		"IT\t\t Riccardo Traverso <gr3yfox.fw@gmail.com>",
-    		"PT-BR\t Magnun Leno <magnun@codecommunity.org>",
-    		"EN\t\t Simon Schneegans <code@simonschneegans.de>",
-    		"KO\t\t Kim Boram <Boramism@gmail.com>",
-            "ES\t\t Eduardo Anabalon <lalo1412@gmail.com>",
-            "FR\t\t Grégoire Bellon-Gervais <greggbg@gmail.com>"
+    		"Simon Schneegans <code@simonschneegans.de> (DE, EN)",
+    		"Riccardo Traverso <gr3yfox.fw@gmail.com> (IT)",
+    		"Magnun Leno <magnun@codecommunity.org> (PT-BR)",
+    		"Kim Boram <Boramism@gmail.com> (KO)",
+            "Eduardo Anabalon <lalo1412@gmail.com> (ES)",
+            "Gregoire Bellon-Gervais <greggbg@gmail.com> (FR)",
+            "Eugene Roskin <pams@imail.ru> (RU)"
     	};
     	
     	// sort translators
@@ -58,12 +58,12 @@ public class AboutWindow: Gtk.AboutDialog {
             artists : artists,
             authors : devs,
             translator_credits : translator_string,
-            copyright : "Copyright (C) 2011 Simon Schneegans <code@simonschneegans.de>",
+            copyright : "Copyright (C) 2011-2012 Simon Schneegans <code@simonschneegans.de>",
             program_name: "Gnome-Pie",
             logo_icon_name: "gnome-pie",
             website: "http://www.simonschneegans.de/?page_id=12",
             website_label: "www.gnome-pie.simonschneegans.de",
-            version: "0.3.1"
+            version: "0.4.0"
         );
     }
 }

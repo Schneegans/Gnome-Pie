@@ -128,7 +128,7 @@ public class IconSelectWindow : GLib.Object {
     /// C'tor, creates a new IconSelectWindow.
     /////////////////////////////////////////////////////////////////////
     
-    public IconSelectWindow() {
+    public IconSelectWindow(Gtk.Window parent) {
         try {
             this.load_queue = new GLib.AsyncQueue<ListEntry?>();
             
@@ -156,6 +156,9 @@ public class IconSelectWindow : GLib.Object {
             builder.add_from_file (Paths.ui_files + "/icon_select.ui");
 
             this.window = builder.get_object("window") as Gtk.Window;
+            this.window.set_transient_for(parent);
+            this.window.set_modal(true);
+            
             this.tabs = builder.get_object("tabs") as Gtk.Notebook;
             
             this.spinner = builder.get_object("spinner") as Gtk.Spinner;
@@ -271,16 +274,13 @@ public class IconSelectWindow : GLib.Object {
                 });
             
             this.window.set_focus(this.icon_view);
+            this.window.delete_event.connect(this.window.hide_on_delete);
             
         } catch (GLib.Error e) {
             error("Could not load UI: %s\n", e.message);
         }
     }
-    
-    public void set_parent(Gtk.Window parent) {
-        this.window.set_transient_for(parent);
-    }
-    
+
     public void show() {
         this.window.show_all();
         this.spinner.hide();

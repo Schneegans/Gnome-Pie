@@ -46,7 +46,7 @@ public class NewSliceWindow : GLib.Object {
     private Gtk.CheckButton quickaction_checkbutton = null;
     
     private PieComboList pie_select = null;
-    private HotkeySelectButton key_select = null;
+    private TriggerSelectButton key_select = null;
     
     private string current_type = "";
     private string current_icon = "";
@@ -131,7 +131,7 @@ public class NewSliceWindow : GLib.Object {
             this.pie_box.pack_start(this.pie_select, true, true);
                 
             this.hotkey_box = builder.get_object("hotkey-box") as Gtk.HBox;
-            this.key_select = new HotkeySelectButton(true);
+            this.key_select = new TriggerSelectButton(false);
             this.hotkey_box.pack_start(this.key_select, false, true);
             this.key_select.on_select.connect((trigger) => {
                 this.current_hotkey = trigger.name;
@@ -156,6 +156,8 @@ public class NewSliceWindow : GLib.Object {
             
             (builder.get_object("ok-button") as Gtk.Button).clicked.connect(on_ok_button_clicked);
             (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(on_cancel_button_clicked);
+            
+            this.window.delete_event.connect(this.window.hide_on_delete);
                 
         } catch (GLib.Error e) {
             error("Could not load UI: %s\n", e.message);
@@ -281,14 +283,13 @@ public class NewSliceWindow : GLib.Object {
     
     private void on_icon_button_clicked(Gtk.Button button) {
         if (icon_window == null) {
-            icon_window = new IconSelectWindow();
+            icon_window = new IconSelectWindow(this.window);
             icon_window.on_ok.connect((icon) => {
                 this.current_custom_icon = icon;
                 this.set_icon(icon);
             });
         }
         
-        icon_window.set_parent(window);
         icon_window.show();
     }
     

@@ -44,6 +44,8 @@ public class RenameWindow : GLib.Object {
             
             (builder.get_object("ok-button") as Gtk.Button).clicked.connect(on_ok_button_clicked);
             (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(on_cancel_button_clicked);
+            
+            this.window.delete_event.connect(this.window.hide_on_delete);
                 
         } catch (GLib.Error e) {
             error("Could not load UI: %s\n", e.message);

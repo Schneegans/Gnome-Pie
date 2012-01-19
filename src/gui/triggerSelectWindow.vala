@@ -39,7 +39,7 @@ public class TriggerSelectWindow : GLib.Object {
     private Gtk.CheckButton turbo;
     private Gtk.CheckButton delayed;
     private Gtk.CheckButton centered;
-    private HotkeySelectButton button;
+    private TriggerSelectButton button;
     
     /////////////////////////////////////////////////////////////////////
     /// The currently configured trigger.
@@ -67,7 +67,7 @@ public class TriggerSelectWindow : GLib.Object {
             builder.add_from_file (Paths.ui_files + "/trigger_select.ui");
 
             this.window = builder.get_object("window") as Gtk.Window;
-            this.button = new HotkeySelectButton(true);
+            this.button = new TriggerSelectButton(true);
             
             this.button.on_select.connect((trigger) => {
                 this.trigger = new Trigger.from_values(trigger.key_sym,
@@ -91,6 +91,8 @@ public class TriggerSelectWindow : GLib.Object {
             
             this.centered = builder.get_object("center-check") as Gtk.CheckButton;
             this.centered.toggled.connect(this.on_check_toggled);
+            
+            this.window.delete_event.connect(this.window.hide_on_delete);
                 
         } catch (GLib.Error e) {
             error("Could not load UI: %s\n", e.message);

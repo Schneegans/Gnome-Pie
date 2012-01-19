@@ -136,6 +136,10 @@ public class Deamon : GLib.Object {
         // init toolkits and static stuff
         Gdk.threads_init();
         
+        // init locale support
+        Intl.bindtextdomain ("gnomepie", Paths.locales);
+        Intl.textdomain ("gnomepie");
+        
         ActionRegistry.init();
         GroupRegistry.init();
         
@@ -143,10 +147,6 @@ public class Deamon : GLib.Object {
         Icon.init();
         ThemedIcon.init();
         RenderedText.init();
-    
-        // init locale support
-        Intl.bindtextdomain ("gnomepie", Paths.locales);
-        Intl.textdomain ("gnomepie");
         
         // launch the indicator
         this.indicator = new Indicator();

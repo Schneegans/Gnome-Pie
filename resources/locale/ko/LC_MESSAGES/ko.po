@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-15 02:49+0900\n"
+"POT-Creation-Date: 2012-01-19 20:25+0100\n"
 "PO-Revision-Date: 2011-11-15 03:15+0900\n"
 "Last-Translator: Kim Boram <Boramism@gmail.com>\n"
 "Language-Team: Korean\n"
@@ -17,25 +17,257 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../../src/actions/actionRegistry.vala:107
-msgid "Trash"
-msgstr "휴지통"
-
-#: ../../src/actions/keyAction.vala:33
+#: ../../src/actions/keyAction.vala:34
 msgid "Press hotkey"
 msgstr "단축키를 누르세요"
 
-#: ../../src/actions/appAction.vala:33
+#: ../../src/actions/keyAction.vala:36
+msgid "Simulates the activation of a hotkey."
+msgstr ""
+
+#: ../../src/actions/appAction.vala:34
 msgid "Launch application"
 msgstr "프로그램 실행"
 
-#: ../../src/actions/pieAction.vala:33
+#: ../../src/actions/appAction.vala:36
+msgid "Executes the given command."
+msgstr ""
+
+#: ../../src/actions/uriAction.vala:34
+msgid "Open URI"
+msgstr "주소 열기"
+
+#: ../../src/actions/uriAction.vala:36
+msgid "Opens a given location. You may use URL's or files paths."
+msgstr ""
+
+#: ../../src/actions/actionRegistry.vala:111
+msgid "Trash"
+msgstr "휴지통"
+
+#: ../../src/actions/pieAction.vala:34
 msgid "Open Pie"
 msgstr "파이 열기"
 
-#: ../../src/actions/uriAction.vala:33
-msgid "Open URI"
-msgstr "주소 열기"
+#: ../../src/actions/pieAction.vala:36
+msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
+msgstr ""
+
+#: ../../src/gui/triggerSelectWindow.vala:144
+msgid ""
+"This hotkey is already assigned to the pie \"%s\"! \n"
+"\n"
+"Please select another one or cancel your selection."
+msgstr ""
+"이 단축키는 이미 \"%s\" 파이에 할당했습니다!\n"
+"\n"
+"다른 것을 선택하거나 선택을 취소하십시오."
+
+#: ../../src/gui/preferencesWindow.vala:145
+msgid "No Pie selected."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:181
+msgid "New Pie"
+msgstr "새 파이"
+
+#: ../../src/gui/preferencesWindow.vala:190
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr "선택한 파이와 파이 안의 모든 조각을 삭제하시겠습니까?"
+
+#: ../../src/gui/newSliceWindow.vala:229
+msgid "Rename me!"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:292
+msgid "Click to edit"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:292
+#: ../../src/gui/piePreviewRenderer.vala:307
+msgid "Drag to move"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:295
+#, fuzzy
+msgid "Click to add a new Slice"
+msgstr "새 조각 추가"
+
+#: ../../src/gui/piePreviewRenderer.vala:299
+#, fuzzy
+msgid "Drop to add as new Slice"
+msgstr "새 조각 추가"
+
+#: ../../src/gui/piePreviewRenderer.vala:302
+msgid "Drop to move Slice"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:307
+msgid "Click to delete"
+msgstr ""
+
+#: ../../src/gui/triggerSelectButton.vala:59
+#, fuzzy
+msgid "Press a hotkey ..."
+msgstr "단축키를 누르세요"
+
+#: ../../src/gui/piePreview.vala:120
+#, fuzzy
+msgid "Do you really want to delete this Slice?"
+msgstr "정말 선택한 조각을 삭제하시겠습니까?"
+
+#: ../../src/gui/themeList.vala:48
+msgid "Themes"
+msgstr "테마"
+
+#: ../../src/gui/themeList.vala:80
+msgid "By"
+msgstr ""
+
+#: ../../src/gui/sliceTypeList.vala:56
+#, fuzzy
+msgid "Slice types"
+msgstr "파일 형식"
+
+#: ../../src/gui/iconSelectWindow.vala:178
+msgid "All icons"
+msgstr "모든 아이콘"
+
+#: ../../src/gui/iconSelectWindow.vala:179
+#: ../../src/pies/defaultConfig.vala:36
+msgid "Applications"
+msgstr "프로그램"
+
+#: ../../src/gui/iconSelectWindow.vala:180
+msgid "Actions"
+msgstr "동작"
+
+#: ../../src/gui/iconSelectWindow.vala:181
+msgid "Places"
+msgstr "위치"
+
+#: ../../src/gui/iconSelectWindow.vala:182
+msgid "File types"
+msgstr "파일 형식"
+
+#: ../../src/gui/iconSelectWindow.vala:183
+msgid "Emotes"
+msgstr "감정"
+
+#: ../../src/gui/iconSelectWindow.vala:184
+msgid "Miscellaneous"
+msgstr "기타"
+
+#: ../../src/gui/iconSelectWindow.vala:257
+msgid "All supported image formats"
+msgstr "지원하는 모든 이미지 형식"
+
+#: ../../src/actionGroups/windowListGroup.vala:34
+#, fuzzy
+msgid "Group: Window List"
+msgstr "창 목록"
+
+#: ../../src/actionGroups/windowListGroup.vala:36
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
+msgstr ""
+
+#: ../../src/actionGroups/menuGroup.vala:35
+#, fuzzy
+msgid "Group: Main menu"
+msgstr "주 메뉴"
+
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr ""
+
+#: ../../src/actionGroups/clipboardGroup.vala:64
+#, fuzzy
+msgid "Group: Clipboard"
+msgstr "클립보드"
+
+#: ../../src/actionGroups/clipboardGroup.vala:66
+msgid "Manages your Clipboard."
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+#, fuzzy
+msgid "Group: Session Control"
+msgstr "세션 컨트롤"
+
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:60
+msgid "Shutdown"
+msgstr "시스템 끄기"
+
+#: ../../src/actionGroups/sessionGroup.vala:63
+msgid "Logout"
+msgstr "로그아웃"
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Reboot"
+msgstr "다시 시작"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+#, fuzzy
+msgid "Group: Bookmarks"
+msgstr "책갈피"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:35
+#, fuzzy
+msgid "Group: Devices"
+msgstr "장치"
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr "루트"
+
+#: ../../src/utilities/bindingManager.vala:155 ../../src/utilities/key.vala:65
+#: ../../src/utilities/trigger.vala:216 ../../src/utilities/trigger.vala:217
+msgid "Not bound"
+msgstr "연결하지 않음"
+
+#: ../../src/utilities/trigger.vala:163
+msgid "Button %i"
+msgstr "%i 단추"
+
+#: ../../src/utilities/trigger.vala:166
+msgid "LeftButton"
+msgstr "왼쪽 단추"
+
+#: ../../src/utilities/trigger.vala:168
+msgid "RightButton"
+msgstr "오른쪽 단추"
+
+#: ../../src/utilities/trigger.vala:170
+msgid "MiddleButton"
+msgstr "가운데 단추"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
+#: ../../src/utilities/trigger.vala:196 ../../src/utilities/trigger.vala:200
+msgid "Turbo"
+msgstr "터보"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
+#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:202
+msgid "Delayed"
+msgstr "시간 지연"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
+#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:204
+msgid "Centered"
+msgstr ""
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
@@ -57,13 +289,7 @@ msgstr "이전 트랙"
 msgid "Play/Pause"
 msgstr "재생/일시 정지"
 
-#: ../../src/pies/defaultConfig.vala:36
-#: ../../src/gui/iconSelectWindow.vala:197
-msgid "Applications"
-msgstr "프로그램"
-
 #: ../../src/pies/defaultConfig.vala:45
-#: ../../src/actionGroups/bookmarkGroup.vala:35
 msgid "Bookmarks"
 msgstr "책갈피"
 
@@ -99,317 +325,299 @@ msgstr "최대화"
 msgid "Restore"
 msgstr "복구"
 
-#: ../../src/gui/iconSelectWindow.vala:160
-msgid "Choose an Icon"
-msgstr "아이콘 선택"
+#: ../ui/icon_select.ui:8
+msgid "Select an icon"
+msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:196
-msgid "All icons"
-msgstr "모든 아이콘"
-
-#: ../../src/gui/iconSelectWindow.vala:198
-msgid "Actions"
-msgstr "동작"
-
-#: ../../src/gui/iconSelectWindow.vala:199
-msgid "Places"
-msgstr "위치"
-
-#: ../../src/gui/iconSelectWindow.vala:200
-msgid "File types"
-msgstr "파일 형식"
-
-#: ../../src/gui/iconSelectWindow.vala:201
-msgid "Emotes"
-msgstr "감정"
-
-#: ../../src/gui/iconSelectWindow.vala:202
-msgid "Miscellaneous"
-msgstr "기타"
-
-#: ../../src/gui/iconSelectWindow.vala:279
+#: ../ui/icon_select.ui:84
 msgid "Icon Theme"
 msgstr "아이콘 테마"
 
-#: ../../src/gui/iconSelectWindow.vala:289
-msgid "All supported image formats"
-msgstr "지원하는 모든 이미지 형식"
-
-#: ../../src/gui/iconSelectWindow.vala:311
+#: ../ui/icon_select.ui:105
 msgid "Custom Icon"
 msgstr "사용자 설정 아이콘"
 
-#: ../../src/gui/preferences.vala:32
-msgid "Gnome-Pie - Settings"
-msgstr "그놈 파이 설정"
+#: ../ui/trigger_select.ui:8
+msgid "Activation Settings"
+msgstr ""
 
-#: ../../src/gui/preferences.vala:55
-msgid "Behavior"
-msgstr "행동"
+#: ../ui/trigger_select.ui:44
+msgid "It's possible to bind mouse buttons as well!"
+msgstr ""
 
-#: ../../src/gui/preferences.vala:65
-msgid "Startup on Login"
-msgstr "로그인할 때 시작"
-
-#: ../../src/gui/preferences.vala:66
-msgid "If checked, Gnome-Pie will start when you log in."
-msgstr "선택하면 그놈 파이가 로그인할 때 자동으로 시작합니다."
-
-#: ../../src/gui/preferences.vala:72
-msgid "Show Indicator"
-msgstr "알리미 보이기"
-
-#: ../../src/gui/preferences.vala:73
-msgid "If checked, an indicator for easy access of the settings menu is shown in your panel."
-msgstr "선택하면 설정 메뉴에 쉽게 접근할 수 있도록 패널에 알리미를 표시합니다."
-
-#: ../../src/gui/preferences.vala:79
-msgid "Open Pies at Mouse"
-msgstr "마우스로 파이 열기"
-
-#: ../../src/gui/preferences.vala:80
-msgid "If checked, pies will open at your pointer. Otherwise they'll pop up in the middle of the screen."
-msgstr "선택하면 포인터가 있는 곳에 파이가 열립니다. 그렇지 않으면 화면의 가운데에 나타납니다."
-
-#: ../../src/gui/preferences.vala:89
-msgid "Global Scale"
-msgstr "전체 크기 조정"
-
-#: ../../src/gui/preferences.vala:126
-msgid "Themes"
-msgstr "테마"
-
-#: ../../src/gui/preferences.vala:144
-msgid "General"
-msgstr "일반"
-
-#: ../../src/gui/preferences.vala:149
-msgid "Pies"
-msgstr "파이"
-
-#: ../../src/gui/preferences.vala:173
-msgid "You can right-click in the list for adding or removing entries."
-msgstr "항목을 추가 또는 제거하려면 목록에서 오른쪽 단추를 누르세요."
-
-#: ../../src/gui/preferences.vala:174
-msgid "You can reset Gnome-Pie to its default options with the terminal command \"gnome-pie --reset\"."
-msgstr "터미널에서 \"gnome-pie --reset\" 명령을 입혁하면 그놈 파이를 기본 설정으로 되돌릴 수 있습니다."
-
-#: ../../src/gui/preferences.vala:175
-msgid "The radiobutton at the beginning of each slice-line indicates the QuickAction of the pie."
-msgstr "각 조각 선의 시작 지점에 있는 선택 단추는 파이의 빠른 동작을 의미합니다."
-
-#: ../../src/gui/preferences.vala:176
-msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
-msgstr "터미널에서 \"gnome-pie --open=ID\" 명령을 입력하면 파이를 열 수 있습니다."
-
-#: ../../src/gui/preferences.vala:177
-msgid "Feel free to visit Gnome-Pie's homepage at %s!"
-msgstr "편하게 그놈 파이 홈페이지 %s에 방문하십시오!"
-
-#: ../../src/gui/preferences.vala:178
-msgid "You can drag'n'drop applications from your main menu to the list above."
-msgstr "주 메뉴에서 위 목록으로 프로그램을 끌어 놓을 수 있습니다."
-
-#: ../../src/gui/preferences.vala:179
-msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr "파드백을 주시려면 주소 %s(으)로 전자 메일을 써주십시오."
-
-#: ../../src/gui/preferences.vala:180
-msgid "You may drag'n'drop URLs and bookmarks from your internet browser to the list above."
-msgstr "인터넷 브라우저에서 위 목록으로 인터넷 주소와 책갈피를 끌어 놓을 수 있습니다."
-
-#: ../../src/gui/preferences.vala:181
-msgid "Bugs can be reported at %s!"
-msgstr "버그는 %s에서 보고할 수 있습니다!"
-
-#: ../../src/gui/preferences.vala:182
-msgid "It's possible to drag'n'drop files and folders from your file browser to the list above."
-msgstr "파일 관리자에서 위 목록으로 파일과 폴더를 끌어 놓을 수 있습니다."
-
-#: ../../src/gui/preferences.vala:183
-msgid "It's recommended to keep your Pies small (at most 6-8 Slices). Else they will become hard to navigate."
-msgstr "파이를 작게 (최대 6-8 조각) 유지하십시오. 그렇지 않으면 찾기 힘들 수 있습니다."
-
-#: ../../src/gui/preferences.vala:184
-msgid "In order to create a launcher for a Pie, drag the Pie from the list to your desktop!"
-msgstr "파이 실행 아이콘을 만드려면 데스크톱 목록에서 파이로 끌어 놓으세요!"
-
-#: ../../src/gui/preferences.vala:193
-msgid "Moves the selected Slice down"
-msgstr "선택한 조각을 아래로 옮기기"
-
-#: ../../src/gui/preferences.vala:205
-msgid "Moves the selected Slice up"
-msgstr "선택한 조각을 위로 옮기기"
-
-#: ../../src/gui/triggerSelectWindow.vala:69
-msgid "Define an open-command"
-msgstr "열기 명령 정의"
-
-#: ../../src/gui/triggerSelectWindow.vala:87
-msgid "Click here if you want to bind a mouse button!"
-msgstr "마우스 단추를 묶으려면 클릭하십시오!"
-
-#: ../../src/gui/triggerSelectWindow.vala:102
+#: ../ui/trigger_select.ui:76
 msgid "Turbo mode"
 msgstr "터보 모드"
 
-#: ../../src/gui/triggerSelectWindow.vala:103
+#: ../ui/trigger_select.ui:80
 msgid "If checked, the Pie will close when you release the chosen hot key."
 msgstr "선택하면 누른 키보드 바로가기를 떼면 파이를 닫습니다."
 
-#: ../../src/gui/triggerSelectWindow.vala:117
+#: ../ui/trigger_select.ui:93
 msgid "Long press for activation"
 msgstr "활성화 하려면 길게 누르세요"
 
-#: ../../src/gui/triggerSelectWindow.vala:118
-msgid "If checked, the Pie will only open if you press this hot key a bit longer."
+#: ../ui/trigger_select.ui:97
+msgid ""
+"If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr "선택하면 파이를 단축키를 길게 누를 때만 엽니다."
 
-#: ../../src/gui/triggerSelectWindow.vala:156
-msgid ""
-"This hotkey is already assigned to the pie \"%s\"! \n"
-"\n"
-"Please select another one or cancel your selection."
+#: ../ui/trigger_select.ui:110
+msgid "Open Pie centered on the screen"
 msgstr ""
-"이 단축키는 이미 \"%s\" 파이에 할당했습니다!\n"
+
+#: ../ui/trigger_select.ui:114
+#, fuzzy
+msgid ""
+"If checked, the Pie will open in the middle of your screen. Else it will pop "
+"up at your pointer."
+msgstr "선택하면 파이를 단축키를 길게 누를 때만 엽니다."
+
+#: ../ui/trigger_select.ui:133
+msgid "<b>Activation options</b>"
+msgstr ""
+
+#: ../ui/settings.ui:8 ../ui/preferences.ui:27
+#, fuzzy
+msgid "General Settings"
+msgstr "그놈 파이 설정"
+
+#: ../ui/settings.ui:47
+#, fuzzy
+msgid "Start Gnome-Pie on login"
+msgstr "로그인할 때 시작"
+
+#: ../ui/settings.ui:52 ../ui/settings.ui:53
+#, fuzzy
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr "선택하면 그놈 파이가 로그인할 때 자동으로 시작합니다."
+
+#: ../ui/settings.ui:66
+msgid "Display panel icon "
+msgstr ""
+
+#: ../ui/settings.ui:71 ../ui/settings.ui:72
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
+
+#: ../ui/settings.ui:92
+#, fuzzy
+msgid "Global scale"
+msgstr "전체 크기 조정"
+
+#: ../ui/settings.ui:130
+msgid "<b>Appearance and behavior</b>"
+msgstr ""
+
+#: ../ui/slice_select.ui:8
+#, fuzzy
+msgid "Slice Options"
+msgstr "프로그램"
+
+#: ../ui/slice_select.ui:95
+msgid "There are no options for this Slice type."
+msgstr ""
+
+#: ../ui/slice_select.ui:121
+msgid "Name of the Slice "
+msgstr ""
+
+#: ../ui/slice_select.ui:159
+msgid "URI to open"
+msgstr ""
+
+#: ../ui/slice_select.ui:197
+msgid "Command to execute"
+msgstr ""
+
+#: ../ui/slice_select.ui:235
+msgid "Hotkey to press"
+msgstr ""
+
+#: ../ui/slice_select.ui:264
+msgid "Pie to open"
+msgstr ""
+
+#: ../ui/slice_select.ui:293
+msgid "Is Quick Action"
+msgstr ""
+
+#: ../ui/slice_select.ui:306
+msgid "This Slice will be executed when you click in the middle of the Pie."
+msgstr ""
+
+#: ../ui/slice_select.ui:339
+msgid "<b>Slice options</b>"
+msgstr ""
+
+#: ../ui/preferences.ui:8
+#, fuzzy
+msgid "Gnome-Pie Settings"
+msgstr "그놈 파이 설정"
+
+#: ../ui/preferences.ui:261
+msgid ""
+"<b><big>This Pie is empty!</big>\n"
 "\n"
-"다른 것을 선택하거나 선택을 취소하십시오."
+"Start adding Slices to it!</b> This can be done by dragging stuff to the "
+"plus sign below. You can try a lot! For example application launchers or "
+"folders. Even URLs from your browser are possible... \n"
+"\n"
+"For manual and advanced configuration click on the plus sign."
+msgstr ""
 
-#: ../../src/gui/triggerSelectWindow.vala:197
-msgid "It possible to make your system unusable if you bind a Pie to your left mouse button. Do you really want to do this?"
-msgstr "파이를 마우스 왼쪽 단추에 연결하면 시스템을 사용하지 못하게 될 수 있습니다. 정말 계속하시겠습니까?"
+#: ../ui/preferences.ui:282
+msgid ""
+"<b><big>You have no Pies!</big>\n"
+"\n"
+"Start by creating one! </b> This can be done by clicking on the tiny little "
+"plus sign in the lower left corner."
+msgstr ""
 
-#: ../../src/gui/themeList.vala:88
-msgid "by"
-msgstr "작성자"
+#: ../ui/rename_pie.ui:6
+#, fuzzy
+msgid "Rename a Pie"
+msgstr "파이 열기"
 
-#: ../../src/gui/pieList.vala:88
-#: ../../src/gui/pieList.vala:851
-msgid "Slice group"
-msgstr "조각 그룹"
+#~ msgid "Choose an Icon"
+#~ msgstr "아이콘 선택"
 
-#: ../../src/gui/pieList.vala:135
-msgid "Icon"
-msgstr "아이콘"
+#~ msgid "Behavior"
+#~ msgstr "행동"
 
-#: ../../src/gui/pieList.vala:200
-msgid "Command"
-msgstr "명령"
+#~ msgid "Show Indicator"
+#~ msgstr "알리미 보이기"
 
-#: ../../src/gui/pieList.vala:301
-#: ../../src/gui/pieList.vala:707
-#: ../../src/gui/pieList.vala:867
-#: ../../src/utilities/trigger.vala:197
-#: ../../src/utilities/trigger.vala:198
-#: ../../src/utilities/bindingManager.vala:156
-msgid "Not bound"
-msgstr "연결하지 않음"
+#~ msgid ""
+#~ "If checked, an indicator for easy access of the settings menu is shown in "
+#~ "your panel."
+#~ msgstr ""
+#~ "선택하면 설정 메뉴에 쉽게 접근할 수 있도록 패널에 알리미를 표시합니다."
 
-#: ../../src/gui/pieList.vala:366
-msgid "Pie-ID / Action type"
-msgstr "파이 ID / 동작 형식"
+#~ msgid "Open Pies at Mouse"
+#~ msgstr "마우스로 파이 열기"
 
-#: ../../src/gui/pieList.vala:427
-msgid "Name"
-msgstr "이름"
+#~ msgid ""
+#~ "If checked, pies will open at your pointer. Otherwise they'll pop up in "
+#~ "the middle of the screen."
+#~ msgstr ""
+#~ "선택하면 포인터가 있는 곳에 파이가 열립니다. 그렇지 않으면 화면의 가운데"
+#~ "에 나타납니다."
 
-#: ../../src/gui/pieList.vala:470
-msgid "Add new Pie"
-msgstr "새 파이 추가"
+#~ msgid "General"
+#~ msgstr "일반"
 
-#: ../../src/gui/pieList.vala:475
-msgid "Add new Slice"
-msgstr "새 조각 추가"
+#~ msgid "Pies"
+#~ msgstr "파이"
 
-#: ../../src/gui/pieList.vala:483
-msgid "Delete"
-msgstr "삭제"
+#~ msgid "You can right-click in the list for adding or removing entries."
+#~ msgstr "항목을 추가 또는 제거하려면 목록에서 오른쪽 단추를 누르세요."
 
-#: ../../src/gui/pieList.vala:619
-msgid "New Pie"
-msgstr "새 파이"
+#~ msgid ""
+#~ "You can reset Gnome-Pie to its default options with the terminal command "
+#~ "\"gnome-pie --reset\"."
+#~ msgstr ""
+#~ "터미널에서 \"gnome-pie --reset\" 명령을 입혁하면 그놈 파이를 기본 설정으"
+#~ "로 되돌릴 수 있습니다."
 
-#: ../../src/gui/pieList.vala:666
-msgid "New Action"
-msgstr "새 동작"
+#~ msgid ""
+#~ "The radiobutton at the beginning of each slice-line indicates the "
+#~ "QuickAction of the pie."
+#~ msgstr ""
+#~ "각 조각 선의 시작 지점에 있는 선택 단추는 파이의 빠른 동작을 의미합니다."
 
-#: ../../src/gui/pieList.vala:680
-msgid "You have to select a Pie to add a Slice to!"
-msgstr "조각을 추가할 파이를 선택해야 합니다!"
+#~ msgid ""
+#~ "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+#~ msgstr ""
+#~ "터미널에서 \"gnome-pie --open=ID\" 명령을 입력하면 파이를 열 수 있습니다."
 
-#: ../../src/gui/pieList.vala:730
-msgid "You have to select a Pie or a Slice to delete!"
-msgstr "삭제하고 싶은 파이와 조각을 선택해야 합니다!"
+#~ msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+#~ msgstr "편하게 그놈 파이 홈페이지 %s에 방문하십시오!"
 
-#: ../../src/gui/pieList.vala:741
-msgid "Do you really want to delete the selected Pie with all contained Slices?"
-msgstr "선택한 파이와 파이 안의 모든 조각을 삭제하시겠습니까?"
+#~ msgid ""
+#~ "You can drag'n'drop applications from your main menu to the list above."
+#~ msgstr "주 메뉴에서 위 목록으로 프로그램을 끌어 놓을 수 있습니다."
 
-#: ../../src/gui/pieList.vala:775
-msgid "Do you really want to delete the selected Slice?"
-msgstr "정말 선택한 조각을 삭제하시겠습니까?"
+#~ msgid "If you want to give some feedback, please write an e-mail to %s!"
+#~ msgstr "파드백을 주시려면 주소 %s(으)로 전자 메일을 써주십시오."
 
-#: ../../src/utilities/trigger.vala:152
-msgid "Button %i"
-msgstr "%i 단추"
+#~ msgid ""
+#~ "You may drag'n'drop URLs and bookmarks from your internet browser to the "
+#~ "list above."
+#~ msgstr ""
+#~ "인터넷 브라우저에서 위 목록으로 인터넷 주소와 책갈피를 끌어 놓을 수 있습니"
+#~ "다."
 
-#: ../../src/utilities/trigger.vala:155
-msgid "LeftButton"
-msgstr "왼쪽 단추"
+#~ msgid "Bugs can be reported at %s!"
+#~ msgstr "버그는 %s에서 보고할 수 있습니다!"
 
-#: ../../src/utilities/trigger.vala:157
-msgid "RightButton"
-msgstr "오른쪽 단추"
+#~ msgid ""
+#~ "It's possible to drag'n'drop files and folders from your file browser to "
+#~ "the list above."
+#~ msgstr "파일 관리자에서 위 목록으로 파일과 폴더를 끌어 놓을 수 있습니다."
 
-#: ../../src/utilities/trigger.vala:159
-msgid "MiddleButton"
-msgstr "가운데 단추"
+#~ msgid ""
+#~ "It's recommended to keep your Pies small (at most 6-8 Slices). Else they "
+#~ "will become hard to navigate."
+#~ msgstr ""
+#~ "파이를 작게 (최대 6-8 조각) 유지하십시오. 그렇지 않으면 찾기 힘들 수 있습"
+#~ "니다."
 
-#: ../../src/utilities/trigger.vala:181
-#: ../../src/utilities/trigger.vala:183
-msgid "Turbo"
-msgstr "터보"
+#~ msgid ""
+#~ "In order to create a launcher for a Pie, drag the Pie from the list to "
+#~ "your desktop!"
+#~ msgstr "파이 실행 아이콘을 만드려면 데스크톱 목록에서 파이로 끌어 놓으세요!"
 
-#: ../../src/utilities/trigger.vala:181
-#: ../../src/utilities/trigger.vala:185
-msgid "Delayed"
-msgstr "시간 지연"
+#~ msgid "Moves the selected Slice down"
+#~ msgstr "선택한 조각을 아래로 옮기기"
 
-#: ../../src/actionGroups/clipboardGroup.vala:63
-msgid "Clipboard"
-msgstr "클립보드"
+#~ msgid "Moves the selected Slice up"
+#~ msgstr "선택한 조각을 위로 옮기기"
 
-#: ../../src/actionGroups/sessionGroup.vala:34
-msgid "Session Control"
-msgstr "세션 컨트롤"
+#~ msgid "Define an open-command"
+#~ msgstr "열기 명령 정의"
 
-#: ../../src/actionGroups/sessionGroup.vala:57
-msgid "Shutdown"
-msgstr "시스템 끄기"
+#~ msgid "Click here if you want to bind a mouse button!"
+#~ msgstr "마우스 단추를 묶으려면 클릭하십시오!"
 
-#: ../../src/actionGroups/sessionGroup.vala:60
-msgid "Logout"
-msgstr "로그아웃"
+#~ msgid ""
+#~ "It possible to make your system unusable if you bind a Pie to your left "
+#~ "mouse button. Do you really want to do this?"
+#~ msgstr ""
+#~ "파이를 마우스 왼쪽 단추에 연결하면 시스템을 사용하지 못하게 될 수 있습니"
+#~ "다. 정말 계속하시겠습니까?"
 
-#: ../../src/actionGroups/sessionGroup.vala:63
-msgid "Reboot"
-msgstr "다시 시작"
+#~ msgid "by"
+#~ msgstr "작성자"
 
-#: ../../src/actionGroups/devicesGroup.vala:34
-msgid "Devices"
-msgstr "장치"
+#~ msgid "Slice group"
+#~ msgstr "조각 그룹"
 
-#: ../../src/actionGroups/devicesGroup.vala:82
-msgid "Root"
-msgstr "루트"
+#~ msgid "Icon"
+#~ msgstr "아이콘"
 
-#: ../../src/actionGroups/windowListGroup.vala:33
-msgid "Window List"
-msgstr "창 목록"
+#~ msgid "Command"
+#~ msgstr "명령"
 
-#: ../../src/actionGroups/menuGroup.vala:34
-msgid "Main menu"
-msgstr "주 메뉴"
+#~ msgid "Pie-ID / Action type"
+#~ msgstr "파이 ID / 동작 형식"
 
+#~ msgid "Name"
+#~ msgstr "이름"
+
+#~ msgid "Add new Pie"
+#~ msgstr "새 파이 추가"
+
+#~ msgid "Delete"
+#~ msgstr "삭제"
+
+#~ msgid "New Action"
+#~ msgstr "새 동작"
+
+#~ msgid "You have to select a Pie to add a Slice to!"
+#~ msgstr "조각을 추가할 파이를 선택해야 합니다!"
+
+#~ msgid "You have to select a Pie or a Slice to delete!"
+#~ msgstr "삭제하고 싶은 파이와 조각을 선택해야 합니다!"

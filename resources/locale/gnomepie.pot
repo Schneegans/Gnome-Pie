@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-19 08:37+0100\n"
+"POT-Creation-Date: 2012-01-19 20:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,7 +53,7 @@ msgstr ""
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
 msgstr ""
 
-#: ../../src/gui/triggerSelectWindow.vala:142
+#: ../../src/gui/triggerSelectWindow.vala:144
 msgid ""
 "This hotkey is already assigned to the pie \"%s\"! \n"
 "\n"
@@ -73,7 +73,7 @@ msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr ""
 
-#: ../../src/gui/newSliceWindow.vala:227
+#: ../../src/gui/newSliceWindow.vala:229
 msgid "Rename me!"
 msgstr ""
 
@@ -122,36 +122,36 @@ msgstr ""
 msgid "Slice types"
 msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:175
+#: ../../src/gui/iconSelectWindow.vala:178
 msgid "All icons"
 msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:176
+#: ../../src/gui/iconSelectWindow.vala:179
 #: ../../src/pies/defaultConfig.vala:36
 msgid "Applications"
 msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:177
+#: ../../src/gui/iconSelectWindow.vala:180
 msgid "Actions"
 msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:178
+#: ../../src/gui/iconSelectWindow.vala:181
 msgid "Places"
 msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:179
+#: ../../src/gui/iconSelectWindow.vala:182
 msgid "File types"
 msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:180
+#: ../../src/gui/iconSelectWindow.vala:183
 msgid "Emotes"
 msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:181
+#: ../../src/gui/iconSelectWindow.vala:184
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:254
+#: ../../src/gui/iconSelectWindow.vala:257
 msgid "All supported image formats"
 msgstr ""
 
@@ -323,38 +323,8 @@ msgstr ""
 msgid "Custom Icon"
 msgstr ""
 
-#: ../ui/appearance.ui:8
-msgid "General Options"
-msgstr ""
-
-#: ../ui/appearance.ui:46
-msgid "Start Gnome-Pie on login"
-msgstr ""
-
-#: ../ui/appearance.ui:50
-msgid "If checked, Gnome-Pie will start silently everytime you log in."
-msgstr ""
-
-#: ../ui/appearance.ui:63
-msgid "Display panel icon "
-msgstr ""
-
-#: ../ui/appearance.ui:67
-msgid ""
-"If not checked, you can access this menu by launching Gnome-Pie a second "
-"time."
-msgstr ""
-
-#: ../ui/appearance.ui:87
-msgid "Global scale"
-msgstr ""
-
-#: ../ui/appearance.ui:125
-msgid "<b>Appearance and behavior</b>"
-msgstr ""
-
 #: ../ui/trigger_select.ui:8
-msgid "Pie Settings"
+msgid "Activation Settings"
 msgstr ""
 
 #: ../ui/trigger_select.ui:44
@@ -392,8 +362,38 @@ msgstr ""
 msgid "<b>Activation options</b>"
 msgstr ""
 
+#: ../ui/settings.ui:8 ../ui/preferences.ui:27
+msgid "General Settings"
+msgstr ""
+
+#: ../ui/settings.ui:47
+msgid "Start Gnome-Pie on login"
+msgstr ""
+
+#: ../ui/settings.ui:52 ../ui/settings.ui:53
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr ""
+
+#: ../ui/settings.ui:66
+msgid "Display panel icon "
+msgstr ""
+
+#: ../ui/settings.ui:71 ../ui/settings.ui:72
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
+
+#: ../ui/settings.ui:92
+msgid "Global scale"
+msgstr ""
+
+#: ../ui/settings.ui:130
+msgid "<b>Appearance and behavior</b>"
+msgstr ""
+
 #: ../ui/slice_select.ui:8
-msgid "Appearance Options"
+msgid "Slice Options"
 msgstr ""
 
 #: ../ui/slice_select.ui:95
@@ -434,10 +434,6 @@ msgstr ""
 
 #: ../ui/preferences.ui:8
 msgid "Gnome-Pie Settings"
-msgstr ""
-
-#: ../ui/preferences.ui:27
-msgid "General Settings"
 msgstr ""
 
 #: ../ui/preferences.ui:261

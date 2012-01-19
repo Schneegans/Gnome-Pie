@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-19 08:37+0100\n"
+"POT-Creation-Date: 2012-01-19 20:25+0100\n"
 "PO-Revision-Date: 2011-08-25 21:04+0200\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German\n"
@@ -54,7 +54,7 @@ msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
 msgstr ""
 "Öffnet einen anderen Pie. Auf diese Art können Submenüs erstellt werden."
 
-#: ../../src/gui/triggerSelectWindow.vala:142
+#: ../../src/gui/triggerSelectWindow.vala:144
 msgid ""
 "This hotkey is already assigned to the pie \"%s\"! \n"
 "\n"
@@ -76,7 +76,7 @@ msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "Soll dieser Pie wirklich mit allen Slices gelöscht werden?"
 
-#: ../../src/gui/newSliceWindow.vala:227
+#: ../../src/gui/newSliceWindow.vala:229
 msgid "Rename me!"
 msgstr "Benenne mich!"
 
@@ -125,36 +125,36 @@ msgstr "Von"
 msgid "Slice types"
 msgstr "Slice-Typen"
 
-#: ../../src/gui/iconSelectWindow.vala:175
+#: ../../src/gui/iconSelectWindow.vala:178
 msgid "All icons"
 msgstr "Alle Symbole"
 
-#: ../../src/gui/iconSelectWindow.vala:176
+#: ../../src/gui/iconSelectWindow.vala:179
 #: ../../src/pies/defaultConfig.vala:36
 msgid "Applications"
 msgstr "Anwendungen"
 
-#: ../../src/gui/iconSelectWindow.vala:177
+#: ../../src/gui/iconSelectWindow.vala:180
 msgid "Actions"
 msgstr "Aktionen"
 
-#: ../../src/gui/iconSelectWindow.vala:178
+#: ../../src/gui/iconSelectWindow.vala:181
 msgid "Places"
 msgstr "Orte"
 
-#: ../../src/gui/iconSelectWindow.vala:179
+#: ../../src/gui/iconSelectWindow.vala:182
 msgid "File types"
 msgstr "Dateitypen"
 
-#: ../../src/gui/iconSelectWindow.vala:180
+#: ../../src/gui/iconSelectWindow.vala:183
 msgid "Emotes"
 msgstr "Smilies"
 
-#: ../../src/gui/iconSelectWindow.vala:181
+#: ../../src/gui/iconSelectWindow.vala:184
 msgid "Miscellaneous"
 msgstr "Sonstige"
 
-#: ../../src/gui/iconSelectWindow.vala:254
+#: ../../src/gui/iconSelectWindow.vala:257
 msgid "All supported image formats"
 msgstr "Alle unterstützten Bildformate"
 
@@ -328,39 +328,9 @@ msgstr "Symbolthema"
 msgid "Custom Icon"
 msgstr "Benutzerdefiniertes Symbol"
 
-#: ../ui/appearance.ui:8
-msgid "General Options"
-msgstr "Allgemeine Einstellungen"
-
-#: ../ui/appearance.ui:46
-msgid "Start Gnome-Pie on login"
-msgstr "Beim Anmelden automatisch ausführen"
-
-#: ../ui/appearance.ui:50
-msgid "If checked, Gnome-Pie will start silently everytime you log in."
-msgstr "Wenn aktiviert, startet Gnome-Pie im Hintergrund beim Anmelden."
-
-#: ../ui/appearance.ui:63
-msgid "Display panel icon "
-msgstr "Zeige ein Symbol im Panel"
-
-#: ../ui/appearance.ui:67
-msgid ""
-"If not checked, you can access this menu by launching Gnome-Pie a second "
-"time."
-msgstr "Falls nicht aktiviert, kann dieses Menü durch ein nochmaliges starten von Gnome-Pie geöffnet werden."
-
-#: ../ui/appearance.ui:87
-msgid "Global scale"
-msgstr "Skalierungsfaktor"
-
-#: ../ui/appearance.ui:125
-msgid "<b>Appearance and behavior</b>"
-msgstr "<b>Erscheinungsbild and Verhalten</b>"
-
 #: ../ui/trigger_select.ui:8
-msgid "Pie Settings"
-msgstr "Gnome-Pie - Einstellungen"
+msgid "Activation Settings"
+msgstr "Aktivierungsoptionen"
 
 #: ../ui/trigger_select.ui:44
 msgid "It's possible to bind mouse buttons as well!"
@@ -400,12 +370,44 @@ msgstr ""
 "des Bildschirms öffnen."
 
 #: ../ui/trigger_select.ui:133
-msgid "<b>Activation options</b>"
-msgstr "<b>Aktivierungsoptionen</b>"
+msgid "Activation options"
+msgstr "Aktivierungsoptionen"
+
+#: ../ui/settings.ui:8 ../ui/preferences.ui:27
+msgid "General Settings"
+msgstr "Allgemeine Einstellungen"
+
+#: ../ui/settings.ui:47
+msgid "Start Gnome-Pie on login"
+msgstr "Beim Anmelden automatisch ausführen"
+
+#: ../ui/settings.ui:52 ../ui/settings.ui:53
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr "Wenn aktiviert, startet Gnome-Pie im Hintergrund beim Anmelden."
+
+#: ../ui/settings.ui:66
+msgid "Display panel icon "
+msgstr "Zeige ein Symbol im Panel"
+
+#: ../ui/settings.ui:71 ../ui/settings.ui:72
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
+"Falls nicht aktiviert, kann dieses Menü durch ein nochmaliges starten von "
+"Gnome-Pie geöffnet werden."
+
+#: ../ui/settings.ui:92
+msgid "Global scale"
+msgstr "Skalierungsfaktor"
+
+#: ../ui/settings.ui:130
+msgid "Appearance and behavior"
+msgstr "Erscheinungsbild and Verhalten"
 
 #: ../ui/slice_select.ui:8
-msgid "Appearance Options"
-msgstr "Erscheinungsbild"
+msgid "Slice Options"
+msgstr "Slice-Optionen"
 
 #: ../ui/slice_select.ui:95
 msgid "There are no options for this Slice type."
@@ -440,16 +442,12 @@ msgid "This Slice will be executed when you click in the middle of the Pie."
 msgstr "Diese Slice wird aktiviert, falls du in die Mitte des Pies klickst."
 
 #: ../ui/slice_select.ui:339
-msgid "<b>Slice options</b>"
-msgstr "<b>Slice-Optionen</b>"
+msgid "Slice options"
+msgstr "Slice-Optionen"
 
 #: ../ui/preferences.ui:8
 msgid "Gnome-Pie Settings"
 msgstr "Gnome-Pie - Einstellungen"
-
-#: ../ui/preferences.ui:27
-msgid "General Settings"
-msgstr "Allgemeine Einstellungen"
 
 #: ../ui/preferences.ui:261
 msgid ""
@@ -484,3 +482,6 @@ msgstr ""
 #: ../ui/rename_pie.ui:6
 msgid "Rename a Pie"
 msgstr "Pie umbenennen"
+
+#~ msgid "Appearance Options"
+#~ msgstr "Erscheinungsbild"

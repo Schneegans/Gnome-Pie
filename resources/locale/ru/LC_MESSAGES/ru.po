@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-11-21 00:58-0300\n"
+"POT-Creation-Date: 2012-01-19 20:25+0100\n"
 "PO-Revision-Date: 2012-01-14 17:15+0400\n"
 "Last-Translator: Eugene Roskin <pams@imail.ru>\n"
 "Language-Team: Russian\n"
@@ -18,6 +18,260 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../../src/actions/keyAction.vala:34
+msgid "Press hotkey"
+msgstr "Нажмите клавишу быстрого доступа"
+
+#: ../../src/actions/keyAction.vala:36
+msgid "Simulates the activation of a hotkey."
+msgstr ""
+
+#: ../../src/actions/appAction.vala:34
+msgid "Launch application"
+msgstr "Запустить приложение"
+
+#: ../../src/actions/appAction.vala:36
+msgid "Executes the given command."
+msgstr ""
+
+#: ../../src/actions/uriAction.vala:34
+msgid "Open URI"
+msgstr "Открыть URI"
+
+#: ../../src/actions/uriAction.vala:36
+msgid "Opens a given location. You may use URL's or files paths."
+msgstr ""
+
+#: ../../src/actions/actionRegistry.vala:111
+msgid "Trash"
+msgstr "Корзина"
+
+#: ../../src/actions/pieAction.vala:34
+msgid "Open Pie"
+msgstr "Открыть пай"
+
+#: ../../src/actions/pieAction.vala:36
+msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
+msgstr ""
+
+#: ../../src/gui/triggerSelectWindow.vala:144
+msgid ""
+"This hotkey is already assigned to the pie \"%s\"! \n"
+"\n"
+"Please select another one or cancel your selection."
+msgstr ""
+"Эта клавиша быстрого доступа уже назначена паю \"%s\"! \n"
+"\n"
+"Пожалуйста, выберите другую или выполните отмену выбора."
+
+#: ../../src/gui/preferencesWindow.vala:145
+msgid "No Pie selected."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:181
+msgid "New Pie"
+msgstr "Новый пай"
+
+#: ../../src/gui/preferencesWindow.vala:190
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+"Вы действительно хотите удалить выделенный пай, со всеми содержащимися в нём "
+"порциями?"
+
+#: ../../src/gui/newSliceWindow.vala:229
+msgid "Rename me!"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:292
+msgid "Click to edit"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:292
+#: ../../src/gui/piePreviewRenderer.vala:307
+msgid "Drag to move"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:295
+#, fuzzy
+msgid "Click to add a new Slice"
+msgstr "Добавить новую порцию"
+
+#: ../../src/gui/piePreviewRenderer.vala:299
+#, fuzzy
+msgid "Drop to add as new Slice"
+msgstr "Добавить новую порцию"
+
+#: ../../src/gui/piePreviewRenderer.vala:302
+msgid "Drop to move Slice"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:307
+msgid "Click to delete"
+msgstr ""
+
+#: ../../src/gui/triggerSelectButton.vala:59
+#, fuzzy
+msgid "Press a hotkey ..."
+msgstr "Нажмите клавишу быстрого доступа"
+
+#: ../../src/gui/piePreview.vala:120
+#, fuzzy
+msgid "Do you really want to delete this Slice?"
+msgstr "Вы действительно хотите удалить выделенную порцию?"
+
+#: ../../src/gui/themeList.vala:48
+msgid "Themes"
+msgstr "Темы"
+
+#: ../../src/gui/themeList.vala:80
+msgid "By"
+msgstr ""
+
+#: ../../src/gui/sliceTypeList.vala:56
+#, fuzzy
+msgid "Slice types"
+msgstr "Типы файлов"
+
+#: ../../src/gui/iconSelectWindow.vala:178
+msgid "All icons"
+msgstr "Все значки"
+
+#: ../../src/gui/iconSelectWindow.vala:179
+#: ../../src/pies/defaultConfig.vala:36
+msgid "Applications"
+msgstr "Приложения"
+
+#: ../../src/gui/iconSelectWindow.vala:180
+msgid "Actions"
+msgstr "Действия"
+
+#: ../../src/gui/iconSelectWindow.vala:181
+msgid "Places"
+msgstr "Переходы"
+
+#: ../../src/gui/iconSelectWindow.vala:182
+msgid "File types"
+msgstr "Типы файлов"
+
+#: ../../src/gui/iconSelectWindow.vala:183
+msgid "Emotes"
+msgstr "Эмоции"
+
+#: ../../src/gui/iconSelectWindow.vala:184
+msgid "Miscellaneous"
+msgstr "Дополнительно"
+
+#: ../../src/gui/iconSelectWindow.vala:257
+msgid "All supported image formats"
+msgstr "Все поддерживаемые форматы изображений"
+
+#: ../../src/actionGroups/windowListGroup.vala:34
+#, fuzzy
+msgid "Group: Window List"
+msgstr "Список окон"
+
+#: ../../src/actionGroups/windowListGroup.vala:36
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
+msgstr ""
+
+#: ../../src/actionGroups/menuGroup.vala:35
+#, fuzzy
+msgid "Group: Main menu"
+msgstr "Основное меню"
+
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr ""
+
+#: ../../src/actionGroups/clipboardGroup.vala:64
+#, fuzzy
+msgid "Group: Clipboard"
+msgstr "Буфер обмена"
+
+#: ../../src/actionGroups/clipboardGroup.vala:66
+msgid "Manages your Clipboard."
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+#, fuzzy
+msgid "Group: Session Control"
+msgstr "Управление сеансом"
+
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:60
+msgid "Shutdown"
+msgstr "Выключить"
+
+#: ../../src/actionGroups/sessionGroup.vala:63
+msgid "Logout"
+msgstr "Завершить сеанс"
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Reboot"
+msgstr "Перезагрузить"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+#, fuzzy
+msgid "Group: Bookmarks"
+msgstr "Закладки"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:35
+#, fuzzy
+msgid "Group: Devices"
+msgstr "Устройства"
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr "Root"
+
+#: ../../src/utilities/bindingManager.vala:155 ../../src/utilities/key.vala:65
+#: ../../src/utilities/trigger.vala:216 ../../src/utilities/trigger.vala:217
+msgid "Not bound"
+msgstr "Нет привязки"
+
+#: ../../src/utilities/trigger.vala:163
+msgid "Button %i"
+msgstr "Кнопка %i"
+
+#: ../../src/utilities/trigger.vala:166
+msgid "LeftButton"
+msgstr "ЛеваяКнопка"
+
+#: ../../src/utilities/trigger.vala:168
+msgid "RightButton"
+msgstr "ПраваяКнопка"
+
+#: ../../src/utilities/trigger.vala:170
+msgid "MiddleButton"
+msgstr "СредняяКнопка"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
+#: ../../src/utilities/trigger.vala:196 ../../src/utilities/trigger.vala:200
+msgid "Turbo"
+msgstr "Турбо"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
+#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:202
+msgid "Delayed"
+msgstr "Задержка"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
+#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:204
+msgid "Centered"
+msgstr ""
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
@@ -39,13 +293,7 @@ msgstr "Предыдущая композиция"
 msgid "Play/Pause"
 msgstr "Воспроизвести/приостановить"
 
-#: ../../src/pies/defaultConfig.vala:36
-#: ../../src/gui/iconSelectWindow.vala:197
-msgid "Applications"
-msgstr "Приложения"
-
 #: ../../src/pies/defaultConfig.vala:45
-#: ../../src/actionGroups/bookmarkGroup.vala:35
 msgid "Bookmarks"
 msgstr "Закладки"
 
@@ -81,373 +329,316 @@ msgstr "Развернуть"
 msgid "Restore"
 msgstr "Восстановить"
 
-#: ../../src/actions/actionRegistry.vala:107
-msgid "Trash"
-msgstr "Корзина"
-
-#: ../../src/actions/uriAction.vala:33
-msgid "Open URI"
-msgstr "Открыть URI"
-
-#: ../../src/actions/pieAction.vala:33
-msgid "Open Pie"
-msgstr "Открыть пай"
-
-#: ../../src/actions/keyAction.vala:33
-msgid "Press hotkey"
-msgstr "Нажмите клавишу быстрого доступа"
-
-#: ../../src/actions/appAction.vala:33
-msgid "Launch application"
-msgstr "Запустить приложение"
-
-#: ../../src/gui/preferences.vala:32
-msgid "Gnome-Pie - Settings"
-msgstr "Gnome-Pie - Настройки"
-
-#: ../../src/gui/preferences.vala:55
-msgid "Behavior"
-msgstr "Поведение"
-
-#: ../../src/gui/preferences.vala:65
-msgid "Startup on Login"
-msgstr "Запускать при загрузке"
-
-#: ../../src/gui/preferences.vala:66
-msgid "If checked, Gnome-Pie will start when you log in."
-msgstr "Если выбрана эта возможность, Gnome-Pie будет "
-"запускаться после входа в систему."
-
-#: ../../src/gui/preferences.vala:72
-msgid "Show Indicator"
-msgstr "Показать индикатор"
-
-#: ../../src/gui/preferences.vala:73
-msgid ""
-"If checked, an indicator for easy access of the settings menu is shown in "
-"your panel."
+#: ../ui/icon_select.ui:8
+msgid "Select an icon"
 msgstr ""
-"Если выбрана эта возможность, индикатор быстрого доступа меню настроек, " 
-"будет отображаться на вашей панели"
 
-#: ../../src/gui/preferences.vala:79
-msgid "Open Pies at Mouse"
-msgstr "Открывать паи при действии мышью"
+#: ../ui/icon_select.ui:84
+msgid "Icon Theme"
+msgstr "Тема значков"
 
-#: ../../src/gui/preferences.vala:80
-msgid ""
-"If checked, pies will open at your pointer. Otherwise they'll pop up in the "
-"middle of the screen."
+#: ../ui/icon_select.ui:105
+msgid "Custom Icon"
+msgstr "Настроить значок"
+
+#: ../ui/trigger_select.ui:8
+msgid "Activation Settings"
 msgstr ""
-"Если выбрана эта возможность, паи будут открываться рядом с курсором. " 
-"В противном случае, они буду всплывать в середине экрана."
 
-#: ../../src/gui/preferences.vala:89
-msgid "Global Scale"
-msgstr "Общий масштаб"
-
-#: ../../src/gui/preferences.vala:126
-msgid "Themes"
-msgstr "Темы"
-
-#: ../../src/gui/preferences.vala:144
-msgid "General"
-msgstr "Основные"
-
-#: ../../src/gui/preferences.vala:149
-msgid "Pies"
-msgstr "Паи"
-
-#: ../../src/gui/preferences.vala:173
-msgid "You can right-click in the list for adding or removing entries."
-msgstr "Вы можете щёлкнуть правой кнопкой в списке для добавления или "
-"удаления элементов."
-
-#: ../../src/gui/preferences.vala:174
-msgid ""
-"You can reset Gnome-Pie to its default options with the terminal command "
-"\"gnome-pie --reset\"."
+#: ../ui/trigger_select.ui:44
+msgid "It's possible to bind mouse buttons as well!"
 msgstr ""
-"Вы можете восстановить первоначальные значения Gnome-Pie с помощью команды " 
-"вводимой в терминале \"gnome-pie --reset\"."
 
-#: ../../src/gui/preferences.vala:175
-msgid ""
-"The radiobutton at the beginning of each slice-line indicates the "
-"QuickAction of the pie."
-msgstr ""
-"Переключатели в начале каждой строки, отражают быстрое действие порции пая"
-
-#: ../../src/gui/preferences.vala:176
-msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
-msgstr "Паи могут открываться с помощью команды вводимой в терминале"
-"\"gnome-pie --open=ID\"."
-
-#: ../../src/gui/preferences.vala:177
-msgid "Feel free to visit Gnome-Pie's homepage at %s!"
-msgstr "Посетите веб-сайт Gnome-Pie по адресу %s!"
-
-#: ../../src/gui/preferences.vala:178
-msgid "You can drag'n'drop applications from your main menu to the list above."
-msgstr "Вы можете переместить приложения из вашего основного меню в список выше"
-
-#: ../../src/gui/preferences.vala:179
-msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr "Если вы хотите оставить отзыв, пожалуйста, напишити по адресу %s!"
-
-#: ../../src/gui/preferences.vala:180
-msgid ""
-"You may drag'n'drop URLs and bookmarks from your internet browser to the "
-"list above."
-msgstr ""
-"Вы можете переносите адресные ссылки и закладки из вашего интернет-"
-"обозревателя в список выше."
-
-#: ../../src/gui/preferences.vala:181
-msgid "Bugs can be reported at "
-msgstr "Сообщения о неполадках могут быть отправлены по адресу %s!"
-
-#: ../../src/gui/preferences.vala:182
-msgid ""
-"It's possible to drag'n'drop files and folders from your file browser to the "
-"list above."
-msgstr ""
-"Возможно переносите файлы и папки из вашего обозревателя файлов в "
-"список выше."
-
-#: ../../src/gui/preferences.vala:183
-msgid ""
-"It's recommended to keep your Pies small (at most 6-8 Slices). Else they "
-"will become hard to navigate."
-msgstr ""
-"Рекомендуется сохранять ваши паи небольшими (по 6-8 порций). "
-"Иначе они станут неудобными для навигации."
-
-#: ../../src/gui/preferences.vala:184
-msgid ""
-"In order to create a launcher for a Pie, drag the Pie from the list to your "
-"desktop!"
-msgstr ""
-"Для создания ярлыка запуска пая, перенесите пай из списка на ваш "
-"рабочий стол!"
-#: ../../src/gui/preferences.vala:193
-msgid "Moves the selected Slice down"
-msgstr "Перемещает выделенную порцию вниз"
-
-#: ../../src/gui/preferences.vala:205
-msgid "Moves the selected Slice up"
-msgstr "Перемещает выделенную порцию вверх"
-
-#: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:851
-msgid "Slice group"
-msgstr "Группа порции"
-
-#: ../../src/gui/pieList.vala:135
-msgid "Icon"
-msgstr "Значок"
-
-#: ../../src/gui/pieList.vala:200
-msgid "Command"
-msgstr "Команда"
-
-#: ../../src/gui/pieList.vala:301 ../../src/gui/pieList.vala:707
-#: ../../src/gui/pieList.vala:867 ../../src/utilities/bindingManager.vala:156
-#: ../../src/utilities/trigger.vala:197 ../../src/utilities/trigger.vala:198
-msgid "Not bound"
-msgstr "Нет привязки"
-
-#: ../../src/gui/pieList.vala:366
-msgid "Pie-ID / Action type"
-msgstr "ID-пая / Тип действия"
-
-#: ../../src/gui/pieList.vala:427
-msgid "Name"
-msgstr "Название"
-
-#: ../../src/gui/pieList.vala:470
-msgid "Add new Pie"
-msgstr "Добавить новый пай"
-
-#: ../../src/gui/pieList.vala:475
-msgid "Add new Slice"
-msgstr "Добавить новую порцию"
-
-#: ../../src/gui/pieList.vala:483
-msgid "Delete"
-msgstr "Удалить"
-
-#: ../../src/gui/pieList.vala:619
-msgid "New Pie"
-msgstr "Новый пай"
-
-#: ../../src/gui/pieList.vala:666
-msgid "New Action"
-msgstr "Новое действие"
-
-#: ../../src/gui/pieList.vala:680
-msgid "You have to select a Pie to add a Slice to!"
-msgstr "Вам необходимо выбрать пай для добавления порции"
-
-#: ../../src/gui/pieList.vala:730
-msgid "You have to select a Pie or a Slice to delete!"
-msgstr "Вам необходимо выбрать пай или порцию для удаления!"
-
-#: ../../src/gui/pieList.vala:741
-msgid ""
-"Do you really want to delete the selected Pie with all contained Slices?"
-msgstr ""
-"Вы действительно хотите удалить выделенный пай, со всеми содержащимися "
-"в нём порциями?"
-
-#: ../../src/gui/pieList.vala:775
-msgid "Do you really want to delete the selected Slice?"
-msgstr "Вы действительно хотите удалить выделенную порцию?"
-
-#: ../../src/gui/triggerSelectWindow.vala:69
-msgid "Define an open-command"
-msgstr "Определите команду открытия"
-
-#: ../../src/gui/triggerSelectWindow.vala:87
-msgid "Click here if you want to bind a mouse button!"
-msgstr "Щёлкните здесь, если вы хотите назначить кнопку мыши"
-
-#: ../../src/gui/triggerSelectWindow.vala:102
+#: ../ui/trigger_select.ui:76
 msgid "Turbo mode"
 msgstr "Турбо-режим"
 
-#: ../../src/gui/triggerSelectWindow.vala:103
+#: ../ui/trigger_select.ui:80
 msgid "If checked, the Pie will close when you release the chosen hot key."
-msgstr "Если выбрана эта возможность, пай закроется после отпуска клавиши "
-"быстрого доступа"
+msgstr ""
+"Если выбрана эта возможность, пай закроется после отпуска клавиши быстрого "
+"доступа"
 
-#: ../../src/gui/triggerSelectWindow.vala:117
+#: ../ui/trigger_select.ui:93
 msgid "Long press for activation"
 msgstr "Продолжительное нажатие для активации"
 
-#: ../../src/gui/triggerSelectWindow.vala:118
+#: ../ui/trigger_select.ui:97
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr ""
 "Если выбрана эта возможность, пай пай откроется только, если вы "
 "продолжительно зажмёте эту клавишу быстрого доступа."
 
-#: ../../src/gui/triggerSelectWindow.vala:156
-msgid ""
-"This hotkey is already assigned to the pie \"%s\"! \n"
-"\n"
-"Please select another one or cancel your selection."
+#: ../ui/trigger_select.ui:110
+msgid "Open Pie centered on the screen"
 msgstr ""
-"Эта клавиша быстрого доступа уже назначена паю \"%s\"! \n"
-"\n"
-"Пожалуйста, выберите другую или выполните отмену выбора."
 
-#: ../../src/gui/triggerSelectWindow.vala:198
+#: ../ui/trigger_select.ui:114
+#, fuzzy
 msgid ""
-"It possible to make your system unusable if you bind a Pie to your left "
-"mouse button. Do you really want to do this?"
+"If checked, the Pie will open in the middle of your screen. Else it will pop "
+"up at your pointer."
 msgstr ""
-"Вы можете снизить функциональность системы, если назначите пай - левой "
-"кнопке мыши. Вы действительно хотите сделать это?"
-#: ../../src/gui/iconSelectWindow.vala:160
-msgid "Choose an Icon"
-msgstr "Выберите значок"
+"Если выбрана эта возможность, пай пай откроется только, если вы "
+"продолжительно зажмёте эту клавишу быстрого доступа."
 
-#: ../../src/gui/iconSelectWindow.vala:196
-msgid "All icons"
-msgstr "Все значки"
+#: ../ui/trigger_select.ui:133
+msgid "<b>Activation options</b>"
+msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:198
-msgid "Actions"
-msgstr "Действия"
+#: ../ui/settings.ui:8 ../ui/preferences.ui:27
+#, fuzzy
+msgid "General Settings"
+msgstr "Gnome-Pie - Настройки"
 
-#: ../../src/gui/iconSelectWindow.vala:199
-msgid "Places"
-msgstr "Переходы"
+#: ../ui/settings.ui:47
+#, fuzzy
+msgid "Start Gnome-Pie on login"
+msgstr "Запускать при загрузке"
 
-#: ../../src/gui/iconSelectWindow.vala:200
-msgid "File types"
-msgstr "Типы файлов"
+#: ../ui/settings.ui:52 ../ui/settings.ui:53
+#, fuzzy
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr ""
+"Если выбрана эта возможность, Gnome-Pie будет запускаться после входа в "
+"систему."
 
-#: ../../src/gui/iconSelectWindow.vala:201
-msgid "Emotes"
-msgstr "Эмоции"
+#: ../ui/settings.ui:66
+msgid "Display panel icon "
+msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:202
-msgid "Miscellaneous"
-msgstr "Дополнительно"
+#: ../ui/settings.ui:71 ../ui/settings.ui:72
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:279
-msgid "Icon Theme"
-msgstr "Тема значков"
+#: ../ui/settings.ui:92
+#, fuzzy
+msgid "Global scale"
+msgstr "Общий масштаб"
 
-#: ../../src/gui/iconSelectWindow.vala:289
-msgid "All supported image formats"
-msgstr "Все поддерживаемые форматы изображений"
+#: ../ui/settings.ui:130
+msgid "<b>Appearance and behavior</b>"
+msgstr ""
 
-#: ../../src/gui/iconSelectWindow.vala:311
-msgid "Custom Icon"
-msgstr "Настроить значок"
+#: ../ui/slice_select.ui:8
+#, fuzzy
+msgid "Slice Options"
+msgstr "Приложения"
 
-#: ../../src/gui/themeList.vala:88
-msgid "by"
-msgstr "-"
+#: ../ui/slice_select.ui:95
+msgid "There are no options for this Slice type."
+msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:34
-msgid "Session Control"
-msgstr "Управление сеансом"
+#: ../ui/slice_select.ui:121
+msgid "Name of the Slice "
+msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:57
-msgid "Shutdown"
-msgstr "Выключить"
+#: ../ui/slice_select.ui:159
+msgid "URI to open"
+msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:60
-msgid "Logout"
-msgstr "Завершить сеанс"
+#: ../ui/slice_select.ui:197
+msgid "Command to execute"
+msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:63
-msgid "Reboot"
-msgstr "Перезагрузить"
+#: ../ui/slice_select.ui:235
+msgid "Hotkey to press"
+msgstr ""
 
-#: ../../src/actionGroups/devicesGroup.vala:34
-msgid "Devices"
-msgstr "Устройства"
+#: ../ui/slice_select.ui:264
+msgid "Pie to open"
+msgstr ""
 
-#: ../../src/actionGroups/devicesGroup.vala:82
-msgid "Root"
-msgstr "Root"
+#: ../ui/slice_select.ui:293
+msgid "Is Quick Action"
+msgstr ""
 
-#: ../../src/actionGroups/clipboardGroup.vala:63
-msgid "Clipboard"
-msgstr "Буфер обмена"
+#: ../ui/slice_select.ui:306
+msgid "This Slice will be executed when you click in the middle of the Pie."
+msgstr ""
 
-#: ../../src/actionGroups/menuGroup.vala:34
-msgid "Main menu"
-msgstr "Основное меню"
+#: ../ui/slice_select.ui:339
+msgid "<b>Slice options</b>"
+msgstr ""
 
-#: ../../src/actionGroups/windowListGroup.vala:33
-msgid "Window List"
-msgstr "Список окон"
+#: ../ui/preferences.ui:8
+#, fuzzy
+msgid "Gnome-Pie Settings"
+msgstr "Gnome-Pie - Настройки"
 
-#: ../../src/utilities/trigger.vala:152
-msgid "Button %i"
-msgstr "Кнопка %i"
+#: ../ui/preferences.ui:261
+msgid ""
+"<b><big>This Pie is empty!</big>\n"
+"\n"
+"Start adding Slices to it!</b> This can be done by dragging stuff to the "
+"plus sign below. You can try a lot! For example application launchers or "
+"folders. Even URLs from your browser are possible... \n"
+"\n"
+"For manual and advanced configuration click on the plus sign."
+msgstr ""
 
-#: ../../src/utilities/trigger.vala:155
-msgid "LeftButton"
-msgstr "ЛеваяКнопка"
+#: ../ui/preferences.ui:282
+msgid ""
+"<b><big>You have no Pies!</big>\n"
+"\n"
+"Start by creating one! </b> This can be done by clicking on the tiny little "
+"plus sign in the lower left corner."
+msgstr ""
 
-#: ../../src/utilities/trigger.vala:157
-msgid "RightButton"
-msgstr "ПраваяКнопка"
+#: ../ui/rename_pie.ui:6
+#, fuzzy
+msgid "Rename a Pie"
+msgstr "Открыть пай"
 
-#: ../../src/utilities/trigger.vala:159
-msgid "MiddleButton"
-msgstr "СредняяКнопка"
+#~ msgid "Behavior"
+#~ msgstr "Поведение"
 
-#: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:183
-msgid "Turbo"
-msgstr "Турбо"
+#~ msgid "Show Indicator"
+#~ msgstr "Показать индикатор"
 
-#: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:185
-msgid "Delayed"
-msgstr "Задержка"
+#~ msgid ""
+#~ "If checked, an indicator for easy access of the settings menu is shown in "
+#~ "your panel."
+#~ msgstr ""
+#~ "Если выбрана эта возможность, индикатор быстрого доступа меню настроек, "
+#~ "будет отображаться на вашей панели"
+
+#~ msgid "Open Pies at Mouse"
+#~ msgstr "Открывать паи при действии мышью"
+
+#~ msgid ""
+#~ "If checked, pies will open at your pointer. Otherwise they'll pop up in "
+#~ "the middle of the screen."
+#~ msgstr ""
+#~ "Если выбрана эта возможность, паи будут открываться рядом с курсором. В "
+#~ "противном случае, они буду всплывать в середине экрана."
+
+#~ msgid "General"
+#~ msgstr "Основные"
+
+#~ msgid "Pies"
+#~ msgstr "Паи"
+
+#~ msgid "You can right-click in the list for adding or removing entries."
+#~ msgstr ""
+#~ "Вы можете щёлкнуть правой кнопкой в списке для добавления или удаления "
+#~ "элементов."
+
+#~ msgid ""
+#~ "You can reset Gnome-Pie to its default options with the terminal command "
+#~ "\"gnome-pie --reset\"."
+#~ msgstr ""
+#~ "Вы можете восстановить первоначальные значения Gnome-Pie с помощью "
+#~ "команды вводимой в терминале \"gnome-pie --reset\"."
+
+#~ msgid ""
+#~ "The radiobutton at the beginning of each slice-line indicates the "
+#~ "QuickAction of the pie."
+#~ msgstr ""
+#~ "Переключатели в начале каждой строки, отражают быстрое действие порции пая"
+
+#~ msgid ""
+#~ "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+#~ msgstr ""
+#~ "Паи могут открываться с помощью команды вводимой в терминале\"gnome-pie --"
+#~ "open=ID\"."
+
+#~ msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+#~ msgstr "Посетите веб-сайт Gnome-Pie по адресу %s!"
+
+#~ msgid ""
+#~ "You can drag'n'drop applications from your main menu to the list above."
+#~ msgstr ""
+#~ "Вы можете переместить приложения из вашего основного меню в список выше"
+
+#~ msgid "If you want to give some feedback, please write an e-mail to %s!"
+#~ msgstr "Если вы хотите оставить отзыв, пожалуйста, напишити по адресу %s!"
+
+#~ msgid ""
+#~ "You may drag'n'drop URLs and bookmarks from your internet browser to the "
+#~ "list above."
+#~ msgstr ""
+#~ "Вы можете переносите адресные ссылки и закладки из вашего интернет-"
+#~ "обозревателя в список выше."
+
+#~ msgid "Bugs can be reported at "
+#~ msgstr "Сообщения о неполадках могут быть отправлены по адресу %s!"
+
+#~ msgid ""
+#~ "It's possible to drag'n'drop files and folders from your file browser to "
+#~ "the list above."
+#~ msgstr ""
+#~ "Возможно переносите файлы и папки из вашего обозревателя файлов в список "
+#~ "выше."
+
+#~ msgid ""
+#~ "It's recommended to keep your Pies small (at most 6-8 Slices). Else they "
+#~ "will become hard to navigate."
+#~ msgstr ""
+#~ "Рекомендуется сохранять ваши паи небольшими (по 6-8 порций). Иначе они "
+#~ "станут неудобными для навигации."
+
+#~ msgid ""
+#~ "In order to create a launcher for a Pie, drag the Pie from the list to "
+#~ "your desktop!"
+#~ msgstr ""
+#~ "Для создания ярлыка запуска пая, перенесите пай из списка на ваш рабочий "
+#~ "стол!"
+
+#~ msgid "Moves the selected Slice down"
+#~ msgstr "Перемещает выделенную порцию вниз"
+
+#~ msgid "Moves the selected Slice up"
+#~ msgstr "Перемещает выделенную порцию вверх"
+
+#~ msgid "Slice group"
+#~ msgstr "Группа порции"
+
+#~ msgid "Icon"
+#~ msgstr "Значок"
+
+#~ msgid "Command"
+#~ msgstr "Команда"
+
+#~ msgid "Pie-ID / Action type"
+#~ msgstr "ID-пая / Тип действия"
+
+#~ msgid "Name"
+#~ msgstr "Название"
+
+#~ msgid "Add new Pie"
+#~ msgstr "Добавить новый пай"
+
+#~ msgid "Delete"
+#~ msgstr "Удалить"
+
+#~ msgid "New Action"
+#~ msgstr "Новое действие"
+
+#~ msgid "You have to select a Pie to add a Slice to!"
+#~ msgstr "Вам необходимо выбрать пай для добавления порции"
+
+#~ msgid "You have to select a Pie or a Slice to delete!"
+#~ msgstr "Вам необходимо выбрать пай или порцию для удаления!"
+
+#~ msgid "Define an open-command"
+#~ msgstr "Определите команду открытия"
+
+#~ msgid "Click here if you want to bind a mouse button!"
+#~ msgstr "Щёлкните здесь, если вы хотите назначить кнопку мыши"
+
+#~ msgid ""
+#~ "It possible to make your system unusable if you bind a Pie to your left "
+#~ "mouse button. Do you really want to do this?"
+#~ msgstr ""
+#~ "Вы можете снизить функциональность системы, если назначите пай - левой "
+#~ "кнопке мыши. Вы действительно хотите сделать это?"
+
+#~ msgid "Choose an Icon"
+#~ msgstr "Выберите значок"
+
+#~ msgid "by"
+#~ msgstr "-"

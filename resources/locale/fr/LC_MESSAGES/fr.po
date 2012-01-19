@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-12-06 14:28+0100\n"
+"POT-Creation-Date: 2012-01-19 20:25+0100\n"
 "PO-Revision-Date: 2011-12-06 14:29+0100\n"
 "Last-Translator: Grégoire BELLON-GERVAIS <greggbg@gmail.com>\n"
 "Language-Team: French\n"
@@ -17,104 +17,43 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../../src/actionGroups/bookmarkGroup.vala:35
-#: ../../src/pies/defaultConfig.vala:45
-msgid "Bookmarks"
-msgstr "Favoris"
+#: ../../src/actions/keyAction.vala:34
+msgid "Press hotkey"
+msgstr "Exécuter le raccourcis"
 
-#: ../../src/actionGroups/windowListGroup.vala:33
-msgid "Window List"
-msgstr "Liste de Fenêtre"
-
-#: ../../src/actionGroups/menuGroup.vala:34
-msgid "Main menu"
-msgstr "Menu principal"
-
-#: ../../src/actionGroups/devicesGroup.vala:34
-msgid "Devices"
-msgstr "Périphériques"
-
-#: ../../src/actionGroups/devicesGroup.vala:82
-msgid "Root"
-msgstr "Racine"
-
-#: ../../src/actionGroups/sessionGroup.vala:34
-msgid "Session Control"
-msgstr "Gestion de la Session"
-
-#: ../../src/actionGroups/sessionGroup.vala:57
-msgid "Shutdown"
-msgstr "Arrêter"
-
-#: ../../src/actionGroups/sessionGroup.vala:60
-msgid "Logout"
-msgstr "Déconnecter"
-
-#: ../../src/actionGroups/sessionGroup.vala:63
-msgid "Reboot"
-msgstr "Redémarrer"
-
-#: ../../src/actionGroups/clipboardGroup.vala:63
-msgid "Clipboard"
-msgstr "Presse-papier"
-
-#: ../../src/utilities/trigger.vala:152
-msgid "Button %i"
-msgstr "Bouton %i"
-
-#: ../../src/utilities/trigger.vala:155
-msgid "LeftButton"
-msgstr "BoutonGauche"
-
-#: ../../src/utilities/trigger.vala:157
-msgid "RightButton"
-msgstr "BoutonDroit"
-
-#: ../../src/utilities/trigger.vala:159
-msgid "MiddleButton"
-msgstr "BoutonMilieu"
-
-#: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:183
-msgid "Turbo"
-msgstr "Turbo"
-
-#: ../../src/utilities/trigger.vala:181 ../../src/utilities/trigger.vala:185
-msgid "Delayed"
-msgstr "Différé"
-
-#: ../../src/utilities/trigger.vala:197 ../../src/utilities/trigger.vala:198
-#: ../../src/utilities/bindingManager.vala:156 ../../src/gui/pieList.vala:301
-#: ../../src/gui/pieList.vala:707 ../../src/gui/pieList.vala:867
-msgid "Not bound"
-msgstr "Non assigné"
-
-#: ../../src/gui/triggerSelectWindow.vala:69
-msgid "Define an open-command"
-msgstr "Définir une commande d'ouverture"
-
-#: ../../src/gui/triggerSelectWindow.vala:87
-msgid "Click here if you want to bind a mouse button!"
-msgstr "Cliquer ici pour assigner un bouton de la souris"
-
-#: ../../src/gui/triggerSelectWindow.vala:102
-msgid "Turbo mode"
-msgstr "Mode turbo"
-
-#: ../../src/gui/triggerSelectWindow.vala:103
-msgid "If checked, the Pie will close when you release the chosen hot key."
-msgstr "La Tarte se fermera quand vous relachez le raccourcis clavier "
-
-#: ../../src/gui/triggerSelectWindow.vala:117
-msgid "Long press for activation"
-msgstr "Appuyer longuement pour activer"
-
-#: ../../src/gui/triggerSelectWindow.vala:118
-msgid ""
-"If checked, the Pie will only open if you press this hot key a bit longer."
+#: ../../src/actions/keyAction.vala:36
+msgid "Simulates the activation of a hotkey."
 msgstr ""
-"La Tarte s'ouvrira uniquement si vous appuyez sur le raccourcis longtemps"
 
-#: ../../src/gui/triggerSelectWindow.vala:156
+#: ../../src/actions/appAction.vala:34
+msgid "Launch application"
+msgstr "Lancer une application"
+
+#: ../../src/actions/appAction.vala:36
+msgid "Executes the given command."
+msgstr ""
+
+#: ../../src/actions/uriAction.vala:34
+msgid "Open URI"
+msgstr "Ouvrir une URI"
+
+#: ../../src/actions/uriAction.vala:36
+msgid "Opens a given location. You may use URL's or files paths."
+msgstr ""
+
+#: ../../src/actions/actionRegistry.vala:111
+msgid "Trash"
+msgstr "Poubelle"
+
+#: ../../src/actions/pieAction.vala:34
+msgid "Open Pie"
+msgstr "Ouvrir la Tarte"
+
+#: ../../src/actions/pieAction.vala:36
+msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
+msgstr ""
+
+#: ../../src/gui/triggerSelectWindow.vala:144
 msgid ""
 "This hotkey is already assigned to the pie \"%s\"! \n"
 "\n"
@@ -124,276 +63,213 @@ msgstr ""
 "\n"
 "Merci d'en choisir un autre ou d'annuler votre choix."
 
-#: ../../src/gui/triggerSelectWindow.vala:198
-msgid ""
-"It possible to make your system unusable if you bind a Pie to your left "
-"mouse button. Do you really want to do this?"
+#: ../../src/gui/preferencesWindow.vala:145
+msgid "No Pie selected."
 msgstr ""
-"Vous pouvez rendre votre système inutilisable en assignant le clic "
-"gauche de la souris. Voulez-vous vraiment continuer ?"
 
-#: ../../src/gui/iconSelectWindow.vala:160
-msgid "Choose an Icon"
-msgstr "Choisir un Icone"
+#: ../../src/gui/preferencesWindow.vala:181
+msgid "New Pie"
+msgstr "Nouvelle Tarte"
 
-#: ../../src/gui/iconSelectWindow.vala:196
+#: ../../src/gui/preferencesWindow.vala:190
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+"Voulez-vous supprimer la Tarte sélectionnée ainsi que toutes les Parts "
+"contenues ?"
+
+#: ../../src/gui/newSliceWindow.vala:229
+msgid "Rename me!"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:292
+msgid "Click to edit"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:292
+#: ../../src/gui/piePreviewRenderer.vala:307
+msgid "Drag to move"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:295
+#, fuzzy
+msgid "Click to add a new Slice"
+msgstr "Ajouter une Part"
+
+#: ../../src/gui/piePreviewRenderer.vala:299
+#, fuzzy
+msgid "Drop to add as new Slice"
+msgstr "Ajouter une Part"
+
+#: ../../src/gui/piePreviewRenderer.vala:302
+msgid "Drop to move Slice"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:307
+msgid "Click to delete"
+msgstr ""
+
+#: ../../src/gui/triggerSelectButton.vala:59
+#, fuzzy
+msgid "Press a hotkey ..."
+msgstr "Exécuter le raccourcis"
+
+#: ../../src/gui/piePreview.vala:120
+#, fuzzy
+msgid "Do you really want to delete this Slice?"
+msgstr "Voulez-vous supprimer la Part sélectionnée ?"
+
+#: ../../src/gui/themeList.vala:48
+msgid "Themes"
+msgstr "Thèmes"
+
+#: ../../src/gui/themeList.vala:80
+msgid "By"
+msgstr ""
+
+#: ../../src/gui/sliceTypeList.vala:56
+#, fuzzy
+msgid "Slice types"
+msgstr "Types de fichier"
+
+#: ../../src/gui/iconSelectWindow.vala:178
 msgid "All icons"
 msgstr "Tous les icones"
 
-#: ../../src/gui/iconSelectWindow.vala:197
+#: ../../src/gui/iconSelectWindow.vala:179
 #: ../../src/pies/defaultConfig.vala:36
 msgid "Applications"
 msgstr "Applications"
 
-#: ../../src/gui/iconSelectWindow.vala:198
+#: ../../src/gui/iconSelectWindow.vala:180
 msgid "Actions"
 msgstr "Actions"
 
-#: ../../src/gui/iconSelectWindow.vala:199
+#: ../../src/gui/iconSelectWindow.vala:181
 msgid "Places"
 msgstr "Dossiers"
 
-#: ../../src/gui/iconSelectWindow.vala:200
+#: ../../src/gui/iconSelectWindow.vala:182
 msgid "File types"
 msgstr "Types de fichier"
 
-#: ../../src/gui/iconSelectWindow.vala:201
+#: ../../src/gui/iconSelectWindow.vala:183
 msgid "Emotes"
 msgstr "Emoticones"
 
-#: ../../src/gui/iconSelectWindow.vala:202
+#: ../../src/gui/iconSelectWindow.vala:184
 msgid "Miscellaneous"
 msgstr "Divers"
 
-#: ../../src/gui/iconSelectWindow.vala:279
-msgid "Icon Theme"
-msgstr "Thème d'icone"
-
-#: ../../src/gui/iconSelectWindow.vala:289
+#: ../../src/gui/iconSelectWindow.vala:257
 msgid "All supported image formats"
 msgstr "Tous formats d'images supportés"
 
-#: ../../src/gui/iconSelectWindow.vala:311
-msgid "Custom Icon"
-msgstr "Icone Personnalisé"
+#: ../../src/actionGroups/windowListGroup.vala:34
+#, fuzzy
+msgid "Group: Window List"
+msgstr "Liste de Fenêtre"
 
-#: ../../src/gui/pieList.vala:88 ../../src/gui/pieList.vala:851
-msgid "Slice group"
-msgstr "Groupe de Parts"
-
-#: ../../src/gui/pieList.vala:135
-msgid "Icon"
-msgstr "Icone"
-
-#: ../../src/gui/pieList.vala:200
-msgid "Command"
-msgstr "Commande"
-
-#: ../../src/gui/pieList.vala:366
-msgid "Pie-ID / Action type"
-msgstr "Tarte-ID / Type d'action"
-
-#: ../../src/gui/pieList.vala:427
-msgid "Name"
-msgstr "Nom"
-
-#: ../../src/gui/pieList.vala:470
-msgid "Add new Pie"
-msgstr "AJouter une Tarte"
-
-#: ../../src/gui/pieList.vala:475
-msgid "Add new Slice"
-msgstr "Ajouter une Part"
-
-#: ../../src/gui/pieList.vala:483
-msgid "Delete"
-msgstr "Effacer"
-
-#: ../../src/gui/pieList.vala:619
-msgid "New Pie"
-msgstr "Nouvelle Tarte"
-
-#: ../../src/gui/pieList.vala:666
-msgid "New Action"
-msgstr "Nouvelle Action"
-
-#: ../../src/gui/pieList.vala:680
-msgid "You have to select a Pie to add a Slice to!"
-msgstr "Sélectionner d'abord une Tarte pour ajouter une Part"
-
-#: ../../src/gui/pieList.vala:730
-msgid "You have to select a Pie or a Slice to delete!"
-msgstr "Sélectionner une Tarte ou une Part pour la supprimer"
-
-#: ../../src/gui/pieList.vala:741
-msgid ""
-"Do you really want to delete the selected Pie with all contained Slices?"
+#: ../../src/actionGroups/windowListGroup.vala:36
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
 msgstr ""
-"Voulez-vous supprimer la Tarte sélectionnée ainsi que toutes les Parts contenues ?"
 
-#: ../../src/gui/pieList.vala:775
-msgid "Do you really want to delete the selected Slice?"
-msgstr "Voulez-vous supprimer la Part sélectionnée ?"
+#: ../../src/actionGroups/menuGroup.vala:35
+#, fuzzy
+msgid "Group: Main menu"
+msgstr "Menu principal"
 
-#: ../../src/gui/preferences.vala:32
-msgid "Gnome-Pie - Settings"
-msgstr "Gnome-Pie - Réglages"
-
-#: ../../src/gui/preferences.vala:55
-msgid "Behavior"
-msgstr "Comportement"
-
-#: ../../src/gui/preferences.vala:65
-msgid "Startup on Login"
-msgstr "Démarrer à la Connexion"
-
-#: ../../src/gui/preferences.vala:66
-msgid "If checked, Gnome-Pie will start when you log in."
-msgstr "Si coché, Gnome-Pie démarrera quand vous vous connectez"
-
-#: ../../src/gui/preferences.vala:72
-msgid "Show Indicator"
-msgstr "Afficher l'Indicateur"
-
-#: ../../src/gui/preferences.vala:73
-msgid ""
-"If checked, an indicator for easy access of the settings menu is shown in "
-"your panel."
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
 msgstr ""
-"Si coché, un indicateur apparaitra dans la zone de notification afin "
-"d'accéder rapidement aux réglages de Gnome-Pie" 
 
-#: ../../src/gui/preferences.vala:79
-msgid "Open Pies at Mouse"
-msgstr "Ouvrir les Tartes sous la Souris"
+#: ../../src/actionGroups/clipboardGroup.vala:64
+#, fuzzy
+msgid "Group: Clipboard"
+msgstr "Presse-papier"
 
-#: ../../src/gui/preferences.vala:80
-msgid ""
-"If checked, pies will open at your pointer. Otherwise they'll pop up in the "
-"middle of the screen."
+#: ../../src/actionGroups/clipboardGroup.vala:66
+msgid "Manages your Clipboard."
 msgstr ""
-"Si coché, les Tartes apparaîtront sous le pointeur. Sinon, elles s'ouvriront "
-"au centre de l'écran."
 
-#: ../../src/gui/preferences.vala:89
-msgid "Global Scale"
-msgstr "Echelle Globale"
+#: ../../src/actionGroups/sessionGroup.vala:35
+#, fuzzy
+msgid "Group: Session Control"
+msgstr "Gestion de la Session"
 
-#: ../../src/gui/preferences.vala:126
-msgid "Themes"
-msgstr "Thèmes"
-
-#: ../../src/gui/preferences.vala:144
-msgid "General"
-msgstr "Général"
-
-#: ../../src/gui/preferences.vala:149
-msgid "Pies"
-msgstr "Tartes"
-
-#: ../../src/gui/preferences.vala:173
-msgid "You can right-click in the list for adding or removing entries."
-msgstr "Le clic-droit permet d'ajouter ou de supprimer des entrées."
-
-#: ../../src/gui/preferences.vala:174
-msgid ""
-"You can reset Gnome-Pie to its default options with the terminal command "
-"\"gnome-pie --reset\"."
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
 msgstr ""
-"Vous pouvez restaurer les paramètres par défaut avec la commande "
-"\"gnome-pie --reset\"."
 
-#: ../../src/gui/preferences.vala:175
-msgid ""
-"The radiobutton at the beginning of each slice-line indicates the "
-"QuickAction of the pie."
+#: ../../src/actionGroups/sessionGroup.vala:60
+msgid "Shutdown"
+msgstr "Arrêter"
+
+#: ../../src/actionGroups/sessionGroup.vala:63
+msgid "Logout"
+msgstr "Déconnecter"
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Reboot"
+msgstr "Redémarrer"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+#, fuzzy
+msgid "Group: Bookmarks"
+msgstr "Favoris"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
 msgstr ""
-"Le bouton radio au début de chaque ligne de Part indique "
-"l'Action Rapide de la Tarte."
 
-#: ../../src/gui/preferences.vala:176
-msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
-msgstr "Les Tartes peuvent être lancées avec la commande \"gnome-pie --open=ID\"."
+#: ../../src/actionGroups/devicesGroup.vala:35
+#, fuzzy
+msgid "Group: Devices"
+msgstr "Périphériques"
 
-#: ../../src/gui/preferences.vala:177
-msgid "Feel free to visit Gnome-Pie's homepage at %s!"
-msgstr "N'hésiter pas à visiter la page web de Gnome-Pie at %s !"
-
-#: ../../src/gui/preferences.vala:178
-msgid "You can drag'n'drop applications from your main menu to the list above."
-msgstr "Vous pouvez glisser-déposer des applications depuis le menu principal dans la liste ci-dessus."
-
-#: ../../src/gui/preferences.vala:179
-msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr "Pour envoyer vos remarques, vous pouvez écrire à l'adresse %s !"
-
-#: ../../src/gui/preferences.vala:180
-msgid ""
-"You may drag'n'drop URLs and bookmarks from your internet browser to the "
-"list above."
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
 msgstr ""
-"Vous pouvez glisser-déposer des URLs et des favoris depuis votre navigateur "
-"dans la liste ci-dessus."
 
-#: ../../src/gui/preferences.vala:181
-msgid "Bugs can be reported at %s!"
-msgstr "Les Bugs peuvent être envoyés à %s !"
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr "Racine"
 
-#: ../../src/gui/preferences.vala:182
-msgid ""
-"It's possible to drag'n'drop files and folders from your file browser to the "
-"list above."
+#: ../../src/utilities/bindingManager.vala:155 ../../src/utilities/key.vala:65
+#: ../../src/utilities/trigger.vala:216 ../../src/utilities/trigger.vala:217
+msgid "Not bound"
+msgstr "Non assigné"
+
+#: ../../src/utilities/trigger.vala:163
+msgid "Button %i"
+msgstr "Bouton %i"
+
+#: ../../src/utilities/trigger.vala:166
+msgid "LeftButton"
+msgstr "BoutonGauche"
+
+#: ../../src/utilities/trigger.vala:168
+msgid "RightButton"
+msgstr "BoutonDroit"
+
+#: ../../src/utilities/trigger.vala:170
+msgid "MiddleButton"
+msgstr "BoutonMilieu"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
+#: ../../src/utilities/trigger.vala:196 ../../src/utilities/trigger.vala:200
+msgid "Turbo"
+msgstr "Turbo"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
+#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:202
+msgid "Delayed"
+msgstr "Différé"
+
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
+#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:204
+msgid "Centered"
 msgstr ""
-"Vous pouvez glisser-déposer des fichiers et des dossiers depuis l'explorateur "
-" dans la liste ci-dessus."
-
-#: ../../src/gui/preferences.vala:183
-msgid ""
-"It's recommended to keep your Pies small (at most 6-8 Slices). Else they "
-"will become hard to navigate."
-msgstr ""
-"Il est recommandé de garder les Tartes petites (pas plus de 6-8 Parts) afin "
-"de leur conserver leur facilité de navigation."
-
-#: ../../src/gui/preferences.vala:184
-msgid ""
-"In order to create a launcher for a Pie, drag the Pie from the list to your "
-"desktop!"
-msgstr ""
-"Afin de créer un lanceur pour une Tarte, vous pouvez déposer la Tarte directement "
-"sur votre bureau !"
-
-#: ../../src/gui/preferences.vala:193
-msgid "Moves the selected Slice down"
-msgstr "Déplace la Part sélectionnée vers le bas"
-
-#: ../../src/gui/preferences.vala:205
-msgid "Moves the selected Slice up"
-msgstr "Déplace la Part sélectionnée vers le haut"
-
-#: ../../src/gui/themeList.vala:88
-msgid "by"
-msgstr "par"
-
-#: ../../src/actions/actionRegistry.vala:107
-msgid "Trash"
-msgstr "Poubelle"
-
-#: ../../src/actions/keyAction.vala:33
-msgid "Press hotkey"
-msgstr "Exécuter le raccourcis"
-
-#: ../../src/actions/uriAction.vala:33
-msgid "Open URI"
-msgstr "Ouvrir une URI"
-
-#: ../../src/actions/appAction.vala:33
-msgid "Launch application"
-msgstr "Lancer une application"
-
-#: ../../src/actions/pieAction.vala:33
-msgid "Open Pie"
-msgstr "Ouvrir la Tarte"
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
@@ -414,6 +290,10 @@ msgstr "Piste Précédente"
 #: ../../src/pies/defaultConfig.vala:33
 msgid "Play/Pause"
 msgstr "Lecture/Pause"
+
+#: ../../src/pies/defaultConfig.vala:45
+msgid "Bookmarks"
+msgstr "Favoris"
 
 #: ../../src/pies/defaultConfig.vala:50
 msgid "Session"
@@ -446,3 +326,310 @@ msgstr "Agrandir"
 #: ../../src/pies/defaultConfig.vala:63
 msgid "Restore"
 msgstr "Restaurer"
+
+#: ../ui/icon_select.ui:8
+msgid "Select an icon"
+msgstr ""
+
+#: ../ui/icon_select.ui:84
+msgid "Icon Theme"
+msgstr "Thème d'icone"
+
+#: ../ui/icon_select.ui:105
+msgid "Custom Icon"
+msgstr "Icone Personnalisé"
+
+#: ../ui/trigger_select.ui:8
+msgid "Activation Settings"
+msgstr ""
+
+#: ../ui/trigger_select.ui:44
+msgid "It's possible to bind mouse buttons as well!"
+msgstr ""
+
+#: ../ui/trigger_select.ui:76
+msgid "Turbo mode"
+msgstr "Mode turbo"
+
+#: ../ui/trigger_select.ui:80
+msgid "If checked, the Pie will close when you release the chosen hot key."
+msgstr "La Tarte se fermera quand vous relachez le raccourcis clavier "
+
+#: ../ui/trigger_select.ui:93
+msgid "Long press for activation"
+msgstr "Appuyer longuement pour activer"
+
+#: ../ui/trigger_select.ui:97
+msgid ""
+"If checked, the Pie will only open if you press this hot key a bit longer."
+msgstr ""
+"La Tarte s'ouvrira uniquement si vous appuyez sur le raccourcis longtemps"
+
+#: ../ui/trigger_select.ui:110
+msgid "Open Pie centered on the screen"
+msgstr ""
+
+#: ../ui/trigger_select.ui:114
+#, fuzzy
+msgid ""
+"If checked, the Pie will open in the middle of your screen. Else it will pop "
+"up at your pointer."
+msgstr ""
+"La Tarte s'ouvrira uniquement si vous appuyez sur le raccourcis longtemps"
+
+#: ../ui/trigger_select.ui:133
+msgid "<b>Activation options</b>"
+msgstr ""
+
+#: ../ui/settings.ui:8 ../ui/preferences.ui:27
+#, fuzzy
+msgid "General Settings"
+msgstr "Gnome-Pie - Réglages"
+
+#: ../ui/settings.ui:47
+#, fuzzy
+msgid "Start Gnome-Pie on login"
+msgstr "Démarrer à la Connexion"
+
+#: ../ui/settings.ui:52 ../ui/settings.ui:53
+#, fuzzy
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr "Si coché, Gnome-Pie démarrera quand vous vous connectez"
+
+#: ../ui/settings.ui:66
+msgid "Display panel icon "
+msgstr ""
+
+#: ../ui/settings.ui:71 ../ui/settings.ui:72
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
+
+#: ../ui/settings.ui:92
+#, fuzzy
+msgid "Global scale"
+msgstr "Echelle Globale"
+
+#: ../ui/settings.ui:130
+msgid "<b>Appearance and behavior</b>"
+msgstr ""
+
+#: ../ui/slice_select.ui:8
+#, fuzzy
+msgid "Slice Options"
+msgstr "Applications"
+
+#: ../ui/slice_select.ui:95
+msgid "There are no options for this Slice type."
+msgstr ""
+
+#: ../ui/slice_select.ui:121
+msgid "Name of the Slice "
+msgstr ""
+
+#: ../ui/slice_select.ui:159
+msgid "URI to open"
+msgstr ""
+
+#: ../ui/slice_select.ui:197
+msgid "Command to execute"
+msgstr ""
+
+#: ../ui/slice_select.ui:235
+msgid "Hotkey to press"
+msgstr ""
+
+#: ../ui/slice_select.ui:264
+msgid "Pie to open"
+msgstr ""
+
+#: ../ui/slice_select.ui:293
+msgid "Is Quick Action"
+msgstr ""
+
+#: ../ui/slice_select.ui:306
+msgid "This Slice will be executed when you click in the middle of the Pie."
+msgstr ""
+
+#: ../ui/slice_select.ui:339
+msgid "<b>Slice options</b>"
+msgstr ""
+
+#: ../ui/preferences.ui:8
+#, fuzzy
+msgid "Gnome-Pie Settings"
+msgstr "Gnome-Pie - Réglages"
+
+#: ../ui/preferences.ui:261
+msgid ""
+"<b><big>This Pie is empty!</big>\n"
+"\n"
+"Start adding Slices to it!</b> This can be done by dragging stuff to the "
+"plus sign below. You can try a lot! For example application launchers or "
+"folders. Even URLs from your browser are possible... \n"
+"\n"
+"For manual and advanced configuration click on the plus sign."
+msgstr ""
+
+#: ../ui/preferences.ui:282
+msgid ""
+"<b><big>You have no Pies!</big>\n"
+"\n"
+"Start by creating one! </b> This can be done by clicking on the tiny little "
+"plus sign in the lower left corner."
+msgstr ""
+
+#: ../ui/rename_pie.ui:6
+#, fuzzy
+msgid "Rename a Pie"
+msgstr "Ouvrir la Tarte"
+
+#~ msgid "Define an open-command"
+#~ msgstr "Définir une commande d'ouverture"
+
+#~ msgid "Click here if you want to bind a mouse button!"
+#~ msgstr "Cliquer ici pour assigner un bouton de la souris"
+
+#~ msgid ""
+#~ "It possible to make your system unusable if you bind a Pie to your left "
+#~ "mouse button. Do you really want to do this?"
+#~ msgstr ""
+#~ "Vous pouvez rendre votre système inutilisable en assignant le clic gauche "
+#~ "de la souris. Voulez-vous vraiment continuer ?"
+
+#~ msgid "Choose an Icon"
+#~ msgstr "Choisir un Icone"
+
+#~ msgid "Slice group"
+#~ msgstr "Groupe de Parts"
+
+#~ msgid "Icon"
+#~ msgstr "Icone"
+
+#~ msgid "Command"
+#~ msgstr "Commande"
+
+#~ msgid "Pie-ID / Action type"
+#~ msgstr "Tarte-ID / Type d'action"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "Add new Pie"
+#~ msgstr "AJouter une Tarte"
+
+#~ msgid "Delete"
+#~ msgstr "Effacer"
+
+#~ msgid "New Action"
+#~ msgstr "Nouvelle Action"
+
+#~ msgid "You have to select a Pie to add a Slice to!"
+#~ msgstr "Sélectionner d'abord une Tarte pour ajouter une Part"
+
+#~ msgid "You have to select a Pie or a Slice to delete!"
+#~ msgstr "Sélectionner une Tarte ou une Part pour la supprimer"
+
+#~ msgid "Behavior"
+#~ msgstr "Comportement"
+
+#~ msgid "Show Indicator"
+#~ msgstr "Afficher l'Indicateur"
+
+#~ msgid ""
+#~ "If checked, an indicator for easy access of the settings menu is shown in "
+#~ "your panel."
+#~ msgstr ""
+#~ "Si coché, un indicateur apparaitra dans la zone de notification afin "
+#~ "d'accéder rapidement aux réglages de Gnome-Pie"
+
+#~ msgid "Open Pies at Mouse"
+#~ msgstr "Ouvrir les Tartes sous la Souris"
+
+#~ msgid ""
+#~ "If checked, pies will open at your pointer. Otherwise they'll pop up in "
+#~ "the middle of the screen."
+#~ msgstr ""
+#~ "Si coché, les Tartes apparaîtront sous le pointeur. Sinon, elles "
+#~ "s'ouvriront au centre de l'écran."
+
+#~ msgid "General"
+#~ msgstr "Général"
+
+#~ msgid "Pies"
+#~ msgstr "Tartes"
+
+#~ msgid "You can right-click in the list for adding or removing entries."
+#~ msgstr "Le clic-droit permet d'ajouter ou de supprimer des entrées."
+
+#~ msgid ""
+#~ "You can reset Gnome-Pie to its default options with the terminal command "
+#~ "\"gnome-pie --reset\"."
+#~ msgstr ""
+#~ "Vous pouvez restaurer les paramètres par défaut avec la commande \"gnome-"
+#~ "pie --reset\"."
+
+#~ msgid ""
+#~ "The radiobutton at the beginning of each slice-line indicates the "
+#~ "QuickAction of the pie."
+#~ msgstr ""
+#~ "Le bouton radio au début de chaque ligne de Part indique l'Action Rapide "
+#~ "de la Tarte."
+
+#~ msgid ""
+#~ "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+#~ msgstr ""
+#~ "Les Tartes peuvent être lancées avec la commande \"gnome-pie --open=ID\"."
+
+#~ msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+#~ msgstr "N'hésiter pas à visiter la page web de Gnome-Pie at %s !"
+
+#~ msgid ""
+#~ "You can drag'n'drop applications from your main menu to the list above."
+#~ msgstr ""
+#~ "Vous pouvez glisser-déposer des applications depuis le menu principal "
+#~ "dans la liste ci-dessus."
+
+#~ msgid "If you want to give some feedback, please write an e-mail to %s!"
+#~ msgstr "Pour envoyer vos remarques, vous pouvez écrire à l'adresse %s !"
+
+#~ msgid ""
+#~ "You may drag'n'drop URLs and bookmarks from your internet browser to the "
+#~ "list above."
+#~ msgstr ""
+#~ "Vous pouvez glisser-déposer des URLs et des favoris depuis votre "
+#~ "navigateur dans la liste ci-dessus."
+
+#~ msgid "Bugs can be reported at %s!"
+#~ msgstr "Les Bugs peuvent être envoyés à %s !"
+
+#~ msgid ""
+#~ "It's possible to drag'n'drop files and folders from your file browser to "
+#~ "the list above."
+#~ msgstr ""
+#~ "Vous pouvez glisser-déposer des fichiers et des dossiers depuis "
+#~ "l'explorateur  dans la liste ci-dessus."
+
+#~ msgid ""
+#~ "It's recommended to keep your Pies small (at most 6-8 Slices). Else they "
+#~ "will become hard to navigate."
+#~ msgstr ""
+#~ "Il est recommandé de garder les Tartes petites (pas plus de 6-8 Parts) "
+#~ "afin de leur conserver leur facilité de navigation."
+
+#~ msgid ""
+#~ "In order to create a launcher for a Pie, drag the Pie from the list to "
+#~ "your desktop!"
+#~ msgstr ""
+#~ "Afin de créer un lanceur pour une Tarte, vous pouvez déposer la Tarte "
+#~ "directement sur votre bureau !"
+
+#~ msgid "Moves the selected Slice down"
+#~ msgstr "Déplace la Part sélectionnée vers le bas"
+
+#~ msgid "Moves the selected Slice up"
+#~ msgstr "Déplace la Part sélectionnée vers le haut"
+
+#~ msgid "by"
+#~ msgstr "par"

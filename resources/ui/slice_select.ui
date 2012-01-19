@@ -5,7 +5,7 @@
     <property name="width_request">550</property>
     <property name="height_request">450</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Appearance Options</property>
+    <property name="title" translatable="yes">Slice Options</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="destroy_with_parent">True</property>
@@ -336,8 +336,10 @@
                   <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="label" translatable="yes">&lt;b&gt;Slice options&lt;/b&gt;</property>
-                    <property name="use_markup">True</property>
+                    <property name="label" translatable="yes">Slice options</property>
+                    <attributes>
+                      <attribute name="weight" value="bold"/>
+                    </attributes>
                   </object>
                 </child>
               </object>

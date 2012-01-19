@@ -8,11 +8,6 @@ Feel free to visit its **homepage** at http://gnome-pie.simonschneegans.de
 It is inspired by an addon written for the game World of Warcraft.
 (http://go-hero.net/opie/)
 
-
-## About this Branch
-
-The aim of this branch is to create a more intuitive an visually appealing configuration menu.
-
 ## Installing from a PPA
 
 There is a PPA with a recent version of Gnome-Pie. If you simply want to test it, it's very easy to install:
@@ -25,7 +20,13 @@ sudo apt-get install gnome-pie
 
 ## Compiling and installing from source
 
-First of all, install all dependancies:
+First of all, install all dependancies. For compilation and linking against GTK3:
+
+~~~~
+sudo apt-get install libgtk-3-dev libcairo2-dev libappindicator3-dev libgee-dev libxml2-dev libxtst-dev libgnome-menu-3-dev valac cmake libunique-3.0-dev libbamf3-dev libwnck-3-dev
+~~~~
+
+For compilation and linking against GTK2:
 
 ~~~~
 sudo apt-get install libgtk2.0-dev libcairo2-dev libappindicator-dev libgee-dev libxml2-dev libxtst-dev libgnome-menu-dev valac cmake libunique-dev libbamf-dev libwnck-dev
@@ -57,7 +58,7 @@ You can open Pies not only by presing their key stroke. Alternatively you may op
 
 ## License
 
-Copyright (C) 2011 Simon Schneegans <code@simonschneegans.de>
+Copyright (C) 2011-2012 Simon Schneegans <code@simonschneegans.de>
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

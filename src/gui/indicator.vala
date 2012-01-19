@@ -73,7 +73,7 @@ public class Indicator : GLib.Object {
             string icon = "indicator-applet";
             try {
                 path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
-                icon = "gnome-pie-indicator";
+                icon = "gnome-pie";
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
             }
@@ -86,16 +86,16 @@ public class Indicator : GLib.Object {
             try {
                 var file = GLib.File.new_for_path(GLib.Path.build_filename(
                     GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources",
-                    "gnome-pie-indicator.svg"
+                    "gnome-pie.svg"
                 ));
 
                 if (!file.query_exists())
-                  this.indicator.set_from_icon_name("gnome-pie-indicator");
+                  this.indicator.set_from_icon_name("gnome-pie");
                 else
                   this.indicator.set_from_file(file.get_path());
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
-                this.indicator.set_from_icon_name("gnome-pie-indicator");
+                this.indicator.set_from_icon_name("gnome-pie");
             }
 
             this.menu = new Gtk.Menu();

@@ -37,7 +37,7 @@ public class PiePreviewCenter : GLib.Object {
         this.parent = parent;
         this.blend = new AnimatedValue.linear(0, 0, 0);
         
-        this.text = new RenderedText("", 1, 1, "");
+        this.text = new RenderedText("", 1, 1, "", new Color(), 1.0);
         this.old_text = text;
     }
     

@@ -15,11 +15,6 @@ You should have received a copy of the GNU General Public License along with
 this program.  If not, see <http://www.gnu.org/licenses/>. 
 */
 
-/////////////////////////////////////////////////////////////////////
-/// TODO-List (need comments):
-/// PieList
-/////////////////////////////////////////////////////////////////////
-
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
@@ -36,6 +31,7 @@ public class Deamon : GLib.Object {
 
     public static int main(string[] args) {
         Logger.init();
+        Gdk.threads_init();
         Gtk.init(ref args);
         Paths.init();
 
@@ -132,14 +128,12 @@ public class Deamon : GLib.Object {
 
             return Unique.Response.PASSTHROUGH;
         });
-    
-        // init toolkits and static stuff
-        Gdk.threads_init();
         
         // init locale support
         Intl.bindtextdomain ("gnomepie", Paths.locales);
         Intl.textdomain ("gnomepie");
         
+        // init toolkits and static stuff
         ActionRegistry.init();
         GroupRegistry.init();
         

@@ -218,7 +218,7 @@ msgstr "Gruppe: Laufwerke"
 #: ../../src/actionGroups/devicesGroup.vala:37
 msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
 msgstr ""
-"Zeigt eine Gruppe für jedes angeschlossene Gerät, wie z. B. USB_Sticks, an. "
+"Zeigt eine Slice für jedes angeschlossene Gerät, wie z. B. USB Sticks, an. "
 
 #: ../../src/actionGroups/devicesGroup.vala:85
 msgid "Root"

@@ -23,7 +23,7 @@ namespace GnomePie {
 
 public class SettingsWindow : GLib.Object {
     
-    private Gtk.Window? window = null;
+    private Gtk.Dialog? window = null;
     private ThemeList? theme_list = null;
     private Gtk.ToggleButton? indicator = null;
     private Gtk.ToggleButton? autostart = null;
@@ -35,7 +35,7 @@ public class SettingsWindow : GLib.Object {
 
             builder.add_from_file (Paths.ui_files + "/settings.ui");
 
-            this.window = builder.get_object("window") as Gtk.Window;
+            this.window = builder.get_object("window") as Gtk.Dialog;
             
             this.theme_list = new ThemeList();
             
@@ -92,7 +92,7 @@ public class SettingsWindow : GLib.Object {
         this.indicator.active = Config.global.show_indicator;
         this.autostart.active = Config.global.auto_start;
     
-        this.window.show_all();  
+        this.window.show_all(); 
     }
     
     private void on_close_button_clicked() {

@@ -25,7 +25,7 @@ namespace GnomePie {
 
 public class RenameWindow : GLib.Object {
 
-    private Gtk.Window window = null;
+    private Gtk.Dialog window = null;
     private Gtk.Entry entry = null;
     
     public signal void on_ok(string new_name);
@@ -37,7 +37,7 @@ public class RenameWindow : GLib.Object {
 
             builder.add_from_file (Paths.ui_files + "/rename_pie.ui");
 
-            window = builder.get_object("window") as Gtk.Window;
+            window = builder.get_object("window") as Gtk.Dialog;
             entry = builder.get_object("name-entry") as Gtk.Entry;
             
             entry.activate.connect(this.on_ok_button_clicked);

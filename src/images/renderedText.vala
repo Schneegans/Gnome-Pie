@@ -56,14 +56,13 @@ public class RenderedText : Image {
     /////////////////////////////////////////////////////////////////////
     
     public RenderedText(string text, int width, int height, string font,
-                        Color color = Config.global.theme.caption_color,
-                            double scale = Config.global.global_scale) {
+                        Color color, double scale) {
                         
         var cached = this.cache.get("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
                                                                color.r, color.g, color.b, color.a));
         
         if (cached == null) {
-            this.render_text(text, width, height, font, color);
+            this.render_text(text, width, height, font, color, scale);
             this.cache.set("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
                                                  color.r, color.g, color.b, color.a), this.surface);
         } else {
@@ -76,14 +75,13 @@ public class RenderedText : Image {
     /////////////////////////////////////////////////////////////////////
     
     public RenderedText.with_markup(string text, int width, int height, string font,
-                        Color color = Config.global.theme.caption_color,
-                            double scale = Config.global.global_scale) {
+                        Color color, double scale) {
                         
         var cached = this.cache.get("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
                                                                color.r, color.g, color.b, color.a));
         
         if (cached == null) {
-            this.render_markup(text, width, height, font, color);
+            this.render_markup(text, width, height, font, color, scale);
             this.cache.set("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
                                                  color.r, color.g, color.b, color.a), this.surface);
         } else {
@@ -96,8 +94,7 @@ public class RenderedText : Image {
     /////////////////////////////////////////////////////////////////////
     
     public void render_text(string text, int width, int height, string font, 
-                            Color color = Config.global.theme.caption_color,
-                            double scale = Config.global.global_scale) {
+                            Color color, double scale) {
                             
         this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
 
@@ -138,8 +135,7 @@ public class RenderedText : Image {
     /////////////////////////////////////////////////////////////////////
     
     public void render_markup(string text, int width, int height, string font, 
-                            Color color = Config.global.theme.caption_color,
-                            double scale = Config.global.global_scale) {
+                            Color color, double scale) {
                             
         this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
 

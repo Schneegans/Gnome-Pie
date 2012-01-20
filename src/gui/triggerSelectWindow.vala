@@ -35,7 +35,7 @@ public class TriggerSelectWindow : GLib.Object {
     /// Some private members which are needed by other methods.
     /////////////////////////////////////////////////////////////////////
     
-    private Gtk.Window window;
+    private Gtk.Dialog window;
     private Gtk.CheckButton turbo;
     private Gtk.CheckButton delayed;
     private Gtk.CheckButton centered;
@@ -66,8 +66,9 @@ public class TriggerSelectWindow : GLib.Object {
 
             builder.add_from_file (Paths.ui_files + "/trigger_select.ui");
 
-            this.window = builder.get_object("window") as Gtk.Window;
+            this.window = builder.get_object("window") as Gtk.Dialog;
             this.button = new TriggerSelectButton(true);
+            this.button.show();
             
             this.button.on_select.connect((trigger) => {
                 this.trigger = new Trigger.from_values(trigger.key_sym,
@@ -105,7 +106,6 @@ public class TriggerSelectWindow : GLib.Object {
     
     public void show() {
         this.window.show_all();
-        this.window.show();
     }
     
     public void set_pie(string id) {

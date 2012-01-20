@@ -50,9 +50,10 @@ class SliceTypeList : Gtk.TreeView {
         base.set_model(this.data);
         base.set_headers_visible(true);
         base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
-        this.height_request = 170;
+        this.set_fixed_height_mode(true);
         
         var main_column = new Gtk.TreeViewColumn();
+            main_column.set_sizing(Gtk.TreeViewColumnSizing.FIXED);
             main_column.title = _("Slice types");
             var icon_render = new Gtk.CellRendererPixbuf();
                 main_column.pack_start(icon_render, false);

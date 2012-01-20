@@ -40,19 +40,21 @@ class ThemeList : Gtk.TreeView {
         
         var data = new Gtk.ListStore(2, typeof(Gdk.Pixbuf), 
                                         typeof(string));
-        base.set_model(data);
-        base.set_headers_visible(true);
-        base.set_grid_lines(Gtk.TreeViewGridLines.NONE);
+        this.set_model(data);
+        this.set_headers_visible(true);
+        this.set_grid_lines(Gtk.TreeViewGridLines.NONE);
+        this.set_fixed_height_mode(true);
         
         var main_column = new Gtk.TreeViewColumn();
             main_column.title = _("Themes");
+            main_column.set_sizing(Gtk.TreeViewColumnSizing.FIXED);
             var icon_render = new Gtk.CellRendererPixbuf();
                 main_column.pack_start(icon_render, false);
         
             var theme_render = new Gtk.CellRendererText();
                 main_column.pack_start(theme_render, true);
         
-        base.append_column(main_column);
+        this.append_column(main_column);
         
         main_column.add_attribute(icon_render, "pixbuf", DataPos.ICON);
         main_column.add_attribute(theme_render, "markup", DataPos.NAME);

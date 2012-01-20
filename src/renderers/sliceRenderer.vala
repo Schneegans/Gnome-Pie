@@ -123,7 +123,9 @@ public class SliceRenderer : GLib.Object {
             this.caption = new RenderedText(action.name, 
                                             Config.global.theme.caption_width,
                                             Config.global.theme.caption_height,
-                                            Config.global.theme.caption_font);
+                                            Config.global.theme.caption_font,
+                                            Config.global.theme.caption_color,
+                                            Config.global.global_scale);
             
         this.active_icon = new ThemedIcon(action.icon, true);
         this.inactive_icon = new ThemedIcon(action.icon, false);
@@ -138,7 +140,8 @@ public class SliceRenderer : GLib.Object {
         }
         
         this.hotkey = new RenderedText(hotkey_label, (int)Config.global.theme.slice_radius*2,
-                         (int)Config.global.theme.slice_radius*2, "sans 20");
+                         (int)Config.global.theme.slice_radius*2, "sans 20",
+                         Config.global.theme.caption_color, Config.global.global_scale);
     }
     
     /////////////////////////////////////////////////////////////////////

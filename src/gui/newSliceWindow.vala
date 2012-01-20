@@ -30,7 +30,7 @@ public class NewSliceWindow : GLib.Object {
     private SliceTypeList slice_type_list = null;
     private IconSelectWindow? icon_window = null;
     
-    private Gtk.Window window = null;
+    private Gtk.Dialog window = null;
     private Gtk.HBox name_box = null;
     private Gtk.HBox command_box = null;
     private Gtk.Button icon_button = null;
@@ -152,7 +152,7 @@ public class NewSliceWindow : GLib.Object {
             var scroll_area = builder.get_object("slice-scrolledwindow") as Gtk.ScrolledWindow;
                 scroll_area.add(this.slice_type_list);
 
-            this.window = builder.get_object("window") as Gtk.Window;
+            this.window = builder.get_object("window") as Gtk.Dialog;
             
             (builder.get_object("ok-button") as Gtk.Button).clicked.connect(on_ok_button_clicked);
             (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(on_cancel_button_clicked);
@@ -169,10 +169,10 @@ public class NewSliceWindow : GLib.Object {
     }
     
     public void show() {
-        this.window.show_all();
         this.slice_type_list.select_first();
         this.pie_select.select_first();
         this.key_select.set_trigger(new Trigger());
+        this.window.show_all();
     }
     
     public void reload() {

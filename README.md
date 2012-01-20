@@ -8,7 +8,7 @@ Feel free to visit its **homepage** at http://gnome-pie.simonschneegans.de
 It is inspired by an addon written for the game World of Warcraft.
 (http://go-hero.net/opie/)
 
-## Installing from a PPA
+## Installing from a PPA!
 
 There is a PPA with a recent version of Gnome-Pie. If you simply want to test it, it's very easy to install:
 
@@ -18,7 +18,7 @@ sudo apt-get update
 sudo apt-get install gnome-pie
 ~~~~
 
-## Compiling and installing from source
+## Compiling and installing from source!
 
 First of all, install all dependancies. For compilation and linking against GTK3:
 
@@ -50,11 +50,27 @@ If you want to install it system wide use
 cd build && sudo make install
 ~~~~
 
-## Usage
+## Usage!
 
 Now you may launch it by Pressing <ctrl><Alt>A to open up a default Pie with your default applications. There are some other Pies defined --- just open up the configuration dialog by activating the appropriate entry in the appindicator menu or by launching gnome-pie for a second time. There you may configure the Pies to suit your needs.
 
 You can open Pies not only by presing their key stroke. Alternatively you may open any Pie by invoking gnome-pie --open 123 where 123 is the ID of the desired Pie (which is displayed in the configuration dialog).
+
+## Support my work!
+
+I really like working on Gnome-Pie — and you can help improving it! There are multiple ways:
+
+### Translate Gnome-Pie!
+
+This is really easy: [There is an easy-to-follow step-by-step-guide available](http://www.simonschneegans.de/?p=439)!
+
+### Create Themes for Gnome-Pie!
+
+If you have some ideas on how Gnome-Pie should look: It’s easy to create new themes! I would love to include some true art in this software! [There is an comprehensive guide as well](http://www.simonschneegans.de/?p=246).
+
+### Donate!
+
+If you can’t afford the time to do the stuff mentioned above, but still want to help — you can help improving this software by buying some drinks for a poor student ;) ! You can [do this with the Flattr](https://flattr.com/submit/auto?user_id=Simmesimme&url=https://github.com/Simmesimme/Gnome-Pie&title=Gnome-Pie&language=&tags=github&category=software) or by [donating via PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X65SUVC4ZTQSC). If you happen to dislike PayPal, send a mail to code@simonschneegans.de and we can chat about this!
 
 ## License
 

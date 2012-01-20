@@ -29,7 +29,7 @@ UPDATING AN EXISTENT TRANSLATION
 1. Update the gnomepie.pot file
 	* navigate with a terminal to the directory "resources/locale"
 	* enter the command "./gen-pot.sh"
-2. Updste your translation file
+2. Update your translation file
 	* enter the command "./update-po.sh"
 	* follow instructions
 3. Translate to your language

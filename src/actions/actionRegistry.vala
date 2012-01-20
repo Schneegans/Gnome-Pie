@@ -113,10 +113,12 @@ public class ActionRegistry : GLib.Object {
                 
             case "http": case "https":
                 final_icon = "www";
+                final_name = get_domain_name(uri);
                 break;
                 
             case "ftp": case "sftp":
                 final_icon = "folder-remote";
+                final_name = get_domain_name(uri);
                 break;
                 
             default:
@@ -204,6 +206,15 @@ public class ActionRegistry : GLib.Object {
     public static Action? default_for_uri(string uri) {
         var info = AppInfo.get_default_for_uri_scheme(uri);
         return new_for_app_info(info);
+    }
+    
+    private static string get_domain_name(string url) {
+        int domain_end = url.index_of_char('/', 7);
+        int domain_begin = url.index_of_char('/', 0) + 2;
+        
+        if (domain_begin < domain_end) return url.substring(domain_begin, domain_end-domain_begin);
+        
+        return url;
     }
 }
 

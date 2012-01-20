@@ -25,7 +25,7 @@ public class FocusGrabber : GLib.Object {
 
     /////////////////////////////////////////////////////////////////////
     /// Utilities for grabbing focus.
-    /// Code from Gnome-Do/Synapse.
+    /// Code roughly from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
     public static void grab(Gdk.Window window, bool keyboard = true, bool pointer = true, bool owner_events = true) {
@@ -44,7 +44,7 @@ public class FocusGrabber : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Code from Gnome-Do/Synapse.
+    /// Code roughly from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
     public static void ungrab(bool keyboard = true, bool pointer = true) {
@@ -70,7 +70,7 @@ public class FocusGrabber : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Code from Gnome-Do/Synapse.
+    /// Code roughly from Gnome-Do/Synapse.
     /////////////////////////////////////////////////////////////////////
     
     private static bool try_grab_window(Gdk.Window window, bool keyboard, bool pointer, bool owner_events) {

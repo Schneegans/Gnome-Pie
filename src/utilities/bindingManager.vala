@@ -54,6 +54,12 @@ public class BindingManager : GLib.Object {
         Gdk.ModifierType.MOD2_MASK|Gdk.ModifierType.LOCK_MASK|Gdk.ModifierType.MOD5_MASK
     };
     
+    /////////////////////////////////////////////////////////////////////
+    /// Some variables to remember which delayed binding was delayed.
+    /// When the delay passes without another event indicating that the
+    /// Trigger was released, the stored binding will be activated.
+    /////////////////////////////////////////////////////////////////////
+    
     private uint32 delayed_count = 0;
     private X.Event? delayed_event = null;
     private Keybinding? delayed_binding = null;

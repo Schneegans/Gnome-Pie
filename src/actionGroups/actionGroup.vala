@@ -71,10 +71,18 @@ public class ActionGroup : GLib.Object {
         actions.clear();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Makes all contained Slices no Quick Actions.
+    /////////////////////////////////////////////////////////////////////
+    
     public void disable_quickactions() {
         foreach (var action in actions)
             action.is_quickaction = false;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns true, if one o the contained Slices is a Quick Action
+    /////////////////////////////////////////////////////////////////////
     
     public bool has_quickaction() {
         foreach (var action in actions)

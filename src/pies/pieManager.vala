@@ -31,6 +31,11 @@ public class PieManager : GLib.Object {
 
     public static Gee.HashMap<string, Pie?> all_pies { get; private set; }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Stores all PieWindows which are currently opened. Should be
+    /// rarely more than two...
+    /////////////////////////////////////////////////////////////////////
+    
     public static Gee.HashSet<PieWindow?> opened_windows { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
@@ -112,6 +117,10 @@ public class PieManager : GLib.Object {
     public static string get_accelerator_label_of(string id) {
         return bindings.get_accelerator_label_of(id);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Bind the Pie with the given ID to the given trigger.
+    /////////////////////////////////////////////////////////////////////
     
     public static void bind_trigger(Trigger trigger, string id) {
         bindings.unbind(id);
@@ -237,6 +246,10 @@ public class PieManager : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a desktop file for which opens the Pie with given ID.
+    /////////////////////////////////////////////////////////////////////
+    
     public static void create_launcher(string id) {
         if (all_pies.has_key(id)) {
             Pie? pie = all_pies[id];
@@ -261,6 +274,10 @@ public class PieManager : GLib.Object {
             }
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Deletes the desktop file for the Pie with the given ID.
+    /////////////////////////////////////////////////////////////////////
     
     private static void remove_launcher(string id) {
         string launcher = Paths.launchers + "/%s.desktop".printf(id);

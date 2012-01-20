@@ -30,12 +30,16 @@ public class ActionRegistry : GLib.Object {
     public static Gee.ArrayList<string> types { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
-    /// Three maps associating a displayable name for each Action, 
+    /// A map associating a displayable name for each Action, 
     /// whether it has a custom icon and a name for the pies.conf
     /// file with it's type.
     /////////////////////////////////////////////////////////////////////
     
     public static Gee.HashMap<string, TypeDescription?> descriptions { get; private set; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// A helper class storing information on a Action type.
+    /////////////////////////////////////////////////////////////////////
     
     public class TypeDescription {
         public string name { get; set; default=""; }
@@ -71,6 +75,10 @@ public class ActionRegistry : GLib.Object {
         type_description = UriAction.register();
         descriptions.set(typeof(UriAction).name(), type_description);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a new Action from the given type name.
+    /////////////////////////////////////////////////////////////////////
     
     public static Action? create_action(string type_id, string name, string icon, string command, bool quickaction) {
         switch (type_id) {
@@ -207,6 +215,11 @@ public class ActionRegistry : GLib.Object {
         var info = AppInfo.get_default_for_uri_scheme(uri);
         return new_for_app_info(info);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Returns for example www.google.com when http://www.google.de/?q=h
+    /// is given.
+    /////////////////////////////////////////////////////////////////////
     
     private static string get_domain_name(string url) {
         int domain_end = url.index_of_char('/', 7);

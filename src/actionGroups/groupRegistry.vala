@@ -30,7 +30,7 @@ public class GroupRegistry : GLib.Object {
     public static Gee.ArrayList<string> types { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
-    /// Three maps associating a displayable name for each ActionGroup, 
+    /// A map associating a displayable name for each ActionGroup, 
     /// an icon name and a name for the pies.conf file with it's type.
     /////////////////////////////////////////////////////////////////////
     
@@ -73,6 +73,10 @@ public class GroupRegistry : GLib.Object {
         types.add(typeof(WindowListGroup).name());
         descriptions.set(typeof(WindowListGroup).name(), type_description);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Creates a Group for a given type name.
+    /////////////////////////////////////////////////////////////////////
     
     public static ActionGroup? create_group(string type_id, string parent_id) {
         switch (type_id) {

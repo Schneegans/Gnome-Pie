@@ -162,13 +162,18 @@ public class Image : GLib.Object {
         else              ctx.paint_with_alpha(alpha);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Converts the image to a Gdk.Pixbuf.
+    /////////////////////////////////////////////////////////////////////
+    
     public Gdk.Pixbuf to_pixbuf() {
         var pixbuf = new Gdk.Pixbuf.from_data(surface.get_data(), Gdk.Colorspace.RGB, true, 8, 
                                               width(), height(), surface.get_stride(), null);
         
         pixbuf = pixbuf.copy();
                                        
-        // funny stuff here --- need to swap Red end Blue because Cairo and Gdk are different...
+        // funny stuff here --- need to swap Red end Blue because Cairo 
+        // and Gdk are different...
         uint8* p = pixbuf.pixels;
         for (int i=0; i<width()*height()*4-4; i+=4) {
             var tmp = *(p + i);

@@ -71,7 +71,8 @@ public class RenderedText : Image {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// C'tor, creates a new image representation of a string.
+    /// C'tor, creates a new image representation of a string. This
+    /// string may contain markup information.
     /////////////////////////////////////////////////////////////////////
     
     public RenderedText.with_markup(string text, int width, int height, string font,

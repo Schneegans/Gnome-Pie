@@ -70,7 +70,7 @@ If you have some ideas on how Gnome-Pie should look: It’s easy to create new t
 
 ### Donate!
 
-If you can’t afford the time to do the stuff mentioned above, but still want to help — you can help improving this software by buying some drinks for a poor student ;) ! You can [do this with the Flattr](https://flattr.com/submit/auto?user_id=Simmesimme&url=https://github.com/Simmesimme/Gnome-Pie&title=Gnome-Pie&language=&tags=github&category=software) or by [donating via PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X65SUVC4ZTQSC). If you happen to dislike PayPal, send a mail to code@simonschneegans.de and we can chat about this!
+If you can’t afford the time to do the stuff mentioned above, but still want to help — you can help improving this software by buying some drinks for a poor student ;) ! You can [do this with the Flattr](http://flattr.com/thing/468485/Gnome-Pie) or by [donating via PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=X65SUVC4ZTQSC). If you happen to dislike PayPal, send a mail to code@simonschneegans.de and we can chat about this!
 
 ## License
 

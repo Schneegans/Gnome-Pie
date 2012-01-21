@@ -252,10 +252,16 @@ public class IconSelectWindow : GLib.Object {
                 
             // file chooser widget
             this.file_chooser = builder.get_object("filechooser") as Gtk.FileChooserWidget;
-                var file_filter = new Gtk.FileFilter();
-                    file_filter.add_pixbuf_formats();
-                    file_filter.set_name(_("All supported image formats"));
-                    file_chooser.add_filter(file_filter);
+//                var file_filter = new Gtk.FileFilter();
+//                    file_filter.add_pixbuf_formats();
+//                    
+//                    #if HAVE_GTK_3
+//                        file_filter.set_filter_name(_("All supported image formats"));
+//                    #else
+//                        file_filter.set_name(_("All supported image formats"));
+//                    #endif
+//                    
+//                    file_chooser.add_filter(file_filter);
                 
                 // set active_icon if the user selected a file
                 file_chooser.selection_changed.connect(() => {

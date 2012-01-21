@@ -21,11 +21,11 @@ msgstr ""
 
 #: ../../src/actions/keyAction.vala:34
 msgid "Press hotkey"
-msgstr "Нажмите клавишу быстрого доступа"
+msgstr "Нажмите сочетание клавиш быстрого доступа"
 
 #: ../../src/actions/keyAction.vala:36
 msgid "Simulates the activation of a hotkey."
-msgstr ""
+msgstr "Имитирует активацию сочетания клавиш быстрого доступа."
 
 #: ../../src/actions/appAction.vala:34
 msgid "Launch application"
@@ -33,15 +33,15 @@ msgstr "Запустить приложение"
 
 #: ../../src/actions/appAction.vala:36
 msgid "Executes the given command."
-msgstr ""
+msgstr "Выполняет заданную команду."
 
 #: ../../src/actions/uriAction.vala:34
 msgid "Open URI"
-msgstr "Открыть URI"
+msgstr "Открытие URI"
 
 #: ../../src/actions/uriAction.vala:36
 msgid "Opens a given location. You may use URL's or files paths."
-msgstr ""
+msgstr "Открывает заданный адрес. Вы можете использовать адресные ссылки или адреса файлов."
 
 #: ../../src/actions/actionRegistry.vala:111
 msgid "Trash"
@@ -49,11 +49,11 @@ msgstr "Корзина"
 
 #: ../../src/actions/pieAction.vala:34
 msgid "Open Pie"
-msgstr "Открыть пай"
+msgstr "Открытие пая"
 
 #: ../../src/actions/pieAction.vala:36
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
-msgstr ""
+msgstr "Oткрывает ещё один пай Gnome-Pie. Таким образом вы можете создавать подменю."
 
 #: ../../src/gui/triggerSelectWindow.vala:144
 msgid ""
@@ -67,7 +67,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:145
 msgid "No Pie selected."
-msgstr ""
+msgstr "Пай не выбран"
 
 #: ../../src/gui/preferencesWindow.vala:181
 msgid "New Pie"
@@ -82,44 +82,44 @@ msgstr ""
 
 #: ../../src/gui/newSliceWindow.vala:229
 msgid "Rename me!"
-msgstr ""
+msgstr "Переименуйте меня!"
 
 #: ../../src/gui/piePreviewRenderer.vala:292
 msgid "Click to edit"
-msgstr ""
+msgstr "Щёлкните для выполнения изменений"
 
 #: ../../src/gui/piePreviewRenderer.vala:292
 #: ../../src/gui/piePreviewRenderer.vala:307
 msgid "Drag to move"
-msgstr ""
+msgstr "Перетаскивайте для выполнения перемещения"
 
 #: ../../src/gui/piePreviewRenderer.vala:295
 #, fuzzy
 msgid "Click to add a new Slice"
-msgstr "Добавить новую порцию"
+msgstr "Щёлкните для добавления новой порции"
 
 #: ../../src/gui/piePreviewRenderer.vala:299
 #, fuzzy
 msgid "Drop to add as new Slice"
-msgstr "Добавить новую порцию"
+msgstr "Перетаскивайте для выполнения добавления в качастве новой порции"
 
 #: ../../src/gui/piePreviewRenderer.vala:302
 msgid "Drop to move Slice"
-msgstr ""
+msgstr "Перетаскивайте для выполнения перемещения порции"
 
 #: ../../src/gui/piePreviewRenderer.vala:307
 msgid "Click to delete"
-msgstr ""
+msgstr "Щёлкните для выполнения удаления"
 
 #: ../../src/gui/triggerSelectButton.vala:59
 #, fuzzy
 msgid "Press a hotkey ..."
-msgstr "Нажмите клавишу быстрого доступа"
+msgstr "Нажмите сочетание клавиш быстрого доступа"
 
 #: ../../src/gui/piePreview.vala:120
 #, fuzzy
 msgid "Do you really want to delete this Slice?"
-msgstr "Вы действительно хотите удалить выделенную порцию?"
+msgstr "Вы действительно хотите удалить эту порцию?"
 
 #: ../../src/gui/themeList.vala:48
 msgid "Themes"
@@ -127,12 +127,12 @@ msgstr "Темы"
 
 #: ../../src/gui/themeList.vala:80
 msgid "By"
-msgstr ""
+msgstr "-"
 
 #: ../../src/gui/sliceTypeList.vala:56
 #, fuzzy
 msgid "Slice types"
-msgstr "Типы файлов"
+msgstr "Типы порций"
 
 #: ../../src/gui/iconSelectWindow.vala:178
 msgid "All icons"
@@ -170,38 +170,38 @@ msgstr "Все поддерживаемые форматы изображени�
 #: ../../src/actionGroups/windowListGroup.vala:34
 #, fuzzy
 msgid "Group: Window List"
-msgstr "Список окон"
+msgstr "Группа: Список окон"
 
 #: ../../src/actionGroups/windowListGroup.vala:36
 msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
-msgstr ""
+msgstr "Показывает порцию для каждого из открытых окон. Как это делает Alt-Tab."
 
 #: ../../src/actionGroups/menuGroup.vala:35
 #, fuzzy
 msgid "Group: Main menu"
-msgstr "Основное меню"
+msgstr "Группа: Основное меню"
 
 #: ../../src/actionGroups/menuGroup.vala:37
 msgid "Displays your main menu structure."
-msgstr ""
+msgstr "Отображает структуру вашего основного меню."
 
 #: ../../src/actionGroups/clipboardGroup.vala:64
 #, fuzzy
 msgid "Group: Clipboard"
-msgstr "Буфер обмена"
+msgstr "Группа: Буфер обмена"
 
 #: ../../src/actionGroups/clipboardGroup.vala:66
 msgid "Manages your Clipboard."
-msgstr ""
+msgstr "Управляет вашим буфером обмена."
 
 #: ../../src/actionGroups/sessionGroup.vala:35
 #, fuzzy
 msgid "Group: Session Control"
-msgstr "Управление сеансом"
+msgstr "Группа: Управление сеансом"
 
 #: ../../src/actionGroups/sessionGroup.vala:37
 msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
-msgstr ""
+msgstr "Показывает порцию для операций выключения, перезагрузки и спящего режима."
 
 #: ../../src/actionGroups/sessionGroup.vala:60
 msgid "Shutdown"
@@ -218,24 +218,24 @@ msgstr "Перезагрузить"
 #: ../../src/actionGroups/bookmarkGroup.vala:36
 #, fuzzy
 msgid "Group: Bookmarks"
-msgstr "Закладки"
+msgstr "Группа: Закладки"
 
 #: ../../src/actionGroups/bookmarkGroup.vala:38
 msgid "Shows a Slice for each of your directory Bookmarks."
-msgstr ""
+msgstr "Показывает порцию содержащую закладки папок."
 
 #: ../../src/actionGroups/devicesGroup.vala:35
 #, fuzzy
 msgid "Group: Devices"
-msgstr "Устройства"
+msgstr "Группа: Устройства"
 
 #: ../../src/actionGroups/devicesGroup.vala:37
 msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
-msgstr ""
+msgstr "Показывает порцию подключённых устройств, например USB-накопителя."
 
 #: ../../src/actionGroups/devicesGroup.vala:85
 msgid "Root"
-msgstr "Root"
+msgstr "Файловая система"
 
 #: ../../src/utilities/bindingManager.vala:155 ../../src/utilities/key.vala:65
 #: ../../src/utilities/trigger.vala:216 ../../src/utilities/trigger.vala:217
@@ -271,7 +271,7 @@ msgstr "Задержка"
 #: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
 #: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:204
 msgid "Centered"
-msgstr ""
+msgstr "По центру"
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
@@ -291,7 +291,7 @@ msgstr "Предыдущая композиция"
 
 #: ../../src/pies/defaultConfig.vala:33
 msgid "Play/Pause"
-msgstr "Воспроизвести/приостановить"
+msgstr "Воспроизвести или приостановить"
 
 #: ../../src/pies/defaultConfig.vala:45
 msgid "Bookmarks"
@@ -331,7 +331,7 @@ msgstr "Восстановить"
 
 #: ../ui/icon_select.ui:8
 msgid "Select an icon"
-msgstr ""
+msgstr "Выберите значок"
 
 #: ../ui/icon_select.ui:84
 msgid "Icon Theme"
@@ -343,11 +343,11 @@ msgstr "Настроить значок"
 
 #: ../ui/trigger_select.ui:8
 msgid "Activation Settings"
-msgstr ""
+msgstr "Настройки активации"
 
 #: ../ui/trigger_select.ui:44
 msgid "It's possible to bind mouse buttons as well!"
-msgstr ""
+msgstr "Также возможно назначать кнопки мыши!"
 
 #: ../ui/trigger_select.ui:76
 msgid "Turbo mode"
@@ -356,8 +356,8 @@ msgstr "Турбо-режим"
 #: ../ui/trigger_select.ui:80
 msgid "If checked, the Pie will close when you release the chosen hot key."
 msgstr ""
-"Если выбрана эта возможность, пай закроется после отпуска клавиши быстрого "
-"доступа"
+"Если выбрана эта возможность, пай закроется после того, как вы отпустите "
+" клавиши быстрого доступа"
 
 #: ../ui/trigger_select.ui:93
 msgid "Long press for activation"
@@ -367,12 +367,12 @@ msgstr "Продолжительное нажатие для активации"
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr ""
-"Если выбрана эта возможность, пай пай откроется только, если вы "
+"Если выбрана эта возможность, пай откроется только, если вы "
 "продолжительно зажмёте эту клавишу быстрого доступа."
 
 #: ../ui/trigger_select.ui:110
 msgid "Open Pie centered on the screen"
-msgstr ""
+msgstr "Открыть пай по центру экрана"
 
 #: ../ui/trigger_select.ui:114
 #, fuzzy
@@ -380,39 +380,40 @@ msgid ""
 "If checked, the Pie will open in the middle of your screen. Else it will pop "
 "up at your pointer."
 msgstr ""
-"Если выбрана эта возможность, пай пай откроется только, если вы "
-"продолжительно зажмёте эту клавишу быстрого доступа."
+"Если выбрана эта возможность, пай откроется в центре вашего экрана."
+"А также может открываться чуть выше вашего курсора."
 
 #: ../ui/trigger_select.ui:133
 msgid "<b>Activation options</b>"
-msgstr ""
+msgstr "<b>Параметры активации</b>"
 
 #: ../ui/settings.ui:8 ../ui/preferences.ui:27
 #, fuzzy
 msgid "General Settings"
-msgstr "Gnome-Pie - Настройки"
+msgstr "Основные настройки"
 
 #: ../ui/settings.ui:47
 #, fuzzy
 msgid "Start Gnome-Pie on login"
-msgstr "Запускать при загрузке"
+msgstr "Запускать Gnome-Pie при загрузке системы"
 
 #: ../ui/settings.ui:52 ../ui/settings.ui:53
 #, fuzzy
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr ""
-"Если выбрана эта возможность, Gnome-Pie будет запускаться после входа в "
-"систему."
+"Если выбрана эта возможность, Gnome-Pie будет фоново запускаться после входа в систему."
 
 #: ../ui/settings.ui:66
 msgid "Display panel icon "
-msgstr ""
+msgstr "Показывать значок на панели "
 
 #: ../ui/settings.ui:71 ../ui/settings.ui:72
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
 msgstr ""
+"Если эта возможность не выбрана, вы можете получить доступ к этому меню запустив "
+"Gnome-Pie второй раз."
 
 #: ../ui/settings.ui:92
 #, fuzzy
@@ -421,53 +422,53 @@ msgstr "Общий масштаб"
 
 #: ../ui/settings.ui:130
 msgid "<b>Appearance and behavior</b>"
-msgstr ""
+msgstr "<b>Оформление и поведение</b>"
 
 #: ../ui/slice_select.ui:8
 #, fuzzy
 msgid "Slice Options"
-msgstr "Приложения"
+msgstr "Параметры порции"
 
 #: ../ui/slice_select.ui:95
 msgid "There are no options for this Slice type."
-msgstr ""
+msgstr "Отсутствуют параметры для этого типа порции"
 
 #: ../ui/slice_select.ui:121
 msgid "Name of the Slice "
-msgstr ""
+msgstr "Название порции"
 
 #: ../ui/slice_select.ui:159
 msgid "URI to open"
-msgstr ""
+msgstr "URI для открытия"
 
 #: ../ui/slice_select.ui:197
 msgid "Command to execute"
-msgstr ""
+msgstr "Командая для выполнения"
 
 #: ../ui/slice_select.ui:235
 msgid "Hotkey to press"
-msgstr ""
+msgstr "Клавиша быстрого доступа для нажатия"
 
 #: ../ui/slice_select.ui:264
 msgid "Pie to open"
-msgstr ""
+msgstr "Пай для открытия"
 
 #: ../ui/slice_select.ui:293
 msgid "Is Quick Action"
-msgstr ""
+msgstr "Это быстрое действие"
 
 #: ../ui/slice_select.ui:306
 msgid "This Slice will be executed when you click in the middle of the Pie."
-msgstr ""
+msgstr "Эта порция будет выполнена, после нажатия в центре пая"
 
 #: ../ui/slice_select.ui:339
 msgid "<b>Slice options</b>"
-msgstr ""
+msgstr "<b>Параметры порции</b>"
 
 #: ../ui/preferences.ui:8
 #, fuzzy
 msgid "Gnome-Pie Settings"
-msgstr "Gnome-Pie - Настройки"
+msgstr "Настройки Gnome-Pie"
 
 #: ../ui/preferences.ui:261
 msgid ""
@@ -479,6 +480,13 @@ msgid ""
 "\n"
 "For manual and advanced configuration click on the plus sign."
 msgstr ""
+"<b><big>Этот пай пуст!</big>\n"
+"\n"
+"Начните добавлять в него порции!</b> Выполните это перетаскивая элементы в значок "
+"плюса ниже. Делайте многое! Например ярлыки запуска программ или папки."
+"А также адресные ссылки из вашего обозревателя... \n"
+"\n"
+"Для выполнения самостоятельной и подробной настройки, щёлкните на знаке плюса."
 
 #: ../ui/preferences.ui:282
 msgid ""
@@ -487,11 +495,15 @@ msgid ""
 "Start by creating one! </b> This can be done by clicking on the tiny little "
 "plus sign in the lower left corner."
 msgstr ""
+"<b><big>Отсутствуют паи!</big>\n"
+"\n"
+"Начните с создания пая! </b> Выполните это щёлкнув на небольшом значке плюса"
+"в нижнем левом углу."
 
 #: ../ui/rename_pie.ui:6
 #, fuzzy
 msgid "Rename a Pie"
-msgstr "Открыть пай"
+msgstr "Переименовать пай"
 
 #~ msgid "Behavior"
 #~ msgstr "Поведение"

@@ -18,29 +18,38 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// 
+/// A list, containing one entry for each existing Pie.
 /////////////////////////////////////////////////////////////////////////
 
 class PieList : Gtk.TreeView {
 
     /////////////////////////////////////////////////////////////////////
-    /// The currently selected row.
+    /// This signal gets emitted when the user selects a new Pie.
     /////////////////////////////////////////////////////////////////////
     
     public signal void on_select(string id);
     
+    /////////////////////////////////////////////////////////////////////
+    /// Stores the data internally.
+    /////////////////////////////////////////////////////////////////////
+    
     private Gtk.ListStore data;
+    private enum DataPos {ICON, ICON_NAME, NAME, ID}
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Stores where a drag startet.
+    /////////////////////////////////////////////////////////////////////
+    
     private Gtk.TreeIter? drag_start = null;
     
     /////////////////////////////////////////////////////////////////////
-    /// Two members needed to avoid useless, frequent changes of the 
-    /// stored Actions.
+    /// Rembers the time when a last drag move event was reported. Used
+    /// to avoid frequent changes of selected Pie when a Pie is dragged
+    /// over this widget.
     /////////////////////////////////////////////////////////////////////
 
     private uint last_hover = 0;
     
-    private enum DataPos {ICON, ICON_NAME, NAME, ID}
-
     /////////////////////////////////////////////////////////////////////
     /// C'tor, constructs the Widget.
     /////////////////////////////////////////////////////////////////////
@@ -103,6 +112,10 @@ class PieList : Gtk.TreeView {
         reload_all();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Loads all existing Pies to the list.
+    /////////////////////////////////////////////////////////////////////
+    
     public void reload_all() {
         Gtk.TreeIter active;
         string id = "";
@@ -117,6 +130,10 @@ class PieList : Gtk.TreeView {
         select(id);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Selects the first Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     public void select_first() {
         Gtk.TreeIter active;
         
@@ -129,6 +146,10 @@ class PieList : Gtk.TreeView {
             this.on_select("");
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Selects the Pie with the given ID.
+    /////////////////////////////////////////////////////////////////////
     
     public void select(string id) {
         this.data.foreach((model, path, iter) => {
@@ -144,7 +165,10 @@ class PieList : Gtk.TreeView {
         });
     }
     
-    // loads one given pie to the list
+    /////////////////////////////////////////////////////////////////////
+    /// Loads one given pie to the list.
+    /////////////////////////////////////////////////////////////////////
+    
     private void load_pie(Pie pie) {
         if (pie.id.length == 3) {
             Gtk.TreeIter last;
@@ -157,6 +181,10 @@ class PieList : Gtk.TreeView {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a drag which started on this Widget was successfull.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_dnd_source(Gdk.DragContext context, Gtk.SelectionData selection_data, uint info, uint time_) {
         if (this.drag_start != null) {
             string id = "";
@@ -164,6 +192,10 @@ class PieList : Gtk.TreeView {
             selection_data.set_uris({"file://" + Paths.launchers + "/" + id + ".desktop"});
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a drag operation is started on this Widget.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_start_drag(Gdk.DragContext ctx) {
         if (this.get_selection().get_selected(null, out this.drag_start)) {
@@ -175,6 +207,10 @@ class PieList : Gtk.TreeView {
             Gtk.drag_set_icon_pixbuf(ctx, pixbuf, icon.size()/2, icon.size()/2);
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when something is dragged over this Widget.
+    /////////////////////////////////////////////////////////////////////
     
     private bool on_drag_move(Gdk.DragContext context, int x, int y, uint time) {
     

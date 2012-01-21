@@ -20,28 +20,58 @@ using GLib.Math;
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// 
+/// The delete sign, displayed in the upper right corner of each
+/// Slice.
 /////////////////////////////////////////////////////////////////////////
 
 public class PiePreviewDeleteSign : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user clicked on this sign.
+    /////////////////////////////////////////////////////////////////////
+
     public signal void on_clicked();
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The image used to display this oject.
+    /////////////////////////////////////////////////////////////////////
     
     public Image icon { get; private set; }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Some constants determining the look and behaviour of this Slice.
+    /////////////////////////////////////////////////////////////////////
+    
     private const int radius = 18;
     private const double globale_scale = 0.8;
+    private const double click_cancel_treshold = 5;
+
+    /////////////////////////////////////////////////////////////////////
+    /// True, when the add sign is currently visible.
+    /////////////////////////////////////////////////////////////////////
 
     private bool visible = false;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Some AnimatedValues for smooth transitions.
+    /////////////////////////////////////////////////////////////////////
+    
     private AnimatedValue size;
     private AnimatedValue alpha; 
     private AnimatedValue activity; 
     private AnimatedValue clicked; 
     
-    private const double click_cancel_treshold = 5;
+    /////////////////////////////////////////////////////////////////////
+    /// Storing the position where a mouse click was executed. Useful for
+    /// canceling the click when the mouse moves some pixels.
+    /////////////////////////////////////////////////////////////////////
     
     private double clicked_x = 0.0;
     private double clicked_y = 0.0;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, sets everything up.
+    /////////////////////////////////////////////////////////////////////
 
     public PiePreviewDeleteSign() {
         this.size = new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 0, 0, 0, 2.0);
@@ -58,12 +88,20 @@ public class PiePreviewDeleteSign : GLib.Object {
         this.icon = new Icon("stock_delete", radius*2);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Makes this object visible.
+    /////////////////////////////////////////////////////////////////////
+    
     public void show() {
         if (!this.visible) {
             this.visible = true;
             this.alpha.reset_target(1.0, 0.3);   
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Makes this object invisible.
+    /////////////////////////////////////////////////////////////////////
     
     public void hide() {
         if (this.visible) {
@@ -73,7 +111,7 @@ public class PiePreviewDeleteSign : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// 
+    /// Updates the size of this object. All transitions will be smooth.
     /////////////////////////////////////////////////////////////////////
 
     public void set_size(double size) {
@@ -81,7 +119,7 @@ public class PiePreviewDeleteSign : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Draws all layers of the slice.
+    /// Draws the sign to the given context.
     /////////////////////////////////////////////////////////////////////
 
     public void draw(double frame_time, Cairo.Context ctx) {
@@ -105,6 +143,10 @@ public class PiePreviewDeleteSign : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the mouse moves to another position.
+    /////////////////////////////////////////////////////////////////////
+    
     public bool on_mouse_move(double x, double y) {
         if (this.clicked.end == 0.9) {
             double dist = GLib.Math.pow(x-this.clicked_x, 2) + GLib.Math.pow(y-this.clicked_y, 2);
@@ -121,6 +163,10 @@ public class PiePreviewDeleteSign : GLib.Object {
         return false;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a button of the mouse is pressed.
+    /////////////////////////////////////////////////////////////////////
+    
     public bool on_button_press(double x, double y) {
         if (this.activity.end == 1.0) {
             this.clicked.reset_target(0.9, 0.1);
@@ -130,6 +176,10 @@ public class PiePreviewDeleteSign : GLib.Object {
         }
         return false;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a button of the mouse is released.
+    /////////////////////////////////////////////////////////////////////
     
     public bool on_button_release(double x, double y) {
         if (this.clicked.end == 0.9) {

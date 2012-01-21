@@ -18,15 +18,30 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// 
+/// A custom widget displaying the preview of a Pie. It can be used to
+/// configure the displayed Pie in various aspects.
 /////////////////////////////////////////////////////////////////////////
 
 class PiePreview : Gtk.DrawingArea {
 
+    /////////////////////////////////////////////////////////////////////
+    /// These get called when the last Slice is removed and when the
+    /// first Slice is added respectively.
+    /////////////////////////////////////////////////////////////////////
+
     public signal void on_last_slice_removed();
     public signal void on_first_slice_added();
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The internally used renderer to draw the Pie.
+    /////////////////////////////////////////////////////////////////////
 
     private PiePreviewRenderer renderer = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The window which pops up, when a Slice is added or edited.
+    /////////////////////////////////////////////////////////////////////
+    
     private NewSliceWindow? new_slice_window = null;
     
     /////////////////////////////////////////////////////////////////////
@@ -35,11 +50,28 @@ class PiePreview : Gtk.DrawingArea {
     
     private GLib.Timer timer;
     
-    private bool drawing = false;
+    /////////////////////////////////////////////////////////////////////
+    /// True, when it is possible to drag a slice from this widget.
+    /// False, when the user currently hovers over the add sign.
+    /////////////////////////////////////////////////////////////////////
+    
     private bool drag_enabled = false;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The ID of the currently displayed Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     private string current_id = "";
     
+    /////////////////////////////////////////////////////////////////////
+    /// The position from where a Slice-drag started.
+    /////////////////////////////////////////////////////////////////////
+    
     private int drag_start_index = -1;
+
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, creates the widget.
+    /////////////////////////////////////////////////////////////////////
 
     public PiePreview() {
         this.renderer = new PiePreviewRenderer();
@@ -136,14 +168,22 @@ class PiePreview : Gtk.DrawingArea {
         });
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Sets the currently displayed Pie to the Pie with the given ID.
+    /////////////////////////////////////////////////////////////////////
+    
     public void set_pie(string id) {
         this.current_id = id;
         this.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this).light[0]);
         this.renderer.load_pie(PieManager.all_pies[id]);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Begins the draw loop. It automatically ends, when the containing
+    /// window becomes invisible.
+    /////////////////////////////////////////////////////////////////////
+    
     public void draw_loop() {
-        this.drawing = true;
         this.timer.start();
         this.queue_draw();
         
@@ -153,6 +193,9 @@ class PiePreview : Gtk.DrawingArea {
         });
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /// Called every frame.
+    /////////////////////////////////////////////////////////////////////
     
     #if HAVE_GTK_3
          private bool on_draw(Cairo.Context ctx) { 
@@ -173,15 +216,27 @@ class PiePreview : Gtk.DrawingArea {
         return true;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the mouse leaves the area of this widget.
+    /////////////////////////////////////////////////////////////////////
+    
     public bool on_mouse_leave(Gdk.EventCrossing event) {
         this.renderer.on_mouse_leave();
         return true;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the mouse enters the area of this widget.
+    /////////////////////////////////////////////////////////////////////
+    
     public bool on_mouse_enter(Gdk.EventCrossing event) {
         this.renderer.on_mouse_enter();
         return true;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the mouse moves in the area of this widget.
+    /////////////////////////////////////////////////////////////////////
     
     private bool on_mouse_move(Gdk.EventMotion event) {
         this.renderer.set_dnd_mode(false);
@@ -195,16 +250,28 @@ class PiePreview : Gtk.DrawingArea {
         return true;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a mouse button is pressed.
+    /////////////////////////////////////////////////////////////////////
+    
     private bool on_button_press() {
         this.renderer.on_button_press();
         return true;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a mouse button is released.
+    /////////////////////////////////////////////////////////////////////
     
     private bool on_button_release() {
         if (!this.renderer.drag_n_drop_mode) 
             this.renderer.on_button_release();
         return true;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the mouse is moved over this widget.
+    /////////////////////////////////////////////////////////////////////
     
     private bool on_drag_move(Gdk.DragContext ctx, int x, int y, uint time) {
         this.renderer.set_dnd_mode(true);
@@ -213,6 +280,10 @@ class PiePreview : Gtk.DrawingArea {
         this.renderer.on_mouse_move(x-allocation.width*0.5, y-allocation.height*0.5);
         return true;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user tries to drag something from this widget.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_start_drag(Gdk.DragContext ctx) {
         this.drag_start_index = this.renderer.get_active_slice();
@@ -224,6 +295,11 @@ class PiePreview : Gtk.DrawingArea {
         
         this.renderer.set_dnd_mode(true);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user finishes a drag operation on this widget.
+    /// Only used for Slice-movement.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_end_drag(Gdk.DragContext context) {
         
@@ -243,6 +319,11 @@ class PiePreview : Gtk.DrawingArea {
         }  
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user finishes a drag operation on this widget.
+    /// Only used for external drags.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_dnd_received(Gdk.DragContext context, int x, int y, 
                                  Gtk.SelectionData selection_data, uint info, uint time_) {
                                  
@@ -259,6 +340,10 @@ class PiePreview : Gtk.DrawingArea {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Enables this widget to be a source for drag operations.
+    /////////////////////////////////////////////////////////////////////
+    
     private void enable_drag_source() {
         if (!this.drag_enabled) {
             this.drag_enabled = true;
@@ -268,6 +353,10 @@ class PiePreview : Gtk.DrawingArea {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Disables this widget to be a source for drag operations.
+    /////////////////////////////////////////////////////////////////////   
+       
     private void disable_drag_source() {
         if (this.drag_enabled) {
             this.drag_enabled = false;

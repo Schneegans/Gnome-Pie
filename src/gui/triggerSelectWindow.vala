@@ -100,13 +100,27 @@ public class TriggerSelectWindow : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Sets the parent window, in order to make this window stay in
+    /// front.
+    /////////////////////////////////////////////////////////////////////
+    
     public void set_parent(Gtk.Window parent) {
         this.window.set_transient_for(parent);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Displays the window on the screen.
+    /////////////////////////////////////////////////////////////////////
+    
     public void show() {
         this.window.show_all();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Initilizes all members to match the Trigger of the Pie with the
+    /// given ID.
+    /////////////////////////////////////////////////////////////////////
     
     public void set_pie(string id) {
         var trigger = new Trigger.from_string(PieManager.get_accelerator_of(id));
@@ -120,12 +134,20 @@ public class TriggerSelectWindow : GLib.Object {
         this.button.set_trigger(trigger);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when one of the three checkoxes is toggled.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_check_toggled() {
         if (this.trigger != null)
             this.trigger = new Trigger.from_values(this.trigger.key_sym, this.trigger.modifiers,
                                                    this.trigger.with_mouse, this.turbo.active,
                                                    this.delayed.active, this.centered.active);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the OK-button is pressed.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_ok_button_clicked() {
         var assigned_id = PieManager.get_assigned_id(this.trigger);
@@ -153,6 +175,10 @@ public class TriggerSelectWindow : GLib.Object {
             this.window.hide();
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the cancel button is pressed.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_cancel_button_clicked() {
         this.window.hide();

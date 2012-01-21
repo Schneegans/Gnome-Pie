@@ -18,17 +18,35 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// A window which allows selection of an Icon of the user's current icon 
-/// theme. Custom icons/images can be selested as well. Loading of icons
-/// happens in an extra thread and a spinner is displayed while loading.
+/// A window which allows selection of a new Slice which is about to be
+/// added to a Pie. It can be also used to edit an existing Slice
 /////////////////////////////////////////////////////////////////////////
 
 public class NewSliceWindow : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// This signal gets emitted when the user confirms his selection.
+    /////////////////////////////////////////////////////////////////////
+
     public signal void on_select(ActionGroup action, bool as_new_slice, int at_position); 
 
+    /////////////////////////////////////////////////////////////////////
+    /// The contained list of slice types. It contains both: Groups and
+    /// single actions.
+    /////////////////////////////////////////////////////////////////////
+
     private SliceTypeList slice_type_list = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The IconSelectWindow used for icon selection for a Slice.
+    /////////////////////////////////////////////////////////////////////
+    
     private IconSelectWindow? icon_window = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Some widgets of this window. Loaded by a ui-builder and stored
+    /// for later access.
+    /////////////////////////////////////////////////////////////////////
     
     private Gtk.Dialog window = null;
     private Gtk.HBox name_box = null;
@@ -45,8 +63,16 @@ public class NewSliceWindow : GLib.Object {
     private Gtk.Entry uri_entry = null;
     private Gtk.CheckButton quickaction_checkbutton = null;
     
+    /////////////////////////////////////////////////////////////////////
+    /// Two custom widgets. For Pie and hotkey selection respectively.
+    /////////////////////////////////////////////////////////////////////
+    
     private PieComboList pie_select = null;
     private TriggerSelectButton key_select = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// These members store information on the currently selected Slice.
+    /////////////////////////////////////////////////////////////////////
     
     private string current_type = "";
     private string current_icon = "";
@@ -55,9 +81,23 @@ public class NewSliceWindow : GLib.Object {
     private string current_hotkey = "";
     private string current_pie_to_open = "";
     
+    /////////////////////////////////////////////////////////////////////
+    /// The position of the edited Slice in its parent Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     private int slice_position = 0;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True, if the Slice i going to be added as a new Slice. Else it
+    /// will edit the Slice at slice_position in its parent Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     private bool add_as_new_slice = true;
- 
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor creates a new window.
+    /////////////////////////////////////////////////////////////////////
+    
     public NewSliceWindow() {
         try {
         
@@ -164,9 +204,18 @@ public class NewSliceWindow : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Sets the parent window, in order to make this window stay in
+    /// front.
+    /////////////////////////////////////////////////////////////////////
+    
     public void set_parent(Gtk.Window parent) {
         this.window.set_transient_for(parent);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Sows the window on the screen.
+    /////////////////////////////////////////////////////////////////////
     
     public void show() {
         this.slice_type_list.select_first();
@@ -175,9 +224,17 @@ public class NewSliceWindow : GLib.Object {
         this.window.show_all();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Reloads the window.
+    /////////////////////////////////////////////////////////////////////
+    
     public void reload() {
         this.pie_select.reload();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Makes all widgets display stuff according to the given action.
+    /////////////////////////////////////////////////////////////////////
     
     public void set_action(ActionGroup group, int position) {
         this.set_default(group.parent_id, position);
@@ -218,6 +275,10 @@ public class NewSliceWindow : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Selects a default action.
+    /////////////////////////////////////////////////////////////////////
+    
     public void set_default(string pie_id, int position) {
         this.slice_position = position;
         this.add_as_new_slice = true;
@@ -231,10 +292,18 @@ public class NewSliceWindow : GLib.Object {
         this.uri_entry.text = "";
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Selects a specific action type.
+    /////////////////////////////////////////////////////////////////////
+    
     private void select_type(string type) {
         this.current_type = type;
         this.slice_type_list.select(type);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called, when the user presses the ok button.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_ok_button_clicked() {
         this.window.hide();
@@ -277,9 +346,17 @@ public class NewSliceWindow : GLib.Object {
         this.on_select(group, this.add_as_new_slice, this.slice_position);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user presses the cancel button.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_cancel_button_clicked() {
         this.window.hide();
     }   
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user presses the icon select button.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_icon_button_clicked(Gtk.Button button) {
         if (icon_window == null) {
@@ -292,6 +369,12 @@ public class NewSliceWindow : GLib.Object {
         
         icon_window.show();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Helper method which sets the icon of the icon select button.
+    /// It assures that both can be displayed: A customly chosen image
+    /// from or an icon from the current theme.
+    /////////////////////////////////////////////////////////////////////
     
     private void set_icon(string icon) {
         if (icon.contains("/"))

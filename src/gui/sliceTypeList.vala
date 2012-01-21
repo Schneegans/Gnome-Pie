@@ -18,19 +18,22 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// 
+/// A list displaying all available Action types and ActionGroup types.
 /////////////////////////////////////////////////////////////////////////
 
 class SliceTypeList : Gtk.TreeView {
 
     /////////////////////////////////////////////////////////////////////
-    /// 
+    /// This signal gets emitted when the user selects a new Type.
     /////////////////////////////////////////////////////////////////////
     
     public signal void on_select(string id, string icon_name);
     
-    private Gtk.ListStore data;
+    /////////////////////////////////////////////////////////////////////
+    /// The listore which staroes all types internally.
+    /////////////////////////////////////////////////////////////////////
     
+    private Gtk.ListStore data;
     private enum DataPos {ICON, ICON_NAME, NAME, ID}
 
     /////////////////////////////////////////////////////////////////////
@@ -80,6 +83,10 @@ class SliceTypeList : Gtk.TreeView {
         reload_all();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Loads a registered actions and action groups.
+    /////////////////////////////////////////////////////////////////////
+    
     public void reload_all() {
         Gtk.TreeIter active;
         string current_id = "";
@@ -118,6 +125,10 @@ class SliceTypeList : Gtk.TreeView {
         select(current_id);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Selects the first type in the list.
+    /////////////////////////////////////////////////////////////////////
+    
     public void select_first() {
         Gtk.TreeIter active;
         
@@ -132,6 +143,10 @@ class SliceTypeList : Gtk.TreeView {
             this.on_select("", "application-default-icon");
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Select the given slice type.
+    /////////////////////////////////////////////////////////////////////
     
     public void select(string id) {
         this.data.foreach((model, path, iter) => {

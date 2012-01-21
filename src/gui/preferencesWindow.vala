@@ -18,17 +18,20 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// The Gtk settings menu of Gnome-Pie.
+/// The settings menu of Gnome-Pie.
 /////////////////////////////////////////////////////////////////////////
 
 public class PreferencesWindow : GLib.Object {
-
-    private Gtk.Builder builder = null;
-
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The ID of the currently selected Pie.
+    /////////////////////////////////////////////////////////////////////
+    
     private string selected_id = "";
     
-    private PiePreview? preview = null;
-    private PieList? pie_list = null;
+    /////////////////////////////////////////////////////////////////////
+    /// Some Gtk widgets used by this window.
+    /////////////////////////////////////////////////////////////////////
     
     private Gtk.Window? window = null;
     private Gtk.Label? id_label = null;
@@ -39,20 +42,29 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.VBox? preview_box = null;
     private Gtk.Image? icon = null;
     private Gtk.EventBox? preview_background = null;
-    
     private Gtk.Button? icon_button = null;
     private Gtk.Button? name_button = null;
     private Gtk.Button? hotkey_button = null;
     private Gtk.ToolButton? remove_pie_button = null;
     
+    /////////////////////////////////////////////////////////////////////
+    /// Some custom widgets and dialogs used by this window.
+    /////////////////////////////////////////////////////////////////////
+    
+    private PiePreview? preview = null;
+    private PieList? pie_list = null;
     private SettingsWindow? settings_window = null;
     private TriggerSelectWindow? trigger_window = null;
     private IconSelectWindow? icon_window = null;
     private RenameWindow? rename_window = null;
     
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, creates the window.
+    /////////////////////////////////////////////////////////////////////
+    
     public PreferencesWindow() {
         try {
-            this.builder = new Gtk.Builder();
+            var builder = new Gtk.Builder();
 
             builder.add_from_file (Paths.ui_files + "/preferences.ui");
 
@@ -126,12 +138,20 @@ public class PreferencesWindow : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Shows the window.
+    /////////////////////////////////////////////////////////////////////
+    
     public void show() {
         this.preview.draw_loop();
         this.window.show_all();
         this.pie_list.select_first();
         this.preview_background.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this.window).light[0]);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a new Pie is selected in the PieList.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_pie_select(string id) {
         selected_id = id;
@@ -184,11 +204,19 @@ public class PreferencesWindow : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the add Pie button is clicked.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_add_pie_button_clicked(Gtk.ToolButton button) {
         var new_pie = PieManager.create_persistent_pie(_("New Pie"), "application-default-icon", null);
         this.pie_list.reload_all();
         this.pie_list.select(new_pie.id);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the remove Pie button is clicked.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_remove_pie_button_clicked(Gtk.ToolButton button) {
         if (this.selected_id != "") {
@@ -209,6 +237,10 @@ public class PreferencesWindow : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when rename Pie button is clicked.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_rename_button_clicked(Gtk.Button button) {
         if (this.rename_window == null) {
             this.rename_window = new RenameWindow();
@@ -226,6 +258,10 @@ public class PreferencesWindow : GLib.Object {
         this.rename_window.show();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the hotkey button is clicked.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_key_button_clicked(Gtk.Button button) {
         if (this.trigger_window == null) {
             this.trigger_window = new TriggerSelectWindow();
@@ -240,6 +276,10 @@ public class PreferencesWindow : GLib.Object {
         this.trigger_window.show();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the general settings button is clicked.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_settings_button_clicked(Gtk.ToolButton button) {
         if (this.settings_window == null) {
             this.settings_window = new SettingsWindow();
@@ -248,6 +288,10 @@ public class PreferencesWindow : GLib.Object {
         
         this.settings_window.show();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the icon button is clicked.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_icon_button_clicked(Gtk.Button button) {
         if (this.icon_window == null) {

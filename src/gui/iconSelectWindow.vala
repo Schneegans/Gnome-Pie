@@ -31,6 +31,10 @@ public class IconSelectWindow : GLib.Object {
     
     public signal void on_ok(string icon_name);
     
+    /////////////////////////////////////////////////////////////////////
+    /// Stores the currently selected icon.
+    /////////////////////////////////////////////////////////////////////
+    
     private string active_icon = "";
 
     /////////////////////////////////////////////////////////////////////
@@ -89,6 +93,10 @@ public class IconSelectWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     private Gtk.Notebook tabs = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The main window.
+    /////////////////////////////////////////////////////////////////////
     
     private Gtk.Window window = null;
     
@@ -252,16 +260,16 @@ public class IconSelectWindow : GLib.Object {
                 
             // file chooser widget
             this.file_chooser = builder.get_object("filechooser") as Gtk.FileChooserWidget;
-//                var file_filter = new Gtk.FileFilter();
-//                    file_filter.add_pixbuf_formats();
-//                    
-//                    #if HAVE_GTK_3
-//                        file_filter.set_filter_name(_("All supported image formats"));
-//                    #else
-//                        file_filter.set_name(_("All supported image formats"));
-//                    #endif
-//                    
-//                    file_chooser.add_filter(file_filter);
+                var file_filter = new Gtk.FileFilter();
+                    file_filter.add_pixbuf_formats();
+                    
+                    #if HAVE_GTK_3
+                        file_filter.set_filter_name(_("All supported image formats"));
+                    #else
+                        file_filter.set_name(_("All supported image formats"));
+                    #endif
+                    
+                    file_chooser.add_filter(file_filter);
                 
                 // set active_icon if the user selected a file
                 file_chooser.selection_changed.connect(() => {
@@ -286,6 +294,10 @@ public class IconSelectWindow : GLib.Object {
             error("Could not load UI: %s\n", e.message);
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Displays the window. The icons are reloaded if neccessary.
+    /////////////////////////////////////////////////////////////////////
 
     public void show() {
         this.window.show_all();
@@ -296,6 +308,10 @@ public class IconSelectWindow : GLib.Object {
             this.load_icons();
         }
     } 
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Makes the window select the icon of the given Pie.
+    /////////////////////////////////////////////////////////////////////
     
     public void set_pie(string id) {
         string icon = PieManager.all_pies[id].icon;
@@ -320,10 +336,18 @@ public class IconSelectWindow : GLib.Object {
         }
     } 
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user clicks the ok button.
+    /////////////////////////////////////////////////////////////////////
+    
     private void on_ok_button_clicked() {
         this.on_ok(this.active_icon);
         this.window.hide();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user clicks the cancel button.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_cancel_button_clicked() {
         this.window.hide();

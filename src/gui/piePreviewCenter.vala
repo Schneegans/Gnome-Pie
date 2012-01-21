@@ -25,13 +25,37 @@ namespace GnomePie {
 
 public class PiePreviewCenter : GLib.Object {
     
+    /////////////////////////////////////////////////////////////////////
+    /// THe Images displayed. When the displayed text changes the
+    /// currently displayed text becomes the old_text. So it's possible
+    /// to create a smooth transitions.
+    /////////////////////////////////////////////////////////////////////
+    
     private RenderedText text = null;
     private RenderedText old_text = null;
     
+    /////////////////////////////////////////////////////////////////////
+    /// Stores the currently displayed text in order to avoid frequent
+    /// and useless updates.
+    /////////////////////////////////////////////////////////////////////
+    
     private string current_text = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// An AnimatedValue for smooth transitions.
+    /////////////////////////////////////////////////////////////////////
+    
     private AnimatedValue blend; 
     
+    /////////////////////////////////////////////////////////////////////
+    /// The parent renderer.
+    /////////////////////////////////////////////////////////////////////
+    
     private unowned PiePreviewRenderer parent;  
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, sets everything up.
+    /////////////////////////////////////////////////////////////////////
     
     public PiePreviewCenter(PiePreviewRenderer parent) {
         this.parent = parent;
@@ -40,6 +64,11 @@ public class PiePreviewCenter : GLib.Object {
         this.text = new RenderedText("", 1, 1, "", new Color(), 1.0);
         this.old_text = text;
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Updates the currently displayed text. It will be smoothly
+    /// blended and may contain pango markup. 
+    /////////////////////////////////////////////////////////////////////
     
     public void set_text(string text) {
         if (text != this.current_text) {
@@ -57,7 +86,7 @@ public class PiePreviewCenter : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// 
+    /// Draws the center to the given context.
     /////////////////////////////////////////////////////////////////////
 
     public void draw(double frame_time, Cairo.Context ctx) {

@@ -20,19 +20,46 @@ using GLib.Math;
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// 
+/// A liitle plus-sign displayed on the preview widget to indicate where
+/// the user may add a new Slice.
 /////////////////////////////////////////////////////////////////////////
 
 public class PiePreviewAddSign : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// Gets emitted, when the users clicks on this object.
+    /////////////////////////////////////////////////////////////////////
+
     public signal void on_clicked(int position);
     
+    /////////////////////////////////////////////////////////////////////
+    /// The image used to display this oject.
+    /////////////////////////////////////////////////////////////////////
+    
     public Image icon { get; private set; }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True, when the add sign is currently visible.
+    /////////////////////////////////////////////////////////////////////
+    
     public bool visible { get; private set; default=false; }
     
+    /////////////////////////////////////////////////////////////////////
+    /// The position of the sign in its parent Pie. May be 2.5 for
+    /// example.
+    /////////////////////////////////////////////////////////////////////
+    
     private double position = 0;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The parent renderer.
+    /////////////////////////////////////////////////////////////////////
 
     private unowned PiePreviewRenderer parent;  
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Some values used for displaying this sign.
+    /////////////////////////////////////////////////////////////////////
     
     private double time = 0;
     private double max_size = 0; 
@@ -41,6 +68,10 @@ public class PiePreviewAddSign : GLib.Object {
     private AnimatedValue alpha; 
     private AnimatedValue activity; 
     private AnimatedValue clicked; 
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, sets everything up.
+    /////////////////////////////////////////////////////////////////////
 
     public PiePreviewAddSign(PiePreviewRenderer parent) {
         this.parent = parent;
@@ -52,7 +83,7 @@ public class PiePreviewAddSign : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Loads an Action. All members are initialized accordingly.
+    /// Loads the desired icon for this sign.
     /////////////////////////////////////////////////////////////////////
 
     public void load() {
@@ -60,7 +91,7 @@ public class PiePreviewAddSign : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// 
+    /// Updates the position where this object should be displayed.
     /////////////////////////////////////////////////////////////////////
 
     public void set_position(int position) {
@@ -73,11 +104,19 @@ public class PiePreviewAddSign : GLib.Object {
         this.angle = 2.0 * PI * new_position/parent.slice_count();
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Makes this object visible.
+    /////////////////////////////////////////////////////////////////////
+    
     public void show() {
         this.visible = true;
         this.size.reset_target(this.max_size, 0.3); 
         this.alpha.reset_target(1.0, 0.3);   
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Makes this object invisible.
+    /////////////////////////////////////////////////////////////////////
     
     public void hide() {
         this.visible = false;
@@ -86,7 +125,7 @@ public class PiePreviewAddSign : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// 
+    /// Updates the size of this object. All transitions will be smooth.
     /////////////////////////////////////////////////////////////////////
 
     public void set_size(double size) {
@@ -95,7 +134,7 @@ public class PiePreviewAddSign : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Draws all layers of the slice.
+    /// Draws the sign to the given context.
     /////////////////////////////////////////////////////////////////////
 
     public void draw(double frame_time, Cairo.Context ctx) {
@@ -141,6 +180,10 @@ public class PiePreviewAddSign : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the mouse moves to another position.
+    /////////////////////////////////////////////////////////////////////
+    
     public void on_mouse_move(double angle) {
         double direction = 2.0 * PI * position/parent.slice_count();
         double diff = fabs(angle-direction);
@@ -152,11 +195,19 @@ public class PiePreviewAddSign : GLib.Object {
         else                                    this.activity.reset_target(-3.0, 1.5);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a button of the mouse is pressed.
+    /////////////////////////////////////////////////////////////////////
+    
     public void on_button_press(double x, double y) {
         if (this.activity.end == 1.0) {
             this.clicked.reset_target(0.9, 0.1);
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a button of the mouse is released.
+    /////////////////////////////////////////////////////////////////////
     
     public void on_button_release(double x, double y) {
         if (this.clicked.end == 0.9) {

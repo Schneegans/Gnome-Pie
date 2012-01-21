@@ -18,15 +18,24 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// The Gtk settings menu of Gnome-Pie.
+/// The settings menu of Gnome-Pie, with options for theme switching and
+/// some general options.
 /////////////////////////////////////////////////////////////////////////
 
 public class SettingsWindow : GLib.Object {
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Some widgets.
+    /////////////////////////////////////////////////////////////////////
     
     private Gtk.Dialog? window = null;
     private ThemeList? theme_list = null;
     private Gtk.ToggleButton? indicator = null;
     private Gtk.ToggleButton? autostart = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor creates, the dialog.
+    /////////////////////////////////////////////////////////////////////
     
     public SettingsWindow() {
         try {
@@ -84,9 +93,18 @@ public class SettingsWindow : GLib.Object {
         }
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Sets the parent window, in order to make this window stay in
+    /// front.
+    /////////////////////////////////////////////////////////////////////
+    
     public void set_parent(Gtk.Window parent) {
         this.window.set_transient_for(parent);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Displays the window on the screen.
+    /////////////////////////////////////////////////////////////////////
     
     public void show() {
         this.indicator.active = Config.global.show_indicator;
@@ -94,6 +112,10 @@ public class SettingsWindow : GLib.Object {
     
         this.window.show_all(); 
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the close button is clicked.
+    /////////////////////////////////////////////////////////////////////
     
     private void on_close_button_clicked() {
         this.window.hide();

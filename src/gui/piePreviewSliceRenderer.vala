@@ -20,34 +20,68 @@ using GLib.Math;
 namespace GnomePie {
 
 /////////////////////////////////////////////////////////////////////////    
-/// 
+/// Displays the preview of a Slice.
 /////////////////////////////////////////////////////////////////////////
 
 public class PiePreviewSliceRenderer : GLib.Object {
 
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user clicked on this Slice.
+    /////////////////////////////////////////////////////////////////////
+
     public signal void on_clicked(int position);
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user clicked on the delete sign.
+    /////////////////////////////////////////////////////////////////////
+    
     public signal void on_remove(int position);
+    
+    /////////////////////////////////////////////////////////////////////
+    /// The image used to display this oject.
+    /////////////////////////////////////////////////////////////////////
     
     public Icon icon { get; private set; }
     public ActionGroup action_group { get; private set; }
     public string name { get; private set; default=""; }
     public bool delete_hovered { get; private set; default=false; }
 
+    /////////////////////////////////////////////////////////////////////
+    /// The parent renderer.
+    /////////////////////////////////////////////////////////////////////
+
     private unowned PiePreviewRenderer parent;  
     
+    /////////////////////////////////////////////////////////////////////
+    /// The delete sign, displayed in the upper right corner of each
+    /// Slice.
+    /////////////////////////////////////////////////////////////////////
+    
     private PiePreviewDeleteSign delete_sign = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Some AnimatedValues for smooth transitions.
+    /////////////////////////////////////////////////////////////////////
     
     private AnimatedValue angle; 
     private AnimatedValue size; 
     private AnimatedValue activity; 
     private AnimatedValue clicked; 
     
-    // distance from the center
+    /////////////////////////////////////////////////////////////////////
+    /// Some constants determining the look and behaviour of this Slice.
+    /////////////////////////////////////////////////////////////////////
+    
     private const double pie_radius = 126;
     private const double radius = 24;
     private const double delete_x = 13;
     private const double delete_y = -13;
     private const double click_cancel_treshold = 5;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Storing the position where a mouse click was executed. Useful for
+    /// canceling the click when the mouse moves some pixels.
+    /////////////////////////////////////////////////////////////////////
     
     private double clicked_x = 0.0;
     private double clicked_y = 0.0;
@@ -58,6 +92,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     private int position;
+
+    /////////////////////////////////////////////////////////////////////
+    /// C'tor, sets everything up.
+    /////////////////////////////////////////////////////////////////////
 
     public PiePreviewSliceRenderer(PiePreviewRenderer parent) {
         this.delete_sign = new PiePreviewDeleteSign();
@@ -91,7 +129,7 @@ public class PiePreviewSliceRenderer : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// 
+    /// Updates the position where this object should be displayed.
     /////////////////////////////////////////////////////////////////////
 
     public void set_position(int position, bool smoothly = true) {
@@ -107,7 +145,7 @@ public class PiePreviewSliceRenderer : GLib.Object {
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// 
+    /// Updates the size of this object. All transitions will be smooth.
     /////////////////////////////////////////////////////////////////////
 
     public void set_size(double size) {
@@ -115,12 +153,16 @@ public class PiePreviewSliceRenderer : GLib.Object {
         this.delete_sign.set_size(size);
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Notifies that all quick actions should be disabled.
+    /////////////////////////////////////////////////////////////////////
+    
     public void disable_quickactions() {
         this.action_group.disable_quickactions();
     }
     
     /////////////////////////////////////////////////////////////////////
-    /// Draws all layers of the slice.
+    /// Draws the slice to the given context.
     /////////////////////////////////////////////////////////////////////
 
     public void draw(double frame_time, Cairo.Context ctx) {
@@ -150,6 +192,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
             
         ctx.restore();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the mouse moves to another position.
+    /////////////////////////////////////////////////////////////////////
     
     public bool on_mouse_move(double angle, double x, double y) {
         double direction = 2.0 * PI * position/parent.slice_count();
@@ -182,10 +228,18 @@ public class PiePreviewSliceRenderer : GLib.Object {
         return active;
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the mouse leaves the area of this widget.
+    /////////////////////////////////////////////////////////////////////
+    
     public void on_mouse_leave() {
         this.activity.reset_target(0.0, 0.3);
         this.delete_sign.hide();
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a button of the mouse is pressed.
+    /////////////////////////////////////////////////////////////////////
     
     public void on_button_press(double x, double y) {
         bool delete_pressed = false;
@@ -202,6 +256,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
             this.clicked_y = y;
         }
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when a button of the mouse is released.
+    /////////////////////////////////////////////////////////////////////
     
     public void on_button_release(double x, double y) {
         bool deleted = false;

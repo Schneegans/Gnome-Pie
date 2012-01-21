@@ -32,10 +32,14 @@ public class TriggerSelectButton : Gtk.ToggleButton {
     public signal void on_select(Trigger trigger);
     
     /////////////////////////////////////////////////////////////////////
-    /// 
+    /// The currently contained Trigger.
     /////////////////////////////////////////////////////////////////////
     
     private Trigger trigger = null;
+    
+    /////////////////////////////////////////////////////////////////////
+    /// True, if mouse buttons can be bound as well.
+    /////////////////////////////////////////////////////////////////////
      
     private bool enable_mouse = false;
     
@@ -67,10 +71,18 @@ public class TriggerSelectButton : Gtk.ToggleButton {
         this.set_trigger(new Trigger());
     }
     
+    /////////////////////////////////////////////////////////////////////
+    /// Makes the button display the given Trigger.
+    /////////////////////////////////////////////////////////////////////
+    
     public void set_trigger(Trigger trigger) {
         this.trigger = trigger;
         this.set_label(trigger.label);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Can be called to cancel the selection process.
+    /////////////////////////////////////////////////////////////////////
     
     private void cancel() {
         this.set_label(trigger.label);
@@ -78,6 +90,10 @@ public class TriggerSelectButton : Gtk.ToggleButton {
         Gtk.grab_remove(this);
         FocusGrabber.ungrab(true, true);
     }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Makes the button display the given Trigger.
+    /////////////////////////////////////////////////////////////////////
     
     private void update_trigger(Trigger trigger) {
         if (this.trigger.name != trigger.name) {

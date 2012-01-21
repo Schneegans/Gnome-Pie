@@ -50,6 +50,7 @@ pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(GMENU3 libgnome-menu-3.0)
 
 find_library(M_LIB m)
+find_library(GTHREAD_LIB gthread-2.0)
 
 set(CFLAGS
     ${GIO_CFLAGS}
@@ -105,6 +106,7 @@ set(LIBS
 	${WNCK_LIBRARIES}
 	${BAMF_LIBRARIES}
 	${M_LIB}
+	${GTHREAD_LIB}
 )
 link_libraries(${LIBS})
 

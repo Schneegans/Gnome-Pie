@@ -22,34 +22,6 @@ namespace GnomePie {
 /////////////////////////////////////////////////////////////////////////
 
 public class RenderedText : Image {
-
-    /////////////////////////////////////////////////////////////////////
-    /// A cache which stores images. It is cleared when the theme of
-    /// Gnome-Pie changes.
-    /// The key is in form <string>@<width>x<height>:<font>.
-    /////////////////////////////////////////////////////////////////////
-
-    private static Gee.HashMap<string, Cairo.ImageSurface?> cache { private get; private set; }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Initializes the cache.
-    /////////////////////////////////////////////////////////////////////
-    
-    public static void init() {
-        clear_cache();
-        
-        Config.global.notify["theme"].connect(() => {
-            clear_cache();
-        });
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Clears the cache.
-    /////////////////////////////////////////////////////////////////////
-    
-    static void clear_cache() {
-        cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-    }
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, creates a new image representation of a string.
@@ -58,16 +30,7 @@ public class RenderedText : Image {
     public RenderedText(string text, int width, int height, string font,
                         Color color, double scale) {
                         
-        var cached = this.cache.get("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
-                                                               color.r, color.g, color.b, color.a));
-        
-        if (cached == null) {
-            this.render_text(text, width, height, font, color, scale);
-            this.cache.set("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
-                                                 color.r, color.g, color.b, color.a), this.surface);
-        } else {
-            this.surface = cached;
-        }
+        this.render_text(text, width, height, font, color, scale);
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -77,17 +40,8 @@ public class RenderedText : Image {
     
     public RenderedText.with_markup(string text, int width, int height, string font,
                         Color color, double scale) {
-                        
-        var cached = this.cache.get("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
-                                                               color.r, color.g, color.b, color.a));
-        
-        if (cached == null) {
-            this.render_markup(text, width, height, font, color, scale);
-            this.cache.set("%s@%ux%u@%f:%s:%f:%f:%f:%f".printf(text, width, height, scale, font,
-                                                 color.r, color.g, color.b, color.a), this.surface);
-        } else {
-            this.surface = cached;
-        }
+
+        this.render_markup(text, width, height, font, color, scale);
     }
     
     /////////////////////////////////////////////////////////////////////

@@ -309,13 +309,20 @@ public class IconSelectWindow : GLib.Object {
         }
     } 
     
+    public static void clear_icons() {
+        if (icon_list != null) {
+            need_reload = true;
+            icon_list.clear();
+        }
+    }
+    
     /////////////////////////////////////////////////////////////////////
     /// Makes the window select the icon of the given Pie.
     /////////////////////////////////////////////////////////////////////
     
-    public void set_pie(string id) {
-        string icon = PieManager.all_pies[id].icon;
-    
+    public void set_icon(string icon) {
+        this.active_icon = icon;
+        
         if (icon.contains("/")) {
             this.file_chooser.set_filename(icon);
             this.tabs.set_current_page(1);
@@ -369,15 +376,9 @@ public class IconSelectWindow : GLib.Object {
 
             // disable sorting of the icon_view - else it's horribly slow
             this.icon_list.set_sort_column_id(-1, Gtk.SortType.ASCENDING);
-            
-            try {
-                // start loading in another thread
-                unowned Thread loader = Thread.create<void*>(load_thread, false);
-                loader.set_priority(ThreadPriority.LOW);
-            } catch (GLib.ThreadError e) {
-                error("Failed to create icon loader thread!");
-            }
-            
+
+            this.load_all.begin();
+
             // insert loaded icons every 200 ms
             Timeout.add(200, () => {
                 while (this.load_queue.length() > 0) {
@@ -390,7 +391,9 @@ public class IconSelectWindow : GLib.Object {
                 }
                 
                 // enable sorting of the icon_view if loading finished
-                if (!this.loading) this.icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);
+                if (!this.loading) {
+                    this.icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);
+                }
 
                 return loading;
             });
@@ -402,12 +405,13 @@ public class IconSelectWindow : GLib.Object {
     /// load_queue.
     /////////////////////////////////////////////////////////////////////
     
-    private void* load_thread() {
+    private async void load_all() {
         var icon_theme = Gtk.IconTheme.get_default();
-
+        
         foreach (var context in icon_theme.list_contexts()) {
             if (!disabled_contexts.contains(context)) {
                 foreach (var icon in icon_theme.list_icons(context)) {
+                    
                     IconContext icon_context = IconContext.OTHER;
                     switch(context) {
                         case "Apps": case "Applications":
@@ -422,6 +426,9 @@ public class IconSelectWindow : GLib.Object {
                             icon_context = IconContext.ACTIONS; break;
                         default: break;
                     }
+                    
+                    Idle.add(load_all.callback);
+                    yield;
                     
                     try {
                         // create a new entry for the queue
@@ -447,8 +454,6 @@ public class IconSelectWindow : GLib.Object {
         // hide the spinner
         if (spinner != null)
             spinner.visible = false;
-
-        return null;
     }
 }
 

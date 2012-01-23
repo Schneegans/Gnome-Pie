@@ -359,15 +359,16 @@ public class NewSliceWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     private void on_icon_button_clicked(Gtk.Button button) {
-        if (icon_window == null) {
-            icon_window = new IconSelectWindow(this.window);
-            icon_window.on_ok.connect((icon) => {
+        if (this.icon_window == null) {
+            this.icon_window = new IconSelectWindow(this.window);
+            this.icon_window.on_ok.connect((icon) => {
                 this.current_custom_icon = icon;
                 this.set_icon(icon);
             });
         }
         
-        icon_window.show();
+        this.icon_window.show();
+        this.icon_window.set_icon(this.current_icon);
     }
     
     /////////////////////////////////////////////////////////////////////

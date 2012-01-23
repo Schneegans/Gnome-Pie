@@ -129,6 +129,7 @@ public class PreferencesWindow : GLib.Object {
                 // save settings on close
                 Config.global.save();
                 Pies.save();
+                //IconSelectWindow.clear_icons();
             });
             
             this.window.delete_event.connect(this.window.hide_on_delete);
@@ -181,9 +182,7 @@ public class PreferencesWindow : GLib.Object {
             if (pie.icon.contains("/"))
                 try {
                     this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(pie.icon, 
-                                                                         this.icon.get_pixel_size(), 
-                                                                         this.icon.get_pixel_size(), 
-                                                                         true);
+                                            this.icon.get_pixel_size(), this.icon.get_pixel_size(), true);
                 } catch (GLib.Error error) {
                     warning(error.message);
                 }
@@ -305,6 +304,7 @@ public class PreferencesWindow : GLib.Object {
         }
         
         this.icon_window.show();
+        this.icon_window.set_icon(PieManager.all_pies[selected_id].icon);
     }
 }
 

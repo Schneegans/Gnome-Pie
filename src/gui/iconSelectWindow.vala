@@ -234,7 +234,7 @@ public class IconSelectWindow : GLib.Object {
                 // displays the filtered icons
                 this.icon_view = new Gtk.IconView.with_model(this.icon_list_filtered);
                     this.icon_view.item_width = 32;
-                    this.icon_view.item_padding = 3;
+                    this.icon_view.item_padding = 2;
                     this.icon_view.pixbuf_column = 2;
                     this.icon_view.tooltip_column = 0;
                     
@@ -384,15 +384,15 @@ public class IconSelectWindow : GLib.Object {
                 while (this.load_queue.length() > 0) {
                     var new_entry = this.load_queue.pop();
                     Gtk.TreeIter current;
-                    this.icon_list.append(out current);
-                    this.icon_list.set(current, 0, new_entry.name,
+                    icon_list.append(out current);
+                    icon_list.set(current, 0, new_entry.name,
                                                 1, new_entry.context,
                                                 2, new_entry.pixbuf);
                 }
                 
                 // enable sorting of the icon_view if loading finished
                 if (!this.loading) {
-                    this.icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);
+                    icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);
                 }
 
                 return loading;

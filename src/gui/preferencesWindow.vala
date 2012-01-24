@@ -129,7 +129,11 @@ public class PreferencesWindow : GLib.Object {
                 // save settings on close
                 Config.global.save();
                 Pies.save();
-                //IconSelectWindow.clear_icons();
+                
+                Timeout.add(100, () => {
+                    IconSelectWindow.clear_icons();
+                    return false;
+                });
             });
             
             this.window.delete_event.connect(this.window.hide_on_delete);

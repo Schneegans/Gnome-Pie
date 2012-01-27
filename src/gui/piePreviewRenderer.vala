@@ -408,7 +408,7 @@ public class PiePreviewRenderer : GLib.Object {
         switch (display) {
             case CenterDisplay.ACTIVE_SLICE:
                 if (this.active_slice >= 0 && this.active_slice < this.slices.size)
-                    this.center_renderer.set_text("<b>" + slices[this.active_slice].name + "</b>\n<small>" 
+                    this.center_renderer.set_text("<b>" + GLib.Markup.escape_text(slices[this.active_slice].name) + "</b>\n<small>" 
                                             + _("Click to edit") + "\n" + _("Drag to move") + "</small>");
                 break;
             case CenterDisplay.ADD:
@@ -418,12 +418,12 @@ public class PiePreviewRenderer : GLib.Object {
                 if (hidden_group == null)
                     this.center_renderer.set_text("<small>" + _("Drop to add as new Slice") + "</small>");
                 else
-                    this.center_renderer.set_text("<b>" + this.hidden_group.name + "</b>\n<small>"
+                    this.center_renderer.set_text("<b>" + GLib.Markup.escape_text(this.hidden_group.name) + "</b>\n<small>"
                                             + _("Drop to move Slice") + "</small>");
                 break;
             case CenterDisplay.DELETE:
                 if (this.active_slice >= 0 && this.active_slice < this.slices.size)
-                    this.center_renderer.set_text("<b>" + slices[this.active_slice].name + "</b>\n<small>" 
+                    this.center_renderer.set_text("<b>" + GLib.Markup.escape_text(slices[this.active_slice].name) + "</b>\n<small>" 
                                             + _("Click to delete") + "\n" + _("Drag to move") + "</small>");
                 break;
             default:

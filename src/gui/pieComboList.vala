@@ -65,7 +65,7 @@ class PieComboList : Gtk.ComboBox {
             this.pack_start(name_render, true);
         
         this.add_attribute(icon_render, "pixbuf", DataPos.ICON);
-        this.add_attribute(name_render, "markup", DataPos.NAME);
+        this.add_attribute(name_render, "text", DataPos.NAME);
         
         this.changed.connect(() => {
             Gtk.TreeIter active;

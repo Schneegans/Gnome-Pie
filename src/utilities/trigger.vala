@@ -182,11 +182,7 @@ public class Trigger : GLib.Object {
                 this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
             }
             
-            this.label = this.label.replace("<", "&lt;");
-            this.label = this.label.replace(">", "&gt;");
-            this.label = this.label.replace("&", "&amp;");
-            
-            this.label_with_specials = this.label;
+            this.label_with_specials = GLib.Markup.escape_text(this.label);
             
             if (this.turbo && this.delayed && this.centered)
                 this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " | " + _("Delayed") + " | " + _("Centered") + " ]</span></small>");

@@ -82,8 +82,10 @@ class ThemeList : Gtk.TreeView {
             Gtk.TreeIter current;
             data.append(out current);
             data.set(current, DataPos.ICON, theme.preview_icon.to_pixbuf()); 
-            data.set(current, DataPos.NAME, "<b>"+theme.name+"</b><small>  -  "+theme.description+"\n"
-                                           +"<i>"+_("By")+" "+theme.author+"</i></small>"); 
+            data.set(current, DataPos.NAME, "<b>"+GLib.Markup.escape_text(theme.name)+"</b><small>  -  "
+                                            +GLib.Markup.escape_text(theme.description)+"\n"
+                                            +"<i>"+GLib.Markup.escape_text(_("By")+" "+theme.author)
+                                            +"</i></small>"); 
             if(theme == Config.global.theme)
                 get_selection().select_iter(current);
         }  

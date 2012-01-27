@@ -86,7 +86,7 @@ class PieList : Gtk.TreeView {
         base.append_column(main_column);
         
         main_column.add_attribute(icon_render, "pixbuf", DataPos.ICON);
-        main_column.add_attribute(name_render, "markup", DataPos.NAME);
+        main_column.add_attribute(name_render, "text", DataPos.NAME);
         
         // setup drag'n'drop
         Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};

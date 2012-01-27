@@ -103,8 +103,8 @@ class SliceTypeList : Gtk.TreeView {
             var icon = new Icon(description.icon, 36);
             data.set(current, DataPos.ICON, icon.to_pixbuf()); 
             data.set(current, DataPos.ICON_NAME, description.icon); 
-            data.set(current, DataPos.NAME, "<b>" + description.name + "</b>\n"
-                                 + "<small>" + description.description + "</small>"); 
+            data.set(current, DataPos.NAME, "<b>" + GLib.Markup.escape_text(description.name) + "</b>\n"
+                                 + "<small>" + GLib.Markup.escape_text(description.description) + "</small>"); 
             data.set(current, DataPos.ID, description.id); 
         }
         
@@ -116,8 +116,8 @@ class SliceTypeList : Gtk.TreeView {
             var icon = new Icon(description.icon, 36);
             data.set(current, DataPos.ICON, icon.to_pixbuf()); 
             data.set(current, DataPos.ICON_NAME, description.icon);
-            data.set(current, DataPos.NAME, "<b>" + description.name + "</b>\n"
-                                 + "<small>" + description.description + "</small>"); 
+            data.set(current, DataPos.NAME, "<b>" + GLib.Markup.escape_text(description.name) + "</b>\n"
+                                 + "<small>" + GLib.Markup.escape_text(description.description) + "</small>"); 
             data.set(current, DataPos.ID, description.id); 
         }
         

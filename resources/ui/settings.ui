@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="2.24"/>
+  <requires lib="gtk+" version="2.20"/>
   <object class="GtkDialog" id="window">
     <property name="width_request">550</property>
     <property name="height_request">450</property>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="2.16"/>
+  <requires lib="gtk+" version="2.20"/>
   <object class="GtkWindow" id="window">
     <property name="width_request">600</property>
     <property name="height_request">475</property>

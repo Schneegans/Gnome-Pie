@@ -87,17 +87,9 @@ public class DevicesGroup : ActionGroup {
         // add all other devices
         foreach(var mount in this.monitor.get_mounts()) {
             // get icon
-            var icon_names = mount.get_icon().to_string().split(" ");
+            var icon = mount.get_icon();
             
-            string icon = "";
-            foreach (var icon_name in icon_names) {
-                if (Gtk.IconTheme.get_default().has_icon(icon_name)) {
-                    icon = icon_name;
-                    break;
-                }
-            }
-            
-            this.add_action(new UriAction(mount.get_name(), icon, mount.get_root().get_uri()));
+            this.add_action(new UriAction(mount.get_name(), Icon.get_icon_name(icon), mount.get_root().get_uri()));
         }
     }
     

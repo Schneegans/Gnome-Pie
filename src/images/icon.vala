@@ -75,6 +75,24 @@ public class Icon : Image {
     }
     
     /////////////////////////////////////////////////////////////////////
+    /// Returns the icon name for a given GLib.Icon.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string get_icon_name(GLib.Icon icon) {
+        if (icon != null) {
+            var icon_names = icon.to_string().split(" ");
+            
+            foreach (var icon_name in icon_names) {
+                if (Gtk.IconTheme.get_default().has_icon(icon_name)) {
+                    return icon_name;
+                }
+            }
+        }
+        
+        return "";
+    }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Returns the filename for a given system icon.
     /////////////////////////////////////////////////////////////////////
     

@@ -30,6 +30,8 @@ namespace Pies {
     /////////////////////////////////////////////////////////////////////
     
     public void save() {
+         message("Saving Pies to \"" + Paths.pie_config + "\".");
+         
         // initializes the XML-Writer
         var writer = new Xml.TextWriter.filename(Paths.pie_config);
         writer.set_indent(true);

@@ -36,6 +36,8 @@ namespace Pies {
             Pies.create_default_config();
             return;
         }
+        
+        message("Loading Pies from \"" + Paths.pie_config + "\".");
     
         // load the settings file
         Xml.Parser.init();

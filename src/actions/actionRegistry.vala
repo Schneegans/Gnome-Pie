@@ -137,15 +137,8 @@ public class ActionRegistry : GLib.Object {
                         return new_for_desktop_file(file.get_parse_name());
                     
                     // search for an appropriate icon
-                    var gicon = info.get_icon();                
-                    string[] icons = gicon.to_string().split(" ");
-                    
-                    foreach (var icon in icons) {
-                        if (Gtk.IconTheme.get_default().has_icon(icon)) {
-                            final_icon = icon;
-                            break;
-                        }
-                    }
+                    var icon = info.get_icon();                
+                    final_icon = Icon.get_icon_name(icon);
                     
                 } catch (GLib.Error e) {
                     warning(e.message);
@@ -167,19 +160,11 @@ public class ActionRegistry : GLib.Object {
     /// A helper method which creates an AppAction for given AppInfo.
     /////////////////////////////////////////////////////////////////////
     
-    public static Action? new_for_app_info(GLib.AppInfo info) {        
-        string[] icons = info.get_icon().to_string().split(" ");
-        string final_icon = "application-default-icon";
+    public static Action? new_for_app_info(GLib.AppInfo info) {   
+        // get icon
+        var icon = info.get_icon();     
         
-        // search for available icons
-        foreach (var icon in icons) {
-            if (Gtk.IconTheme.get_default().has_icon(icon)) {
-                final_icon = icon;
-                break;
-            }
-        }
-        
-        return new AppAction(info.get_display_name() , final_icon, info.get_commandline());
+        return new AppAction(info.get_display_name(), Icon.get_icon_name(icon), info.get_commandline());
     }
     
     /////////////////////////////////////////////////////////////////////

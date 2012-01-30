@@ -58,6 +58,13 @@ public class PieRenderer : GLib.Object {
     public bool turbo_mode { get; private set; default=false; }
     
     /////////////////////////////////////////////////////////////////////
+    /// True if the pie is currently navigated with the keyboard. This is
+    /// set to false as soon as the mouse moves.
+    /////////////////////////////////////////////////////////////////////
+    
+    public bool key_board_control { get; set; default=false; }
+    
+    /////////////////////////////////////////////////////////////////////
     /// All SliceRenderers used to draw this Pie.
     /////////////////////////////////////////////////////////////////////
     
@@ -68,13 +75,6 @@ public class PieRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     private CenterRenderer center;
-    
-    /////////////////////////////////////////////////////////////////////
-    /// True if the pie is currently navigated with the keyboard. This is
-    /// set to false as soon as the mouse moves.
-    /////////////////////////////////////////////////////////////////////
-    
-    private bool key_board_control = false;
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes members.
@@ -161,6 +161,8 @@ public class PieRenderer : GLib.Object {
            this.set_highlighted_slice(this.active_slice+1);
         else if (this.active_slice != top)
            this.set_highlighted_slice((this.active_slice-1+this.slice_count())%this.slice_count());
+           
+        this.key_board_control = true;
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -178,6 +180,8 @@ public class PieRenderer : GLib.Object {
            this.set_highlighted_slice(this.active_slice-1);
         else if (this.active_slice != bottom)
            this.set_highlighted_slice((this.active_slice+1)%this.slice_count());
+           
+        this.key_board_control = true;
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -195,6 +199,8 @@ public class PieRenderer : GLib.Object {
            this.set_highlighted_slice(this.active_slice-1);
         else if (this.active_slice < left)
            this.set_highlighted_slice(this.active_slice+1);
+        
+        this.key_board_control = true;
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -212,6 +218,8 @@ public class PieRenderer : GLib.Object {
            this.set_highlighted_slice((this.active_slice+1)%this.slice_count());
         else if (this.active_slice < left && this.active_slice != right)
            this.set_highlighted_slice((this.active_slice-1+this.slice_count())%this.slice_count());
+           
+        this.key_board_control = true;
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -292,8 +300,6 @@ public class PieRenderer : GLib.Object {
             
             foreach (var slice in this.slices)
                 slice.set_active_slice(active);
-            
-            this.key_board_control = true;
         }
     }
 }

@@ -52,6 +52,14 @@ public class PieManager : GLib.Object {
     private static bool a_pie_is_active = false;
     
     /////////////////////////////////////////////////////////////////////
+    /// Storing the position of the last Pie. Used for subpies, which are
+    /// opened at their parents location.
+    /////////////////////////////////////////////////////////////////////
+    
+    private static int last_x = 0;
+    private static int last_y = 0;
+    
+    /////////////////////////////////////////////////////////////////////
     /// Initializes all Pies. They are loaded from the pies.conf file.
     /////////////////////////////////////////////////////////////////////
     
@@ -73,7 +81,7 @@ public class PieManager : GLib.Object {
     /// Opens the Pie with the given ID, if it exists.
     /////////////////////////////////////////////////////////////////////
     
-    public static void open_pie(string id) {
+    public static void open_pie(string id, bool at_last_position = false) {
         if (!a_pie_is_active) {
             Pie? pie = all_pies[id];
             
@@ -82,7 +90,13 @@ public class PieManager : GLib.Object {
                 
                 var window = new PieWindow();
                 window.load_pie(pie);
-                window.open();
+                
+                if (at_last_position) {
+                    window.open_at(last_x, last_y);
+                } else {
+                    window.open();
+                    window.get_center_pos(out last_x, out last_y);
+                }
                 
                 opened_windows.add(window);
                 

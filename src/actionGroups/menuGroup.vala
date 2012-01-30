@@ -131,18 +131,11 @@ public class MenuGroup : ActionGroup {
                     
                 if (type == GMenu.TreeItemType.DIRECTORY && !item.get_directory().get_is_nodisplay()) {
                     // create a MenuGroup for sub menus 
-                    string[] icons = item.get_directory().get_icon().to_string().split(" ");
-                    string final_icon = "application-default-icon";
                     
-                    // search for available icons
-                    foreach (var icon in icons) {
-                        if (Gtk.IconTheme.get_default().has_icon(icon)) {
-                            final_icon = icon;
-                            break;
-                        }
-                    }
-                
-                    var sub_menu = PieManager.create_dynamic_pie(item.get_directory().get_name(), final_icon);
+                    // get icon
+                    var icon = item.get_directory().get_icon();
+                    
+                    var sub_menu = PieManager.create_dynamic_pie(item.get_directory().get_name(), Icon.get_icon_name(icon));
                     var group = new MenuGroup.sub_menu(sub_menu.id);
                     group.add_action(new PieAction(parent_id, true));
                     group.load_contents(item.get_directory(), sub_menu.id);

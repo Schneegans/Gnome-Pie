@@ -193,6 +193,28 @@ public class PieWindow : Gtk.Window {
     }
     
     /////////////////////////////////////////////////////////////////////
+    /// Opens the window at a given location.
+    /////////////////////////////////////////////////////////////////////
+    
+    public void open_at(int at_x, int at_y) {
+        this.open();
+        this.move(at_x-this.width_request/2, at_y-this.height_request/2);
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Gets the center position of the window.
+    /////////////////////////////////////////////////////////////////////
+    
+    public void get_center_pos(out int out_x, out int out_y) {
+        int x, y, width, height;
+        this.get_position(out x, out y);
+        this.get_size(out width, out height);
+        
+        out_x = x + width/2;
+        out_y = y + height/2;
+    }
+    
+    /////////////////////////////////////////////////////////////////////
     /// Draw the Pie.
     /////////////////////////////////////////////////////////////////////
 
@@ -303,6 +325,7 @@ public class PieWindow : Gtk.Window {
                 else if (key >= 65 && key <= 90)   index = (int)key - 55;
                 
                 if (index >= 0 && index < this.renderer.slice_count()) {
+                    this.renderer.key_board_control = true;
                     this.renderer.set_highlighted_slice(index);
                 
                     if (this.renderer.active_slice == index) {

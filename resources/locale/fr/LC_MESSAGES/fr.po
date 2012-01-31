@@ -25,7 +25,7 @@ msgstr "Ouvrir une Part"
 
 #: ../../src/actions/pieAction.vala:36
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
-msgstr "Ouvrir une autre Part de Gnome-Pie. Vous pouvez ainsi créer des sous-menus."
+msgstr "Ouvre une autre Part de Gnome-Pie. Vous pouvez ainsi créer des sous-menus."
 
 #: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
@@ -37,11 +37,11 @@ msgstr "Lancer l'application"
 
 #: ../../src/actions/appAction.vala:36
 msgid "Executes the given command."
-msgstr "Execute lacommande définie"
+msgstr "Execute la commande définie"
 
 #: ../../src/actions/uriAction.vala:34
 msgid "Open URI"
-msgstr "Ouvrir une URI"
+msgstr "Ouvrir une URL"
 
 #: ../../src/actions/uriAction.vala:36
 msgid "Opens a given location. You may use URL's or files paths."
@@ -53,13 +53,13 @@ msgstr "Appuyez le raccourci clavier"
 
 #: ../../src/actions/keyAction.vala:36
 msgid "Simulates the activation of a hotkey."
-msgstr "Simuler l'activation d'un racourci clavier"
+msgstr "Simule l'activation d'un racourci clavier"
 
 #: ../../src/utilities/bindingManager.vala:161
 #: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
 #: ../../src/utilities/key.vala:65
 msgid "Not bound"
-msgstr "Aucun lien"
+msgstr "Aucun raccourci"
 
 #: ../../src/utilities/trigger.vala:163
 msgid "Button %i"
@@ -102,7 +102,7 @@ msgstr "Gère votre Presse-papier"
 
 #: ../../src/actionGroups/menuGroup.vala:35
 msgid "Group: Main menu"
-msgstr "Group : Menu principal"
+msgstr "Groupe : Menu principal"
 
 #: ../../src/actionGroups/menuGroup.vala:37
 msgid "Displays your main menu structure."
@@ -180,16 +180,16 @@ msgstr "Faites glisser pour déplacer"
 
 #: ../../src/gui/piePreviewRenderer.vala:415
 msgid "Click to add a new Slice"
-msgstr "Cliquez pour ajouter "
+msgstr "Cliquez pour ajouter \n"
 "une nouvelle Tranche"
 
 #: ../../src/gui/piePreviewRenderer.vala:419
 msgid "Drop to add as new Slice"
-msgstr "Déposez pour ajouter une nouvelle Tranche"
+msgstr "Déposez pour ajouter \n une nouvelle Tranche"
 
 #: ../../src/gui/piePreviewRenderer.vala:422
 msgid "Drop to move Slice"
-msgstr "Déposez pour deplacer la Tranche"
+msgstr "Déposez pour \n deplacer la Tranche"
 
 #: ../../src/gui/piePreviewRenderer.vala:427
 msgid "Click to delete"
@@ -332,7 +332,7 @@ msgstr "Thème d'icône"
 
 #: ../ui/icon_select.ui:105
 msgid "Custom Icon"
-msgstr "Icône personnaliser"
+msgstr "Icône personnalisée"
 
 #: ../ui/settings.ui:9 ../ui/preferences.ui:27
 msgid "General Settings"
@@ -420,11 +420,11 @@ msgstr "Nom de la Tranche"
 
 #: ../ui/slice_select.ui:204
 msgid "URI to open"
-msgstr "URI à ouvrir"
+msgstr "Liens web à ouvrir"
 
 #: ../ui/slice_select.ui:243
 msgid "Command to execute"
-msgstr "Commande àexecuter"
+msgstr "Commande à executer"
 
 #: ../ui/slice_select.ui:282
 msgid "Hotkey to press"
@@ -436,11 +436,11 @@ msgstr "Part à ouvrir"
 
 #: ../ui/slice_select.ui:340
 msgid "Is Quick Action"
-msgstr "Est une action rapide"
+msgstr "Action rapide"
 
 #: ../ui/slice_select.ui:354 ../ui/slice_select.ui:355
 msgid "This Slice will be executed when you click in the middle of the Pie."
-msgstr "Cette Trance sera exécutée quand vous cliquerez au milieu de la Part."
+msgstr "Cette Tranche sera exécutée quand vous cliquerez au milieu de la Part."
 
 #: ../ui/slice_select.ui:388
 msgid "Slice options"
@@ -466,7 +466,7 @@ msgstr ""
 "sur le signe plus. Vous pouvez en essayer plein ! Par exemple, des lanceurs d'application "
 "ou des dossiers. Même les liens de votre navigateur sont supportées ...\n"
 "\n"
-"Pour des ajouts manuels ou plus avancés, cliquer sur le signe plus."
+"Pour des ajouts manuels ou plus avancés, cliquez sur le signe plus."
 
 #: ../ui/preferences.ui:282
 msgid ""

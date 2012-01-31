@@ -199,7 +199,9 @@ public class SliceRenderer : GLib.Object {
 	    double direction = 2.0 * PI * position/parent.slice_count() + this.fade_rotation.val;
 	    double max_scale = 1.0/Config.global.theme.max_zoom;
         double diff = fabs(angle-direction);
-        
+
+        //direction -= 4*PI*diff*(1-diff/PI)/parent.slice_count();
+
         if (diff > PI)
 	        diff = 2 * PI - diff;
 

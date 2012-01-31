@@ -92,7 +92,7 @@ public class PieAction : Action {
     /////////////////////////////////////////////////////////////////////
 
     public override void activate() {
-        PieManager.open_pie(real_command, false);
+        PieManager.open_pie(real_command, true);
     } 
 }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="Glossy" description="A shiny theme for Gnome-Pie" author="Simon Schneegans" email="code@simonschneegans.de">
-    <pie radius="100" maxZoom="1.3" zoomRange="0.2" transitionTime="0.1" fadeInTime="0.2" fadeOutTime="0.2" fadeInZoom="0.7" fadeOutZoom="0.7">
+    <pie radius="100" maxZoom="1.3" zoomRange="0.2" wobble="0.1" transitionTime="0.1" fadeInTime="0.2" fadeOutTime="0.2" fadeInZoom="0.7" fadeOutZoom="0.7">
         <center radius="65" activeRadius="40">
             <center_layer file="icon_bg.svg" 
                           active_scale="1"     active_rotationMode="auto"   active_rotationSpeed="0"  active_colorize="false"    active_alpha="1.0" 
@@ -16,7 +16,7 @@
                           active_scale="1"     active_rotationMode="turn_to_mouse"   active_rotationSpeed="10.0"    active_colorize="false"    active_alpha="1.0" 
                           inactive_scale="0.6" inactive_rotationMode="auto" inactive_rotationSpeed="0.0"  inactive_colorize="false" inactive_alpha="0.0" />
         </center>
-        <slices radius="26" minGap="0">
+        <slices radius="26" minGap="5">
             <activeSlice>
                 <slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="false" />
                 <slice_layer type="icon" file="icon_mask.svg" scale="0.9" colorize="false" />

@@ -38,6 +38,7 @@ public class Theme : GLib.Object {
     public double max_zoom         {get; private set; default=1.2;}
     public double zoom_range       {get; private set; default=0.2;}
     public double transition_time  {get; private set; default=0.5;}
+    public double wobble           {get; private set; default=0.0;}
     public double fade_in_time     {get; private set; default=0.2;}
     public double fade_out_time    {get; private set; default=0.1;}
     public double fade_in_zoom     {get; private set; default=1.0;}
@@ -181,6 +182,9 @@ public class Theme : GLib.Object {
                     break;
                 case "transitiontime":
                     transition_time = double.parse(attr_content);
+                    break;
+                case "wobble":
+                    wobble = double.parse(attr_content);
                     break;
                 case "fadeintime":
                     fade_in_time = double.parse(attr_content);

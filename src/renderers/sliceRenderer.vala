@@ -86,7 +86,7 @@ public class SliceRenderer : GLib.Object {
     private AnimatedValue alpha;            // for fading in/out
     private AnimatedValue fade_rotation;    // for fading in/out
     private AnimatedValue fade_scale;       // for fading in/out
-    private AnimatedValue offset;           // for organic wobbling
+    private AnimatedValue wobble;           // for organic wobbling
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all AnimatedValues.
@@ -96,7 +96,7 @@ public class SliceRenderer : GLib.Object {
         this.parent = parent;
        
         this.fade =   new AnimatedValue.linear(0.0, 0.0, Config.global.theme.transition_time);
-        this.offset = new AnimatedValue.linear(0.0, 0.0, Config.global.theme.transition_time);
+        this.wobble = new AnimatedValue.linear(0.0, 0.0, Config.global.theme.transition_time);
         this.alpha =  new AnimatedValue.linear(0.0, 1.0, Config.global.theme.fade_in_time);
         this.scale =  new AnimatedValue.cubic(AnimatedValue.Direction.OUT, 
                                                  1.0/Config.global.theme.max_zoom, 
@@ -197,7 +197,7 @@ public class SliceRenderer : GLib.Object {
         this.fade.update(frame_time);
         this.fade_scale.update(frame_time);
         this.fade_rotation.update(frame_time);
-        this.offset.update(frame_time);
+        this.wobble.update(frame_time);
 	    
 	    double direction = 2.0 * PI * position/parent.slice_count() + this.fade_rotation.val;
 	    double max_scale = 1.0/Config.global.theme.max_zoom;
@@ -209,17 +209,17 @@ public class SliceRenderer : GLib.Object {
         active = ((parent.active_slice >= 0) && (diff < PI/parent.slice_count()));
         
         if (parent.active_slice >= 0) {
-            double offset = Config.global.theme.wobble*diff/PI*(1-diff/PI);
+            double wobble = Config.global.theme.wobble*diff/PI*(1-diff/PI);
             if ((direction < angle && direction > angle - PI) || direction > PI+angle) {
-                this.offset.reset_target(-offset, Config.global.theme.transition_time*0.5);
+                this.wobble.reset_target(-wobble, Config.global.theme.transition_time*0.5);
             } else {
-                this.offset.reset_target(offset, Config.global.theme.transition_time*0.5);
+                this.wobble.reset_target(wobble, Config.global.theme.transition_time*0.5);
             }
         } else {
-            this.offset.reset_target(0, Config.global.theme.transition_time*0.5);
+            this.wobble.reset_target(0, Config.global.theme.transition_time*0.5);
         }
         
-        direction += this.offset.val;
+        direction += this.wobble.val;
 
         if (diff < 2 * PI * Config.global.theme.zoom_range)
             max_scale = (Config.global.theme.max_zoom/(diff * (Config.global.theme.max_zoom - 1)

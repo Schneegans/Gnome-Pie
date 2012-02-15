@@ -103,7 +103,6 @@ public class PieManager : GLib.Object {
                 window.on_closed.connect(() => {
                     opened_windows.remove(window);
                     if (opened_windows.size == 0) {
-                        ThemedIcon.clear_cache();
                         Icon.clear_cache();
                     }
                 });

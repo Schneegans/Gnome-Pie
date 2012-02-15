@@ -407,8 +407,14 @@ public class Theme : GLib.Object {
                 if (element_name == "slice_layer") {
                     string file = "";
                     double scale = 1.0;
-                    bool is_icon = false;
+                    SliceLayer.Type type = SliceLayer.Type.IMAGE;
                     bool colorize = false;
+                    string slice_caption_font = "sans 8";
+                    int slice_caption_width = 50;
+                    int slice_caption_height = 20;
+                    int pos_x = 0;
+                    int pos_y = 0;
+                    Color slice_caption_color = new Color.from_rgb(1.0f, 1.0f, 1.0f);
                     
                     for (Xml.Attr* attribute = layer->properties; attribute != null; attribute = attribute->next) {
                         string attr_name = attribute->name.down();
@@ -423,12 +429,38 @@ public class Theme : GLib.Object {
                                 break;
                             case "type":
                                 if (attr_content == "icon")
-                                    is_icon = true;
+                                    type = SliceLayer.Type.ICON;
+                                else if (attr_content == "caption")
+                                    type = SliceLayer.Type.CAPTION;
+                                else if (attr_content == "caption_background")
+                                    type = SliceLayer.Type.CAPTION_BACKGROUND;
                                 else if (attr_content != "file")
                                     warning("Invalid attribute content " + attr_content + " for attribute " + attr_name + " in <slice_layer> element!");
                                 break;
                             case "colorize":
                                 colorize = bool.parse(attr_content);
+                                break;
+                            case "font":
+                                slice_caption_font = attr_content;
+                                break;
+                            case "width":
+                                slice_caption_width = (int)(int.parse(attr_content) * Config.global.global_scale);
+                                if (slice_caption_width % 2 == 1)
+                                    --slice_caption_width;
+                                break;
+                            case "height":
+                                slice_caption_height = (int)(int.parse(attr_content) * Config.global.global_scale);
+                                if (slice_caption_height % 2 == 1)
+                                    --slice_caption_height;
+                                break;
+                            case "x":
+                                pos_x = (int)(double.parse(attr_content) * Config.global.global_scale);
+                                break;
+                            case "y":
+                                pos_y = (int)(double.parse(attr_content) * Config.global.global_scale);
+                                break;
+                            case "color":
+                                slice_caption_color = new Color.from_string(attr_content);
                                 break;
                             default:
                                 warning("Invalid attribute \"" + attr_name + "\" in <slice_layer> element!");
@@ -442,9 +474,19 @@ public class Theme : GLib.Object {
                     int size = 2*(int)(slice_radius*scale*max_zoom);
 
                     if (slice->name.down() == "activeslice") {
-                        active_slice_layers.add(new SliceLayer(file, size, colorize, is_icon));
+                        if (type == SliceLayer.Type.ICON)                    active_slice_layers.add(new SliceLayer.icon(file, size, colorize));
+                        else if (type == SliceLayer.Type.CAPTION)            active_slice_layers.add(new SliceLayer.caption(slice_caption_font,
+                                                                             slice_caption_width, slice_caption_height,
+                                                                             pos_y, slice_caption_color));
+                        else if (type == SliceLayer.Type.CAPTION_BACKGROUND) active_slice_layers.add(new SliceLayer.caption_bg(file, size, colorize));
+                        else                                                 active_slice_layers.add(new SliceLayer(file, size, colorize));
                     } else {
-                        inactive_slice_layers.add(new SliceLayer(file, size, colorize, is_icon));
+                        if (type == SliceLayer.Type.ICON)                    inactive_slice_layers.add(new SliceLayer.icon(file, size, colorize));
+                        else if (type == SliceLayer.Type.CAPTION)            inactive_slice_layers.add(new SliceLayer.caption(slice_caption_font,
+                                                                             slice_caption_width, slice_caption_height,
+                                                                             pos_y, slice_caption_color));
+                        else if (type == SliceLayer.Type.CAPTION_BACKGROUND) inactive_slice_layers.add(new SliceLayer.caption_bg(file, size, colorize));
+                        else                                                 inactive_slice_layers.add(new SliceLayer(file, size, colorize));
                     }
 
                 } else {

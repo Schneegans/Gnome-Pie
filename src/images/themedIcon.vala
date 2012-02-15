@@ -23,54 +23,12 @@ namespace GnomePie {
 /////////////////////////////////////////////////////////////////////////
 
 public class ThemedIcon : Image {
-
-    /////////////////////////////////////////////////////////////////////
-    /// A cache which stores loaded icon. The key is the icon name. When
-    /// the users icon theme or the theme of Gnome-Pie changes, these
-    /// cahces are cleared.
-    /////////////////////////////////////////////////////////////////////
-
-    private static Gee.HashMap<string, Cairo.ImageSurface?> active_cache { private get; private set; }
-    private static Gee.HashMap<string, Cairo.ImageSurface?> inactive_cache { private get; private set; }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Initializes the caches.
-    /////////////////////////////////////////////////////////////////////
-    
-    public static void init() {
-        clear_cache();
-        
-        Config.global.notify["theme"].connect(() => {
-            clear_cache();
-        });
-        
-        Gtk.IconTheme.get_default().changed.connect(() => {
-            clear_cache();
-        });
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Clears the cache.
-    /////////////////////////////////////////////////////////////////////
-    
-    public static void clear_cache() {
-        active_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-        inactive_cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-    }
     
     /////////////////////////////////////////////////////////////////////
     /// Paint a slice icon according to the current theme.
     /////////////////////////////////////////////////////////////////////
     
-    public ThemedIcon(string icon_name, bool active) {
-        // check cache
-        var current_cache = active ? active_cache : inactive_cache;
-        var cached = current_cache.get(icon_name);
-        
-        if (cached != null) {
-            this.surface = cached;
-            return;
-        }
+    public ThemedIcon(string caption, string icon_name, bool active) {
     
         // get layers for the desired slice type
         var layers = active ? Config.global.theme.active_slice_layers : Config.global.theme.inactive_slice_layers;
@@ -78,7 +36,8 @@ public class ThemedIcon : Image {
         // get max size
         int size = 1;
         foreach (var layer in layers) {
-            if (layer.image.width() > size) size = layer.image.width();
+            if (layer.image != null && layer.image.width() > size) 
+                size = layer.image.width();
         }
         
         this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, size, size);
@@ -86,7 +45,8 @@ public class ThemedIcon : Image {
         // get size of icon layer
         int icon_size = size;
         foreach (var layer in layers) {
-            if (layer.is_icon) icon_size = layer.image.width();
+            if (layer.image != null && layer.layer_type == SliceLayer.Type.ICON)
+                icon_size = layer.image.width();
         }
     
         Image icon;
@@ -108,8 +68,7 @@ public class ThemedIcon : Image {
                 ctx.push_group();
             }
                     
-            if (layer.is_icon) {
-            
+            if (layer.layer_type == SliceLayer.Type.ICON) {
                 ctx.push_group();
                 
                 layer.image.paint_on(ctx);
@@ -129,7 +88,13 @@ public class ThemedIcon : Image {
                 ctx.paint();
                 ctx.set_operator(Cairo.Operator.OVER);
                 
-            } else {
+            } else if (layer.layer_type == SliceLayer.Type.CAPTION && Config.global.show_captions) {
+                Image text = new RenderedText(caption, layer.width, layer.height, layer.font, layer.color, Config.global.global_scale);
+                ctx.translate(0, layer.position);
+                text.paint_on(ctx);
+                ctx.translate(0, -layer.position);
+            } else if (layer.layer_type == SliceLayer.Type.IMAGE || 
+                      (layer.layer_type == SliceLayer.Type.CAPTION_BACKGROUND && Config.global.show_captions)) {
                 layer.image.paint_on(ctx);
             }
             
@@ -144,9 +109,6 @@ public class ThemedIcon : Image {
                 ctx.paint();
             }
         }
-        
-        // store the surface in cache
-        current_cache.set(icon_name, this.surface);
     }
     
     /////////////////////////////////////////////////////////////////////

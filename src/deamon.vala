@@ -139,7 +139,6 @@ public class Deamon : GLib.Object {
         
         PieManager.init();
         Icon.init();
-        ThemedIcon.init();
         
         // launch the indicator
         this.indicator = new Indicator();

@@ -16,11 +16,15 @@
                 <slice_layer type="file" file="icon_active.svg"   scale="1"   colorize="true" />
                 <slice_layer type="file" file="gloss.svg"   scale="1"   colorize="false" />
                 <slice_layer type="icon" scale="0.9" colorize="false" />
+                <slice_layer type="caption_background" file="caption.svg" scale="1" colorize="false" />
+                <slice_layer type="caption" y="20" font="sans 9" width="55" height="20" />
             </activeSlice>
             <inactiveSlice>
                 <slice_layer type="file" file="icon_inactive.svg"   scale="1"   colorize="false" />
                 <slice_layer type="file" file="gloss.svg"   scale="1"   colorize="false" />
                 <slice_layer type="icon" scale="0.9" colorize="false" />
+                <slice_layer type="caption_background" file="caption.svg" scale="1" colorize="false" />
+                <slice_layer type="caption" y="20" font="sans 9" width="55" height="20" />
             </inactiveSlice>
         </slices>
         <caption position="0" font="sans 10" width="90" height="90" />

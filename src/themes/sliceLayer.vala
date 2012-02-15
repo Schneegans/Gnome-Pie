@@ -23,30 +23,62 @@ namespace GnomePie {
 /////////////////////////////////////////////////////////////////////////
 
 public class SliceLayer : GLib.Object {
+
+    public enum Type { IMAGE, ICON, CAPTION, CAPTION_BACKGROUND }
+    public Type layer_type { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Information on the contained image.
     /////////////////////////////////////////////////////////////////////
     
     public Image image {get; set;}
-    public string icon_file {get; private set;}
+    
     
     /////////////////////////////////////////////////////////////////////
     /// Properties of this layer.
     /////////////////////////////////////////////////////////////////////
     
-    public bool colorize {get; private set; }
-    public bool is_icon {get; private set;}
-    public int icon_size {get; private set;}
+    public string icon_file {get; private set; default="";}
+    public bool colorize {get; private set; default=false;}
+    public int icon_size {get; private set; default=1;}
+    
+    public string font {get; private set; default="";}
+    public int width {get; private set; default=0;}
+    public int height {get; private set; default=0;}
+    public int position {get; private set; default=0;}
+    public Color color {get; private set; default=new Color();}
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members of the layer.
     /////////////////////////////////////////////////////////////////////
     
-    public SliceLayer(string icon_file, int icon_size, bool colorize, bool is_icon) {
+    public SliceLayer(string icon_file, int icon_size, bool colorize) {
+        this.layer_type = Type.IMAGE;
         this.icon_file = icon_file;
         this.colorize = colorize;
-        this.is_icon = is_icon;
+        this.icon_size = icon_size;
+    }
+    
+    public SliceLayer.icon(string icon_file, int icon_size, bool colorize) {
+        this.layer_type = Type.ICON;
+        this.icon_file = icon_file;
+        this.colorize = colorize;
+        this.icon_size = icon_size;
+    }
+    
+    public SliceLayer.caption(string font, int width, int height, int position, Color color) {
+        this.layer_type = Type.CAPTION;
+        this.font = font;
+        this.width = width;
+        this.height = height;
+        this.position = position;
+        this.color = color;
+    }
+    
+    public SliceLayer.caption_bg(string icon_file, int icon_size, bool colorize) {
+        this.layer_type = Type.CAPTION_BACKGROUND;
+        this.icon_file = icon_file;
+        this.colorize = colorize;
         this.icon_size = icon_size;
     }
     
@@ -55,9 +87,11 @@ public class SliceLayer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public void load_image() {
-        if (this.icon_file == "" && this.is_icon == true) 
+        this.image = null;
+    
+        if (this.icon_file == "" && this.layer_type == Type.ICON) 
             this.image = new Image.empty(this.icon_size, this.icon_size, new Color.from_rgb(1, 1, 1));
-        else
+        else if (this.icon_file != "")
             this.image = new Image.from_file_at_size(this.icon_file, this.icon_size, this.icon_size);
     }
 }

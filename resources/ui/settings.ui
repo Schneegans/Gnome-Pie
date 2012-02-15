@@ -108,6 +108,25 @@
                           </packing>
                         </child>
                         <child>
+                          <object class="GtkCheckButton" id="captions-checkbox">
+                            <property name="label" translatable="yes">Display Slice captions</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="has_tooltip">True</property>
+                            <property name="tooltip_markup" translatable="yes">If not checked, you can access this menu by launching Gnome-Pie a second time.</property>
+                            <property name="tooltip_text" translatable="yes">If not checked, you can access this menu by launching Gnome-Pie a second time.</property>
+                            <property name="use_action_appearance">False</property>
+                            <property name="xalign">0</property>
+                            <property name="draw_indicator">True</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
                           <object class="GtkHBox" id="hbox1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>

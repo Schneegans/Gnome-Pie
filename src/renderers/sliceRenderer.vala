@@ -129,8 +129,8 @@ public class SliceRenderer : GLib.Object {
                                             Config.global.theme.caption_color,
                                             Config.global.global_scale);
             
-        this.active_icon = new ThemedIcon(action.icon, true);
-        this.inactive_icon = new ThemedIcon(action.icon, false);
+        this.active_icon = new ThemedIcon(action.name, action.icon, true);
+        this.inactive_icon = new ThemedIcon(action.name, action.icon, false);
         
         this.color = new Color.from_icon(this.active_icon);
         

@@ -32,6 +32,7 @@ public class SettingsWindow : GLib.Object {
     private ThemeList? theme_list = null;
     private Gtk.ToggleButton? indicator = null;
     private Gtk.ToggleButton? autostart = null;
+    private Gtk.ToggleButton? captions = null;
     
     /////////////////////////////////////////////////////////////////////
     /// C'tor creates, the dialog.
@@ -58,6 +59,9 @@ public class SettingsWindow : GLib.Object {
             
             this.indicator = (builder.get_object("indicator-checkbox") as Gtk.ToggleButton);
             this.indicator.toggled.connect(on_indicator_toggled);
+            
+            this.captions = (builder.get_object("captions-checkbox") as Gtk.ToggleButton);
+            this.captions.toggled.connect(on_captions_toggled);
             
             var scale_slider = (builder.get_object("scale-hscale") as Gtk.HScale);
                 scale_slider.set_range(0.5, 2.0);
@@ -109,6 +113,7 @@ public class SettingsWindow : GLib.Object {
     public void show() {
         this.indicator.active = Config.global.show_indicator;
         this.autostart.active = Config.global.auto_start;
+        this.captions.active = Config.global.show_captions;
     
         this.window.show_all(); 
     }
@@ -168,6 +173,15 @@ public class SettingsWindow : GLib.Object {
     private void on_indicator_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
         Config.global.show_indicator = check.active;
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Shows or hides the captions of Slices.
+    /////////////////////////////////////////////////////////////////////
+    
+    private void on_captions_toggled(Gtk.ToggleButton check_box) {
+        var check = check_box as Gtk.CheckButton;
+        Config.global.show_captions = check.active;
     }
 }
 

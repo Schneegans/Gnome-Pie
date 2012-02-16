@@ -64,49 +64,52 @@ public class ThemedIcon : Image {
         // now render all layers on top of each other
         foreach (var layer in layers) {
         
-            if (layer.colorize) {
-                ctx.push_group();
-            }
+            if (layer.visibility == SliceLayer.Visibility.ANY || 
+                (Config.global.show_captions == (layer.visibility == SliceLayer.Visibility.WITH_CAPTION))) {
+            
+                if (layer.colorize) {
+                    ctx.push_group();
+                }
+                        
+                if (layer.layer_type == SliceLayer.Type.ICON) {
+                    ctx.push_group();
                     
-            if (layer.layer_type == SliceLayer.Type.ICON) {
-                ctx.push_group();
-                
-                layer.image.paint_on(ctx);
-                
-                ctx.set_operator(Cairo.Operator.IN);
-                
-                if (layer.image.width() != icon_size) {
-                    if (icon_name.contains("/"))
-                        icon = new Image.from_file_at_size(icon_name, layer.image.width(), layer.image.width());
-                    else
-                        icon = new Icon(icon_name,layer.image.width());
+                    layer.image.paint_on(ctx);
+                    
+                    ctx.set_operator(Cairo.Operator.IN);
+                    
+                    if (layer.image.width() != icon_size) {
+                        if (icon_name.contains("/"))
+                            icon = new Image.from_file_at_size(icon_name, layer.image.width(), layer.image.width());
+                        else
+                            icon = new Icon(icon_name,layer.image.width());
+                    }
+                    
+                    icon.paint_on(ctx);
+
+                    ctx.pop_group_to_source();
+                    ctx.paint();
+                    ctx.set_operator(Cairo.Operator.OVER);
+                    
+                } else if (layer.layer_type == SliceLayer.Type.CAPTION) {
+                    Image text = new RenderedText(caption, layer.width, layer.height, layer.font, layer.color, Config.global.global_scale);
+                    ctx.translate(0, layer.position);
+                    text.paint_on(ctx);
+                    ctx.translate(0, -layer.position);
+                } else if (layer.layer_type == SliceLayer.Type.FILE) {
+                    layer.image.paint_on(ctx);
                 }
                 
-                icon.paint_on(ctx);
-
-                ctx.pop_group_to_source();
-                ctx.paint();
-                ctx.set_operator(Cairo.Operator.OVER);
-                
-            } else if (layer.layer_type == SliceLayer.Type.CAPTION && Config.global.show_captions) {
-                Image text = new RenderedText(caption, layer.width, layer.height, layer.font, layer.color, Config.global.global_scale);
-                ctx.translate(0, layer.position);
-                text.paint_on(ctx);
-                ctx.translate(0, -layer.position);
-            } else if (layer.layer_type == SliceLayer.Type.IMAGE || 
-                      (layer.layer_type == SliceLayer.Type.CAPTION_BACKGROUND && Config.global.show_captions)) {
-                layer.image.paint_on(ctx);
-            }
-            
-            // colorize the whole layer if neccasary
-            if (layer.colorize) {
-                ctx.set_operator(Cairo.Operator.ATOP);
-                ctx.set_source_rgb(color.r, color.g, color.b);
-                ctx.paint();
-                
-                ctx.set_operator(Cairo.Operator.OVER);
-                ctx.pop_group_to_source();
-                ctx.paint();
+                // colorize the whole layer if neccasary
+                if (layer.colorize) {
+                    ctx.set_operator(Cairo.Operator.ATOP);
+                    ctx.set_source_rgb(color.r, color.g, color.b);
+                    ctx.paint();
+                    
+                    ctx.set_operator(Cairo.Operator.OVER);
+                    ctx.pop_group_to_source();
+                    ctx.paint();
+                }
             }
         }
     }

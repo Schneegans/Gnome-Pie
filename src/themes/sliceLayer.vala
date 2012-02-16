@@ -24,8 +24,11 @@ namespace GnomePie {
 
 public class SliceLayer : GLib.Object {
 
-    public enum Type { IMAGE, ICON, CAPTION, CAPTION_BACKGROUND }
+    public enum Type { FILE, ICON, CAPTION }
+    public enum Visibility { ANY, WITH_CAPTION, WITHOUT_CAPTION }
+    
     public Type layer_type { get; private set; }
+    public Visibility visibility { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
     /// Information on the contained image.
@@ -52,34 +55,30 @@ public class SliceLayer : GLib.Object {
     /// C'tor, initializes all members of the layer.
     /////////////////////////////////////////////////////////////////////
     
-    public SliceLayer(string icon_file, int icon_size, bool colorize) {
-        this.layer_type = Type.IMAGE;
+    public SliceLayer.file(string icon_file, int icon_size, bool colorize, Visibility visibility) {
+        this.layer_type = Type.FILE;
         this.icon_file = icon_file;
         this.colorize = colorize;
         this.icon_size = icon_size;
+        this.visibility = visibility;
     }
     
-    public SliceLayer.icon(string icon_file, int icon_size, bool colorize) {
+    public SliceLayer.icon(string icon_file, int icon_size, bool colorize, Visibility visibility) {
         this.layer_type = Type.ICON;
         this.icon_file = icon_file;
         this.colorize = colorize;
         this.icon_size = icon_size;
+        this.visibility = visibility;
     }
     
-    public SliceLayer.caption(string font, int width, int height, int position, Color color) {
+    public SliceLayer.caption(string font, int width, int height, int position, Color color, Visibility visibility) {
         this.layer_type = Type.CAPTION;
         this.font = font;
         this.width = width;
         this.height = height;
         this.position = position;
         this.color = color;
-    }
-    
-    public SliceLayer.caption_bg(string icon_file, int icon_size, bool colorize) {
-        this.layer_type = Type.CAPTION_BACKGROUND;
-        this.icon_file = icon_file;
-        this.colorize = colorize;
-        this.icon_size = icon_size;
+        this.visibility = visibility;
     }
     
     /////////////////////////////////////////////////////////////////////

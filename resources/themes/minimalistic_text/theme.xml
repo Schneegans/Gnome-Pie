@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme name="Minimalistic Text" description="A text-only theme" author="Simon Schneegans" email="code@simonschneegans.de">
+    <pie radius="120" maxZoom="1.3" zoomRange="0.3" wobble="0.4" transitionTime="0.3" springiness="1.2" 
+          fadeInTime="0.3" fadeOutTime="0.3" fadeInZoom="0.7" fadeOutZoom="1.2" fadeInRotation="0.2" fadeOutRotation="-0.2">
+        <slices radius="35" minGap="0">
+            <activeSlice>
+                <slice_layer type="icon" scale="0.1" />
+                <slice_layer type="file" file="bg.svg" scale="1" colorize="true" />
+                <slice_layer type="file" file="bg.svg" scale="0.95" colorize="false" />
+                <slice_layer type="file" file="fg.svg" scale="0.95" colorize="true" />
+                <slice_layer type="caption" y="0" font="sans 10" color="#fff" width="70" height="70" />
+            </activeSlice>
+            <inactiveSlice>
+                <slice_layer type="icon" scale="0.1" />
+                <slice_layer type="file" file="bg.svg" scale="1" colorize="true" />
+                <slice_layer type="file" file="bg.svg" scale="0.95" colorize="false" />
+                <slice_layer type="caption" y="0" font="sans 10" color="#fff" width="70" height="70" />
+            </inactiveSlice>
+        </slices>
+    </pie>
+</theme>
+

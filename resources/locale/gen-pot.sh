@@ -13,6 +13,7 @@ xgettext --package-name $domain \
          --default-domain $domain \
          --output $domain.pot.tmp \
          --copyright-holder="$copyright" \
+         --from-code utf-8 \
          -k_ \
          -L Glade \
          $filelist
@@ -23,6 +24,7 @@ xgettext --package-name $domain \
          --default-domain $domain \
          --output $domain.pot \
          --copyright-holder="$copyright" \
+         --from-code utf-8 \
          -k_ \
          -L C# \
          $filelist

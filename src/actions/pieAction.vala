@@ -58,12 +58,16 @@ public class PieAction : Action {
     public override string name {
         get {
             var referee = PieManager.all_pies[real_command];
-            if (referee != null)
-                return referee.name;
+            if (referee != null) {
+                owned_name = "↪" + referee.name;
+                return owned_name;
+            }
             return "";
         }
         protected set {}
     }
+    
+    private string owned_name;
     
     /////////////////////////////////////////////////////////////////////
     /// Returns the icon of the referenced Pie.

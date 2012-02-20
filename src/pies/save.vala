@@ -30,7 +30,10 @@ namespace Pies {
     /////////////////////////////////////////////////////////////////////
     
     public void save() {
-         message("Saving Pies to \"" + Paths.pie_config + "\".");
+        message("Saving Pies to \"" + Paths.pie_config + "\".");
+         
+        // log pie statistics
+        string pie_line = "PIES";
          
         // initializes the XML-Writer
         var writer = new Xml.TextWriter.filename(Paths.pie_config);
@@ -44,6 +47,8 @@ namespace Pies {
             
             // if it's no dynamically created Pie
             if (pie.id.length == 3) {
+                int slice_count = 0;                
+
                 // write all attributes of the Pie
                 writer.start_element("pie");
                 writer.write_attribute("name", pie.name);
@@ -65,18 +70,26 @@ namespace Pies {
                             writer.write_attribute("command", action.real_command);
                             writer.write_attribute("quickAction", action.is_quickaction ? "true" : "false");
                             writer.end_element();
+                            
+                            ++ slice_count;
                         }
                     } else {
                         writer.start_element("group");
                             writer.write_attribute("type", GroupRegistry.descriptions[group.get_type().name()].id);
                         writer.end_element();
+                        
+                        slice_count += group.actions.size;
                     }
                 }
                 writer.end_element();
+                
+                pie_line += " " + pie.id + "(%d)".printf(slice_count);
             }
         }
         writer.end_element();
         writer.end_document();
+        
+        Logger.stats(pie_line);
     }
 }
 

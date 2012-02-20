@@ -69,7 +69,7 @@ public class AboutWindow: Gtk.AboutDialog {
             logo_icon_name: "gnome-pie",
             website: "http://www.simonschneegans.de/?page_id=12",
             website_label: "www.gnome-pie.simonschneegans.de",
-            version: "0.4.2"
+            version: Deamon.version
         );
     }
 }

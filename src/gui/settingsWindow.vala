@@ -124,6 +124,12 @@ public class SettingsWindow : GLib.Object {
     
     private void on_close_button_clicked() {
         this.window.hide();
+        
+        Logger.stats("SETTINGS " + Config.global.theme.name + 
+                     (this.indicator.active ? " INDICATOR" : "") +
+                     (this.autostart.active ? " AUTOSTART" : "") +
+                     (this.captions.active ? " CAPTIONS" : "") +
+                     " %f".printf(Config.global.global_scale));
     }
     
     /////////////////////////////////////////////////////////////////////

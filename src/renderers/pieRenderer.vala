@@ -130,9 +130,21 @@ public class PieRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public void activate() {
-        if (this.active_slice >= 0 && this.active_slice < this.slices.size)
+        if (this.active_slice >= 0 && this.active_slice < this.slices.size) {
             slices[active_slice].activate();
-        this.cancel();
+            
+            if (this.active_slice == this.quickaction)
+                Logger.stats("ACTIVATE QUICKACTION %d".printf(this.active_slice));
+            else
+                Logger.stats("ACTIVATE %d".printf(this.active_slice));
+        } else {
+            Logger.stats("CANCEL");
+        }
+        
+        foreach (var slice in this.slices)
+            slice.fade_out();
+            
+        center.fade_out();
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -144,6 +156,8 @@ public class PieRenderer : GLib.Object {
             slice.fade_out();
             
         center.fade_out();
+        
+        Logger.stats("CANCEL");
     }
     
     /////////////////////////////////////////////////////////////////////

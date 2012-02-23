@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-19 20:25+0100\n"
+"POT-Creation-Date: 2012-02-23 09:29+0100\n"
 "PO-Revision-Date: 2011-08-25 21:04+0200\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German\n"
@@ -41,7 +41,7 @@ msgstr "URI öffnen"
 msgid "Opens a given location. You may use URL's or files paths."
 msgstr "Öffnet URLs oder Dateipfade."
 
-#: ../../src/actions/actionRegistry.vala:111
+#: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
 msgstr "Müll"
 
@@ -54,7 +54,7 @@ msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
 msgstr ""
 "Öffnet einen anderen Pie. Auf diese Art können Submenüs erstellt werden."
 
-#: ../../src/gui/triggerSelectWindow.vala:144
+#: ../../src/gui/triggerSelectWindow.vala:166
 msgid ""
 "This hotkey is already assigned to the pie \"%s\"! \n"
 "\n"
@@ -63,98 +63,99 @@ msgstr ""
 "Dieser Hotkey ist schon dem Pie \"%s\" zugeordnet!\n"
 " Bitte wähle einen anderen!"
 
-#: ../../src/gui/preferencesWindow.vala:145
+#: ../../src/gui/preferencesWindow.vala:175
 msgid "No Pie selected."
 msgstr "Kein Pie gewählt."
 
-#: ../../src/gui/preferencesWindow.vala:181
+#: ../../src/gui/preferencesWindow.vala:215
 msgid "New Pie"
 msgstr "Neuer Pie"
 
-#: ../../src/gui/preferencesWindow.vala:190
+#: ../../src/gui/preferencesWindow.vala:228
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "Soll dieser Pie wirklich mit allen Slices gelöscht werden?"
 
-#: ../../src/gui/newSliceWindow.vala:229
+#: ../../src/gui/newSliceWindow.vala:290
 msgid "Rename me!"
 msgstr "Benenne mich!"
 
-#: ../../src/gui/piePreviewRenderer.vala:292
+#: ../../src/gui/piePreviewRenderer.vala:412
 msgid "Click to edit"
 msgstr "Editieren durch klicken"
 
-#: ../../src/gui/piePreviewRenderer.vala:292
-#: ../../src/gui/piePreviewRenderer.vala:307
+#: ../../src/gui/piePreviewRenderer.vala:412
+#: ../../src/gui/piePreviewRenderer.vala:427
 msgid "Drag to move"
 msgstr "Verschieben durch ziehen"
 
-#: ../../src/gui/piePreviewRenderer.vala:295
+#: ../../src/gui/piePreviewRenderer.vala:415
 msgid "Click to add a new Slice"
 msgstr "Neue Slice durch Klicken hinzufügen"
 
-#: ../../src/gui/piePreviewRenderer.vala:299
+#: ../../src/gui/piePreviewRenderer.vala:419
 msgid "Drop to add as new Slice"
 msgstr "Als neue Slice hinzuzufügen"
 
-#: ../../src/gui/piePreviewRenderer.vala:302
+#: ../../src/gui/piePreviewRenderer.vala:422
 msgid "Drop to move Slice"
 msgstr "Slice verschieben"
 
-#: ../../src/gui/piePreviewRenderer.vala:307
+#: ../../src/gui/piePreviewRenderer.vala:427
 msgid "Click to delete"
 msgstr "Löschen durch klicken"
 
-#: ../../src/gui/triggerSelectButton.vala:59
+#: ../../src/gui/triggerSelectButton.vala:63
 msgid "Press a hotkey ..."
 msgstr "Wählen..."
 
-#: ../../src/gui/piePreview.vala:120
+#: ../../src/gui/piePreview.vala:152
 msgid "Do you really want to delete this Slice?"
 msgstr "Soll die ausgewählte Slice wirklich gelöscht werden?"
 
-#: ../../src/gui/themeList.vala:48
+#: ../../src/gui/themeList.vala:62
 msgid "Themes"
 msgstr "Themen"
 
-#: ../../src/gui/themeList.vala:80
+#: ../../src/gui/themeList.vala:99
 msgid "By"
 msgstr "Von"
 
-#: ../../src/gui/sliceTypeList.vala:56
+#: ../../src/gui/sliceTypeList.vala:60
 msgid "Slice types"
 msgstr "Slice-Typen"
 
-#: ../../src/gui/iconSelectWindow.vala:178
+#: ../../src/gui/iconSelectWindow.vala:186
 msgid "All icons"
 msgstr "Alle Symbole"
 
-#: ../../src/gui/iconSelectWindow.vala:179
+#: ../../src/gui/iconSelectWindow.vala:187
 #: ../../src/pies/defaultConfig.vala:36
 msgid "Applications"
 msgstr "Anwendungen"
 
-#: ../../src/gui/iconSelectWindow.vala:180
+#: ../../src/gui/iconSelectWindow.vala:188
 msgid "Actions"
 msgstr "Aktionen"
 
-#: ../../src/gui/iconSelectWindow.vala:181
+#: ../../src/gui/iconSelectWindow.vala:189
 msgid "Places"
 msgstr "Orte"
 
-#: ../../src/gui/iconSelectWindow.vala:182
+#: ../../src/gui/iconSelectWindow.vala:190
 msgid "File types"
 msgstr "Dateitypen"
 
-#: ../../src/gui/iconSelectWindow.vala:183
+#: ../../src/gui/iconSelectWindow.vala:191
 msgid "Emotes"
 msgstr "Smilies"
 
-#: ../../src/gui/iconSelectWindow.vala:184
+#: ../../src/gui/iconSelectWindow.vala:192
 msgid "Miscellaneous"
 msgstr "Sonstige"
 
-#: ../../src/gui/iconSelectWindow.vala:257
+#: ../../src/gui/iconSelectWindow.vala:267
+#: ../../src/gui/iconSelectWindow.vala:269
 msgid "All supported image formats"
 msgstr "Alle unterstützten Bildformate"
 
@@ -224,8 +225,8 @@ msgstr ""
 msgid "Root"
 msgstr "Dateisystem"
 
-#: ../../src/utilities/bindingManager.vala:155 ../../src/utilities/key.vala:65
-#: ../../src/utilities/trigger.vala:216 ../../src/utilities/trigger.vala:217
+#: ../../src/utilities/bindingManager.vala:161 ../../src/utilities/key.vala:65
+#: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
 msgid "Not bound"
 msgstr "Nicht zugewiesen"
 
@@ -245,18 +246,18 @@ msgstr "MausRechts"
 msgid "MiddleButton"
 msgstr "Mausrad"
 
-#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
-#: ../../src/utilities/trigger.vala:196 ../../src/utilities/trigger.vala:200
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
 msgid "Turbo"
 msgstr "Turbo"
 
-#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
-#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:202
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:192
+#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:198
 msgid "Delayed"
 msgstr "Verzögert"
 
-#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
-#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:204
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
+#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:200
 msgid "Centered"
 msgstr "Zentriert"
 
@@ -320,7 +321,7 @@ msgstr "Wiederherstellen"
 msgid "Select an icon"
 msgstr "Wähle ein Symbol"
 
-#: ../ui/icon_select.ui:84
+#: ../ui/icon_select.ui:85
 msgid "Icon Theme"
 msgstr "Symbolthema"
 
@@ -332,36 +333,36 @@ msgstr "Benutzerdefiniertes Symbol"
 msgid "Activation Settings"
 msgstr "Aktivierungsoptionen"
 
-#: ../ui/trigger_select.ui:44
+#: ../ui/trigger_select.ui:86
 msgid "It's possible to bind mouse buttons as well!"
 msgstr "Es ist auch möglich, Maustasten zu binden!"
 
-#: ../ui/trigger_select.ui:76
+#: ../ui/trigger_select.ui:118
 msgid "Turbo mode"
 msgstr "Turbo-Mode"
 
-#: ../ui/trigger_select.ui:80
+#: ../ui/trigger_select.ui:123 ../ui/trigger_select.ui:124
 msgid "If checked, the Pie will close when you release the chosen hot key."
 msgstr ""
 "Falls aktiviert schließt sich der Pie wieder automatisch, wenn der Hotkey "
 "losgelassen wird."
 
-#: ../ui/trigger_select.ui:93
+#: ../ui/trigger_select.ui:137
 msgid "Long press for activation"
 msgstr "Verzögerte Aktivierung"
 
-#: ../ui/trigger_select.ui:97
+#: ../ui/trigger_select.ui:142 ../ui/trigger_select.ui:143
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr ""
 "Falls aktiviert, wird sich der Pie erst öffnen, wenn der Hotkey länger "
 "gedrückt gehalten wird."
 
-#: ../ui/trigger_select.ui:110
+#: ../ui/trigger_select.ui:156
 msgid "Open Pie centered on the screen"
 msgstr "Zentriert auf dem Bildschirm öffnen"
 
-#: ../ui/trigger_select.ui:114
+#: ../ui/trigger_select.ui:161 ../ui/trigger_select.ui:162
 msgid ""
 "If checked, the Pie will open in the middle of your screen. Else it will pop "
 "up at your pointer."
@@ -369,27 +370,27 @@ msgstr ""
 "Falls aktiviert, wird sich der Pie nicht an der Maus, sondern in der Mitte "
 "des Bildschirms öffnen."
 
-#: ../ui/trigger_select.ui:133
+#: ../ui/trigger_select.ui:181
 msgid "Activation options"
 msgstr "Aktivierungsoptionen"
 
-#: ../ui/settings.ui:8 ../ui/preferences.ui:27
+#: ../ui/settings.ui:9 ../ui/preferences.ui:27
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
 
-#: ../ui/settings.ui:47
+#: ../ui/settings.ui:74
 msgid "Start Gnome-Pie on login"
 msgstr "Beim Anmelden automatisch ausführen"
 
-#: ../ui/settings.ui:52 ../ui/settings.ui:53
+#: ../ui/settings.ui:79 ../ui/settings.ui:80
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr "Wenn aktiviert, startet Gnome-Pie im Hintergrund beim Anmelden."
 
-#: ../ui/settings.ui:66
+#: ../ui/settings.ui:93
 msgid "Display panel icon "
 msgstr "Zeige ein Symbol im Panel"
 
-#: ../ui/settings.ui:71 ../ui/settings.ui:72
+#: ../ui/settings.ui:98 ../ui/settings.ui:99
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
@@ -397,51 +398,67 @@ msgstr ""
 "Falls nicht aktiviert, kann dieses Menü durch ein nochmaliges starten von "
 "Gnome-Pie geöffnet werden."
 
-#: ../ui/settings.ui:92
+#: ../ui/settings.ui:118
+msgid "Behavior"
+msgstr "Verhalten"
+
+#: ../ui/settings.ui:175
 msgid "Global scale"
 msgstr "Skalierungsfaktor"
 
-#: ../ui/settings.ui:130
-msgid "Appearance and behavior"
-msgstr "Erscheinungsbild and Verhalten"
+#: ../ui/settings.ui:207
+msgid "Display Slice labels"
+msgstr "Zeige Namen der Slices"
 
-#: ../ui/slice_select.ui:8
+#: ../ui/settings.ui:212 ../ui/settings.ui:213
+msgid ""
+"Displays the name of each Slice next to it. Only available if supported by "
+"the theme."
+msgstr ""
+"Zeigt den Name jeder Slice an. Nur möglich, wenn durch das aktuelle Thema "
+"unterstützt."
+
+#: ../ui/settings.ui:232
+msgid "Appearance"
+msgstr "Erscheinungsbild"
+
+#: ../ui/slice_select.ui:9
 msgid "Slice Options"
 msgstr "Slice-Optionen"
 
-#: ../ui/slice_select.ui:95
+#: ../ui/slice_select.ui:139
 msgid "There are no options for this Slice type."
 msgstr "Es gibt keine Otionen für diesen Slice-Typ."
 
-#: ../ui/slice_select.ui:121
+#: ../ui/slice_select.ui:165
 msgid "Name of the Slice "
 msgstr "Name"
 
-#: ../ui/slice_select.ui:159
+#: ../ui/slice_select.ui:204
 msgid "URI to open"
 msgstr "URI"
 
-#: ../ui/slice_select.ui:197
+#: ../ui/slice_select.ui:243
 msgid "Command to execute"
 msgstr "Befehl"
 
-#: ../ui/slice_select.ui:235
+#: ../ui/slice_select.ui:282
 msgid "Hotkey to press"
 msgstr "Tastenkomination"
 
-#: ../ui/slice_select.ui:264
+#: ../ui/slice_select.ui:311
 msgid "Pie to open"
 msgstr "Pie"
 
-#: ../ui/slice_select.ui:293
+#: ../ui/slice_select.ui:340
 msgid "Is Quick Action"
 msgstr "Ist Quick Action"
 
-#: ../ui/slice_select.ui:306
+#: ../ui/slice_select.ui:354 ../ui/slice_select.ui:355
 msgid "This Slice will be executed when you click in the middle of the Pie."
 msgstr "Diese Slice wird aktiviert, falls du in die Mitte des Pies klickst."
 
-#: ../ui/slice_select.ui:339
+#: ../ui/slice_select.ui:388
 msgid "Slice options"
 msgstr "Slice-Optionen"
 
@@ -479,9 +496,6 @@ msgstr ""
 "Erstelle einen neuen! </b> Klicke dazu einfach auf das kleine Pluszeichen "
 "unter der leeren Liste auf der linken Seite."
 
-#: ../ui/rename_pie.ui:6
+#: ../ui/rename_pie.ui:8
 msgid "Rename a Pie"
 msgstr "Pie umbenennen"
-
-#~ msgid "Appearance Options"
-#~ msgstr "Erscheinungsbild"

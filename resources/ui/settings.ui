@@ -204,7 +204,7 @@
                         </child>
                         <child>
                           <object class="GtkCheckButton" id="captions-checkbox">
-                            <property name="label" translatable="yes">Display Slice captions</property>
+                            <property name="label" translatable="yes">Display Slice labels</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>

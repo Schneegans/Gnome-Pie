@@ -42,7 +42,7 @@ public class AboutWindow: Gtk.AboutDialog {
     		"Magnun Leno <magnun@codecommunity.org> (PT-BR)",
     		"Kim Boram <Boramism@gmail.com> (KO)",
             "Eduardo Anabalon <lalo1412@gmail.com> (ES)",
-            "Gregoire Bellon-Gervais <greggbg@gmail.com> (FR)",
+            "Grégoire Bellon-Gervais <greggbg@gmail.com> (FR)",
             "Alex Maxime <cad.maxime@gmail.com> (FR)",
             "Eugene Roskin <pams@imail.ru> (RU)"
     	};

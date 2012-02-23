@@ -50,6 +50,7 @@ public class Theme : GLib.Object {
     public double active_radius    {get; private set; default=45.0;}
     public double slice_radius     {get; private set; default=32.0;}
     public double slice_gap        {get; private set; default=14.0;}
+    public bool   has_slice_captions {get; private set; default=false;}
     public bool   caption          {get; private set; default=false;}
     public string caption_font     {get; private set; default="sans 12";}
     public int    caption_width    {get; private set; default=100;}
@@ -464,9 +465,10 @@ public class Theme : GLib.Object {
                             case "visibility":
                                 if (attr_content == "without_caption")
                                     visibility = SliceLayer.Visibility.WITHOUT_CAPTION;
-                                else if (attr_content == "with_caption")
+                                else if (attr_content == "with_caption") {
+                                    this.has_slice_captions = true;
                                     visibility = SliceLayer.Visibility.WITH_CAPTION;
-                                else if (attr_content != "any")
+                                } else if (attr_content != "any")
                                     warning("Invalid attribute content " + attr_content + " for attribute " + attr_name + " in <slice_layer> element!");
                                 break;
                             default:

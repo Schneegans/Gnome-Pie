@@ -24,6 +24,15 @@ namespace GnomePie {
 class ThemeList : Gtk.TreeView {
 
     /////////////////////////////////////////////////////////////////////
+    /// This signal gets emitted, when a new theme is selected by the
+    /// user. This new theme is applied automatically, with this signal
+    /// actions may be triggered which should be executed AFTER the 
+    /// change to a new theme.
+    /////////////////////////////////////////////////////////////////////
+
+    public signal void on_select_new();
+
+    /////////////////////////////////////////////////////////////////////
     /// The currently selected row.
     /////////////////////////////////////////////////////////////////////
 
@@ -69,6 +78,9 @@ class ThemeList : Gtk.TreeView {
                 Timeout.add(10, () => {
                     int index = int.parse(data.get_path(active).to_string());
                     Config.global.theme = Config.global.themes[index];
+                    
+                    this.on_select_new();
+    
                     Config.global.theme.load();
                     Config.global.theme.load_images();
                     return false;

@@ -48,6 +48,14 @@ public class SettingsWindow : GLib.Object {
             this.window = builder.get_object("window") as Gtk.Dialog;
             
             this.theme_list = new ThemeList();
+            this.theme_list.on_select_new.connect(() => {
+                this.captions.active = Config.global.show_captions;
+                if (Config.global.theme.has_slice_captions) {
+                    this.captions.sensitive = true;
+                } else {
+                    this.captions.sensitive = false;
+                }
+            });
             
             var scroll_area = builder.get_object("theme-scrolledwindow") as Gtk.ScrolledWindow;
                 scroll_area.add(this.theme_list);
@@ -112,9 +120,15 @@ public class SettingsWindow : GLib.Object {
     
     public void show() {
         this.indicator.active = Config.global.show_indicator;
-        this.autostart.active = Config.global.auto_start;
+        this.autostart.active = Config.global.auto_start;     
         this.captions.active = Config.global.show_captions;
-    
+        
+        if (Config.global.theme.has_slice_captions) {
+            this.captions.sensitive = true;
+        } else {
+            this.captions.sensitive = false;
+        }
+        
         this.window.show_all(); 
     }
     

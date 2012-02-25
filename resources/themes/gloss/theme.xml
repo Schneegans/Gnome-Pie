@@ -16,16 +16,20 @@
                           active_scale="1"     active_rotationMode="turn_to_mouse"   active_rotationSpeed="10.0"    active_colorize="false"    active_alpha="1.0" 
                           inactive_scale="0.6" inactive_rotationMode="auto" inactive_rotationSpeed="0.0"  inactive_colorize="false" inactive_alpha="0.0" />
         </center>
-        <slices radius="26" minGap="5">
+        <slices radius="33" minGap="4">
             <activeSlice>
-                <slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="false" />
-                <slice_layer type="icon" file="icon_mask.svg" scale="0.9" colorize="false" />
-                <slice_layer type="file" file="icon_fg_active.svg"   scale="1"   colorize="false" />
+                <slice_layer type="file" file="icon_bg.svg"   scale="0.9"   colorize="false" />
+                <slice_layer type="icon" file="icon_mask.svg" scale="0.81" colorize="false" />
+                <slice_layer type="file" file="icon_fg_active.svg"   scale="0.9"   colorize="false" />
+                <slice_layer type="file" file="slice_caption.svg" scale="1" colorize="false" visibility="with_caption" />
+                <slice_layer type="caption" y="31" font="sans bold 9" width="75" height="20" visibility="with_caption" />
             </activeSlice>
             <inactiveSlice>
-                <slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="false" />
-                <slice_layer type="icon" file="icon_mask.svg" scale="0.9" colorize="false" />
-                <slice_layer type="file" file="icon_fg.svg"   scale="1"   colorize="false" />
+                <slice_layer type="file" file="icon_bg.svg"   scale="0.9"   colorize="false" />
+                <slice_layer type="icon" file="icon_mask.svg" scale="0.81" colorize="false" />
+                <slice_layer type="file" file="icon_fg.svg"   scale="0.9"   colorize="false" />
+                <slice_layer type="file" file="slice_caption.svg" scale="1" colorize="false" visibility="with_caption" />
+                <slice_layer type="caption" y="31" font="sans bold 9" width="75" height="20" visibility="with_caption" />
             </inactiveSlice>
         </slices>
         <caption position="0"  font="sans 10" width="100" height="100" />

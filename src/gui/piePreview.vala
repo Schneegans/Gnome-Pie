@@ -111,6 +111,9 @@ class PiePreview : Gtk.DrawingArea {
         this.new_slice_window.on_select.connect((new_action, as_new_slice, at_position) => {
             var pie = PieManager.all_pies[this.current_id];
             
+            debug(new_action.actions[0].name);
+            debug(new_action.actions[0].real_command);
+            
             if (new_action.has_quickaction())
                 renderer.disable_quickactions();
             

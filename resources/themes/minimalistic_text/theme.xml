@@ -9,13 +9,13 @@
                 <slice_layer type="file" file="bg.svg" scale="1" colorize="true" />
                 <slice_layer type="file" file="bg.svg" scale="0.95" colorize="false" />
                 <slice_layer type="file" file="fg.svg" scale="0.95" colorize="true" />
-                <slice_layer type="caption" y="0" font="sans 10" color="#fff" width="70" height="70" />
+                <slice_layer type="caption" y="0" font="sans bold 10" color="#fff" width="70" height="70" />
             </activeSlice>
             <inactiveSlice>
                 <slice_layer type="icon" scale="0.1" />
                 <slice_layer type="file" file="bg.svg" scale="1" colorize="true" />
                 <slice_layer type="file" file="bg.svg" scale="0.95" colorize="false" />
-                <slice_layer type="caption" y="0" font="sans 10" color="#fff" width="70" height="70" />
+                <slice_layer type="caption" y="0" font="sans bold 10" colorize="true" width="70" height="70" />
             </inactiveSlice>
         </slices>
     </pie>

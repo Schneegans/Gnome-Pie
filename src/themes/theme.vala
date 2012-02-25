@@ -486,13 +486,13 @@ public class Theme : GLib.Object {
                         if (type == SliceLayer.Type.ICON)         active_slice_layers.add(new SliceLayer.icon(file, size, colorize, visibility));
                         else if (type == SliceLayer.Type.CAPTION) active_slice_layers.add(new SliceLayer.caption(slice_caption_font,
                                                                              slice_caption_width, slice_caption_height,
-                                                                             pos_y, slice_caption_color, visibility));
+                                                                             pos_y, slice_caption_color, colorize, visibility));
                         else                                      active_slice_layers.add(new SliceLayer.file(file, size, colorize, visibility));
                     } else {
                         if (type == SliceLayer.Type.ICON)         inactive_slice_layers.add(new SliceLayer.icon(file, size, colorize, visibility));
                         else if (type == SliceLayer.Type.CAPTION) inactive_slice_layers.add(new SliceLayer.caption(slice_caption_font,
                                                                              slice_caption_width, slice_caption_height,
-                                                                             pos_y, slice_caption_color, visibility));
+                                                                             pos_y, slice_caption_color, colorize, visibility));
                         else                                      inactive_slice_layers.add(new SliceLayer.file(file, size, colorize, visibility));
                     }
 

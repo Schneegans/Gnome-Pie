@@ -71,7 +71,7 @@ public class SliceLayer : GLib.Object {
         this.visibility = visibility;
     }
     
-    public SliceLayer.caption(string font, int width, int height, int position, Color color, Visibility visibility) {
+    public SliceLayer.caption(string font, int width, int height, int position, Color color, bool colorize, Visibility visibility) {
         this.layer_type = Type.CAPTION;
         this.font = font;
         this.width = width;
@@ -79,6 +79,7 @@ public class SliceLayer : GLib.Object {
         this.position = position;
         this.color = color;
         this.visibility = visibility;
+        this.colorize = colorize;
     }
     
     /////////////////////////////////////////////////////////////////////

@@ -25,11 +25,15 @@
                 <slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="false" />
                 <slice_layer type="file" file="icon_fg.svg"   scale="1"   colorize="true" />
                 <slice_layer type="icon" scale="0.7"/>
+                <slice_layer type="file" file="slice_caption.svg" scale="1" colorize="false" visibility="with_caption" />
+                <slice_layer type="caption" y="28" font="sans bold 10" width="85" height="20" visibility="with_caption" />
             </activeSlice>
             <inactiveSlice>
                 <slice_layer type="file" file="icon_bg.svg"   scale="0.7"   colorize="false" />
                 <slice_layer type="file" file="icon_fg.svg"   scale="0.65"   colorize="false" />
                 <slice_layer type="icon" scale="0.5"/>
+                <slice_layer type="file" file="slice_caption.svg" scale="1" colorize="false" visibility="with_caption" />
+                <slice_layer type="caption" y="28" font="sans bold 10" width="85" height="20" visibility="with_caption" />
             </inactiveSlice>
         </slices>
         <caption position="-35"  font="sans bold 10" width="100" height="20" />

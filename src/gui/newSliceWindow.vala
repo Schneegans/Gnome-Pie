@@ -258,6 +258,7 @@ public class NewSliceWindow : GLib.Object {
                     break;
                 case "key":
                     this.current_custom_icon = action.icon;
+                    this.current_hotkey = action.real_command;
                     this.key_select.set_trigger(new Trigger.from_string(action.real_command));
                     break;
                 case "pie":

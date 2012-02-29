@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-19 20:25+0100\n"
+"POT-Creation-Date: 2012-02-29 15:58+0100\n"
 "PO-Revision-Date: 2011-11-08 21:49-0300\n"
 "Last-Translator: Magnun Leno da Silva <magnun@codecommunity.org>\n"
 "Language-Team: Language pt-br\n"
@@ -40,7 +40,7 @@ msgstr "Abrir URL"
 msgid "Opens a given location. You may use URL's or files paths."
 msgstr ""
 
-#: ../../src/actions/actionRegistry.vala:111
+#: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
 msgstr "Remover"
 
@@ -52,7 +52,7 @@ msgstr "Abrir menu"
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
 msgstr ""
 
-#: ../../src/gui/triggerSelectWindow.vala:144
+#: ../../src/gui/triggerSelectWindow.vala:166
 msgid ""
 "This hotkey is already assigned to the pie \"%s\"! \n"
 "\n"
@@ -62,104 +62,105 @@ msgstr ""
 "\n"
 "Por favor escolha outro ou cancele sua seleção."
 
-#: ../../src/gui/preferencesWindow.vala:145
+#: ../../src/gui/preferencesWindow.vala:175
 msgid "No Pie selected."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:181
+#: ../../src/gui/preferencesWindow.vala:215
 msgid "New Pie"
 msgstr "Novo Menu"
 
-#: ../../src/gui/preferencesWindow.vala:190
+#: ../../src/gui/preferencesWindow.vala:228
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr ""
 "Você realmente deseja excluir o Menu selecionado e todas as suas Opções?"
 
-#: ../../src/gui/newSliceWindow.vala:229
+#: ../../src/gui/newSliceWindow.vala:291
 msgid "Rename me!"
 msgstr ""
 
-#: ../../src/gui/piePreviewRenderer.vala:292
+#: ../../src/gui/piePreviewRenderer.vala:412
 msgid "Click to edit"
 msgstr ""
 
-#: ../../src/gui/piePreviewRenderer.vala:292
-#: ../../src/gui/piePreviewRenderer.vala:307
+#: ../../src/gui/piePreviewRenderer.vala:412
+#: ../../src/gui/piePreviewRenderer.vala:427
 msgid "Drag to move"
 msgstr ""
 
-#: ../../src/gui/piePreviewRenderer.vala:295
+#: ../../src/gui/piePreviewRenderer.vala:415
 #, fuzzy
 msgid "Click to add a new Slice"
 msgstr "Adicionar nova Opção"
 
-#: ../../src/gui/piePreviewRenderer.vala:299
+#: ../../src/gui/piePreviewRenderer.vala:419
 #, fuzzy
 msgid "Drop to add as new Slice"
 msgstr "Adicionar nova Opção"
 
-#: ../../src/gui/piePreviewRenderer.vala:302
+#: ../../src/gui/piePreviewRenderer.vala:422
 msgid "Drop to move Slice"
 msgstr ""
 
-#: ../../src/gui/piePreviewRenderer.vala:307
+#: ../../src/gui/piePreviewRenderer.vala:427
 msgid "Click to delete"
 msgstr ""
 
-#: ../../src/gui/triggerSelectButton.vala:59
+#: ../../src/gui/triggerSelectButton.vala:63
 #, fuzzy
 msgid "Press a hotkey ..."
 msgstr "Pressione a tecla de atalho"
 
-#: ../../src/gui/piePreview.vala:120
+#: ../../src/gui/piePreview.vala:155
 #, fuzzy
 msgid "Do you really want to delete this Slice?"
 msgstr "Você realmente deseja excluir a Opção selecionada?"
 
-#: ../../src/gui/themeList.vala:48
+#: ../../src/gui/themeList.vala:62
 msgid "Themes"
 msgstr "Temas"
 
-#: ../../src/gui/themeList.vala:80
+#: ../../src/gui/themeList.vala:99
 msgid "By"
 msgstr ""
 
-#: ../../src/gui/sliceTypeList.vala:56
+#: ../../src/gui/sliceTypeList.vala:60
 #, fuzzy
 msgid "Slice types"
 msgstr "Tipos de arquivos"
 
-#: ../../src/gui/iconSelectWindow.vala:178
+#: ../../src/gui/iconSelectWindow.vala:186
 msgid "All icons"
 msgstr "Todos os ícones"
 
-#: ../../src/gui/iconSelectWindow.vala:179
+#: ../../src/gui/iconSelectWindow.vala:187
 #: ../../src/pies/defaultConfig.vala:36
 msgid "Applications"
 msgstr "Aplicações"
 
-#: ../../src/gui/iconSelectWindow.vala:180
+#: ../../src/gui/iconSelectWindow.vala:188
 msgid "Actions"
 msgstr "Ações"
 
-#: ../../src/gui/iconSelectWindow.vala:181
+#: ../../src/gui/iconSelectWindow.vala:189
 msgid "Places"
 msgstr "Lugares"
 
-#: ../../src/gui/iconSelectWindow.vala:182
+#: ../../src/gui/iconSelectWindow.vala:190
 msgid "File types"
 msgstr "Tipos de arquivos"
 
-#: ../../src/gui/iconSelectWindow.vala:183
+#: ../../src/gui/iconSelectWindow.vala:191
 msgid "Emotes"
 msgstr "Emotes"
 
-#: ../../src/gui/iconSelectWindow.vala:184
+#: ../../src/gui/iconSelectWindow.vala:192
 msgid "Miscellaneous"
 msgstr "Diversos"
 
-#: ../../src/gui/iconSelectWindow.vala:257
+#: ../../src/gui/iconSelectWindow.vala:267
+#: ../../src/gui/iconSelectWindow.vala:269
 msgid "All supported image formats"
 msgstr "Todos os tipos de imagem suportados"
 
@@ -233,8 +234,8 @@ msgstr ""
 msgid "Root"
 msgstr "Raiz"
 
-#: ../../src/utilities/bindingManager.vala:155 ../../src/utilities/key.vala:65
-#: ../../src/utilities/trigger.vala:216 ../../src/utilities/trigger.vala:217
+#: ../../src/utilities/bindingManager.vala:161 ../../src/utilities/key.vala:65
+#: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
 msgid "Not bound"
 msgstr "Sem vinculações"
 
@@ -254,18 +255,18 @@ msgstr "Botão Direito"
 msgid "MiddleButton"
 msgstr "Botão do Meio"
 
-#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
-#: ../../src/utilities/trigger.vala:196 ../../src/utilities/trigger.vala:200
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
 msgid "Turbo"
 msgstr "Turbo"
 
-#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
-#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:202
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:192
+#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:198
 msgid "Delayed"
 msgstr "Atrasado"
 
-#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:194
-#: ../../src/utilities/trigger.vala:198 ../../src/utilities/trigger.vala:204
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
+#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:200
 msgid "Centered"
 msgstr ""
 
@@ -329,7 +330,7 @@ msgstr "Restaurar"
 msgid "Select an icon"
 msgstr ""
 
-#: ../ui/icon_select.ui:84
+#: ../ui/icon_select.ui:85
 msgid "Icon Theme"
 msgstr "Tema de Ícones"
 
@@ -341,34 +342,34 @@ msgstr "Outros Ícones"
 msgid "Activation Settings"
 msgstr ""
 
-#: ../ui/trigger_select.ui:44
+#: ../ui/trigger_select.ui:86
 msgid "It's possible to bind mouse buttons as well!"
 msgstr ""
 
-#: ../ui/trigger_select.ui:76
+#: ../ui/trigger_select.ui:118
 msgid "Turbo mode"
 msgstr "Modo Turbo"
 
-#: ../ui/trigger_select.ui:80
+#: ../ui/trigger_select.ui:123 ../ui/trigger_select.ui:124
 msgid "If checked, the Pie will close when you release the chosen hot key."
 msgstr "Se marcado, o Menu irá fechar quando o atalho for liberado."
 
-#: ../ui/trigger_select.ui:93
+#: ../ui/trigger_select.ui:137
 msgid "Long press for activation"
 msgstr "Clique longo para ativação"
 
-#: ../ui/trigger_select.ui:97
+#: ../ui/trigger_select.ui:142 ../ui/trigger_select.ui:143
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr ""
 "Se marcador, o Menu irá abrir somente se você pressionar este atalho por "
 "mais um tempo."
 
-#: ../ui/trigger_select.ui:110
+#: ../ui/trigger_select.ui:156
 msgid "Open Pie centered on the screen"
 msgstr ""
 
-#: ../ui/trigger_select.ui:114
+#: ../ui/trigger_select.ui:161 ../ui/trigger_select.ui:162
 #, fuzzy
 msgid ""
 "If checked, the Pie will open in the middle of your screen. Else it will pop "
@@ -377,84 +378,99 @@ msgstr ""
 "Se marcador, o Menu irá abrir somente se você pressionar este atalho por "
 "mais um tempo."
 
-#: ../ui/trigger_select.ui:133
-msgid "<b>Activation options</b>"
+#: ../ui/trigger_select.ui:181
+msgid "Activation options"
 msgstr ""
 
-#: ../ui/settings.ui:8 ../ui/preferences.ui:27
+#: ../ui/settings.ui:9 ../ui/preferences.ui:27
 #, fuzzy
 msgid "General Settings"
 msgstr "Gnome-Pie - Configurações"
 
-#: ../ui/settings.ui:47
+#: ../ui/settings.ui:74
 #, fuzzy
 msgid "Start Gnome-Pie on login"
 msgstr "Iniciar durante o Login"
 
-#: ../ui/settings.ui:52 ../ui/settings.ui:53
+#: ../ui/settings.ui:79 ../ui/settings.ui:80
 #, fuzzy
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr "Se marcado, o Gnome-Pie irá iniciar durante o login."
 
-#: ../ui/settings.ui:66
+#: ../ui/settings.ui:93
 msgid "Display panel icon "
 msgstr ""
 
-#: ../ui/settings.ui:71 ../ui/settings.ui:72
+#: ../ui/settings.ui:98 ../ui/settings.ui:99
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
 msgstr ""
 
-#: ../ui/settings.ui:92
+#: ../ui/settings.ui:118
+msgid "Behavior"
+msgstr "Comportamento"
+
+#: ../ui/settings.ui:175
 #, fuzzy
 msgid "Global scale"
 msgstr "Escalonamento Global"
 
-#: ../ui/settings.ui:130
-msgid "<b>Appearance and behavior</b>"
+#: ../ui/settings.ui:207
+msgid "Display Slice labels"
 msgstr ""
 
-#: ../ui/slice_select.ui:8
+#: ../ui/settings.ui:212 ../ui/settings.ui:213
+msgid ""
+"Displays the name of each Slice next to it. Only available if supported by "
+"the theme."
+msgstr ""
+
+#: ../ui/settings.ui:232
+msgid "Appearance"
+msgstr ""
+
+#: ../ui/slice_select.ui:9
 #, fuzzy
 msgid "Slice Options"
 msgstr "Aplicações"
 
-#: ../ui/slice_select.ui:95
+#: ../ui/slice_select.ui:139
 msgid "There are no options for this Slice type."
 msgstr ""
 
-#: ../ui/slice_select.ui:121
+#: ../ui/slice_select.ui:165
 msgid "Name of the Slice "
 msgstr ""
 
-#: ../ui/slice_select.ui:159
+#: ../ui/slice_select.ui:204
 msgid "URI to open"
 msgstr ""
 
-#: ../ui/slice_select.ui:197
+#: ../ui/slice_select.ui:243
 msgid "Command to execute"
 msgstr ""
 
-#: ../ui/slice_select.ui:235
+#: ../ui/slice_select.ui:282
 msgid "Hotkey to press"
 msgstr ""
 
-#: ../ui/slice_select.ui:264
+#: ../ui/slice_select.ui:311
 msgid "Pie to open"
 msgstr ""
 
-#: ../ui/slice_select.ui:293
+#: ../ui/slice_select.ui:340
 msgid "Is Quick Action"
 msgstr ""
 
-#: ../ui/slice_select.ui:306
+#: ../ui/slice_select.ui:354 ../ui/slice_select.ui:355
 msgid "This Slice will be executed when you click in the middle of the Pie."
 msgstr ""
 
-#: ../ui/slice_select.ui:339
-msgid "<b>Slice options</b>"
-msgstr ""
+#: ../ui/slice_select.ui:388
+#, fuzzy
+msgid "Slice options"
+msgstr "Aplicações"
 
 #: ../ui/preferences.ui:8
 #, fuzzy
@@ -480,7 +496,7 @@ msgid ""
 "plus sign in the lower left corner."
 msgstr ""
 
-#: ../ui/rename_pie.ui:6
+#: ../ui/rename_pie.ui:8
 #, fuzzy
 msgid "Rename a Pie"
 msgstr "Abrir menu"
@@ -500,9 +516,6 @@ msgstr "Abrir menu"
 #~ msgstr ""
 #~ "É possível tornar seu sistema inútil caso você vincule um Menu ao botão "
 #~ "esquerdo do mouse. Você realmente quer fazer isso?"
-
-#~ msgid "Behavior"
-#~ msgstr "Comportamento"
 
 #~ msgid "Show Indicator"
 #~ msgstr "Mostrar Indicador"

@@ -3,13 +3,13 @@
 # Copyright (C) 2012 Simon Schneegans <code@simonschneegans.de>
 # This file is distributed under the same license as the gnomepie package.
 # Alex Maxime <cad.maxime@gmail.com>, 2012.
-# 
+#
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-27 22:14+0100\n"
+"POT-Creation-Date: 2012-02-29 15:58+0100\n"
 "PO-Revision-Date: 2012-01-27 22:15+0100\n"
 "Last-Translator: Alex Maxime <cad.maxime@gmail.com>\n"
 "Language-Team: French\n"
@@ -19,17 +19,13 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: ../../src/actions/pieAction.vala:34
-msgid "Open Pie"
-msgstr "Ouvrir une Part"
+#: ../../src/actions/keyAction.vala:34
+msgid "Press hotkey"
+msgstr "Appuyez le raccourci clavier"
 
-#: ../../src/actions/pieAction.vala:36
-msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
-msgstr "Ouvre une autre Part de Gnome-Pie. Vous pouvez ainsi créer des sous-menus."
-
-#: ../../src/actions/actionRegistry.vala:119
-msgid "Trash"
-msgstr "Poubelle"
+#: ../../src/actions/keyAction.vala:36
+msgid "Simulates the activation of a hotkey."
+msgstr "Simule l'activation d'un racourci clavier"
 
 #: ../../src/actions/appAction.vala:34
 msgid "Launch application"
@@ -45,118 +41,34 @@ msgstr "Ouvrir une URL"
 
 #: ../../src/actions/uriAction.vala:36
 msgid "Opens a given location. You may use URL's or files paths."
-msgstr "Ouvre un emplacement définie. Vous pouvez entrer une URL ou le chemin d'un fichier"
+msgstr ""
+"Ouvre un emplacement définie. Vous pouvez entrer une URL ou le chemin d'un "
+"fichier"
 
-#: ../../src/actions/keyAction.vala:34
-msgid "Press hotkey"
-msgstr "Appuyez le raccourci clavier"
+#: ../../src/actions/actionRegistry.vala:119
+msgid "Trash"
+msgstr "Poubelle"
 
-#: ../../src/actions/keyAction.vala:36
-msgid "Simulates the activation of a hotkey."
-msgstr "Simule l'activation d'un racourci clavier"
+#: ../../src/actions/pieAction.vala:34
+msgid "Open Pie"
+msgstr "Ouvrir une Part"
 
-#: ../../src/utilities/bindingManager.vala:161
-#: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
-#: ../../src/utilities/key.vala:65
-msgid "Not bound"
-msgstr "Aucun raccourci"
+#: ../../src/actions/pieAction.vala:36
+msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
+msgstr ""
+"Ouvre une autre Part de Gnome-Pie. Vous pouvez ainsi créer des sous-menus."
 
-#: ../../src/utilities/trigger.vala:163
-msgid "Button %i"
-msgstr "Bouton"
+#: ../../src/gui/triggerSelectWindow.vala:166
+msgid ""
+"This hotkey is already assigned to the pie \"%s\"! \n"
+"\n"
+"Please select another one or cancel your selection."
+msgstr ""
+"Ce raccourci clavier est deja déninie pour la Part \"%s\"! \n"
+"\n"
+"Merci de choisir un autre ou annler votre choix"
 
-#: ../../src/utilities/trigger.vala:166
-msgid "LeftButton"
-msgstr "Bouton Gauche"
-
-#: ../../src/utilities/trigger.vala:168
-msgid "RightButton"
-msgstr "Bouton Droit"
-
-#: ../../src/utilities/trigger.vala:170
-msgid "MiddleButton"
-msgstr "Bouton Central"
-
-#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
-#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
-msgid "Turbo"
-msgstr "Turbo"
-
-#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:192
-#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:198
-msgid "Delayed"
-msgstr "Differé"
-
-#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
-#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:200
-msgid "Centered"
-msgstr "Centré"
-
-#: ../../src/actionGroups/clipboardGroup.vala:64
-msgid "Group: Clipboard"
-msgstr "Groupe : Press-papier"
-
-#: ../../src/actionGroups/clipboardGroup.vala:66
-msgid "Manages your Clipboard."
-msgstr "Gère votre Presse-papier"
-
-#: ../../src/actionGroups/menuGroup.vala:35
-msgid "Group: Main menu"
-msgstr "Groupe : Menu principal"
-
-#: ../../src/actionGroups/menuGroup.vala:37
-msgid "Displays your main menu structure."
-msgstr "Affiche la structure de menu principal"
-
-#: ../../src/actionGroups/bookmarkGroup.vala:36
-msgid "Group: Bookmarks"
-msgstr "Groupe : Favoris"
-
-#: ../../src/actionGroups/bookmarkGroup.vala:38
-msgid "Shows a Slice for each of your directory Bookmarks."
-msgstr "Affiche une Tranche pour chacun des répertoires en Favoris"
-
-#: ../../src/actionGroups/windowListGroup.vala:34
-msgid "Group: Window List"
-msgstr "Groupe : Liste de la fenêtre"
-
-#: ../../src/actionGroups/windowListGroup.vala:36
-msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
-msgstr "Affiche une Tranche pour chacune des fenêtres ouverte. Fonctionne comme Alt-Tab "
-
-#: ../../src/actionGroups/sessionGroup.vala:35
-msgid "Group: Session Control"
-msgstr "Groupe : Gestion de la Session"
-
-#: ../../src/actionGroups/sessionGroup.vala:37
-msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
-msgstr "Affiche une Tranche pour Eteindre, Redemarrer, et Hiberner"
-
-#: ../../src/actionGroups/sessionGroup.vala:60
-msgid "Shutdown"
-msgstr "Eteindre"
-
-#: ../../src/actionGroups/sessionGroup.vala:63
-msgid "Logout"
-msgstr "Déconnexion"
-
-#: ../../src/actionGroups/sessionGroup.vala:66
-msgid "Reboot"
-msgstr "Redemarrer"
-
-#: ../../src/actionGroups/devicesGroup.vala:35
-msgid "Group: Devices"
-msgstr "Groupe : Périphériques"
-
-#: ../../src/actionGroups/devicesGroup.vala:37
-msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
-msgstr "Affiche une Tranche pour chaque périphérique branchés, comme une clé USB"
-
-#: ../../src/actionGroups/devicesGroup.vala:85
-msgid "Root"
-msgstr "Racine"
-
-#: ../../src/gui/preferencesWindow.vala:175une
+#: ../../src/gui/preferencesWindow.vala:175
 msgid "No Pie selected."
 msgstr "Aucune Part selectionnée"
 
@@ -169,6 +81,10 @@ msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "Voulez-vous supprimer la Part sélectionné et son contenue ?"
 
+#: ../../src/gui/newSliceWindow.vala:291
+msgid "Rename me!"
+msgstr "Renome moi!"
+
 #: ../../src/gui/piePreviewRenderer.vala:412
 msgid "Click to edit"
 msgstr "Cliquez pour éditer"
@@ -180,24 +96,45 @@ msgstr "Faites glisser pour déplacer"
 
 #: ../../src/gui/piePreviewRenderer.vala:415
 msgid "Click to add a new Slice"
-msgstr "Cliquez pour ajouter \n"
+msgstr ""
+"Cliquez pour ajouter \n"
 "une nouvelle Tranche"
 
 #: ../../src/gui/piePreviewRenderer.vala:419
 msgid "Drop to add as new Slice"
-msgstr "Déposez pour ajouter \n une nouvelle Tranche"
+msgstr ""
+"Déposez pour ajouter \n"
+" une nouvelle Tranche"
 
 #: ../../src/gui/piePreviewRenderer.vala:422
 msgid "Drop to move Slice"
-msgstr "Déposez pour \n deplacer la Tranche"
+msgstr ""
+"Déposez pour \n"
+" deplacer la Tranche"
 
 #: ../../src/gui/piePreviewRenderer.vala:427
 msgid "Click to delete"
 msgstr "Cliquez pour supprimer"
 
-#: ../../src/gui/piePreview.vala:152
+#: ../../src/gui/triggerSelectButton.vala:63
+msgid "Press a hotkey ..."
+msgstr "Faites un raccourci clavier"
+
+#: ../../src/gui/piePreview.vala:155
 msgid "Do you really want to delete this Slice?"
 msgstr "Voulez-vous supprimer cette Tranche"
+
+#: ../../src/gui/themeList.vala:62
+msgid "Themes"
+msgstr "Thèmes"
+
+#: ../../src/gui/themeList.vala:99
+msgid "By"
+msgstr "Par"
+
+#: ../../src/gui/sliceTypeList.vala:60
+msgid "Slice types"
+msgstr "Types de Tranche"
 
 #: ../../src/gui/iconSelectWindow.vala:186
 msgid "All icons"
@@ -233,34 +170,108 @@ msgstr "Divers"
 msgid "All supported image formats"
 msgstr "Tout les formats d'images supportés"
 
-#: ../../src/gui/triggerSelectWindow.vala:166
-msgid ""
-"This hotkey is already assigned to the pie \"%s\"! \n"
-"\n"
-"Please select another one or cancel your selection."
-msgstr "Ce raccourci clavier est deja déninie pour la Part \"%s\"! \n"
-"\n"
-"Merci de choisir un autre ou annler votre choix"
+#: ../../src/actionGroups/windowListGroup.vala:34
+msgid "Group: Window List"
+msgstr "Groupe : Liste de la fenêtre"
 
-#: ../../src/gui/sliceTypeList.vala:60
-msgid "Slice types"
-msgstr "Types de Tranche"
+#: ../../src/actionGroups/windowListGroup.vala:36
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
+msgstr ""
+"Affiche une Tranche pour chacune des fenêtres ouverte. Fonctionne comme Alt-"
+"Tab "
 
-#: ../../src/gui/themeList.vala:53
-msgid "Themes"
-msgstr "Thèmes"
+#: ../../src/actionGroups/menuGroup.vala:35
+msgid "Group: Main menu"
+msgstr "Groupe : Menu principal"
 
-#: ../../src/gui/themeList.vala:87
-msgid "By"
-msgstr "Par"
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr "Affiche la structure de menu principal"
 
-#: ../../src/gui/triggerSelectButton.vala:63
-msgid "Press a hotkey ..."
-msgstr "Faites un raccourci clavier"
+#: ../../src/actionGroups/clipboardGroup.vala:64
+msgid "Group: Clipboard"
+msgstr "Groupe : Press-papier"
 
-#: ../../src/gui/newSliceWindow.vala:290
-msgid "Rename me!"
-msgstr "Renome moi!"
+#: ../../src/actionGroups/clipboardGroup.vala:66
+msgid "Manages your Clipboard."
+msgstr "Gère votre Presse-papier"
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+msgid "Group: Session Control"
+msgstr "Groupe : Gestion de la Session"
+
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
+msgstr "Affiche une Tranche pour Eteindre, Redemarrer, et Hiberner"
+
+#: ../../src/actionGroups/sessionGroup.vala:60
+msgid "Shutdown"
+msgstr "Eteindre"
+
+#: ../../src/actionGroups/sessionGroup.vala:63
+msgid "Logout"
+msgstr "Déconnexion"
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Reboot"
+msgstr "Redemarrer"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+msgid "Group: Bookmarks"
+msgstr "Groupe : Favoris"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
+msgstr "Affiche une Tranche pour chacun des répertoires en Favoris"
+
+#: ../../src/actionGroups/devicesGroup.vala:35
+msgid "Group: Devices"
+msgstr "Groupe : Périphériques"
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr ""
+"Affiche une Tranche pour chaque périphérique branchés, comme une clé USB"
+
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr "Racine"
+
+#: ../../src/utilities/bindingManager.vala:161 ../../src/utilities/key.vala:65
+#: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
+msgid "Not bound"
+msgstr "Aucun raccourci"
+
+#: ../../src/utilities/trigger.vala:163
+msgid "Button %i"
+msgstr "Bouton"
+
+#: ../../src/utilities/trigger.vala:166
+msgid "LeftButton"
+msgstr "Bouton Gauche"
+
+#: ../../src/utilities/trigger.vala:168
+msgid "RightButton"
+msgstr "Bouton Droit"
+
+#: ../../src/utilities/trigger.vala:170
+msgid "MiddleButton"
+msgstr "Bouton Central"
+
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
+msgid "Turbo"
+msgstr "Turbo"
+
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:192
+#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:198
+msgid "Delayed"
+msgstr "Differé"
+
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
+#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:200
+msgid "Centered"
+msgstr "Centré"
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
@@ -318,10 +329,6 @@ msgstr "Agrandir"
 msgid "Restore"
 msgstr "Restaurer"
 
-#: ../ui/rename_pie.ui:8
-msgid "Rename a Pie"
-msgstr "Renomer la Part"
-
 #: ../ui/icon_select.ui:8
 msgid "Select an icon"
 msgstr "Choisir un icône"
@@ -333,37 +340,6 @@ msgstr "Thème d'icône"
 #: ../ui/icon_select.ui:105
 msgid "Custom Icon"
 msgstr "Icône personnalisée"
-
-#: ../ui/settings.ui:9 ../ui/preferences.ui:27
-msgid "General Settings"
-msgstr "Paramètres généraux"
-
-#: ../ui/settings.ui:74
-msgid "Start Gnome-Pie on login"
-msgstr "Lancer Gnome-pie au démarrage"
-
-#: ../ui/settings.ui:79 ../ui/settings.ui:80
-msgid "If checked, Gnome-Pie will start silently everytime you log in."
-msgstr "Si vous cochez, Gnome-Pie se lancera a chaque connexions"
-
-#: ../ui/settings.ui:93
-msgid "Display panel icon "
-msgstr "Affiche le panneau d'icône"
-
-#: ../ui/settings.ui:98 ../ui/settings.ui:99
-msgid ""
-"If not checked, you can access this menu by launching Gnome-Pie a second "
-"time."
-msgstr "Si non coché, vous pouvez utiliser ce menu pour lancer Gnome-Pie une deuxième "
-"fois."
-
-#: ../ui/settings.ui:119
-msgid "Global scale"
-msgstr "Echelle globale"
-
-#: ../ui/settings.ui:157
-msgid "Appearance and behavior"
-msgstr "Apparence et comportement"
 
 #: ../ui/trigger_select.ui:8
 msgid "Activation Settings"
@@ -388,7 +364,8 @@ msgstr "Appuyez longtemps pour activer"
 #: ../ui/trigger_select.ui:142 ../ui/trigger_select.ui:143
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
-msgstr "Si coché, la Pie s'ouvrira seulement si vous appuyez longtemps le raccourcis "
+msgstr ""
+"Si coché, la Pie s'ouvrira seulement si vous appuyez longtemps le raccourcis "
 "clavier"
 
 #: ../ui/trigger_select.ui:156
@@ -399,12 +376,61 @@ msgstr "Ouvrir la Part au centre de l'écran"
 msgid ""
 "If checked, the Pie will open in the middle of your screen. Else it will pop "
 "up at your pointer."
-msgstr "Si Coché, la Part s'ouvrira au centre de l'écran. Sinon elle apparaîtra "
-"sous la souris"
+msgstr ""
+"Si Coché, la Part s'ouvrira au centre de l'écran. Sinon elle apparaîtra sous "
+"la souris"
 
 #: ../ui/trigger_select.ui:181
 msgid "Activation options"
 msgstr "Options d'activations"
+
+#: ../ui/settings.ui:9 ../ui/preferences.ui:27
+msgid "General Settings"
+msgstr "Paramètres généraux"
+
+#: ../ui/settings.ui:74
+msgid "Start Gnome-Pie on login"
+msgstr "Lancer Gnome-pie au démarrage"
+
+#: ../ui/settings.ui:79 ../ui/settings.ui:80
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr "Si vous cochez, Gnome-Pie se lancera a chaque connexions"
+
+#: ../ui/settings.ui:93
+msgid "Display panel icon "
+msgstr "Affiche le panneau d'icône"
+
+#: ../ui/settings.ui:98 ../ui/settings.ui:99
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
+"Si non coché, vous pouvez utiliser ce menu pour lancer Gnome-Pie une "
+"deuxième fois."
+
+#: ../ui/settings.ui:118
+msgid "Behavior"
+msgstr ""
+
+#: ../ui/settings.ui:175
+msgid "Global scale"
+msgstr "Echelle globale"
+
+#: ../ui/settings.ui:207
+#, fuzzy
+msgid "Display Slice labels"
+msgstr "Affiche le panneau d'icône"
+
+#: ../ui/settings.ui:212 ../ui/settings.ui:213
+msgid ""
+"Displays the name of each Slice next to it. Only available if supported by "
+"the theme."
+msgstr ""
+
+#: ../ui/settings.ui:232
+#, fuzzy
+msgid "Appearance"
+msgstr "Apparence et comportement"
 
 #: ../ui/slice_select.ui:9
 msgid "Slice Options"
@@ -462,9 +488,10 @@ msgid ""
 msgstr ""
 "<b><big>Cette Part est vide !</big>\n"
 "\n"
-"Commencez en lui ajoutant des Tranche !</b> Pour cela, vous pouvez déplacer des éléments "
-"sur le signe plus. Vous pouvez en essayer plein ! Par exemple, des lanceurs d'application "
-"ou des dossiers. Même les liens de votre navigateur sont supportées ...\n"
+"Commencez en lui ajoutant des Tranche !</b> Pour cela, vous pouvez déplacer "
+"des éléments sur le signe plus. Vous pouvez en essayer plein ! Par exemple, "
+"des lanceurs d'application ou des dossiers. Même les liens de votre "
+"navigateur sont supportées ...\n"
 "\n"
 "Pour des ajouts manuels ou plus avancés, cliquez sur le signe plus."
 
@@ -477,5 +504,9 @@ msgid ""
 msgstr ""
 "<b><big>Vous n'avez aucune Part !</big>\n"
 "\n"
-"Commencer par en créer une !</b> Cela peut être fait en cliquant sur le petit signe "
-"plus dans le coin en bas à gauche."
+"Commencer par en créer une !</b> Cela peut être fait en cliquant sur le "
+"petit signe plus dans le coin en bas à gauche."
+
+#: ../ui/rename_pie.ui:8
+msgid "Rename a Pie"
+msgstr "Renomer la Part"

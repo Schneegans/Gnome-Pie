@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-23 09:29+0100\n"
+"POT-Creation-Date: 2012-02-29 15:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -73,7 +73,7 @@ msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr ""
 
-#: ../../src/gui/newSliceWindow.vala:290
+#: ../../src/gui/newSliceWindow.vala:291
 msgid "Rename me!"
 msgstr ""
 
@@ -106,7 +106,7 @@ msgstr ""
 msgid "Press a hotkey ..."
 msgstr ""
 
-#: ../../src/gui/piePreview.vala:152
+#: ../../src/gui/piePreview.vala:155
 msgid "Do you really want to delete this Slice?"
 msgstr ""
 

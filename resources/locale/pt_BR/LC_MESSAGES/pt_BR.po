@@ -1,20 +1,21 @@
-# Language pt-br translations for gnomepie package.
-# Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>
+# Portuguese translations for gnomepie package.
+# Copyright (C) 2012 Simon Schneegans <code@simonschneegans.de>
 # This file is distributed under the same license as the gnomepie package.
-# Magnun Leno <magnun@codecommunity.org>, 2011.
+# Magnun Leno <magnun@codecommunity.org>, 2012.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnomepie 0.1\n"
+"Project-Id-Version: gnomepie 0.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 14:09-0300\n"
-"PO-Revision-Date: 2011-11-08 21:49-0300\n"
-"Last-Translator: Magnun Leno da Silva <magnun@codecommunity.org>\n"
-"Language-Team: Language pt-br\n"
-"Language: pt-br\n"
+"POT-Creation-Date: 2012-02-29 16:07-0300\n"
+"PO-Revision-Date: 2012-02-29 15:41-0300\n"
+"Last-Translator: Magnun Leno <magnun@codecommunity.org>\n"
+"Language-Team: Brazilian Portuguese\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: ../../src/actions/keyAction.vala:34
 msgid "Press hotkey"
@@ -50,7 +51,7 @@ msgstr "Abre um local escolhido. Você pode usar URLs ou caminhos de arquivos."
 
 #: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
-msgstr "Remover"
+msgstr "Lixeira"
 
 #: ../../src/utilities/trigger.vala:163
 msgid "Button %i"
@@ -257,7 +258,9 @@ msgstr "Grupo: Lista de Janelas"
 
 #: ../../src/actionGroups/windowListGroup.vala:36
 msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
-msgstr "Mostra uma Fatia para cada uma de suas janelas abertas. Praticamente igual a o Alt-Tab."
+msgstr ""
+"Mostra uma Fatia para cada uma de suas janelas abertas. Praticamente igual a "
+"o Alt-Tab."
 
 #: ../../src/actionGroups/devicesGroup.vala:35
 msgid "Group: Devices"
@@ -352,8 +355,9 @@ msgstr ""
 "<b><big>Este Menu está vazio!!</big>\n"
 "\n"
 "Comece adicionando algumas Fatias a ele!</b> Isto pode ser feito ao arrastar "
-"coisas para o sinal de mais abaixo. Você pode tentar várias coisas! Por exemplo, "
-"o lançador de uma aplicação ou pastas. Até mesmo URLs do seu browser... \n"
+"coisas para o sinal de mais abaixo. Você pode tentar várias coisas! Por "
+"exemplo, o lançador de uma aplicação ou pastas. Até mesmo URLs do seu "
+"browser... \n"
 "\n"
 "Para configurações manuais e mais avançadas clique no sinal de mais."
 
@@ -366,8 +370,8 @@ msgid ""
 msgstr ""
 "<b><big>Você não tem Menus!</big>\n"
 "\n"
-"Comece criando um! </b> Isto pode ser feito ao clicar no pequeno sinal de mais "
-"no canto inferior esquerdo."
+"Comece criando um! </b> Isto pode ser feito ao clicar no pequeno sinal de "
+"mais no canto inferior esquerdo."
 
 #: ../ui/slice_select.ui:9
 msgid "Slice Options"
@@ -415,7 +419,8 @@ msgstr "Iniciar o Gnome-Pie ao logar"
 
 #: ../ui/settings.ui:79 ../ui/settings.ui:80
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
-msgstr "Se marcado, o Gnome-Pie irá iniciar silenciosamente sempre que você logar."
+msgstr ""
+"Se marcado, o Gnome-Pie irá iniciar silenciosamente sempre que você logar."
 
 #: ../ui/settings.ui:93
 msgid "Display panel icon "
@@ -426,8 +431,8 @@ msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
 msgstr ""
-"Se desmarcado, você pode acessar este menu ao lançar o Gnome-Pie pela segunda "
-"vez."
+"Se desmarcado, você pode acessar este menu ao lançar o Gnome-Pie pela "
+"segunda vez."
 
 #: ../ui/settings.ui:118
 msgid "Behavior"
@@ -446,7 +451,7 @@ msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
 msgstr ""
-"Mostra ao lado de cada fatia o seu nome. Disponível apenas se o tema "
+"Mostra ao lado de cada Fatia o seu nome. Disponível apenas se o tema "
 "suportar."
 
 #: ../ui/settings.ui:232

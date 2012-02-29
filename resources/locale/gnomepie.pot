@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 15:58+0100\n"
+"POT-Creation-Date: 2012-02-29 14:09-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,6 +23,14 @@ msgstr ""
 
 #: ../../src/actions/keyAction.vala:36
 msgid "Simulates the activation of a hotkey."
+msgstr ""
+
+#: ../../src/actions/pieAction.vala:34
+msgid "Open Pie"
+msgstr ""
+
+#: ../../src/actions/pieAction.vala:36
+msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
 msgstr ""
 
 #: ../../src/actions/appAction.vala:34
@@ -43,186 +51,6 @@ msgstr ""
 
 #: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
-msgstr ""
-
-#: ../../src/actions/pieAction.vala:34
-msgid "Open Pie"
-msgstr ""
-
-#: ../../src/actions/pieAction.vala:36
-msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
-msgstr ""
-
-#: ../../src/gui/triggerSelectWindow.vala:166
-msgid ""
-"This hotkey is already assigned to the pie \"%s\"! \n"
-"\n"
-"Please select another one or cancel your selection."
-msgstr ""
-
-#: ../../src/gui/preferencesWindow.vala:175
-msgid "No Pie selected."
-msgstr ""
-
-#: ../../src/gui/preferencesWindow.vala:215
-msgid "New Pie"
-msgstr ""
-
-#: ../../src/gui/preferencesWindow.vala:228
-msgid ""
-"Do you really want to delete the selected Pie with all contained Slices?"
-msgstr ""
-
-#: ../../src/gui/newSliceWindow.vala:291
-msgid "Rename me!"
-msgstr ""
-
-#: ../../src/gui/piePreviewRenderer.vala:412
-msgid "Click to edit"
-msgstr ""
-
-#: ../../src/gui/piePreviewRenderer.vala:412
-#: ../../src/gui/piePreviewRenderer.vala:427
-msgid "Drag to move"
-msgstr ""
-
-#: ../../src/gui/piePreviewRenderer.vala:415
-msgid "Click to add a new Slice"
-msgstr ""
-
-#: ../../src/gui/piePreviewRenderer.vala:419
-msgid "Drop to add as new Slice"
-msgstr ""
-
-#: ../../src/gui/piePreviewRenderer.vala:422
-msgid "Drop to move Slice"
-msgstr ""
-
-#: ../../src/gui/piePreviewRenderer.vala:427
-msgid "Click to delete"
-msgstr ""
-
-#: ../../src/gui/triggerSelectButton.vala:63
-msgid "Press a hotkey ..."
-msgstr ""
-
-#: ../../src/gui/piePreview.vala:155
-msgid "Do you really want to delete this Slice?"
-msgstr ""
-
-#: ../../src/gui/themeList.vala:62
-msgid "Themes"
-msgstr ""
-
-#: ../../src/gui/themeList.vala:99
-msgid "By"
-msgstr ""
-
-#: ../../src/gui/sliceTypeList.vala:60
-msgid "Slice types"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:186
-msgid "All icons"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:187
-#: ../../src/pies/defaultConfig.vala:36
-msgid "Applications"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:188
-msgid "Actions"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:189
-msgid "Places"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:190
-msgid "File types"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:191
-msgid "Emotes"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:192
-msgid "Miscellaneous"
-msgstr ""
-
-#: ../../src/gui/iconSelectWindow.vala:267
-#: ../../src/gui/iconSelectWindow.vala:269
-msgid "All supported image formats"
-msgstr ""
-
-#: ../../src/actionGroups/windowListGroup.vala:34
-msgid "Group: Window List"
-msgstr ""
-
-#: ../../src/actionGroups/windowListGroup.vala:36
-msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
-msgstr ""
-
-#: ../../src/actionGroups/menuGroup.vala:35
-msgid "Group: Main menu"
-msgstr ""
-
-#: ../../src/actionGroups/menuGroup.vala:37
-msgid "Displays your main menu structure."
-msgstr ""
-
-#: ../../src/actionGroups/clipboardGroup.vala:64
-msgid "Group: Clipboard"
-msgstr ""
-
-#: ../../src/actionGroups/clipboardGroup.vala:66
-msgid "Manages your Clipboard."
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:35
-msgid "Group: Session Control"
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:37
-msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:60
-msgid "Shutdown"
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:63
-msgid "Logout"
-msgstr ""
-
-#: ../../src/actionGroups/sessionGroup.vala:66
-msgid "Reboot"
-msgstr ""
-
-#: ../../src/actionGroups/bookmarkGroup.vala:36
-msgid "Group: Bookmarks"
-msgstr ""
-
-#: ../../src/actionGroups/bookmarkGroup.vala:38
-msgid "Shows a Slice for each of your directory Bookmarks."
-msgstr ""
-
-#: ../../src/actionGroups/devicesGroup.vala:35
-msgid "Group: Devices"
-msgstr ""
-
-#: ../../src/actionGroups/devicesGroup.vala:37
-msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
-msgstr ""
-
-#: ../../src/actionGroups/devicesGroup.vala:85
-msgid "Root"
-msgstr ""
-
-#: ../../src/utilities/bindingManager.vala:161 ../../src/utilities/key.vala:65
-#: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
-msgid "Not bound"
 msgstr ""
 
 #: ../../src/utilities/trigger.vala:163
@@ -256,6 +84,11 @@ msgstr ""
 msgid "Centered"
 msgstr ""
 
+#: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
+#: ../../src/utilities/key.vala:65 ../../src/utilities/bindingManager.vala:161
+msgid "Not bound"
+msgstr ""
+
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
 msgstr ""
@@ -274,6 +107,11 @@ msgstr ""
 
 #: ../../src/pies/defaultConfig.vala:33
 msgid "Play/Pause"
+msgstr ""
+
+#: ../../src/pies/defaultConfig.vala:36
+#: ../../src/gui/iconSelectWindow.vala:187
+msgid "Applications"
 msgstr ""
 
 #: ../../src/pies/defaultConfig.vala:45
@@ -312,6 +150,168 @@ msgstr ""
 msgid "Restore"
 msgstr ""
 
+#: ../../src/gui/piePreview.vala:155
+msgid "Do you really want to delete this Slice?"
+msgstr ""
+
+#: ../../src/gui/themeList.vala:62
+msgid "Themes"
+msgstr ""
+
+#: ../../src/gui/themeList.vala:99
+msgid "By"
+msgstr ""
+
+#: ../../src/gui/newSliceWindow.vala:291
+msgid "Rename me!"
+msgstr ""
+
+#: ../../src/gui/triggerSelectWindow.vala:166
+msgid ""
+"This hotkey is already assigned to the pie \"%s\"! \n"
+"\n"
+"Please select another one or cancel your selection."
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:412
+msgid "Click to edit"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:412
+#: ../../src/gui/piePreviewRenderer.vala:427
+msgid "Drag to move"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:415
+msgid "Click to add a new Slice"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:419
+msgid "Drop to add as new Slice"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:422
+msgid "Drop to move Slice"
+msgstr ""
+
+#: ../../src/gui/piePreviewRenderer.vala:427
+msgid "Click to delete"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:175
+msgid "No Pie selected."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:215
+msgid "New Pie"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:228
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+
+#: ../../src/gui/triggerSelectButton.vala:63
+msgid "Press a hotkey ..."
+msgstr ""
+
+#: ../../src/gui/sliceTypeList.vala:60
+msgid "Slice types"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:186
+msgid "All icons"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:188
+msgid "Actions"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:189
+msgid "Places"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:190
+msgid "File types"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:191
+msgid "Emotes"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:192
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../../src/gui/iconSelectWindow.vala:267
+#: ../../src/gui/iconSelectWindow.vala:269
+msgid "All supported image formats"
+msgstr ""
+
+#: ../../src/actionGroups/windowListGroup.vala:34
+msgid "Group: Window List"
+msgstr ""
+
+#: ../../src/actionGroups/windowListGroup.vala:36
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:35
+msgid "Group: Devices"
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr ""
+
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr ""
+
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+msgid "Group: Bookmarks"
+msgstr ""
+
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+msgid "Group: Session Control"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:60
+msgid "Shutdown"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:63
+msgid "Logout"
+msgstr ""
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Reboot"
+msgstr ""
+
+#: ../../src/actionGroups/menuGroup.vala:35
+msgid "Group: Main menu"
+msgstr ""
+
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr ""
+
+#: ../../src/actionGroups/clipboardGroup.vala:64
+msgid "Group: Clipboard"
+msgstr ""
+
+#: ../../src/actionGroups/clipboardGroup.vala:66
+msgid "Manages your Clipboard."
+msgstr ""
+
 #: ../ui/icon_select.ui:8
 msgid "Select an icon"
 msgstr ""
@@ -324,87 +324,35 @@ msgstr ""
 msgid "Custom Icon"
 msgstr ""
 
-#: ../ui/trigger_select.ui:8
-msgid "Activation Settings"
+#: ../ui/rename_pie.ui:8
+msgid "Rename a Pie"
 msgstr ""
 
-#: ../ui/trigger_select.ui:86
-msgid "It's possible to bind mouse buttons as well!"
+#: ../ui/preferences.ui:8
+msgid "Gnome-Pie Settings"
 msgstr ""
 
-#: ../ui/trigger_select.ui:118
-msgid "Turbo mode"
-msgstr ""
-
-#: ../ui/trigger_select.ui:123 ../ui/trigger_select.ui:124
-msgid "If checked, the Pie will close when you release the chosen hot key."
-msgstr ""
-
-#: ../ui/trigger_select.ui:137
-msgid "Long press for activation"
-msgstr ""
-
-#: ../ui/trigger_select.ui:142 ../ui/trigger_select.ui:143
-msgid ""
-"If checked, the Pie will only open if you press this hot key a bit longer."
-msgstr ""
-
-#: ../ui/trigger_select.ui:156
-msgid "Open Pie centered on the screen"
-msgstr ""
-
-#: ../ui/trigger_select.ui:161 ../ui/trigger_select.ui:162
-msgid ""
-"If checked, the Pie will open in the middle of your screen. Else it will pop "
-"up at your pointer."
-msgstr ""
-
-#: ../ui/trigger_select.ui:181
-msgid "Activation options"
-msgstr ""
-
-#: ../ui/settings.ui:9 ../ui/preferences.ui:27
+#: ../ui/preferences.ui:27 ../ui/settings.ui:9
 msgid "General Settings"
 msgstr ""
 
-#: ../ui/settings.ui:74
-msgid "Start Gnome-Pie on login"
-msgstr ""
-
-#: ../ui/settings.ui:79 ../ui/settings.ui:80
-msgid "If checked, Gnome-Pie will start silently everytime you log in."
-msgstr ""
-
-#: ../ui/settings.ui:93
-msgid "Display panel icon "
-msgstr ""
-
-#: ../ui/settings.ui:98 ../ui/settings.ui:99
+#: ../ui/preferences.ui:261
 msgid ""
-"If not checked, you can access this menu by launching Gnome-Pie a second "
-"time."
+"<b><big>This Pie is empty!</big>\n"
+"\n"
+"Start adding Slices to it!</b> This can be done by dragging stuff to the "
+"plus sign below. You can try a lot! For example application launchers or "
+"folders. Even URLs from your browser are possible... \n"
+"\n"
+"For manual and advanced configuration click on the plus sign."
 msgstr ""
 
-#: ../ui/settings.ui:118
-msgid "Behavior"
-msgstr ""
-
-#: ../ui/settings.ui:175
-msgid "Global scale"
-msgstr ""
-
-#: ../ui/settings.ui:207
-msgid "Display Slice labels"
-msgstr ""
-
-#: ../ui/settings.ui:212 ../ui/settings.ui:213
+#: ../ui/preferences.ui:282
 msgid ""
-"Displays the name of each Slice next to it. Only available if supported by "
-"the theme."
-msgstr ""
-
-#: ../ui/settings.ui:232
-msgid "Appearance"
+"<b><big>You have no Pies!</big>\n"
+"\n"
+"Start by creating one! </b> This can be done by clicking on the tiny little "
+"plus sign in the lower left corner."
 msgstr ""
 
 #: ../ui/slice_select.ui:9
@@ -447,29 +395,81 @@ msgstr ""
 msgid "Slice options"
 msgstr ""
 
-#: ../ui/preferences.ui:8
-msgid "Gnome-Pie Settings"
+#: ../ui/settings.ui:74
+msgid "Start Gnome-Pie on login"
 msgstr ""
 
-#: ../ui/preferences.ui:261
+#: ../ui/settings.ui:79 ../ui/settings.ui:80
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr ""
+
+#: ../ui/settings.ui:93
+msgid "Display panel icon "
+msgstr ""
+
+#: ../ui/settings.ui:98 ../ui/settings.ui:99
 msgid ""
-"<b><big>This Pie is empty!</big>\n"
-"\n"
-"Start adding Slices to it!</b> This can be done by dragging stuff to the "
-"plus sign below. You can try a lot! For example application launchers or "
-"folders. Even URLs from your browser are possible... \n"
-"\n"
-"For manual and advanced configuration click on the plus sign."
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
 msgstr ""
 
-#: ../ui/preferences.ui:282
+#: ../ui/settings.ui:118
+msgid "Behavior"
+msgstr ""
+
+#: ../ui/settings.ui:175
+msgid "Global scale"
+msgstr ""
+
+#: ../ui/settings.ui:207
+msgid "Display Slice labels"
+msgstr ""
+
+#: ../ui/settings.ui:212 ../ui/settings.ui:213
 msgid ""
-"<b><big>You have no Pies!</big>\n"
-"\n"
-"Start by creating one! </b> This can be done by clicking on the tiny little "
-"plus sign in the lower left corner."
+"Displays the name of each Slice next to it. Only available if supported by "
+"the theme."
 msgstr ""
 
-#: ../ui/rename_pie.ui:8
-msgid "Rename a Pie"
+#: ../ui/settings.ui:232
+msgid "Appearance"
+msgstr ""
+
+#: ../ui/trigger_select.ui:8
+msgid "Activation Settings"
+msgstr ""
+
+#: ../ui/trigger_select.ui:86
+msgid "It's possible to bind mouse buttons as well!"
+msgstr ""
+
+#: ../ui/trigger_select.ui:118
+msgid "Turbo mode"
+msgstr ""
+
+#: ../ui/trigger_select.ui:123 ../ui/trigger_select.ui:124
+msgid "If checked, the Pie will close when you release the chosen hot key."
+msgstr ""
+
+#: ../ui/trigger_select.ui:137
+msgid "Long press for activation"
+msgstr ""
+
+#: ../ui/trigger_select.ui:142 ../ui/trigger_select.ui:143
+msgid ""
+"If checked, the Pie will only open if you press this hot key a bit longer."
+msgstr ""
+
+#: ../ui/trigger_select.ui:156
+msgid "Open Pie centered on the screen"
+msgstr ""
+
+#: ../ui/trigger_select.ui:161 ../ui/trigger_select.ui:162
+msgid ""
+"If checked, the Pie will open in the middle of your screen. Else it will pop "
+"up at your pointer."
+msgstr ""
+
+#: ../ui/trigger_select.ui:181
+msgid "Activation options"
 msgstr ""

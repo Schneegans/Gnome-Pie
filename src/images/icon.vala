@@ -78,7 +78,7 @@ public class Icon : Image {
     /// Returns the icon name for a given GLib.Icon.
     /////////////////////////////////////////////////////////////////////
     
-    public static string get_icon_name(GLib.Icon icon) {
+    public static string get_icon_name(GLib.Icon? icon) {
         if (icon != null) {
             var icon_names = icon.to_string().split(" ");
             

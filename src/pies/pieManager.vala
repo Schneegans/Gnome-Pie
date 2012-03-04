@@ -93,7 +93,7 @@ public class PieManager : GLib.Object {
                 var window = new PieWindow();
                 window.load_pie(pie);
                 
-                if (at_last_position) {
+                if (at_last_position && last_x != 0 && last_y != 0) {
                     window.open_at(last_x, last_y);
                 } else {
                     window.open();

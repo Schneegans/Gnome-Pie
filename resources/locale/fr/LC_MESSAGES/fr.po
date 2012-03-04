@@ -2,16 +2,17 @@
 # Traductions françaises du paquet gnomepie.
 # Copyright (C) 2012 Simon Schneegans <code@simonschneegans.de>
 # This file is distributed under the same license as the gnomepie package.
+# Grégoire BELLON-GERVAIS <greggbg@gmail.com>, 2012.
 # Alex Maxime <cad.maxime@gmail.com>, 2012.
 #
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnomepie 0.4\n"
+"Project-Id-Version: gnomepie 0.5\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-02-29 15:58+0100\n"
 "PO-Revision-Date: 2012-01-27 22:15+0100\n"
-"Last-Translator: Alex Maxime <cad.maxime@gmail.com>\n"
+"Last-Translator: Grégoire BELLON-GERVAIS <greggbg@gmail.com>\n"
 "Language-Team: French\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -21,11 +22,11 @@ msgstr ""
 
 #: ../../src/actions/keyAction.vala:34
 msgid "Press hotkey"
-msgstr "Appuyez le raccourci clavier"
+msgstr "Appuyez sur le raccourci clavier"
 
 #: ../../src/actions/keyAction.vala:36
 msgid "Simulates the activation of a hotkey."
-msgstr "Simule l'activation d'un racourci clavier"
+msgstr "Simule l'activation d'un raccourci clavier"
 
 #: ../../src/actions/appAction.vala:34
 msgid "Launch application"
@@ -64,13 +65,13 @@ msgid ""
 "\n"
 "Please select another one or cancel your selection."
 msgstr ""
-"Ce raccourci clavier est deja déninie pour la Part \"%s\"! \n"
+"Ce raccourci clavier est déja déninie pour la Part \"%s\"! \n"
 "\n"
-"Merci de choisir un autre ou annler votre choix"
+"Merci d'en choisir un autre ou d'annuler votre choix."
 
 #: ../../src/gui/preferencesWindow.vala:175
 msgid "No Pie selected."
-msgstr "Aucune Part selectionnée"
+msgstr "Aucune Part sélectionnée"
 
 #: ../../src/gui/preferencesWindow.vala:215
 msgid "New Pie"
@@ -79,7 +80,8 @@ msgstr "Nouvelle Part"
 #: ../../src/gui/preferencesWindow.vala:228
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
-msgstr "Voulez-vous supprimer la Part sélectionné et son contenue ?"
+msgstr ""
+"Voulez-vous supprimer la Part sélectionnée et son contenu ?"
 
 #: ../../src/gui/newSliceWindow.vala:291
 msgid "Rename me!"
@@ -96,9 +98,8 @@ msgstr "Faites glisser pour déplacer"
 
 #: ../../src/gui/piePreviewRenderer.vala:415
 msgid "Click to add a new Slice"
-msgstr ""
-"Cliquez pour ajouter \n"
-"une nouvelle Tranche"
+msgstr "Cliquez pour ajouter \n"
+" une nouvelle Tranche"
 
 #: ../../src/gui/piePreviewRenderer.vala:419
 msgid "Drop to add as new Slice"
@@ -138,7 +139,7 @@ msgstr "Types de Tranche"
 
 #: ../../src/gui/iconSelectWindow.vala:186
 msgid "All icons"
-msgstr "Tout les icônes"
+msgstr "Tous les icônes"
 
 #: ../../src/gui/iconSelectWindow.vala:187
 #: ../../src/pies/defaultConfig.vala:36
@@ -155,11 +156,11 @@ msgstr "Dossiers"
 
 #: ../../src/gui/iconSelectWindow.vala:190
 msgid "File types"
-msgstr "Type de fichier"
+msgstr "Types de fichier"
 
 #: ../../src/gui/iconSelectWindow.vala:191
 msgid "Emotes"
-msgstr "Emoticones"
+msgstr "Émoticones"
 
 #: ../../src/gui/iconSelectWindow.vala:192
 msgid "Miscellaneous"
@@ -168,17 +169,17 @@ msgstr "Divers"
 #: ../../src/gui/iconSelectWindow.vala:267
 #: ../../src/gui/iconSelectWindow.vala:269
 msgid "All supported image formats"
-msgstr "Tout les formats d'images supportés"
+msgstr "Tous les formats d'images supportés"
 
 #: ../../src/actionGroups/windowListGroup.vala:34
 msgid "Group: Window List"
-msgstr "Groupe : Liste de la fenêtre"
+msgstr "Groupe : Liste de fenêtre"
 
 #: ../../src/actionGroups/windowListGroup.vala:36
 msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
 msgstr ""
-"Affiche une Tranche pour chacune des fenêtres ouverte. Fonctionne comme Alt-"
-"Tab "
+"Affiche une Tranche pour chacune des fenêtres ouvertes. Fonctionne comme Alt-"
+"Tab."
 
 #: ../../src/actionGroups/menuGroup.vala:35
 msgid "Group: Main menu"
@@ -190,7 +191,7 @@ msgstr "Affiche la structure de menu principal"
 
 #: ../../src/actionGroups/clipboardGroup.vala:64
 msgid "Group: Clipboard"
-msgstr "Groupe : Press-papier"
+msgstr "Groupe : Presse-papier"
 
 #: ../../src/actionGroups/clipboardGroup.vala:66
 msgid "Manages your Clipboard."
@@ -202,11 +203,11 @@ msgstr "Groupe : Gestion de la Session"
 
 #: ../../src/actionGroups/sessionGroup.vala:37
 msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
-msgstr "Affiche une Tranche pour Eteindre, Redemarrer, et Hiberner"
+msgstr "Affiche une Tranche pour Éteindre, Redemarrer, et Hiberner"
 
 #: ../../src/actionGroups/sessionGroup.vala:60
 msgid "Shutdown"
-msgstr "Eteindre"
+msgstr "Éteindre"
 
 #: ../../src/actionGroups/sessionGroup.vala:63
 msgid "Logout"
@@ -214,7 +215,7 @@ msgstr "Déconnexion"
 
 #: ../../src/actionGroups/sessionGroup.vala:66
 msgid "Reboot"
-msgstr "Redemarrer"
+msgstr "Redémarrer"
 
 #: ../../src/actionGroups/bookmarkGroup.vala:36
 msgid "Group: Bookmarks"
@@ -231,7 +232,7 @@ msgstr "Groupe : Périphériques"
 #: ../../src/actionGroups/devicesGroup.vala:37
 msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
 msgstr ""
-"Affiche une Tranche pour chaque périphérique branchés, comme une clé USB"
+"Affiche une Tranche pour chaque périphériques branchés, comme une clé USB"
 
 #: ../../src/actionGroups/devicesGroup.vala:85
 msgid "Root"
@@ -266,7 +267,7 @@ msgstr "Turbo"
 #: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:192
 #: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:198
 msgid "Delayed"
-msgstr "Differé"
+msgstr "Différé"
 
 #: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
 #: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:200
@@ -291,7 +292,7 @@ msgstr "Piste précédente"
 
 #: ../../src/pies/defaultConfig.vala:33
 msgid "Play/Pause"
-msgstr "Jouer/Pause"
+msgstr "Lecture/Pause"
 
 #: ../../src/pies/defaultConfig.vala:45
 msgid "Bookmarks"
@@ -299,7 +300,7 @@ msgstr "Favoris"
 
 #: ../../src/pies/defaultConfig.vala:50
 msgid "Session"
-msgstr "Séssion"
+msgstr "Session"
 
 #: ../../src/pies/defaultConfig.vala:54
 msgid "Main Menu"
@@ -311,7 +312,7 @@ msgstr "Fenêtre"
 
 #: ../../src/pies/defaultConfig.vala:59
 msgid "Scale"
-msgstr "Echelle"
+msgstr "Échelle"
 
 #: ../../src/pies/defaultConfig.vala:60
 msgid "Minimize"
@@ -339,7 +340,7 @@ msgstr "Thème d'icône"
 
 #: ../ui/icon_select.ui:105
 msgid "Custom Icon"
-msgstr "Icône personnalisée"
+msgstr "Icône personnalisé"
 
 #: ../ui/trigger_select.ui:8
 msgid "Activation Settings"
@@ -355,7 +356,7 @@ msgstr "Mode Turbo"
 
 #: ../ui/trigger_select.ui:123 ../ui/trigger_select.ui:124
 msgid "If checked, the Pie will close when you release the chosen hot key."
-msgstr "Si coché, la Pie se ferme quand vous relâchez le racourci clavier"
+msgstr "Si coché, la Part se ferme quand vous relâchez le raccourci clavier"
 
 #: ../ui/trigger_select.ui:137
 msgid "Long press for activation"
@@ -365,7 +366,7 @@ msgstr "Appuyez longtemps pour activer"
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr ""
-"Si coché, la Pie s'ouvrira seulement si vous appuyez longtemps le raccourcis "
+"Si coché, la Part s'ouvrira seulement si vous appuyez longtemps le raccourci "
 "clavier"
 
 #: ../ui/trigger_select.ui:156
@@ -394,7 +395,7 @@ msgstr "Lancer Gnome-pie au démarrage"
 
 #: ../ui/settings.ui:79 ../ui/settings.ui:80
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
-msgstr "Si vous cochez, Gnome-Pie se lancera a chaque connexions"
+msgstr "Si vous cochez, Gnome-Pie se lancera à chaque connexions"
 
 #: ../ui/settings.ui:93
 msgid "Display panel icon "
@@ -410,11 +411,11 @@ msgstr ""
 
 #: ../ui/settings.ui:118
 msgid "Behavior"
-msgstr ""
+msgstr "Comportement"
 
 #: ../ui/settings.ui:175
 msgid "Global scale"
-msgstr "Echelle globale"
+msgstr "Échelle globale"
 
 #: ../ui/settings.ui:207
 #, fuzzy
@@ -426,11 +427,13 @@ msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
 msgstr ""
+"Afficher le nom de chaque Tranche sur le côté. Supporté uniquement pas les "
+"thèmes compatibles."
 
 #: ../ui/settings.ui:232
 #, fuzzy
 msgid "Appearance"
-msgstr "Apparence et comportement"
+msgstr "Apparence"
 
 #: ../ui/slice_select.ui:9
 msgid "Slice Options"
@@ -438,7 +441,7 @@ msgstr "Options de la Tranche"
 
 #: ../ui/slice_select.ui:139
 msgid "There are no options for this Slice type."
-msgstr "Il n'y a pas d'optionspour ce type de tranche"
+msgstr "Il n'y a pas d'option pour ce type de Tranche"
 
 #: ../ui/slice_select.ui:165
 msgid "Name of the Slice "
@@ -450,7 +453,7 @@ msgstr "Liens web à ouvrir"
 
 #: ../ui/slice_select.ui:243
 msgid "Command to execute"
-msgstr "Commande à executer"
+msgstr "Commande à éxécuter"
 
 #: ../ui/slice_select.ui:282
 msgid "Hotkey to press"
@@ -474,7 +477,7 @@ msgstr "Options de la Tranche"
 
 #: ../ui/preferences.ui:8
 msgid "Gnome-Pie Settings"
-msgstr "Paramètre de Gnome-Pie"
+msgstr "Paramètres de Gnome-Pie"
 
 #: ../ui/preferences.ui:261
 msgid ""
@@ -488,10 +491,10 @@ msgid ""
 msgstr ""
 "<b><big>Cette Part est vide !</big>\n"
 "\n"
-"Commencez en lui ajoutant des Tranche !</b> Pour cela, vous pouvez déplacer "
+"Commencez en lui ajoutant des Tranches !</b> Pour cela, vous pouvez déplacer "
 "des éléments sur le signe plus. Vous pouvez en essayer plein ! Par exemple, "
 "des lanceurs d'application ou des dossiers. Même les liens de votre "
-"navigateur sont supportées ...\n"
+"navigateur sont supportés ...\n"
 "\n"
 "Pour des ajouts manuels ou plus avancés, cliquez sur le signe plus."
 
@@ -509,4 +512,4 @@ msgstr ""
 
 #: ../ui/rename_pie.ui:8
 msgid "Rename a Pie"
-msgstr "Renomer la Part"
+msgstr "Renommer la Part"

@@ -132,8 +132,8 @@ public class TriggerSelectButton : Gtk.ToggleButton {
         if (this.active) {
                 Gtk.Allocation rect;
                 this.get_allocation(out rect);
-                if (event.x < rect.x || event.x > rect.x + rect.width
-                 || event.y < rect.y || event.y > rect.y + rect.height) {
+                if (event.x < 0 || event.x > rect.width
+                 || event.y < 0 || event.y > rect.height) {
                  
                     this.cancel();
                     return true;

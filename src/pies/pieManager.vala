@@ -93,11 +93,10 @@ public class PieManager : GLib.Object {
                 var window = new PieWindow();
                 window.load_pie(pie);
                 
-                if (at_last_position && last_x != 0 && last_y != 0) {
+                if (at_last_position) {
                     window.open_at(last_x, last_y);
                 } else {
                     window.open();
-                    window.get_center_pos(out last_x, out last_y);
                 }
                 
                 opened_windows.add(window);
@@ -110,6 +109,7 @@ public class PieManager : GLib.Object {
                 });
                 
                 window.on_closing.connect(() => {
+                    window.get_center_pos(out last_x, out last_y);
                     a_pie_is_active = false;
                 });
                 

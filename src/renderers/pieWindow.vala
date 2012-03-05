@@ -206,7 +206,7 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
     
     public void get_center_pos(out int out_x, out int out_y) {
-        int x, y, width, height;
+        int x=0, y=0, width=0, height=0;
         this.get_position(out x, out y);
         this.get_size(out width, out height);
         

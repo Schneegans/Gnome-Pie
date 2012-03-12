@@ -201,7 +201,7 @@ msgstr "Apagar"
 
 #: ../../src/actionGroups/sessionGroup.vala:63
 msgid "Logout"
-msgstr ""
+msgstr "Cerrar Sesión"
 
 #: ../../src/actionGroups/sessionGroup.vala:66
 msgid "Reboot"
@@ -213,8 +213,7 @@ msgstr "Grupo: Marcadores"
 
 #: ../../src/actionGroups/bookmarkGroup.vala:38
 msgid "Shows a Slice for each of your directory Bookmarks."
-msgstr ""
-"Muestra una Rebanada por cada uno de los directorios en los Marcadores."
+msgstr "Muestra una Rebanada por cada uno de los directorios en los Marcadores."
 
 #: ../../src/actionGroups/devicesGroup.vala:35
 msgid "Group: Devices"
@@ -393,11 +392,12 @@ msgstr "Mostrar panel de íconos"
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
-msgstr "Puedes acceder a este menú lanzando Gnome-Pie por segundavez."
+msgstr "Si no esta activado, puedes acceder a este menú lanzando Gnome-Pie "
+"por segunda vez."
 
 #: ../ui/settings.ui:118
 msgid "Behavior"
-msgstr ""
+msgstr "Comportamiento"
 
 #: ../ui/settings.ui:175
 msgid "Global scale"
@@ -406,18 +406,19 @@ msgstr "Escala Global"
 #: ../ui/settings.ui:207
 #, fuzzy
 msgid "Display Slice labels"
-msgstr "Mostrar panel de íconos"
+msgstr "Mostrar las etiquetas de las Rebanadas"
 
 #: ../ui/settings.ui:212 ../ui/settings.ui:213
 msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
 msgstr ""
+"Mostrar el nombre de cada Rebanada. Solo si es soportado por el theme."
 
 #: ../ui/settings.ui:232
 #, fuzzy
 msgid "Appearance"
-msgstr "Apariencia y comportamiento"
+msgstr "Apariencia"
 
 #: ../ui/slice_select.ui:9
 msgid "Slice Options"

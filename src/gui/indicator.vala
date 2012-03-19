@@ -68,8 +68,12 @@ public class Indicator : GLib.Object {
 
     public Indicator() {
         string icon = "";
-            
-        if (Gdk.X11Screen.get_window_manager_name(Gdk.Screen.get_default()) == "Mutter")
+        
+        #if HAVE_GTK_3
+            if (Gdk.X11Screen.get_window_manager_name(Gdk.Screen.get_default()) == "Mutter")
+        #else
+            if (Gdk.x11_screen_get_window_manager_name(Gdk.Screen.get_default()) == "Mutter")
+        #endif
             icon = "gnome-pie";
         else
             icon = "gnome-pie-symbolic";

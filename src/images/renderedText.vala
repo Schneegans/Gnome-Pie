@@ -71,21 +71,29 @@ public class RenderedText : Image {
             
             // add newlines at the end of each line, in order to allow ellipsizing
             string broken_string = "";
-            var lines = layout.get_lines().copy();
             
-            foreach (var line in lines) {
+            for (int i=0; i<layout.get_line_count(); ++i) {
             
-                string next_line = text.substring(line.start_index, line.length);
+                string next_line = "";
+                if (i == layout.get_line_count() -1) 
+                    next_line = text.substring(layout.get_line(i).start_index, -1);
+                else                                 
+                    next_line = text.substring(layout.get_line(i).start_index, layout.get_line(i).length);
                 
                 if (broken_string == "") {
                     broken_string = next_line;
                 } else if (next_line != "") {
                     // test whether the addition of a line would cause the height to become too large
                     string broken_string_tmp = broken_string + "\n" + next_line;
+                    
+                    var layout_tmp = Pango.cairo_create_layout(ctx);        
+                    layout_tmp.set_width(Pango.units_from_double(width));
+                    
+                    layout_tmp.set_font_description(font_description);
             
-                    layout.set_text(broken_string_tmp, -1);
+                    layout_tmp.set_text(broken_string_tmp, -1);
                     Pango.Rectangle extents;
-                    layout.get_pixel_extents(null, out extents);
+                    layout_tmp.get_pixel_extents(null, out extents);
                     
                     if (extents.height > height) broken_string = broken_string + next_line;
                     else                         broken_string = broken_string_tmp;

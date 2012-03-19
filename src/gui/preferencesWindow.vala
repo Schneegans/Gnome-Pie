@@ -130,7 +130,7 @@ public class PreferencesWindow : GLib.Object {
                 Config.global.save();
                 Pies.save();
                 
-                Gdk.threads_add_timeout(100, () => {
+                Timeout.add(100, () => {
                     IconSelectWindow.clear_icons();
                     return false;
                 });

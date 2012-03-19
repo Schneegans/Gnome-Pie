@@ -75,7 +75,7 @@ class ThemeList : Gtk.TreeView {
         this.get_selection().changed.connect(() => {
             Gtk.TreeIter active;
             if (this.get_selection().get_selected(null, out active)) {
-                Gdk.threads_add_timeout(10, () => {
+                Timeout.add(10, () => {
                     int index = int.parse(data.get_path(active).to_string());
                     Config.global.theme = Config.global.themes[index];
                     

@@ -380,7 +380,7 @@ public class IconSelectWindow : GLib.Object {
             this.load_all.begin();
 
             // insert loaded icons every 200 ms
-            Gdk.threads_add_timeout(200, () => {
+            Timeout.add(200, () => {
                 while (this.load_queue.length() > 0) {
                     var new_entry = this.load_queue.pop();
                     Gtk.TreeIter current;

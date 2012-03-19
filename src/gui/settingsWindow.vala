@@ -82,7 +82,7 @@ public class SettingsWindow : GLib.Object {
                 scale_slider.value_changed.connect(() => {
                     if (!changing) {
                         changing = true;
-                        Gdk.threads_add_timeout(300, () => {
+                        Timeout.add(300, () => {
                             if (changed_again) {
                                 changed_again = false;
                                 return true;

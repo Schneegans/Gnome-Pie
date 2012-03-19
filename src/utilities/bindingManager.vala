@@ -307,7 +307,7 @@ public class BindingManager : GLib.Object {
             this.delayed_event = event;
             this.delayed_binding = binding;
 
-            Gdk.threads_add_timeout(300, () => {
+            Timeout.add(300, () => {
             	// if nothing has been pressed in the meantime
                 if (current_count == this.delayed_count) {
                 	this.delayed_binding = null;

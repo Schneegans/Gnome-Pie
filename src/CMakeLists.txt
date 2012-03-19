@@ -82,6 +82,7 @@ install(
 install(
 	FILES
 		${CMAKE_SOURCE_DIR}/resources/gnome-pie.svg
+		${CMAKE_SOURCE_DIR}/resources/gnome-pie-symbolic.svg
 	DESTINATION
 		${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps
 )

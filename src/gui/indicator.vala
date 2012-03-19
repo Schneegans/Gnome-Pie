@@ -73,7 +73,7 @@ public class Indicator : GLib.Object {
             string icon = "indicator-applet";
             try {
                 path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
-                icon = "gnome-pie";
+                icon = "gnome-pie-symbolic";
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
             }

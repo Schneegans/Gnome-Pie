@@ -60,8 +60,6 @@ namespace Pies {
                         } 
                     }
                 }
-                Xml.Parser.cleanup();
-                
             } else {
                 warning("Error loading pies: pies.conf is empty! The cake is a lie...");
             }

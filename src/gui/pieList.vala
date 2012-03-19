@@ -230,7 +230,7 @@ class PieList : Gtk.TreeView {
         // avoid too frequent selection...
         this.last_hover = time;
         
-        GLib.Timeout.add(150, () => {
+        Gdk.threads_add_timeout(150, () => {
             if (this.last_hover == time)
                 this.get_selection().select_path(path); 
             return false;

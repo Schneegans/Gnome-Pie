@@ -55,6 +55,7 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
     
     private bool closing = false;
+    private bool closed = false;
     
     /////////////////////////////////////////////////////////////////////
     /// A timer used for calculating the frame time.
@@ -186,7 +187,10 @@ public class PieWindow : Gtk.Window {
         this.queue_draw();
         
         // the main draw loop
-        Timeout.add((uint)(1000.0/Config.global.refresh_rate), () => {
+        Gdk.threads_add_timeout((uint)(1000.0/Config.global.refresh_rate), () => {  
+            if (this.closed)
+                return false;
+                              
             this.queue_draw();
             return this.visible;
         }); 
@@ -266,7 +270,8 @@ public class PieWindow : Gtk.Window {
             FocusGrabber.ungrab();
             this.renderer.activate();
             
-            Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
+            Gdk.threads_add_timeout((uint)(Config.global.theme.fade_out_time*1000), () => {
+                this.closed = true;
                 this.on_closed();
                 this.destroy();
                 return false;
@@ -286,7 +291,8 @@ public class PieWindow : Gtk.Window {
             FocusGrabber.ungrab();
             this.renderer.cancel();
             
-            Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
+            Gdk.threads_add_timeout((uint)(Config.global.theme.fade_out_time*1000), () => {
+                this.closed = true;
                 this.on_closed();
                 this.destroy();
                 return false;
@@ -329,7 +335,7 @@ public class PieWindow : Gtk.Window {
                     this.renderer.set_highlighted_slice(index);
                 
                     if (this.renderer.active_slice == index) {
-                        GLib.Timeout.add((uint)(Config.global.theme.transition_time*1000.0), ()=> {
+                        Gdk.threads_add_timeout((uint)(Config.global.theme.transition_time*1000.0), ()=> {
                             this.activate_slice();
                             return false;
                         });

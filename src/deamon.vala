@@ -36,7 +36,7 @@ public class Deamon : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public static int main(string[] args) {
-        version = "0.5.1";
+        version = "0.5.2";
     
         Logger.init();
         Gdk.threads_init();
@@ -148,6 +148,8 @@ public class Deamon : GLib.Object {
             return Unique.Response.PASSTHROUGH;
         });
         
+        Gdk.threads_enter();
+        
         // init locale support
         Intl.bindtextdomain ("gnomepie", Paths.locales);
         Intl.textdomain ("gnomepie");
@@ -174,6 +176,8 @@ public class Deamon : GLib.Object {
 	    if (open_pie != null) PieManager.open_pie(open_pie);
 	    
 	    Gtk.main();
+	    
+	    Gdk.threads_leave();
     }
     
     /////////////////////////////////////////////////////////////////////

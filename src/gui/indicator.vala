@@ -46,7 +46,6 @@ public class Indicator : GLib.Object {
 
     public bool active {
         get {
-        
             #if HAVE_APPINDICATOR
                 return indicator.get_status() == AppIndicator.IndicatorStatus.ACTIVE;
             #else
@@ -68,12 +67,18 @@ public class Indicator : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public Indicator() {
+        string icon = "";
+            
+        if (Gdk.X11Screen.get_window_manager_name(Gdk.Screen.get_default()) == "Mutter")
+            icon = "gnome-pie";
+        else
+            icon = "gnome-pie-symbolic";
+                
         #if HAVE_APPINDICATOR
             string path = "";
-            string icon = "indicator-applet";
+
             try {
                 path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
-                icon = "gnome-pie-symbolic";
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
             }
@@ -86,16 +91,16 @@ public class Indicator : GLib.Object {
             try {
                 var file = GLib.File.new_for_path(GLib.Path.build_filename(
                     GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources",
-                    "gnome-pie.svg"
+                    icon + ".svg"
                 ));
 
                 if (!file.query_exists())
-                  this.indicator.set_from_icon_name("gnome-pie");
+                  this.indicator.set_from_icon_name(icon);
                 else
                   this.indicator.set_from_file(file.get_path());
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
-                this.indicator.set_from_icon_name("gnome-pie");
+                this.indicator.set_from_icon_name(icon);
             }
 
             this.menu = new Gtk.Menu();

@@ -174,7 +174,7 @@ public class PreferencesWindow : GLib.Object {
             this.id_label.label = "";
             this.name_label.label = _("No Pie selected.");
             this.hotkey_label.set_markup("");
-            this.icon.icon_name = "application-default-icon";
+            this.icon.icon_name = "stock_unknown";
 
             this.no_pie_label.show();
         } else {
@@ -212,7 +212,7 @@ public class PreferencesWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     private void on_add_pie_button_clicked(Gtk.ToolButton button) {
-        var new_pie = PieManager.create_persistent_pie(_("New Pie"), "application-default-icon", null);
+        var new_pie = PieManager.create_persistent_pie(_("New Pie"), "stock_unknown", null);
         this.pie_list.reload_all();
         this.pie_list.select(new_pie.id);
     }

@@ -148,7 +148,7 @@ public class ActionRegistry : GLib.Object {
         }
         
         if (!Gtk.IconTheme.get_default().has_icon(final_icon))
-                final_icon = "application-default-icon";
+                final_icon = "stock_unknown";
         
         if (name != null)
             final_name = name;

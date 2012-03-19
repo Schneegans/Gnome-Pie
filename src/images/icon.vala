@@ -105,7 +105,7 @@ public class Icon : Image {
                 return icon_name;
             
             warning("Icon \"" + icon_name + "\" not found! Using default icon...");
-            icon_name = "application-default-icon";
+            icon_name = "stock_unknown";
         }
             
         
@@ -115,7 +115,7 @@ public class Icon : Image {
         
         if (result == "") {
             warning("Icon \"" + icon_name + "\" not found! Using default icon...");
-            icon_name = "application-default-icon";
+            icon_name = "stock_unknown";
             file = icon_theme.lookup_icon(icon_name, size, 0);
             if (file != null) result = file.get_filename();
         }

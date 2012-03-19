@@ -187,7 +187,7 @@ class PiePreview : Gtk.DrawingArea {
         this.timer.start();
         this.queue_draw();
         
-        Gdk.threads_add_timeout((uint)(1000.0/Config.global.refresh_rate), () => {
+        GLib.Timeout.add((uint)(1000.0/Config.global.refresh_rate), () => {
             this.queue_draw();
             return this.get_toplevel().visible;
         });

@@ -187,7 +187,7 @@ public class PieWindow : Gtk.Window {
         this.queue_draw();
         
         // the main draw loop
-        Gdk.threads_add_timeout((uint)(1000.0/Config.global.refresh_rate), () => {  
+        GLib.Timeout.add((uint)(1000.0/Config.global.refresh_rate), () => {  
             if (this.closed)
                 return false;
                               
@@ -270,7 +270,7 @@ public class PieWindow : Gtk.Window {
             FocusGrabber.ungrab();
             this.renderer.activate();
             
-            Gdk.threads_add_timeout((uint)(Config.global.theme.fade_out_time*1000), () => {
+            GLib.Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
                 this.closed = true;
                 this.on_closed();
                 this.destroy();
@@ -291,7 +291,7 @@ public class PieWindow : Gtk.Window {
             FocusGrabber.ungrab();
             this.renderer.cancel();
             
-            Gdk.threads_add_timeout((uint)(Config.global.theme.fade_out_time*1000), () => {
+            GLib.Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
                 this.closed = true;
                 this.on_closed();
                 this.destroy();
@@ -335,7 +335,7 @@ public class PieWindow : Gtk.Window {
                     this.renderer.set_highlighted_slice(index);
                 
                     if (this.renderer.active_slice == index) {
-                        Gdk.threads_add_timeout((uint)(Config.global.theme.transition_time*1000.0), ()=> {
+                        GLib.Timeout.add((uint)(Config.global.theme.transition_time*1000.0), ()=> {
                             this.activate_slice();
                             return false;
                         });

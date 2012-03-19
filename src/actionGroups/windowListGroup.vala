@@ -32,7 +32,7 @@ public class WindowListGroup : ActionGroup {
     public static GroupRegistry.TypeDescription register() {
         var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Window List");
-        description.icon = "window-manager";
+        description.icon = "gnome-window-manager";
         description.description = _("Shows a Slice for each of your opened Windows. Almost like Alt-Tab.");
         description.id = "window_list";
         return description;

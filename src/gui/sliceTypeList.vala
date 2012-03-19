@@ -140,7 +140,7 @@ class SliceTypeList : Gtk.TreeView {
             this.data.get(active, DataPos.ICON_NAME, out icon);
             this.on_select(id, icon);
         } else {
-            this.on_select("", "application-default-icon");
+            this.on_select("", "stock_unknown");
         }
     }
     

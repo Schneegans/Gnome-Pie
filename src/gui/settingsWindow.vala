@@ -152,17 +152,21 @@ public class SettingsWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     private void on_autostart_toggled(Gtk.ToggleButton check_box) {
+    
         bool active = check_box.active;
         if (!active && FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
+            Config.global.auto_start = false;
             // delete the autostart file
             FileUtils.remove (Paths.autostart);
         }
         else if (active && !FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
+            Config.global.auto_start = true;
+            
             string autostart_entry = 
                 "#!/usr/bin/env xdg-open\n" + 
                 "[Desktop Entry]\n" +
                 "Name=Gnome-Pie\n" +
-                "Exec=gnome-pie\n" +
+                "Exec=" + Paths.executable + "\n" +
                 "Encoding=UTF-8\n" +
                 "Type=Application\n" +
                 "X-GNOME-Autostart-enabled=true\n" +

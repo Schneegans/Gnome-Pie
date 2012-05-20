@@ -78,7 +78,7 @@ public class NewsWindow: Gtk.Dialog {
                 
             box.pack_end(check);
         
-        this.get_content_area().pack_start(box);
+        (this.get_content_area() as Gtk.VBox).pack_start(box);
         this.get_content_area().show_all();
         
         this.add_button(Gtk.Stock.CLOSE, 0);

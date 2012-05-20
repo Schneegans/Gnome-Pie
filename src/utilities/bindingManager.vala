@@ -48,9 +48,11 @@ public class BindingManager : GLib.Object {
         Gdk.ModifierType.MOD2_MASK,
         Gdk.ModifierType.LOCK_MASK,
         Gdk.ModifierType.MOD5_MASK,
+        
         Gdk.ModifierType.MOD2_MASK|Gdk.ModifierType.LOCK_MASK,
         Gdk.ModifierType.MOD2_MASK|Gdk.ModifierType.MOD5_MASK,
         Gdk.ModifierType.LOCK_MASK|Gdk.ModifierType.MOD5_MASK,
+        
         Gdk.ModifierType.MOD2_MASK|Gdk.ModifierType.LOCK_MASK|Gdk.ModifierType.MOD5_MASK
     };
     

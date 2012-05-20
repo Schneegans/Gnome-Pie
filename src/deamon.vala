@@ -36,7 +36,7 @@ public class Deamon : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public static int main(string[] args) {
-        version = "0.5.2";
+        version = "0.5.3";
     
         Logger.init();
         Gdk.threads_init();
@@ -173,7 +173,12 @@ public class Deamon : GLib.Object {
 	    Logger.stats("LAUNCH " + version);
 	    
 	    // open pie if neccessary
-	    if (open_pie != null) PieManager.open_pie(open_pie);
+	    if (open_pie != null) 
+	        PieManager.open_pie(open_pie);
+        else if (Config.global.showed_news < NewsWindow.news_count) {
+            var b = new NewsWindow();
+	        b.show();
+        }
 	    
 	    Gtk.main();
 	    

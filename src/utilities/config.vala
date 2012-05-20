@@ -57,6 +57,7 @@ public class Config : GLib.Object {
     public bool show_indicator { get; set; default = true; }
     public bool show_captions { get; set; default = true; }
     public bool auto_start { get; set; default = false; }
+    public int showed_news { get; set; default = 0; }
     public Gee.ArrayList<Theme?> themes { get; private set; }
     
     /////////////////////////////////////////////////////////////////////
@@ -72,6 +73,7 @@ public class Config : GLib.Object {
                 writer.write_attribute("global_scale", global_scale.to_string());
                 writer.write_attribute("show_indicator", show_indicator ? "true" : "false");
                 writer.write_attribute("show_captions", show_captions ? "true" : "false");
+                writer.write_attribute("showed_news", showed_news.to_string());
             writer.end_element();
         writer.end_document();
     }
@@ -116,6 +118,9 @@ public class Config : GLib.Object {
                             break;
                         case "show_captions":
                             show_captions = bool.parse(attr_content);
+                            break;
+                        case "showed_news":
+                            showed_news = int.parse(attr_content);
                             break;
                         default:
                             warning("Invalid setting \"" + attr_name + "\" in gnome-pie.conf!");

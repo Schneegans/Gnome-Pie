@@ -25,6 +25,13 @@ namespace GnomePie {
 public class Paths : GLib.Object {
 
     /////////////////////////////////////////////////////////////////////
+    /// The config directory,
+    /// usually ~/.config/gnome-pie/.
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string config_directory { get; private set; default=""; }
+
+    /////////////////////////////////////////////////////////////////////
     /// The log file,
     /// usually ~/.config/gnome-pie/gnome-pie.log.
     /////////////////////////////////////////////////////////////////////
@@ -170,6 +177,8 @@ public class Paths : GLib.Object {
                 error(e.message);
             }
         }
+        
+        config_directory = config_dir.get_path();
         
         // create local themes directory if neccasary
         var themes_dir = config_dir.get_child("themes");

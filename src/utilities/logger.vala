@@ -107,6 +107,15 @@ public class Logger {
     /// Appends a line to the statistics file
     /////////////////////////////////////////////////////////////////////
     
+    public static int get_statistics_size() {
+        if (stats_length == -1) {
+            var stats = GLib.FileStream.open(Paths.stats, "a");
+            stats_length = (int)stats.tell();
+        }
+        
+        return stats_length;
+    }
+    
     public static void stats(string line) {
         var stats = GLib.FileStream.open(Paths.stats, "a");
             

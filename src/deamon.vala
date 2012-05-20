@@ -175,7 +175,9 @@ public class Deamon : GLib.Object {
 	    // open pie if neccessary
 	    if (open_pie != null) 
 	        PieManager.open_pie(open_pie);
-        else if (Config.global.showed_news < NewsWindow.news_count) {
+        else if (Config.global.showed_news < NewsWindow.news_count 
+                 && Logger.get_statistics_size() > 10000) {
+                 
             var b = new NewsWindow();
 	        b.show();
         }

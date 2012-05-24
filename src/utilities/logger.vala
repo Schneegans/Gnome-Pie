@@ -110,7 +110,9 @@ public class Logger {
     public static int get_statistics_size() {
         if (stats_length == -1) {
             var stats = GLib.FileStream.open(Paths.stats, "a");
-            stats_length = (int)stats.tell();
+            
+            if (stats != null)
+                stats_length = (int)stats.tell();
         }
         
         return stats_length;

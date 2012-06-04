@@ -53,7 +53,12 @@ public class FocusGrabber : GLib.Object {
             var display = Gdk.Display.get_default();
             var manager = display.get_device_manager();
             
-            unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+            #if VALA_0_16
+                GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+            #else
+                unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+            #endif
+            
             foreach(var device in list) {
                 if ((device.input_source == Gdk.InputSource.KEYBOARD && keyboard)
                  || (device.input_source != Gdk.InputSource.KEYBOARD && pointer)) 
@@ -81,7 +86,12 @@ public class FocusGrabber : GLib.Object {
             
             bool grabbed_all = true;
             
-            unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+            #if VALA_0_16
+                GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+            #else
+                unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+            #endif
+            
             foreach(var device in list) {
                 if ((device.input_source == Gdk.InputSource.KEYBOARD && keyboard) 
                  || (device.input_source != Gdk.InputSource.KEYBOARD && pointer)) {

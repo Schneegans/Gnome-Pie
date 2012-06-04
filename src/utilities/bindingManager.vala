@@ -227,8 +227,13 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event) { 
-        void* pointer = &gdk_xevent;
-        X.Event* xevent = (X.Event*) pointer;
+        
+        #if VALA_0_16
+            X.Event* xevent = (X.Event*) gdk_xevent;
+        #else
+            void* pointer = &gdk_xevent;
+            X.Event* xevent = (X.Event*) pointer;
+        #endif
  
         if(xevent->type == X.EventType.KeyPress) {
             foreach(var binding in bindings) {

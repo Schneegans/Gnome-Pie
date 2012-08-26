@@ -100,8 +100,6 @@ public class Deamon : GLib.Object {
                 message("Removed file \"%s\"", Paths.pie_config);
             if (GLib.FileUtils.remove(Paths.settings) == 0)
                 message("Removed file \"%s\"", Paths.settings);
-                
-            Logger.stats("LAUNCH RESET");
             
             return;
         }
@@ -121,15 +119,11 @@ public class Deamon : GLib.Object {
                 data.set_text(open_pie, open_pie.length);
                 app.send_message(Unique.Command.ACTIVATE, data);
                 
-                Logger.stats("LAUNCH PIE " + open_pie);
-                
                 return;
             } 
            
             message("Gnome-Pie is already running. Sending request to open config menu.");
             app.send_message(Unique.Command.ACTIVATE, null);
-            
-            Logger.stats("LAUNCH CONFIG");
             
             return;
         }
@@ -170,17 +164,10 @@ public class Deamon : GLib.Object {
 	
 	    // finished loading... so run the prog!
 	    message("Started happily...");
-	    Logger.stats("LAUNCH " + version);
 	    
 	    // open pie if neccessary
 	    if (open_pie != null) 
 	        PieManager.open_pie(open_pie);
-        else if (Config.global.showed_news < NewsWindow.news_count 
-                 && Logger.get_statistics_size() > 10000) {
-                 
-            var b = new NewsWindow();
-	        b.show();
-        }
 	    
 	    Gtk.main();
 	    

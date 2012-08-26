@@ -86,7 +86,6 @@ public class PieManager : GLib.Object {
             Pie? pie = all_pies[id];
             
             if (pie != null) {
-                Logger.stats("OPEN " + id);
                 
                 a_pie_is_active = true;
                 

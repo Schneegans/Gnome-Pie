@@ -53,7 +53,7 @@ public class FocusGrabber : GLib.Object {
             var display = Gdk.Display.get_default();
             var manager = display.get_device_manager();
             
-            #if VALA_0_16
+            #if VALA_0_16 || VALA_0_17
                 GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
             #else
                 unowned GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);

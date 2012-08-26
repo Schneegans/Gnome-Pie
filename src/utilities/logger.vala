@@ -68,10 +68,8 @@ public class Logger {
     /////////////////////////////////////////////////////////////////////
     
     private static const int max_log_length = 1000000;
-    private static const int max_stats_length = 1000000;
     
     private static int log_length;
-    private static int stats_length;
     
     /////////////////////////////////////////////////////////////////////
     /// Possible terminal colors.
@@ -94,53 +92,12 @@ public class Logger {
     
     public static void init() {
         log_length = -1;
-        stats_length = -1;
     
         try {
 			regex = new Regex("""(.*)\.vala(:\d+): (.*)""");
 		} catch {}
 		
         GLib.Log.set_handler(null, GLib.LogLevelFlags.LEVEL_MASK, log_func);
-    }
-    
-    /////////////////////////////////////////////////////////////////////
-    /// Appends a line to the statistics file
-    /////////////////////////////////////////////////////////////////////
-    
-    public static int get_statistics_size() {
-        if (stats_length == -1) {
-            var stats = GLib.FileStream.open(Paths.stats, "a");
-            
-            if (stats != null)
-                stats_length = (int)stats.tell();
-        }
-        
-        return stats_length;
-    }
-    
-    public static void stats(string line) {
-        var stats = GLib.FileStream.open(Paths.stats, "a");
-            
-        if (stats != null) {
-            if (stats_length == -1) 
-                stats_length = (int)stats.tell();
-        
-            string final_line = "[" + get_time() + "] " + line + "\n";
-            stats.puts(final_line);
-            stats_length += final_line.length;
-        }
-        
-        if (stats_length > max_stats_length) {
-            string content = "";
-            
-            try {
-                GLib.FileUtils.get_contents(Paths.stats, out content);
-                int split_index = content.index_of_char('\n', stats_length - (int)(max_stats_length*0.9));                
-                GLib.FileUtils.set_contents(Paths.stats, content.substring(split_index+1));
-                
-                stats_length -= (split_index+1);
-            } catch (GLib.FileError e) {}
-        }
     }
     
     /////////////////////////////////////////////////////////////////////

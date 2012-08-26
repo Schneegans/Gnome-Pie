@@ -228,7 +228,7 @@ public class BindingManager : GLib.Object {
     
     private Gdk.FilterReturn event_filter(Gdk.XEvent gdk_xevent, Gdk.Event gdk_event) { 
         
-        #if VALA_0_16
+        #if VALA_0_16 || VALA_0_17
             X.Event* xevent = (X.Event*) gdk_xevent;
         #else
             void* pointer = &gdk_xevent;

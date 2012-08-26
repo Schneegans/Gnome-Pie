@@ -23,7 +23,7 @@ namespace GnomePie {
 
 public class NewsWindow: Gtk.Dialog {
 
-    public static const int news_count = 1;
+    public static const int news_count = 2;
     
     /////////////////////////////////////////////////////////////////////
     /// 
@@ -42,27 +42,7 @@ public class NewsWindow: Gtk.Dialog {
             var news = new Gtk.Label("");
                 news.wrap = true;
                 news.set_width_chars(75);
-                news.set_markup("<b>Gnome-Pie needs your help!</b>\n\n" +
-            
-                     "Hey, this is Simon, developer of Gnome-Pie. I’m going to " +
-                     "write my Bachelor thesis on pie menus! In order to improve " +
-                     "Gnome-Pie to the limits, I need some information on how " +
-                     "you use Gnome-Pie.\n\n" +
-
-                     "<b>So please help improving this software by sending the " +
-                     "file 'gnome-pie.stats' located in <a href='file:" + 
-                     Paths.config_directory + "'>" + Paths.config_directory + 
-                     "</a> by email to <a href='mailto:pie-stats@simonschneegans.de?subject=statistics'>" + 
-                     "pie-stats@simonschneegans.de</a>!</b>\n\n" + 
-                     
-                     "There is no personal information in this file. Only " +
-                     "information on your usage frequency, how fast you use " +
-                     "Gnome-Pie and how many Pies with how many Slices you " +
-                     "have configured. If you have any questions regarding " +
-                     "this topic please send an email to " +
-                     "<a href='mailto:code@simonschneegans.de'>code@simonschneegans.de</a>!\n\n" +
-                     
-                     "Thank you so much! It’s going to be exciting!");
+                news.set_markup("<b>Thank you!</b>\n\n");
                  
             box.pack_start(news, false, false);
             

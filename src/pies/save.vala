@@ -32,9 +32,6 @@ namespace Pies {
     public void save() {
         message("Saving Pies to \"" + Paths.pie_config + "\".");
          
-        // log pie statistics
-        string pie_line = "PIES";
-         
         // initializes the XML-Writer
         var writer = new Xml.TextWriter.filename(Paths.pie_config);
         writer.set_indent(true);
@@ -82,14 +79,10 @@ namespace Pies {
                     }
                 }
                 writer.end_element();
-                
-                pie_line += " " + pie.id + "(%d)".printf(slice_count);
             }
         }
         writer.end_element();
         writer.end_document();
-        
-        Logger.stats(pie_line);
     }
 }
 

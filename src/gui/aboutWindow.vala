@@ -45,7 +45,8 @@ public class AboutWindow: Gtk.AboutDialog {
             "Grégoire Bellon-Gervais <greggbg@gmail.com> (FR)",
             "Alex Maxime <cad.maxime@gmail.com> (FR)",
             "Eugene Roskin <pams@imail.ru> (RU)",
-            "Ting Zhou <tzhou@haverford.edu> (ZH-CN)"
+            "Ting Zhou <tzhou@haverford.edu> (ZH-CN)",
+            "Martin Dinov <martindinov@yahoo.com> (BG)"
     	};
     	
     	// sort translators

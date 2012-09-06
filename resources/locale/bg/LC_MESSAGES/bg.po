@@ -1,0 +1,496 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2012 Simon Schneegans <code@simonschneegans.de>
+# This file is distributed under the same license as the PACKAGE package.
+#  <martindinov@yahoo.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnomepie 0.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-02-29 16:07-0300\n"
+"PO-Revision-Date: 2012-09-02 08:05-0400\n"
+"Last-Translator: Martin Dinov <martindinov@yahoo.com>\n"
+"Language-Team: Bulgarian\n"
+"Language: bg\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../src/actions/keyAction.vala:34
+msgid "Press hotkey"
+msgstr "Моля натиснете клавишната комбинация"
+
+#: ../../src/actions/keyAction.vala:36
+msgid "Simulates the activation of a hotkey."
+msgstr "Симулира натискането на клавишната комбинациа."
+
+#: ../../src/actions/pieAction.vala:34
+msgid "Open Pie"
+msgstr "Отворете паят"
+
+#: ../../src/actions/pieAction.vala:36
+msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
+msgstr "Отваря нов Гноум-Пай пай. Може да направите под-менюта по този начин."
+
+#: ../../src/actions/appAction.vala:34
+msgid "Launch application"
+msgstr "Старт на апликациа"
+
+#: ../../src/actions/appAction.vala:36
+msgid "Executes the given command."
+msgstr "Стартиране на командата"
+
+#: ../../src/actions/uriAction.vala:34
+msgid "Open URI"
+msgstr "Отварете URI"
+
+#: ../../src/actions/uriAction.vala:36
+msgid "Opens a given location. You may use URL's or files paths."
+msgstr "Отваря определена локациа. Може да изпозжате URL или файлови пътеки."
+
+#: ../../src/actions/actionRegistry.vala:119
+msgid "Trash"
+msgstr "Боклук"
+
+#: ../../src/utilities/trigger.vala:163
+msgid "Button %i"
+msgstr "Бутон %i"
+
+#: ../../src/utilities/trigger.vala:166
+msgid "LeftButton"
+msgstr "Ляв Бутон"
+
+#: ../../src/utilities/trigger.vala:168
+msgid "RightButton"
+msgstr "ДесенБутон"
+
+#: ../../src/utilities/trigger.vala:170
+msgid "MiddleButton"
+msgstr "СреденБутон"
+
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
+#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
+msgid "Turbo"
+msgstr "Турбо"
+
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:192
+#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:198
+msgid "Delayed"
+msgstr "Закаснено"
+
+#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
+#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:200
+msgid "Centered"
+msgstr "Зентрирано"
+
+#: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
+#: ../../src/utilities/key.vala:65 ../../src/utilities/bindingManager.vala:161
+msgid "Not bound"
+msgstr "Не свързано"
+
+#: ../../src/pies/defaultConfig.vala:29
+msgid "Multimedia"
+msgstr "Мултимедия"
+
+#: ../../src/pies/defaultConfig.vala:30
+msgid "Next Track"
+msgstr "Следвашта песен"
+
+#: ../../src/pies/defaultConfig.vala:31
+msgid "Stop"
+msgstr "Спри"
+
+#: ../../src/pies/defaultConfig.vala:32
+msgid "Previous Track"
+msgstr "Предишна Песен"
+
+#: ../../src/pies/defaultConfig.vala:33
+msgid "Play/Pause"
+msgstr "Плей/Пауза"
+
+#: ../../src/pies/defaultConfig.vala:36
+#: ../../src/gui/iconSelectWindow.vala:187
+msgid "Applications"
+msgstr "Приложения"
+
+#: ../../src/pies/defaultConfig.vala:45
+msgid "Bookmarks"
+msgstr "Отметки"
+
+#: ../../src/pies/defaultConfig.vala:50
+msgid "Session"
+msgstr "Сесия"
+
+#: ../../src/pies/defaultConfig.vala:54
+msgid "Main Menu"
+msgstr "Главно Меню"
+
+#: ../../src/pies/defaultConfig.vala:58
+msgid "Window"
+msgstr "Прозорец"
+
+#: ../../src/pies/defaultConfig.vala:59
+msgid "Scale"
+msgstr "Мащаб"
+
+#: ../../src/pies/defaultConfig.vala:60
+msgid "Minimize"
+msgstr "Минимизирай"
+
+#: ../../src/pies/defaultConfig.vala:61
+msgid "Close"
+msgstr "Затвори"
+
+#: ../../src/pies/defaultConfig.vala:62
+msgid "Maximize"
+msgstr "Максимизирай"
+
+#: ../../src/pies/defaultConfig.vala:63
+msgid "Restore"
+msgstr "Въстанови"
+
+#: ../../src/gui/piePreview.vala:155
+msgid "Do you really want to delete this Slice?"
+msgstr "Сигурни ли сте че искате да изтрийте това парче?"
+
+#: ../../src/gui/themeList.vala:62
+msgid "Themes"
+msgstr "Теми"
+
+#: ../../src/gui/themeList.vala:99
+msgid "By"
+msgstr "По"
+
+#: ../../src/gui/newSliceWindow.vala:291
+msgid "Rename me!"
+msgstr "Прейменувай ме!"
+
+#: ../../src/gui/triggerSelectWindow.vala:166
+msgid ""
+"This hotkey is already assigned to the pie \"%s\"! \n"
+"\n"
+"Please select another one or cancel your selection."
+msgstr ""
+"Тази клавишна комбинация вече се използва от друг пай \"%s\"! \n"
+"\n"
+"Моля изберете друга комбиназия или сменете комбиназията."
+
+#: ../../src/gui/piePreviewRenderer.vala:412
+msgid "Click to edit"
+msgstr "Кликнете за да редактирате"
+
+#: ../../src/gui/piePreviewRenderer.vala:412
+#: ../../src/gui/piePreviewRenderer.vala:427
+msgid "Drag to move"
+msgstr "Плъзнете за да преместите"
+
+#: ../../src/gui/piePreviewRenderer.vala:415
+msgid "Click to add a new Slice"
+msgstr "Кликнете за да добавите ново парче"
+
+#: ../../src/gui/piePreviewRenderer.vala:419
+msgid "Drop to add as new Slice"
+msgstr "Пуснете за да добавите ново парче"
+
+#: ../../src/gui/piePreviewRenderer.vala:422
+msgid "Drop to move Slice"
+msgstr "Пуснете за да преместите парчето"
+
+#: ../../src/gui/piePreviewRenderer.vala:427
+msgid "Click to delete"
+msgstr "Кликнете за да изтриете"
+
+#: ../../src/gui/preferencesWindow.vala:175
+msgid "No Pie selected."
+msgstr "Няма селектиран пай"
+
+#: ../../src/gui/preferencesWindow.vala:215
+msgid "New Pie"
+msgstr "Нов пай"
+
+#: ../../src/gui/preferencesWindow.vala:228
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+"Сигурни ли сте че искате да изтриете избраният пай със всички съхранени парчета вътре?"
+
+#: ../../src/gui/triggerSelectButton.vala:63
+msgid "Press a hotkey ..."
+msgstr "Натиснете клавиатурната комбинация"
+
+#: ../../src/gui/sliceTypeList.vala:60
+msgid "Slice types"
+msgstr "Типове парчета"
+
+#: ../../src/gui/iconSelectWindow.vala:186
+msgid "All icons"
+msgstr "Всички икони"
+
+#: ../../src/gui/iconSelectWindow.vala:188
+msgid "Actions"
+msgstr "Действия"
+
+#: ../../src/gui/iconSelectWindow.vala:189
+msgid "Places"
+msgstr "Места"
+
+#: ../../src/gui/iconSelectWindow.vala:190
+msgid "File types"
+msgstr "Типове файлове"
+
+#: ../../src/gui/iconSelectWindow.vala:191
+msgid "Emotes"
+msgstr "Емоти"
+
+#: ../../src/gui/iconSelectWindow.vala:192
+msgid "Miscellaneous"
+msgstr "Други"
+
+#: ../../src/gui/iconSelectWindow.vala:267
+#: ../../src/gui/iconSelectWindow.vala:269
+msgid "All supported image formats"
+msgstr "Всички подъръжани картинни формати"
+
+#: ../../src/actionGroups/windowListGroup.vala:34
+msgid "Group: Window List"
+msgstr "Група: Прозорецов лист"
+
+#: ../../src/actionGroups/windowListGroup.vala:36
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
+msgstr "Показва парче за всеки от отворените прозорци. Почити като Алт-Таб."
+
+#: ../../src/actionGroups/devicesGroup.vala:35
+msgid "Group: Devices"
+msgstr "Група: Узтройства"
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr "Показва парче за всеки от включените узтройства, като USB-стикове."
+
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr "Рут"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+msgid "Group: Bookmarks"
+msgstr "Група: Букмаркери"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
+msgstr "Показва парче за всеки от директорията Букмарки."
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+msgid "Group: Session Control"
+msgstr "Група: Контрол на сесията"
+
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
+msgstr "Показва парче за Спиране на системата, рестартиране, и зимуване."
+
+#: ../../src/actionGroups/sessionGroup.vala:60
+msgid "Shutdown"
+msgstr "Спиране"
+
+#: ../../src/actionGroups/sessionGroup.vala:63
+msgid "Logout"
+msgstr "Излизане"
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Reboot"
+msgstr "Рестарт"
+
+#: ../../src/actionGroups/menuGroup.vala:35
+msgid "Group: Main menu"
+msgstr "Група: Главно меню"
+
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr "Показва главаната ви меню структура."
+
+#: ../../src/actionGroups/clipboardGroup.vala:64
+msgid "Group: Clipboard"
+msgstr "Група: Клипборд"
+
+#: ../../src/actionGroups/clipboardGroup.vala:66
+msgid "Manages your Clipboard."
+msgstr "Управлява клипбордът."
+
+#: ../ui/icon_select.ui:8
+msgid "Select an icon"
+msgstr "Изберете икона"
+
+#: ../ui/icon_select.ui:85
+msgid "Icon Theme"
+msgstr "Иконна тема"
+
+#: ../ui/icon_select.ui:105
+msgid "Custom Icon"
+msgstr "Собствена икона"
+
+#: ../ui/rename_pie.ui:8
+msgid "Rename a Pie"
+msgstr "Прейменувайте парче"
+
+#: ../ui/preferences.ui:8
+msgid "Gnome-Pie Settings"
+msgstr "Гноум-Пай Сетинги"
+
+#: ../ui/preferences.ui:27 ../ui/settings.ui:9
+msgid "General Settings"
+msgstr "Общи Сетинги"
+
+#: ../ui/preferences.ui:261
+msgid ""
+"<b><big>This Pie is empty!</big>\n"
+"\n"
+"Start adding Slices to it!</b> This can be done by dragging stuff to the "
+"plus sign below. You can try a lot! For example application launchers or "
+"folders. Even URLs from your browser are possible... \n"
+"\n"
+"For manual and advanced configuration click on the plus sign."
+msgstr ""
+"<b><big>This Pie is empty!</big>\n"
+"\n"
+"Почнете да добавяте парчета към него!</b> Това може да направите като изплъзкате неща към "
+"плюс симвулът долу. Може да пробвате различни неша! Примерно апликационни стартери или "
+"папки. Даже URLs от вашият сайт са възможни... \n"
+"\n"
+"За ръчна и напреднала конфигурация натиснете плюсът."
+
+#: ../ui/preferences.ui:282
+msgid ""
+"<b><big>You have no Pies!</big>\n"
+"\n"
+"Start by creating one! </b> This can be done by clicking on the tiny little "
+"plus sign in the lower left corner."
+msgstr ""
+"<b><big>Нямате пайове!</big>\n"
+"\n"
+"Почнете със създаването на пай! </b> Това може да се направи със кликването на малкият "
+"плюс символът в долният ляв край."
+
+#: ../ui/slice_select.ui:9
+msgid "Slice Options"
+msgstr "Опций за парчета"
+
+#: ../ui/slice_select.ui:139
+msgid "There are no options for this Slice type."
+msgstr "Няма опций за този тип парче."
+
+#: ../ui/slice_select.ui:165
+msgid "Name of the Slice "
+msgstr "Име на парчето "
+
+#: ../ui/slice_select.ui:204
+msgid "URI to open"
+msgstr "URI да се отвори"
+
+#: ../ui/slice_select.ui:243
+msgid "Command to execute"
+msgstr "Команда за стартиране"
+
+#: ../ui/slice_select.ui:282
+msgid "Hotkey to press"
+msgstr "Клавишна комбинация за използване"
+
+#: ../ui/slice_select.ui:311
+msgid "Pie to open"
+msgstr "Пай за отваряне"
+
+#: ../ui/slice_select.ui:340
+msgid "Is Quick Action"
+msgstr "Е бързо действие"
+
+#: ../ui/slice_select.ui:354 ../ui/slice_select.ui:355
+msgid "This Slice will be executed when you click in the middle of the Pie."
+msgstr "Тази част ще се стартира като кликнете върху паят."
+
+#: ../ui/slice_select.ui:388
+msgid "Slice options"
+msgstr "Опций за парчето"
+
+#: ../ui/settings.ui:74
+msgid "Start Gnome-Pie on login"
+msgstr "Пускане на Гноум-Пай на логин"
+
+#: ../ui/settings.ui:79 ../ui/settings.ui:80
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr "Ако избрано, Гноум-Пай ще стартира тихо при всяко влизане в системата."
+
+#: ../ui/settings.ui:93
+msgid "Display panel icon "
+msgstr "Покажи панеловата икона "
+
+#: ../ui/settings.ui:98 ../ui/settings.ui:99
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
+"Ако не е избрано, можете да влезете в тожа меню като стартирате Гноум-Пай втори "
+"път."
+
+#: ../ui/settings.ui:118
+msgid "Behavior"
+msgstr "Държание"
+
+#: ../ui/settings.ui:175
+msgid "Global scale"
+msgstr "Глобална скала"
+
+#: ../ui/settings.ui:207
+msgid "Display Slice labels"
+msgstr "Покажи найменование на парчето"
+
+#: ../ui/settings.ui:212 ../ui/settings.ui:213
+msgid ""
+"Displays the name of each Slice next to it. Only available if supported by "
+"the theme."
+msgstr "Показва името на всяко парче до парчето. Само ако се подържа от "
+"темата."
+
+#: ../ui/settings.ui:232
+msgid "Appearance"
+msgstr "Външен вид"
+
+#: ../ui/trigger_select.ui:8
+msgid "Activation Settings"
+msgstr "Сетинги за активация"
+
+#: ../ui/trigger_select.ui:86
+msgid "It's possible to bind mouse buttons as well!"
+msgstr "Можете и копчетата на мишката да програмирате!"
+
+#: ../ui/trigger_select.ui:118
+msgid "Turbo mode"
+msgstr "Турбо модус"
+
+#: ../ui/trigger_select.ui:123 ../ui/trigger_select.ui:124
+msgid "If checked, the Pie will close when you release the chosen hot key."
+msgstr "Ако избрано, паят ще се затвори когато изберете избраната от вас клавиятурна комбиназия."
+
+#: ../ui/trigger_select.ui:137
+msgid "Long press for activation"
+msgstr "Натиснете дълго за активиране"
+
+#: ../ui/trigger_select.ui:142 ../ui/trigger_select.ui:143
+msgid ""
+"If checked, the Pie will only open if you press this hot key a bit longer."
+msgstr ""
+"Ако избрано, паят ще се отвори само ако задържите клавишната комбинация за по дълго."
+
+#: ../ui/trigger_select.ui:156
+msgid "Open Pie centered on the screen"
+msgstr "Отворете пай центриран на екранът"
+
+#: ../ui/trigger_select.ui:161 ../ui/trigger_select.ui:162
+msgid ""
+"If checked, the Pie will open in the middle of your screen. Else it will pop "
+"up at your pointer."
+msgstr ""
+"Ако избрано, паят ще се отвори в средата на екранът. Иначе ще се отвори "
+"при пойнтерът на мишката."
+
+#: ../ui/trigger_select.ui:181
+msgid "Activation options"
+msgstr "Активазия опций"

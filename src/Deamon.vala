@@ -36,12 +36,12 @@ public class Deamon : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public static int main(string[] args) {
-        version = "0.5.3";
+        version = "1.0.1";
     
         Logger.init();
         Gdk.threads_init();
         Gtk.init(ref args);
-        Paths.init();
+        //Paths.init();
         
         message("Welcome to Gnome-Pie " + version + "!");
 
@@ -56,7 +56,7 @@ public class Deamon : GLib.Object {
     /// The AppIndicator of Gnome-Pie.
     /////////////////////////////////////////////////////////////////////
 
-    private Indicator indicator = null;
+//    private Indicator indicator = null;
     
     /////////////////////////////////////////////////////////////////////
     /// Varaibles set by the commend line parser.
@@ -95,17 +95,17 @@ public class Deamon : GLib.Object {
             warning(error.message);
         }
         
-        if (this.reset) {
-            if (GLib.FileUtils.remove(Paths.pie_config) == 0)
-                message("Removed file \"%s\"", Paths.pie_config);
-            if (GLib.FileUtils.remove(Paths.settings) == 0)
-                message("Removed file \"%s\"", Paths.settings);
-            
-            return;
-        }
+//        if (this.reset) {
+//            if (GLib.FileUtils.remove(Paths.pie_config) == 0)
+//                message("Removed file \"%s\"", Paths.pie_config);
+//            if (GLib.FileUtils.remove(Paths.settings) == 0)
+//                message("Removed file \"%s\"", Paths.settings);
+//            
+//            return;
+//        }
     
         // create unique application
-        var app = new Unique.App("org.gnome.gnomepie", null);
+        var app = new Unique.App("org.gnomepie", null);
 
         #if HAVE_GTK_3
             if (app.is_running()) {
@@ -133,8 +133,8 @@ public class Deamon : GLib.Object {
             if (cmd == Unique.Command.ACTIVATE) {
                 var pie = data.get_text();
                 
-                if (pie != null && pie != "") PieManager.open_pie(pie);
-                else                          this.indicator.show_preferences();
+//                if (pie != null && pie != "") PieManager.open_pie(pie);
+//                else                          this.indicator.show_preferences();
 
                 return Unique.Response.OK;
             }
@@ -143,20 +143,6 @@ public class Deamon : GLib.Object {
         });
         
         Gdk.threads_enter();
-        
-        // init locale support
-        Intl.bindtextdomain ("gnomepie", Paths.locales);
-        Intl.textdomain ("gnomepie");
-        
-        // init toolkits and static stuff
-        ActionRegistry.init();
-        GroupRegistry.init();
-        
-        PieManager.init();
-        Icon.init();
-        
-        // launch the indicator
-        this.indicator = new Indicator();
 
         // connect SigHandlers
         Posix.signal(Posix.SIGINT, sig_handler);
@@ -166,8 +152,11 @@ public class Deamon : GLib.Object {
 	    message("Started happily...");
 	    
 	    // open pie if neccessary
-	    if (open_pie != null) 
-	        PieManager.open_pie(open_pie);
+//	    if (open_pie != null) 
+//	        PieManager.open_pie(open_pie);
+
+        var test = new Test();
+        test.run();
 	    
 	    Gtk.main();
 	    

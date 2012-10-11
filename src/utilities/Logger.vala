@@ -105,27 +105,27 @@ public class Logger {
     /////////////////////////////////////////////////////////////////////
     
     private static void write_log_line(string line) {
-        var log = GLib.FileStream.open(Paths.log, "a");
-            
-        if (log != null) {
-            if (log_length == -1) 
-                log_length = (int)log.tell();
-                
-            log.puts(line);
-            log_length += line.length;
-        }
-        
-        if (log_length > max_log_length) {
-            string content = "";
-            
-            try {
-                GLib.FileUtils.get_contents(Paths.log, out content);
-                int split_index = content.index_of_char('\n', log_length - (int)(max_log_length*0.9));                
-                GLib.FileUtils.set_contents(Paths.log, content.substring(split_index+1));
-                
-                log_length -= (split_index+1);
-            } catch (GLib.FileError e) {}
-        }
+//        var log = GLib.FileStream.open(Paths.log, "a");
+//            
+//        if (log != null) {
+//            if (log_length == -1) 
+//                log_length = (int)log.tell();
+//                
+//            log.puts(line);
+//            log_length += line.length;
+//        }
+//        
+//        if (log_length > max_log_length) {
+//            string content = "";
+//            
+//            try {
+//                GLib.FileUtils.get_contents(Paths.log, out content);
+//                int split_index = content.index_of_char('\n', log_length - (int)(max_log_length*0.9));                
+//                GLib.FileUtils.set_contents(Paths.log, content.substring(split_index+1));
+//                
+//                log_length -= (split_index+1);
+//            } catch (GLib.FileError e) {}
+//        }
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -268,3 +268,4 @@ public class Logger {
 }
 
 }
+

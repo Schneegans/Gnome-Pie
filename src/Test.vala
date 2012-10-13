@@ -19,32 +19,57 @@ namespace GnomePie {
 
 [DBus (name = "org.openpie.main")]
 interface DBusInterface : Object {
-    public abstract int open_menu(string menu) throws IOError;   
-    public signal void on_selection(int menu_id, string selected_item); 
+    public abstract string show_menu(string menu) throws IOError;   
 }
 
 public class Test : GLib.Object {
 
     private DBusInterface open_pie = null;
+    private BindingManager bindings = null;
 
     public void run() {
 
+        bindings = new BindingManager();
+        bindings.bind(new Trigger.from_string("<Ctrl>A"), "test");
+        
         try {
             open_pie = Bus.get_proxy_sync(BusType.SESSION, "org.openpie.main",
                                                            "/org/openpie/main");
-
-            open_pie.on_selection.connect((menu_id, selected_item) => {
-                message("Got selection confirmation! ID: %d Item: %s", 
-                        menu_id, selected_item);
-            });
-
-            open_pie.open_menu("open!");
-            message("Sent open request.");
-
         } catch (IOError e) {
             error(e.message);
-        }
+        } 
         
+        bindings.on_press.connect((id) => {
+            message("Sent request!");
+            var result = open_pie.show_menu(generate_menu());
+            message("Got: " + result);
+        });
+    }
+    
+    
+    
+    private string generate_menu() {
+        var b = new Json.Builder();
+        
+        b.begin_object();
+        b.set_member_name("text").add_string_value("root");
+        b.set_member_name("icon").add_string_value("huhu");
+        b.set_member_name("subs").begin_array();
+                b.begin_object();
+                    b.set_member_name("text").add_string_value("File");
+                    b.set_member_name("icon").add_string_value("file");
+                b.end_object();
+                b.begin_object();
+                    b.set_member_name("text").add_string_value("Edit");
+                    b.set_member_name("icon").add_string_value("edit");
+                b.end_object();
+            b.end_array();
+        b.end_object();
+        
+        var generator = new Json.Generator();
+        generator.root = b.get_root();
+        
+        return generator.to_data(null);
     }
 }
 

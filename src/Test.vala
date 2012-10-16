@@ -19,35 +19,40 @@ namespace GnomePie {
 
 [DBus (name = "org.openpie.main")]
 interface DBusInterface : Object {
-    public abstract string show_menu(string menu) throws IOError;   
+    public signal void on_selection(int id, string item);
+    public abstract int show_menu(string menu) throws IOError;   
 }
 
 public class Test : GLib.Object {
 
     private DBusInterface open_pie = null;
     private BindingManager bindings = null;
+    
+    private int menu_id = 0;
 
     public void run() {
 
-        bindings = new BindingManager();
-        bindings.bind(new Trigger.from_string("<Ctrl>A"), "test");
+        this.bindings = new BindingManager();
+        this.bindings.bind(new Trigger.from_string("<Ctrl>A"), "test");
         
         try {
-            open_pie = Bus.get_proxy_sync(BusType.SESSION, "org.openpie.main",
-                                                           "/org/openpie/main");
+            this.open_pie = Bus.get_proxy_sync(BusType.SESSION, "org.openpie.main",
+                                                                "/org/openpie/main");
+                                                                
+            this.bindings.on_press.connect((id) => {
+                this.menu_id = this.open_pie.show_menu(this.generate_menu());
+                message("Sent request! Got ID: %d", this.menu_id);
+            });
+            
+            this.open_pie.on_selection.connect((id, item) => {
+                message("Got selection! ID: %d, Item: %s", id, item);
+            });
+        
         } catch (IOError e) {
             error(e.message);
-        } 
-        
-        bindings.on_press.connect((id) => {
-            message("Sent request!");
-            var result = open_pie.show_menu(generate_menu());
-            message("Got: " + result);
-        });
+        }  
     }
-    
-    
-    
+
     private string generate_menu() {
         var b = new Json.Builder();
         

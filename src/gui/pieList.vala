@@ -94,6 +94,7 @@ class PieList : Gtk.TreeView {
         this.enable_model_drag_source(Gdk.ModifierType.BUTTON1_MASK, entries, Gdk.DragAction.LINK);
         this.enable_model_drag_dest(entries, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
         this.drag_data_get.connect(this.on_dnd_source);
+        this.drag_data_received.connect(this.on_dnd_received);
         this.drag_begin.connect_after(this.on_start_drag);
         this.drag_motion.connect(this.on_drag_move);
         this.drag_leave.connect(() => {
@@ -237,6 +238,29 @@ class PieList : Gtk.TreeView {
         });
         
         return true;
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the user finishes a drag operation on this widget.
+    /// Only used for external drags.
+    /////////////////////////////////////////////////////////////////////
+    
+    private void on_dnd_received(Gdk.DragContext context, int x, int y, 
+                                 Gtk.SelectionData selection_data, uint info, uint time_) {
+        
+        Gtk.TreeIter active;
+        if (this.get_selection().get_selected(null, out active)) {
+            string id = "";
+            this.data.get(active, DataPos.ID, out id);
+            
+            var pie = PieManager.all_pies[id];
+            
+            foreach (var uri in selection_data.get_uris()) {
+                pie.add_action(ActionRegistry.new_for_uri(uri), 0);
+            }
+            
+            this.on_select(id);
+        }
     }
 }
 

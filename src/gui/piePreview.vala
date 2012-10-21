@@ -177,6 +177,10 @@ class PiePreview : Gtk.DrawingArea {
         this.current_id = id;
         this.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this).light[Gtk.StateType.NORMAL]);
         this.renderer.load_pie(PieManager.all_pies[id]);
+        
+        if (id == this.drag_start_id) {
+            this.renderer.hide_group(this.drag_start_index);
+        }
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -280,6 +284,7 @@ class PiePreview : Gtk.DrawingArea {
         Gtk.Allocation allocation;
         this.get_allocation(out allocation);
         this.renderer.on_mouse_move(x-allocation.width*0.5, y-allocation.height*0.5);
+        
         return true;
     }
     
@@ -334,6 +339,9 @@ class PiePreview : Gtk.DrawingArea {
                     
                 }
             });
+            
+            this.drag_start_index = -1;
+            this.drag_start_id = "";
         }  
     }
     

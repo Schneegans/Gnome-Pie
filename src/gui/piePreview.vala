@@ -68,6 +68,7 @@ class PiePreview : Gtk.DrawingArea {
     /////////////////////////////////////////////////////////////////////
     
     private int drag_start_index = -1;
+    private string drag_start_id = "";
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, creates the widget.
@@ -174,7 +175,7 @@ class PiePreview : Gtk.DrawingArea {
     
     public void set_pie(string id) {
         this.current_id = id;
-        this.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this).light[0]);
+        this.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this).light[Gtk.StateType.NORMAL]);
         this.renderer.load_pie(PieManager.all_pies[id]);
     }
     
@@ -209,6 +210,7 @@ class PiePreview : Gtk.DrawingArea {
         
         Gtk.Allocation allocation;
         this.get_allocation(out allocation);
+        
         ctx.translate((int)(allocation.width*0.5), (int)(allocation.height*0.5));
         
         this.renderer.draw(frame_time, ctx);
@@ -287,6 +289,7 @@ class PiePreview : Gtk.DrawingArea {
     
     private void on_start_drag(Gdk.DragContext ctx) {
         this.drag_start_index = this.renderer.get_active_slice();
+        this.drag_start_id = this.current_id;
         var icon = this.renderer.get_active_icon();
         var pixbuf = icon.to_pixbuf();
 
@@ -311,9 +314,24 @@ class PiePreview : Gtk.DrawingArea {
             context.list_targets().foreach((target) => {
                 Gdk.Atom target_type = (Gdk.Atom)target;
                 if (target_type.name() == "text/plain") {
-                    var pie = PieManager.all_pies[this.current_id];
-                    pie.move_group(this.drag_start_index, target_index);
-                    this.renderer.show_hidden_group_at(target_index);
+                    if (this.current_id == this.drag_start_id) {
+                        var pie = PieManager.all_pies[this.current_id];
+                        pie.move_group(this.drag_start_index, target_index);
+                        this.renderer.show_hidden_group_at(target_index);
+                    } else {
+                        var src_pie = PieManager.all_pies[this.drag_start_id];
+                        var dst_pie = PieManager.all_pies[this.current_id];
+                        dst_pie.add_group(src_pie.action_groups[this.drag_start_index], target_index);
+                        this.renderer.add_group(dst_pie.action_groups[target_index], target_index);
+                        
+                        if (this.renderer.slices.size == 1)
+                            this.on_first_slice_added();
+                        
+                        if ((context.get_actions() & Gdk.DragAction.COPY) == 0)
+                            src_pie.remove_group(this.drag_start_index);
+                    }
+                
+                    
                 }
             });
         }  
@@ -349,7 +367,7 @@ class PiePreview : Gtk.DrawingArea {
             this.drag_enabled = true;
             Gtk.TargetEntry slice_source = {"text/plain", Gtk.TargetFlags.SAME_WIDGET | Gtk.TargetFlags.SAME_APP, 0};
             Gtk.TargetEntry[] sources = { slice_source };
-            Gtk.drag_source_set(this, Gdk.ModifierType.BUTTON1_MASK, sources, Gdk.DragAction.MOVE);
+            Gtk.drag_source_set(this, Gdk.ModifierType.BUTTON1_MASK, sources, Gdk.DragAction.MOVE | Gdk.DragAction.COPY);
         }
     }
     

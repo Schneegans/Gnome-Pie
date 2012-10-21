@@ -36,7 +36,7 @@ public class Deamon : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public static int main(string[] args) {
-        version = "0.5.3";
+        version = "0.5.4";
     
         Logger.init();
         Gdk.threads_init();

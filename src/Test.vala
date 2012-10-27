@@ -19,7 +19,7 @@ namespace GnomePie {
 
 [DBus (name = "org.openpie.main")]
 interface DBusInterface : Object {
-    public signal void on_selection(int id, string item);
+    public signal void on_select(int id, string item);
     public abstract int show_menu(string menu) throws IOError;   
 }
 
@@ -44,7 +44,7 @@ public class Test : GLib.Object {
                 message("Sent request! Got ID: %d", this.menu_id);
             });
             
-            this.open_pie.on_selection.connect((id, item) => {
+            this.open_pie.on_select.connect((id, item) => {
                 message("Got selection! ID: %d, Item: %s", id, item);
             });
         

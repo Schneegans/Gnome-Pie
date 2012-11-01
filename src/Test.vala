@@ -40,7 +40,7 @@ public class Test : GLib.Object {
                                                                 "/org/openpie/main");
                                                                 
             this.bindings.on_press.connect((id) => {
-                this.menu_id = this.open_pie.show_menu(this.generate_menu());
+                this.menu_id = this.open_pie.show_menu(this.generate_menu(2, 8));
                 message("Sent request! Got ID: %d", this.menu_id);
             });
             
@@ -52,51 +52,46 @@ public class Test : GLib.Object {
             error(e.message);
         }  
     }
-
-    private string generate_menu() {
+ 
+    private string generate_menu(int depth, int width) {
         var b = new Json.Builder();
         
         b.begin_object();
             b.set_member_name("subs").begin_array();
-                b.begin_object();
-                    b.set_member_name("text").add_string_value("File");
-                    b.set_member_name("icon").add_string_value("file");
-                    b.set_member_name("angle").add_double_value(GLib.Math.PI*0.5);
-                    b.set_member_name("subs").begin_array();
-                        b.begin_object();
-                            b.set_member_name("text").add_string_value("Up");
-                            b.set_member_name("icon").add_string_value("stock_up");
-                            b.set_member_name("angle").add_double_value(0.0);
-                        b.end_object();
-                        b.begin_object();
-                            b.set_member_name("text").add_string_value("Down");
-                            b.set_member_name("icon").add_string_value("stock_down");
-                            b.set_member_name("angle").add_double_value(GLib.Math.PI);
-                        b.end_object();
-                        b.begin_object();
-                            b.set_member_name("text").add_string_value("Left");
-                            b.set_member_name("icon").add_string_value("stock_left");
-                            b.set_member_name("angle").add_double_value(GLib.Math.PI*1.5);
-                        b.end_object();
-                        b.begin_object();
-                            b.set_member_name("text").add_string_value("Right");
-                            b.set_member_name("icon").add_string_value("stock_right");
-                            b.set_member_name("angle").add_double_value(GLib.Math.PI*0.5);
-                        b.end_object();
-                    b.end_array();
-                b.end_object();
-                b.begin_object();
-                    b.set_member_name("text").add_string_value("Edit");
-                    b.set_member_name("icon").add_string_value("edit");
-                    b.set_member_name("angle").add_double_value(GLib.Math.PI*1.5);
-                b.end_object();
+            
+            for (int w=0; w<width; ++w) {
+                add_sub_menu(b, depth - 1, width);
+            }
+                
             b.end_array();
         b.end_object();
         
         var generator = new Json.Generator();
         generator.root = b.get_root();
-     
+             
         return generator.to_data(null);
+    }
+    
+    private void add_sub_menu(Json.Builder b, int depth, int width) {
+        if (depth >= 0) {
+            b.begin_object();
+                b.set_member_name("text").add_string_value("Text");
+                b.set_member_name("icon").add_string_value("Icon");
+//                b.set_member_name("angle").add_double_value(GLib.Math.PI*0.5);
+                
+                if (depth > 0) {
+                    b.set_member_name("subs").begin_array();
+            
+                    for (int w=0; w<width; ++w) {
+                        add_sub_menu(b, depth - 1, width);
+                    }
+                        
+                    b.end_array();
+                
+                }
+
+            b.end_object();
+        }
     }
 }
 

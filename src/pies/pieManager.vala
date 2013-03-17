@@ -81,7 +81,7 @@ public class PieManager : GLib.Object {
     /// Opens the Pie with the given ID, if it exists.
     /////////////////////////////////////////////////////////////////////
     
-    public static void open_pie(string id, bool at_last_position = false) {
+    public static void open_pie(string id) {
         if (!a_pie_is_active) {
             Pie? pie = all_pies[id];
             
@@ -92,11 +92,7 @@ public class PieManager : GLib.Object {
                 var window = new PieWindow();
                 window.load_pie(pie);
                 
-                if (at_last_position) {
-                    window.open_at(last_x, last_y);
-                } else {
-                    window.open();
-                }
+                window.open();
                 
                 opened_windows.add(window);
                 

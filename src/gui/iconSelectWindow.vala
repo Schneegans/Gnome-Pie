@@ -140,24 +140,24 @@ public class IconSelectWindow : GLib.Object {
         try {
             this.load_queue = new GLib.AsyncQueue<ListEntry?>();
             
-            if (this.icon_list == null) {
-                this.icon_list = new Gtk.ListStore(3, typeof(string), // icon name
+            if (IconSelectWindow.icon_list == null) {
+                IconSelectWindow.icon_list = new Gtk.ListStore(3, typeof(string), // icon name
                                                       typeof(IconContext), // icon type
                                                       typeof(Gdk.Pixbuf)); // the icon itself
                                                       
                 // disable sorting until all icons are loaded
                 // else loading becomes horribly slow
-                this.icon_list.set_default_sort_func(() => {return 0;});
+                IconSelectWindow.icon_list.set_default_sort_func(() => {return 0;});
 
                 // reload if icon theme changes
                 Gtk.IconTheme.get_default().changed.connect(() => {
                     if (this.window.visible) load_icons();
-                    else need_reload = true;
+                    else IconSelectWindow.need_reload = true;
                 });
             }
             
             // make the icon_view filterable
-            this.icon_list_filtered = new Gtk.TreeModelFilter(this.icon_list, null);
+            this.icon_list_filtered = new Gtk.TreeModelFilter(IconSelectWindow.icon_list, null);
                 
             Gtk.Builder builder = new Gtk.Builder();
 
@@ -303,16 +303,16 @@ public class IconSelectWindow : GLib.Object {
         this.window.show_all();
         this.spinner.hide();
         
-        if (this.need_reload) {
-            this.need_reload = false;
+        if (IconSelectWindow.need_reload) {
+            IconSelectWindow.need_reload = false;
             this.load_icons();
         }
     } 
     
     public static void clear_icons() {
-        if (icon_list != null) {
-            need_reload = true;
-            icon_list.clear();
+        if (IconSelectWindow.icon_list != null) {
+            IconSelectWindow.need_reload = true;
+            IconSelectWindow.icon_list.clear();
         }
     }
     
@@ -366,16 +366,16 @@ public class IconSelectWindow : GLib.Object {
     
     private void load_icons() {
         // only if it's not loading currently
-        if (!this.loading) {
-            this.loading = true;
-            this.icon_list.clear();
+        if (!IconSelectWindow.loading) {
+            IconSelectWindow.loading = true;
+            IconSelectWindow.icon_list.clear();
             
             // display the spinner
             if (spinner != null)
                 this.spinner.visible = true;
 
             // disable sorting of the icon_view - else it's horribly slow
-            this.icon_list.set_sort_column_id(-1, Gtk.SortType.ASCENDING);
+            IconSelectWindow.icon_list.set_sort_column_id(-1, Gtk.SortType.ASCENDING);
 
             this.load_all.begin();
 
@@ -384,15 +384,15 @@ public class IconSelectWindow : GLib.Object {
                 while (this.load_queue.length() > 0) {
                     var new_entry = this.load_queue.pop();
                     Gtk.TreeIter current;
-                    icon_list.append(out current);
-                    icon_list.set(current, 0, new_entry.name,
+                    IconSelectWindow.icon_list.append(out current);
+                    IconSelectWindow.icon_list.set(current, 0, new_entry.name,
                                                 1, new_entry.context,
                                                 2, new_entry.pixbuf);
                 }
                 
                 // enable sorting of the icon_view if loading finished
-                if (!this.loading) {
-                    icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);
+                if (!IconSelectWindow.loading) {
+                    IconSelectWindow.icon_list.set_sort_column_id(0, Gtk.SortType.ASCENDING);
                 }
 
                 return loading;
@@ -449,7 +449,7 @@ public class IconSelectWindow : GLib.Object {
         }
         
         // finished loading
-        this.loading = false;
+        IconSelectWindow.loading = false;
         
         // hide the spinner
         if (spinner != null)

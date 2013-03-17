@@ -95,7 +95,7 @@ public class Deamon : GLib.Object {
             warning(error.message);
         }
         
-        if (this.reset) {
+        if (Deamon.reset) {
             if (GLib.FileUtils.remove(Paths.pie_config) == 0)
                 message("Removed file \"%s\"", Paths.pie_config);
             if (GLib.FileUtils.remove(Paths.settings) == 0)

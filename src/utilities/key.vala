@@ -118,8 +118,8 @@ public class Key : GLib.Object {
         display.flush();
 
         // press and release the actual key
-        X.Test.fake_key_event(this.display, this.key_code, true, 0);
-        X.Test.fake_key_event(this.display, this.key_code, false, 0);
+        X.Test.fake_key_event(display, this.key_code, true, 0);
+        X.Test.fake_key_event(display, this.key_code, false, 0);
 
         // release the pressed modifiers and re-press the keys hold down by the user
         press_modifiers(this.modifiers, false);
@@ -145,16 +145,16 @@ public class Key : GLib.Object {
     
     private void press_modifiers(Gdk.ModifierType modifiers, bool down) {
         if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0)
-            X.Test.fake_key_event(this.display, this.ctrl_code, down, 0);
+            X.Test.fake_key_event(display, ctrl_code, down, 0);
 
         if ((modifiers & Gdk.ModifierType.SHIFT_MASK) > 0)
-            X.Test.fake_key_event(this.display, this.shift_code, down, 0);
+            X.Test.fake_key_event(display, shift_code, down, 0);
             
         if ((modifiers & Gdk.ModifierType.MOD1_MASK) > 0)
-            X.Test.fake_key_event(this.display, this.alt_code, down, 0);
+            X.Test.fake_key_event(display, alt_code, down, 0);
 
         if ((modifiers & Gdk.ModifierType.SUPER_MASK) > 0)
-            X.Test.fake_key_event(this.display, this.super_code, down, 0);
+            X.Test.fake_key_event(display, super_code, down, 0);
     }
 }
 

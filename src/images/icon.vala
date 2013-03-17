@@ -56,11 +56,11 @@ public class Icon : Image {
     /////////////////////////////////////////////////////////////////////
     
     public Icon(string icon_name, int size) {
-        var cached = this.cache.get("%s@%u".printf(icon_name, size));
+        var cached = Icon.cache.get("%s@%u".printf(icon_name, size));
         
         if (cached == null) {
-            this.load_file_at_size(this.get_icon_file(icon_name, size), size, size);
-            this.cache.set("%s@%u".printf(icon_name, size), this.surface);
+            this.load_file_at_size(Icon.get_icon_file(icon_name, size), size, size);
+            Icon.cache.set("%s@%u".printf(icon_name, size), this.surface);
         } else {
             this.surface = cached;
         }
@@ -105,7 +105,6 @@ public class Icon : Image {
                 return icon_name;
             
             warning("Icon \"" + icon_name + "\" not found! Using default icon...");
-            icon_name = "stock_unknown";
         }
             
         
@@ -115,14 +114,20 @@ public class Icon : Image {
         
         if (result == "") {
             warning("Icon \"" + icon_name + "\" not found! Using default icon...");
-            icon_name = "stock_unknown";
-            file = icon_theme.lookup_icon(icon_name, size, 0);
-            if (file != null) result = file.get_filename();
-        }
         
-        if (result == "")
-            warning("Icon \"" + icon_name + "\" not found! Will be ugly...");
+            string[] default_icons = {"application-default-icon", "stock_unknown"};
+            foreach (var icon in default_icons) {
+                file = icon_theme.lookup_icon(icon, size, 0);
+                if (file != null) {
+                    result = file.get_filename();
+                    break;
+                }
+            }
             
+            if (result == "")
+                warning("No default icon found! Will be ugly...");
+        }
+         
         return result;
     }
 }

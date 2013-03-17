@@ -134,6 +134,7 @@ public class Image : GLib.Object {
                 warning("Failed to load " + filename + "!");
                 this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
             }
+            
         } catch (GLib.Error e) {
             message("Error loading image file: %s", e.message);
             this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);
@@ -167,11 +168,11 @@ public class Image : GLib.Object {
     /////////////////////////////////////////////////////////////////////
     
     public Gdk.Pixbuf to_pixbuf() {
-        if (this.surface == null)
+        if (this.surface == null || this.surface.get_data().length <= 0)
             return new Gdk.Pixbuf(Gdk.Colorspace.RGB, true, 8, 1, 1);
         
-        var pixbuf = new Gdk.Pixbuf.from_data(surface.get_data(), Gdk.Colorspace.RGB, true, 8, 
-                                              width(), height(), surface.get_stride(), null);
+        var pixbuf = new Gdk.Pixbuf.from_data(this.surface.get_data(), Gdk.Colorspace.RGB, true, 8, 
+                                              width(), height(), this.surface.get_stride(), null);
         
         pixbuf = pixbuf.copy();
                                        
@@ -183,7 +184,7 @@ public class Image : GLib.Object {
             *(p + i) = *(p + i + 2);
             *(p + i + 2) = tmp;
         }
-		
+
 		return pixbuf;
     }
     

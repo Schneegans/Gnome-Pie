@@ -42,9 +42,9 @@ public class PiePreviewDeleteSign : GLib.Object {
     /// Some constants determining the look and behaviour of this Slice.
     /////////////////////////////////////////////////////////////////////
     
-    private const int radius = 18;
-    private const double globale_scale = 0.8;
-    private const double click_cancel_treshold = 5;
+    private static const int radius = 18;
+    private static const double globale_scale = 0.8;
+    private static const double click_cancel_treshold = 5;
 
     /////////////////////////////////////////////////////////////////////
     /// True, when the add sign is currently visible.
@@ -85,7 +85,7 @@ public class PiePreviewDeleteSign : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void load() {
-        this.icon = new Icon("stock_delete", radius*2);
+        this.icon = new Icon("stock_delete", PiePreviewDeleteSign.radius*2);
     }
     
     /////////////////////////////////////////////////////////////////////
@@ -133,7 +133,7 @@ public class PiePreviewDeleteSign : GLib.Object {
             
             // transform the context
             double scale = (this.size.val*this.clicked.val 
-                         + this.activity.val*0.2 - 0.2)*globale_scale;
+                         + this.activity.val*0.2 - 0.2)*PiePreviewDeleteSign.globale_scale;
             ctx.scale(scale, scale);
         
             // paint the image
@@ -150,11 +150,11 @@ public class PiePreviewDeleteSign : GLib.Object {
     public bool on_mouse_move(double x, double y) {
         if (this.clicked.end == 0.9) {
             double dist = GLib.Math.pow(x-this.clicked_x, 2) + GLib.Math.pow(y-this.clicked_y, 2);
-            if (dist > this.click_cancel_treshold*this.click_cancel_treshold)
+            if (dist > PiePreviewDeleteSign.click_cancel_treshold*PiePreviewDeleteSign.click_cancel_treshold)
                 this.clicked.reset_target(1.0, 0.1);
         }
     
-	    if (GLib.Math.fabs(x) <= radius*globale_scale && GLib.Math.fabs(y) <= radius*globale_scale) {
+	    if (GLib.Math.fabs(x) <= PiePreviewDeleteSign.radius*PiePreviewDeleteSign.globale_scale && GLib.Math.fabs(y) <= PiePreviewDeleteSign.radius*PiePreviewDeleteSign.globale_scale) {
 	        this.activity.reset_target(1.0, 0.2);
 	        return true;
         } 

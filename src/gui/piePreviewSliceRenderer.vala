@@ -72,11 +72,11 @@ public class PiePreviewSliceRenderer : GLib.Object {
     /// Some constants determining the look and behaviour of this Slice.
     /////////////////////////////////////////////////////////////////////
     
-    private const double pie_radius = 126;
-    private const double radius = 24;
-    private const double delete_x = 13;
-    private const double delete_y = -13;
-    private const double click_cancel_treshold = 5;
+    private static const double pie_radius = 126;
+    private static const double radius = 24;
+    private static const double delete_x = 13;
+    private static const double delete_y = -13;
+    private static const double click_cancel_treshold = 5;
     
     /////////////////////////////////////////////////////////////////////
     /// Storing the position where a mouse click was executed. Useful for
@@ -120,10 +120,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
         
         // if it's a custom ActionGroup
         if (group.get_type().depth() == 2 && group.actions.size > 0) {
-            this.icon = new Icon(group.actions[0].icon, (int)(radius*2));
+            this.icon = new Icon(group.actions[0].icon, (int)(PiePreviewSliceRenderer.radius*2));
             this.name = group.actions[0].name;
         } else {
-            this.icon = new Icon(GroupRegistry.descriptions[group.get_type().name()].icon, (int)(radius*2));
+            this.icon = new Icon(GroupRegistry.descriptions[group.get_type().name()].icon, (int)(PiePreviewSliceRenderer.radius*2));
             this.name = GroupRegistry.descriptions[group.get_type().name()].name;
         }
     }
@@ -174,7 +174,7 @@ public class PiePreviewSliceRenderer : GLib.Object {
         ctx.save();
         
             // transform the context
-            ctx.translate(cos(this.angle.val)*pie_radius, sin(this.angle.val)*pie_radius);
+            ctx.translate(cos(this.angle.val)*PiePreviewSliceRenderer.pie_radius, sin(this.angle.val)*PiePreviewSliceRenderer.pie_radius);
             
             double scale = this.size.val*this.clicked.val 
                          + this.activity.val*0.1 - 0.1;
@@ -187,7 +187,7 @@ public class PiePreviewSliceRenderer : GLib.Object {
             
             ctx.restore();
             
-            ctx.translate(delete_x*this.size.val, delete_y*this.size.val);
+            ctx.translate(PiePreviewSliceRenderer.delete_x*this.size.val, PiePreviewSliceRenderer.delete_y*this.size.val);
             this.delete_sign.draw(frame_time, ctx);
             
         ctx.restore();
@@ -216,14 +216,14 @@ public class PiePreviewSliceRenderer : GLib.Object {
         
         if (this.clicked.end == 0.9) {
             double dist = GLib.Math.pow(x-this.clicked_x, 2) + GLib.Math.pow(y-this.clicked_y, 2);
-            if (dist > this.click_cancel_treshold*this.click_cancel_treshold)
+            if (dist > PiePreviewSliceRenderer.click_cancel_treshold*PiePreviewSliceRenderer.click_cancel_treshold)
                 this.clicked.reset_target(1.0, 0.1);
         }
         
-        double own_x = cos(this.angle.val)*pie_radius;
-        double own_y = sin(this.angle.val)*pie_radius;
-        this.delete_hovered = this.delete_sign.on_mouse_move(x - own_x - delete_x*this.size.val, 
-                                                             y - own_y - delete_y*this.size.val);
+        double own_x = cos(this.angle.val)*PiePreviewSliceRenderer.pie_radius;
+        double own_y = sin(this.angle.val)*PiePreviewSliceRenderer.pie_radius;
+        this.delete_hovered = this.delete_sign.on_mouse_move(x - own_x - PiePreviewSliceRenderer.delete_x*this.size.val, 
+                                                             y - own_y - PiePreviewSliceRenderer.delete_y*this.size.val);
                                        
         return active;
     }
@@ -244,10 +244,10 @@ public class PiePreviewSliceRenderer : GLib.Object {
     public void on_button_press(double x, double y) {
         bool delete_pressed = false;
         if (this.activity.end == 1.0) {
-            double own_x = cos(this.angle.val)*pie_radius;
-            double own_y = sin(this.angle.val)*pie_radius;
-            delete_pressed = this.delete_sign.on_button_press(x - own_x - delete_x*this.size.val, 
-                                                              y - own_y - delete_y*this.size.val);
+            double own_x = cos(this.angle.val)*PiePreviewSliceRenderer.pie_radius;
+            double own_y = sin(this.angle.val)*PiePreviewSliceRenderer.pie_radius;
+            delete_pressed = this.delete_sign.on_button_press(x - own_x - PiePreviewSliceRenderer.delete_x*this.size.val, 
+                                                              y - own_y - PiePreviewSliceRenderer.delete_y*this.size.val);
         }
     
         if (!delete_pressed && this.activity.end == 1.0) {

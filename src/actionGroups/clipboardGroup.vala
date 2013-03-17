@@ -79,7 +79,7 @@ public class ClipboardGroup : ActionGroup {
     /// The maximum remembered items of the clipboard.
     /////////////////////////////////////////////////////////////////////
     
-    private const int max_items = 6;
+    private static const int max_items = 6;
     
     private Gee.ArrayList<ClipboardItem?> items;
     
@@ -98,7 +98,7 @@ public class ClipboardGroup : ActionGroup {
     private void add_item(Gtk.Clipboard c, Gtk.SelectionData contents) {
         var new_item = new ClipboardItem(contents);
         
-        if (this.items.size == this.max_items)
+        if (this.items.size == ClipboardGroup.max_items)
             this.items.remove_at(0);
         
         this.items.add(new_item);

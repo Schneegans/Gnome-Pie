@@ -40,7 +40,7 @@ public class Test : GLib.Object {
                                                                 "/org/openpie/main");
                                                                 
             this.bindings.on_press.connect((id) => {
-                this.menu_id = this.open_pie.show_menu(this.generate_menu(2, 8));
+                this.menu_id = this.open_pie.show_menu(this.generate_menu(2, 4));
                 message("Sent request! Got ID: %d", this.menu_id);
             });
             

@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,87 +12,179 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
 
-[DBus (name = "org.openpie.main")]
+[DBus (name = "org.gnome.openpie")]
 interface DBusInterface : Object {
     public signal void on_select(int id, string item);
-    public abstract int show_menu(string menu) throws IOError;   
+    public abstract int show_menu(string menu) throws IOError;
 }
 
 public class Test : GLib.Object {
 
     private DBusInterface open_pie = null;
     private BindingManager bindings = null;
-    
+
     private int menu_id = 0;
 
     public void run() {
 
         this.bindings = new BindingManager();
         this.bindings.bind(new Trigger.from_string("<Ctrl>A"), "test");
-        
+
         try {
-            this.open_pie = Bus.get_proxy_sync(BusType.SESSION, "org.openpie.main",
-                                                                "/org/openpie/main");
-                                                                
-            this.bindings.on_press.connect((id) => {
-                this.menu_id = this.open_pie.show_menu(this.generate_menu(2, 4));
-                message("Sent request! Got ID: %d", this.menu_id);
-            });
-            
+            this.open_pie = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.openpie",
+                                                                "/org/gnome/openpie");
+
+            // this.bindings.on_press.connect((id) => {
+            //     this.menu_id = this.open_pie.show_menu(this.main_menu());
+            //     message("Sent request! Got ID: %d", this.menu_id);
+            // });
+
+
+
             this.open_pie.on_select.connect((id, item) => {
-                message("Got selection! ID: %d, Item: %s", id, item);
+                if (item == "") {
+                    message("Got no selection! ID: %d", id);
+                } else {
+                    message("Got selection! ID: %d, Item: %s", id, item);
+                }
+
+                GLib.Timeout.add(2000, open_menu);
             });
-        
+
+            open_menu();
+
         } catch (IOError e) {
             error(e.message);
-        }  
+        }
     }
- 
-    private string generate_menu(int depth, int width) {
+
+    private bool open_menu() {
+        this.menu_id = this.open_pie.show_menu(this.generate_menu(3, 5));
+         // this.menu_id = this.open_pie.show_menu(this.main_menu());
+        message("Sent request! Got ID: %d", this.menu_id);
+
+        return false;
+    }
+
+    private string main_menu() {
+
+        string[5]  names = {"File", "Edit", "Find", "Tools", "Help"};
+
+        var subs = new Gee.ArrayList<Gee.ArrayList<string>>();
+
+        subs.add(new Gee.ArrayList<string>());
+        subs.get(0).add("Open");
+        subs.get(0).add("Save");
+        subs.get(0).add("Close");
+        subs.get(0).add("Print");
+
+        subs.add(new Gee.ArrayList<string>());
+        subs.get(1).add("Copy");
+        subs.get(1).add("Cut");
+        subs.get(1).add("Paste");
+        subs.get(1).add("Undo");
+        subs.get(1).add("Redo");
+
+        subs.add(new Gee.ArrayList<string>());
+        subs.get(2).add("Find next");
+        subs.get(2).add("Find previous");
+        subs.get(2).add("Find & replace");
+        subs.get(2).add("Find in files");
+        subs.get(2).add("Incremental find");
+
+        subs.add(new Gee.ArrayList<string>());
+        subs.get(3).add("Snippets");
+        subs.get(3).add("Build");
+        subs.get(3).add("Macros");
+        subs.get(3).add("Build System");
+        subs.get(3).add("Preferences");
+
+        subs.add(new Gee.ArrayList<string>());
+        subs.get(4).add("Documentation");
+        subs.get(4).add("Purchase license");
+        subs.get(4).add("Enter license");
+        subs.get(4).add("About");
+
         var b = new Json.Builder();
-        
+
         b.begin_object();
             b.set_member_name("subs").begin_array();
-            
-            for (int w=0; w<width; ++w) {
-                add_sub_menu(b, depth - 1, width);
+
+            for (int i=0; i<subs.size; ++i) {
+                b.begin_object();
+                    b.set_member_name("text").add_string_value(names[i]);
+                    b.set_member_name("icon").add_string_value("Icon");
+
+                    b.set_member_name("subs").begin_array();
+                    for (int j=0; j<subs.get(i).size; ++j) {
+                        b.begin_object();
+                        b.set_member_name("text").add_string_value(subs.get(i).get(j));
+                        b.set_member_name("icon").add_string_value("Icon");
+                        b.end_object();
+
+                    }
+                    b.end_array();
+
+                b.end_object();
             }
-                
+
             b.end_array();
         b.end_object();
-        
+
         var generator = new Json.Generator();
         generator.root = b.get_root();
-             
+
         return generator.to_data(null);
     }
-    
-    private void add_sub_menu(Json.Builder b, int depth, int width) {
+
+    private string generate_menu(int depth, int width) {
+        var b = new Json.Builder();
+
+        b.begin_object();
+            b.set_member_name("subs").begin_array();
+
+            for (int w=0; w<width; ++w) {
+                add_sub_menu(b, depth - 1, width, w==0 || w==width-1, w);
+            }
+
+            b.end_array();
+        b.end_object();
+
+        var generator = new Json.Generator();
+        generator.root = b.get_root();
+
+        return generator.to_data(null);
+    }
+
+    private void add_sub_menu(Json.Builder b, int depth, int width, bool first_or_last_child, int which) {
         if (depth >= 0) {
             b.begin_object();
-                b.set_member_name("text").add_string_value("Text");
+                b.set_member_name("text").add_string_value("Text %d".printf(which+1));
                 b.set_member_name("icon").add_string_value("Icon");
-//                b.set_member_name("angle").add_double_value(GLib.Math.PI*0.5);
-                
+
                 if (depth > 0) {
                     b.set_member_name("subs").begin_array();
-            
-                    for (int w=0; w<width; ++w) {
-                        add_sub_menu(b, depth - 1, width);
+
+                    int with2 = first_or_last_child ? width - 1 : width;
+
+
+                    for (int w=0; w<with2; ++w) {
+                        add_sub_menu(b, depth - 1, width, w==0 || w==with2-1, w);
                     }
-                        
+
                     b.end_array();
-                
+
                 }
 
             b.end_object();
         }
     }
+
 }
 
 }

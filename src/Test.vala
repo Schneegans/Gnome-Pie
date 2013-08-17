@@ -64,7 +64,7 @@ public class Test : GLib.Object {
     }
 
     private bool open_menu() {
-        this.menu_id = this.open_pie.show_menu(this.generate_menu(3, 5));
+        this.menu_id = this.open_pie.show_menu(this.generate_menu(2, 8));
          // this.menu_id = this.open_pie.show_menu(this.main_menu());
         message("Sent request! Got ID: %d", this.menu_id);
 
@@ -149,7 +149,7 @@ public class Test : GLib.Object {
             b.set_member_name("subs").begin_array();
 
             for (int w=0; w<width; ++w) {
-                add_sub_menu(b, depth - 1, width, w==0 || w==width-1, w);
+                add_sub_menu(b, depth - 1, width, true, w);
             }
 
             b.end_array();
@@ -174,7 +174,7 @@ public class Test : GLib.Object {
 
 
                     for (int w=0; w<with2; ++w) {
-                        add_sub_menu(b, depth - 1, width, w==0 || w==with2-1, w);
+                        add_sub_menu(b, depth - 1, width, true, w);
                     }
 
                     b.end_array();

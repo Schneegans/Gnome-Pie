@@ -64,8 +64,9 @@ public class Test : GLib.Object {
     }
 
     private bool open_menu() {
-        this.menu_id = this.open_pie.show_menu(this.generate_menu(2, 8));
-         // this.menu_id = this.open_pie.show_menu(this.main_menu());
+        // this.menu_id = this.open_pie.show_menu(this.generate_menu_random());
+        // this.menu_id = this.open_pie.show_menu(this.generate_menu(2, 8));
+        this.menu_id = this.open_pie.show_menu(this.main_menu());
         message("Sent request! Got ID: %d", this.menu_id);
 
         return false;
@@ -142,14 +143,19 @@ public class Test : GLib.Object {
         return generator.to_data(null);
     }
 
-    private string generate_menu(int depth, int width) {
+    private string generate_menu_random() {
         var b = new Json.Builder();
 
         b.begin_object();
             b.set_member_name("subs").begin_array();
 
+            int width = GLib.Random.int_range(4, 10);
             for (int w=0; w<width; ++w) {
-                add_sub_menu(b, depth - 1, width, true, w);
+                int sub_width = GLib.Random.int_range(4, 10);
+                int sub_depth = GLib.Random.int_range(1, 4);
+
+                if (sub_depth > 0)
+                    add_sub_menu(b, sub_depth - 1, sub_width, w);
             }
 
             b.end_array();
@@ -161,7 +167,26 @@ public class Test : GLib.Object {
         return generator.to_data(null);
     }
 
-    private void add_sub_menu(Json.Builder b, int depth, int width, bool first_or_last_child, int which) {
+    private string generate_menu(int depth, int width) {
+        var b = new Json.Builder();
+
+        b.begin_object();
+            b.set_member_name("subs").begin_array();
+
+            for (int w=0; w<width; ++w) {
+                add_sub_menu(b, depth - 1, width, w);
+            }
+
+            b.end_array();
+        b.end_object();
+
+        var generator = new Json.Generator();
+        generator.root = b.get_root();
+
+        return generator.to_data(null);
+    }
+
+    private void add_sub_menu(Json.Builder b, int depth, int width, int which) {
         if (depth >= 0) {
             b.begin_object();
                 b.set_member_name("text").add_string_value("Text %d".printf(which+1));
@@ -170,11 +195,9 @@ public class Test : GLib.Object {
                 if (depth > 0) {
                     b.set_member_name("subs").begin_array();
 
-                    int with2 = first_or_last_child ? width - 1 : width;
 
-
-                    for (int w=0; w<with2; ++w) {
-                        add_sub_menu(b, depth - 1, width, true, w);
+                    for (int w=0; w<width; ++w) {
+                        add_sub_menu(b, depth - 1, width, w);
                     }
 
                     b.end_array();
@@ -184,6 +207,8 @@ public class Test : GLib.Object {
             b.end_object();
         }
     }
+
+
 
 }
 

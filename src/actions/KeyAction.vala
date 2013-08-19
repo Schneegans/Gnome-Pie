@@ -33,12 +33,12 @@ public class KeyAction : Action {
   // for this Action, whether it has a custom Icon/Name and the string
   // used in the pies.conf file for this kind of Actions.
   public static ActionRegistry.TypeDescription register() {
-    var description = new ActionRegistry.TypeDescription();
-    description.name = _("Press hotkey");
-    description.icon = "preferences-desktop-keyboard-shortcuts";
-    description.description = _("Simulates the activation of a hotkey.");
-    description.icon_name_editable = true;
-    description.id = "key";
+    var description                 = new ActionRegistry.TypeDescription();
+    description.name                = _("Press hotkey");
+    description.icon                = "preferences-desktop-keyboard-shortcuts";
+    description.description         = _("Simulates the activation of a hotkey.");
+    description.icon_name_editable  = true;
+    description.id                  = "key";
     return description;
   }
 

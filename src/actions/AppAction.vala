@@ -34,11 +34,11 @@ public class AppAction : Action {
   // used in the pies.conf file for this kind of Actions.
   public static ActionRegistry.TypeDescription register() {
     var description = new ActionRegistry.TypeDescription();
-    description.name = _("Launch application");
-    description.icon = "application-x-executable";
-    description.description = _("Executes the given command.");
-    description.icon_name_editable = true;
-    description.id = "app";
+    description.name                = _("Launch application");
+    description.icon                = "application-x-executable";
+    description.description         = _("Executes the given command.");
+    description.icon_name_editable  = true;
+    description.id                  = "app";
     return description;
   }
 

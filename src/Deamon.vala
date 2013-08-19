@@ -123,8 +123,6 @@ public class Deamon : GLib.Object {
       return Unique.Response.PASSTHROUGH;
     });
 
-    Gdk.threads_enter();
-
     // connect SigHandlers
     Posix.signal(Posix.SIGINT, sig_handler);
 	  Posix.signal(Posix.SIGTERM, sig_handler);
@@ -140,8 +138,6 @@ public class Deamon : GLib.Object {
     test.run();
 
 	  Gtk.main();
-
-	  Gdk.threads_leave();
   }
 
   // Print a nifty message when the prog is killed. ----------------------------

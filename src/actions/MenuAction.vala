@@ -34,11 +34,11 @@ public class PieAction : Action {
   // used in the pies.conf file for this kind of Actions.
   public static ActionRegistry.TypeDescription register() {
     var description = new ActionRegistry.TypeDescription();
-    description.name = _("Open Pie");
-    description.icon = "gnome-pie";
-    description.description = _("Opens another Pie of Gnome-Pie. You may create sub menus this way.");
-    description.icon_name_editable = false;
-    description.id = "pie";
+    description.name                = _("Open Pie");
+    description.icon                = "gnome-pie";
+    description.description         = _("Opens another Pie of Gnome-Pie. You may create sub menus this way.");
+    description.icon_name_editable  = false;
+    description.id                  = "pie";
     return description;
   }
 

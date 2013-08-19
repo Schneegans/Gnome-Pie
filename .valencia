@@ -1,3 +1,0 @@
-version = 1
-build_command = ./make.sh
-clean_command = rm -rf build/

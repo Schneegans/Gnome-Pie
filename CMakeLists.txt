@@ -48,6 +48,7 @@ pkg_check_modules(X11 REQUIRED x11)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(GMENU3 libgnome-menu-3.0)
+pkg_check_modules(JSON json-glib-1.0)
 
 find_library(M_LIB m)
 find_library(GTHREAD_LIB gthread-2.0)
@@ -106,6 +107,7 @@ set(LIBS
 	${BAMF_LIBRARIES}
 	${M_LIB}
 	${GTHREAD_LIB}
+	${JSON_LIBRARIES}
 )
 link_libraries(${LIBS})
 
@@ -125,6 +127,7 @@ set(LIB_PATHS
 	${X11_LIBRARY_DIRS}
 	${WNCK_LIBRARY_DIRS}
 	${BAMF_LIBRARY_DIRS}
+	${JSON_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -144,6 +147,7 @@ set(INCLUDE_PATHS
 	${X11_INCLUDE_DIRS}
 	${BAMF_INCLUDE_DIRS}
 	${WNCK_INCLUDE_DIRS}
+	${JSON_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -161,6 +165,7 @@ set(VALA_PKGS
   posix
   libxml-2.0
   xtst
+  json-glib-1.0
 )
 
 if (${INDICATOR_FOUND})

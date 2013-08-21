@@ -53,11 +53,11 @@ public class PieAction : Action {
   // Returns the name of the referenced Pie.
   public override string name {
     get {
-      // var referee = PieManager.all_pies[real_command];
-      // if (referee != null) {
-      //   owned_name = "↪" + referee.name;
-      //   return owned_name;
-      // }
+      var referee = PieManager.all_pies[real_command];
+      if (referee != null) {
+        owned_name = "↪" + referee.name;
+        return owned_name;
+      }
       return "";
     }
     protected set {}
@@ -68,9 +68,9 @@ public class PieAction : Action {
   // Returns the icon of the referenced Pie.
   public override string icon {
     get {
-      // var referee = PieManager.all_pies[real_command];
-      // if (referee != null)
-      //   return referee.icon;
+      var referee = PieManager.all_pies[real_command];
+      if (referee != null)
+        return referee.icon;
       return "";
     }
     protected set {}
@@ -85,7 +85,15 @@ public class PieAction : Action {
 
   // Opens the desired Pie. ----------------------------------------------------
   public override void activate() {
-    // PieManager.open_pie(real_command);
+
+  }
+
+  // ---------------------------------------------------------------------------
+  public override void serialize(Json.Builder builder) {
+    var referee = PieManager.all_pies[real_command];
+    if (referee != null) {
+      referee.serialize(builder);
+    }
   }
 }
 

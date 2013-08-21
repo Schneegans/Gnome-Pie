@@ -130,7 +130,6 @@ public class MenuGroup : ActionGroup {
 
           var sub_menu = PieManager.create_dynamic_pie(item.get_directory().get_name(), Icon.get_icon_name(icon));
           var group = new MenuGroup.sub_menu(sub_menu.id);
-          group.add_action(new PieAction(parent_id, true));
           group.load_contents(item.get_directory(), sub_menu.id);
           childs.add(group);
 
@@ -155,7 +154,6 @@ public class MenuGroup : ActionGroup {
                                                 ((GMenu.TreeDirectory)item).get_name(),
                                                 ((GMenu.TreeDirectory)item).get_icon());
               var group = new MenuGroup.sub_menu(sub_menu.id);
-              group.add_action(new PieAction(parent_id, true));
               group.load_contents((GMenu.TreeDirectory)item, sub_menu.id);
               childs.add(group);
 

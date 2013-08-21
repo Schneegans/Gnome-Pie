@@ -35,7 +35,7 @@ public class Deamon : GLib.Object {
     Logger.init();
     Gdk.threads_init();
     Gtk.init(ref args);
-    //Paths.init();
+    Paths.init();
 
     message("Welcome to Gnome-Pie " + version + "!");
 
@@ -62,11 +62,8 @@ public class Deamon : GLib.Object {
     { null }
   };
 
-  /////////////////////////////////////////////////////////////////////
-  // C'tor of the Deamon. It checks whether it's the firts running
+  // C'tor of the Deamon. It checks whether it's the firts running -------------
   // instance of Gnome-Pie.
-  /////////////////////////////////////////////////////////////////////
-
   public void run(string[] args) {
     // create command line options
     var context = new GLib.OptionContext("");
@@ -80,14 +77,14 @@ public class Deamon : GLib.Object {
       warning(error.message);
     }
 
-    // if (this.reset) {
-    //   if (GLib.FileUtils.remove(Paths.pie_config) == 0)
-    //     message("Removed file \"%s\"", Paths.pie_config);
-    //   if (GLib.FileUtils.remove(Paths.settings) == 0)
-    //     message("Removed file \"%s\"", Paths.settings);
+    if (this.reset) {
+      if (GLib.FileUtils.remove(Paths.pie_config) == 0)
+        message("Removed file \"%s\"", Paths.pie_config);
+      if (GLib.FileUtils.remove(Paths.settings) == 0)
+        message("Removed file \"%s\"", Paths.settings);
 
-    //   return;
-    // }
+      return;
+    }
 
     // create unique application
     var app = new Unique.App("org.gnome.gnomepie", null);
@@ -114,7 +111,7 @@ public class Deamon : GLib.Object {
       if (cmd == Unique.Command.ACTIVATE) {
         var pie = data.get_text();
 
-       // if (pie != null && pie != "") PieManager.open_pie(pie);
+       if (pie != null && pie != "") PieManager.open_pie(pie);
        // else             this.indicator.show_preferences();
 
         return Unique.Response.OK;
@@ -122,6 +119,9 @@ public class Deamon : GLib.Object {
 
       return Unique.Response.PASSTHROUGH;
     });
+
+    // load pies
+    PieManager.init();
 
     // connect SigHandlers
     Posix.signal(Posix.SIGINT, sig_handler);
@@ -131,11 +131,11 @@ public class Deamon : GLib.Object {
 	  message("Started happily...");
 
 	  // open pie if neccessary
-	  // if (open_pie != null)
-	  //   PieManager.open_pie(open_pie);
+	  if (open_pie != null)
+	    PieManager.open_pie(open_pie);
 
-    var test = new Test();
-    test.run();
+    // var test = new Test();
+    // test.run();
 
 	  Gtk.main();
   }

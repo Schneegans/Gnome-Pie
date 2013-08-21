@@ -31,6 +31,8 @@ public class PieManager : GLib.Object {
   // Stores all global hotkeys.
   private static BindingManager bindings;
 
+  private static OpenPie openpie_ = null;
+
   // True, if any pie has the current focus. If it is closing this
   // will be false already.
   private static bool a_pie_is_active = false;
@@ -44,6 +46,7 @@ public class PieManager : GLib.Object {
   public static void init() {
     all_pies = new Gee.HashMap<string, Pie?>();
     bindings = new BindingManager();
+    openpie_ = new OpenPie();
 
     // load all Pies from th pies.conf file
     Pies.load();
@@ -63,28 +66,13 @@ public class PieManager : GLib.Object {
 
         a_pie_is_active = true;
 
-        // var window = new PieWindow();
-        // window.load_pie(pie);
+        var menu = Serializer.serialize(pie);
 
-        // window.open();
-
-        // opened_windows.add(window);
-
-        // window.on_closed.connect(() => {
-        //     opened_windows.remove(window);
-        //     if (opened_windows.size == 0) {
-        //         Icon.clear_cache();
-        //     }
-        // });
-
-        // window.on_closing.connect(() => {
-        //     window.get_center_pos(out last_x, out last_y);
-        //     a_pie_is_active = false;
-        // });
-
+        openpie_.open_menu(menu);
 
       } else {
-        warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");
+        warning("Failed to open pie with ID \"" + id +
+                "\": ID does not exist!");
       }
     }
   }
@@ -132,7 +120,9 @@ public class PieManager : GLib.Object {
 
   // Creates a new Pie which is displayed in the configuration dialog ----------
   // and gets saved.
-  public static Pie create_persistent_pie(string name, string icon_name, Trigger? hotkey, string? desired_id = null) {
+  public static Pie create_persistent_pie(string name, string icon_name,
+    Trigger? hotkey, string? desired_id = null) {
+
     Pie pie = create_pie(name, icon_name, 100, 999, desired_id);
 
     if (hotkey != null) {
@@ -146,13 +136,17 @@ public class PieManager : GLib.Object {
 
   // Creates a new Pie which is not displayed in the configuration -------------
   // dialog and is not saved.
-  public static Pie create_dynamic_pie(string name, string icon_name, string? desired_id = null) {
+  public static Pie create_dynamic_pie(string name, string icon_name,
+    string? desired_id = null) {
+
     return create_pie(name, icon_name, 1000, 9999, desired_id);
   }
 
   // Adds a new Pie. Can't be accesd from outer scope. Use ---------------------
   // create_persistent_pie or create_dynamic_pie instead.
-  private static Pie create_pie(string name, string icon_name, int min_id, int max_id, string? desired_id = null) {
+  private static Pie create_pie(string name, string icon_name, int min_id,
+    int max_id, string? desired_id = null) {
+
     var random = new GLib.Rand();
 
     string final_id;
@@ -168,7 +162,9 @@ public class PieManager : GLib.Object {
 
       if (id < min_id || id > max_id) {
         final_id = random.int_range(min_id, max_id).to_string();
-        warning("The ID for pie \"" + name + "\" should be in range %u - %u! Using \"" + final_id + "\" instead of \"" + desired_id + "\"...", min_id, max_id);
+        warning("The ID for pie \"" + name +
+                "\" should be in range %u - %u! Using \"" + final_id +
+                "\" instead of \"" + desired_id + "\"...", min_id, max_id);
       }
     }
 
@@ -177,7 +173,9 @@ public class PieManager : GLib.Object {
       var id_number = int.parse(final_id) + 1;
       if (id_number == max_id+1) id_number = min_id;
       final_id = id_number.to_string();
-      warning("Trying to add pie \"" + name + "\": ID \"" + tmp + "\" already exists! Using \"" + final_id + "\" instead...");
+      warning("Trying to add pie \"" + name + "\": ID \"" + tmp +
+              "\" already exists! Using \"" + final_id + "\" instead...");
+
       return create_pie(name, icon_name, min_id, max_id, final_id);
     }
 
@@ -200,7 +198,8 @@ public class PieManager : GLib.Object {
       }
     }
     else {
-      warning("Failed to remove pie with ID \"" + id + "\": ID does not exist!");
+      warning("Failed to remove pie with ID \"" +
+              id + "\": ID does not exist!");
     }
   }
 

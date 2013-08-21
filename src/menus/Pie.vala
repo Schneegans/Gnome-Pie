@@ -100,6 +100,22 @@ public class Pie : GLib.Object {
       this.action_groups.set(index, group);
     }
   }
+
+  // ---------------------------------------------------------------------------
+  public void serialize(Json.Builder builder) {
+
+    builder.begin_object();
+    builder.set_member_name("text").add_string_value(name);
+    builder.set_member_name("icon").add_string_value(icon);
+
+    builder.set_member_name("subs").begin_array();
+    foreach (var group in action_groups) {
+      group.serialize(builder);
+    }
+    builder.end_array();
+
+    builder.end_object();
+  }
 }
 
 }

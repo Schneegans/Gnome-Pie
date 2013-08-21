@@ -18,59 +18,55 @@
 namespace GnomePie {
 
 ////////////////////////////////////////////////////////////////////////////////
-// A base class for actions, which are executed when the users                //
-// activates a menu item.                                                     //
+//                                                                            //
 ////////////////////////////////////////////////////////////////////////////////
 
-public abstract class Action : GLib.Object {
+[DBus (name = "org.gnome.openpie")]
+interface DBusInterface : Object {
+  public signal   void  on_select(int id, string item);
+  public abstract int   show_menu(string menu) throws IOError;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//                                                                            //
+////////////////////////////////////////////////////////////////////////////////
+
+public class OpenPie : GLib.Object {
 
   //////////////////////////////////////////////////////////////////////////////
   //                          public interface                                //
   //////////////////////////////////////////////////////////////////////////////
 
-  //////////////////////// public abstract members /////////////////////////////
-
-  // The command which gets executed when user activates the item.
-  // It may be anything but has to be representable with a string.
-  public abstract string real_command { get; construct set; }
-
-  // The command displayed to the user. It should be a bit more
-  // beautiful than the real_command.
-  public abstract string display_command { get; }
-
-  ///////////////////////////// public members /////////////////////////////////
-
-  // The name of the Action.
-  public virtual string name { get; set; }
-
-  // The name of the icon of this Action. It should be in the users
-  // current icon theme.
-  public virtual string icon { get; set; }
-
-  // True, if this Action is the quickAction of the associated Menu.
-  // The quickAction of a Menu gets executed when the users clicks w/o
-  // moving his pointer
-  public virtual bool is_quickaction { get; set; }
-
-  /////////////////////// public abstract methods //////////////////////////////
-
-  // This one is called, when the user activates the item ----------------------
-  public abstract void activate();
+  public signal void on_select(int id, string item);
 
   //////////////////////////// public methods //////////////////////////////////
 
-  // C'tor, initializes all members --------------------------------------------
-  public Action(string name, string icon, bool is_quickaction) {
-      GLib.Object(name : name, icon : icon, is_quickaction : is_quickaction);
+  // ---------------------------------------------------------------------------
+  public OpenPie() {
+    try {
+      dbus_ = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.openpie",
+                                                          "/org/gnome/openpie");
+      dbus_.on_select.connect((id, item) => {
+        on_select(id, item);
+      });
+
+    } catch (IOError e) {
+      error("Failed to connect to OpenPie: " + e.message);
+    }
   }
 
   // ---------------------------------------------------------------------------
-  public virtual void serialize(Json.Builder builder) {
-    builder.begin_object();
-    builder.set_member_name("text").add_string_value(name);
-    builder.set_member_name("icon").add_string_value(icon);
-    builder.end_object();
+  public int open_menu(string menu) {
+    return dbus_.show_menu(menu);
   }
+
+  //////////////////////////////////////////////////////////////////////////////
+  //                          private stuff                                   //
+  //////////////////////////////////////////////////////////////////////////////
+
+  ////////////////////////// private members ///////////////////////////////////
+
+  private DBusInterface dbus_ = null;
 }
 
 }

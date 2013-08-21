@@ -17,12 +17,6 @@ this program.  If not, see <http://www.gnu.org/licenses/>.
 
 namespace GnomePie {
 
-[DBus (name = "org.gnome.openpie")]
-interface DBusInterface : Object {
-    public signal void on_select(int id, string item);
-    public abstract int show_menu(string menu) throws IOError;
-}
-
 public class Test : GLib.Object {
 
     private DBusInterface open_pie = null;

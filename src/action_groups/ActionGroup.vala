@@ -79,6 +79,14 @@ public class ActionGroup : GLib.Object {
 
     return false;
   }
+
+  // ---------------------------------------------------------------------------
+  public virtual void serialize(Json.Builder builder) {
+
+    foreach (var action in actions) {
+      action.serialize(builder);
+    }
+  }
 }
 
 }

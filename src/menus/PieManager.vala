@@ -24,23 +24,15 @@ namespace GnomePie {
 
 public class PieManager : GLib.Object {
 
+  //////////////////////////////////////////////////////////////////////////////
+  //                         public interface                                 //
+  //////////////////////////////////////////////////////////////////////////////
+
   // A map of all Pies. It contains both, dynamic and persistent Pies.
   // They are associated to their ID's.
   public static Gee.HashMap<string, Pie?> all_pies { get; private set; }
 
-  // Stores all global hotkeys.
-  private static BindingManager bindings;
-
-  private static OpenPie openpie_ = null;
-
-  // True, if any pie has the current focus. If it is closing this
-  // will be false already.
-  private static bool a_pie_is_active = false;
-
-  // Storing the position of the last Pie. Used for subpies, which are
-  // opened at their parents location.
-  private static int last_x = 0;
-  private static int last_y = 0;
+  //////////////////////////// public methods //////////////////////////////////
 
   // Initializes all Pies. They are loaded from the pies.conf file. ------------
   public static void init() {
@@ -48,8 +40,21 @@ public class PieManager : GLib.Object {
     bindings = new BindingManager();
     openpie_ = new OpenPie();
 
+    active_pie_id = "";
+
     // load all Pies from th pies.conf file
     Pies.load();
+
+    // react on selections
+    openpie_.on_select.connect((id, path) => {
+      if (id == active_openpie_id) {
+
+        all_pies[active_pie_id].activate(path);
+
+        active_openpie_id = -1;
+        active_pie_id = "";
+      }
+    });
 
     // open the according pie if it's hotkey is pressed
     bindings.on_press.connect((id) => {
@@ -59,21 +64,21 @@ public class PieManager : GLib.Object {
 
   // Opens the Pie with the given ID, if it exists. ----------------------------
   public static void open_pie(string id) {
-    if (!a_pie_is_active) {
+    if (active_pie_id == "") {
       Pie? pie = all_pies[id];
 
       if (pie != null) {
-
-        a_pie_is_active = true;
-
         var menu = Serializer.serialize(pie);
 
-        openpie_.open_menu(menu);
+        active_openpie_id = openpie_.open_menu(menu);
+        active_pie_id = id;
 
       } else {
         warning("Failed to open pie with ID \"" + id +
                 "\": ID does not exist!");
       }
+    } else {
+      warning("Failed to open menu: There is already one openend!");
     }
   }
 
@@ -141,6 +146,30 @@ public class PieManager : GLib.Object {
 
     return create_pie(name, icon_name, 1000, 9999, desired_id);
   }
+
+
+  //////////////////////////////////////////////////////////////////////////////
+  //                           private stuff                                  //
+  //////////////////////////////////////////////////////////////////////////////
+
+  ////////////////////////// member variables //////////////////////////////////
+
+  // Stores all global hotkeys.
+  private static BindingManager bindings;
+
+  private static OpenPie openpie_ = null;
+
+  // True, if any pie has the current focus. If it is closing this
+  // will be false already.
+  private static string active_pie_id = "";
+  private static int    active_openpie_id = -1;
+
+  // Storing the position of the last Pie. Used for subpies, which are
+  // opened at their parents location.
+  private static int last_x = 0;
+  private static int last_y = 0;
+
+  ////////////////////////// private methods ///////////////////////////////////
 
   // Adds a new Pie. Can't be accesd from outer scope. Use ---------------------
   // create_persistent_pie or create_dynamic_pie instead.

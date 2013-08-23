@@ -23,7 +23,7 @@ namespace GnomePie {
 
 [DBus (name = "org.gnome.openpie")]
 interface DBusInterface : Object {
-  public signal   void  on_select(int id, string item);
+  public signal   void  on_select(int id, string path);
   public abstract int   show_menu(string menu) throws IOError;
 }
 
@@ -37,7 +37,7 @@ public class OpenPie : GLib.Object {
   //                          public interface                                //
   //////////////////////////////////////////////////////////////////////////////
 
-  public signal void on_select(int id, string item);
+  public signal void on_select(int id, string path);
 
   //////////////////////////// public methods //////////////////////////////////
 
@@ -46,8 +46,8 @@ public class OpenPie : GLib.Object {
     try {
       dbus_ = Bus.get_proxy_sync(BusType.SESSION, "org.gnome.openpie",
                                                           "/org/gnome/openpie");
-      dbus_.on_select.connect((id, item) => {
-        on_select(id, item);
+      dbus_.on_select.connect((id, path) => {
+        on_select(id, path);
       });
 
     } catch (IOError e) {

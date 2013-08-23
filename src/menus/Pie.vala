@@ -48,6 +48,12 @@ public class Pie : GLib.Object {
     this.action_groups = new Gee.ArrayList<ActionGroup?>();
   }
 
+  // ---------------------------------------------------------------------------
+  public void activate(string path) {
+    var items = path.split(" ");
+    activate_path(items);
+  }
+
   // Should be called when this Pie is deleted, in order to clean up -----------
   // stuff created by contained ActionGroups.
   public virtual void on_remove() {
@@ -115,6 +121,47 @@ public class Pie : GLib.Object {
     builder.end_array();
 
     builder.end_object();
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  //                          private stuff                                   //
+  //////////////////////////////////////////////////////////////////////////////
+
+  ////////////////////////// private methods ///////////////////////////////////
+
+  // ---------------------------------------------------------------------------
+  private void activate_path(string[] path) {
+    if (path.length > 0) {
+      int index = int.parse(path[0]);
+
+      var action = get_action(index);
+
+      if (action == null) {
+        warning("Failed to execute action: Index out of bounds!");
+        return;
+      }
+
+      if (action is PieAction) {
+        var id = (action as PieAction).real_command;
+        PieManager.all_pies[id].activate_path(path[1:path.length]);
+
+      } else {
+        action.activate();
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  private Action? get_action(int index) {
+    foreach (var group in action_groups) {
+      foreach (var action in group.actions) {
+        if (index-- == 0) {
+          return action;
+        }
+      }
+    }
+
+    return null;
   }
 }
 

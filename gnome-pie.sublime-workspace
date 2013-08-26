@@ -510,6 +510,33 @@
 				"buffer_size": 3391,
 				"line_ending": "Unix"
 			}
+		},
+		{
+			"file": "make.sh",
+			"settings":
+			{
+				"buffer_size": 99,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/actions/ActionRegistry.vala",
+			"settings":
+			{
+				"buffer_size": 8122,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "////////////////////////////////////////////////////////////////////////////////\n// Copyright (c) 2011-2013 by Simon Schneegans                                //\n//                                                                            //\n// This program is free software: you can redistribute it and/or modify it    //\n// under the terms of the GNU General Public License as published by the Free //\n// Software Foundation, either version 3 of the License, or (at your option)  //\n// any later version.                                                         //\n//                                                                            //\n// This program is distributed in the hope that it will be useful, but        //\n// WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY //\n// or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License   //\n// for more details.                                                          //\n//                                                                            //\n// You should have received a copy of the GNU General Public License along    //\n// with this program.  If not, see <http://www.gnu.org/licenses/>.            //\n////////////////////////////////////////////////////////////////////////////////\n\nnamespace OpenPie {\n\n////////////////////////////////////////////////////////////////////////////////\n// A class which loads image files. It can load image files in various        //\n// formats, including jpeg, png and svg.                                      //\n////////////////////////////////////////////////////////////////////////////////\n\npublic class Image : GLib.Object {\n\n  //////////////////////////////////////////////////////////////////////////////\n  //                          public interface                                //\n  //////////////////////////////////////////////////////////////////////////////\n\n  // The internally used surface. ----------------------------------------------\n  public Cairo.ImageSurface surface { public get; protected set; default=null; }\n\n  //////////////////////////// public methods //////////////////////////////////\n\n  // Creates an empty Image. ---------------------------------------------------\n  public Image.empty(int width, int height, Color? color = null) {\n    this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);\n\n    if (color != null) {\n      var ctx = this.context();\n      ctx.set_source_rgb(color.r, color.g, color.b);\n      ctx.paint();\n    }\n  }\n\n  // Creates an image from the the given filename. -----------------------------\n  public Image.from_file(string filename) {\n    this.load_file(filename);\n  }\n\n  // Creates an image from the the given filename at a given size. -------------\n  public Image.from_file_at_size(string filename, int width, int height) {\n    this.load_file_at_size(filename, width, height);\n  }\n\n  // Creates an image from the the given Gdk.Pixbuf. ---------------------------\n  public Image.from_pixbuf(Gdk.Pixbuf pixbuf) {\n    if (pixbuf != null)\n      this.load_pixbuf(pixbuf);\n    else\n      this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);\n  }\n\n  // Captures a part of the screen. --------------------------------------------\n  public Image.capture_screen(int posx, int posy, int width,\n                              int height, bool hide_pies = true) {\n\n    Gdk.Window root = Gdk.get_default_root_window();\n\n    Gdk.Pixbuf pixbuf = Gdk.pixbuf_get_from_window(root, posx, posy,\n                                                   width, height);\n    this.load_pixbuf(pixbuf);\n  }\n\n  // Loads an image from the the given filename. -------------------------------\n  public void load_file(string filename) {\n    try {\n      var pixbuf = new Gdk.Pixbuf.from_file(filename);\n\n      if (pixbuf != null) {\n        this.load_pixbuf(pixbuf);\n      } else {\n        warning(\"Failed to load \" + filename + \"!\");\n        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);\n      }\n    } catch (GLib.Error e) {\n      message(\"Error loading image file: %s\", e.message);\n      this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, 1, 1);\n    }\n  }\n\n  // Loads an image from the the given filename at a given size. ---------------\n  public void load_file_at_size(string filename, int width, int height) {\n    try {\n      var pixbuf = new Gdk.Pixbuf.from_file_at_size(filename, width, height);\n\n      if (pixbuf != null) {\n        this.load_pixbuf(pixbuf);\n      } else {\n        warning(\"Failed to load \" + filename + \"!\");\n        this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);\n      }\n    } catch (GLib.Error e) {\n      message(\"Error loading image file: %s\", e.message);\n      this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, width, height);\n    }\n  }\n\n  // Loads an image from the the given Gdk.Pixbuf. -----------------------------\n  public void load_pixbuf(Gdk.Pixbuf pixbuf) {\n    this.surface = new Cairo.ImageSurface(Cairo.Format.ARGB32, pixbuf.width, pixbuf.height);\n\n    var ctx = this.context();\n    Gdk.cairo_set_source_pixbuf(ctx, pixbuf, 1.0, 1.0);\n    ctx.paint();\n  }\n\n  // Paints the image onto the given Cairo.Context -----------------------------\n  public void paint_on(Cairo.Context ctx, double alpha = 1.0) {\n    ctx.set_source_surface(this.surface, (int)(-0.5*this.width()-1), (int)(-0.5*this.height()-1));\n    if (alpha >= 1.0) ctx.paint();\n    else        ctx.paint_with_alpha(alpha);\n  }\n\n  // Converts the image to a Gdk.Pixbuf. ---------------------------------------\n  public Gdk.Pixbuf to_pixbuf() {\n    if (this.surface == null || this.surface.get_data().length <= 0)\n      return new Gdk.Pixbuf(Gdk.Colorspace.RGB, true, 8, 1, 1);\n\n    var pixbuf = new Gdk.Pixbuf.from_data(this.surface.get_data(), Gdk.Colorspace.RGB, true, 8,\n                        width(), height(), this.surface.get_stride(), null);\n\n    pixbuf = pixbuf.copy();\n\n    // funny stuff here --- need to swap Red end Blue because Cairo\n    // and Gdk are different...\n    uint8* p = pixbuf.pixels;\n    for (int i=0; i<width()*height()*4-4; i+=4) {\n      var tmp = *(p + i);\n      *(p + i) = *(p + i + 2);\n      *(p + i + 2) = tmp;\n    }\n\n		return pixbuf;\n  }\n\n  // Returns a Cairo.Context for the Image. ------------------------------------\n  public Cairo.Context context() {\n    return new Cairo.Context(this.surface);\n  }\n\n  // Returns the width of the image in pixels. ---------------------------------\n  public int width() {\n    if (this.surface != null)\n      return this.surface.get_width();\n    return 0;\n  }\n\n  // Returns the height of the image in pixels. --------------------------------\n  public int height() {\n    if (this.surface != null)\n      return this.surface.get_height();\n    return 0;\n  }\n}\n\n}\n",
+			"file": "src/utilities/Image.vala",
+			"file_size": 6790,
+			"file_write_time": 130212103610000000,
+			"settings":
+			{
+				"buffer_size": 6790,
+				"line_ending": "Unix"
+			}
 		}
 	],
 	"build_system": "Packages/User/Vala.sublime-build",
@@ -519,16 +546,8 @@
 		"selected_items":
 		[
 			[
-				"cha",
-				"Git: Change Branch"
-			],
-			[
-				"push",
-				"Git: Push Current Branch"
-			],
-			[
 				"pus",
-				"Git: Push"
+				"Git: Push Current Branch"
 			],
 			[
 				"com",
@@ -537,6 +556,14 @@
 			[
 				"add",
 				"Git: Add..."
+			],
+			[
+				"cha",
+				"Git: Change Branch"
+			],
+			[
+				"push",
+				"Git: Push Current Branch"
 			],
 			[
 				"git ad",
@@ -615,7 +642,7 @@
 				"Preferences: SublimeLinter Settings – Default"
 			]
 		],
-		"width": 435.0
+		"width": 390.0
 	},
 	"console":
 	{
@@ -637,6 +664,7 @@
 	},
 	"file_history":
 	[
+		"/home/simon/Projekte/Programmierung/Vala/Gnome-Pie/Gnome-Pie/src/utilities/Image.vala",
 		"/home/simon/.data/Projekte/Programmierung/Vala/OpenPie/daemon/server/OpenPieServer.vala",
 		"/var/www/HistoGlobe/data/world_low.json",
 		"/var/www/HistoGlobe/data/ne_50m_admin_0_boundary_lines_land.json",
@@ -968,8 +996,8 @@
 						"selection":
 						[
 							[
-								6212,
-								6212
+								5835,
+								5835
 							]
 						],
 						"settings":
@@ -1016,7 +1044,7 @@
 			]
 		},
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -1044,6 +1072,91 @@
 						},
 						"translation.x": 0.0,
 						"translation.y": 4.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "make.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 99,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								99,
+								99
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/actions/ActionRegistry.vala",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5744,
+								5744
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vala/vala/Vala.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1471.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/utilities/Image.vala",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6790,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2249,
+								2249
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Vala/vala/Vala.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1521.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -1092,6 +1205,10 @@
 	"output.exec":
 	{
 		"height": 182.0
+	},
+	"output.git":
+	{
+		"height": 90.0
 	},
 	"project": "gnome-pie.sublime-project",
 	"replace":

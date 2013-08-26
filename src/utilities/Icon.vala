@@ -22,7 +22,7 @@ namespace GnomePie {
 // icon theme.                                                                //
 ////////////////////////////////////////////////////////////////////////////////
 
-public class Icon : Image {
+public class Icon : GLib.Object {
 
   //////////////////////////////////////////////////////////////////////////////
   //                          public interface                                //
@@ -85,49 +85,6 @@ public class Icon : Image {
     return result;
   }
 
-  // Initializes the cache. ----------------------------------------------------
-  public static void init() {
-    clear_cache();
-
-    Gtk.IconTheme.get_default().changed.connect(() => {
-      clear_cache();
-    });
-  }
-
-  // Clears the cache. ---------------------------------------------------------
-  public static void clear_cache() {
-    cache = new Gee.HashMap<string, Cairo.ImageSurface?>();
-  }
-
-  //////////////////////////// public methods //////////////////////////////////
-
-  // Loads an icon from the current icon theme of the user. --------------------
-  public Icon(string icon_name, int size) {
-    var cached = Icon.cache.get("%s@%u".printf(icon_name, size));
-
-    if (cached == null) {
-      this.load_file_at_size(Icon.get_icon_file(icon_name, size), size, size);
-      Icon.cache.set("%s@%u".printf(icon_name, size), this.surface);
-    } else {
-      this.surface = cached;
-    }
-  }
-
-  // Returns the size of the icon in pixels. Greetings to Liskov. --------------
-  public int size() {
-    return base.width();
-  }
-
-
-  //////////////////////////////////////////////////////////////////////////////
-  //                          private stuff                                   //
-  //////////////////////////////////////////////////////////////////////////////
-
-  /////////////////////// private static members ///////////////////////////////
-
-  // A cache which stores loaded icon. It is cleared when the icon
-  // theme of the user changes. The key is in form <filename>@<size>.
-  private static Gee.HashMap<string, Cairo.ImageSurface?> cache { private get; private set; }
 }
 
 }

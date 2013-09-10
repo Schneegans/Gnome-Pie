@@ -55,21 +55,31 @@ namespace Pies {
           // if it's a custom ActionGroup
           if (group.get_type().depth() == 2) {
             foreach (var action in group.actions) {
+              var name = action.get_type().name();
               writer.start_element("slice");
-              writer.write_attribute("type", ActionRegistry.descriptions[action.get_type().name()].id);
-              if (ActionRegistry.descriptions[action.get_type().name()].icon_name_editable) {
+              writer.write_attribute(
+                "type", ActionRegistry.descriptions[name].id
+              );
+
+              if (ActionRegistry.descriptions[name].icon_name_editable) {
                 writer.write_attribute("name", action.name);
                 writer.write_attribute("icon", action.icon);
               }
+
               writer.write_attribute("command", action.real_command);
-              writer.write_attribute("quickAction", action.is_quickaction ? "true" : "false");
+              writer.write_attribute(
+                "quickAction", action.is_quickaction ? "true" : "false"
+              );
               writer.end_element();
 
-              ++ slice_count;
+              ++slice_count;
             }
           } else {
             writer.start_element("group");
-                writer.write_attribute("type", ActionGroupRegistry.descriptions[group.get_type().name()].id);
+                writer.write_attribute(
+                  "type",
+                  ActionGroupRegistry.descriptions[group.get_type().name()].id
+                );
             writer.end_element();
 
             slice_count += group.actions.size;

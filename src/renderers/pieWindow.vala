@@ -85,6 +85,7 @@ public class PieWindow : Gtk.Window {
         this.set_resizable(false);
         this.icon_name = "gnome-pie";
         this.set_accept_focus(false);
+        this.app_paintable = true;
         
         // check for compositing
         if (this.screen.is_composited()) {

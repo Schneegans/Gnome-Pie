@@ -68,8 +68,9 @@ public class Indicator : GLib.Object {
 
     public Indicator() {
         string icon = "";
+        var screen = (Gdk.X11.Screen)Gdk.Screen.get_default();
 
-        if (Gdk.X11Screen.get_window_manager_name(Gdk.Screen.get_default()) == "Mutter")
+        if (screen.get_window_manager_name() == "Mutter")
             icon = "gnome-pie";
         else
             icon = "gnome-pie-symbolic";
@@ -110,7 +111,7 @@ public class Indicator : GLib.Object {
         this.prefs = new PreferencesWindow();
 
         // preferences item
-        var item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.PREFERENCES, null);
+        var item = new Gtk.ImageMenuItem.with_mnemonic(_("_Preferences"));
         item.activate.connect(() => {
             this.prefs.show();
         });
@@ -119,7 +120,7 @@ public class Indicator : GLib.Object {
         menu.append(item);
 
         // about item
-        item = new Gtk.ImageMenuItem.from_stock (Gtk.Stock.ABOUT, null);
+        item = new Gtk.ImageMenuItem.with_mnemonic(_("_About"));
         item.show();
         item.activate.connect(() => {
             var about = new AboutWindow();
@@ -134,7 +135,7 @@ public class Indicator : GLib.Object {
         menu.append(sepa);
 
         // quit item
-        item = new Gtk.ImageMenuItem.from_stock(Gtk.Stock.QUIT, null);
+        item = new Gtk.ImageMenuItem.with_mnemonic(_("_Quit"));
         item.activate.connect(Gtk.main_quit);
         item.show();
         menu.append(item);

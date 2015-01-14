@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,14 +12,14 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 using GLib.Math;
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// A Color class with full rgb/hsv support
 /// and some useful utility methods.
 /////////////////////////////////////////////////////////////////////////
@@ -35,15 +35,15 @@ public class Color: GLib.Object {
     private float _g;
     private float _b;
     private float _a;
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Creates a white Color.
     /////////////////////////////////////////////////////////////////////
-    
+
     public Color() {
         Color.from_rgb(1.0f, 1.0f, 1.0f);
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Creates a solid color with the given RGB values.
     /////////////////////////////////////////////////////////////////////
@@ -51,47 +51,48 @@ public class Color: GLib.Object {
     public Color.from_rgb(float red, float green, float blue) {
         Color.from_rgba(red, green, blue, 1.0f);
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Creates a translucient color with the given RGBA values.
     /////////////////////////////////////////////////////////////////////
-    
+
     public Color.from_rgba(float red, float green, float blue, float alpha) {
         r = red;
         g = green;
         b = blue;
         a = alpha;
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Creates a color from the given Gdk.Color
     /////////////////////////////////////////////////////////////////////
-    
-    public Color.from_gdk(Gdk.Color color) {
-        Color.from_rgb(
-            (float)color.red/65535.0f,
-            (float)color.green/65535.0f,
-            (float)color.blue/65535.0f
+
+    public Color.from_gdk(Gdk.RGBA color) {
+        Color.from_rgba(
+            (float)color.red,
+            (float)color.green,
+            (float)color.blue,
+            (float)color.alpha
         );
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Creates a color, parsed from a string, such as #22EE33
     /////////////////////////////////////////////////////////////////////
-    
+
     public Color.from_string(string hex_string) {
-        Gdk.Color color;
-        Gdk.Color.parse(hex_string, out color);
+        var color = Gdk.RGBA();
+        color.parse(hex_string);
         Color.from_gdk(color);
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Gets the main color from an Image. Code from Unity.
     /////////////////////////////////////////////////////////////////////
-    
+
     public Color.from_icon(Image icon) {
         unowned uchar[] data = icon.surface.get_data();
-    
+
         uint width = icon.surface.get_width();
         uint height = icon.surface.get_height();
         uint row_bytes = icon.surface.get_stride();
@@ -99,7 +100,7 @@ public class Color: GLib.Object {
         double total = 0.0;
         double rtotal = 0.0;
         double gtotal = 0.0;
-        double btotal = 0.0; 
+        double btotal = 0.0;
 
         for (uint i = 0; i < width; ++i) {
             for (uint j = 0; j < height; ++j) {
@@ -126,7 +127,7 @@ public class Color: GLib.Object {
 
         v = 1.0f;
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The reddish part of the color.
     /////////////////////////////////////////////////////////////////////
@@ -138,14 +139,14 @@ public class Color: GLib.Object {
         set {
             if (value > 1.0f) _r = 1.0f;
             else if (value < 0.0f) _r = 0.0f;
-            else _r = value; 
+            else _r = value;
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The greenish part of the color.
     /////////////////////////////////////////////////////////////////////
-    
+
     public float g {
         get {
             return _g;
@@ -153,14 +154,14 @@ public class Color: GLib.Object {
         set {
             if (value > 1.0f) _g = 1.0f;
             else if (value < 0.0f) _g = 0.0f;
-            else _g = value; 
+            else _g = value;
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The blueish part of the color.
     /////////////////////////////////////////////////////////////////////
-    
+
     public float b {
         get {
             return _b;
@@ -168,14 +169,14 @@ public class Color: GLib.Object {
         set {
             if (value > 1.0f) _b = 1.0f;
             else if (value < 0.0f) _b = 0.0f;
-            else _b = value; 
+            else _b = value;
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The transparency of the color.
     /////////////////////////////////////////////////////////////////////
-    
+
     public float a {
         get {
             return _a;
@@ -183,14 +184,14 @@ public class Color: GLib.Object {
         set {
             if (value > 1.0f) _a = 1.0f;
             else if (value < 0.0f) _a = 0.0f;
-            else _a = value; 
+            else _a = value;
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The hue of the color.
     /////////////////////////////////////////////////////////////////////
-    
+
     public float h {
         get {
             if (s > 0.0f) {
@@ -210,11 +211,11 @@ public class Color: GLib.Object {
             setHSV(value, s, v);
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The saturation of the color.
     /////////////////////////////////////////////////////////////////////
-    
+
     public float s {
         get {
             if (v == 0.0f) return 0.0f;
@@ -226,11 +227,11 @@ public class Color: GLib.Object {
             else setHSV(h, value, v);
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The value of the color.
     /////////////////////////////////////////////////////////////////////
-    
+
     public float v {
         get {
             return fmaxf(fmaxf(r, g), b);
@@ -241,16 +242,16 @@ public class Color: GLib.Object {
             else setHSV(h, s, value);
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Inverts the color.
     /////////////////////////////////////////////////////////////////////
-    
+
     public void invert() {
         h += 180.0f;
         v = 1.0f - v;
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Private member, used to apply color changes.
     /////////////////////////////////////////////////////////////////////

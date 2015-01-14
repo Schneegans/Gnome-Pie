@@ -223,7 +223,17 @@ public class PieWindow : Gtk.Window {
 
         // get the mouse position
         double mouse_x = 0.0, mouse_y = 0.0;
-        this.get_pointer(out mouse_x, out mouse_y);
+        Gdk.ModifierType mask;
+
+        var display = Gdk.Display.get_default();
+        var manager = display.get_device_manager();
+        GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+
+        foreach(var device in list) {
+            if (device.input_source != Gdk.InputSource.KEYBOARD) {
+                this.get_window().get_device_position_double(device, out mouse_x, out mouse_y, out mask);
+            }
+        }
 
         // store the frame time
         double frame_time = this.timer.elapsed();

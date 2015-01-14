@@ -149,7 +149,9 @@ public class PreferencesWindow : GLib.Object {
         this.preview.draw_loop();
         this.window.show_all();
         this.pie_list.select_first();
-        this.preview_background.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this.window).light[0]);
+
+        var style = this.preview_background.get_style_context();
+        this.preview_background.override_background_color(Gtk.StateFlags.NORMAL, style.get_background_color(Gtk.StateFlags.NORMAL));
     }
 
     /////////////////////////////////////////////////////////////////////

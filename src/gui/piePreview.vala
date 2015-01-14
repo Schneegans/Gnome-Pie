@@ -75,7 +75,7 @@ class PiePreview : Gtk.DrawingArea {
     /////////////////////////////////////////////////////////////////////
 
     public PiePreview() {
-        this.renderer = new PiePreviewRenderer();
+        this.renderer = new PiePreviewRenderer(this);
 
         this.draw.connect(this.on_draw);
         this.timer = new GLib.Timer();
@@ -169,8 +169,10 @@ class PiePreview : Gtk.DrawingArea {
     /////////////////////////////////////////////////////////////////////
 
     public void set_pie(string id) {
+        var style = this.get_style_context();
+
         this.current_id = id;
-        this.modify_bg(Gtk.StateType.NORMAL, Gtk.rc_get_style(this).light[Gtk.StateType.NORMAL]);
+        this.override_background_color(Gtk.StateFlags.NORMAL, style.get_background_color(Gtk.StateFlags.NORMAL));
         this.renderer.load_pie(PieManager.all_pies[id]);
 
         if (id == this.drag_start_id) {

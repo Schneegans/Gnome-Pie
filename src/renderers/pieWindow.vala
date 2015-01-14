@@ -89,11 +89,7 @@ public class PieWindow : Gtk.Window {
 
         // check for compositing
         if (this.screen.is_composited()) {
-            #if HAVE_GTK_3
-                this.set_visual(this.screen.get_rgba_visual());
-            #else
-                this.set_colormap(this.screen.get_rgba_colormap());
-            #endif
+            this.set_visual(this.screen.get_rgba_visual());
             this.has_compositing = true;
         }
 
@@ -147,11 +143,7 @@ public class PieWindow : Gtk.Window {
         });
 
         // draw the pie on expose
-        #if HAVE_GTK_3
-            this.draw.connect(this.draw_window);
-        #else
-            this.expose_event.connect(this.draw_window);
-        #endif
+        this.draw.connect(this.draw_window);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -214,13 +206,7 @@ public class PieWindow : Gtk.Window {
     /// Draw the Pie.
     /////////////////////////////////////////////////////////////////////
 
-    #if HAVE_GTK_3
-        private bool draw_window(Cairo.Context ctx) {
-    #else
-        private bool draw_window(Gtk.Widget da, Gdk.EventExpose event) {
-            // clear the window
-            var ctx = Gdk.cairo_create(this.get_window());
-    #endif
+    private bool draw_window(Cairo.Context ctx) {
         // paint the background image if there is no compositing
         if (this.has_compositing) {
             ctx.set_operator (Cairo.Operator.CLEAR);

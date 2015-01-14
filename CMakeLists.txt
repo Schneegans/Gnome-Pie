@@ -26,21 +26,11 @@ ensure_vala_version("0.11.0" MINIMUM)
 find_package(PkgConfig)
 
 # check whether GTK3 is supported
-pkg_check_modules(GTK3 gtk+-3.0)
-
-if (${GTK3_FOUND})
-    pkg_check_modules(INDICATOR3 appindicator3-0.1)
-    pkg_check_modules(UNIQUE REQUIRED unique-3.0)
-    pkg_check_modules(WNCK REQUIRED libwnck-3.0)
-    pkg_check_modules(BAMF REQUIRED libbamf3)
-else (${GTK3_FOUND})
-    pkg_check_modules(GTK2 REQUIRED gtk+-2.0)
-    pkg_check_modules(INDICATOR appindicator-0.1)
-    pkg_check_modules(UNIQUE REQUIRED unique-1.0)
-    pkg_check_modules(WNCK REQUIRED libwnck-1.0)
-    pkg_check_modules(BAMF REQUIRED libbamf)
-endif (${GTK3_FOUND})
-
+pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
+pkg_check_modules(INDICATOR3 appindicator3-0.1)
+pkg_check_modules(UNIQUE REQUIRED unique-3.0)
+pkg_check_modules(WNCK REQUIRED libwnck-3.0)
+pkg_check_modules(BAMF REQUIRED libbamf3)
 pkg_check_modules(GIO REQUIRED gio-unix-2.0)
 pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-1.0)
@@ -54,7 +44,6 @@ find_library(GTHREAD_LIB gthread-2.0)
 
 set(CFLAGS
     ${GIO_CFLAGS}
-    ${GTK2_CFLAGS} ${GTK2_CFLAGS_OTHER}
     ${GTK3_CFLAGS} ${GTK3_CFLAGS_OTHER}
     ${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
     ${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
@@ -65,11 +54,6 @@ set(CFLAGS
 	-s -O3 -w
 #	-g
 )
-
-# fallback to gtk2 if gtk3 wasn't found
-if (${GTK3_FOUND})
-    LIST(APPEND CFLAGS -DHAVE_GTK_3)
-endif (${GTK3_FOUND})
 
 # fallback to gnome-menus2 if gnome-menus3 wasn't found
 if (${GMENU3_FOUND})
@@ -90,7 +74,6 @@ add_definitions(${CFLAGS})
 
 set(LIBS
     ${GIO_LIBRARIES}
-	${GTK2_LIBRARIES}
 	${GTK3_LIBRARIES}
 	${CAIRO_LIBRARIES}
 	${GEE_LIBRARIES}
@@ -111,7 +94,6 @@ link_libraries(${LIBS})
 
 set(LIB_PATHS
     ${GIO_LIBRARY_DIRS}
-	${GTK2_LIBRARY_DIRS}
 	${GTK3_LIBRARY_DIRS}
 	${CAIRO_LIBRARY_DIRS}
 	${GEE_LIBRARY_DIRS}
@@ -130,7 +112,6 @@ link_directories(${LIB_PATHS})
 
 set(INCLUDE_PATHS
     ${GIO_INCLUDE_DIRS}
-	${GTK2_INCLUDE_DIRS}
 	${GTK3_INCLUDE_DIRS}
 	${CAIRO_INCLUDE_DIRS}
 	${GEE_INCLUDE_DIRS}
@@ -214,7 +195,6 @@ message( "Summary:" )
 message( "  EXECUTABLE_OUTPUT_PATH = ${EXECUTABLE_OUTPUT_PATH}" )
 message( "  VALA_EXECUTABLE = ${VALA_EXECUTABLE}" )
 message( "Libs:" )
-message( "  GTK2_LIBRARIES = ${GTK2_LIBRARIES}" )
 message( "  GTK3_LIBRARIES = ${GTK3_LIBRARIES}" )
 message( "  CAIRO_LIBRARIES = ${CAIRO_LIBRARIES}" )
 message( "  GEE_LIBRARIES = ${GEE_LIBRARIES}" )

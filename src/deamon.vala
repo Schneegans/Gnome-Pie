@@ -39,7 +39,6 @@ public class Deamon : GLib.Object {
         version = "0.5.6";
 
         Logger.init();
-        Gdk.threads_init();
         Gtk.init(ref args);
         Paths.init();
 
@@ -107,11 +106,7 @@ public class Deamon : GLib.Object {
         // create unique application
         var app = new Unique.App("org.gnome.gnomepie", null);
 
-        #if HAVE_GTK_3
-            if (app.is_running()) {
-        #else
-            if (app.is_running) {
-        #endif
+        if (app.is_running()) {
             // inform the running instance of the pie to be opened
             if (open_pie != null) {
             	message("Gnome-Pie is already running. Sending request to open pie " + open_pie + ".");
@@ -142,8 +137,6 @@ public class Deamon : GLib.Object {
             return Unique.Response.PASSTHROUGH;
         });
 
-        Gdk.threads_enter();
-
         // init locale support
         Intl.bindtextdomain ("gnomepie", Paths.locales);
         Intl.textdomain ("gnomepie");
@@ -170,8 +163,6 @@ public class Deamon : GLib.Object {
 	        PieManager.open_pie(open_pie);
 
 	    Gtk.main();
-
-	    Gdk.threads_leave();
     }
 
     /////////////////////////////////////////////////////////////////////

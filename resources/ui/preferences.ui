@@ -6,7 +6,7 @@
     <property name="height_request">475</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Gnome-Pie Settings</property>
-    <property name="resizable">False</property>
+    <property name="resizable">True</property>
     <property name="window_position">center</property>
     <property name="has_resize_grip">False</property>
     <child>
@@ -260,7 +260,7 @@
                                     <property name="ypad">6</property>
                                     <property name="label" translatable="yes">&lt;b&gt;&lt;big&gt;This Pie is empty!&lt;/big&gt;
 
-Start adding Slices to it!&lt;/b&gt; This can be done by dragging stuff to the plus sign below. You can try a lot! For example application launchers or folders. Even URLs from your browser are possible... 
+Start adding Slices to it!&lt;/b&gt; This can be done by dragging stuff to the plus sign below. You can try a lot! For example application launchers or folders. Even URLs from your browser are possible...
 
 For manual and advanced configuration click on the plus sign.</property>
                                     <property name="use_markup">True</property>

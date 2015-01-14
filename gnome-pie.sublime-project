@@ -1,0 +1,22 @@
+{
+    "build_systems":
+    [
+        {
+            "cmd":
+            [
+                "./make.sh"
+            ],
+            "file_regex": "^(..[^:]*):(.*)$",
+            "name": "gnome-pie-project",
+            "working_dir": "${project_path}"
+        }
+    ],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": ".",
+            "folder_exclude_patterns": ["build"]
+		}
+	]
+}

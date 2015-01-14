@@ -3,10 +3,11 @@
   <requires lib="gtk+" version="2.20"/>
   <object class="GtkDialog" id="window">
     <property name="width_request">350</property>
+    <property name="default_width">350</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Activation Settings</property>
-    <property name="resizable">False</property>
+    <property name="resizable">True</property>
     <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="destroy_with_parent">True</property>

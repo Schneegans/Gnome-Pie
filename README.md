@@ -3,7 +3,7 @@ Gnome-Pie
 
 **Gnome-Pie** is a circular application launcher for Linux. It is made of several pies, each consisting of multiple slices. The user presses a key stroke which opens the desired pie. By activating one of its slices, applications may be launched, key presses may be simulated or files can be opened.
 
-Feel free to visit its **homepage** at http://gnome-pie.simonschneegans.de
+Feel free to visit its **homepage** at http://simmesimme.github.io/gnome-pie.html
 
 It is inspired by an addon written for the game World of Warcraft.
 (http://go-hero.net/opie/)
@@ -38,7 +38,7 @@ Then build  Gnome-Pie by typing:
 ./make.sh
 ~~~~
 
-Launch it with 
+Launch it with
 
 ~~~~
 ./gnome-pie
@@ -74,7 +74,7 @@ If you can’t afford the time to do the stuff mentioned above, but still want t
 
 ## License
 
-Copyright (C) 2011-2012 Simon Schneegans <code@simonschneegans.de>
+Copyright (C) 2011-2015 Simon Schneegans <code@simonschneegans.de>
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

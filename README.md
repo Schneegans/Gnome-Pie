@@ -20,16 +20,10 @@ sudo apt-get install gnome-pie
 
 ## Compiling and installing from source!
 
-First of all, install all dependancies. For compilation and linking against GTK3:
+First of all, install all dependancies:
 
 ~~~~
 sudo apt-get install libgtk-3-dev libcairo2-dev libappindicator3-dev libgee-dev libxml2-dev libxtst-dev libgnome-menu-3-dev valac cmake libunique-3.0-dev libbamf3-dev libwnck-3-dev bamfdaemon
-~~~~
-
-For compilation and linking against GTK2:
-
-~~~~
-sudo apt-get install libgtk2.0-dev libcairo2-dev libappindicator-dev libgee-dev libxml2-dev libxtst-dev libgnome-menu-dev valac cmake libunique-dev libbamf-dev libwnck-dev bamfdaemon
 ~~~~
 
 Then build  Gnome-Pie by typing:

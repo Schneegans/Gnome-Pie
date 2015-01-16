@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,12 +12,12 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// A singleton class for storing global settings. These settings can
 /// be loaded from and saved to an XML file.
 /////////////////////////////////////////////////////////////////////////
@@ -29,11 +29,11 @@ public class Config : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private static Config _instance = null;
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Returns the singleton instance.
     /////////////////////////////////////////////////////////////////////
-    
+
     public static Config global {
         get {
             if (_instance == null) {
@@ -46,7 +46,7 @@ public class Config : GLib.Object {
             _instance = value;
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// All settings variables.
     /////////////////////////////////////////////////////////////////////
@@ -54,16 +54,17 @@ public class Config : GLib.Object {
     public Theme theme { get; set; }
     public double refresh_rate { get; set; default = 60.0; }
     public double global_scale { get; set; default = 1.0; }
+    public int  activation_range { get; set; default = 300; }
     public bool show_indicator { get; set; default = true; }
     public bool show_captions { get; set; default = true; }
     public bool auto_start { get; set; default = false; }
     public int showed_news { get; set; default = 0; }
     public Gee.ArrayList<Theme?> themes { get; private set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Saves all above variables to a file.
     /////////////////////////////////////////////////////////////////////
-    
+
     public void save() {
         var writer = new Xml.TextWriter.filename(Paths.settings);
         writer.start_document("1.0");
@@ -71,28 +72,29 @@ public class Config : GLib.Object {
                 writer.write_attribute("theme", theme.name);
                 writer.write_attribute("refresh_rate", refresh_rate.to_string());
                 writer.write_attribute("global_scale", global_scale.to_string());
+                writer.write_attribute("activation_range", activation_range.to_string());
                 writer.write_attribute("show_indicator", show_indicator ? "true" : "false");
                 writer.write_attribute("show_captions", show_captions ? "true" : "false");
                 writer.write_attribute("showed_news", showed_news.to_string());
             writer.end_element();
         writer.end_document();
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Loads all settings variables from a file.
     /////////////////////////////////////////////////////////////////////
-    
+
     private void load() {
-    
+
         // check for auto_start filename
         this.auto_start = FileUtils.test(Paths.autostart, FileTest.EXISTS);
-    
+
         // parse the settings file
         Xml.Parser.init();
         Xml.Doc* settingsXML = Xml.Parser.parse_file(Paths.settings);
         bool   error_occrured = false;
         string theme_name = "";
-        
+
         if (settingsXML != null) {
 
             Xml.Node* root = settingsXML->get_root_element();
@@ -101,7 +103,7 @@ public class Config : GLib.Object {
                 for (Xml.Attr* attribute = root->properties; attribute != null; attribute = attribute->next) {
                     string attr_name = attribute->name.down();
                     string attr_content = attribute->children->content;
-                    
+
                     switch (attr_name) {
                         case "theme":
                             theme_name = attr_content;
@@ -112,6 +114,10 @@ public class Config : GLib.Object {
                         case "global_scale":
                             global_scale = double.parse(attr_content);
                             global_scale.clamp(0.5, 2.0);
+                            break;
+                        case "activation_range":
+                            activation_range = int.parse(attr_content);
+                            activation_range.clamp(100, 2000);
                             break;
                         case "show_indicator":
                             show_indicator = bool.parse(attr_content);
@@ -127,45 +133,45 @@ public class Config : GLib.Object {
                             break;
                     }
                 }
-               
+
                 Xml.Parser.cleanup();
-                
+
             } else {
                 warning("Error loading settings: gnome-pie.conf is empty! Using defaults...");
                 error_occrured = true;
             }
-            
+
             delete settingsXML;
-            
+
         } else {
             warning("Error loading settings: gnome-pie.conf not found! Using defaults...");
             error_occrured = true;
         }
-        
+
         load_themes(theme_name);
 
         if (error_occrured) save();
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Registers all themes in the user's and in the global
     /// theme directory.
     /////////////////////////////////////////////////////////////////////
-    
+
     public void load_themes(string current) {
         themes = new Gee.ArrayList<Theme?>();
         try {
             string name;
-            
+
             // load global themes
             var d = Dir.open(Paths.global_themes);
             while ((name = d.read_name()) != null) {
 	            var theme = new Theme(Paths.global_themes + "/" + name);
-	            
+
 	            if (theme.load())
 	            	themes.add(theme);
             }
-            
+
             // load local themes
             d = Dir.open(Paths.local_themes);
             while ((name = d.read_name()) != null) {
@@ -173,11 +179,11 @@ public class Config : GLib.Object {
                 if (theme.load())
                     themes.add(theme);
             }
-            
+
         } catch (Error e) {
             warning (e.message);
-        } 
-        
+        }
+
         if (themes.size > 0) {
             if (current == "") {
                 current = "Unity";
@@ -197,7 +203,7 @@ public class Config : GLib.Object {
         }
         else error("No theme found!");
     }
-    
+
 }
 
 }

@@ -56,11 +56,7 @@ I really like working on Gnome-Pie — and you can help improving it! There are 
 
 ### Translate Gnome-Pie!
 
-This is really easy: [There is an easy-to-follow step-by-step-guide available](http://www.simonschneegans.de/?p=439)!
-
-### Create Themes for Gnome-Pie!
-
-If you have some ideas on how Gnome-Pie should look: It’s easy to create new themes! I would love to include some true art in this software! [There is an comprehensive guide as well](http://www.simonschneegans.de/?p=246).
+This is really easy: [There is an easy-to-follow step-by-step-guide available](http://simmesimme.github.io/lessons/2011/11/09/translate-gnome-pie/)!
 
 ### Donate!
 

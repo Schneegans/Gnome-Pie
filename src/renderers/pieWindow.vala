@@ -256,7 +256,11 @@ public class PieWindow : Gtk.Window {
             this.on_closing();
             Gtk.grab_remove(this);
             FocusGrabber.ungrab();
-            this.renderer.activate();
+
+            GLib.Timeout.add(10, () => {
+                this.renderer.activate();
+                return false;
+            });
 
             GLib.Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
                 this.closed = true;

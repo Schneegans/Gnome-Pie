@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
 <interface>
-  <requires lib="gtk+" version="2.20"/>
+  <requires lib="gtk+" version="3.8"/>
   <object class="GtkDialog" id="window">
-    <property name="width_request">550</property>
-    <property name="height_request">450</property>
-    <property name="default_width">550</property>
-    <property name="default_height">450</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Slice Options</property>
-    <property name="resizable">True</property>
     <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">dialog</property>
-    <property name="has_resize_grip">False</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
+        <property name="width_request">550</property>
+        <property name="height_request">450</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child internal-child="action_area">
@@ -26,10 +23,10 @@
             <child>
               <object class="GtkButton" id="cancel-button">
                 <property name="label">gtk-close</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -41,10 +38,10 @@
             <child>
               <object class="GtkButton" id="ok-button">
                 <property name="label">gtk-ok</property>
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
-                <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -62,10 +59,11 @@
           </packing>
         </child>
         <child>
-          <object class="GtkVBox" id="vbox2">
+          <object class="GtkBox" id="vbox2">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="border_width">6</property>
+            <property name="orientation">vertical</property>
             <property name="spacing">6</property>
             <child>
               <object class="GtkScrolledWindow" id="slice-scrolledwindow">
@@ -98,16 +96,16 @@
                     <property name="left_padding">6</property>
                     <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkHBox" id="hbox2">
+                      <object class="GtkBox" id="hbox2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkButton" id="icon-button">
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="relief">none</property>
                             <child>
                               <object class="GtkImage" id="icon">
@@ -125,14 +123,16 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkVBox" id="options-box">
+                          <object class="GtkBox" id="options-box">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
                             <property name="homogeneous">True</property>
                             <child>
-                              <object class="GtkVBox" id="no-options-box">
+                              <object class="GtkBox" id="no-options-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
                                 <child>
                                   <object class="GtkLabel" id="label1">
                                     <property name="visible">True</property>
@@ -154,7 +154,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHBox" id="name-box">
+                              <object class="GtkBox" id="name-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
@@ -177,7 +177,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="invisible_char">•</property>
-                                    <property name="invisible_char_set">True</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -193,7 +192,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHBox" id="uri-box">
+                              <object class="GtkBox" id="uri-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
@@ -216,7 +215,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="invisible_char">•</property>
-                                    <property name="invisible_char_set">True</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -232,7 +230,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHBox" id="command-box">
+                              <object class="GtkBox" id="command-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
@@ -255,7 +253,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="invisible_char">•</property>
-                                    <property name="invisible_char_set">True</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -271,7 +268,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHBox" id="hotkey-box">
+                              <object class="GtkBox" id="hotkey-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
@@ -300,7 +297,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHBox" id="pie-box">
+                              <object class="GtkBox" id="pie-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
@@ -329,7 +326,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHBox" id="quickaction-box">
+                              <object class="GtkBox" id="quickaction-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="spacing">6</property>
@@ -349,13 +346,13 @@
                                 </child>
                                 <child>
                                   <object class="GtkCheckButton" id="quick-action-checkbutton">
+                                    <property name="use_action_appearance">False</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
                                     <property name="has_tooltip">True</property>
                                     <property name="tooltip_markup" translatable="yes">This Slice will be executed when you click in the middle of the Pie.</property>
                                     <property name="tooltip_text" translatable="yes">This Slice will be executed when you click in the middle of the Pie.</property>
-                                    <property name="use_action_appearance">False</property>
                                     <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                   </object>

@@ -39,7 +39,7 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.Label? hotkey_label = null;
     private Gtk.Label? no_pie_label = null;
     private Gtk.Label? no_slice_label = null;
-    private Gtk.VBox? preview_box = null;
+    private Gtk.Box? preview_box = null;
     private Gtk.Image? icon = null;
     private Gtk.EventBox? preview_background = null;
     private Gtk.Button? icon_button = null;
@@ -63,82 +63,73 @@ public class PreferencesWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public PreferencesWindow() {
-        try {
-            var builder = new Gtk.Builder();
+        var builder = new Gtk.Builder.from_file(Paths.ui_files + "/preferences.ui");
 
-            builder.add_from_file (Paths.ui_files + "/preferences.ui");
+        this.window = builder.get_object("window") as Gtk.Window;
+        this.window.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
+                    Gdk.EventMask.KEY_RELEASE_MASK |
+                    Gdk.EventMask.KEY_PRESS_MASK |
+                    Gdk.EventMask.POINTER_MOTION_MASK);
 
-            this.window = builder.get_object("window") as Gtk.Window;
+        var toolbar = builder.get_object ("toolbar") as Gtk.Widget;
+        toolbar.get_style_context().add_class("primary-toolbar");
 
-            this.window.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
-                        Gdk.EventMask.KEY_RELEASE_MASK |
-                        Gdk.EventMask.KEY_PRESS_MASK |
-                        Gdk.EventMask.POINTER_MOTION_MASK);
+        var inline_toolbar = builder.get_object ("pies-toolbar") as Gtk.Widget;
+        inline_toolbar.get_style_context().add_class("inline-toolbar");
 
-            var toolbar = builder.get_object ("toolbar") as Gtk.Widget;
-            toolbar.get_style_context().add_class("primary-toolbar");
+        this.pie_list = new PieList();
+        this.pie_list.on_select.connect(this.on_pie_select);
 
-            var inline_toolbar = builder.get_object ("pies-toolbar") as Gtk.Widget;
-            inline_toolbar.get_style_context().add_class("inline-toolbar");
+        var scroll_area = builder.get_object("pies-scrolledwindow") as Gtk.ScrolledWindow;
+        scroll_area.add(this.pie_list);
 
-            this.pie_list = new PieList();
-            this.pie_list.on_select.connect(this.on_pie_select);
+        this.preview = new PiePreview();
+        this.preview.on_first_slice_added.connect(() => {
+            this.no_slice_label.hide();
+        });
 
-            var scroll_area = builder.get_object("pies-scrolledwindow") as Gtk.ScrolledWindow;
-            scroll_area.add(this.pie_list);
+        this.preview.on_last_slice_removed.connect(() => {
+            this.no_slice_label.show();
+        });
 
-            this.preview = new PiePreview();
-            this.preview.on_first_slice_added.connect(() => {
-                this.no_slice_label.hide();
+        preview_box = builder.get_object("preview-box") as Gtk.Box;
+        this.preview_box.pack_start(preview, true, true);
+        this.id_label = builder.get_object("id-label") as Gtk.Label;
+        this.name_label = builder.get_object("pie-name-label") as Gtk.Label;
+        this.hotkey_label = builder.get_object("hotkey-label") as Gtk.Label;
+        this.no_pie_label = builder.get_object("no-pie-label") as Gtk.Label;
+        this.no_slice_label = builder.get_object("no-slice-label") as Gtk.Label;
+        this.icon = builder.get_object("icon") as Gtk.Image;
+        this.preview_background = builder.get_object("preview-background") as Gtk.EventBox;
+
+        (builder.get_object("settings-button") as Gtk.ToolButton).clicked.connect(on_settings_button_clicked);
+
+        this.hotkey_button = builder.get_object("key-button") as Gtk.Button;
+        this.hotkey_button.clicked.connect(on_key_button_clicked);
+
+        this.icon_button = builder.get_object("icon-button") as Gtk.Button;
+        this.icon_button.clicked.connect(on_icon_button_clicked);
+
+        this.name_button = builder.get_object("rename-button") as Gtk.Button;
+        this.name_button.clicked.connect(on_rename_button_clicked);
+
+        this.remove_pie_button = builder.get_object("remove-pie-button") as Gtk.ToolButton;
+        this.remove_pie_button.clicked.connect(on_remove_pie_button_clicked);
+
+        (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
+
+        this.window.hide.connect(() => {
+            // save settings on close
+            Config.global.save();
+            Pies.save();
+
+            Timeout.add(100, () => {
+                IconSelectWindow.clear_icons();
+                return false;
             });
+        });
 
-            this.preview.on_last_slice_removed.connect(() => {
-                this.no_slice_label.show();
-            });
-
-            preview_box = builder.get_object("preview-box") as Gtk.VBox;
-            this.preview_box.pack_start(preview, true, true);
-
-            this.id_label = builder.get_object("id-label") as Gtk.Label;
-            this.name_label = builder.get_object("pie-name-label") as Gtk.Label;
-            this.hotkey_label = builder.get_object("hotkey-label") as Gtk.Label;
-            this.no_pie_label = builder.get_object("no-pie-label") as Gtk.Label;
-            this.no_slice_label = builder.get_object("no-slice-label") as Gtk.Label;
-            this.icon = builder.get_object("icon") as Gtk.Image;
-            this.preview_background = builder.get_object("preview-background") as Gtk.EventBox;
-
-            (builder.get_object("settings-button") as Gtk.ToolButton).clicked.connect(on_settings_button_clicked);
-
-            this.hotkey_button = builder.get_object("key-button") as Gtk.Button;
-            this.hotkey_button.clicked.connect(on_key_button_clicked);
-
-            this.icon_button = builder.get_object("icon-button") as Gtk.Button;
-            this.icon_button.clicked.connect(on_icon_button_clicked);
-
-            this.name_button = builder.get_object("rename-button") as Gtk.Button;
-            this.name_button.clicked.connect(on_rename_button_clicked);
-
-            this.remove_pie_button = builder.get_object("remove-pie-button") as Gtk.ToolButton;
-            this.remove_pie_button.clicked.connect(on_remove_pie_button_clicked);
-
-            (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
-
-            this.window.hide.connect(() => {
-                // save settings on close
-                Config.global.save();
-                Pies.save();
-
-                Timeout.add(100, () => {
-                    IconSelectWindow.clear_icons();
-                    return false;
-                });
-            });
-
-            this.window.delete_event.connect(this.window.hide_on_delete);
-
-        } catch (GLib.Error e) {
-            error("Could not load UI: %s\n", e.message);
-        }
+        this.window.delete_event.connect(this.window.hide_on_delete);
     }
 
     /////////////////////////////////////////////////////////////////////

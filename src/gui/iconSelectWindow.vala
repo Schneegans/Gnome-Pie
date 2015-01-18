@@ -175,7 +175,7 @@ public class IconSelectWindow : GLib.Object {
             (builder.get_object("ok-button") as Gtk.Button).clicked.connect(on_ok_button_clicked);
             (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(on_cancel_button_clicked);
 
-            var combo_box = builder.get_object("combo-box") as Gtk.VBox;
+            var combo_box = builder.get_object("combo-box") as Gtk.Box;
 
             // context combo
             var context_combo = new Gtk.ComboBoxText();

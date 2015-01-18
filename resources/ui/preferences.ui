@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Generated with glade 3.18.3 -->
 <interface>
-  <requires lib="gtk+" version="2.20"/>
+  <requires lib="gtk+" version="3.8"/>
   <object class="GtkWindow" id="window">
-    <property name="width_request">600</property>
-    <property name="height_request">475</property>
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Gnome-Pie Settings</property>
-    <property name="resizable">True</property>
     <property name="window_position">center</property>
-    <property name="has_resize_grip">False</property>
     <child>
-      <object class="GtkVBox" id="vbox2">
+      <object class="GtkBox" id="vbox2">
+        <property name="width_request">625</property>
+        <property name="height_request">500</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkToolbar" id="toolbar">
             <property name="visible">True</property>
@@ -20,9 +20,9 @@
             <property name="toolbar_style">both-horiz</property>
             <child>
               <object class="GtkToolButton" id="settings-button">
+                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="use_action_appearance">False</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">General Settings</property>
                 <property name="use_underline">True</property>
@@ -41,19 +41,21 @@
           </packing>
         </child>
         <child>
-          <object class="GtkVBox" id="main-vbox1">
+          <object class="GtkBox" id="main-vbox1">
             <property name="can_focus">False</property>
             <property name="border_width">10</property>
+            <property name="orientation">vertical</property>
             <property name="spacing">10</property>
             <child>
-              <object class="GtkHBox" id="hbox1">
+              <object class="GtkBox" id="hbox1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="spacing">6</property>
                 <child>
-                  <object class="GtkVBox" id="pie-list-box">
+                  <object class="GtkBox" id="pie-list-box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkScrolledWindow" id="pies-scrolledwindow">
                         <property name="width_request">170</property>
@@ -79,9 +81,9 @@
                         <property name="icon_size">1</property>
                         <child>
                           <object class="GtkToolButton" id="add-pie-button">
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
                             <property name="icon_name">list-add-symbolic</property>
                           </object>
@@ -92,9 +94,9 @@
                         </child>
                         <child>
                           <object class="GtkToolButton" id="remove-pie-button">
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="use_underline">True</property>
                             <property name="icon_name">list-remove-symbolic</property>
                           </object>
@@ -118,21 +120,22 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkVBox" id="pie-box">
+                  <object class="GtkBox" id="pie-box">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
                     <property name="spacing">6</property>
                     <child>
-                      <object class="GtkHBox" id="hbox2">
+                      <object class="GtkBox" id="hbox2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkButton" id="icon-button">
+                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="relief">none</property>
                             <property name="focus_on_click">False</property>
                             <child>
@@ -151,15 +154,16 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkVBox" id="pie-box1">
+                          <object class="GtkBox" id="pie-box1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
+                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkButton" id="rename-button">
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="relief">none</property>
                                 <property name="use_underline">True</property>
                                 <property name="focus_on_click">False</property>
@@ -185,10 +189,10 @@
                             </child>
                             <child>
                               <object class="GtkButton" id="key-button">
+                                <property name="use_action_appearance">False</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="use_action_appearance">False</property>
                                 <property name="relief">none</property>
                                 <property name="use_underline">True</property>
                                 <property name="focus_on_click">False</property>
@@ -249,10 +253,11 @@
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
-                              <object class="GtkVBox" id="pie-edit-box">
+                              <object class="GtkBox" id="pie-edit-box">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="border_width">2</property>
+                                <property name="orientation">vertical</property>
                                 <child>
                                   <object class="GtkLabel" id="no-slice-label">
                                     <property name="can_focus">False</property>
@@ -294,9 +299,10 @@ Start by creating one! &lt;/b&gt; This can be done by clicking on the tiny littl
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkVBox" id="preview-box">
+                                  <object class="GtkBox" id="preview-box">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="orientation">vertical</property>
                                     <child>
                                       <placeholder/>
                                     </child>

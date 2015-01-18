@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk+" version="2.20"/>
+  <requires lib="gtk+" version="3.8"/>
   <object class="GtkDialog" id="window">
-    <property name="width_request">550</property>
-    <property name="height_request">450</property>
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">General Settings</property>
@@ -15,6 +13,8 @@
     <property name="has_resize_grip">False</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="dialog-vbox1">
+        <property name="width_request">550</property>
+        <property name="height_request">450</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <child internal-child="action_area">
@@ -45,7 +45,8 @@
           </packing>
         </child>
         <child>
-          <object class="GtkVBox" id="vbox4">
+          <object class="GtkBox" id="vbox4">
+            <property name="orientation">vertical</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="border_width">6</property>
@@ -65,7 +66,8 @@
                     <property name="left_padding">6</property>
                     <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkVBox" id="vbox5">
+                      <object class="GtkBox" id="vbox5">
+                        <property name="orientation">vertical</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
@@ -143,7 +145,8 @@
                     <property name="left_padding">6</property>
                     <property name="right_padding">6</property>
                     <child>
-                      <object class="GtkVBox" id="vbox1">
+                      <object class="GtkBox" id="vbox1">
+                        <property name="orientation">vertical</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="spacing">6</property>
@@ -164,7 +167,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkHBox" id="hbox1">
+                          <object class="GtkBox" id="hbox1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="spacing">6</property>
@@ -181,7 +184,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHScale" id="scale-hscale">
+                              <object class="GtkScale" id="scale-hscale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="fill_level">2</property>
@@ -203,7 +206,7 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkHBox" id="hbox2">
+                          <object class="GtkBox" id="hbox2">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="spacing">6</property>
@@ -220,7 +223,7 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkHScale" id="range-hscale">
+                              <object class="GtkScale" id="range-hscale">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="fill_level">2000</property>

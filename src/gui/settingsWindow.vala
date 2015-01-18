@@ -71,7 +71,7 @@ public class SettingsWindow : GLib.Object {
             this.captions = (builder.get_object("captions-checkbox") as Gtk.ToggleButton);
             this.captions.toggled.connect(on_captions_toggled);
 
-            var scale_slider = (builder.get_object("scale-hscale") as Gtk.HScale);
+            var scale_slider = (builder.get_object("scale-hscale") as Gtk.Scale);
                 scale_slider.set_range(0.5, 2.0);
                 scale_slider.set_increments(0.05, 0.25);
                 scale_slider.set_value(Config.global.global_scale);
@@ -98,7 +98,7 @@ public class SettingsWindow : GLib.Object {
                     }
                 });
 
-            var range_slider = (builder.get_object("range-hscale") as Gtk.HScale);
+            var range_slider = (builder.get_object("range-hscale") as Gtk.Scale);
                 range_slider.set_range(100, 2000);
                 range_slider.set_increments(10, 100);
                 range_slider.set_value(Config.global.activation_range);

@@ -32,7 +32,7 @@ pkg_check_modules(WNCK REQUIRED libwnck-3.0)
 pkg_check_modules(BAMF REQUIRED libbamf3)
 pkg_check_modules(GIO REQUIRED gio-unix-2.0)
 pkg_check_modules(CAIRO REQUIRED cairo)
-pkg_check_modules(GEE REQUIRED gee-1.0)
+pkg_check_modules(GEE REQUIRED gee-0.8)
 pkg_check_modules(X11 REQUIRED x11)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
@@ -136,7 +136,7 @@ set(VALA_PKGS
   libwnck-3.0
   libbamf3
   cairo
-  gee-1.0
+  gee-0.8
   x11
   gio-unix-2.0
   posix

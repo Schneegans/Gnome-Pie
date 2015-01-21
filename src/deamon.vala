@@ -42,8 +42,6 @@ public class Deamon : GLib.Object {
         Gtk.init(ref args);
         Paths.init();
 
-        message("Welcome to Gnome-Pie " + version + "!");
-
         // create the Deamon and run it
         var deamon = new GnomePie.Deamon();
         deamon.run(args);
@@ -82,6 +80,68 @@ public class Deamon : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void run(string[] args) {
+
+        // create unique application
+        var app = new GLib.Application("org.gnome.gnomepie", GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
+
+        app.command_line.connect((cmd) => {
+            string[] tmp = cmd.get_arguments();
+            unowned string[] remote_args = tmp;
+            if (!handle_command_line(remote_args, true)) {
+                Gtk.main_quit();
+            }
+
+            return 0;
+        });
+
+        app.startup.connect(() => {
+
+            message("Welcome to Gnome-Pie " + version + "!");
+
+            // init locale support
+            Intl.bindtextdomain ("gnomepie", Paths.locales);
+            Intl.textdomain ("gnomepie");
+
+            // init toolkits and static stuff
+            ActionRegistry.init();
+            GroupRegistry.init();
+
+            PieManager.init();
+            Icon.init();
+
+            // launch the indicator
+            this.indicator = new Indicator();
+
+            // connect SigHandlers
+            Posix.signal(Posix.SIGINT, sig_handler);
+            Posix.signal(Posix.SIGTERM, sig_handler);
+
+            // finished loading... so run the prog!
+            message("Started happily...");
+
+            if (handle_command_line(args, false)) {
+                Gtk.main();
+            }
+        });
+
+        app.run(args);
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Print a nifty message when the prog is killed.
+    /////////////////////////////////////////////////////////////////////
+
+    private static void sig_handler(int sig) {
+        stdout.printf("\n");
+		message("Caught signal (%d), bye!".printf(sig));
+		Gtk.main_quit();
+	}
+
+    /////////////////////////////////////////////////////////////////////
+    /// Handles command line parameters.
+    /////////////////////////////////////////////////////////////////////
+
+    private bool handle_command_line(string[] args, bool show_preferences) {
         // create command line options
         var context = new GLib.OptionContext("");
         context.set_help_enabled(true);
@@ -94,86 +154,24 @@ public class Deamon : GLib.Object {
             warning(error.message);
         }
 
-        if (Deamon.reset) {
+        if (reset) {
             if (GLib.FileUtils.remove(Paths.pie_config) == 0)
                 message("Removed file \"%s\"", Paths.pie_config);
             if (GLib.FileUtils.remove(Paths.settings) == 0)
                 message("Removed file \"%s\"", Paths.settings);
 
-            return;
+            return false;
         }
 
-        // create unique application
-        var app = new Unique.App("org.gnome.gnomepie", null);
-
-        if (app.is_running()) {
-            // inform the running instance of the pie to be opened
-            if (open_pie != null) {
-            	message("Gnome-Pie is already running. Sending request to open pie " + open_pie + ".");
-                var data = new Unique.MessageData();
-                data.set_text(open_pie, open_pie.length);
-                app.send_message(Unique.Command.ACTIVATE, data);
-
-                return;
-            }
-
-            message("Gnome-Pie is already running. Sending request to open config menu.");
-            app.send_message(Unique.Command.ACTIVATE, null);
-
-            return;
+        if (open_pie != null && open_pie != "") {
+            PieManager.open_pie(open_pie);
+            open_pie = "";
+        } else if (show_preferences) {
+            this.indicator.show_preferences();
         }
 
-        // wait for incoming messages
-        app.message_received.connect((cmd, data, event_time) => {
-            if (cmd == Unique.Command.ACTIVATE) {
-                var pie = data.get_text();
-
-                if (pie != null && pie != "") PieManager.open_pie(pie);
-                else                          this.indicator.show_preferences();
-
-                return Unique.Response.OK;
-            }
-
-            return Unique.Response.PASSTHROUGH;
-        });
-
-        // init locale support
-        Intl.bindtextdomain ("gnomepie", Paths.locales);
-        Intl.textdomain ("gnomepie");
-
-        // init toolkits and static stuff
-        ActionRegistry.init();
-        GroupRegistry.init();
-
-        PieManager.init();
-        Icon.init();
-
-        // launch the indicator
-        this.indicator = new Indicator();
-
-        // connect SigHandlers
-        Posix.signal(Posix.SIGINT, sig_handler);
-	    Posix.signal(Posix.SIGTERM, sig_handler);
-
-	    // finished loading... so run the prog!
-	    message("Started happily...");
-
-	    // open pie if neccessary
-	    if (open_pie != null)
-	        PieManager.open_pie(open_pie);
-
-	    Gtk.main();
+        return true;
     }
-
-    /////////////////////////////////////////////////////////////////////
-    /// Print a nifty message when the prog is killed.
-    /////////////////////////////////////////////////////////////////////
-
-    private static void sig_handler(int sig) {
-        stdout.printf("\n");
-		message("Caught signal (%d), bye!".printf(sig));
-		Gtk.main_quit();
-	}
 }
 
 }

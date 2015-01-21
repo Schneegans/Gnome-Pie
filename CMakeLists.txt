@@ -28,7 +28,6 @@ find_package(PkgConfig)
 # check whether GTK3 is supported
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 pkg_check_modules(INDICATOR3 appindicator3-0.1)
-pkg_check_modules(UNIQUE REQUIRED unique-3.0)
 pkg_check_modules(WNCK REQUIRED libwnck-3.0)
 pkg_check_modules(BAMF REQUIRED libbamf3)
 pkg_check_modules(GIO REQUIRED gio-unix-2.0)
@@ -83,7 +82,6 @@ set(LIBS
 	${XTST_LIBRARIES}
 	${GMENU_LIBRARIES}
 	${GMENU3_LIBRARIES}
-	${UNIQUE_LIBRARIES}
 	${X11_LIBRARIES}
 	${WNCK_LIBRARIES}
 	${BAMF_LIBRARIES}
@@ -103,7 +101,6 @@ set(LIB_PATHS
 	${XTST_LIBRARY_DIRS}
 	${GMENU_LIBRARY_DIRS}
 	${GMENU3_LIBRARY_DIRS}
-	${UNIQUE_LIBRARY_DIRS}
 	${X11_LIBRARY_DIRS}
 	${WNCK_LIBRARY_DIRS}
 	${BAMF_LIBRARY_DIRS}
@@ -121,7 +118,6 @@ set(INCLUDE_PATHS
 	${XTST_INCLUDE_DIRS}
 	${GMENU_INCLUDE_DIRS}
 	${GMENU3_INCLUDE_DIRS}
-	${UNIQUE_INCLUDE_DIRS}
 	${X11_INCLUDE_DIRS}
 	${BAMF_INCLUDE_DIRS}
 	${WNCK_INCLUDE_DIRS}
@@ -135,6 +131,10 @@ include_directories(${INCLUDE_PATHS})
 set(EXECUTABLE_OUTPUT_PATH ${gnomepie_SOURCE_DIR})
 
 set(VALA_PKGS
+  gtk+-3.0
+  gdk-x11-3.0
+  libwnck-3.0
+  libbamf3
   cairo
   gee-1.0
   x11
@@ -157,20 +157,6 @@ if (${GMENU3_FOUND})
 else (${GMENU3_FOUND})
     LIST(APPEND VALA_PKGS libgnome-menu)
 endif (${GMENU3_FOUND})
-
-if (${GTK3_FOUND})
-    LIST(APPEND VALA_PKGS gtk+-3.0)
-    LIST(APPEND VALA_PKGS gdk-x11-3.0)
-    LIST(APPEND VALA_PKGS libbamf3)
-    LIST(APPEND VALA_PKGS libwnck-3.0)
-    LIST(APPEND VALA_PKGS unique-3.0)
-else (${GTK3_FOUND})
-    LIST(APPEND VALA_PKGS gtk+-2.0)
-    LIST(APPEND VALA_PKGS gdk-x11-2.0)
-    LIST(APPEND VALA_PKGS bamf)
-    LIST(APPEND VALA_PKGS libwnck-1.0)
-    LIST(APPEND VALA_PKGS unique-1.0)
-endif (${GTK3_FOUND})
 
 add_subdirectory(src)
 
@@ -204,7 +190,6 @@ message( "  XML_LIBRARIES = ${XML_LIBRARIES}" )
 message( "  XTST_LIBRARIES = ${XTST_LIBRARIES}" )
 message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )
 message( "  GMENU3_LIBRARIES = ${GMENU3_LIBRARIES}" )
-message( "  UNIQUE_LIBRARIES = ${UNIQUE_LIBRARIES}" )
 message( "  X11_LIBRARIES = ${X11_LIBRARIES}" )
 message( "  BAMF_LIBRARIES = ${BAMF_LIBRARIES}" )
 message( "  WNCK_LIBRARIES = ${WNCK_LIBRARIES}" )

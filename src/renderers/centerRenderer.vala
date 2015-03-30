@@ -94,7 +94,7 @@ public class CenterRenderer : GLib.Object {
     /// Draws all center layers and the caption.
     /////////////////////////////////////////////////////////////////////
     
-    public void draw(double frame_time, Cairo.Context ctx, double angle, double distance) {
+    public void draw(double frame_time, Cairo.Context ctx, double angle, int mouse_track) {
         // get all center_layers
 	    var layers = Config.global.theme.center_layers;
         
@@ -139,7 +139,7 @@ public class CenterRenderer : GLib.Object {
 	        } else if (rotation_mode == CenterLayer.RotationMode.TO_ACTIVE) {
 	            max_rotation_speed *= this.activity.val;
 	            
-	            double slice_angle = parent.slice_count() > 0 ? 2*PI/parent.slice_count() : 0;
+	            double slice_angle = parent.total_slice_count > 0 ? 2*PI/parent.total_slice_count : 0;
 	            double direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
 	            double diff = direction-layer.rotation;
 	            double step = max_rotation_speed*frame_time;
@@ -182,11 +182,43 @@ public class CenterRenderer : GLib.Object {
         if (Config.global.theme.caption && caption != null && this.activity.val > 0) {
 		    ctx.save();
             ctx.identity_matrix();
-            int pos = this.parent.size/2;
-            ctx.translate(pos, (int)(Config.global.theme.caption_position) + pos);
+            ctx.translate(this.parent.center_x, (int)(Config.global.theme.caption_position) + this.parent.center_y);
             caption.paint_on(ctx, this.activity.val*this.alpha.val);
             ctx.restore();
         }
+        
+        //scroll pie
+        if (this.alpha.val > 0.1
+            && this.parent.original_visible_slice_count < this.parent.slice_count() 
+            && this.parent.original_visible_slice_count > 0) {
+            int np= (this.parent.slice_count()+this.parent.original_visible_slice_count -1)/this.parent.original_visible_slice_count;
+            int cp= this.parent.first_slice_idx / this.parent.original_visible_slice_count;
+            int r= 8;       //circle radious
+            int dy= 20;     //distance between circles
+            double a= 0.8 * this.alpha.val;
+            int dx= (int)Config.global.theme.center_radius + r + 10;
+            if (this.parent.center_x + dx > this.parent.size_w)
+                dx= -dx;    //no right side, put scroll in the left size
+	        ctx.save();
+            ctx.identity_matrix();
+            ctx.translate(this.parent.center_x + dx, this.parent.center_y - (np-1)*dy/2);
+            for (int i=0; i<np; i++) {
+                ctx.arc( 0, 0, r, 0, 2*PI );
+                if (i == cp){
+                    ctx.set_source_rgba(0.3,0.3,0.3, a);    //light gray stroke
+                    ctx.stroke_preserve();
+                    ctx.set_source_rgba(1,1,1, a);          //white fill
+                    ctx.fill(); //current
+                } else {
+                    ctx.set_source_rgba(1,1,1, a);          //white stroke
+                    ctx.stroke_preserve();
+                    ctx.set_source_rgba(0.3,0.3,0.3, a/4);  //light gray fill
+                    ctx.fill(); //current
+                }
+                ctx.translate(0, dy);
+            }
+            ctx.restore();
+        }        
     }
 }
 

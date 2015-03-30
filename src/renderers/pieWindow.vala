@@ -97,7 +97,8 @@ public class PieWindow : Gtk.Window {
         this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
                         Gdk.EventMask.KEY_RELEASE_MASK |
                         Gdk.EventMask.KEY_PRESS_MASK |
-                        Gdk.EventMask.POINTER_MOTION_MASK);
+                        Gdk.EventMask.POINTER_MOTION_MASK |
+                        Gdk.EventMask.SCROLL_MASK );
 
         // activate on left click
         this.button_release_event.connect ((e) => {
@@ -141,6 +142,15 @@ public class PieWindow : Gtk.Window {
             Gtk.grab_add(this);
             FocusGrabber.grab(this.get_window(), true, true, false);
         });
+        
+        this.scroll_event.connect((e) => {
+            if (e.direction == Gdk.ScrollDirection.UP)
+                this.renderer.select_prevpage();
+                
+            else if (e.direction == Gdk.ScrollDirection.DOWN)
+                this.renderer.select_nextpage();
+            return true;
+        });
 
         // draw the pie on expose
         this.draw.connect(this.draw_window);
@@ -153,7 +163,7 @@ public class PieWindow : Gtk.Window {
     public void load_pie(Pie pie) {
         this.renderer.load_pie(pie);
         this.set_window_position(pie);
-        this.set_size_request(renderer.size, renderer.size);
+        this.set_size_request(renderer.size_w, renderer.size_h);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -162,7 +172,6 @@ public class PieWindow : Gtk.Window {
 
     public void open() {
         this.realize();
-
         // capture the background image if there is no compositing
         if (!this.has_compositing) {
             int x, y, width, height;
@@ -194,12 +203,27 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
 
     public void get_center_pos(out int out_x, out int out_y) {
-        int x=0, y=0, width=0, height=0;
+        int x=0, y=0; //width=0, height=0;
         this.get_position(out x, out y);
-        this.get_size(out width, out height);
+        out_x = x + renderer.center_x;
+        out_y = y + renderer.center_y;
+    }
+    
+    private void get_mouse_position(out double mx, out double my) {
+        // get the mouse position
+        mx = 0.0;
+        my = 0.0;
+        Gdk.ModifierType mask;
 
-        out_x = x + width/2;
-        out_y = y + height/2;
+        var display = Gdk.Display.get_default();
+        var manager = display.get_device_manager();
+        GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+
+        foreach(var device in list) {
+            if (device.input_source != Gdk.InputSource.KEYBOARD) {
+                this.get_window().get_device_position_double(device, out mx, out my, out mask);
+            }
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -213,35 +237,26 @@ public class PieWindow : Gtk.Window {
             ctx.paint();
             ctx.set_operator (Cairo.Operator.OVER);
         } else {
+		    
             ctx.set_operator (Cairo.Operator.OVER);
             ctx.set_source_surface(background.surface, -1, -1);
             ctx.paint();
         }
 
         // align the context to the center of the PieWindow
-        ctx.translate(this.width_request*0.5, this.height_request*0.5);
+        ctx.translate(this.renderer.center_x, this.renderer.center_y);
 
         // get the mouse position
-        double mouse_x = 0.0, mouse_y = 0.0;
-        Gdk.ModifierType mask;
-
-        var display = Gdk.Display.get_default();
-        var manager = display.get_device_manager();
-        GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
-
-        foreach(var device in list) {
-            if (device.input_source != Gdk.InputSource.KEYBOARD) {
-                this.get_window().get_device_position_double(device, out mouse_x, out mouse_y, out mask);
-            }
-        }
+        double mouse_x, mouse_y;
+        get_mouse_position( out mouse_x, out mouse_y );
 
         // store the frame time
         double frame_time = this.timer.elapsed();
         this.timer.reset();
 
         // render the Pie
-        this.renderer.draw(frame_time, ctx, (int)(mouse_x - this.width_request*0.5),
-                                            (int)(mouse_y - this.height_request*0.5));
+        this.renderer.draw(frame_time, ctx, (int)(mouse_x - this.renderer.center_x),
+                                            (int)(mouse_y - this.renderer.center_y));
 
         return true;
     }
@@ -314,6 +329,10 @@ public class PieWindow : Gtk.Window {
             else if (Gdk.keyval_name(key) == "Down") this.renderer.select_down();
             else if (Gdk.keyval_name(key) == "Left") this.renderer.select_left();
             else if (Gdk.keyval_name(key) == "Right") this.renderer.select_right();
+            else if (Gdk.keyval_name(key) == "Page_Down") this.renderer.select_nextpage();
+            else if (Gdk.keyval_name(key) == "Page_Up") this.renderer.select_prevpage();
+            else if (Gdk.keyval_name(key) == "Tab") this.renderer.select_nextpage();
+            else if (Gdk.keyval_name(key) == "ISO_Left_Tab") this.renderer.select_prevpage();
             else if (Gdk.keyval_name(key) == "Alt_L") this.renderer.show_hotkeys = true;
             else {
                 int index = -1;

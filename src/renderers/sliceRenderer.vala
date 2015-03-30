@@ -94,7 +94,14 @@ public class SliceRenderer : GLib.Object {
 
     public SliceRenderer(PieRenderer parent) {
         this.parent = parent;
+        this.reset_anim();
+    }
+        
+    /////////////////////////////////////////////////////////////////////
+    /// Put all AnimatedValues in their initial values
+    /////////////////////////////////////////////////////////////////////
 
+    public void reset_anim() {
         this.fade =   new AnimatedValue.linear(0.0, 0.0, Config.global.theme.transition_time);
         this.wobble = new AnimatedValue.linear(0.0, 0.0, Config.global.theme.transition_time);
         this.alpha =  new AnimatedValue.linear(0.0, 1.0, Config.global.theme.fade_in_time);
@@ -147,7 +154,7 @@ public class SliceRenderer : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Activaes the Action of this slice.
+    /// Activates the Action of this slice.
     /////////////////////////////////////////////////////////////////////
 
     public void activate() {
@@ -189,7 +196,7 @@ public class SliceRenderer : GLib.Object {
     /// Draws all layers of the slice.
     /////////////////////////////////////////////////////////////////////
 
-    public void draw(double frame_time, Cairo.Context ctx, double angle, double distance) {
+    public void draw(double frame_time, Cairo.Context ctx, double angle, int slice_track) {
 
         // update the AnimatedValues
         this.scale.update(frame_time);
@@ -199,16 +206,21 @@ public class SliceRenderer : GLib.Object {
         this.fade_rotation.update(frame_time);
         this.wobble.update(frame_time);
 
-	    double direction = 2.0 * PI * position/parent.slice_count() + this.fade_rotation.val;
+	    double direction = 2.0 * PI * (position-parent.first_slice_idx)/parent.total_slice_count 
+                    	    + parent.first_slice_angle + this.fade_rotation.val;
 	    double max_scale = 1.0/Config.global.theme.max_zoom;
         double diff = fabs(angle-direction);
 
+        if (diff > 2 * PI)
+            diff = diff - 2 * PI;
+            
         if (diff > PI)
 	        diff = 2 * PI - diff;
 
-        active = ((parent.active_slice >= 0) && (diff < PI/parent.slice_count()));
 
-        if (parent.active_slice >= 0) {
+        active = ((parent.active_slice >= 0) && (diff < PI/parent.total_slice_count));
+
+        if (slice_track != 0) {
             double wobble = Config.global.theme.wobble*diff/PI*(1-diff/PI);
             if ((direction < angle && direction > angle - PI) || direction > PI+angle) {
                 this.wobble.reset_target(-wobble, Config.global.theme.transition_time*0.5);
@@ -228,7 +240,7 @@ public class SliceRenderer : GLib.Object {
 
 
 
-        max_scale = (parent.active_slice >= 0 ? max_scale : 1.0/Config.global.theme.max_zoom);
+        max_scale = (slice_track != 0 ? max_scale : 1.0/Config.global.theme.max_zoom);
 
         if (fabs(this.scale.end - max_scale) > Config.global.theme.max_zoom*0.005)
             this.scale.reset_target(max_scale, Config.global.theme.transition_time);
@@ -240,9 +252,9 @@ public class SliceRenderer : GLib.Object {
 
         // increase radius if there are many slices in a pie
         if (atan((Config.global.theme.slice_radius+Config.global.theme.slice_gap)
-          /(radius/Config.global.theme.max_zoom)) > PI/parent.slice_count()) {
+          /(radius/Config.global.theme.max_zoom)) > PI/parent.total_slice_count) {
             radius = (Config.global.theme.slice_radius+Config.global.theme.slice_gap)
-                     /tan(PI/parent.slice_count())*Config.global.theme.max_zoom;
+                     /tan(PI/parent.total_slice_count)*Config.global.theme.max_zoom;
         }
 
         // transform the context

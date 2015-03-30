@@ -266,9 +266,7 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
 
     private void activate_slice() {
-        message( "--activate_slice--" );
         if (!this.closing) {
-            message( "--closing--" );
             this.closing = true;
             this.on_closing();
             Gtk.grab_remove(this);
@@ -280,7 +278,6 @@ public class PieWindow : Gtk.Window {
             });
 
             GLib.Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
-                message( "--CLOSED--" );
                 this.closed = true;
                 this.on_closed();
                 this.destroy();
@@ -294,9 +291,7 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
 
     private void cancel() {
-        message( "--cancel--" );
         if (!this.closing) {
-            message( "--closing--" );
             this.closing = true;
             this.on_closing();
             Gtk.grab_remove(this);
@@ -304,7 +299,6 @@ public class PieWindow : Gtk.Window {
             this.renderer.cancel();
 
             GLib.Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
-                message( "--CLOSED--" );
                 this.closed = true;
                 this.on_closed();
                 this.destroy();

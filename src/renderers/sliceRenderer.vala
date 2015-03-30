@@ -196,7 +196,7 @@ public class SliceRenderer : GLib.Object {
     /// Draws all layers of the slice.
     /////////////////////////////////////////////////////////////////////
 
-    public void draw(double frame_time, Cairo.Context ctx, double angle, int mouse_track) {
+    public void draw(double frame_time, Cairo.Context ctx, double angle, int slice_track) {
 
         // update the AnimatedValues
         this.scale.update(frame_time);
@@ -220,7 +220,7 @@ public class SliceRenderer : GLib.Object {
 
         active = ((parent.active_slice >= 0) && (diff < PI/parent.total_slice_count));
 
-        if (mouse_track != 0) {
+        if (slice_track != 0) {
             double wobble = Config.global.theme.wobble*diff/PI*(1-diff/PI);
             if ((direction < angle && direction > angle - PI) || direction > PI+angle) {
                 this.wobble.reset_target(-wobble, Config.global.theme.transition_time*0.5);
@@ -240,7 +240,7 @@ public class SliceRenderer : GLib.Object {
 
 
 
-        max_scale = (mouse_track != 0 ? max_scale : 1.0/Config.global.theme.max_zoom);
+        max_scale = (slice_track != 0 ? max_scale : 1.0/Config.global.theme.max_zoom);
 
         if (fabs(this.scale.end - max_scale) > Config.global.theme.max_zoom*0.005)
             this.scale.reset_target(max_scale, Config.global.theme.transition_time);

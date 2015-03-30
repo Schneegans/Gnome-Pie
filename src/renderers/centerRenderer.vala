@@ -94,7 +94,7 @@ public class CenterRenderer : GLib.Object {
     /// Draws all center layers and the caption.
     /////////////////////////////////////////////////////////////////////
     
-    public void draw(double frame_time, Cairo.Context ctx, double angle, int mouse_track) {
+    public void draw(double frame_time, Cairo.Context ctx, double angle, int slice_track) {
         // get all center_layers
 	    var layers = Config.global.theme.center_layers;
         

@@ -507,12 +507,12 @@ public class PieRenderer : GLib.Object {
         if (this.size_w > 0) {
 	        double distance = sqrt(mouse_x*mouse_x + mouse_y*mouse_y);
 	        double angle = 0.0;
-	        int mouse_track= 0;
+	        int slice_track= 0;
 
 	        if (this.key_board_control) {
 	            int n= this.active_slice - this.first_slice_idx;
 	            angle = 2.0*PI*n/(double)this.total_slice_count + this.first_slice_angle;
-	            mouse_track= 1;
+	            slice_track= 1;
 	        } else {
 
 	            if (distance > 0) {
@@ -541,7 +541,7 @@ public class PieRenderer : GLib.Object {
     	                next_active_slice = -1;
     	            else {
 	                    next_active_slice = next_active_slice + this.first_slice_idx;
-	                    mouse_track= 1;
+	                    slice_track= 1;
 	                }
 	            } else {
 	                next_active_slice = -1;
@@ -550,11 +550,11 @@ public class PieRenderer : GLib.Object {
 	            this.set_highlighted_slice(next_active_slice);
 	        }
 
-            center.draw(frame_time, ctx, angle, mouse_track);
+            center.draw(frame_time, ctx, angle, slice_track);
 
 	        //foreach (var slice in this.slices)
 	        for (int i= 0; i < this.visible_slice_count; ++i) {
-	           this.slices[ i+this.first_slice_idx ].draw(frame_time, ctx, angle, mouse_track);
+	           this.slices[ i+this.first_slice_idx ].draw(frame_time, ctx, angle, slice_track);
 		    }
 		}
     }

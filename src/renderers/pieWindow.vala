@@ -142,11 +142,11 @@ public class PieWindow : Gtk.Window {
             Gtk.grab_add(this);
             FocusGrabber.grab(this.get_window(), true, true, false);
         });
-        
+
         this.scroll_event.connect((e) => {
             if (e.direction == Gdk.ScrollDirection.UP)
                 this.renderer.select_prevpage();
-                
+
             else if (e.direction == Gdk.ScrollDirection.DOWN)
                 this.renderer.select_nextpage();
             return true;
@@ -208,7 +208,7 @@ public class PieWindow : Gtk.Window {
         out_x = x + renderer.center_x;
         out_y = y + renderer.center_y;
     }
-    
+
     private void get_mouse_position(out double mx, out double my) {
         // get the mouse position
         mx = 0.0;
@@ -237,7 +237,6 @@ public class PieWindow : Gtk.Window {
             ctx.paint();
             ctx.set_operator (Cairo.Operator.OVER);
         } else {
-		    
             ctx.set_operator (Cairo.Operator.OVER);
             ctx.set_source_surface(background.surface, -1, -1);
             ctx.paint();

@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,7 +12,7 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
@@ -23,13 +23,13 @@ namespace GnomePie {
 /////////////////////////////////////////////////////////////////////
 
 public class SessionGroup : ActionGroup {
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Used to register this type of ActionGroup. It sets the display
-    /// name for this ActionGroup, it's icon name and the string used in 
+    /// name for this ActionGroup, it's icon name and the string used in
     /// the pies.conf file for this kind of ActionGroups.
     /////////////////////////////////////////////////////////////////////
-    
+
     public static GroupRegistry.TypeDescription register() {
         var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Session Control");
@@ -38,38 +38,38 @@ public class SessionGroup : ActionGroup {
         description.id = "session";
         return description;
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
     /////////////////////////////////////////////////////////////////////
-    
+
     public SessionGroup(string parent_id) {
         GLib.Object(parent_id : parent_id);
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Construct block adds the three Actions.
     /////////////////////////////////////////////////////////////////////
-    
+
     construct {
-//    	string iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.gnome.SessionManager", "/org/gnome/SessionManager");
-//		iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.Hal", "/org/freedesktop/Hal/devices/computer");
-//    	iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.kde.ksmserver", "/KSMServer");
-//    	iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager");
-    
-        this.add_action(new AppAction(_("Shutdown"), "gnome-shutdown", 
+//        string iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.gnome.SessionManager", "/org/gnome/SessionManager");
+//        iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.Hal", "/org/freedesktop/Hal/devices/computer");
+//        iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.kde.ksmserver", "/KSMServer");
+//        iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager");
+
+        this.add_action(new AppAction(_("Shutdown"), "gnome-shutdown",
             "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.RequestShutdown"));
-            
-        this.add_action(new AppAction(_("Logout"), "gnome-session-logout", 
+
+        this.add_action(new AppAction(_("Logout"), "gnome-session-logout",
             "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.Logout uint32:1"));
-            
-        this.add_action(new AppAction(_("Reboot"), "gnome-session-reboot", 
+
+        this.add_action(new AppAction(_("Reboot"), "gnome-session-reboot",
             "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.RequestReboot"));
     }
-    
+
     // TODO: check for available interfaces --- these may work too:
     // dbus-send --print-reply --dest=org.freedesktop.Hal /org/freedesktop/Hal/devices/computer org.freedesktop.Hal.Device.SystemPowerManagement.Shutdown
-    // dbus-send --print-reply --dest=org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout 0 2 2 
+    // dbus-send --print-reply --dest=org.kde.ksmserver /KSMServer org.kde.KSMServerInterface.logout 0 2 2
     // dbus-send --print-reply --dest="org.freedesktop.ConsoleKit" /org/freedesktop/ConsoleKit/Manager org.freedesktop.ConsoleKit.Manager.Stop
 }
 

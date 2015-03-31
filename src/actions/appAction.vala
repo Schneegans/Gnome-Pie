@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,12 +12,12 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// This type of Action launches an application or a custom command.
 /////////////////////////////////////////////////////////////////////////
 
@@ -38,17 +38,17 @@ public class AppAction : Action {
         description.id = "app";
         return description;
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Stores the command line.
     /////////////////////////////////////////////////////////////////////
 
     public override string real_command { get; construct set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Simply returns the real_command. No beautification.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string display_command { get {return real_command;} }
 
     /////////////////////////////////////////////////////////////////////
@@ -67,10 +67,10 @@ public class AppAction : Action {
         try{
             var item = GLib.AppInfo.create_from_commandline(this.real_command, null, GLib.AppInfoCreateFlags.NONE);
             item.launch(null, null);
-    	} catch (Error e) {
-	        warning(e.message);
+        } catch (Error e) {
+            warning(e.message);
         }
-    } 
+    }
 }
 
 }

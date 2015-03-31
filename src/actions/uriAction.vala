@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,23 +12,23 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// This type of Action opens the default application for an URI.
 /////////////////////////////////////////////////////////////////////////
 
 public class UriAction : Action {
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Used to register this type of Action. It sets the display name
     /// for this Action, whether it has a custom Icon/Name and the string
     /// used in the pies.conf file for this kind of Actions.
     /////////////////////////////////////////////////////////////////////
-    
+
     public static ActionRegistry.TypeDescription register() {
         var description = new ActionRegistry.TypeDescription();
         description.name = _("Open URI");
@@ -38,17 +38,17 @@ public class UriAction : Action {
         description.id = "uri";
         return description;
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The URI of this Action.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string real_command { get; construct set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Returns only the real URI. An URI can't be beautified.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string display_command { get {return real_command;} }
 
     /////////////////////////////////////////////////////////////////////
@@ -56,8 +56,8 @@ public class UriAction : Action {
     /////////////////////////////////////////////////////////////////////
 
     public UriAction(string name, string icon, string command, bool is_quickaction = false) {
-        GLib.Object(name : name, icon : icon, 
-                    real_command : command.has_prefix("www") ? "http://" + command : command, 
+        GLib.Object(name : name, icon : icon,
+                    real_command : command.has_prefix("www") ? "http://" + command : command,
                     is_quickaction : is_quickaction);
     }
 
@@ -68,10 +68,10 @@ public class UriAction : Action {
     public override void activate() {
         try{
             GLib.AppInfo.launch_default_for_uri(real_command, null);
-    	} catch (Error e) {
-	        warning(e.message);
+        } catch (Error e) {
+            warning(e.message);
         }
-    } 
+    }
 }
 
 }

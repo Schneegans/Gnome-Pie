@@ -29,38 +29,38 @@ public class AboutWindow: Gtk.AboutDialog {
     /////////////////////////////////////////////////////////////////////
 
     public AboutWindow () {
-    	string[] devs = {
-			"Simon Schneegans <code@simonschneegans.de>",
+        string[] devs = {
+            "Simon Schneegans <code@simonschneegans.de>",
             "Francesco Piccinno <stack.box@gmail.com>"
         };
         string[] artists = {
-			"Simon Schneegans <code@simonschneegans.de>"
+            "Simon Schneegans <code@simonschneegans.de>"
         };
-    	string[] translators = {
-    		"Simon Schneegans <code@simonschneegans.de> (DE, EN)",
-    		"Riccardo Traverso <gr3yfox.fw@gmail.com> (IT)",
-    		"Magnun Leno <magnun@codecommunity.org> (PT-BR)",
-    		"Kim Boram <Boramism@gmail.com> (KO)",
+        string[] translators = {
+            "Simon Schneegans <code@simonschneegans.de> (DE, EN)",
+            "Riccardo Traverso <gr3yfox.fw@gmail.com> (IT)",
+            "Magnun Leno <magnun@codecommunity.org> (PT-BR)",
+            "Kim Boram <Boramism@gmail.com> (KO)",
             "Eduardo Anabalon <lalo1412@gmail.com> (ES)",
             "Grégoire Bellon-Gervais <greggbg@gmail.com> (FR)",
             "Alex Maxime <cad.maxime@gmail.com> (FR)",
             "Eugene Roskin <pams@imail.ru> (RU)",
             "Ting Zhou <tzhou@haverford.edu> (ZH-CN)",
             "Martin Dinov <martindinov@yahoo.com> (BG)"
-    	};
+        };
 
-    	// sort translators
-    	GLib.List<string> translator_list = new GLib.List<string>();
-    	foreach (var translator in translators)
-    		translator_list.append(translator);
+        // sort translators
+        GLib.List<string> translator_list = new GLib.List<string>();
+        foreach (var translator in translators)
+            translator_list.append(translator);
 
-    	translator_list.sort((a, b) => {
-    		return a.ascii_casecmp(b);
-    	});
+        translator_list.sort((a, b) => {
+            return a.ascii_casecmp(b);
+        });
 
-    	string translator_string = "";
-    	foreach (var translator in translator_list)
-	   		translator_string += translator + "\n";
+        string translator_string = "";
+        foreach (var translator in translator_list)
+               translator_string += translator + "\n";
 
         GLib.Object (
             artists : artists,

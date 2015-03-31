@@ -133,9 +133,9 @@ public class Deamon : GLib.Object {
 
     private static void sig_handler(int sig) {
         stdout.printf("\n");
-		message("Caught signal (%d), bye!".printf(sig));
-		Gtk.main_quit();
-	}
+        message("Caught signal (%d), bye!".printf(sig));
+        Gtk.main_quit();
+    }
 
     /////////////////////////////////////////////////////////////////////
     /// Handles command line parameters.

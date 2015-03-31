@@ -276,48 +276,48 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private void activate_delayed(Keybinding? binding , X.Event event) {
-    	// increase event count, so any waiting event will realize that
-    	// something happened in the meantime
+        // increase event count, so any waiting event will realize that
+        // something happened in the meantime
         var current_count = ++this.delayed_count;
 
         if (binding == null && this.delayed_event != null) {
-        	// if the trigger is released and an event is currently waiting
-		    // simulate that the trigger has been pressed without any inter-
-		    // ference of Gnome-Pie
-       		X.Display display = Gdk.X11.get_default_xdisplay();
+            // if the trigger is released and an event is currently waiting
+            // simulate that the trigger has been pressed without any inter-
+            // ference of Gnome-Pie
+               X.Display display = Gdk.X11.get_default_xdisplay();
 
-       		// unbind the trigger, else we'll capture that event again ;)
-       		unbind(delayed_binding.id);
+               // unbind the trigger, else we'll capture that event again ;)
+               unbind(delayed_binding.id);
 
-       		if (this.delayed_binding.trigger.with_mouse) {
-       			// simulate mouse click
-       			X.Test.fake_button_event(display, this.delayed_event.xbutton.button, true, 0);
-       			display.flush();
+               if (this.delayed_binding.trigger.with_mouse) {
+                   // simulate mouse click
+                   X.Test.fake_button_event(display, this.delayed_event.xbutton.button, true, 0);
+                   display.flush();
 
-            	X.Test.fake_button_event(display, this.delayed_event.xbutton.button, false, 0);
-            	display.flush();
+                X.Test.fake_button_event(display, this.delayed_event.xbutton.button, false, 0);
+                display.flush();
 
-       		} else {
-       			// simulate key press
-       			X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, true, 0);
-       			display.flush();
+               } else {
+                   // simulate key press
+                   X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, true, 0);
+                   display.flush();
 
-       			X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, false, 0);
-       			display.flush();
-       		}
+                   X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, false, 0);
+                   display.flush();
+               }
 
             // bind it again
             bind(delayed_binding.trigger, delayed_binding.id);
         } else if (binding != null) {
-        	// if the trigger has been pressed, store it and wait for any interuption
-        	// within the next 300 milliseconds
+            // if the trigger has been pressed, store it and wait for any interuption
+            // within the next 300 milliseconds
             this.delayed_event = event;
             this.delayed_binding = binding;
 
             Timeout.add(300, () => {
-            	// if nothing has been pressed in the meantime
+                // if nothing has been pressed in the meantime
                 if (current_count == this.delayed_count) {
-                	this.delayed_binding = null;
+                    this.delayed_binding = null;
                     this.delayed_event = null;
                     on_press(binding.id);
                 }

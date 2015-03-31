@@ -166,10 +166,10 @@ public class Config : GLib.Object {
             // load global themes
             var d = Dir.open(Paths.global_themes);
             while ((name = d.read_name()) != null) {
-	            var theme = new Theme(Paths.global_themes + "/" + name);
+                var theme = new Theme(Paths.global_themes + "/" + name);
 
-	            if (theme.load())
-	            	themes.add(theme);
+                if (theme.load())
+                    themes.add(theme);
             }
 
             // load local themes

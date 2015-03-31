@@ -180,7 +180,7 @@ public class Image : GLib.Object {
             *(p + i + 2) = tmp;
         }
 
-		return pixbuf;
+        return pixbuf;
     }
 
     /////////////////////////////////////////////////////////////////////

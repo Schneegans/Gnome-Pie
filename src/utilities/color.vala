@@ -258,10 +258,10 @@ public class Color: GLib.Object {
 
     private void setHSV(float hue, float saturation, float val) {
         if(saturation == 0) {
-	        r = val;
-	        g = val;
-	        b = val;
-	        return;
+            r = val;
+            g = val;
+            b = val;
+            return;
         }
         hue = fmodf(hue, 360);
         hue /= 60;
@@ -269,36 +269,36 @@ public class Color: GLib.Object {
         float f = hue - i;
 
         switch(i) {
-	        case 0:
-		        r = val;
-		        g = val * (1.0f - saturation * (1.0f - f));
-		        b = val * (1.0f - saturation);
-		        break;
-	        case 1:
-		        r = val * (1.0f - saturation * f);
-		        g = val;
-		        b = val * (1.0f - saturation);
-		        break;
-	        case 2:
-		        r = val * (1.0f - saturation);
-		        g = val;
-		        b = val * (1.0f - saturation * (1.0f - f));
-		        break;
-	        case 3:
-		        r = val * (1.0f - saturation);
-		        g = val * (1.0f - saturation * f);
-		        b = val;
-		        break;
-	        case 4:
-		        r = val * (1.0f - saturation * (1.0f - f));
-		        g = val * (1.0f - saturation);
-		        b = val;
-		        break;
-	        default:
-		        r = val;
-		        g = val * (1.0f - saturation);
-		        b = val * (1.0f - saturation * f);
-		        break;
+            case 0:
+                r = val;
+                g = val * (1.0f - saturation * (1.0f - f));
+                b = val * (1.0f - saturation);
+                break;
+            case 1:
+                r = val * (1.0f - saturation * f);
+                g = val;
+                b = val * (1.0f - saturation);
+                break;
+            case 2:
+                r = val * (1.0f - saturation);
+                g = val;
+                b = val * (1.0f - saturation * (1.0f - f));
+                break;
+            case 3:
+                r = val * (1.0f - saturation);
+                g = val * (1.0f - saturation * f);
+                b = val;
+                break;
+            case 4:
+                r = val * (1.0f - saturation * (1.0f - f));
+                g = val * (1.0f - saturation);
+                b = val;
+                break;
+            default:
+                r = val;
+                g = val * (1.0f - saturation);
+                b = val * (1.0f - saturation * f);
+                break;
         }
     }
 }

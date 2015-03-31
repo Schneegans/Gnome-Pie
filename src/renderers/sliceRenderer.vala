@@ -96,7 +96,7 @@ public class SliceRenderer : GLib.Object {
         this.parent = parent;
         this.reset_anim();
     }
-        
+
     /////////////////////////////////////////////////////////////////////
     /// Put all AnimatedValues in their initial values
     /////////////////////////////////////////////////////////////////////
@@ -206,16 +206,18 @@ public class SliceRenderer : GLib.Object {
         this.fade_rotation.update(frame_time);
         this.wobble.update(frame_time);
 
-	    double direction = 2.0 * PI * (position-parent.first_slice_idx)/parent.total_slice_count 
-                    	    + parent.first_slice_angle + this.fade_rotation.val;
-	    double max_scale = 1.0/Config.global.theme.max_zoom;
+        double direction = 2.0 * PI * (position-parent.first_slice_idx)/parent.total_slice_count
+                            + parent.first_slice_angle + this.fade_rotation.val;
+        double max_scale = 1.0/Config.global.theme.max_zoom;
         double diff = fabs(angle-direction);
 
-        if (diff > 2 * PI)
+        if (diff > 2 * PI) {
             diff = diff - 2 * PI;
-            
-        if (diff > PI)
-	        diff = 2 * PI - diff;
+        }
+
+        if (diff > PI) {
+            diff = 2 * PI - diff;
+        }
 
 
         active = ((parent.active_slice >= 0) && (diff < PI/parent.total_slice_count));

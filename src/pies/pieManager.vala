@@ -89,6 +89,9 @@ public class PieManager : GLib.Object {
 
                 a_pie_is_active = true;
 
+                //change WM_CLASS so launchers can track windows properly
+                Gdk.set_program_class("gnome-pie-" + id);
+
                 var window = new PieWindow();
                 window.load_pie(pie);
 
@@ -275,7 +278,8 @@ public class PieManager : GLib.Object {
                 "Exec=%s -o %s\n".printf(Paths.executable, pie.id) +
                 "Encoding=UTF-8\n" +
                 "Type=Application\n" +
-                "Icon=%s\n".printf(pie.icon);
+                "Icon=%s\n".printf(pie.icon) +
+                "StartupWMClass=gnome-pie-%s\n".printf(pie.id);
 
             // create the launcher file
             string launcher = Paths.launchers + "/%s.desktop".printf(pie.id);

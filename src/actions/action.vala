@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,12 +12,12 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// A base class for actions, which are executed when the user
 /// activates a pie's slice.
 /////////////////////////////////////////////////////////////////////////
@@ -30,33 +30,33 @@ public abstract class Action : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public abstract string real_command { get; construct set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The command displayed to the user. It should be a bit more
     /// beautiful than the real_command.
     /////////////////////////////////////////////////////////////////////
-    
-    public abstract string display_command { get; }  
-    
+
+    public abstract string display_command { get; }
+
     /////////////////////////////////////////////////////////////////////
     /// The name of the Action.
-    /////////////////////////////////////////////////////////////////////  
+    /////////////////////////////////////////////////////////////////////
 
     public virtual string name { get; set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The name of the icon of this Action. It should be in the users
     /// current icon theme.
     /////////////////////////////////////////////////////////////////////
-    
+
     public virtual string icon { get; set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// True, if this Action is the quickAction of the associated Pie.
     /// The quickAction of a Pie gets executed when the users clicks on
     /// the center of a Pie.
     /////////////////////////////////////////////////////////////////////
-    
+
     public virtual bool is_quickaction { get; set; }
 
     /////////////////////////////////////////////////////////////////////

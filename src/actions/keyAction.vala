@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,12 +12,12 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// This type of Action "presses" a key stroke.
 /////////////////////////////////////////////////////////////////////////
 
@@ -37,24 +37,24 @@ public class KeyAction : Action {
         description.icon_name_editable = true;
         description.id = "key";
         return description;
-    }   
-    
+    }
+
     /////////////////////////////////////////////////////////////////////
     /// Stores the accelerator of this action.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string real_command { get; construct set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Returns a human readable form of the accelerator.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string display_command { get {return key.label;} }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// The simulated key which gets 'pressed' on execution.
     /////////////////////////////////////////////////////////////////////
-    
+
     public Key key { get; set; }
 
     /////////////////////////////////////////////////////////////////////
@@ -64,11 +64,11 @@ public class KeyAction : Action {
     public KeyAction(string name, string icon, string command, bool is_quickaction = false) {
         GLib.Object(name : name, icon : icon, real_command : command, is_quickaction : is_quickaction);
     }
-    
+
     construct {
         this.key = new Key.from_string(real_command);
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Presses the desired key.
     /////////////////////////////////////////////////////////////////////

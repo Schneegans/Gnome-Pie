@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,14 +12,14 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
-*/        
+this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 using GLib.Math;
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// A helper method which loads pies according to the configuration file.
 /////////////////////////////////////////////////////////////////////////
 
@@ -28,7 +28,7 @@ namespace Pies {
     /////////////////////////////////////////////////////////////////////
     /// Loads all Pies from the pies.conf file.
     /////////////////////////////////////////////////////////////////////
-    
+
     public void load() {
         // check whether the config file exists
         if (!GLib.File.new_for_path(Paths.pie_config).query_exists()) {
@@ -36,13 +36,13 @@ namespace Pies {
             Pies.create_default_config();
             return;
         }
-        
+
         message("Loading Pies from \"" + Paths.pie_config + "\".");
-    
+
         // load the settings file
         Xml.Parser.init();
         Xml.Doc* piesXML = Xml.Parser.parse_file(Paths.pie_config);
-        
+
         if (piesXML != null) {
             // begin parsing at the root element
             Xml.Node* root = piesXML->get_root_element();
@@ -57,36 +57,36 @@ namespace Pies {
                             default:
                                 warning("Invalid child element <" + node_name + "> in <pies> element pies.conf!");
                                 break;
-                        } 
+                        }
                     }
                 }
             } else {
                 warning("Error loading pies: pies.conf is empty! The cake is a lie...");
             }
-            
+
             delete piesXML;
-            
+
         } else {
             warning("Error loading pies: pies.conf not found! The cake is a lie...");
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Parses a <pie> element from the pies.conf file.
     /////////////////////////////////////////////////////////////////////
-    
+
     private static void parse_pie(Xml.Node* node) {
         string hotkey = "";
         string name = "";
         string icon = "";
         string id = "";
         int quickaction = -1;
-        
+
         // parse all attributes of this node
         for (Xml.Attr* attribute = node->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
             string attr_content = attribute->children->content;
-            
+
             switch (attr_name) {
                 case "hotkey":
                     hotkey = attr_content;
@@ -108,15 +108,15 @@ namespace Pies {
                     break;
             }
         }
-        
+
         if (name == "") {
             warning("Invalid <pie> element in pies.conf: No name specified!");
             return;
         }
-        
+
         // add a new Pie with the loaded properties
         var pie = PieManager.create_persistent_pie(name, icon, new Trigger.from_string(hotkey), id);
-        
+
         // and parse all child elements
         for (Xml.Node* slice = node->children; slice != null; slice = slice->next) {
             if (slice->type == Xml.ElementType.ELEMENT_NODE) {
@@ -131,22 +131,22 @@ namespace Pies {
                     default:
                         warning("Invalid child element <" + node_name + "> in <pie> element in pies.conf!");
                         break;
-                } 
+                }
             }
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Parses a <slice> element from the pies.conf file.
     /////////////////////////////////////////////////////////////////////
-    
+
     private static void parse_slice(Xml.Node* slice, Pie pie) {
         string name="";
         string icon="";
         string command="";
         string type="";
         bool quickaction = false;
-        
+
         // parse all attributes of this node
         for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
@@ -173,20 +173,20 @@ namespace Pies {
                     break;
             }
         }
-        
+
         // create a new Action according to the loaded type
         Action action = ActionRegistry.create_action(type, name, icon, command, quickaction);
-        
+
         if (action != null) pie.add_action(action);
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Parses a <group> element from the pies.conf file.
     /////////////////////////////////////////////////////////////////////
-    
+
     private static void parse_group(Xml.Node* slice, Pie pie) {
         string type="";
-        
+
         // parse all attributes of this node
         for (Xml.Attr* attribute = slice->properties; attribute != null; attribute = attribute->next) {
             string attr_name = attribute->name.down();
@@ -201,7 +201,7 @@ namespace Pies {
                     break;
             }
         }
-        
+
         ActionGroup group = GroupRegistry.create_group(type, pie.id);
 
         if (group != null) pie.add_group(group);

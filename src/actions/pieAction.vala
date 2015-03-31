@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,12 +12,12 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// This Action opens another pie.
 /////////////////////////////////////////////////////////////////////////
 
@@ -38,23 +38,23 @@ public class PieAction : Action {
         description.id = "pie";
         return description;
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Stores the ID of the referenced Pie.
     /////////////////////////////////////////////////////////////////////
 
     public override string real_command { get; construct set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Returns the name of the referenced Pie.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string display_command { get {return name;} }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Returns the name of the referenced Pie.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string name {
         get {
             var referee = PieManager.all_pies[real_command];
@@ -66,13 +66,13 @@ public class PieAction : Action {
         }
         protected set {}
     }
-    
+
     private string owned_name;
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Returns the icon of the referenced Pie.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string icon {
         get {
             var referee = PieManager.all_pies[real_command];
@@ -90,14 +90,14 @@ public class PieAction : Action {
     public PieAction(string id, bool is_quickaction = false) {
         GLib.Object(name : "", icon : "", real_command : id, is_quickaction : is_quickaction);
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Opens the desired Pie.
     /////////////////////////////////////////////////////////////////////
 
     public override void activate() {
         PieManager.open_pie(real_command);
-    } 
+    }
 }
 
 }

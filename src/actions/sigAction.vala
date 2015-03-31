@@ -1,4 +1,4 @@
-/* 
+/*
 Copyright (c) 2011 by Simon Schneegans
 
 This program is free software: you can redistribute it and/or modify it
@@ -12,12 +12,12 @@ FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 more details.
 
 You should have received a copy of the GNU General Public License along with
-this program.  If not, see <http://www.gnu.org/licenses/>. 
+this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 namespace GnomePie {
 
-/////////////////////////////////////////////////////////////////////////    
+/////////////////////////////////////////////////////////////////////////
 /// This type of Action can't be selected by the user, therefore there is
 /// no register() method for this class. But it may be useful for
 /// ActionGroups: It emits a signal on activation.
@@ -30,19 +30,19 @@ public class SigAction : Action {
     /////////////////////////////////////////////////////////////////////
 
     public signal void activated();
-    
+
     /////////////////////////////////////////////////////////////////////
     /// This may store something useful.
     /////////////////////////////////////////////////////////////////////
 
     public override string real_command { get; construct set; }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Only for inheritance... Greetings to Liskov.
     /////////////////////////////////////////////////////////////////////
-    
+
     public override string display_command { get {return real_command;} }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
     /////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ public class SigAction : Action {
 
     public override void activate() {
         this.activated();
-    } 
+    }
 }
 
 }

@@ -112,6 +112,9 @@ public class PieManager : GLib.Object {
                 });
 
 
+                //restore default WM_CLASS after window open
+                Gdk.set_program_class("gnome-pie");
+
             } else {
                 warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");
             }

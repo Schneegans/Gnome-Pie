@@ -206,14 +206,28 @@ public class BindingManager : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
+    /// Returns whether the pie with the given ID is auto shaped
+    /////////////////////////////////////////////////////////////////////
+
+    public bool get_is_auto_shape(string id) {
+        foreach (var binding in bindings) {
+            if (binding.id == id) {
+                return binding.trigger.auto_shape;
+            }
+        }
+
+        return false;
+    }
+
+    /////////////////////////////////////////////////////////////////////
     /// Returns the name ID of the Pie bound to the given Trigger.
     /// Returns "" if there is nothing bound to this trigger.
     /////////////////////////////////////////////////////////////////////
 
     public string get_assigned_id(Trigger trigger) {
         foreach (var binding in bindings) {
-            var first = binding.trigger.name.replace("[turbo]", "").replace("[delayed]", "");
-            var second = trigger.name.replace("[turbo]", "").replace("[delayed]", "");
+            var first = Trigger.remove_flags(binding.trigger.name);
+            var second = Trigger.remove_flags(trigger.name);
             if (first == second) {
                 return binding.id;
             }

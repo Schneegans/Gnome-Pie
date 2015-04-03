@@ -112,6 +112,9 @@ public class PieManager : GLib.Object {
                 });
 
 
+                //restore default WM_CLASS after window open
+                Gdk.set_program_class("gnome-pie");
+
             } else {
                 warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");
             }
@@ -161,6 +164,14 @@ public class PieManager : GLib.Object {
         return bindings.get_is_centered(id);
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /// Returns true if the pie with the given id is auto shaped
+    /////////////////////////////////////////////////////////////////////
+
+    public static bool get_is_auto_shape(string id) {
+        return bindings.get_is_auto_shape(id);
+    }
+    
     /////////////////////////////////////////////////////////////////////
     /// Returns the name of the Pie with the given ID.
     /////////////////////////////////////////////////////////////////////

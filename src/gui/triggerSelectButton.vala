@@ -117,7 +117,8 @@ public class TriggerSelectButton : Gtk.ToggleButton {
                 this.update_trigger(new Trigger());
             } else if (event.is_modifier == 0) {
                 Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
-                this.update_trigger(new Trigger.from_values(event.keyval, state, false, false, false, false));
+                this.update_trigger(new Trigger.from_values(event.keyval, state, false, false, false,
+                            false, false));
             }
 
             return true;
@@ -144,7 +145,7 @@ public class TriggerSelectButton : Gtk.ToggleButton {
             if (this.active && this.enable_mouse) {
                 Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
                 var new_trigger = new Trigger.from_values((int)event.button, state, true,
-                                                          false, false, false);
+                                                          false, false, false, false);
 
                 if (new_trigger.key_code != 1) this.update_trigger(new_trigger);
                 else                           this.cancel();

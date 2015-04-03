@@ -99,11 +99,19 @@ public class SettingsWindow : GLib.Object {
                 });
 
             var range_slider = (builder.get_object("range-hscale") as Gtk.Scale);
-                range_slider.set_range(100, 2000);
+                range_slider.set_range(0, 2000);
                 range_slider.set_increments(10, 100);
                 range_slider.set_value(Config.global.activation_range);
                 range_slider.value_changed.connect(() => {
                     Config.global.activation_range = (int)range_slider.get_value();
+                });
+
+            var range_slices = (builder.get_object("range-slices") as Gtk.Scale);
+                range_slices.set_range(12, 96);
+                range_slices.set_increments(4, 12);
+                range_slices.set_value(Config.global.max_visible_slices);
+                range_slices.value_changed.connect(() => {
+                    Config.global.max_visible_slices = (int)range_slices.get_value();
                 });
 
             this.window.delete_event.connect(this.window.hide_on_delete);

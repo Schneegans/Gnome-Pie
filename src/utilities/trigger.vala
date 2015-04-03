@@ -87,6 +87,12 @@ public class Trigger : GLib.Object {
     public bool centered { get; private set; default=false; }
 
     /////////////////////////////////////////////////////////////////////
+    /// True if the pie selects its shape to minimize mouse traveling
+    /////////////////////////////////////////////////////////////////////
+
+    public bool auto_shape { get; private set; default=false; }
+
+    /////////////////////////////////////////////////////////////////////
     /// C'tor, creates a new, "unbound" Trigger.
     /////////////////////////////////////////////////////////////////////
 
@@ -99,7 +105,7 @@ public class Trigger : GLib.Object {
     /// in this format: "[option(s)]<modifier(s)>button" where
     /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
     /// something like "s", "F4" or "button0" and "[option]" is either
-    /// "[turbo]", "[centered]" or "["delayed"]".
+    /// "[turbo]", "[centered]", "["delayed"]" or "["auto_shape"]".
     /////////////////////////////////////////////////////////////////////
 
     public Trigger.from_string(string trigger) {
@@ -112,11 +118,12 @@ public class Trigger : GLib.Object {
 
     public Trigger.from_values(uint key_sym, Gdk.ModifierType modifiers,
                                bool with_mouse, bool turbo, bool delayed,
-                               bool centered ) {
+                               bool centered, bool auto_shape ) {
 
         string trigger = (turbo ? "[turbo]" : "")
                        + (delayed ? "[delayed]" : "")
-                       + (centered ? "[centered]" : "");
+                       + (centered ? "[centered]" : "")
+                       + (auto_shape ? "[auto_shape]" : "");
 
         if (with_mouse) {
             trigger += Gtk.accelerator_name(0, modifiers) + "button%u".printf(key_sym);
@@ -132,7 +139,7 @@ public class Trigger : GLib.Object {
     /// in this format: "[option(s)]<modifier(s)>button" where
     /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
     /// something like "s", "F4" or "button0" and "[option]" is either
-    /// "[turbo]", "[centered]" or "["delayed"]".
+    /// "[turbo]", "[centered]", "["delayed"]" or "["auto_shape"]".
     /////////////////////////////////////////////////////////////////////
 
     public void parse_string(string trigger) {
@@ -145,11 +152,13 @@ public class Trigger : GLib.Object {
             this.turbo = check_string.contains("[turbo]");
             this.delayed = check_string.contains("[delayed]");
             this.centered = check_string.contains("[centered]");
+            this.auto_shape = check_string.contains("[auto_shape]");
 
             // remove optional arguments
             check_string = check_string.replace("[turbo]", "");
             check_string = check_string.replace("[delayed]", "");
             check_string = check_string.replace("[centered]", "");
+            check_string = check_string.replace("[auto_shape]", "");
 
             int button = this.get_mouse_button(check_string);
             if (button > 0) {
@@ -184,20 +193,30 @@ public class Trigger : GLib.Object {
 
             this.label_with_specials = GLib.Markup.escape_text(this.label);
 
-            if (this.turbo && this.delayed && this.centered)
-                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " | " + _("Delayed") + " | " + _("Centered") + " ]</span></small>");
-            else if (this.turbo && this.centered)
-                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " | " + _("Centered") + " ]</span></small>");
-            else if (this.turbo && this.delayed)
-                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " | " + _("Delayed") + " ]</span></small>");
-            else if (this.centered && this.delayed)
-                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Delayed") + " | " + _("Centered") + " ]</span></small>");
-            else if (this.turbo)
-                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Turbo") + " ]</span></small>");
-            else if (this.delayed)
-                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Delayed") + " ]</span></small>");
-            else if (this.centered)
-                this.label_with_specials += ("  <small><span weight='light'>[ " + _("Centered") + " ]</span></small>");
+            string msg= "";
+            if (this.turbo) {
+                msg= _("Turbo");
+            }
+            if (this.delayed) {
+                if (msg == "")
+                    msg= _("Delayed");
+                else
+                    msg += " | " + _("Delayed");
+            }
+            if (this.centered) {
+                if (msg == "")
+                    msg= _("Centered");
+                else
+                    msg += " | " + _("Centered");
+            }
+            if (this.auto_shape) {
+                if (msg == "")
+                    msg= _("Auto-shaped");
+                else
+                    msg += " | " + _("Auto-shaped");
+            }
+            if (msg != "")
+                this.label_with_specials += ("  <small><span weight='light'>[ " + msg + " ]</span></small>");
 
         } else {
             this.set_unbound();
@@ -217,7 +236,22 @@ public class Trigger : GLib.Object {
         this.modifiers = 0;
         this.turbo = false;
         this.delayed = false;
+        this.auto_shape = false;
         this.with_mouse = false;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Remove "[turbo]", "[delayed]", "[centered]" and "[auto_shape]"
+    /// from the given string 
+    /////////////////////////////////////////////////////////////////////
+    
+    public static string remove_flags(string trigger) {
+        string trg= trigger;
+        trg = trg.replace("[turbo]", "");
+        trg = trg.replace("[delayed]", "");
+        trg = trg.replace("[centered]", "");
+        trg = trg.replace("[auto_shape]", "");
+        return trg;
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -225,13 +259,8 @@ public class Trigger : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private bool is_valid(string trigger) {
-        // copy string
-        string check_string = trigger;
-
         // remove optional arguments
-        check_string = check_string.replace("[turbo]", "");
-        check_string = check_string.replace("[delayed]", "");
-        check_string = check_string.replace("[centered]", "");
+        string check_string = remove_flags(trigger);
 
         if (this.get_mouse_button(check_string) > 0) {
             // it seems to be a valid mouse-trigger so replace button part,

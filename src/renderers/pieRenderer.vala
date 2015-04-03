@@ -84,14 +84,6 @@ public class PieRenderer : GLib.Object {
     public ShowPieMode pie_show_mode { get; private set; }
 
     /////////////////////////////////////////////////////////////////////
-    /// True if the pie will change the show mode depending on mouse position
-    /// (eat some pie to show the center near the mouse)
-    /////////////////////////////////////////////////////////////////////
-
-    public bool auto_show_pie_mode { get; private set; default=false; }
-
-
-    /////////////////////////////////////////////////////////////////////
     /// Number of visible slices
     /////////////////////////////////////////////////////////////////////
 
@@ -160,6 +152,11 @@ public class PieRenderer : GLib.Object {
     private CenterRenderer center;
 
     /////////////////////////////////////////////////////////////////////
+    /// Maximum distance from the center that activates the slices
+    /////////////////////////////////////////////////////////////////////
+    private int activation_range;
+    
+    /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes members.
     /////////////////////////////////////////////////////////////////////
 
@@ -170,10 +167,9 @@ public class PieRenderer : GLib.Object {
         this.active_slice = -2;
         this.size_w = 0;
         this.size_h = 0;
+        this.activation_range= 300;
 
-        this.max_visible_slices= 24;
-
-        this.auto_show_pie_mode= true; //eat some pie to show the center near the mouse
+        this.max_visible_slices= Config.global.max_visible_slices;
 
         set_show_mode(ShowPieMode.FULL_PIE);
     }
@@ -183,9 +179,6 @@ public class PieRenderer : GLib.Object {
         // get the mouse position and screen resolution
         double x = 0.0;
         double y = 0.0;
-
-        //screenx= 0;
-        //screeny= 0;
 
         var display = Gdk.Display.get_default();
         var manager = display.get_device_manager();
@@ -245,7 +238,7 @@ public class PieRenderer : GLib.Object {
         }
 
 
-        if (this.auto_show_pie_mode) {
+        if (PieManager.get_is_auto_shape(pie.id) && !PieManager.get_is_centered(pie.id)) {
             // get mouse position and screen resolution
             int mouse_x, mouse_y, screen_x, screen_y;
             get_mouse_and_screen( out mouse_x, out mouse_y, out screen_x, out screen_y );
@@ -286,6 +279,8 @@ public class PieRenderer : GLib.Object {
                 (((Config.global.theme.slice_radius + Config.global.theme.slice_gap)/tan(PI/this.total_slice_count))
                 + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom);
         }
+        //activation_range = normal pie radius + "outer" activation_range
+        this.activation_range= (int)((double)Config.global.activation_range + sz/(2*Config.global.theme.max_zoom));
 
         int szx = 1; //full width
         int szy = 1; //full height
@@ -534,7 +529,7 @@ public class PieRenderer : GLib.Object {
                     angle = 2.0*PI*n/(double)this.total_slice_count + this.first_slice_angle;
 
                 } else if (distance > Config.global.theme.active_radius && this.total_slice_count > 0
-                           && distance < Config.global.activation_range) {
+                           && distance < this.activation_range) {
                     double a= angle-this.first_slice_angle;
                     if (a < 0)
                         a= a + 2*PI;

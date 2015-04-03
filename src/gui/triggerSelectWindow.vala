@@ -39,6 +39,7 @@ public class TriggerSelectWindow : GLib.Object {
     private Gtk.CheckButton turbo;
     private Gtk.CheckButton delayed;
     private Gtk.CheckButton centered;
+    private Gtk.CheckButton auto_shape;
     private TriggerSelectButton button;
 
     /////////////////////////////////////////////////////////////////////
@@ -76,7 +77,8 @@ public class TriggerSelectWindow : GLib.Object {
                                                        trigger.with_mouse,
                                                        this.turbo.active,
                                                        this.delayed.active,
-                                                       this.centered.active);
+                                                       this.centered.active,
+                                                       this.auto_shape.active);
             });
 
             (builder.get_object("trigger-box") as Gtk.Box).pack_start(this.button, true, true);
@@ -92,6 +94,9 @@ public class TriggerSelectWindow : GLib.Object {
 
             this.centered = builder.get_object("center-check") as Gtk.CheckButton;
             this.centered.toggled.connect(this.on_check_toggled);
+            
+            this.auto_shape = builder.get_object("auto-check") as Gtk.CheckButton;
+            this.auto_shape.toggled.connect(this.on_check_toggled);
 
             this.window.delete_event.connect(this.window.hide_on_delete);
 
@@ -128,6 +133,7 @@ public class TriggerSelectWindow : GLib.Object {
         this.turbo.active = trigger.turbo;
         this.delayed.active = trigger.delayed;
         this.centered.active = trigger.centered;
+        this.auto_shape.active= trigger.auto_shape;
         this.original_trigger = trigger;
         this.trigger = trigger;
 
@@ -142,7 +148,8 @@ public class TriggerSelectWindow : GLib.Object {
         if (this.trigger != null)
             this.trigger = new Trigger.from_values(this.trigger.key_sym, this.trigger.modifiers,
                                                    this.trigger.with_mouse, this.turbo.active,
-                                                   this.delayed.active, this.centered.active);
+                                                   this.delayed.active, this.centered.active,
+                                                   this.auto_shape.active);
     }
 
     /////////////////////////////////////////////////////////////////////

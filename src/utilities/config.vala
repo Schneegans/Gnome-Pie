@@ -54,7 +54,8 @@ public class Config : GLib.Object {
     public Theme theme { get; set; }
     public double refresh_rate { get; set; default = 60.0; }
     public double global_scale { get; set; default = 1.0; }
-    public int  activation_range { get; set; default = 300; }
+    public int  activation_range { get; set; default = 200; }
+    public int  max_visible_slices { get; set; default = 24; }
     public bool show_indicator { get; set; default = true; }
     public bool show_captions { get; set; default = true; }
     public bool auto_start { get; set; default = false; }
@@ -73,6 +74,7 @@ public class Config : GLib.Object {
                 writer.write_attribute("refresh_rate", refresh_rate.to_string());
                 writer.write_attribute("global_scale", global_scale.to_string());
                 writer.write_attribute("activation_range", activation_range.to_string());
+                writer.write_attribute("max_visible_slices", max_visible_slices.to_string());
                 writer.write_attribute("show_indicator", show_indicator ? "true" : "false");
                 writer.write_attribute("show_captions", show_captions ? "true" : "false");
                 writer.write_attribute("showed_news", showed_news.to_string());
@@ -117,7 +119,11 @@ public class Config : GLib.Object {
                             break;
                         case "activation_range":
                             activation_range = int.parse(attr_content);
-                            activation_range.clamp(100, 2000);
+                            activation_range.clamp(0, 2000);
+                            break;
+                        case "max_visible_slices":
+                            max_visible_slices = int.parse(attr_content);
+                            max_visible_slices.clamp(10, 2000);
                             break;
                         case "show_indicator":
                             show_indicator = bool.parse(attr_content);

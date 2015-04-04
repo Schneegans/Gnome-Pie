@@ -2,6 +2,51 @@
 <!-- Generated with glade 3.16.1 -->
 <interface>
   <requires lib="gtk+" version="3.8"/>
+  <object class="GtkImage" id="shape1">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape1.svg</property>
+  </object>
+  <object class="GtkImage" id="shape2">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape2.svg</property>
+  </object>
+  <object class="GtkImage" id="shape3">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape3.svg</property>
+  </object>
+  <object class="GtkImage" id="shape4">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape4.svg</property>
+  </object>
+  <object class="GtkImage" id="shape5">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape5.svg</property>
+  </object>
+  <object class="GtkImage" id="shape6">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape6.svg</property>
+  </object>
+  <object class="GtkImage" id="shape7">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape7.svg</property>
+  </object>
+  <object class="GtkImage" id="shape8">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape8.svg</property>
+  </object>
+  <object class="GtkImage" id="shape9">
+    <property name="visible">True</property>
+    <property name="can_focus">False</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
+  </object>
   <object class="GtkDialog" id="window">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -87,7 +132,7 @@
                 <property name="label" translatable="yes">It's possible to bind mouse buttons as well!</property>
                 <attributes>
                   <attribute name="weight" value="light"/>
-                  <attribute name="scale" value="0.80000000000000004"/>
+                  <attribute name="scale" value="0.8"/>
                 </attributes>
               </object>
               <packing>
@@ -213,22 +258,196 @@
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
                         <child>
-                          <object class="GtkCheckButton" id="auto-check">
-                            <property name="label" translatable="yes">Automatically select the best pie shape</property>
-                            <property name="use_action_appearance">False</property>
+                          <object class="GtkGrid" id="grid1">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_markup" translatable="yes">If checked, the Pie will choose the shape that requires less mouse traveling.</property>
-                            <property name="tooltip_text" translatable="yes">If checked, the Pie will choose the shape that requires less mouse traveling.</property>
-                            <property name="xalign">0</property>
-                            <property name="draw_indicator">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="halign">center</property>
+                            <property name="row_spacing">5</property>
+                            <property name="column_spacing">20</property>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape1">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape1</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">0</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape2">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape2</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="group">rshape1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">1</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape3">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape3</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="group">rshape1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">2</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape4">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape4</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="group">rshape1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">0</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape5">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape5</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="group">rshape1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">1</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape6">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape6</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="group">rshape1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">2</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape7">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape7</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="group">rshape1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="top_attach">0</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape8">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape8</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="group">rshape1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="top_attach">1</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkRadioButton" id="rshape9">
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">False</property>
+                                <property name="image">shape9</property>
+                                <property name="xalign">0</property>
+                                <property name="always_show_image">True</property>
+                                <property name="draw_indicator">True</property>
+                                <property name="group">rshape1</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="top_attach">2</property>
+                                <property name="width">1</property>
+                                <property name="height">1</property>
+                              </packing>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
                             <property name="fill">True</property>
                             <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkRadioButton" id="rshape0">
+                            <property name="label" translatable="yes">Automatically select the best pie shape</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="tooltip_text" translatable="yes">If checked, the shape will be automatically selected to minimize mouse travelling.</property>
+                            <property name="xalign">0</property>
+                            <property name="active">True</property>
+                            <property name="draw_indicator">True</property>
+                            <property name="group">rshape1</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">1</property>
                           </packing>
                         </child>
                       </object>

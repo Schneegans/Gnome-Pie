@@ -31,6 +31,7 @@ public class AboutWindow: Gtk.AboutDialog {
     public AboutWindow () {
         string[] devs = {
             "Simon Schneegans <code@simonschneegans.de>",
+            "Gabriel Dubatti <gdubatti@gmail.com>",
             "Francesco Piccinno <stack.box@gmail.com>"
         };
         string[] artists = {

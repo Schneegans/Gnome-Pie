@@ -75,15 +75,15 @@ public class PieRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public enum ShowPieMode {
-        FULL_PIE=5,
-        HPIE_LEFT=8, HPIE_RIGHT=2, HPIE_TOP=6, HPIE_BOTTOM=4,
-        CPIE_TOP_LEFT=9, CPIE_TOP_RIGHT=3, CPIE_BOT_LEFT=7, CPIE_BOT_RIGHT=1}
-
+        FULL_PIE,
+        HPIE_LEFT, HPIE_RIGHT, HPIE_TOP, HPIE_BOTTOM,
+        CPIE_TOP_LEFT, CPIE_TOP_RIGHT, CPIE_BOT_LEFT, CPIE_BOT_RIGHT}
+        
     /////////////////////////////////////////////////////////////////////
     ///  Show pie mode: full, half-circle, corner
     /////////////////////////////////////////////////////////////////////
 
-    public ShowPieMode pie_show_mode { get; private set; }
+    public ShowPieMode pie_show_mode { get; private set; default= ShowPieMode.FULL_PIE; }
 
     /////////////////////////////////////////////////////////////////////
     /// Number of visible slices
@@ -225,8 +225,9 @@ public class PieRenderer : GLib.Object {
         this.set_highlighted_slice(this.quickaction);
 
 
+        ShowPieMode showpie= ShowPieMode.FULL_PIE;
         //set full pie to determine the number of visible slices
-        set_show_mode(ShowPieMode.FULL_PIE);
+        set_show_mode(showpie);
 
         int sz0= (int)fmax(2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
                               2*Config.global.theme.center_radius);
@@ -247,34 +248,44 @@ public class PieRenderer : GLib.Object {
             //set the best show mode that put the mouse near the center
             if (mouse_x < sz/2) {
                 if (mouse_y < sz/2)
-                    set_show_mode(ShowPieMode.CPIE_TOP_LEFT);   //show 1/4 pie
+                    showpie= ShowPieMode.CPIE_TOP_LEFT;         //show 1/4 pie
                 else if (screen_y > 0 && screen_y-mouse_y < sz/2)
-                    set_show_mode(ShowPieMode.CPIE_BOT_LEFT);   //show 1/4 pie
+                    showpie= ShowPieMode.CPIE_BOT_LEFT;         //show 1/4 pie
                 else
-                    set_show_mode(ShowPieMode.HPIE_LEFT);       //show 1/2 pie
+                    showpie= ShowPieMode.HPIE_LEFT;             //show 1/2 pie
 
             } else if (mouse_y < sz/2) {
                 if (screen_x > 0 && screen_x-mouse_x < sz/2)
-                    set_show_mode(ShowPieMode.CPIE_TOP_RIGHT);  //show 1/4 pie
+                    showpie= ShowPieMode.CPIE_TOP_RIGHT;        //show 1/4 pie
                 else
-                    set_show_mode(ShowPieMode.HPIE_TOP);        //show 1/2 pie
+                    showpie= ShowPieMode.HPIE_TOP;              //show 1/2 pie
 
             } else if (screen_x > 0 && screen_x-mouse_x < sz/2) {
                 if (screen_y > 0 && screen_y-mouse_y < sz/2)
-                    set_show_mode(ShowPieMode.CPIE_BOT_RIGHT);  //show 1/4 pie
+                    showpie= ShowPieMode.CPIE_BOT_RIGHT;        //show 1/4 pie
                 else
-                    set_show_mode(ShowPieMode.HPIE_RIGHT);      //show 1/2 pie
+                    showpie= ShowPieMode.HPIE_RIGHT;            //show 1/2 pie
 
             } else if (screen_y > 0 && screen_y-mouse_y < sz/2)
-                set_show_mode(ShowPieMode.HPIE_BOTTOM);         //show 1/2 pie
+                showpie= ShowPieMode.HPIE_BOTTOM;               //show 1/2 pie
 
 
         } else {
-            //use the configurated shape
-            int rs= PieManager.get_shape_number(pie.id); //rs= number of radio-button 1..9
-            //ShowPieMode use the same numbers as the radio-button shape selector
-            set_show_mode((ShowPieMode)rs);
+            //select the configured shape
+            //convert from radio-buttum number to ShowPieMode enum
+            switch( PieManager.get_shape_number(pie.id) ) {
+            case 1:  showpie= ShowPieMode.CPIE_BOT_RIGHT;   break;
+            case 2:  showpie= ShowPieMode.HPIE_RIGHT;       break;
+            case 3:  showpie= ShowPieMode.CPIE_TOP_RIGHT;   break;
+            case 4:  showpie= ShowPieMode.HPIE_BOTTOM;      break;
+            case 6:  showpie= ShowPieMode.HPIE_TOP;         break;
+            case 7:  showpie= ShowPieMode.CPIE_BOT_LEFT;    break;
+            case 8:  showpie= ShowPieMode.HPIE_LEFT;        break;
+            case 9:  showpie= ShowPieMode.CPIE_TOP_LEFT;    break;
+            }
         }
+        //set the new show pie mode
+        set_show_mode(showpie);
 
         //recalc size
         sz = sz0;
@@ -600,7 +611,7 @@ public class PieRenderer : GLib.Object {
         //Angular position of the first visible slice
         this.first_slice_angle= 0;
 
-           int mult= 1;
+        int mult= 1;
         switch(show_mode) {
             //half pie
             case ShowPieMode.HPIE_LEFT:
@@ -642,7 +653,7 @@ public class PieRenderer : GLib.Object {
         }
         this.pie_show_mode= show_mode;
         //limit the number of visible slices
-           int maxview= this.max_visible_slices / mult;
+        int maxview= this.max_visible_slices / mult;
         //Number of visible slices
         this.visible_slice_count= (int)fmin(slices.size, maxview);
         //Number of slices in full pie (visible or not)

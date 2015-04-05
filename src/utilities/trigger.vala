@@ -87,10 +87,14 @@ public class Trigger : GLib.Object {
     public bool centered { get; private set; default=false; }
 
     /////////////////////////////////////////////////////////////////////
-    /// True if the pie selects its shape to minimize mouse traveling
+    /// Returns the current selected "radio-button" shape: 0= automatic
+    /// 5= full pie; 1,3,7,8= quarters; 2,4,6,8=halves
+    /// 1 | 4 | 7
+    /// 2 | 5 | 8
+    /// 3 | 6 | 9
     /////////////////////////////////////////////////////////////////////
 
-    public bool auto_shape { get; private set; default=false; }
+    public int shape { get; private set; default=5; }
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, creates a new, "unbound" Trigger.
@@ -105,7 +109,7 @@ public class Trigger : GLib.Object {
     /// in this format: "[option(s)]<modifier(s)>button" where
     /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
     /// something like "s", "F4" or "button0" and "[option]" is either
-    /// "[turbo]", "[centered]", "["delayed"]" or "["auto_shape"]".
+    /// "[turbo]", "[centered]", "["delayed"]" or "["shape#"]"
     /////////////////////////////////////////////////////////////////////
 
     public Trigger.from_string(string trigger) {
@@ -118,12 +122,12 @@ public class Trigger : GLib.Object {
 
     public Trigger.from_values(uint key_sym, Gdk.ModifierType modifiers,
                                bool with_mouse, bool turbo, bool delayed,
-                               bool centered, bool auto_shape ) {
+                               bool centered, int shape ) {
 
         string trigger = (turbo ? "[turbo]" : "")
                        + (delayed ? "[delayed]" : "")
                        + (centered ? "[centered]" : "")
-                       + (auto_shape ? "[auto_shape]" : "");
+                       + (shape!=5 ? "[shape%d]".printf(shape) : "");
 
         if (with_mouse) {
             trigger += Gtk.accelerator_name(0, modifiers) + "button%u".printf(key_sym);
@@ -133,13 +137,13 @@ public class Trigger : GLib.Object {
 
         this.parse_string(trigger);
     }
-
+    
     /////////////////////////////////////////////////////////////////////
     /// Parses a Trigger string. This is
     /// in this format: "[option(s)]<modifier(s)>button" where
     /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
     /// something like "s", "F4" or "button0" and "[option]" is either
-    /// "[turbo]", "[centered]", "["delayed"]" or "["auto_shape"]".
+    /// "[turbo]", "[centered]", "["delayed"]" or "["shape#"]"
     /////////////////////////////////////////////////////////////////////
 
     public void parse_string(string trigger) {
@@ -152,13 +156,11 @@ public class Trigger : GLib.Object {
             this.turbo = check_string.contains("[turbo]");
             this.delayed = check_string.contains("[delayed]");
             this.centered = check_string.contains("[centered]");
-            this.auto_shape = check_string.contains("[auto_shape]");
+            
+            this.shape= parse_shape( check_string );
 
             // remove optional arguments
-            check_string = check_string.replace("[turbo]", "");
-            check_string = check_string.replace("[delayed]", "");
-            check_string = check_string.replace("[centered]", "");
-            check_string = check_string.replace("[auto_shape]", "");
+            check_string = remove_optional(check_string);
 
             int button = this.get_mouse_button(check_string);
             if (button > 0) {
@@ -180,15 +182,23 @@ public class Trigger : GLib.Object {
 
                 this.label += button_text;
             } else {
-                this.with_mouse = false;
+                //empty triggers are ok now, they carry open options as well
+                if (check_string == "") {
+                    this.label = _("Not bound");
+                    this.key_code = 0;
+                    this.key_sym = 0;
+                    this.modifiers = 0;
+                } else {
+                    this.with_mouse = false;
 
-                var display = new X.Display();
+                    var display = new X.Display();
 
-                uint keysym = 0;
-                Gtk.accelerator_parse(check_string, out keysym, out this._modifiers);
-                this.key_code = display.keysym_to_keycode(keysym);
-                this.key_sym = keysym;
-                this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
+                    uint keysym = 0;
+                    Gtk.accelerator_parse(check_string, out keysym, out this._modifiers);
+                    this.key_code = display.keysym_to_keycode(keysym);
+                    this.key_sym = keysym;
+                    this.label = Gtk.accelerator_get_label(keysym, this.modifiers);
+                }
             }
 
             this.label_with_specials = GLib.Markup.escape_text(this.label);
@@ -209,11 +219,22 @@ public class Trigger : GLib.Object {
                 else
                     msg += " | " + _("Centered");
             }
-            if (this.auto_shape) {
+            if (this.shape == 0) {
                 if (msg == "")
                     msg= _("Auto-shaped");
                 else
                     msg += " | " + _("Auto-shaped");
+            } else if (this.shape == 1 || this.shape ==3 || this.shape == 7 || this.shape == 9) {
+                if (msg == "")
+                    msg= _("Quarter pie");
+                else
+                    msg += " | " + _("Quarter pie");
+                    
+            } else if (this.shape == 2 || this.shape == 4 || this.shape == 6 || this.shape == 8) {
+                if (msg == "")
+                    msg= _("Half pie");
+                else
+                    msg += " | " + _("Half pie");
             }
             if (msg != "")
                 this.label_with_specials += ("  <small><span weight='light'>[ " + msg + " ]</span></small>");
@@ -221,6 +242,19 @@ public class Trigger : GLib.Object {
         } else {
             this.set_unbound();
         }
+    }
+    
+    /////////////////////////////////////////////////////////////////////
+    /// Extract shape number from trigger string
+    /// "[0]".."[9]" 0:auto 5:full pie (default)
+    /// 1,3,7,9=quarters    2,4,6,8= halves
+    /////////////////////////////////////////////////////////////////////
+    private int parse_shape(string trigger) {
+        int rs;
+        for( rs= 0; rs < 10; rs++ )
+            if (trigger.contains("[shape%d]".printf(rs) ))
+                return rs;
+        return 5; //default= full pie
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -236,21 +270,22 @@ public class Trigger : GLib.Object {
         this.modifiers = 0;
         this.turbo = false;
         this.delayed = false;
-        this.auto_shape = false;
+        this.shape = 5; //full pie
         this.with_mouse = false;
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Remove "[turbo]", "[delayed]", "[centered]" and "[auto_shape]"
-    /// from the given string 
+    /// Remove optional arguments from the given string
+    /// "[turbo]", "[delayed]", "[centered]" and "[shape#]"
     /////////////////////////////////////////////////////////////////////
     
-    public static string remove_flags(string trigger) {
+    public static string remove_optional(string trigger) {
         string trg= trigger;
         trg = trg.replace("[turbo]", "");
         trg = trg.replace("[delayed]", "");
         trg = trg.replace("[centered]", "");
-        trg = trg.replace("[auto_shape]", "");
+        for (int rs= 0; rs < 10; rs++)
+            trg = trg.replace("[shape%d]".printf(rs), "");
         return trg;
     }
 
@@ -260,7 +295,7 @@ public class Trigger : GLib.Object {
 
     private bool is_valid(string trigger) {
         // remove optional arguments
-        string check_string = remove_flags(trigger);
+        string check_string = remove_optional(trigger);
 
         if (this.get_mouse_button(check_string) > 0) {
             // it seems to be a valid mouse-trigger so replace button part,
@@ -268,6 +303,10 @@ public class Trigger : GLib.Object {
             int button_index = check_string.index_of("button");
             check_string = check_string.slice(0, button_index) + "a";
         }
+        
+        //empty triggers are ok now, they carry open options as well
+        if (check_string == "")
+            return true;
 
         // now it shouls be a normal gtk accelerator
         uint keysym = 0;

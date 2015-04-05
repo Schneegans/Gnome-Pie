@@ -39,7 +39,7 @@ public class TriggerSelectWindow : GLib.Object {
     private Gtk.CheckButton turbo;
     private Gtk.CheckButton delayed;
     private Gtk.CheckButton centered;
-    private Gtk.CheckButton auto_shape;
+    private Gtk.RadioButton rshape[10];
     private TriggerSelectButton button;
 
     /////////////////////////////////////////////////////////////////////
@@ -55,6 +55,13 @@ public class TriggerSelectWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private Trigger original_trigger = null;
+
+    /////////////////////////////////////////////////////////////////////
+    /// Radioboxes call toggled() twice per selection change.
+    /// This flag is used to discard one of the two notifications.
+    /////////////////////////////////////////////////////////////////////
+
+    private static int notify_toggle= 0;
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, constructs a new TriggerSelectWindow.
@@ -78,7 +85,7 @@ public class TriggerSelectWindow : GLib.Object {
                                                        this.turbo.active,
                                                        this.delayed.active,
                                                        this.centered.active,
-                                                       this.auto_shape.active);
+                                                       this.get_radio_shape());
             });
 
             (builder.get_object("trigger-box") as Gtk.Box).pack_start(this.button, true, true);
@@ -95,8 +102,10 @@ public class TriggerSelectWindow : GLib.Object {
             this.centered = builder.get_object("center-check") as Gtk.CheckButton;
             this.centered.toggled.connect(this.on_check_toggled);
             
-            this.auto_shape = builder.get_object("auto-check") as Gtk.CheckButton;
-            this.auto_shape.toggled.connect(this.on_check_toggled);
+            for (int i= 0; i < 10; i++) {
+                this.rshape[i] = builder.get_object("rshape%d".printf(i)) as Gtk.RadioButton;
+                this.rshape[i].toggled.connect(this.on_radio_toggled);
+            }
 
             this.window.delete_event.connect(this.window.hide_on_delete);
 
@@ -133,7 +142,7 @@ public class TriggerSelectWindow : GLib.Object {
         this.turbo.active = trigger.turbo;
         this.delayed.active = trigger.delayed;
         this.centered.active = trigger.centered;
-        this.auto_shape.active= trigger.auto_shape;
+        this.set_radio_shape( trigger.shape );
         this.original_trigger = trigger;
         this.trigger = trigger;
 
@@ -141,7 +150,7 @@ public class TriggerSelectWindow : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Called when one of the three checkoxes is toggled.
+    /// Called when one of the checkboxes is toggled.
     /////////////////////////////////////////////////////////////////////
 
     private void on_check_toggled() {
@@ -149,9 +158,46 @@ public class TriggerSelectWindow : GLib.Object {
             this.trigger = new Trigger.from_values(this.trigger.key_sym, this.trigger.modifiers,
                                                    this.trigger.with_mouse, this.turbo.active,
                                                    this.delayed.active, this.centered.active,
-                                                   this.auto_shape.active);
+                                                   this.get_radio_shape());
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the current selected radio-button shape: 0= automatic
+    /// 5= full pie; 1,3,7,8= quarters; 2,4,6,8=halves
+    /// 1 | 4 | 7
+    /// 2 | 5 | 8
+    /// 3 | 6 | 9
+    /////////////////////////////////////////////////////////////////////
+
+    private int get_radio_shape() {
+        int rs;
+        for (rs= 0; rs < 10; rs++)
+            if (this.rshape[rs].active)
+                break;
+        return rs;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Sets the current selected radio-button shape: 0= automatic
+    /// 5= full pie; 1,3,7,8= quarters; 2,4,6,8=halves
+    /////////////////////////////////////////////////////////////////////
+    
+    private void set_radio_shape(int rs) {
+        if (rs < 0 || rs > 9)
+            rs= 5;  //replace invalid value with default= full pie
+        this.rshape[rs].active= true;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Called twice when one of the radioboxes is toggled.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_radio_toggled() {
+        notify_toggle= 1 - notify_toggle;
+        if (notify_toggle == 1)
+            on_check_toggled(); //just call once
+    }
+    
     /////////////////////////////////////////////////////////////////////
     /// Called when the OK-button is pressed.
     /////////////////////////////////////////////////////////////////////

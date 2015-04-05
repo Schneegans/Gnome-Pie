@@ -212,12 +212,29 @@ public class BindingManager : GLib.Object {
     public bool get_is_auto_shape(string id) {
         foreach (var binding in bindings) {
             if (binding.id == id) {
-                return binding.trigger.auto_shape;
+                return (binding.trigger.shape == 0);
             }
         }
 
         return false;
     }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Returns the prefered pie shape number
+    /////////////////////////////////////////////////////////////////////
+
+    public int get_shape_number(string id) {
+        foreach (var binding in bindings) {
+            if (binding.id == id) {
+                if (binding.trigger.shape == 0)
+                    break;  //return default if auto-open 
+                return binding.trigger.shape; //use selected shape
+            }
+        }
+
+        return 5;   //default= full pie
+    }
+
 
     /////////////////////////////////////////////////////////////////////
     /// Returns the name ID of the Pie bound to the given Trigger.
@@ -226,8 +243,8 @@ public class BindingManager : GLib.Object {
 
     public string get_assigned_id(Trigger trigger) {
         foreach (var binding in bindings) {
-            var first = Trigger.remove_flags(binding.trigger.name);
-            var second = Trigger.remove_flags(trigger.name);
+            var first = Trigger.remove_optional(binding.trigger.name);
+            var second = Trigger.remove_optional(trigger.name);
             if (first == second) {
                 return binding.id;
             }

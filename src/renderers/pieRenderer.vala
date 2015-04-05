@@ -71,11 +71,13 @@ public class PieRenderer : GLib.Object {
     /// CPIE_TOP_RIGHT: Eat  3/4 pie so it can be shown at the top-right corner.
     /// CPIE_BOT_LEFT:  Eat  3/4 pie so it can be shown at the bottom-left corner.
     /// CPIE_BOT_RIGHT: Eat  3/4 pie so it can be shown at the bottom-right corner.
+    /// (use the same numbers as the radio-button shape selector)
     /////////////////////////////////////////////////////////////////////
 
-    public enum ShowPieMode {FULL_PIE,
-                    HPIE_LEFT, HPIE_RIGHT, HPIE_TOP, HPIE_BOTTOM,
-                    CPIE_TOP_LEFT, CPIE_TOP_RIGHT, CPIE_BOT_LEFT, CPIE_BOT_RIGHT}
+    public enum ShowPieMode {
+        FULL_PIE=5,
+        HPIE_LEFT=8, HPIE_RIGHT=2, HPIE_TOP=6, HPIE_BOTTOM=4,
+        CPIE_TOP_LEFT=9, CPIE_TOP_RIGHT=3, CPIE_BOT_LEFT=7, CPIE_BOT_RIGHT=1}
 
     /////////////////////////////////////////////////////////////////////
     ///  Show pie mode: full, half-circle, corner
@@ -267,9 +269,11 @@ public class PieRenderer : GLib.Object {
                 set_show_mode(ShowPieMode.HPIE_BOTTOM);         //show 1/2 pie
 
 
-        //} else {
-        //    //select a fixed show mode (can be configurable by GUI)
-        //    set_show_mode(ShowPieMode.FULL_PIE);
+        } else {
+            //use the configurated shape
+            int rs= PieManager.get_shape_number(pie.id); //rs= number of radio-button 1..9
+            //ShowPieMode use the same numbers as the radio-button shape selector
+            set_show_mode((ShowPieMode)rs);
         }
 
         //recalc size

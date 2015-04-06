@@ -78,7 +78,7 @@ public class PieRenderer : GLib.Object {
         FULL_PIE,
         HPIE_LEFT, HPIE_RIGHT, HPIE_TOP, HPIE_BOTTOM,
         CPIE_TOP_LEFT, CPIE_TOP_RIGHT, CPIE_BOT_LEFT, CPIE_BOT_RIGHT}
-        
+
     /////////////////////////////////////////////////////////////////////
     ///  Show pie mode: full, half-circle, corner
     /////////////////////////////////////////////////////////////////////
@@ -157,7 +157,7 @@ public class PieRenderer : GLib.Object {
     /// Maximum distance from the center that activates the slices
     /////////////////////////////////////////////////////////////////////
     private int activation_range;
-    
+
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes members.
     /////////////////////////////////////////////////////////////////////
@@ -587,8 +587,8 @@ public class PieRenderer : GLib.Object {
         if (index != this.active_slice) {
             if (index >= this.first_slice_idx && index < this.first_slice_idx+this.visible_slice_count)
                 this.active_slice = index;
-            else if (this.quickaction >= this.first_slice_idx && this.quickaction < this.first_slice_idx+this.visible_slice_count)
-                this.active_slice = this.quickaction;
+            // else if (this.quickaction >= this.first_slice_idx && this.quickaction < this.first_slice_idx+this.visible_slice_count)
+            //     this.active_slice = this.quickaction;
             else
                 this.active_slice = -1;
 

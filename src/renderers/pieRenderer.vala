@@ -564,7 +564,6 @@ public class PieRenderer : GLib.Object {
 
             center.draw(frame_time, ctx, angle, slice_track);
 
-            //foreach (var slice in this.slices)
             for (int i= 0; i < this.visible_slice_count; ++i) {
                this.slices[ i+this.first_slice_idx ].draw(frame_time, ctx, angle, slice_track);
             }
@@ -587,8 +586,6 @@ public class PieRenderer : GLib.Object {
         if (index != this.active_slice) {
             if (index >= this.first_slice_idx && index < this.first_slice_idx+this.visible_slice_count)
                 this.active_slice = index;
-            // else if (this.quickaction >= this.first_slice_idx && this.quickaction < this.first_slice_idx+this.visible_slice_count)
-            //     this.active_slice = this.quickaction;
             else
                 this.active_slice = -1;
 
@@ -597,8 +594,6 @@ public class PieRenderer : GLib.Object {
 
             center.set_active_slice(active);
 
-            //foreach (var slice in this.slices)
-            //    slice.set_active_slice(active);
             for (int i= 0; i < this.visible_slice_count; ++i) {
                this.slices[ i+this.first_slice_idx ].set_active_slice(active);
             }

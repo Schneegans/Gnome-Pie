@@ -98,7 +98,7 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void bind(Trigger trigger, string id) {
-        if(trigger.key_code != 0) {
+        if (trigger.key_code != 0) {
             X.Display display = Gdk.X11.get_default_xdisplay();
             X.ID xid = Gdk.X11.get_default_root_xwindow();
 
@@ -116,10 +116,13 @@ public class BindingManager : GLib.Object {
             }
 
             Gdk.flush();
-
             Keybinding binding = new Keybinding(trigger, id);
             bindings.add(binding);
             display.flush();
+        } else {
+            //no key_code: just add the bindind to the list to save optional trigger parameters
+            Keybinding binding = new Keybinding(trigger, id);
+            bindings.add(binding);
         }
     }
 
@@ -128,6 +131,17 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void unbind(string id) {
+        foreach (var binding in bindings) {
+            if (id == binding.id) {
+                if (binding.trigger.key_code == 0) {
+                    //no key_code: just remove the bindind from the list
+                    bindings.remove(binding);
+                    return;                     
+                }
+                break;
+            }
+        }
+        
         X.Display display = Gdk.X11.get_default_xdisplay();
         X.ID xid = Gdk.X11.get_default_root_xwindow();
 
@@ -227,7 +241,7 @@ public class BindingManager : GLib.Object {
         foreach (var binding in bindings) {
             if (binding.id == id) {
                 if (binding.trigger.shape == 0)
-                    break;  //return default if auto-open 
+                    break;  //return default if auto-shaped 
                 return binding.trigger.shape; //use selected shape
             }
         }

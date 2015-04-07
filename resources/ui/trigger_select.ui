@@ -219,14 +219,14 @@
                         </child>
                         <child>
                           <object class="GtkCheckButton" id="warp-check">
-                            <property name="label" translatable="yes">Warp mouse pointer to center</property>
+                            <property name="label" translatable="yes">Warp mouse pointer to center of Pie</property>
                             <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
-                            <property name="tooltip_markup" translatable="yes">If checked, the Pie will open in the middle of your screen. Else it will pop up at your pointer.</property>
-                            <property name="tooltip_text" translatable="yes">If checked, the Pie will open in the middle of your screen. Else it will pop up at your pointer.</property>
+                            <property name="tooltip_markup" translatable="yes">If checked, the mouse pointer will be warped to the center of the Pie. This allows for quick selections even if the Pie is opened at the screen's boundary.</property>
+                            <property name="tooltip_text" translatable="yes">If checked, the mouse pointer will be warped to the center of the Pie. This allows for quick selections even if the Pie is opened at the screen's boundary.</property>
                             <property name="xalign">0</property>
                             <property name="draw_indicator">True</property>
                           </object>

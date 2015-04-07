@@ -2,14 +2,15 @@
 # Copyright (C) 2012 Simon Schneegans <code@simonschneegans.de>
 # This file is distributed under the same license as the gnomepie package.
 # Eduardo Anabalon <lalo1412@gmail.com>, 2012.
+# Gabriel Dubatti  <gdubatti@gmail.com>, 2015.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-02-29 15:58+0100\n"
+"POT-Creation-Date: 2015-04-07 08:55+0200\n"
 "PO-Revision-Date: 2012-01-22 15:30-0300\n"
-"Last-Translator: Eduardo Anabalon <lalo1412@gmail.com>\n"
+"Last-Translator: Gabriel Dubatti <gdubatti@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -25,14 +26,6 @@ msgstr "Presiona un atajo."
 msgid "Simulates the activation of a hotkey."
 msgstr "Simula la activación de un atajo."
 
-#: ../../src/actions/appAction.vala:34
-msgid "Launch application"
-msgstr "Lanzar una aplicación"
-
-#: ../../src/actions/appAction.vala:36
-msgid "Executes the given command."
-msgstr "Ejecutar un comando dado."
-
 #: ../../src/actions/uriAction.vala:34
 msgid "Open URI"
 msgstr "Abrir URI"
@@ -45,6 +38,14 @@ msgstr "Abre un lugar determinado. Puedes usar URI's o ruta de archivos."
 msgid "Trash"
 msgstr "Borrar"
 
+#: ../../src/actions/appAction.vala:34
+msgid "Launch application"
+msgstr "Lanzar una aplicación"
+
+#: ../../src/actions/appAction.vala:36
+msgid "Executes the given command."
+msgstr "Ejecutar un comando dado."
+
 #: ../../src/actions/pieAction.vala:34
 msgid "Open Pie"
 msgstr "Abrir Pastel"
@@ -53,67 +54,100 @@ msgstr "Abrir Pastel"
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
 msgstr "Abre otro Pastel de Gnome-Pie. De esta manera puedes crear submenús."
 
-#: ../../src/gui/triggerSelectWindow.vala:166
+#: ../../src/gui/preferencesWindow.vala:166
+msgid "No Pie selected."
+msgstr "Pastel no seleccionado."
+
+#: ../../src/gui/preferencesWindow.vala:206
+msgid "New Pie"
+msgstr "Nuevo Pastel"
+
+#: ../../src/gui/preferencesWindow.vala:219
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+"¿Realmente quieres borrar el Pastel seleccionado incluyendo todas sus "
+"Rebanadas?"
+
+#: ../../src/gui/triggerSelectWindow.vala:226
 msgid ""
 "This hotkey is already assigned to the pie \"%s\"! \n"
 "\n"
 "Please select another one or cancel your selection."
 msgstr ""
-"Este atajo ya está asignado al pastel \"%s\"! \n"
+"Este atajo ya está asignado al Pastel \"%s\"! \n"
 "\n"
 "Por favor selecciona otro atajo o cancela tu selección."
 
-#: ../../src/gui/preferencesWindow.vala:175
-msgid "No Pie selected."
-msgstr "Pastel no seleccionado."
+#: ../../src/gui/piePreview.vala:148
+msgid "Do you really want to delete this Slice?"
+msgstr "¿Realmente quieres borrar ésta Rebanada?"
 
-#: ../../src/gui/preferencesWindow.vala:215
-msgid "New Pie"
-msgstr "Nuevo Pastel"
+#: ../../src/gui/sliceTypeList.vala:60
+msgid "Slice types"
+msgstr "Tipos de Rebanada"
 
-#: ../../src/gui/preferencesWindow.vala:228
-msgid ""
-"Do you really want to delete the selected Pie with all contained Slices?"
-msgstr ""
-"Realmente quieres borrar el Pastel seleccionado incluyendo todas sus "
-"Rebanadas?"
+#: ../../src/gui/piePreviewRenderer.vala:419
+msgid "Click to edit"
+msgstr "Click para editar"
+
+#: ../../src/gui/piePreviewRenderer.vala:419
+#: ../../src/gui/piePreviewRenderer.vala:434
+msgid "Drag to move"
+msgstr "Arrastra para mover"
+
+#: ../../src/gui/piePreviewRenderer.vala:422
+msgid "Click to add a new Slice"
+msgstr "Click para añadir una nueva Rebanada"
+
+#: ../../src/gui/piePreviewRenderer.vala:426
+msgid "Drop to add as new Slice"
+msgstr "Suelta para añadir una nueva Rebanada"
+
+#: ../../src/gui/piePreviewRenderer.vala:429
+msgid "Drop to move Slice"
+msgstr "Suelta para mover la Rebanada"
+
+#: ../../src/gui/piePreviewRenderer.vala:434
+msgid "Click to delete"
+msgstr "Click para borrar"
+
+#: ../../src/gui/iconSelectWindow.vala:182
+msgid "All icons"
+msgstr "Todos los iconos"
+
+#: ../../src/gui/iconSelectWindow.vala:183
+#: ../../src/pies/defaultConfig.vala:36
+msgid "Applications"
+msgstr "Aplicaciones"
+
+#: ../../src/gui/iconSelectWindow.vala:184
+msgid "Actions"
+msgstr "Acciones"
+
+#: ../../src/gui/iconSelectWindow.vala:185
+msgid "Places"
+msgstr "Lugares"
+
+#: ../../src/gui/iconSelectWindow.vala:186
+msgid "File types"
+msgstr "Tipos de archivo"
+
+#: ../../src/gui/iconSelectWindow.vala:187
+msgid "Emotes"
+msgstr "Emoticones"
+
+#: ../../src/gui/iconSelectWindow.vala:188
+msgid "Miscellaneous"
+msgstr "Misceláneos"
+
+#: ../../src/gui/iconSelectWindow.vala:261
+msgid "All supported image formats"
+msgstr "Todos los formatos de imágenes soportados"
 
 #: ../../src/gui/newSliceWindow.vala:291
 msgid "Rename me!"
 msgstr "Renombrame!"
-
-#: ../../src/gui/piePreviewRenderer.vala:412
-msgid "Click to edit"
-msgstr "Click para editar"
-
-#: ../../src/gui/piePreviewRenderer.vala:412
-#: ../../src/gui/piePreviewRenderer.vala:427
-msgid "Drag to move"
-msgstr "Arrastra para mover"
-
-#: ../../src/gui/piePreviewRenderer.vala:415
-msgid "Click to add a new Slice"
-msgstr "Click para añadir una nueva Rebanada"
-
-#: ../../src/gui/piePreviewRenderer.vala:419
-msgid "Drop to add as new Slice"
-msgstr "Suelta para añadir una nueva Rebanada"
-
-#: ../../src/gui/piePreviewRenderer.vala:422
-msgid "Drop to move Slice"
-msgstr "Suelta para mover la Rebanada"
-
-#: ../../src/gui/piePreviewRenderer.vala:427
-msgid "Click to delete"
-msgstr "Click para borrar"
-
-#: ../../src/gui/triggerSelectButton.vala:63
-msgid "Press a hotkey ..."
-msgstr "Presiona un atajo ..."
-
-#: ../../src/gui/piePreview.vala:155
-msgid "Do you really want to delete this Slice?"
-msgstr "Realmente quieres borrar ésta Rebanada?"
 
 #: ../../src/gui/themeList.vala:62
 msgid "Themes"
@@ -123,43 +157,75 @@ msgstr "Temas"
 msgid "By"
 msgstr "Por"
 
-#: ../../src/gui/sliceTypeList.vala:60
-msgid "Slice types"
-msgstr "Tipos de Rebanada"
+#: ../../src/gui/indicator.vala:114
+msgid "_Preferences"
+msgstr "_Preferencias"
 
-#: ../../src/gui/iconSelectWindow.vala:186
-msgid "All icons"
-msgstr "Todos los iconos"
+#: ../../src/gui/indicator.vala:123
+msgid "_About"
+msgstr "_Acerca de"
 
-#: ../../src/gui/iconSelectWindow.vala:187
-#: ../../src/pies/defaultConfig.vala:36
-msgid "Applications"
-msgstr "Aplicaciones"
+#: ../../src/gui/indicator.vala:138
+msgid "_Quit"
+msgstr "_Salir"
 
-#: ../../src/gui/iconSelectWindow.vala:188
-msgid "Actions"
-msgstr "Acciones"
+#: ../../src/gui/newsWindow.vala:64
+msgid "_Close"
+msgstr "_Cerrar"
 
-#: ../../src/gui/iconSelectWindow.vala:189
-msgid "Places"
-msgstr "Lugares"
+#: ../../src/gui/triggerSelectButton.vala:64
+msgid "Press a hotkey ..."
+msgstr "Presiona un atajo ..."
 
-#: ../../src/gui/iconSelectWindow.vala:190
-msgid "File types"
-msgstr "Tipos de archivo"
+#: ../../src/utilities/key.vala:65 ../../src/utilities/bindingManager.vala:177
+#: ../../src/utilities/trigger.vala:195 ../../src/utilities/trigger.vala:280
+#: ../../src/utilities/trigger.vala:281
+msgid "Not bound"
+msgstr "Sin atajo"
 
-#: ../../src/gui/iconSelectWindow.vala:191
-msgid "Emotes"
-msgstr "Emotes"
+#: ../../src/utilities/trigger.vala:182
+msgid "Button %i"
+msgstr "Botón %i"
 
-#: ../../src/gui/iconSelectWindow.vala:192
-msgid "Miscellaneous"
-msgstr "Misceláneos"
+#: ../../src/utilities/trigger.vala:185
+msgid "LeftButton"
+msgstr "BotónIzquierdo"
 
-#: ../../src/gui/iconSelectWindow.vala:267
-#: ../../src/gui/iconSelectWindow.vala:269
-msgid "All supported image formats"
-msgstr "Todos los formatos de imágenes soportados"
+#: ../../src/utilities/trigger.vala:187
+msgid "RightButton"
+msgstr "BotónDerecho"
+
+#: ../../src/utilities/trigger.vala:189
+msgid "MiddleButton"
+msgstr "BotónCentral"
+
+#: ../../src/utilities/trigger.vala:216
+msgid "Turbo"
+msgstr "Turbo"
+
+#: ../../src/utilities/trigger.vala:220 ../../src/utilities/trigger.vala:222
+msgid "Delayed"
+msgstr "Retrasado"
+
+#: ../../src/utilities/trigger.vala:226 ../../src/utilities/trigger.vala:228
+msgid "Centered"
+msgstr "Centrado"
+
+#: ../../src/utilities/trigger.vala:232 ../../src/utilities/trigger.vala:234
+msgid "Warp"
+msgstr "Teletransportar"
+
+#: ../../src/utilities/trigger.vala:238 ../../src/utilities/trigger.vala:240
+msgid "Auto-shaped"
+msgstr "Auto-forma"
+
+#: ../../src/utilities/trigger.vala:243 ../../src/utilities/trigger.vala:245
+msgid "Quarter pie"
+msgstr "Cuarto de Pastel"
+
+#: ../../src/utilities/trigger.vala:249 ../../src/utilities/trigger.vala:251
+msgid "Half pie"
+msgstr "Medio Pastel"
 
 #: ../../src/actionGroups/windowListGroup.vala:34
 msgid "Group: Window List"
@@ -168,16 +234,8 @@ msgstr "Grupo: Lista de Ventanas"
 #: ../../src/actionGroups/windowListGroup.vala:36
 msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
 msgstr ""
-"Muestra una Rebanada para cada uno de tus Ventanas abiertas. Casi como Alt-"
+"Muestra una Rebanada para cada una de tus Ventanas abiertas. Casi como Alt-"
 "Tab."
-
-#: ../../src/actionGroups/menuGroup.vala:35
-msgid "Group: Main menu"
-msgstr "Grupo: Menú Principal"
-
-#: ../../src/actionGroups/menuGroup.vala:37
-msgid "Displays your main menu structure."
-msgstr "Muestra la estructura de tu Menú Principal."
 
 #: ../../src/actionGroups/clipboardGroup.vala:64
 msgid "Group: Clipboard"
@@ -187,13 +245,33 @@ msgstr "Grupo: Portapapeles"
 msgid "Manages your Clipboard."
 msgstr "Gestiona tus Portapapeles."
 
+#: ../../src/actionGroups/devicesGroup.vala:35
+msgid "Group: Devices"
+msgstr "Grupo: Dispositivos"
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr "Muestra una Rebanada por cada dispositivo conectado, como USB-Sticks."
+
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr "Root"
+
+#: ../../src/actionGroups/menuGroup.vala:35
+msgid "Group: Main menu"
+msgstr "Grupo: Menú Principal"
+
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr "Muestra la estructura de tu Menú Principal."
+
 #: ../../src/actionGroups/sessionGroup.vala:35
 msgid "Group: Session Control"
 msgstr "Grupo: Control de Sesión"
 
 #: ../../src/actionGroups/sessionGroup.vala:37
 msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
-msgstr "Muestra una Rebanada para Apagar, Reiniciar, e Hibernar."
+msgstr "Muestra una Rebanada para Apagar, Reiniciar e Hibernar."
 
 #: ../../src/actionGroups/sessionGroup.vala:60
 msgid "Shutdown"
@@ -214,54 +292,6 @@ msgstr "Grupo: Marcadores"
 #: ../../src/actionGroups/bookmarkGroup.vala:38
 msgid "Shows a Slice for each of your directory Bookmarks."
 msgstr "Muestra una Rebanada por cada uno de los directorios en los Marcadores."
-
-#: ../../src/actionGroups/devicesGroup.vala:35
-msgid "Group: Devices"
-msgstr "Grupo: Dispositivos"
-
-#: ../../src/actionGroups/devicesGroup.vala:37
-msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
-msgstr "Muestra una Rebanada por cada dispositivo conectado, como USB-Sticks."
-
-#: ../../src/actionGroups/devicesGroup.vala:85
-msgid "Root"
-msgstr "Root"
-
-#: ../../src/utilities/bindingManager.vala:161 ../../src/utilities/key.vala:65
-#: ../../src/utilities/trigger.vala:212 ../../src/utilities/trigger.vala:213
-msgid "Not bound"
-msgstr "No encontrado"
-
-#: ../../src/utilities/trigger.vala:163
-msgid "Button %i"
-msgstr "Botón %i"
-
-#: ../../src/utilities/trigger.vala:166
-msgid "LeftButton"
-msgstr "BotónIzquierdo"
-
-#: ../../src/utilities/trigger.vala:168
-msgid "RightButton"
-msgstr "BotónDerecho"
-
-#: ../../src/utilities/trigger.vala:170
-msgid "MiddleButton"
-msgstr "BotónCentral"
-
-#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
-#: ../../src/utilities/trigger.vala:192 ../../src/utilities/trigger.vala:196
-msgid "Turbo"
-msgstr "Turbo"
-
-#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:192
-#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:198
-msgid "Delayed"
-msgstr "Retrasado"
-
-#: ../../src/utilities/trigger.vala:188 ../../src/utilities/trigger.vala:190
-#: ../../src/utilities/trigger.vala:194 ../../src/utilities/trigger.vala:200
-msgid "Centered"
-msgstr "Centrado"
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
@@ -319,120 +349,87 @@ msgstr "Maximizar"
 msgid "Restore"
 msgstr "Restaurar"
 
-#: ../ui/icon_select.ui:8
-msgid "Select an icon"
-msgstr "Selecciona un icono"
-
-#: ../ui/icon_select.ui:85
-msgid "Icon Theme"
-msgstr "Tema de iconos"
-
-#: ../ui/icon_select.ui:105
-msgid "Custom Icon"
-msgstr "Icono personalizado"
-
-#: ../ui/trigger_select.ui:8
+#: ../ui/trigger_select.ui:53
 msgid "Activation Settings"
 msgstr "Configuración de activación"
 
-#: ../ui/trigger_select.ui:86
+#: ../ui/trigger_select.ui:132
 msgid "It's possible to bind mouse buttons as well!"
 msgstr "Es posible enlazar los botones del ratón también!"
 
-#: ../ui/trigger_select.ui:118
+#: ../ui/trigger_select.ui:165
 msgid "Turbo mode"
 msgstr "Modo Turbo"
 
-#: ../ui/trigger_select.ui:123 ../ui/trigger_select.ui:124
+#: ../ui/trigger_select.ui:171 ../ui/trigger_select.ui:172
 msgid "If checked, the Pie will close when you release the chosen hot key."
-msgstr "el Pastel cerrará cuando sueltes el atajo seleccionado."
+msgstr "El Pastel cerrará cuando sueltes el atajo seleccionado."
 
-#: ../ui/trigger_select.ui:137
+#: ../ui/trigger_select.ui:184
 msgid "Long press for activation"
-msgstr "Larga pulsación para la activación"
+msgstr "Pulsación larga para activar"
 
-#: ../ui/trigger_select.ui:142 ../ui/trigger_select.ui:143
+#: ../ui/trigger_select.ui:190 ../ui/trigger_select.ui:191
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
-msgstr "el Pastel solo se abrirá si presionas el atajo un poco más."
+msgstr "El Pastel sólo se abrirá si presionas el atajo un poco más."
 
-#: ../ui/trigger_select.ui:156
+#: ../ui/trigger_select.ui:203
 msgid "Open Pie centered on the screen"
 msgstr "Abrir el Pastel en el centro de la pantalla"
 
-#: ../ui/trigger_select.ui:161 ../ui/trigger_select.ui:162
+#: ../ui/trigger_select.ui:209 ../ui/trigger_select.ui:210
 msgid ""
 "If checked, the Pie will open in the middle of your screen. Else it will pop "
 "up at your pointer."
 msgstr ""
-"el Pastel abrirá en el centro de la pantalla. De lo contrario abrirá encima "
+"El Pastel abrirá en el centro de la pantalla. De lo contrario abrirá encima "
 "del puntero."
 
-#: ../ui/trigger_select.ui:181
+#: ../ui/trigger_select.ui:222
+msgid "Warp mouse pointer to center of Pie"
+msgstr "Teletransportar el mouse al centro del Pastel"
+
+#: ../ui/trigger_select.ui:228 ../ui/trigger_select.ui:229
+msgid ""
+"If checked, the mouse pointer will be warped to the center of the Pie. This "
+"allows for quick selections even if the Pie is opened at the screen's "
+"boundary."
+msgstr "El puntero será teletransportado al centro del Pastel."
+
+#: ../ui/trigger_select.ui:247
 msgid "Activation options"
 msgstr "Opciones de activación"
 
-#: ../ui/settings.ui:9 ../ui/preferences.ui:27
-msgid "General Settings"
-msgstr "Configuraciones Generales"
+#: ../ui/trigger_select.ui:438
+msgid "Automatically select the best pie shape"
+msgstr "Seleccionar automáticamente la mejor forma de Pastel"
 
-#: ../ui/settings.ui:74
-msgid "Start Gnome-Pie on login"
-msgstr "Arrancar Gnome-Pie al inicio"
-
-#: ../ui/settings.ui:79 ../ui/settings.ui:80
-msgid "If checked, Gnome-Pie will start silently everytime you log in."
-msgstr "Gnome-Pie se iniciará en silencio cada vez que inicies sesión."
-
-#: ../ui/settings.ui:93
-msgid "Display panel icon "
-msgstr "Mostrar panel de íconos"
-
-#: ../ui/settings.ui:98 ../ui/settings.ui:99
+#: ../ui/trigger_select.ui:442
 msgid ""
-"If not checked, you can access this menu by launching Gnome-Pie a second "
-"time."
-msgstr "Si no esta activado, puedes acceder a este menú lanzando Gnome-Pie "
-"por segunda vez."
-
-#: ../ui/settings.ui:118
-msgid "Behavior"
-msgstr "Comportamiento"
-
-#: ../ui/settings.ui:175
-msgid "Global scale"
-msgstr "Escala Global"
-
-#: ../ui/settings.ui:207
-#, fuzzy
-msgid "Display Slice labels"
-msgstr "Mostrar las etiquetas de las Rebanadas"
-
-#: ../ui/settings.ui:212 ../ui/settings.ui:213
-msgid ""
-"Displays the name of each Slice next to it. Only available if supported by "
-"the theme."
+"If checked, the shape will be automatically selected to minimize mouse "
+"travelling."
 msgstr ""
-"Mostrar el nombre de cada Rebanada. Solo si es soportado por el theme."
+"La forma del Pastel se ajustará según la posición del puntero para "
+"minimizar la distancia al centro"
 
-#: ../ui/settings.ui:232
-#, fuzzy
-msgid "Appearance"
-msgstr "Apariencia"
+#: ../ui/trigger_select.ui:462
+msgid "Pie shape"
+msgstr "Forma del Pastel"
 
-#: ../ui/slice_select.ui:9
+#: ../ui/slice_select.ui:8
 msgid "Slice Options"
 msgstr "Opciones de Rebanadas"
 
-#: ../ui/slice_select.ui:139
+#: ../ui/slice_select.ui:141
 msgid "There are no options for this Slice type."
 msgstr "No hay opciones para este tipo de Rebanada."
 
-#: ../ui/slice_select.ui:165
+#: ../ui/slice_select.ui:167
 msgid "Name of the Slice "
 msgstr "Nombre de la Rebanada "
 
-#: ../ui/slice_select.ui:204
+#: ../ui/slice_select.ui:205
 msgid "URI to open"
 msgstr "URI a abrir"
 
@@ -440,37 +437,57 @@ msgstr "URI a abrir"
 msgid "Command to execute"
 msgstr "Comando a ejecutar"
 
-#: ../ui/slice_select.ui:282
+#: ../ui/slice_select.ui:281
 msgid "Hotkey to press"
 msgstr "Atajo a presionar"
 
-#: ../ui/slice_select.ui:311
+#: ../ui/slice_select.ui:310
 msgid "Pie to open"
 msgstr "Pastel a abrir"
 
-#: ../ui/slice_select.ui:340
+#: ../ui/slice_select.ui:339
 msgid "Is Quick Action"
 msgstr "Es una Acción Rápida"
 
 #: ../ui/slice_select.ui:354 ../ui/slice_select.ui:355
 msgid "This Slice will be executed when you click in the middle of the Pie."
-msgstr "Esta Rebanada se ejecutará cuando hagas click en el medio del Pastel."
+msgstr "Esta Rebanada se ejecutará cuando hagas click en el centro del Pastel."
 
-#: ../ui/slice_select.ui:388
+#: ../ui/slice_select.ui:387
 msgid "Slice options"
 msgstr "Opciones de Rebanadas"
 
-#: ../ui/preferences.ui:8
+#: ../ui/icon_select.ui:9
+msgid "Select an icon"
+msgstr "Selecciona un icono"
+
+#: ../ui/icon_select.ui:103
+msgid "Icon Theme"
+msgstr "Tema de iconos"
+
+#: ../ui/icon_select.ui:123
+msgid "Custom Icon"
+msgstr "Icono personalizado"
+
+#: ../ui/rename_pie.ui:8
+msgid "Rename a Pie"
+msgstr "Renombrar un Pastel"
+
+#: ../ui/preferences.ui:7
 msgid "Gnome-Pie Settings"
 msgstr "Configuraciones de Gnome-Pie"
 
-#: ../ui/preferences.ui:261
+#: ../ui/preferences.ui:27 ../ui/settings.ui:8
+msgid "General Settings"
+msgstr "Configuraciones Generales"
+
+#: ../ui/preferences.ui:266
 msgid ""
 "<b><big>This Pie is empty!</big>\n"
 "\n"
 "Start adding Slices to it!</b> This can be done by dragging stuff to the "
 "plus sign below. You can try a lot! For example application launchers or "
-"folders. Even URLs from your browser are possible... \n"
+"folders. Even URLs from your browser are possible...\n"
 "\n"
 "For manual and advanced configuration click on the plus sign."
 msgstr ""
@@ -478,11 +495,11 @@ msgstr ""
 "\n"
 "Empieza añadiendo Rebanadas!</b> Puedes hacerlo añadiendo cosas al signo "
 "más. Puedes intentar muchas cosas! Por ejemplo lanzadores de aplicaciones o "
-"directorios. Incluso puedes añadir URLs desde tu navegador... \n"
+"directorios. Incluso puedes añadir URLs desde tu navegador...\n"
 "\n"
 "Para configuración manual y avanzada, click en el signo más."
 
-#: ../ui/preferences.ui:282
+#: ../ui/preferences.ui:287
 msgid ""
 "<b><big>You have no Pies!</big>\n"
 "\n"
@@ -494,12 +511,52 @@ msgstr ""
 "Empieza por crear uno! </b> Puedes hacerlo haciendo click en el pequeño "
 "signo más en la esquina inferior izquierda."
 
-#: ../ui/rename_pie.ui:8
-msgid "Rename a Pie"
-msgstr "Renombrar un Pastel"
+#: ../ui/settings.ui:75
+msgid "Start Gnome-Pie on login"
+msgstr "Arrancar Gnome-Pie al inicio"
 
-#~ msgid "Suspend"
-#~ msgstr "Suspender"
+#: ../ui/settings.ui:81 ../ui/settings.ui:82
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr "Gnome-Pie se iniciará en silencio cada vez que inicies sesión."
 
-#~ msgid "Hibernate"
-#~ msgstr "Hibernar"
+#: ../ui/settings.ui:94
+msgid "Display panel icon "
+msgstr "Mostrar panel de íconos "
+
+#: ../ui/settings.ui:100 ../ui/settings.ui:101
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr "Si no esta activado, puedes acceder a este menú lanzando Gnome-Pie "
+"por segunda vez."
+
+#: ../ui/settings.ui:119
+msgid "Behavior"
+msgstr "Comportamiento"
+
+#: ../ui/settings.ui:178
+msgid "Global scale"
+msgstr "Escala Global"
+
+#: ../ui/settings.ui:217
+msgid "Maximum slices per pie"
+msgstr "Máximo de Rebanadas por Pastel"
+
+#: ../ui/settings.ui:256
+msgid "Maximum activation radius"
+msgstr "Radio máximo de activación"
+
+#: ../ui/settings.ui:287
+msgid "Display Slice labels"
+msgstr "Mostrar etiquetas en las Rebanadas"
+
+#: ../ui/settings.ui:293 ../ui/settings.ui:294
+msgid ""
+"Displays the name of each Slice next to it. Only available if supported by "
+"the theme."
+msgstr ""
+"Mostrar el nombre de cada Rebanada. Sólo si es soportado por el Tema."
+
+#: ../ui/settings.ui:312
+msgid "Appearance"
+msgstr "Apariencia"

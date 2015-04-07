@@ -14,7 +14,7 @@
    width="16"
    height="16"
    id="svg2408"
-   inkscape:version="0.48.2 r9819"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="gnome-pie-symbolic.svg">
   <sodipodi:namedview
      pagecolor="#ffffff"
@@ -23,19 +23,32 @@
      objecttolerance="10"
      gridtolerance="10"
      guidetolerance="10"
-     inkscape:pageopacity="0"
+     inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:window-width="1117"
-     inkscape:window-height="801"
+     inkscape:window-width="958"
+     inkscape:window-height="1024"
      id="namedview93"
      showgrid="false"
-     inkscape:zoom="19.327586"
-     inkscape:cx="12.439174"
-     inkscape:cy="13.17699"
-     inkscape:window-x="272"
-     inkscape:window-y="129"
+     inkscape:zoom="38.655172"
+     inkscape:cx="10.659948"
+     inkscape:cy="8.7396561"
+     inkscape:window-x="960"
+     inkscape:window-y="30"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg2408" />
+     inkscape:current-layer="svg2408"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:snap-center="true"
+     inkscape:snap-object-midpoints="true">
+    <sodipodi:guide
+       orientation="1,0"
+       position="8.0121949,11.487804"
+       id="guide3835" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="10.536585,8.0121949"
+       id="guide3837" />
+  </sodipodi:namedview>
   <defs
      id="defs2410">
     <linearGradient
@@ -382,18 +395,6 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <path
-     style="fill:#bebebe;fill-opacity:1;stroke:none;display:inline"
-     d="m 12.589017,1.6792906 -4.0308085,5.9429262 6.9863825,1.297697 c 0.122606,-0.5066686 0.206573,-1.0289239 0.206572,-1.5731267 0,-2.3954977 -1.270177,-4.482987 -3.162146,-5.6674965 z m 0.358131,2.5663579 c 0.498554,0.00585 0.972501,0.3065623 1.173181,0.7970478 C 14.387905,5.696678 14.075779,6.440862 13.421794,6.7084377 12.767813,6.9760115 12.019151,6.6638827 11.751576,6.0099011 11.484,5.3559188 11.796136,4.607257 12.450111,4.3396825 c 0.163496,-0.066895 0.330852,-0.095991 0.497037,-0.094034 z"
-     id="path2505"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="cccsccssssc" />
-  <path
-     style="fill:#bebebe;fill-opacity:1;stroke:none;display:inline"
-     d="m 6.8886625,1.4267538 c -3.6986717,0 -6.7003582,3.0016859 -6.7003582,6.7003574 0,3.6986728 3.0016865,6.7003588 6.7003582,6.7003588 3.1544675,0 5.7830925,-2.190332 6.4937865,-5.1272308 L 6.396067,8.4025416 10.426875,2.4596152 C 9.3976255,1.8152299 8.1918366,1.4267538 6.8886625,1.4267538 z M 6.7032767,2.8288473 c 0.6407264,0 1.1612552,0.5164675 1.1612552,1.1571946 0,0.6407263 -0.4596242,1.1287721 -1.1003506,1.1287721 -0.6407267,0 -1.2221588,-0.4880458 -1.2221588,-1.1287721 0,-0.6407271 0.5205275,-1.1571952 1.1612542,-1.1571946 z M 3.0940077,5.3394951 C 3.278494,5.3351846 3.4670226,5.3774583 3.6427308,5.4676645 4.2049976,5.7563332 4.428055,6.4434245 4.1393855,7.005691 3.8507166,7.5679571 3.1596196,7.7870098 2.597353,7.4983402 2.0350863,7.2096719 1.8120294,6.5225809 2.1006984,5.9603135 2.2991583,5.5737554 2.6881379,5.3489617 3.0940077,5.3394951 z M 4.219113,10.119282 c 0.3012407,1.59e-4 0.6024458,0.111968 0.8321637,0.341929 0.4594336,0.459922 0.4599205,1.204892 0,1.664326 -0.4599212,0.459436 -1.204893,0.459922 -1.6643274,0 -0.4594343,-0.459921 -0.4599211,-1.204892 0,-1.664326 C 3.61691,10.231493 3.9178722,10.119122 4.219113,10.119282 z m 5.4315502,0.09169 c 0.3720518,-0.01259 0.7470128,0.154998 0.9821828,0.478916 0.376269,0.518269 0.258518,1.243113 -0.259751,1.619383 -0.5182687,0.376271 -1.2431141,0.25852 -1.6193838,-0.25975 C 8.3774414,11.531257 8.4911351,10.810472 9.0094044,10.434201 9.2037536,10.2931 9.4274317,10.218531 9.6506632,10.210976 z"
-     id="path3971"
-     inkscape:connector-curvature="0"
-     sodipodi:nodetypes="ssscccsssssscsssscssssssssssss" />
   <g
      id="layer2"
      style="display:none"
@@ -493,4 +494,55 @@
        id="rect3171"
        style="opacity:0.1;fill:url(#linearGradient3613);fill-opacity:1;fill-rule:nonzero;stroke:#ffffff;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;filter:url(#filter3794)" />
   </g>
+  <path
+     style="fill:#e9e7e2;fill-opacity:1;stroke:none"
+     d="m 11.081759,9.2790468 c -0.0045,-1.0541444 0.846399,-1.9123478 1.900543,-1.9168514 1.054143,-0.0045 1.912347,0.8463986 1.91685,1.9005429 0.0046,1.0541437 -0.846398,1.9123477 -1.900542,1.9168507 -1.054145,0.0045 -1.912348,-0.846397 -1.916851,-1.9005422 z"
+     id="path3845"
+     inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
+     inkscape:export-xdpi="1637.5708"
+     inkscape:export-ydpi="1637.5708"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#e9e7e2;fill-opacity:1;stroke:none"
+     inkscape:transform-center-x="-0.12084252"
+     d="m 8.7278282,12.001248 c 0.7843384,-0.457318 1.7908998,-0.192213 2.2482168,0.592125 0.457317,0.784339 0.192213,1.7909 -0.592127,2.248216 -0.7843369,0.457318 -1.7908981,0.192215 -2.2482152,-0.592124 -0.457317,-0.784339 -0.1922134,-1.7909 0.5921254,-2.248217 z"
+     id="path3903"
+     inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
+     inkscape:export-xdpi="1637.5708"
+     inkscape:export-ydpi="1637.5708"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#e9e7e2;fill-opacity:1;stroke:none"
+     d="m 5.5367222,11.914644 c 0.7097459,0.405739 0.9561921,1.310019 0.550453,2.019765 -0.405739,0.709746 -1.3100181,0.956193 -2.019764,0.550453 -0.7097459,-0.405739 -0.956192,-1.310019 -0.550453,-2.019765 0.4057391,-0.709745 1.3100182,-0.956192 2.019764,-0.550453 z"
+     id="path3905"
+     inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
+     inkscape:export-xdpi="1637.5708"
+     inkscape:export-ydpi="1637.5708"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#e9e7e2;fill-opacity:1;stroke:none"
+     inkscape:transform-center-x="-0.15111639"
+     d="M 4.1247316,9.2638315 C 4.1286312,10.17663 3.3918232,10.91976 2.4790249,10.923658 1.5662267,10.927559 0.82309635,10.190751 0.81919669,9.2779534 0.81529713,8.3651552 1.5521051,7.6220248 2.4649032,7.6181251 c 0.9127983,-0.0039 1.6559287,0.7329083 1.6598284,1.6457064 z"
+     id="path3907"
+     inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
+     inkscape:export-xdpi="1637.5708"
+     inkscape:export-ydpi="1637.5708"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#e9e7e2;fill-opacity:1;stroke:none"
+     d="M 5.3079079,6.0033637 C 4.3355025,6.570335 3.087591,6.2416655 2.5206197,5.2692601 1.9536486,4.2968546 2.2823178,3.0489429 3.2547233,2.4819718 4.2271288,1.9150006 5.4750403,2.24367 6.0420116,3.2160754 6.6089827,4.1884809 6.2803134,5.4363924 5.3079079,6.0033637 z"
+     id="path3909"
+     inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
+     inkscape:export-xdpi="1637.5708"
+     inkscape:export-ydpi="1637.5708"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#e9e7e2;fill-opacity:1;stroke:none"
+     inkscape:transform-center-x="-0.15685295"
+     d="M 9.2730964,5.9780938 C 8.0589999,5.2840336 7.6374274,3.7371669 8.3314877,2.5230705 9.0255479,1.3089741 10.572413,0.88740131 11.786511,1.5814616 c 1.214096,0.6940602 1.635668,2.2409268 0.941608,3.4550234 -0.69406,1.2140964 -2.240927,1.635669 -3.4550226,0.9416088 z"
+     id="path3911"
+     inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
+     inkscape:export-xdpi="1637.5708"
+     inkscape:export-ydpi="1637.5708"
+     inkscape:connector-curvature="0" />
 </svg>

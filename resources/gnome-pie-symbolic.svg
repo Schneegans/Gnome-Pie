@@ -25,16 +25,16 @@
      guidetolerance="10"
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
-     inkscape:window-width="958"
-     inkscape:window-height="1024"
+     inkscape:window-width="1920"
+     inkscape:window-height="1025"
      id="namedview93"
      showgrid="false"
-     inkscape:zoom="38.655172"
-     inkscape:cx="10.659948"
-     inkscape:cy="8.7396561"
-     inkscape:window-x="960"
+     inkscape:zoom="19.327586"
+     inkscape:cx="8.5620071"
+     inkscape:cy="4.3461907"
+     inkscape:window-x="0"
      inkscape:window-y="30"
-     inkscape:window-maximized="0"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg2408"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -391,7 +391,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -496,53 +496,59 @@
   </g>
   <path
      style="fill:#e9e7e2;fill-opacity:1;stroke:none"
-     d="m 11.081759,9.2790468 c -0.0045,-1.0541444 0.846399,-1.9123478 1.900543,-1.9168514 1.054143,-0.0045 1.912347,0.8463986 1.91685,1.9005429 0.0046,1.0541437 -0.846398,1.9123477 -1.900542,1.9168507 -1.054145,0.0045 -1.912348,-0.846397 -1.916851,-1.9005422 z"
+     d="m 10.47382,9.3954607 c -0.05339,-1.4677747 1.378985,-2.4110289 2.676635,-2.4342466 1.29765,-0.023218 2.588561,0.7676451 2.602399,2.21098 0.01384,1.4433349 -1.348541,2.4047029 -2.624895,2.3825069 -1.276354,-0.0222 -2.600751,-0.691466 -2.654139,-2.1592403 z"
      id="path3845"
      inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
      inkscape:export-xdpi="1637.5708"
      inkscape:export-ydpi="1637.5708"
-     inkscape:connector-curvature="0" />
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="zzzzz" />
   <path
      style="fill:#e9e7e2;fill-opacity:1;stroke:none"
      inkscape:transform-center-x="-0.12084252"
-     d="m 8.7278282,12.001248 c 0.7843384,-0.457318 1.7908998,-0.192213 2.2482168,0.592125 0.457317,0.784339 0.192213,1.7909 -0.592127,2.248216 -0.7843369,0.457318 -1.7908981,0.192215 -2.2482152,-0.592124 -0.457317,-0.784339 -0.1922134,-1.7909 0.5921254,-2.248217 z"
+     d="m 8.3656516,12.091792 c 0.9662532,-0.771254 2.3925434,-0.451272 3.1148534,0.385167 0.667188,0.772606 0.696553,1.767116 -0.139406,2.36463 -0.709644,0.507228 -2.0059942,0.499397 -2.8561544,-0.268752 -0.7813133,-0.705944 -0.9840924,-1.79077 -0.119293,-2.481045 z"
      id="path3903"
      inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
      inkscape:export-xdpi="1637.5708"
      inkscape:export-ydpi="1637.5708"
-     inkscape:connector-curvature="0" />
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="sssss" />
   <path
      style="fill:#e9e7e2;fill-opacity:1;stroke:none"
-     d="m 5.5367222,11.914644 c 0.7097459,0.405739 0.9561921,1.310019 0.550453,2.019765 -0.405739,0.709746 -1.3100181,0.956193 -2.019764,0.550453 -0.7097459,-0.405739 -0.956192,-1.310019 -0.550453,-2.019765 0.4057391,-0.709745 1.3100182,-0.956192 2.019764,-0.550453 z"
+     d="m 5.8730291,11.604207 c 0.7549892,0.442748 1.2490366,1.675318 0.8091506,2.291397 C 6.0781356,14.741594 4.993109,14.525516 4.2873042,14.019206 3.6158328,13.537525 3.1519268,12.517371 3.6980465,11.779548 4.1844266,11.122436 5.1678118,11.190647 5.8730291,11.604207 z"
      id="path3905"
      inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
      inkscape:export-xdpi="1637.5708"
      inkscape:export-ydpi="1637.5708"
-     inkscape:connector-curvature="0" />
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="sssss" />
   <path
      style="fill:#e9e7e2;fill-opacity:1;stroke:none"
      inkscape:transform-center-x="-0.15111639"
-     d="M 4.1247316,9.2638315 C 4.1286312,10.17663 3.3918232,10.91976 2.4790249,10.923658 1.5662267,10.927559 0.82309635,10.190751 0.81919669,9.2779534 0.81529713,8.3651552 1.5521051,7.6220248 2.4649032,7.6181251 c 0.9127983,-0.0039 1.6559287,0.7329083 1.6598284,1.6457064 z"
+     d="M 4.1506014,9.1215478 C 4.2943827,10.230181 3.5426631,11.035218 2.4272854,10.755505 1.5418955,10.533467 0.83675943,9.6340499 0.80626181,8.7217536 0.77482692,7.78142 1.3042584,7.1413503 2.2579451,7.1783392 3.170066,7.213716 4.0332005,8.2163227 4.1506014,9.1215478 z"
      id="path3907"
      inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
      inkscape:export-xdpi="1637.5708"
      inkscape:export-ydpi="1637.5708"
-     inkscape:connector-curvature="0" />
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="sssss" />
   <path
      style="fill:#e9e7e2;fill-opacity:1;stroke:none"
-     d="M 5.3079079,6.0033637 C 4.3355025,6.570335 3.087591,6.2416655 2.5206197,5.2692601 1.9536486,4.2968546 2.2823178,3.0489429 3.2547233,2.4819718 4.2271288,1.9150006 5.4750403,2.24367 6.0420116,3.2160754 6.6089827,4.1884809 6.2803134,5.4363924 5.3079079,6.0033637 z"
+     d="M 5.3337777,6.3784752 C 4.2833141,7.1292474 3.0004532,6.7244276 2.3524662,5.3598042 1.8382853,4.2769687 2.0560682,2.7366193 3.2159187,2.1068603 4.2890072,1.52421 5.4649548,2.2322162 5.9514674,3.3454242 6.4022374,4.376848 6.2495535,5.7239651 5.3337777,6.3784752 z"
      id="path3909"
      inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
      inkscape:export-xdpi="1637.5708"
      inkscape:export-ydpi="1637.5708"
-     inkscape:connector-curvature="0" />
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="sssss" />
   <path
      style="fill:#e9e7e2;fill-opacity:1;stroke:none"
      inkscape:transform-center-x="-0.15685295"
-     d="M 9.2730964,5.9780938 C 8.0589999,5.2840336 7.6374274,3.7371669 8.3314877,2.5230705 9.0255479,1.3089741 10.572413,0.88740131 11.786511,1.5814616 c 1.214096,0.6940602 1.635668,2.2409268 0.941608,3.4550234 -0.69406,1.2140964 -2.240927,1.635669 -3.4550226,0.9416088 z"
+     d="M 8.4767147,6.1793133 C 7.2397866,5.2458127 7.0983347,3.7631538 7.7751301,2.5230705 8.4519256,1.2829872 10.174664,0.46142828 11.532633,1.3717458 12.890601,2.2820633 12.951418,4.0704267 12.184696,5.2305082 11.417975,6.3905897 9.7136428,7.1128139 8.4767147,6.1793133 z"
      id="path3911"
      inkscape:export-filename="/home/simon/Desktop/gnome-pie-symbolic.png"
      inkscape:export-xdpi="1637.5708"
      inkscape:export-ydpi="1637.5708"
-     inkscape:connector-curvature="0" />
+     inkscape:connector-curvature="0"
+     sodipodi:nodetypes="zzzzz" />
 </svg>

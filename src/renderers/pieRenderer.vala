@@ -71,7 +71,6 @@ public class PieRenderer : GLib.Object {
     /// CPIE_TOP_RIGHT: Eat  3/4 pie so it can be shown at the top-right corner.
     /// CPIE_BOT_LEFT:  Eat  3/4 pie so it can be shown at the bottom-left corner.
     /// CPIE_BOT_RIGHT: Eat  3/4 pie so it can be shown at the bottom-right corner.
-    /// (use the same numbers as the radio-button shape selector)
     /////////////////////////////////////////////////////////////////////
 
     public enum ShowPieMode {
@@ -241,10 +240,15 @@ public class PieRenderer : GLib.Object {
         }
 
 
+        // get mouse position and screen resolution
+        int mouse_x, mouse_y, screen_x, screen_y;
+        get_mouse_and_screen( out mouse_x, out mouse_y, out screen_x, out screen_y );
+
+        //reduce the window size if needed to get closer to the actual mouse position
+        int reduce_szx= 1;
+        int reduce_szy= 1;
+
         if (PieManager.get_is_auto_shape(pie.id) && !PieManager.get_is_centered(pie.id)) {
-            // get mouse position and screen resolution
-            int mouse_x, mouse_y, screen_x, screen_y;
-            get_mouse_and_screen( out mouse_x, out mouse_y, out screen_x, out screen_y );
             //set the best show mode that put the mouse near the center
             if (mouse_x < sz/2) {
                 if (mouse_y < sz/2)
@@ -271,17 +275,63 @@ public class PieRenderer : GLib.Object {
 
 
         } else {
+            //if the pie is centered in the screen, don't reduce the size
+            if (PieManager.get_is_centered(pie.id)) {
+                reduce_szx= 0;
+                reduce_szy= 0;
+            }
+                
             //select the configured shape
             //convert from radio-buttum number to ShowPieMode enum
             switch( PieManager.get_shape_number(pie.id) ) {
-            case 1:  showpie= ShowPieMode.CPIE_BOT_RIGHT;   break;
-            case 2:  showpie= ShowPieMode.HPIE_RIGHT;       break;
-            case 3:  showpie= ShowPieMode.CPIE_TOP_RIGHT;   break;
-            case 4:  showpie= ShowPieMode.HPIE_BOTTOM;      break;
-            case 6:  showpie= ShowPieMode.HPIE_TOP;         break;
-            case 7:  showpie= ShowPieMode.CPIE_BOT_LEFT;    break;
-            case 8:  showpie= ShowPieMode.HPIE_LEFT;        break;
-            case 9:  showpie= ShowPieMode.CPIE_TOP_LEFT;    break;
+            case 1:
+                showpie= ShowPieMode.CPIE_BOT_RIGHT;
+                if (screen_x-mouse_x > sz/2)
+                    reduce_szx= 0; //keep full width
+                if (screen_y-mouse_y > sz/2)
+                    reduce_szy= 0; //keep full height
+                break;
+            case 2:
+                showpie= ShowPieMode.HPIE_RIGHT;
+                if (screen_x-mouse_x > sz/2)
+                    reduce_szx= 0; //keep full width
+                break;
+            case 3:
+                showpie= ShowPieMode.CPIE_TOP_RIGHT;
+                if (screen_x-mouse_x > sz/2)
+                    reduce_szx= 0; //keep full width
+                if (mouse_y > sz/2)
+                    reduce_szy= 0; //keep full height
+                break;
+            case 4:
+                showpie= ShowPieMode.HPIE_BOTTOM;
+                if (screen_y-mouse_y > sz/2)
+                    reduce_szy= 0; //keep full height
+                break;
+            case 6:
+                showpie= ShowPieMode.HPIE_TOP;
+                if (mouse_y > sz/2)
+                    reduce_szy= 0; //keep full height
+                break;
+            case 7:
+                showpie= ShowPieMode.CPIE_BOT_LEFT;
+                if (mouse_x > sz/2)
+                    reduce_szx= 0; //keep full width
+                if (screen_y-mouse_y > sz/2)
+                    reduce_szy= 0; //keep full height
+                break;
+            case 8:
+                showpie= ShowPieMode.HPIE_LEFT;
+                if (mouse_x > sz/2)
+                    reduce_szx= 0; //keep full width
+                break;
+            case 9:
+                showpie= ShowPieMode.CPIE_TOP_LEFT;
+                if (mouse_x > sz/2)
+                    reduce_szx= 0; //keep full width
+                if (mouse_y > sz/2)
+                    reduce_szy= 0; //keep full height
+                break;
             }
         }
         //set the new show pie mode
@@ -332,6 +382,11 @@ public class PieRenderer : GLib.Object {
                 szy = 2; //half height, center to the bottom
                 break;
         }
+        if (reduce_szx == 0)
+            szx = 1;    //don't reduce width
+        if (reduce_szy == 0)
+            szy = 1;    //don't reduce height
+        
         int rc = (int)Config.global.theme.center_radius;
         if (szx == 1 ) {
             //full width

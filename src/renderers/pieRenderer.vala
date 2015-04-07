@@ -128,10 +128,10 @@ public class PieRenderer : GLib.Object {
 
 
     /////////////////////////////////////////////////////////////////////
-    /// True if the pie should close when it's trigger is released.
+    /// The ID of the currently loaded Pie.
     /////////////////////////////////////////////////////////////////////
 
-    public bool turbo_mode { get; private set; default=false; }
+    public string id { get; private set; }
 
     /////////////////////////////////////////////////////////////////////
     /// True if the pie is currently navigated with the keyboard. This is
@@ -204,6 +204,8 @@ public class PieRenderer : GLib.Object {
     public void load_pie(Pie pie) {
         this.slices.clear();
 
+        this.id = pie.id;
+
         int count = 0;
         foreach (var group in pie.action_groups) {
             foreach (var action in group.actions) {
@@ -218,8 +220,6 @@ public class PieRenderer : GLib.Object {
                 ++count;
             }
         }
-
-        this.turbo_mode = PieManager.get_is_turbo(pie.id);
 
         this.set_highlighted_slice(this.quickaction);
 
@@ -280,7 +280,7 @@ public class PieRenderer : GLib.Object {
                 reduce_szx= 0;
                 reduce_szy= 0;
             }
-                
+
             //select the configured shape
             //convert from radio-buttum number to ShowPieMode enum
             switch( PieManager.get_shape_number(pie.id) ) {
@@ -386,7 +386,7 @@ public class PieRenderer : GLib.Object {
             szx = 1;    //don't reduce width
         if (reduce_szy == 0)
             szy = 1;    //don't reduce height
-        
+
         int rc = (int)Config.global.theme.center_radius;
         if (szx == 1 ) {
             //full width

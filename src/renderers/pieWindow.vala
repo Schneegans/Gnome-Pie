@@ -102,7 +102,7 @@ public class PieWindow : Gtk.Window {
 
         // activate on left click
         this.button_release_event.connect ((e) => {
-            if (e.button == 1 || this.renderer.turbo_mode) this.activate_slice();
+            if (e.button == 1 || PieManager.get_is_turbo(this.renderer.id)) this.activate_slice();
             return true;
         });
 
@@ -125,7 +125,7 @@ public class PieWindow : Gtk.Window {
         // activate on key release if turbo_mode is enabled
         this.key_release_event.connect((e) => {
             last_key = 0;
-            if (this.renderer.turbo_mode)
+            if (PieManager.get_is_turbo(this.renderer.id))
                 this.activate_slice();
             else
                 this.handle_key_release(e.keyval);
@@ -188,10 +188,19 @@ public class PieWindow : Gtk.Window {
         this.timer.start();
         this.queue_draw();
 
+        bool warp_pointer = PieManager.get_is_warp(this.renderer.id);
+
         // the main draw loop
         GLib.Timeout.add((uint)(1000.0/Config.global.refresh_rate), () => {
             if (this.closed)
                 return false;
+
+            if (warp_pointer) {
+                warp_pointer = false;
+                int x, y;
+                this.get_center_pos(out x, out y);
+                this.set_mouse_position(x, y);
+            }
 
             this.queue_draw();
             return this.visible;
@@ -209,10 +218,14 @@ public class PieWindow : Gtk.Window {
         out_y = y + renderer.center_y;
     }
 
-    private void get_mouse_position(out double mx, out double my) {
+    /////////////////////////////////////////////////////////////////////
+    /// Gets the absolute position of the mouse pointer.
+    /////////////////////////////////////////////////////////////////////
+
+    private void get_mouse_position(out int mx, out int my) {
         // get the mouse position
-        mx = 0.0;
-        my = 0.0;
+        mx = 0;
+        my = 0;
         Gdk.ModifierType mask;
 
         var display = Gdk.Display.get_default();
@@ -221,7 +234,22 @@ public class PieWindow : Gtk.Window {
 
         foreach(var device in list) {
             if (device.input_source != Gdk.InputSource.KEYBOARD) {
-                this.get_window().get_device_position_double(device, out mx, out my, out mask);
+                this.get_window().get_device_position(device, out mx, out my, out mask);
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Sets the absolute position of the mouse pointer.
+    /////////////////////////////////////////////////////////////////////
+
+    private void set_mouse_position(int mx, int my) {
+        var display = Gdk.Display.get_default();
+        var manager = display.get_device_manager();
+        GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+        foreach(var device in list) {
+            if (device.input_source != Gdk.InputSource.KEYBOARD) {
+                device.warp(Gdk.Screen.get_default(), mx, my);
             }
         }
     }
@@ -246,7 +274,7 @@ public class PieWindow : Gtk.Window {
         ctx.translate(this.renderer.center_x, this.renderer.center_y);
 
         // get the mouse position
-        double mouse_x, mouse_y;
+        int mouse_x, mouse_y;
         get_mouse_position( out mouse_x, out mouse_y );
 
         // store the frame time
@@ -254,8 +282,8 @@ public class PieWindow : Gtk.Window {
         this.timer.reset();
 
         // render the Pie
-        this.renderer.draw(frame_time, ctx, (int)(mouse_x - this.renderer.center_x),
-                                            (int)(mouse_y - this.renderer.center_y));
+        this.renderer.draw(frame_time, ctx, mouse_x - (int)this.renderer.center_x,
+                                            mouse_y - (int)this.renderer.center_y);
 
         return true;
     }
@@ -323,7 +351,7 @@ public class PieWindow : Gtk.Window {
     private void handle_key_press(uint key) {
         if      (Gdk.keyval_name(key) == "Escape") this.cancel();
         else if (Gdk.keyval_name(key) == "Return") this.activate_slice();
-        else if (!this.renderer.turbo_mode) {
+        else if (!PieManager.get_is_turbo(this.renderer.id)) {
             if (Gdk.keyval_name(key) == "Up") this.renderer.select_up();
             else if (Gdk.keyval_name(key) == "Down") this.renderer.select_down();
             else if (Gdk.keyval_name(key) == "Left") this.renderer.select_left();
@@ -360,7 +388,7 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
 
     private void handle_key_release(uint key) {
-        if (!this.renderer.turbo_mode) {
+        if (!PieManager.get_is_turbo(this.renderer.id)) {
             if (Gdk.keyval_name(key) == "Alt_L") this.renderer.show_hotkeys = false;
         }
     }

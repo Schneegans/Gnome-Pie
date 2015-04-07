@@ -39,6 +39,7 @@ public class TriggerSelectWindow : GLib.Object {
     private Gtk.CheckButton turbo;
     private Gtk.CheckButton delayed;
     private Gtk.CheckButton centered;
+    private Gtk.CheckButton warp;
     private Gtk.RadioButton rshape[10];
     private TriggerSelectButton button;
 
@@ -85,6 +86,7 @@ public class TriggerSelectWindow : GLib.Object {
                                                        this.turbo.active,
                                                        this.delayed.active,
                                                        this.centered.active,
+                                                       this.warp.active,
                                                        this.get_radio_shape());
             });
 
@@ -101,7 +103,10 @@ public class TriggerSelectWindow : GLib.Object {
 
             this.centered = builder.get_object("center-check") as Gtk.CheckButton;
             this.centered.toggled.connect(this.on_check_toggled);
-            
+
+            this.warp = builder.get_object("warp-check") as Gtk.CheckButton;
+            this.warp.toggled.connect(this.on_check_toggled);
+
             for (int i= 0; i < 10; i++) {
                 this.rshape[i] = builder.get_object("rshape%d".printf(i)) as Gtk.RadioButton;
                 this.rshape[i].toggled.connect(this.on_radio_toggled);
@@ -142,6 +147,7 @@ public class TriggerSelectWindow : GLib.Object {
         this.turbo.active = trigger.turbo;
         this.delayed.active = trigger.delayed;
         this.centered.active = trigger.centered;
+        this.warp.active = trigger.warp;
         this.set_radio_shape( trigger.shape );
         this.original_trigger = trigger;
         this.trigger = trigger;
@@ -158,6 +164,7 @@ public class TriggerSelectWindow : GLib.Object {
             this.trigger = new Trigger.from_values(this.trigger.key_sym, this.trigger.modifiers,
                                                    this.trigger.with_mouse, this.turbo.active,
                                                    this.delayed.active, this.centered.active,
+                                                   this.warp.active,
                                                    this.get_radio_shape());
     }
 
@@ -181,7 +188,7 @@ public class TriggerSelectWindow : GLib.Object {
     /// Sets the current selected radio-button shape: 0= automatic
     /// 5= full pie; 1,3,7,8= quarters; 2,4,6,8=halves
     /////////////////////////////////////////////////////////////////////
-    
+
     private void set_radio_shape(int rs) {
         if (rs < 0 || rs > 9)
             rs= 5;  //replace invalid value with default= full pie
@@ -197,7 +204,7 @@ public class TriggerSelectWindow : GLib.Object {
         if (notify_toggle == 1)
             on_check_toggled(); //just call once
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Called when the OK-button is pressed.
     /////////////////////////////////////////////////////////////////////

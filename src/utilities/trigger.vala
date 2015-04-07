@@ -87,6 +87,12 @@ public class Trigger : GLib.Object {
     public bool centered { get; private set; default=false; }
 
     /////////////////////////////////////////////////////////////////////
+    /// True if the mouse pointer is warped to the pie's center.
+    /////////////////////////////////////////////////////////////////////
+
+    public bool warp { get; private set; default=false; }
+
+    /////////////////////////////////////////////////////////////////////
     /// Returns the current selected "radio-button" shape: 0= automatic
     /// 5= full pie; 1,3,7,8= quarters; 2,4,6,8=halves
     /// 1 | 4 | 7
@@ -109,7 +115,7 @@ public class Trigger : GLib.Object {
     /// in this format: "[option(s)]<modifier(s)>button" where
     /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
     /// something like "s", "F4" or "button0" and "[option]" is either
-    /// "[turbo]", "[centered]", "["delayed"]" or "["shape#"]"
+    /// "[turbo]", "[centered]", "[warp]", "["delayed"]" or "["shape#"]"
     /////////////////////////////////////////////////////////////////////
 
     public Trigger.from_string(string trigger) {
@@ -122,11 +128,12 @@ public class Trigger : GLib.Object {
 
     public Trigger.from_values(uint key_sym, Gdk.ModifierType modifiers,
                                bool with_mouse, bool turbo, bool delayed,
-                               bool centered, int shape ) {
+                               bool centered, bool warp, int shape ) {
 
         string trigger = (turbo ? "[turbo]" : "")
                        + (delayed ? "[delayed]" : "")
                        + (centered ? "[centered]" : "")
+                       + (warp ? "[warp]" : "")
                        + (shape!=5 ? "[shape%d]".printf(shape) : "");
 
         if (with_mouse) {
@@ -137,13 +144,13 @@ public class Trigger : GLib.Object {
 
         this.parse_string(trigger);
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Parses a Trigger string. This is
     /// in this format: "[option(s)]<modifier(s)>button" where
     /// "<modifier>" is something like "<Alt>" or "<Control>", "button"
     /// something like "s", "F4" or "button0" and "[option]" is either
-    /// "[turbo]", "[centered]", "["delayed"]" or "["shape#"]"
+    /// "[turbo]", "[centered]", "[warp]", "["delayed"]" or "["shape#"]"
     /////////////////////////////////////////////////////////////////////
 
     public void parse_string(string trigger) {
@@ -156,7 +163,8 @@ public class Trigger : GLib.Object {
             this.turbo = check_string.contains("[turbo]");
             this.delayed = check_string.contains("[delayed]");
             this.centered = check_string.contains("[centered]");
-            
+            this.warp = check_string.contains("[warp]");
+
             this.shape= parse_shape( check_string );
 
             // remove optional arguments
@@ -219,6 +227,12 @@ public class Trigger : GLib.Object {
                 else
                     msg += " | " + _("Centered");
             }
+            if (this.warp) {
+                if (msg == "")
+                    msg= _("Warp");
+                else
+                    msg += " | " + _("Warp");
+            }
             if (this.shape == 0) {
                 if (msg == "")
                     msg= _("Auto-shaped");
@@ -229,7 +243,7 @@ public class Trigger : GLib.Object {
                     msg= _("Quarter pie");
                 else
                     msg += " | " + _("Quarter pie");
-                    
+
             } else if (this.shape == 2 || this.shape == 4 || this.shape == 6 || this.shape == 8) {
                 if (msg == "")
                     msg= _("Half pie");
@@ -243,12 +257,13 @@ public class Trigger : GLib.Object {
             this.set_unbound();
         }
     }
-    
+
     /////////////////////////////////////////////////////////////////////
     /// Extract shape number from trigger string
     /// "[0]".."[9]" 0:auto 5:full pie (default)
     /// 1,3,7,9=quarters    2,4,6,8= halves
     /////////////////////////////////////////////////////////////////////
+
     private int parse_shape(string trigger) {
         int rs;
         for( rs= 0; rs < 10; rs++ )
@@ -270,20 +285,23 @@ public class Trigger : GLib.Object {
         this.modifiers = 0;
         this.turbo = false;
         this.delayed = false;
+        this.centered = false;
+        this.warp = false;
         this.shape = 5; //full pie
         this.with_mouse = false;
     }
 
     /////////////////////////////////////////////////////////////////////
     /// Remove optional arguments from the given string
-    /// "[turbo]", "[delayed]", "[centered]" and "[shape#]"
+    /// "[turbo]", "[delayed]", "[warp]" "[centered]" and "[shape#]"
     /////////////////////////////////////////////////////////////////////
-    
+
     public static string remove_optional(string trigger) {
         string trg= trigger;
         trg = trg.replace("[turbo]", "");
         trg = trg.replace("[delayed]", "");
         trg = trg.replace("[centered]", "");
+        trg = trg.replace("[warp]", "");
         for (int rs= 0; rs < 10; rs++)
             trg = trg.replace("[shape%d]".printf(rs), "");
         return trg;
@@ -303,7 +321,7 @@ public class Trigger : GLib.Object {
             int button_index = check_string.index_of("button");
             check_string = check_string.slice(0, button_index) + "a";
         }
-        
+
         //empty triggers are ok now, they carry open options as well
         if (check_string == "")
             return true;

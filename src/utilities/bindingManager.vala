@@ -136,12 +136,12 @@ public class BindingManager : GLib.Object {
                 if (binding.trigger.key_code == 0) {
                     //no key_code: just remove the bindind from the list
                     bindings.remove(binding);
-                    return;                     
+                    return;
                 }
                 break;
             }
         }
-        
+
         X.Display display = Gdk.X11.get_default_xdisplay();
         X.ID xid = Gdk.X11.get_default_root_xwindow();
 
@@ -220,6 +220,20 @@ public class BindingManager : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
+    /// Returns whether the pie with the given ID is in warp mode.
+    /////////////////////////////////////////////////////////////////////
+
+    public bool get_is_warp(string id) {
+        foreach (var binding in bindings) {
+            if (binding.id == id) {
+                return binding.trigger.warp;
+            }
+        }
+
+        return false;
+    }
+
+    /////////////////////////////////////////////////////////////////////
     /// Returns whether the pie with the given ID is auto shaped
     /////////////////////////////////////////////////////////////////////
 
@@ -241,7 +255,7 @@ public class BindingManager : GLib.Object {
         foreach (var binding in bindings) {
             if (binding.id == id) {
                 if (binding.trigger.shape == 0)
-                    break;  //return default if auto-shaped 
+                    break;  //return default if auto-shaped
                 return binding.trigger.shape; //use selected shape
             }
         }
@@ -353,6 +367,10 @@ public class BindingManager : GLib.Object {
 
             // bind it again
             bind(delayed_binding.trigger, delayed_binding.id);
+
+            this.delayed_binding = null;
+            this.delayed_event = null;
+
         } else if (binding != null) {
             // if the trigger has been pressed, store it and wait for any interuption
             // within the next 300 milliseconds

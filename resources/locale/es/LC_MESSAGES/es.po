@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../src/actions/keyAction.vala:34
 msgid "Press hotkey"
-msgstr "Presiona un atajo."
+msgstr "Presiona un atajo"
 
 #: ../../src/actions/keyAction.vala:36
 msgid "Simulates the activation of a hotkey."
@@ -36,7 +36,7 @@ msgstr "Abre un lugar determinado. Puedes usar URI's o ruta de archivos."
 
 #: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
-msgstr "Borrar"
+msgstr "Papelera"
 
 #: ../../src/actions/appAction.vala:34
 msgid "Launch application"
@@ -81,7 +81,7 @@ msgstr ""
 
 #: ../../src/gui/piePreview.vala:148
 msgid "Do you really want to delete this Slice?"
-msgstr "¿Realmente quieres borrar ésta Rebanada?"
+msgstr "¿Realmente quieres borrar esta Rebanada?"
 
 #: ../../src/gui/sliceTypeList.vala:60
 msgid "Slice types"
@@ -147,7 +147,7 @@ msgstr "Todos los formatos de imágenes soportados"
 
 #: ../../src/gui/newSliceWindow.vala:291
 msgid "Rename me!"
-msgstr "Renombrame!"
+msgstr "Renómbrame!"
 
 #: ../../src/gui/themeList.vala:62
 msgid "Themes"
@@ -355,7 +355,7 @@ msgstr "Configuración de activación"
 
 #: ../ui/trigger_select.ui:132
 msgid "It's possible to bind mouse buttons as well!"
-msgstr "Es posible enlazar los botones del ratón también!"
+msgstr "También es posible enlazar los botones del ratón!"
 
 #: ../ui/trigger_select.ui:165
 msgid "Turbo mode"
@@ -395,7 +395,10 @@ msgid ""
 "If checked, the mouse pointer will be warped to the center of the Pie. This "
 "allows for quick selections even if the Pie is opened at the screen's "
 "boundary."
-msgstr "El puntero será teletransportado al centro del Pastel."
+msgstr ""
+"El puntero será teletransportado al centro del Pastel. Esto permite "
+"acelerar la selección cuando el pastel es abierto cerca de un borde o en el "
+"centro de la pantalla."
 
 #: ../ui/trigger_select.ui:247
 msgid "Activation options"
@@ -493,7 +496,7 @@ msgid ""
 msgstr ""
 "<b><big>Un Pastel vacío!</big>\n"
 "\n"
-"Empieza añadiendo Rebanadas!</b> Puedes hacerlo añadiendo cosas al signo "
+"Empieza añadiendo Rebanadas!</b> Puedes hacerlo arrastrando cosas al signo "
 "más. Puedes intentar muchas cosas! Por ejemplo lanzadores de aplicaciones o "
 "directorios. Incluso puedes añadir URLs desde tu navegador...\n"
 "\n"
@@ -560,3 +563,4 @@ msgstr ""
 #: ../ui/settings.ui:312
 msgid "Appearance"
 msgstr "Apariencia"
+

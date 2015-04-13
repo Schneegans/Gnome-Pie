@@ -708,7 +708,7 @@ public class PieRenderer : GLib.Object {
         this.visible_slice_count= (int)fmin(slices.size, maxview);
         //Number of slices in full pie (visible or not)
         this.total_slice_count= this.visible_slice_count*mult;
-        if (mult > 1) {
+        if (mult > 1 && slices.size > 1) {
             this.total_slice_count -= mult;
         }
 

@@ -45,6 +45,23 @@ public class PieWindow : Gtk.Window {
     public Image background { get; private set; default=null; }
 
     /////////////////////////////////////////////////////////////////////
+    /// Background image position and size.
+    /// Some panels moves the window after it was realized.
+    /////////////////////////////////////////////////////////////////////
+
+    private int back_x;
+    private int back_y;
+    private int back_sz_x;
+    private int back_sz_y;
+
+    /////////////////////////////////////////////////////////////////////
+    /// This values set the maximum allowed window offset.
+    /////////////////////////////////////////////////////////////////////
+
+    private int back_maxoff_x = 64;
+    private int back_maxoff_y = 64;
+
+    /////////////////////////////////////////////////////////////////////
     /// The owned renderer.
     /////////////////////////////////////////////////////////////////////
 
@@ -174,10 +191,46 @@ public class PieWindow : Gtk.Window {
         this.realize();
         // capture the background image if there is no compositing
         if (!this.has_compositing) {
-            int x, y, width, height;
-            this.get_position(out x, out y);
-            this.get_size(out width, out height);
-            this.background = new Image.capture_screen(x, y, width+1, height+1);
+            this.get_position(out this.back_x, out this.back_y);
+            this.get_size(out this.back_sz_x, out this.back_sz_y);
+            this.back_sz_x++;
+            this.back_sz_y++;
+            //allow some window movement from the screen borders
+            //(some panels moves the window after it was realized)
+            int dx = this.back_maxoff_x - this.back_x;
+            if (dx > 0) {
+                this.back_sz_x += dx;
+            }
+            int dy = this.back_maxoff_y - this.back_y;
+            if (this.back_y < this.back_maxoff_y) {
+                this.back_sz_y += dy;
+            }
+            int screenx= Gdk.Screen.width();
+            int screeny= Gdk.Screen.height();
+            dx = this.back_maxoff_x - (screenx - this.back_x - this.back_sz_x +1);
+            if (dx > 0) {
+                this.back_sz_x += dx;
+                this.back_x  -= dx;
+            }
+            dy = this.back_maxoff_y - (screeny - this.back_y - this.back_sz_y +1);
+            if (dy > 0) {
+                this.back_sz_y += dy;
+                this.back_y  -= dy;
+            }
+            //make sure we don't go outside the screen
+            if (this.back_x < 0) {
+                this.back_sz_x += this.back_x;
+                this.back_x = 0;
+            }
+            if (this.back_y < 0) {
+                this.back_sz_y += this.back_y;
+                this.back_y = 0;
+            }
+            if (this.back_x + this.back_sz_x > screenx)
+                this.back_sz_x = screenx - this.back_x;
+            if (this.back_y + this.back_sz_y > screeny)
+                this.back_sz_y = screeny - this.back_y;
+            this.background = new Image.capture_screen(this.back_x, this.back_y, this.back_sz_x, this.back_sz_y);
         }
 
         // capture the input focus
@@ -265,9 +318,18 @@ public class PieWindow : Gtk.Window {
             ctx.paint();
             ctx.set_operator (Cairo.Operator.OVER);
         } else {
+            //correct the background position if the window was moved
+            //since the background image was captured
+            int x, y;
+            this.get_position(out x, out y);
+            int dx = this.back_x - x;
+            int dy = this.back_y - y;
+            ctx.save();
+            ctx.translate(dx, dy);
             ctx.set_operator (Cairo.Operator.OVER);
             ctx.set_source_surface(background.surface, -1, -1);
             ctx.paint();
+            ctx.restore();
         }
 
         // align the context to the center of the PieWindow

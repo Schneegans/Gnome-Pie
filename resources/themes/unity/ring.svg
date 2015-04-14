@@ -14,7 +14,7 @@
    height="100"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.1 r9760"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="ring.svg">
   <defs
      id="defs4">
@@ -149,20 +149,20 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="3.959798"
-     inkscape:cx="-48.85178"
-     inkscape:cy="58.882718"
+     inkscape:zoom="5.6"
+     inkscape:cx="58.266215"
+     inkscape:cy="49.681706"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:showpageshadow="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1056"
-     inkscape:window-x="0"
-     inkscape:window-y="24"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="958"
+     inkscape:window-height="1024"
+     inkscape:window-x="960"
+     inkscape:window-y="30"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -181,14 +181,14 @@
      id="layer1"
      transform="translate(0,-952.36218)">
     <path
-       transform="matrix(0.90538035,0,0,0.90538035,4.7309822,957.09316)"
+       transform="matrix(0.98294109,0,0,0.98294109,0.85294503,953.21512)"
        d="M 98.57143,50 A 48.57143,48.57143 0 1 1 1.4285698,50 48.57143,48.57143 0 1 1 98.57143,50 z"
        sodipodi:ry="48.57143"
        sodipodi:rx="48.57143"
        sodipodi:cy="50"
        sodipodi:cx="50"
-       id="path3782"
-       style="opacity:0.36140351;fill:none;stroke:#000000;stroke-width:7.62110661999999994;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path3780"
+       style="opacity:0.25490195999999998;fill:#000000;fill-opacity:0.75690606999999999;stroke:#ffffff;stroke-opacity:0.76795577999999998;stroke-width:1.01735497;stroke-miterlimit:4;stroke-dasharray:none"
        sodipodi:type="arc" />
     <path
        sodipodi:type="arc"
@@ -202,13 +202,13 @@
        transform="translate(0,952.36218)" />
     <path
        sodipodi:type="arc"
-       style="opacity:0.81403509;fill:#000000;fill-opacity:1;stroke:none"
+       style="opacity:0.59803921999999998;fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-opacity:0.35359117;stroke-width:1.22634043999999998;stroke-miterlimit:4;stroke-dasharray:none"
        id="path3812"
        sodipodi:cx="50"
        sodipodi:cy="50"
        sodipodi:rx="48.57143"
        sodipodi:ry="48.57143"
        d="M 98.57143,50 A 48.57143,48.57143 0 1 1 1.4285698,50 48.57143,48.57143 0 1 1 98.57143,50 z"
-       transform="matrix(0.82999029,0,0,0.82999029,8.5004852,960.86266)" />
+       transform="matrix(0.81543425,0,0,0.81543425,9.2282872,961.59046)" />
   </g>
 </svg>

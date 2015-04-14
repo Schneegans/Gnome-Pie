@@ -45,8 +45,7 @@ public class PieWindow : Gtk.Window {
     public Image background { get; private set; default=null; }
 
     /////////////////////////////////////////////////////////////////////
-    /// Background image position and size.
-    /// Some panels moves the window after it was realized.
+    /// The background image position and size.
     /////////////////////////////////////////////////////////////////////
 
     private int back_x;
@@ -55,11 +54,20 @@ public class PieWindow : Gtk.Window {
     private int back_sz_y;
 
     /////////////////////////////////////////////////////////////////////
-    /// This values set the maximum allowed window offset.
+    /// Some panels moves the window after it was realized.
+    /// This value set the maximum allowed panel height or width.
+    /// (how many pixels the window could be moved in every direction
+    ///  from the screen borders towards the center)
     /////////////////////////////////////////////////////////////////////
 
-    private int back_maxoff_x = 64;
-    private int back_maxoff_y = 64;
+    private int panel_sz = 64;
+
+    /////////////////////////////////////////////////////////////////////
+    /// This value set the maximum allowed mouse movement in pixels
+    /// from the capture to the show point in every direction.
+    /////////////////////////////////////////////////////////////////////
+
+    private int mouse_move = 30;
 
     /////////////////////////////////////////////////////////////////////
     /// The owned renderer.
@@ -195,28 +203,36 @@ public class PieWindow : Gtk.Window {
             this.get_size(out this.back_sz_x, out this.back_sz_y);
             this.back_sz_x++;
             this.back_sz_y++;
-            //allow some window movement from the screen borders
-            //(some panels moves the window after it was realized)
-            int dx = this.back_maxoff_x - this.back_x;
-            if (dx > 0) {
-                this.back_sz_x += dx;
-            }
-            int dy = this.back_maxoff_y - this.back_y;
-            if (this.back_y < this.back_maxoff_y) {
-                this.back_sz_y += dy;
-            }
+
             int screenx= Gdk.Screen.width();
             int screeny= Gdk.Screen.height();
-            dx = this.back_maxoff_x - (screenx - this.back_x - this.back_sz_x +1);
+
+            //allow some window movement from the screen borders
+            //(some panels moves the window after it was realized)
+            int dx = this.panel_sz - this.back_x;
+            if (dx > 0)
+                this.back_sz_x += dx;
+            dx = this.panel_sz - (screenx - this.back_x - this.back_sz_x +1);
             if (dx > 0) {
                 this.back_sz_x += dx;
                 this.back_x  -= dx;
             }
-            dy = this.back_maxoff_y - (screeny - this.back_y - this.back_sz_y +1);
+
+            int dy = this.panel_sz - this.back_y;
+            if (dy > 0)
+                this.back_sz_y += dy;
+            dy = this.panel_sz - (screeny - this.back_y - this.back_sz_y +1);
             if (dy > 0) {
                 this.back_sz_y += dy;
                 this.back_y  -= dy;
             }
+
+            //also tolerate some mouse movement
+            this.back_x -= this.mouse_move;
+            this.back_sz_x += this.mouse_move*2;
+            this.back_y -= this.mouse_move;
+            this.back_sz_y += this.mouse_move*2;
+
             //make sure we don't go outside the screen
             if (this.back_x < 0) {
                 this.back_sz_x += this.back_x;

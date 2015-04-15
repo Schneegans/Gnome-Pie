@@ -95,10 +95,6 @@ public class PieManager : GLib.Object {
                 var window = new PieWindow();
                 window.load_pie(pie);
 
-                window.open();
-
-                opened_windows.add(window);
-
                 window.on_closed.connect(() => {
                     opened_windows.remove(window);
                     if (opened_windows.size == 0) {
@@ -111,9 +107,12 @@ public class PieManager : GLib.Object {
                     a_pie_is_active = false;
                 });
 
+                opened_windows.add(window);
+
+                window.open();
 
                 //restore default WM_CLASS after window open
-                Gdk.set_program_class("gnome-pie");
+                Gdk.set_program_class("Gnome-pie");
 
             } else {
                 warning("Failed to open pie with ID \"" + id + "\": ID does not exist!");

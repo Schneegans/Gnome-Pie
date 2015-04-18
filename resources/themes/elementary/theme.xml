@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <theme name="Elementary" description="Inspired by the style of Elementary OS" author="Simon Schneegans" email="code@simonschneegans.de">
-    <pie radius="120" maxZoom="1.2" zoomRange="0.3" wobble="0.1" transitionTime="0.15" springiness="0.3"
+    <pie radius="100" maxZoom="1.2" zoomRange="0.3" wobble="0.1" transitionTime="0.15" springiness="0.3"
           fadeInTime="0.2" fadeOutTime="0.2" fadeInZoom="0.5" fadeOutZoom="0.8" fadeInRotation="0.2" fadeOutRotation="-0.2">
-        <center radius="70" activeRadius="35">
+        <center radius="50" activeRadius="35">
             <center_layer file="ring.svg"
                           active_scale="1.0"   active_rotationMode="auto"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"
                           inactive_scale="1.0" inactive_rotationMode="auto" inactive_rotationSpeed="0" inactive_colorize="false" inactive_alpha="1.0" />
@@ -16,15 +16,15 @@
             	<slice_layer type="file" file="icon_bg.svg"   scale="1"   colorize="true" />
                 <slice_layer type="icon" scale="0.5" />
                 <slice_layer type="file" file="slice_caption.svg" scale="1" colorize="true" visibility="with_caption" />
-                <slice_layer type="caption" y="30" font="sans 10" width="85" color="#000" height="20" visibility="with_caption" />
+                <slice_layer type="caption" y="30" font="sans 9" width="85" color="#3a3a3a" height="20" visibility="with_caption" />
             </activeSlice>
             <inactiveSlice>
                 <slice_layer type="icon" scale="0.5" />
                 <slice_layer type="file" file="slice_caption.svg" scale="1" colorize="true" visibility="with_caption" />
-                <slice_layer type="caption" y="30" font="sans 10" width="85" color="#000" height="20" visibility="with_caption" />
+                <slice_layer type="caption" y="30" font="sans 9" width="85" color="#3a3a3a" height="20" visibility="with_caption" />
             </inactiveSlice>
         </slices>
-        <caption position="0" font="sans 10" width="90" height="90" color="#3a3a3a"/>
+        <caption position="0" font="sans 9" width="70" height="70" color="#3a3a3a"/>
     </pie>
 </theme>
 

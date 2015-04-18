@@ -49,6 +49,7 @@ public class Theme : GLib.Object {
     public double center_radius    {get; private set; default=90.0;}
     public double active_radius    {get; private set; default=45.0;}
     public double slice_radius     {get; private set; default=32.0;}
+    public double visible_slice_radius {get; private set; default=0.0;}
     public double slice_gap        {get; private set; default=14.0;}
     public bool   has_slice_captions {get; private set; default=false;}
     public bool   caption          {get; private set; default=false;}
@@ -281,6 +282,7 @@ public class Theme : GLib.Object {
             switch (attr_name) {
                  case "radius":
                     slice_radius = double.parse(attr_content) * Config.global.global_scale;
+                    visible_slice_radius = double.parse(attr_content) * Config.global.global_scale;
                     break;
                 case "mingap":
                     slice_gap = double.parse(attr_content) * Config.global.global_scale;
@@ -481,6 +483,7 @@ public class Theme : GLib.Object {
                         file = directory + "/" + file;
 
                     int size = 2*(int)(slice_radius*scale*max_zoom);
+                    this.visible_slice_radius = Math.fmax(slice_radius*scale, this.visible_slice_radius);
 
                     if (slice->name.down() == "activeslice") {
                         if (type == SliceLayer.Type.ICON)         active_slice_layers.add(new SliceLayer.icon(file, size, colorize, visibility));

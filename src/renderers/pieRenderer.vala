@@ -228,16 +228,18 @@ public class PieRenderer : GLib.Object {
         //set full pie to determine the number of visible slices
         set_show_mode(showpie);
 
-        int sz0= (int)fmax(2*Config.global.theme.radius + 2*Config.global.theme.slice_radius*Config.global.theme.max_zoom,
-                              2*Config.global.theme.center_radius);
+        int sz0= (int)fmax(2*Config.global.theme.radius + 2*Config.global.theme.visible_slice_radius*Config.global.theme.max_zoom,
+                           2*Config.global.theme.center_radius);
 
         int sz= sz0;
         // increase size if there are many slices
         if (this.total_slice_count > 0) {
             sz = (int)fmax(sz0,
                 (((Config.global.theme.slice_radius + Config.global.theme.slice_gap)/tan(PI/this.total_slice_count))
-                + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom);
+                 + Config.global.theme.visible_slice_radius)*2*Config.global.theme.max_zoom);
         }
+
+
 
 
         // get mouse position and screen resolution
@@ -342,7 +344,7 @@ public class PieRenderer : GLib.Object {
         if (this.total_slice_count > 0) {
             sz = (int)fmax(sz0,
                 (((Config.global.theme.slice_radius + Config.global.theme.slice_gap)/tan(PI/this.total_slice_count))
-                + Config.global.theme.slice_radius)*2*Config.global.theme.max_zoom);
+                 + Config.global.theme.visible_slice_radius)*2*Config.global.theme.max_zoom);
         }
         //activation_range = normal pie radius + "outer" activation_range
         this.activation_range= (int)((double)Config.global.activation_range + sz/(2*Config.global.theme.max_zoom));

@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="ring.svg">
+   sodipodi:docname="icon.svg">
   <defs
      id="defs4">
     <linearGradient
@@ -197,15 +197,15 @@
        gradientUnits="userSpaceOnUse" />
     <filter
        inkscape:collect="always"
-       id="filter3798"
-       x="-0.10384654"
-       width="1.2076931"
-       y="-0.10384654"
-       height="1.2076931">
+       id="filter3793"
+       x="-0.16153907"
+       width="1.3230781"
+       y="-0.16153907"
+       height="1.3230781">
       <feGaussianBlur
          inkscape:collect="always"
-         stdDeviation="4.2033126"
-         id="feGaussianBlur3800" />
+         stdDeviation="6.5384863"
+         id="feGaussianBlur3795" />
     </filter>
   </defs>
   <sodipodi:namedview
@@ -216,8 +216,8 @@
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="4.3325651"
-     inkscape:cy="109.09942"
+     inkscape:cx="-47.866103"
+     inkscape:cy="27.888949"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -247,14 +247,14 @@
      id="layer1"
      transform="translate(0,-952.36218)">
     <path
-       transform="matrix(0.8695154,0,0,0.86476442,6.5242291,959.69215)"
+       transform="matrix(0.64679838,0,0,0.64326432,17.66008,970.76715)"
        d="M 98.57143,50 A 48.57143,48.57143 0 1 1 1.4285698,50 48.57143,48.57143 0 1 1 98.57143,50 z"
        sodipodi:ry="48.57143"
        sodipodi:rx="48.57143"
        sodipodi:cy="50"
        sodipodi:cx="50"
        id="path3792"
-       style="fill:#a1a1a1;fill-opacity:1;stroke:none;filter:url(#filter3798)"
+       style="fill:#a1a1a1;fill-opacity:1;stroke:none;filter:url(#filter3793)"
        sodipodi:type="arc" />
     <path
        sodipodi:type="arc"
@@ -265,16 +265,16 @@
        sodipodi:rx="48.57143"
        sodipodi:ry="48.57143"
        d="M 98.57143,50 A 48.57143,48.57143 0 1 1 1.4285698,50 48.57143,48.57143 0 1 1 98.57143,50 z"
-       transform="matrix(0.8695154,0,0,0.86476442,6.5242291,959.69215)" />
+       transform="matrix(0.64679838,0,0,0.64326432,17.66008,970.76715)" />
     <path
-       transform="matrix(0.86318078,0,0,0.86318078,6.8409607,959.07906)"
+       transform="matrix(0.62673666,0,0,0.62865876,18.663167,970.98248)"
        d="M 98.57143,50 A 48.57143,48.57143 0 1 1 1.4285698,50 48.57143,48.57143 0 1 1 98.57143,50 z"
        sodipodi:ry="48.57143"
        sodipodi:rx="48.57143"
        sodipodi:cy="50"
        sodipodi:cx="50"
        id="path3782"
-       style="fill:url(#linearGradient3809);fill-opacity:1;stroke:url(#linearGradient3807);stroke-width:0.56458998;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:url(#linearGradient3809);fill-opacity:1;stroke:url(#linearGradient3807);stroke-width:1.50654161;stroke-miterlimit:4;stroke-dasharray:none"
        sodipodi:type="arc" />
   </g>
 </svg>

@@ -118,12 +118,15 @@ public class PieWindow : Gtk.Window {
             this.has_compositing = true;
         }
 
+        //add_events() call was removed because it causes that gnome-pie sometimes enter
+        //and infinte loop while processing some mouse-motion events.
+        //(this was seen in Ubuntu 14.04.2 64/32-bits -Glib 2.19- and in MATE 14.04.2)
         // set up event filter
-        this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
-                        Gdk.EventMask.KEY_RELEASE_MASK |
-                        Gdk.EventMask.KEY_PRESS_MASK |
-                        Gdk.EventMask.POINTER_MOTION_MASK |
-                        Gdk.EventMask.SCROLL_MASK );
+        //this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
+        //                Gdk.EventMask.KEY_RELEASE_MASK |
+        //                Gdk.EventMask.KEY_PRESS_MASK |
+        //                Gdk.EventMask.POINTER_MOTION_MASK |
+        //                Gdk.EventMask.SCROLL_MASK );
 
         // activate on left click
         this.button_release_event.connect ((e) => {

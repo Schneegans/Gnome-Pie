@@ -48,7 +48,7 @@ public class TriggerSelectButton : Gtk.ToggleButton {
     /////////////////////////////////////////////////////////////////////
 
     private Gdk.ModifierType lock_modifiers = Gdk.ModifierType.MOD2_MASK
-                                             |Gdk.ModifierType.SUPER_MASK
+                                             |Gdk.ModifierType.MOD4_MASK
                                              |Gdk.ModifierType.LOCK_MASK
                                              |Gdk.ModifierType.MOD5_MASK;
 

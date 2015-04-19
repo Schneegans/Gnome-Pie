@@ -104,13 +104,17 @@ public class BindingManager : GLib.Object {
 
             Gdk.error_trap_push();
 
+            // if bound to super key we need to grab MOD4 instead
+            // (for whatever reason...)
+            var modifiers = prepare_modifiers(trigger.modifiers);
+
             foreach(uint lock_modifier in lock_modifiers) {
                 if (trigger.with_mouse) {
-                    display.grab_button(trigger.key_code, trigger.modifiers|lock_modifier, xid, false,
+                    display.grab_button(trigger.key_code, modifiers|lock_modifier, xid, false,
                                         X.EventMask.ButtonPressMask | X.EventMask.ButtonReleaseMask,
                                         X.GrabMode.Async, X.GrabMode.Async, xid, 0);
                 } else {
-                    display.grab_key(trigger.key_code, trigger.modifiers|lock_modifier,
+                    display.grab_key(trigger.key_code, modifiers|lock_modifier,
                                      xid, false, X.GrabMode.Async, X.GrabMode.Async);
                 }
             }
@@ -148,11 +152,16 @@ public class BindingManager : GLib.Object {
         Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
         foreach(var binding in bindings) {
             if(id == binding.id) {
+
+                // if bound to super key we need to ungrab MOD4 instead
+                // (for whatever reason...)
+                var modifiers = prepare_modifiers(binding.trigger.modifiers);
+
                 foreach(uint lock_modifier in lock_modifiers) {
                     if (binding.trigger.with_mouse) {
-                        display.ungrab_button(binding.trigger.key_code, binding.trigger.modifiers|lock_modifier, xid);
+                        display.ungrab_button(binding.trigger.key_code, modifiers|lock_modifier, xid);
                     } else {
-                        display.ungrab_key(binding.trigger.key_code, binding.trigger.modifiers|lock_modifier, xid);
+                        display.ungrab_key(binding.trigger.key_code, modifiers|lock_modifier, xid);
                     }
                 }
                 remove_bindings.add(binding);
@@ -282,6 +291,21 @@ public class BindingManager : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
+    /// If SUPER_MASK is set in the input, it will be replaced with
+    /// MOD4_MASK. For some reason this is required to listen for key
+    /// presses of the super button....
+    /////////////////////////////////////////////////////////////////////
+
+    private Gdk.ModifierType prepare_modifiers(Gdk.ModifierType mods) {
+        if ((mods & Gdk.ModifierType.SUPER_MASK) > 0) {
+            mods |= Gdk.ModifierType.MOD4_MASK;
+            mods = mods & ~ Gdk.ModifierType.SUPER_MASK;
+        }
+
+        return mods & ~lock_modifiers[7];
+    }
+
+    /////////////////////////////////////////////////////////////////////
     /// Event filter method needed to fetch X.Events.
     /////////////////////////////////////////////////////////////////////
 
@@ -296,9 +320,14 @@ public class BindingManager : GLib.Object {
 
         if(xevent->type == X.EventType.KeyPress) {
             foreach(var binding in bindings) {
+
                 // remove NumLock, CapsLock and ScrollLock from key state
-                uint event_mods = xevent.xkey.state & ~ (lock_modifiers[7]);
-                if(xevent->xkey.keycode == binding.trigger.key_code && event_mods == binding.trigger.modifiers) {
+                var event_mods = prepare_modifiers((Gdk.ModifierType)xevent.xkey.state);
+                var bound_mods = prepare_modifiers(binding.trigger.modifiers);
+
+                if(xevent->xkey.keycode == binding.trigger.key_code &&
+                   event_mods == bound_mods) {
+
                     if (binding.trigger.delayed) {
                         this.activate_delayed(binding, *xevent);
                     } else {
@@ -309,9 +338,14 @@ public class BindingManager : GLib.Object {
          }
          else if(xevent->type == X.EventType.ButtonPress) {
             foreach(var binding in bindings) {
+
                 // remove NumLock, CapsLock and ScrollLock from key state
-                uint event_mods = xevent.xbutton.state & ~ (lock_modifiers[7]);
-                if(xevent->xbutton.button == binding.trigger.key_code && event_mods == binding.trigger.modifiers) {
+                var event_mods = prepare_modifiers((Gdk.ModifierType)xevent.xbutton.state);
+                var bound_mods = prepare_modifiers(binding.trigger.modifiers);
+
+                if(xevent->xbutton.button == binding.trigger.key_code &&
+                   event_mods == bound_mods) {
+
                     if (binding.trigger.delayed) {
                         this.activate_delayed(binding, *xevent);
                     } else {

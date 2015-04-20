@@ -192,7 +192,7 @@ public class Config : GLib.Object {
 
         if (themes.size > 0) {
             if (current == "") {
-                current = "Unity";
+                current = "Adwaita";
                 warning("No theme specified! Using default...");
             }
             foreach (var t in themes) {

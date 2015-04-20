@@ -33,7 +33,7 @@ public class DevicesGroup : ActionGroup {
     public static GroupRegistry.TypeDescription register() {
         var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Devices");
-        description.icon = "harddrive";
+        description.icon = "drive-harddisk";
         description.description = _("Shows a Slice for each plugged in devices, like USB-Sticks.");
         description.id = "devices";
         return description;
@@ -82,7 +82,7 @@ public class DevicesGroup : ActionGroup {
 
     private void load() {
         // add root device
-        this.add_action(new UriAction(_("Root"), "harddrive", "file:///"));
+        this.add_action(new UriAction(_("Root"), "drive-harddisk", "file:///"));
 
         // add all other devices
         foreach(var mount in this.monitor.get_mounts()) {

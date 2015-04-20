@@ -85,7 +85,7 @@ public class PiePreviewDeleteSign : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void load() {
-        this.icon = new Icon("stock_delete", PiePreviewDeleteSign.radius*2);
+        this.icon = new Icon("edit-delete", PiePreviewDeleteSign.radius*2);
     }
 
     /////////////////////////////////////////////////////////////////////

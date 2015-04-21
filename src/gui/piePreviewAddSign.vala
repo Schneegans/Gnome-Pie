@@ -87,7 +87,7 @@ public class PiePreviewAddSign : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void load() {
-        this.icon = new Icon("add", 36);
+        this.icon = new Icon("list-add", 36);
     }
 
     /////////////////////////////////////////////////////////////////////

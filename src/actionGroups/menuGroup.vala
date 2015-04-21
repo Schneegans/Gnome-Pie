@@ -33,7 +33,7 @@ public class MenuGroup : ActionGroup {
     public static GroupRegistry.TypeDescription register() {
         var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Main menu");
-        description.icon = "gnome-main-menu";
+        description.icon = "start-here";
         description.description = _("Displays your main menu structure.");
         description.id = "menu";
         return description;

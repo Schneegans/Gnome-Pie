@@ -2,7 +2,5 @@
 *.h
 build/*
 gnome-pie
-Makefile
-.valencia
 *~
 gnome-pie.sublime-workspace

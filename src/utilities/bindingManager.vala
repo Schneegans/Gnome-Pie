@@ -99,7 +99,7 @@ public class BindingManager : GLib.Object {
 
     public void bind(Trigger trigger, string id) {
         if (trigger.key_code != 0) {
-            X.Display display = Gdk.X11.get_default_xdisplay();
+            unowned X.Display display = Gdk.X11.get_default_xdisplay();
             X.ID xid = Gdk.X11.get_default_root_xwindow();
 
             Gdk.error_trap_push();
@@ -146,7 +146,7 @@ public class BindingManager : GLib.Object {
             }
         }
 
-        X.Display display = Gdk.X11.get_default_xdisplay();
+        unowned X.Display display = Gdk.X11.get_default_xdisplay();
         X.ID xid = Gdk.X11.get_default_root_xwindow();
 
         Gee.List<Keybinding> remove_bindings = new Gee.ArrayList<Keybinding>();
@@ -377,27 +377,27 @@ public class BindingManager : GLib.Object {
             // if the trigger is released and an event is currently waiting
             // simulate that the trigger has been pressed without any inter-
             // ference of Gnome-Pie
-               X.Display display = Gdk.X11.get_default_xdisplay();
+            unowned X.Display display = Gdk.X11.get_default_xdisplay();
 
-               // unbind the trigger, else we'll capture that event again ;)
-               unbind(delayed_binding.id);
+            // unbind the trigger, else we'll capture that event again ;)
+            unbind(delayed_binding.id);
 
-               if (this.delayed_binding.trigger.with_mouse) {
-                   // simulate mouse click
-                   X.Test.fake_button_event(display, this.delayed_event.xbutton.button, true, 0);
-                   display.flush();
-
-                X.Test.fake_button_event(display, this.delayed_event.xbutton.button, false, 0);
+            if (this.delayed_binding.trigger.with_mouse) {
+                // simulate mouse click
+                XTest.fake_button_event(display, this.delayed_event.xbutton.button, true, 0);
                 display.flush();
 
-               } else {
-                   // simulate key press
-                   X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, true, 0);
-                   display.flush();
+                XTest.fake_button_event(display, this.delayed_event.xbutton.button, false, 0);
+                display.flush();
 
-                   X.Test.fake_key_event(display, this.delayed_event.xkey.keycode, false, 0);
-                   display.flush();
-               }
+            } else {
+                // simulate key press
+                XTest.fake_key_event(display, this.delayed_event.xkey.keycode, true, 0);
+                display.flush();
+
+                XTest.fake_key_event(display, this.delayed_event.xkey.keycode, false, 0);
+                display.flush();
+            }
 
             // bind it again
             bind(delayed_binding.trigger, delayed_binding.id);

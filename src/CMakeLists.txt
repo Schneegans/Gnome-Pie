@@ -23,7 +23,6 @@ vala_precompile(
     PACKAGES
         ${VALA_PKGS}
     OPTIONS
-        --vapidir=${CMAKE_SOURCE_DIR}/vapi/
         --thread
         ${DEFINES}
 )

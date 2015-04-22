@@ -17,7 +17,7 @@ include(ValaPrecompile)
 include(ValaVersion)
 
 find_package(Vala)
-ensure_vala_version("0.11.0" MINIMUM)
+ensure_vala_version("0.22.0" MINIMUM)
 
 ################################################################
 # Configure and find libraries

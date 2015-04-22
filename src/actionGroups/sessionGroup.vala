@@ -33,7 +33,7 @@ public class SessionGroup : ActionGroup {
     public static GroupRegistry.TypeDescription register() {
         var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Session Control");
-        description.icon = "gnome-logout";
+        description.icon = "system-log-out";
         description.description = _("Shows a Slice for Shutdown, Reboot, and Hibernate.");
         description.id = "session";
         return description;
@@ -57,14 +57,14 @@ public class SessionGroup : ActionGroup {
 //        iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.kde.ksmserver", "/KSMServer");
 //        iface = GLib.Bus.get_proxy_sync(GLib.BusType.SESSION, "org.freedesktop.ConsoleKit", "/org/freedesktop/ConsoleKit/Manager");
 
-        this.add_action(new AppAction(_("Shutdown"), "gnome-shutdown",
-            "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.RequestShutdown"));
+        this.add_action(new AppAction(_("Shutdown"), "system-shutdown",
+            "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.Shutdown"));
 
-        this.add_action(new AppAction(_("Logout"), "gnome-session-logout",
+        this.add_action(new AppAction(_("Logout"), "system-log-out",
             "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.Logout uint32:1"));
 
-        this.add_action(new AppAction(_("Reboot"), "gnome-session-reboot",
-            "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.RequestReboot"));
+        this.add_action(new AppAction(_("Reboot"), "view-refresh",
+            "dbus-send --print-reply --dest=org.gnome.SessionManager /org/gnome/SessionManager org.gnome.SessionManager.Reboot"));
     }
 
     // TODO: check for available interfaces --- these may work too:

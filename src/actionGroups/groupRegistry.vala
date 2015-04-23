@@ -72,6 +72,10 @@ public class GroupRegistry : GLib.Object {
         type_description = WindowListGroup.register();
         types.add(typeof(WindowListGroup).name());
         descriptions.set(typeof(WindowListGroup).name(), type_description);
+
+        type_description = WorkspaceWindowListGroup.register();
+        types.add(typeof(WorkspaceWindowListGroup).name());
+        descriptions.set(typeof(WorkspaceWindowListGroup).name(), type_description);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -85,6 +89,7 @@ public class GroupRegistry : GLib.Object {
             case "menu": return new MenuGroup(parent_id);
             case "session": return new SessionGroup(parent_id);
             case "window_list": return new WindowListGroup(parent_id);
+            case "workspace_window_list": return new WorkspaceWindowListGroup(parent_id);
         }
 
         return null;

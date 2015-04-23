@@ -122,6 +122,7 @@ public class NewSliceWindow : GLib.Object {
                 switch (type) {
                     case "bookmarks": case "clipboard": case "devices":
                     case "menu": case "session": case "window_list":
+                    case "workspace_window_list":
                         this.no_options_box.show();
                         this.set_icon(icon);
                         break;
@@ -318,6 +319,7 @@ public class NewSliceWindow : GLib.Object {
             case "menu":        group = new MenuGroup(this.current_id);          break;
             case "session":     group = new SessionGroup(this.current_id);       break;
             case "window_list": group = new WindowListGroup(this.current_id);    break;
+            case "workspace_window_list": group = new WorkspaceWindowListGroup(this.current_id);    break;
 
             case "app":
                 group = new ActionGroup(this.current_id);

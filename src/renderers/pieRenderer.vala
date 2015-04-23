@@ -422,10 +422,10 @@ public class PieRenderer : GLib.Object {
     /// Activates the currently active slice.
     /////////////////////////////////////////////////////////////////////
 
-    public void activate() {
+    public void activate(uint32 time_stamp) {
         if (this.active_slice >= this.first_slice_idx
             && this.active_slice < this.first_slice_idx+this.visible_slice_count) {
-            slices[active_slice].activate();
+            slices[active_slice].activate(time_stamp);
         }
 
         //foreach (var slice in this.slices)

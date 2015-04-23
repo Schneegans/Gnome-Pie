@@ -29,7 +29,7 @@ public class SigAction : Action {
     /// This signal is emitted on activation.
     /////////////////////////////////////////////////////////////////////
 
-    public signal void activated();
+    public signal void activated(uint32 time_stamp);
 
     /////////////////////////////////////////////////////////////////////
     /// This may store something useful.
@@ -55,8 +55,8 @@ public class SigAction : Action {
     /// Emits the signal on activation.
     /////////////////////////////////////////////////////////////////////
 
-    public override void activate() {
-        this.activated();
+    public override void activate(uint32 time_stamp) {
+        this.activated(time_stamp);
     }
 }
 

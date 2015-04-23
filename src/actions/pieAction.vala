@@ -95,7 +95,7 @@ public class PieAction : Action {
     /// Opens the desired Pie.
     /////////////////////////////////////////////////////////////////////
 
-    public override void activate() {
+    public override void activate(uint32 time_stamp) {
         PieManager.open_pie(real_command);
     }
 }

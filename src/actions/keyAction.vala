@@ -73,7 +73,7 @@ public class KeyAction : Action {
     /// Presses the desired key.
     /////////////////////////////////////////////////////////////////////
 
-    public override void activate() {
+    public override void activate(uint32 time_stamp) {
         key.press();
     }
 }

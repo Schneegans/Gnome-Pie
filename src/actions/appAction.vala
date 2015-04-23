@@ -63,7 +63,7 @@ public class AppAction : Action {
     /// Launches the desired command.
     /////////////////////////////////////////////////////////////////////
 
-    public override void activate() {
+    public override void activate(uint32 time_stamp) {
         try{
             var item = GLib.AppInfo.create_from_commandline(this.real_command, null, GLib.AppInfoCreateFlags.NONE);
             item.launch(null, null);

@@ -157,8 +157,8 @@ public class SliceRenderer : GLib.Object {
     /// Activates the Action of this slice.
     /////////////////////////////////////////////////////////////////////
 
-    public void activate() {
-        action.activate();
+    public void activate(uint32 time_stamp) {
+        action.activate(time_stamp);
     }
 
     /////////////////////////////////////////////////////////////////////

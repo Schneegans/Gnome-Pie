@@ -94,21 +94,20 @@ public class WindowListGroup : ActionGroup {
                     (bamf_app == null) ? application.get_icon_name().down() : bamf_app.get_icon(),
                     "%lu".printf(window.get_xid())
                 );
-                action.activated.connect(() => {
+                action.activated.connect((time_stamp) => {
                     Wnck.Screen.get_default().force_update();
 
                     var xid = (X.Window)uint64.parse(action.real_command);
                     var win = Wnck.Window.get(xid);
-                    var time = Gtk.get_current_event_time();
 
                     if (win.get_workspace() != null
                         && win.get_workspace() != win.get_screen().get_active_workspace())
-                        win.get_workspace().activate(time);
+                        win.get_workspace().activate(time_stamp);
 
                     if (win.is_minimized())
-                        win.unminimize(time);
+                        win.unminimize(time_stamp);
 
-                    win.activate_transient(time);
+                    win.activate_transient(time_stamp);
                 });
                 this.add_action(action);
             }

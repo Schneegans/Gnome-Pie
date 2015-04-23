@@ -65,7 +65,7 @@ public class UriAction : Action {
     /// Opens the default application for the URI.
     /////////////////////////////////////////////////////////////////////
 
-    public override void activate() {
+    public override void activate(uint32 time_stamp) {
         try{
             GLib.AppInfo.launch_default_for_uri(real_command, null);
         } catch (Error e) {

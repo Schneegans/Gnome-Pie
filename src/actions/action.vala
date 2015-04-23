@@ -71,7 +71,7 @@ public abstract class Action : GLib.Object {
     /// This one is called, when the user activates the Slice.
     /////////////////////////////////////////////////////////////////////
 
-    public abstract void activate();
+    public abstract void activate(uint32 time_stamp);
 }
 
 }

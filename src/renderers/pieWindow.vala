@@ -130,7 +130,7 @@ public class PieWindow : Gtk.Window {
 
         // activate on left click
         this.button_release_event.connect ((e) => {
-            if (e.button == 1 || PieManager.get_is_turbo(this.renderer.id)) this.activate_slice();
+            if (e.button == 1 || PieManager.get_is_turbo(this.renderer.id)) this.activate_slice(e.time);
             return true;
         });
 
@@ -145,7 +145,7 @@ public class PieWindow : Gtk.Window {
         this.key_press_event.connect((e) => {
             if (e.keyval != last_key) {
                 last_key = e.keyval;
-                this.handle_key_press(e.keyval);
+                this.handle_key_press(e.keyval, e.time);
             }
             return true;
         });
@@ -154,7 +154,7 @@ public class PieWindow : Gtk.Window {
         this.key_release_event.connect((e) => {
             last_key = 0;
             if (PieManager.get_is_turbo(this.renderer.id))
-                this.activate_slice();
+                this.activate_slice(e.time);
             else
                 this.handle_key_release(e.keyval);
             return true;
@@ -373,7 +373,7 @@ public class PieWindow : Gtk.Window {
     /// Activates the currently activate slice.
     /////////////////////////////////////////////////////////////////////
 
-    private void activate_slice() {
+    private void activate_slice(uint32 time_stamp) {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
@@ -381,7 +381,7 @@ public class PieWindow : Gtk.Window {
             FocusGrabber.ungrab();
 
             GLib.Timeout.add(10, () => {
-                this.renderer.activate();
+                this.renderer.activate(time_stamp);
                 return false;
             });
 
@@ -429,9 +429,9 @@ public class PieWindow : Gtk.Window {
     /// Do some useful stuff when keys are pressed.
     /////////////////////////////////////////////////////////////////////
 
-    private void handle_key_press(uint key) {
+    private void handle_key_press(uint key, uint32 time_stamp) {
         if      (Gdk.keyval_name(key) == "Escape") this.cancel();
-        else if (Gdk.keyval_name(key) == "Return") this.activate_slice();
+        else if (Gdk.keyval_name(key) == "Return") this.activate_slice(time_stamp);
         else if (!PieManager.get_is_turbo(this.renderer.id)) {
             if (Gdk.keyval_name(key) == "Up") this.renderer.select_up();
             else if (Gdk.keyval_name(key) == "Down") this.renderer.select_down();
@@ -455,7 +455,7 @@ public class PieWindow : Gtk.Window {
 
                     if (this.renderer.active_slice == index) {
                         GLib.Timeout.add((uint)(Config.global.theme.transition_time*1000.0), ()=> {
-                            this.activate_slice();
+                            this.activate_slice(time_stamp);
                             return false;
                         });
                     }

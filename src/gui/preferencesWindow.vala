@@ -63,8 +63,11 @@ public class PreferencesWindow : GLib.Object {
                     Gdk.EventMask.KEY_PRESS_MASK |
                     Gdk.EventMask.POINTER_MOTION_MASK);
 
-        var toolbar = builder.get_object ("toolbar") as Gtk.Widget;
-        toolbar.get_style_context().add_class("primary-toolbar");
+        var headerbar = new Gtk.HeaderBar();
+        headerbar.show_close_button = true;
+        headerbar.title = _("Gnome-Pie Settings");
+        headerbar.subtitle = _("bake your pies!");
+        window.set_titlebar(headerbar);
 
         var inline_toolbar = builder.get_object ("pies-toolbar") as Gtk.Widget;
         inline_toolbar.get_style_context().add_class("inline-toolbar");
@@ -93,7 +96,7 @@ public class PreferencesWindow : GLib.Object {
         this.no_slice_label = builder.get_object("no-slice-label") as Gtk.Label;
         this.preview_background = builder.get_object("preview-background") as Gtk.EventBox;
 
-        (builder.get_object("settings-button") as Gtk.ToolButton).clicked.connect(on_settings_button_clicked);
+        // (builder.get_object("settings-button") as Gtk.ToolButton).clicked.connect(on_settings_button_clicked);
 
         this.remove_pie_button = builder.get_object("remove-pie-button") as Gtk.ToolButton;
         this.remove_pie_button.clicked.connect(on_remove_pie_button_clicked);
@@ -108,10 +111,10 @@ public class PreferencesWindow : GLib.Object {
             Config.global.save();
             Pies.save();
 
-            // Timeout.add(100, () => {
-            //     IconSelectWindow.clear_icons();
-            //     return false;
-            // });
+            Timeout.add(100, () => {
+                IconSelectWindow.clear_icons();
+                return false;
+            });
         });
 
         this.window.delete_event.connect(this.window.hide_on_delete);

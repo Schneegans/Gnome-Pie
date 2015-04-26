@@ -251,7 +251,7 @@ public class Trigger : GLib.Object {
                     msg += " | " + _("Half pie");
             }
             if (msg != "")
-                this.label_with_specials += ("  <small><span weight='light'>[ " + msg + " ]</span></small>");
+                this.label_with_specials += ("  [ " + msg + " ]");
 
         } else {
             this.set_unbound();

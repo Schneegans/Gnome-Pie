@@ -62,6 +62,7 @@ class SliceTypeList : Gtk.TreeView {
                 main_column.pack_start(icon_render, false);
 
             var name_render = new Gtk.CellRendererText();
+                name_render.xpad = 6;
                 main_column.pack_start(name_render, true);
 
         base.append_column(main_column);
@@ -103,8 +104,8 @@ class SliceTypeList : Gtk.TreeView {
             var icon = new Icon(description.icon, 36);
             data.set(current, DataPos.ICON, icon.to_pixbuf());
             data.set(current, DataPos.ICON_NAME, description.icon);
-            data.set(current, DataPos.NAME, "<b>" + GLib.Markup.escape_text(description.name) + "</b>\n"
-                                 + "<small>" + GLib.Markup.escape_text(description.description) + "</small>");
+            data.set(current, DataPos.NAME, GLib.Markup.escape_text(description.name) + "\n"
+                                 + "<span font-size='x-small'>" + GLib.Markup.escape_text(description.description) + "</span>");
             data.set(current, DataPos.ID, description.id);
         }
 
@@ -116,8 +117,8 @@ class SliceTypeList : Gtk.TreeView {
             var icon = new Icon(description.icon, 36);
             data.set(current, DataPos.ICON, icon.to_pixbuf());
             data.set(current, DataPos.ICON_NAME, description.icon);
-            data.set(current, DataPos.NAME, "<b>" + GLib.Markup.escape_text(description.name) + "</b>\n"
-                                 + "<small>" + GLib.Markup.escape_text(description.description) + "</small>");
+            data.set(current, DataPos.NAME, GLib.Markup.escape_text(description.name) + "\n"
+                                 + "<span font-size='x-small'>" + GLib.Markup.escape_text(description.description) + "</span>");
             data.set(current, DataPos.ID, description.id);
         }
 

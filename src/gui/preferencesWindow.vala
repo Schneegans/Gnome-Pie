@@ -34,18 +34,12 @@ public class PreferencesWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private Gtk.Window? window = null;
-    private Gtk.Label? id_label = null;
-    private Gtk.Label? name_label = null;
-    private Gtk.Label? hotkey_label = null;
     private Gtk.Label? no_pie_label = null;
     private Gtk.Label? no_slice_label = null;
     private Gtk.Box? preview_box = null;
-    private Gtk.Image? icon = null;
     private Gtk.EventBox? preview_background = null;
-    private Gtk.Button? icon_button = null;
-    private Gtk.Button? name_button = null;
-    private Gtk.Button? hotkey_button = null;
     private Gtk.ToolButton? remove_pie_button = null;
+    private Gtk.ToolButton? edit_pie_button = null;
 
     /////////////////////////////////////////////////////////////////////
     /// Some custom widgets and dialogs used by this window.
@@ -54,9 +48,7 @@ public class PreferencesWindow : GLib.Object {
     private PiePreview? preview = null;
     private PieList? pie_list = null;
     private SettingsWindow? settings_window = null;
-    private TriggerSelectWindow? trigger_window = null;
-    private IconSelectWindow? icon_window = null;
-    private RenameWindow? rename_window = null;
+    private PieOptionsWindow? pie_options_window = null;
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, creates the window.
@@ -79,6 +71,9 @@ public class PreferencesWindow : GLib.Object {
 
         this.pie_list = new PieList();
         this.pie_list.on_select.connect(this.on_pie_select);
+        this.pie_list.on_activate.connect(() => {
+            this.on_edit_pie_button_clicked();
+        });
 
         var scroll_area = builder.get_object("pies-scrolledwindow") as Gtk.ScrolledWindow;
         scroll_area.add(this.pie_list);
@@ -94,27 +89,17 @@ public class PreferencesWindow : GLib.Object {
 
         preview_box = builder.get_object("preview-box") as Gtk.Box;
         this.preview_box.pack_start(preview, true, true);
-        this.id_label = builder.get_object("id-label") as Gtk.Label;
-        this.name_label = builder.get_object("pie-name-label") as Gtk.Label;
-        this.hotkey_label = builder.get_object("hotkey-label") as Gtk.Label;
         this.no_pie_label = builder.get_object("no-pie-label") as Gtk.Label;
         this.no_slice_label = builder.get_object("no-slice-label") as Gtk.Label;
-        this.icon = builder.get_object("icon") as Gtk.Image;
         this.preview_background = builder.get_object("preview-background") as Gtk.EventBox;
 
         (builder.get_object("settings-button") as Gtk.ToolButton).clicked.connect(on_settings_button_clicked);
 
-        this.hotkey_button = builder.get_object("key-button") as Gtk.Button;
-        this.hotkey_button.clicked.connect(on_key_button_clicked);
-
-        this.icon_button = builder.get_object("icon-button") as Gtk.Button;
-        this.icon_button.clicked.connect(on_icon_button_clicked);
-
-        this.name_button = builder.get_object("rename-button") as Gtk.Button;
-        this.name_button.clicked.connect(on_rename_button_clicked);
-
         this.remove_pie_button = builder.get_object("remove-pie-button") as Gtk.ToolButton;
         this.remove_pie_button.clicked.connect(on_remove_pie_button_clicked);
+
+        this.edit_pie_button = builder.get_object("edit-pie-button") as Gtk.ToolButton;
+        this.edit_pie_button.clicked.connect(on_edit_pie_button_clicked);
 
         (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
 
@@ -123,10 +108,10 @@ public class PreferencesWindow : GLib.Object {
             Config.global.save();
             Pies.save();
 
-            Timeout.add(100, () => {
-                IconSelectWindow.clear_icons();
-                return false;
-            });
+            // Timeout.add(100, () => {
+            //     IconSelectWindow.clear_icons();
+            //     return false;
+            // });
         });
 
         this.window.delete_event.connect(this.window.hide_on_delete);
@@ -156,33 +141,13 @@ public class PreferencesWindow : GLib.Object {
         this.no_pie_label.hide();
         this.preview_box.hide();
 
-        this.name_button.sensitive = false;
-        this.hotkey_button.sensitive = false;
-        this.icon_button.sensitive = false;
         this.remove_pie_button.sensitive = false;
+        this.edit_pie_button.sensitive = false;
 
         if (id == "") {
-            this.id_label.label = "";
-            this.name_label.label = _("No Pie selected.");
-            this.hotkey_label.set_markup("");
-            this.icon.icon_name = "stock_unknown";
-
             this.no_pie_label.show();
         } else {
             var pie = PieManager.all_pies[selected_id];
-            this.id_label.label = ("ID: %s").printf(pie.id);
-            this.name_label.label = PieManager.get_name_of(pie.id);
-            this.hotkey_label.set_markup(PieManager.get_accelerator_label_of(pie.id));
-
-            if (pie.icon.contains("/"))
-                try {
-                    this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(pie.icon,
-                                            this.icon.get_pixel_size(), this.icon.get_pixel_size(), true);
-                } catch (GLib.Error error) {
-                    warning(error.message);
-                }
-            else
-                this.icon.icon_name = pie.icon;
 
             this.preview.set_pie(id);
             this.preview_box.show();
@@ -191,10 +156,8 @@ public class PreferencesWindow : GLib.Object {
                 this.no_slice_label.show();
             }
 
-            this.name_button.sensitive = true;
-            this.hotkey_button.sensitive = true;
-            this.icon_button.sensitive = true;
             this.remove_pie_button.sensitive = true;
+            this.edit_pie_button.sensitive = true;
         }
     }
 
@@ -206,6 +169,8 @@ public class PreferencesWindow : GLib.Object {
         var new_pie = PieManager.create_persistent_pie(_("New Pie"), "stock_unknown", null);
         this.pie_list.reload_all();
         this.pie_list.select(new_pie.id);
+
+        this.on_edit_pie_button_clicked();
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -232,42 +197,25 @@ public class PreferencesWindow : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Called when rename Pie button is clicked.
+    /// Called when the edit pie button is clicked.
     /////////////////////////////////////////////////////////////////////
 
-    private void on_rename_button_clicked(Gtk.Button button) {
-        if (this.rename_window == null) {
-            this.rename_window = new RenameWindow();
-            this.rename_window.set_parent(window);
-            this.rename_window.on_ok.connect((name) => {
+    private void on_edit_pie_button_clicked(Gtk.ToolButton? button = null) {
+        if (this.pie_options_window == null) {
+            this.pie_options_window = new PieOptionsWindow();
+            this.pie_options_window.set_parent(window);
+            this.pie_options_window.on_ok.connect((trigger, name, icon) => {
                 var pie = PieManager.all_pies[selected_id];
                 pie.name = name;
+                pie.icon = icon;
+                PieManager.bind_trigger(trigger, selected_id);
                 PieManager.create_launcher(pie.id);
-                this.name_label.label = name;
                 this.pie_list.reload_all();
             });
         }
 
-        this.rename_window.set_pie(selected_id);
-        this.rename_window.show();
-    }
-
-    /////////////////////////////////////////////////////////////////////
-    /// Called when the hotkey button is clicked.
-    /////////////////////////////////////////////////////////////////////
-
-    private void on_key_button_clicked(Gtk.Button button) {
-        if (this.trigger_window == null) {
-            this.trigger_window = new TriggerSelectWindow();
-            this.trigger_window.set_parent(window);
-            this.trigger_window.on_ok.connect((trigger) => {
-                PieManager.bind_trigger(trigger, selected_id);
-                this.hotkey_label.set_markup(trigger.label_with_specials);
-            });
-        }
-
-        this.trigger_window.set_pie(selected_id);
-        this.trigger_window.show();
+        this.pie_options_window.set_pie(selected_id);
+        this.pie_options_window.show();
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -281,25 +229,6 @@ public class PreferencesWindow : GLib.Object {
         }
 
         this.settings_window.show();
-    }
-
-    /////////////////////////////////////////////////////////////////////
-    /// Called when the icon button is clicked.
-    /////////////////////////////////////////////////////////////////////
-
-    private void on_icon_button_clicked(Gtk.Button button) {
-        if (this.icon_window == null) {
-            this.icon_window = new IconSelectWindow(this.window);
-            this.icon_window.on_ok.connect((icon) => {
-                var pie = PieManager.all_pies[selected_id];
-                pie.icon = icon;
-                PieManager.create_launcher(pie.id);
-                this.pie_list.reload_all();
-            });
-        }
-
-        this.icon_window.show();
-        this.icon_window.set_icon(PieManager.all_pies[selected_id].icon);
     }
 }
 

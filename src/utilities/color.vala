@@ -77,6 +77,17 @@ public class Color: GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
+    /// Creates a color from a given widget style
+    /////////////////////////////////////////////////////////////////////
+
+    public Color.from_widget_style(Gtk.Widget widget, string style_name) {
+        var ctx = widget.get_style_context();
+        Gdk.RGBA color;
+        ctx.lookup_color(style_name, out color);
+        Color.from_gdk(color);
+    }
+
+    /////////////////////////////////////////////////////////////////////
     /// Creates a color, parsed from a string, such as #22EE33
     /////////////////////////////////////////////////////////////////////
 
@@ -126,6 +137,14 @@ public class Color: GLib.Object {
         if (s > 0.15f) s = 0.65f;
 
         v = 1.0f;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Returns this color as its hex representation.
+    /////////////////////////////////////////////////////////////////////
+
+    public string to_hex_string() {
+        return "#%02X%02X%02X".printf((int)(_r*255), (int)(_g*255), (int)(_b*255));
     }
 
     /////////////////////////////////////////////////////////////////////

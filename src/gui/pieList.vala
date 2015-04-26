@@ -28,6 +28,7 @@ class PieList : Gtk.TreeView {
     /////////////////////////////////////////////////////////////////////
 
     public signal void on_select(string id);
+    public signal void on_activate();
 
     /////////////////////////////////////////////////////////////////////
     /// Stores the data internally.
@@ -79,6 +80,7 @@ class PieList : Gtk.TreeView {
                 main_column.pack_start(icon_render, false);
 
             var name_render = new Gtk.CellRendererText();
+                name_render.xpad = 6;
                 name_render.ellipsize = Pango.EllipsizeMode.END;
                 name_render.ellipsize_set = true;
                 main_column.pack_start(name_render, true);
@@ -86,7 +88,7 @@ class PieList : Gtk.TreeView {
         base.append_column(main_column);
 
         main_column.add_attribute(icon_render, "pixbuf", DataPos.ICON);
-        main_column.add_attribute(name_render, "text", DataPos.NAME);
+        main_column.add_attribute(name_render, "markup", DataPos.NAME);
 
         // setup drag'n'drop
         Gtk.TargetEntry uri_source = {"text/uri-list", 0, 0};
@@ -99,6 +101,10 @@ class PieList : Gtk.TreeView {
         this.drag_motion.connect(this.on_drag_move);
         this.drag_leave.connect(() => {
             this.last_hover = 0;
+        });
+
+        this.row_activated.connect(() => {
+            this.on_activate();
         });
 
         this.get_selection().changed.connect(() => {
@@ -177,7 +183,8 @@ class PieList : Gtk.TreeView {
             var icon = new Icon(pie.icon, 24);
             this.data.set(last, DataPos.ICON, icon.to_pixbuf(),
                                 DataPos.ICON_NAME, pie.icon,
-                                DataPos.NAME, pie.name,
+                                DataPos.NAME,GLib.Markup.escape_text(pie.name) + "\n" +
+                                "<span font-size='x-small'>" + PieManager.get_accelerator_label_of(pie.id) + "</span>",
                                 DataPos.ID, pie.id);
         }
     }

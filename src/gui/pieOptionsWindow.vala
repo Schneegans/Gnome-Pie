@@ -23,13 +23,13 @@ namespace GnomePie {
 /// a mouse based hotkey.
 /////////////////////////////////////////////////////////////////////////
 
-public class TriggerSelectWindow : GLib.Object {
+public class PieOptionsWindow : GLib.Object {
 
     /////////////////////////////////////////////////////////////////////
     /// This signal is emitted when the user selects a new hot key.
     /////////////////////////////////////////////////////////////////////
 
-    public signal void on_ok(Trigger trigger);
+    public signal void on_ok(Trigger trigger, string pie_name, string icon_name);
 
     /////////////////////////////////////////////////////////////////////
     /// Some private members which are needed by other methods.
@@ -41,7 +41,13 @@ public class TriggerSelectWindow : GLib.Object {
     private Gtk.CheckButton centered;
     private Gtk.CheckButton warp;
     private Gtk.RadioButton rshape[10];
-    private TriggerSelectButton button;
+    private TriggerSelectButton trigger_button;
+    private Gtk.Entry name_entry = null;
+    private Gtk.Button? icon_button = null;
+    private Gtk.Image? icon = null;
+    private Gtk.Label? pie_id = null;
+
+    private IconSelectWindow? icon_window = null;
 
     /////////////////////////////////////////////////////////////////////
     /// The currently configured trigger.
@@ -58,39 +64,53 @@ public class TriggerSelectWindow : GLib.Object {
     private Trigger original_trigger = null;
 
     /////////////////////////////////////////////////////////////////////
+    /// Stores the current icon name of the pie.
+    /////////////////////////////////////////////////////////////////////
+
+    private string icon_name = "";
+
+    /////////////////////////////////////////////////////////////////////
+    /// Stores the id of the current pie.
+    /////////////////////////////////////////////////////////////////////
+
+    private string id = "";
+
+    /////////////////////////////////////////////////////////////////////
     /// Radioboxes call toggled() twice per selection change.
     /// This flag is used to discard one of the two notifications.
     /////////////////////////////////////////////////////////////////////
 
-    private static int notify_toggle= 0;
+    private static int notify_toggle = 0;
 
     /////////////////////////////////////////////////////////////////////
-    /// C'tor, constructs a new TriggerSelectWindow.
+    /// C'tor, constructs a new PieOptionsWindow.
     /////////////////////////////////////////////////////////////////////
 
-    public TriggerSelectWindow() {
+    public PieOptionsWindow() {
         try {
 
             Gtk.Builder builder = new Gtk.Builder();
 
-            builder.add_from_file (Paths.ui_files + "/trigger_select.ui");
+            builder.add_from_file (Paths.ui_files + "/pie_options.ui");
 
             this.window = builder.get_object("window") as Gtk.Dialog;
-            this.button = new TriggerSelectButton(true);
-            this.button.show();
+            this.trigger_button = new TriggerSelectButton(true);
+            this.trigger_button.show();
 
-            this.button.on_select.connect((trigger) => {
-                this.trigger = new Trigger.from_values(trigger.key_sym,
-                                                       trigger.modifiers,
-                                                       trigger.with_mouse,
-                                                       this.turbo.active,
-                                                       this.delayed.active,
-                                                       this.centered.active,
-                                                       this.warp.active,
-                                                       this.get_radio_shape());
+            this.trigger_button.on_select.connect((trigger) => {
+                this.trigger = new Trigger.from_values(
+                    trigger.key_sym,
+                    trigger.modifiers,
+                    trigger.with_mouse,
+                    this.turbo.active,
+                    this.delayed.active,
+                    this.centered.active,
+                    this.warp.active,
+                    this.get_radio_shape()
+                );
             });
 
-            (builder.get_object("trigger-box") as Gtk.Box).pack_start(this.button, true, true);
+            (builder.get_object("trigger-box") as Gtk.Box).pack_start(this.trigger_button, true, true);
 
             (builder.get_object("ok-button") as Gtk.Button).clicked.connect(this.on_ok_button_clicked);
             (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(this.on_cancel_button_clicked);
@@ -111,6 +131,15 @@ public class TriggerSelectWindow : GLib.Object {
                 this.rshape[i] = builder.get_object("rshape%d".printf(i)) as Gtk.RadioButton;
                 this.rshape[i].toggled.connect(this.on_radio_toggled);
             }
+
+            this.name_entry = builder.get_object("name-entry") as Gtk.Entry;
+            this.name_entry.activate.connect(this.on_ok_button_clicked);
+
+            this.pie_id = builder.get_object("pie-id") as Gtk.Label;
+
+            this.icon = builder.get_object("icon") as Gtk.Image;
+            this.icon_button = builder.get_object("icon-button") as Gtk.Button;
+            this.icon_button.clicked.connect(on_icon_button_clicked);
 
             this.window.delete_event.connect(this.window.hide_on_delete);
 
@@ -143,6 +172,9 @@ public class TriggerSelectWindow : GLib.Object {
 
     public void set_pie(string id) {
         var trigger = new Trigger.from_string(PieManager.get_accelerator_of(id));
+        var pie = PieManager.all_pies[id];
+
+        this.id = id;
 
         this.turbo.active = trigger.turbo;
         this.delayed.active = trigger.delayed;
@@ -151,8 +183,10 @@ public class TriggerSelectWindow : GLib.Object {
         this.set_radio_shape( trigger.shape );
         this.original_trigger = trigger;
         this.trigger = trigger;
-
-        this.button.set_trigger(trigger);
+        this.name_entry.text = PieManager.get_name_of(id);
+        this.pie_id.label = "Pie-ID: " + id;
+        this.trigger_button.set_trigger(trigger);
+        this.set_icon(pie.icon);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -160,12 +194,15 @@ public class TriggerSelectWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private void on_check_toggled() {
-        if (this.trigger != null)
-            this.trigger = new Trigger.from_values(this.trigger.key_sym, this.trigger.modifiers,
-                                                   this.trigger.with_mouse, this.turbo.active,
-                                                   this.delayed.active, this.centered.active,
-                                                   this.warp.active,
-                                                   this.get_radio_shape());
+        if (this.trigger != null) {
+            this.trigger = new Trigger.from_values(
+                this.trigger.key_sym, this.trigger.modifiers,
+                this.trigger.with_mouse, this.turbo.active,
+                this.delayed.active, this.centered.active,
+                this.warp.active,
+                this.get_radio_shape()
+            );
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -178,9 +215,11 @@ public class TriggerSelectWindow : GLib.Object {
 
     private int get_radio_shape() {
         int rs;
-        for (rs= 0; rs < 10; rs++)
-            if (this.rshape[rs].active)
+        for (rs= 0; rs < 10; rs++) {
+            if (this.rshape[rs].active) {
                 break;
+            }
+        }
         return rs;
     }
 
@@ -190,8 +229,9 @@ public class TriggerSelectWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private void set_radio_shape(int rs) {
-        if (rs < 0 || rs > 9)
+        if (rs < 0 || rs > 9) {
             rs= 5;  //replace invalid value with default= full pie
+        }
         this.rshape[rs].active= true;
     }
 
@@ -201,8 +241,25 @@ public class TriggerSelectWindow : GLib.Object {
 
     private void on_radio_toggled() {
         notify_toggle= 1 - notify_toggle;
-        if (notify_toggle == 1)
+        if (notify_toggle == 1) {
             on_check_toggled(); //just call once
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Called when the icon button is clicked.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_icon_button_clicked(Gtk.Button button) {
+        if (this.icon_window == null) {
+            this.icon_window = new IconSelectWindow(this.window);
+            this.icon_window.on_ok.connect((icon) => {
+                set_icon(icon);
+            });
+        }
+
+        this.icon_window.show();
+        this.icon_window.set_icon(this.icon_name);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -212,16 +269,7 @@ public class TriggerSelectWindow : GLib.Object {
     private void on_ok_button_clicked() {
         var assigned_id = PieManager.get_assigned_id(this.trigger);
 
-        if (this.trigger == this.original_trigger) {
-            // nothing did change
-            this.window.hide();
-        } else if (this.trigger.key_code == this.original_trigger.key_code
-                && this.trigger.modifiers == this.original_trigger.modifiers
-                && this.trigger.with_mouse == this.original_trigger.with_mouse) {
-            // only turbo and/or delayed mode changed, no need to check for double assignment
-            this.on_ok(this.trigger);
-            this.window.hide();
-        } else if (assigned_id != "") {
+        if (assigned_id != "" && assigned_id != this.id) {
             // it's already assigned
             var error = _("This hotkey is already assigned to the pie \"%s\"! \n\nPlease select " +
                           "another one or cancel your selection.").printf(PieManager.get_name_of(assigned_id));
@@ -231,8 +279,27 @@ public class TriggerSelectWindow : GLib.Object {
             dialog.destroy();
         } else {
             // a unused hot key has been chosen, great!
-            this.on_ok(this.trigger);
+            this.on_ok(this.trigger, this.name_entry.text, this.icon_name);
             this.window.hide();
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Sets the icon of the icon_button
+    /////////////////////////////////////////////////////////////////////
+
+    private void set_icon(string name) {
+        this.icon_name = name;
+
+        if (name.contains("/")) {
+            try {
+                this.icon.pixbuf = new Gdk.Pixbuf.from_file_at_scale(name,
+                                        this.icon.get_pixel_size(), this.icon.get_pixel_size(), true);
+            } catch (GLib.Error error) {
+                warning(error.message);
+            }
+        } else {
+            this.icon.icon_name = name;
         }
     }
 

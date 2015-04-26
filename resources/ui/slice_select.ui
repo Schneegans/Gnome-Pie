@@ -106,7 +106,6 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
-                            <property name="relief">none</property>
                             <child>
                               <object class="GtkImage" id="icon">
                                 <property name="visible">True</property>

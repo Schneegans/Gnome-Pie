@@ -66,7 +66,7 @@ class PieList : Gtk.TreeView {
         this.data.set_sort_column_id(DataPos.NAME, Gtk.SortType.ASCENDING);
 
         this.set_model(this.data);
-        this.set_headers_visible(false);
+        this.set_headers_visible(true);
         this.set_grid_lines(Gtk.TreeViewGridLines.NONE);
         this.width_request = 170;
         this.set_enable_search(false);
@@ -74,6 +74,7 @@ class PieList : Gtk.TreeView {
         this.set_events(Gdk.EventMask.POINTER_MOTION_MASK);
 
         var main_column = new Gtk.TreeViewColumn();
+            main_column.title = _("Pies");
             var icon_render = new Gtk.CellRendererPixbuf();
                 icon_render.xpad = 4;
                 icon_render.ypad = 4;

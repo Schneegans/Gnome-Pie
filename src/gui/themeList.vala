@@ -62,15 +62,18 @@ class ThemeList : Gtk.TreeView {
             main_column.title = _("Themes");
             main_column.set_sizing(Gtk.TreeViewColumnSizing.FIXED);
             var icon_render = new Gtk.CellRendererPixbuf();
+                icon_render.xpad = 4;
+                icon_render.ypad = 4;
                 main_column.pack_start(icon_render, false);
 
-            var theme_render = new Gtk.CellRendererText();
-                main_column.pack_start(theme_render, true);
+            var name_render = new Gtk.CellRendererText();
+                name_render.xpad = 6;
+                main_column.pack_start(name_render, true);
 
         this.append_column(main_column);
 
         main_column.add_attribute(icon_render, "pixbuf", DataPos.ICON);
-        main_column.add_attribute(theme_render, "markup", DataPos.NAME);
+        main_column.add_attribute(name_render, "markup", DataPos.NAME);
 
         this.get_selection().changed.connect(() => {
             Gtk.TreeIter active;
@@ -94,10 +97,10 @@ class ThemeList : Gtk.TreeView {
             Gtk.TreeIter current;
             data.append(out current);
             data.set(current, DataPos.ICON, theme.preview_icon.to_pixbuf());
-            data.set(current, DataPos.NAME, "<b>"+GLib.Markup.escape_text(theme.name)+"</b><small>  -  "
-                                            +GLib.Markup.escape_text(theme.description)+"\n"
-                                            +"<i>"+GLib.Markup.escape_text(_("By")+" "+theme.author)
-                                            +"</i></small>");
+            data.set(current, DataPos.NAME, GLib.Markup.escape_text(theme.name)+"\n"
+                                            + "<span font-size='x-small'>" + GLib.Markup.escape_text(theme.description)
+                                            + " - <i>"+GLib.Markup.escape_text(_("By")+" "+theme.author)
+                                            + "</i></span>");
             if(theme == Config.global.theme)
                 get_selection().select_iter(current);
         }

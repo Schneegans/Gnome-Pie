@@ -33,6 +33,8 @@ public class PreferencesWindow : GLib.Object {
     /// Some Gtk widgets used by this window.
     /////////////////////////////////////////////////////////////////////
 
+    private Gtk.Stack? stack = null;
+
     private Gtk.Window? window = null;
     private Gtk.Label? no_pie_label = null;
     private Gtk.Label? no_slice_label = null;
@@ -41,13 +43,17 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.ToolButton? remove_pie_button = null;
     private Gtk.ToolButton? edit_pie_button = null;
 
+    private ThemeList? theme_list = null;
+    private Gtk.ToggleButton? indicator = null;
+    private Gtk.ToggleButton? autostart = null;
+    private Gtk.ToggleButton? captions = null;
+
     /////////////////////////////////////////////////////////////////////
     /// Some custom widgets and dialogs used by this window.
     /////////////////////////////////////////////////////////////////////
 
     private PiePreview? preview = null;
     private PieList? pie_list = null;
-    private SettingsWindow? settings_window = null;
     private PieOptionsWindow? pie_options_window = null;
 
     /////////////////////////////////////////////////////////////////////
@@ -68,6 +74,31 @@ public class PreferencesWindow : GLib.Object {
         headerbar.title = _("Gnome-Pie Settings");
         headerbar.subtitle = _("bake your pies!");
         window.set_titlebar(headerbar);
+
+        var main_box = builder.get_object("main-box") as Gtk.Box;
+        var pie_settings = builder.get_object("pie-settings") as Gtk.Box;
+        var general_settings = builder.get_object("general-settings") as Gtk.Box;
+
+        pie_settings.parent.remove(pie_settings);
+        general_settings.parent.remove(general_settings);
+
+        Gtk.StackSwitcher switcher = new Gtk.StackSwitcher();
+        switcher.margin_top = 10;
+        switcher.set_halign(Gtk.Align.CENTER);
+        main_box.pack_start(switcher, false, true, 0);
+
+        this.stack = new Gtk.Stack();
+        this.stack.transition_duration = 500;
+        this.stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
+        this.stack.homogeneous = true;
+        this.stack.halign = Gtk.Align.FILL;
+        this.stack.expand = true;
+        main_box.add(stack);
+        switcher.set_stack(stack);
+
+        this.stack.add_with_properties(general_settings, "name", "1", "title", "General Settings", null);
+        this.stack.add_with_properties(pie_settings, "name", "2", "title", "Pie Settings", null);
+
 
         var inline_toolbar = builder.get_object ("pies-toolbar") as Gtk.Widget;
         inline_toolbar.get_style_context().add_class("inline-toolbar");
@@ -96,8 +127,6 @@ public class PreferencesWindow : GLib.Object {
         this.no_slice_label = builder.get_object("no-slice-label") as Gtk.Label;
         this.preview_background = builder.get_object("preview-background") as Gtk.EventBox;
 
-        // (builder.get_object("settings-button") as Gtk.ToolButton).clicked.connect(on_settings_button_clicked);
-
         this.remove_pie_button = builder.get_object("remove-pie-button") as Gtk.ToolButton;
         this.remove_pie_button.clicked.connect(on_remove_pie_button_clicked);
 
@@ -105,6 +134,71 @@ public class PreferencesWindow : GLib.Object {
         this.edit_pie_button.clicked.connect(on_edit_pie_button_clicked);
 
         (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
+
+        this.theme_list = new ThemeList();
+        this.theme_list.on_select_new.connect(() => {
+            this.captions.active = Config.global.show_captions;
+            if (Config.global.theme.has_slice_captions) {
+                this.captions.sensitive = true;
+            } else {
+                this.captions.sensitive = false;
+            }
+        });
+
+        scroll_area = builder.get_object("theme-scrolledwindow") as Gtk.ScrolledWindow;
+        scroll_area.add(this.theme_list);
+
+        this.autostart = (builder.get_object("autostart-checkbox") as Gtk.ToggleButton);
+        this.autostart.toggled.connect(on_autostart_toggled);
+
+        this.indicator = (builder.get_object("indicator-checkbox") as Gtk.ToggleButton);
+        this.indicator.toggled.connect(on_indicator_toggled);
+
+        this.captions = (builder.get_object("captions-checkbox") as Gtk.ToggleButton);
+        this.captions.toggled.connect(on_captions_toggled);
+
+        var scale_slider = (builder.get_object("scale-hscale") as Gtk.Scale);
+            scale_slider.set_range(0.5, 2.0);
+            scale_slider.set_increments(0.05, 0.25);
+            scale_slider.set_value(Config.global.global_scale);
+
+            bool changing = false;
+            bool changed_again = false;
+
+            scale_slider.value_changed.connect(() => {
+                if (!changing) {
+                    changing = true;
+                    Timeout.add(300, () => {
+                        if (changed_again) {
+                            changed_again = false;
+                            return true;
+                        }
+
+                        Config.global.global_scale = scale_slider.get_value();
+                        Config.global.load_themes(Config.global.theme.name);
+                        changing = false;
+                        return false;
+                    });
+                } else {
+                    changed_again = true;
+                }
+            });
+
+        var range_slider = (builder.get_object("range-hscale") as Gtk.Scale);
+            range_slider.set_range(0, 2000);
+            range_slider.set_increments(10, 100);
+            range_slider.set_value(Config.global.activation_range);
+            range_slider.value_changed.connect(() => {
+                Config.global.activation_range = (int)range_slider.get_value();
+            });
+
+        var range_slices = (builder.get_object("range-slices") as Gtk.Scale);
+            range_slices.set_range(12, 96);
+            range_slices.set_increments(4, 12);
+            range_slices.set_value(Config.global.max_visible_slices);
+            range_slices.value_changed.connect(() => {
+                Config.global.max_visible_slices = (int)range_slices.get_value();
+            });
 
         this.window.hide.connect(() => {
             // save settings on close
@@ -131,6 +225,81 @@ public class PreferencesWindow : GLib.Object {
 
         var style = this.preview_background.get_style_context();
         this.preview_background.override_background_color(Gtk.StateFlags.NORMAL, style.get_background_color(Gtk.StateFlags.NORMAL));
+
+        this.indicator.active = Config.global.show_indicator;
+        this.autostart.active = Config.global.auto_start;
+        this.captions.active = Config.global.show_captions;
+
+        if (Config.global.theme.has_slice_captions) {
+            this.captions.sensitive = true;
+        } else {
+            this.captions.sensitive = false;
+        }
+
+        this.stack.set_visible_child_full("2", Gtk.StackTransitionType.NONE);
+        this.pie_list.has_focus = true;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Creates or deletes the autostart file. This code is inspired
+    /// by project synapse as well.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_autostart_toggled(Gtk.ToggleButton check_box) {
+
+        bool active = check_box.active;
+        if (!active && FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
+            Config.global.auto_start = false;
+            // delete the autostart file
+            FileUtils.remove (Paths.autostart);
+        }
+        else if (active && !FileUtils.test(Paths.autostart, FileTest.EXISTS)) {
+            Config.global.auto_start = true;
+
+            string autostart_entry =
+                "#!/usr/bin/env xdg-open\n" +
+                "[Desktop Entry]\n" +
+                "Name=Gnome-Pie\n" +
+                "Exec=" + Paths.executable + "\n" +
+                "Encoding=UTF-8\n" +
+                "Type=Application\n" +
+                "X-GNOME-Autostart-enabled=true\n" +
+                "Icon=gnome-pie\n";
+
+            // create the autostart file
+            string autostart_dir = GLib.Path.get_dirname(Paths.autostart);
+            if (!FileUtils.test(autostart_dir, FileTest.EXISTS | FileTest.IS_DIR)) {
+                DirUtils.create_with_parents(autostart_dir, 0755);
+            }
+
+            try {
+                FileUtils.set_contents(Paths.autostart, autostart_entry);
+                FileUtils.chmod(Paths.autostart, 0755);
+            } catch (Error e) {
+                var d = new Gtk.MessageDialog (this.window, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
+                                           "%s", e.message);
+                d.run ();
+                d.destroy ();
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Shows or hides the indicator.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_indicator_toggled(Gtk.ToggleButton check_box) {
+        var check = check_box as Gtk.CheckButton;
+        Config.global.show_indicator = check.active;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Shows or hides the captions of Slices.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_captions_toggled(Gtk.ToggleButton check_box) {
+        var check = check_box as Gtk.CheckButton;
+        Config.global.show_captions = check.active;
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -219,19 +388,6 @@ public class PreferencesWindow : GLib.Object {
 
         this.pie_options_window.set_pie(selected_id);
         this.pie_options_window.show();
-    }
-
-    /////////////////////////////////////////////////////////////////////
-    /// Called when the general settings button is clicked.
-    /////////////////////////////////////////////////////////////////////
-
-    private void on_settings_button_clicked(Gtk.ToolButton button) {
-        if (this.settings_window == null) {
-            this.settings_window = new SettingsWindow();
-            this.settings_window.set_parent(this.window.get_toplevel() as Gtk.Window);
-        }
-
-        this.settings_window.show();
     }
 }
 

@@ -32,6 +32,13 @@ public class Deamon : GLib.Object {
     public static string version;
 
     /////////////////////////////////////////////////////////////////////
+    /// Varaibles set by the commend line parser.
+    /////////////////////////////////////////////////////////////////////
+
+    public static bool header_bar = false;
+    public static bool stack_switcher = false;
+
+    /////////////////////////////////////////////////////////////////////
     /// The beginning of everything.
     /////////////////////////////////////////////////////////////////////
 
@@ -71,6 +78,10 @@ public class Deamon : GLib.Object {
           "Open the Pie with the given ID", "ID" },
         { "reset", 'r', 0, GLib.OptionArg.NONE, out reset,
           "Reset all options to default values" },
+        { "header-bar", 'b', 0, GLib.OptionArg.NONE, out header_bar,
+          "Uses the new GTK.HeaderBar" },
+        { "stack-switcher", 's', 0, GLib.OptionArg.NONE, out stack_switcher,
+          "Uses the new GTK.StackSwitcher" },
         { null }
     };
 
@@ -102,24 +113,25 @@ public class Deamon : GLib.Object {
             Intl.bindtextdomain ("gnomepie", Paths.locales);
             Intl.textdomain ("gnomepie");
 
-            // init toolkits and static stuff
-            ActionRegistry.init();
-            GroupRegistry.init();
-
-            PieManager.init();
-            Icon.init();
-
-            // launch the indicator
-            this.indicator = new Indicator();
-
-            // connect SigHandlers
-            Posix.signal(Posix.SIGINT, sig_handler);
-            Posix.signal(Posix.SIGTERM, sig_handler);
-
-            // finished loading... so run the prog!
-            message("Started happily...");
-
             if (handle_command_line(args, false)) {
+
+                // init toolkits and static stuff
+                ActionRegistry.init();
+                GroupRegistry.init();
+
+                PieManager.init();
+                Icon.init();
+
+                // launch the indicator
+                this.indicator = new Indicator();
+
+                // connect SigHandlers
+                Posix.signal(Posix.SIGINT, sig_handler);
+                Posix.signal(Posix.SIGTERM, sig_handler);
+
+                // finished loading... so run the prog!
+                message("Started happily...");
+
                 Gtk.main();
             }
         });
@@ -143,10 +155,9 @@ public class Deamon : GLib.Object {
 
     private bool handle_command_line(string[] args, bool show_preferences) {
         // create command line options
-        var context = new GLib.OptionContext("");
-        context.set_help_enabled(true);
+        var context = new GLib.OptionContext(" - the pie menu for linux");
         context.add_main_entries(options, null);
-        context.add_group(Gtk.get_option_group (false));
+        context.add_group(Gtk.get_option_group(false));
 
         try {
             context.parse(ref args);

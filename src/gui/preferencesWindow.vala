@@ -33,7 +33,7 @@ public class PreferencesWindow : GLib.Object {
     /// Some Gtk widgets used by this window.
     /////////////////////////////////////////////////////////////////////
 
-    // private Gtk.Stack? stack = null;
+    private Gtk.Stack? stack = null;
 
     private Gtk.Window? window = null;
     private Gtk.Label? no_pie_label = null;
@@ -69,35 +69,42 @@ public class PreferencesWindow : GLib.Object {
                     Gdk.EventMask.KEY_PRESS_MASK |
                     Gdk.EventMask.POINTER_MOTION_MASK);
 
-        // var headerbar = new Gtk.HeaderBar();
-        // headerbar.show_close_button = true;
-        // headerbar.title = _("Gnome-Pie Settings");
-        // headerbar.subtitle = _("bake your pies!");
-        // window.set_titlebar(headerbar);
+        if (Deamon.header_bar) {
+            var headerbar = new Gtk.HeaderBar();
+            headerbar.show_close_button = true;
+            headerbar.title = _("Gnome-Pie Settings");
+            headerbar.subtitle = _("bake your pies!");
+            window.set_titlebar(headerbar);
+        }
 
-        // var main_box = builder.get_object("main-box") as Gtk.Box;
-        // var pie_settings = builder.get_object("pie-settings") as Gtk.Box;
-        // var general_settings = builder.get_object("general-settings") as Gtk.Box;
+        if (Deamon.stack_switcher) {
+            var main_box = builder.get_object("main-box") as Gtk.Box;
+            var notebook = builder.get_object("notebook") as Gtk.Notebook;
+            var pie_settings = builder.get_object("pie-settings") as Gtk.Box;
+            var general_settings = builder.get_object("general-settings") as Gtk.Box;
 
-        // pie_settings.parent.remove(pie_settings);
-        // general_settings.parent.remove(general_settings);
+            pie_settings.parent.remove(pie_settings);
+            general_settings.parent.remove(general_settings);
 
-        // Gtk.StackSwitcher switcher = new Gtk.StackSwitcher();
-        // switcher.margin_top = 10;
-        // switcher.set_halign(Gtk.Align.CENTER);
-        // main_box.pack_start(switcher, false, true, 0);
+            main_box.remove(notebook);
 
-        // this.stack = new Gtk.Stack();
-        // this.stack.transition_duration = 500;
-        // this.stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
-        // this.stack.homogeneous = true;
-        // this.stack.halign = Gtk.Align.FILL;
-        // this.stack.expand = true;
-        // main_box.add(stack);
-        // switcher.set_stack(stack);
+            Gtk.StackSwitcher switcher = new Gtk.StackSwitcher();
+            switcher.margin_top = 10;
+            switcher.set_halign(Gtk.Align.CENTER);
+            main_box.pack_start(switcher, false, true, 0);
 
-        // this.stack.add_with_properties(general_settings, "name", "1", "title", "General Settings", null);
-        // this.stack.add_with_properties(pie_settings, "name", "2", "title", "Pie Settings", null);
+            this.stack = new Gtk.Stack();
+            this.stack.transition_duration = 500;
+            this.stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
+            this.stack.homogeneous = true;
+            this.stack.halign = Gtk.Align.FILL;
+            this.stack.expand = true;
+            main_box.add(stack);
+            switcher.set_stack(stack);
+
+            this.stack.add_with_properties(general_settings, "name", "1", "title", _("General Settings"), null);
+            this.stack.add_with_properties(pie_settings, "name", "2", "title", _("Pie Settings"), null);
+        }
 
         this.pie_list = new PieList();
         this.pie_list.on_select.connect(this.on_pie_select);
@@ -232,7 +239,9 @@ public class PreferencesWindow : GLib.Object {
             this.captions.sensitive = false;
         }
 
-        // this.stack.set_visible_child_full("2", Gtk.StackTransitionType.NONE);
+        if (Deamon.stack_switcher) {
+            this.stack.set_visible_child_full("2", Gtk.StackTransitionType.NONE);
+        }
         this.pie_list.has_focus = true;
     }
 

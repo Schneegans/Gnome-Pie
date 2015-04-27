@@ -33,15 +33,15 @@ public class PreferencesWindow : GLib.Object {
     /// Some Gtk widgets used by this window.
     /////////////////////////////////////////////////////////////////////
 
-    private Gtk.Stack? stack = null;
+    // private Gtk.Stack? stack = null;
 
     private Gtk.Window? window = null;
     private Gtk.Label? no_pie_label = null;
     private Gtk.Label? no_slice_label = null;
     private Gtk.Box? preview_box = null;
     private Gtk.EventBox? preview_background = null;
-    private Gtk.ToolButton? remove_pie_button = null;
-    private Gtk.ToolButton? edit_pie_button = null;
+    private Gtk.Button? remove_pie_button = null;
+    private Gtk.Button? edit_pie_button = null;
 
     private ThemeList? theme_list = null;
     private Gtk.ToggleButton? indicator = null;
@@ -69,39 +69,35 @@ public class PreferencesWindow : GLib.Object {
                     Gdk.EventMask.KEY_PRESS_MASK |
                     Gdk.EventMask.POINTER_MOTION_MASK);
 
-        var headerbar = new Gtk.HeaderBar();
-        headerbar.show_close_button = true;
-        headerbar.title = _("Gnome-Pie Settings");
-        headerbar.subtitle = _("bake your pies!");
-        window.set_titlebar(headerbar);
+        // var headerbar = new Gtk.HeaderBar();
+        // headerbar.show_close_button = true;
+        // headerbar.title = _("Gnome-Pie Settings");
+        // headerbar.subtitle = _("bake your pies!");
+        // window.set_titlebar(headerbar);
 
-        var main_box = builder.get_object("main-box") as Gtk.Box;
-        var pie_settings = builder.get_object("pie-settings") as Gtk.Box;
-        var general_settings = builder.get_object("general-settings") as Gtk.Box;
+        // var main_box = builder.get_object("main-box") as Gtk.Box;
+        // var pie_settings = builder.get_object("pie-settings") as Gtk.Box;
+        // var general_settings = builder.get_object("general-settings") as Gtk.Box;
 
-        pie_settings.parent.remove(pie_settings);
-        general_settings.parent.remove(general_settings);
+        // pie_settings.parent.remove(pie_settings);
+        // general_settings.parent.remove(general_settings);
 
-        Gtk.StackSwitcher switcher = new Gtk.StackSwitcher();
-        switcher.margin_top = 10;
-        switcher.set_halign(Gtk.Align.CENTER);
-        main_box.pack_start(switcher, false, true, 0);
+        // Gtk.StackSwitcher switcher = new Gtk.StackSwitcher();
+        // switcher.margin_top = 10;
+        // switcher.set_halign(Gtk.Align.CENTER);
+        // main_box.pack_start(switcher, false, true, 0);
 
-        this.stack = new Gtk.Stack();
-        this.stack.transition_duration = 500;
-        this.stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
-        this.stack.homogeneous = true;
-        this.stack.halign = Gtk.Align.FILL;
-        this.stack.expand = true;
-        main_box.add(stack);
-        switcher.set_stack(stack);
+        // this.stack = new Gtk.Stack();
+        // this.stack.transition_duration = 500;
+        // this.stack.transition_type = Gtk.StackTransitionType.SLIDE_LEFT_RIGHT;
+        // this.stack.homogeneous = true;
+        // this.stack.halign = Gtk.Align.FILL;
+        // this.stack.expand = true;
+        // main_box.add(stack);
+        // switcher.set_stack(stack);
 
-        this.stack.add_with_properties(general_settings, "name", "1", "title", "General Settings", null);
-        this.stack.add_with_properties(pie_settings, "name", "2", "title", "Pie Settings", null);
-
-
-        var inline_toolbar = builder.get_object ("pies-toolbar") as Gtk.Widget;
-        inline_toolbar.get_style_context().add_class("inline-toolbar");
+        // this.stack.add_with_properties(general_settings, "name", "1", "title", "General Settings", null);
+        // this.stack.add_with_properties(pie_settings, "name", "2", "title", "Pie Settings", null);
 
         this.pie_list = new PieList();
         this.pie_list.on_select.connect(this.on_pie_select);
@@ -127,13 +123,13 @@ public class PreferencesWindow : GLib.Object {
         this.no_slice_label = builder.get_object("no-slice-label") as Gtk.Label;
         this.preview_background = builder.get_object("preview-background") as Gtk.EventBox;
 
-        this.remove_pie_button = builder.get_object("remove-pie-button") as Gtk.ToolButton;
+        this.remove_pie_button = builder.get_object("remove-pie-button") as Gtk.Button;
         this.remove_pie_button.clicked.connect(on_remove_pie_button_clicked);
 
-        this.edit_pie_button = builder.get_object("edit-pie-button") as Gtk.ToolButton;
+        this.edit_pie_button = builder.get_object("edit-pie-button") as Gtk.Button;
         this.edit_pie_button.clicked.connect(on_edit_pie_button_clicked);
 
-        (builder.get_object("add-pie-button") as Gtk.ToolButton).clicked.connect(on_add_pie_button_clicked);
+        (builder.get_object("add-pie-button") as Gtk.Button).clicked.connect(on_add_pie_button_clicked);
 
         this.theme_list = new ThemeList();
         this.theme_list.on_select_new.connect(() => {
@@ -236,7 +232,7 @@ public class PreferencesWindow : GLib.Object {
             this.captions.sensitive = false;
         }
 
-        this.stack.set_visible_child_full("2", Gtk.StackTransitionType.NONE);
+        // this.stack.set_visible_child_full("2", Gtk.StackTransitionType.NONE);
         this.pie_list.has_focus = true;
     }
 
@@ -337,7 +333,7 @@ public class PreferencesWindow : GLib.Object {
     /// Called when the add Pie button is clicked.
     /////////////////////////////////////////////////////////////////////
 
-    private void on_add_pie_button_clicked(Gtk.ToolButton button) {
+    private void on_add_pie_button_clicked(Gtk.Button button) {
         var new_pie = PieManager.create_persistent_pie(_("New Pie"), "stock_unknown", null);
         this.pie_list.reload_all();
         this.pie_list.select(new_pie.id);
@@ -349,7 +345,7 @@ public class PreferencesWindow : GLib.Object {
     /// Called when the remove Pie button is clicked.
     /////////////////////////////////////////////////////////////////////
 
-    private void on_remove_pie_button_clicked(Gtk.ToolButton button) {
+    private void on_remove_pie_button_clicked(Gtk.Button button) {
         if (this.selected_id != "") {
             var dialog = new Gtk.MessageDialog((Gtk.Window)this.window.get_toplevel(), Gtk.DialogFlags.MODAL,
                          Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
@@ -372,7 +368,7 @@ public class PreferencesWindow : GLib.Object {
     /// Called when the edit pie button is clicked.
     /////////////////////////////////////////////////////////////////////
 
-    private void on_edit_pie_button_clicked(Gtk.ToolButton? button = null) {
+    private void on_edit_pie_button_clicked(Gtk.Button? button = null) {
         if (this.pie_options_window == null) {
             this.pie_options_window = new PieOptionsWindow();
             this.pie_options_window.set_parent(window);

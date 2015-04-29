@@ -100,9 +100,26 @@ public class WindowListGroup : ActionGroup {
                     var xid = (X.Window)uint64.parse(action.real_command);
                     var win = Wnck.Window.get(xid);
 
-                    if (win.get_workspace() != null
-                        && win.get_workspace() != win.get_screen().get_active_workspace())
-                        win.get_workspace().activate(time_stamp);
+                    if (win.get_workspace() != null) {
+                        //select the workspace
+                        if (win.get_workspace() != win.get_screen().get_active_workspace())
+                            win.get_workspace().activate(time_stamp);
+
+                        //select the viewport inside the wprkspace
+                        if (!win.is_in_viewport(win.get_workspace()) ) {
+                            int xp, yp, widthp, heightp, scx, scy, nx, ny, wx, wy;
+                            win.get_geometry (out xp, out yp, out widthp, out heightp);
+                            scx= win.get_screen().get_width();
+                            scy= win.get_screen().get_height();
+                            wx= win.get_workspace().get_viewport_x();
+                            wy= win.get_workspace().get_viewport_y();
+                            if (scx > 0 && scy > 0) {
+                                nx= ((wx+xp) / scx) * scx;
+                                ny= ((wy+yp) / scy) * scy;
+                                win.get_screen().move_viewport(nx, ny);
+                            }
+                        }
+                    }
 
                     if (win.is_minimized())
                         win.unminimize(time_stamp);

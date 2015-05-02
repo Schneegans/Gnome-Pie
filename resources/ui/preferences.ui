@@ -8,8 +8,8 @@
     <property name="window_position">center</property>
     <child>
       <object class="GtkBox" id="main-box">
-        <property name="width_request">500</property>
-        <property name="height_request">460</property>
+        <property name="width_request">650</property>
+        <property name="height_request">500</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
@@ -17,6 +17,7 @@
           <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="margin_top">6</property>
             <property name="show_border">False</property>
             <child>
               <object class="GtkBox" id="general-settings">
@@ -326,6 +327,7 @@
               </object>
               <packing>
                 <property name="tab_expand">True</property>
+                <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
@@ -606,6 +608,7 @@ Start by creating one! &lt;/b&gt; This can be done by clicking on the tiny littl
               <packing>
                 <property name="position">1</property>
                 <property name="tab_expand">True</property>
+                <property name="tab_fill">False</property>
               </packing>
             </child>
             <child>
@@ -618,7 +621,7 @@ Start by creating one! &lt;/b&gt; This can be done by clicking on the tiny littl
           <packing>
             <property name="expand">True</property>
             <property name="fill">True</property>
-            <property name="position">0</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>

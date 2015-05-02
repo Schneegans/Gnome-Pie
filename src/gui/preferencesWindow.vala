@@ -34,6 +34,7 @@ public class PreferencesWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private Gtk.Stack? stack = null;
+    private Gtk.Notebook? notebook = null;
 
     private Gtk.Window? window = null;
     private Gtk.Label? no_pie_label = null;
@@ -77,16 +78,17 @@ public class PreferencesWindow : GLib.Object {
             window.set_titlebar(headerbar);
         }
 
+        this.notebook = builder.get_object("notebook") as Gtk.Notebook;
+
         if (Deamon.stack_switcher) {
             var main_box = builder.get_object("main-box") as Gtk.Box;
-            var notebook = builder.get_object("notebook") as Gtk.Notebook;
             var pie_settings = builder.get_object("pie-settings") as Gtk.Box;
             var general_settings = builder.get_object("general-settings") as Gtk.Box;
 
             pie_settings.parent.remove(pie_settings);
             general_settings.parent.remove(general_settings);
 
-            main_box.remove(notebook);
+            main_box.remove(this.notebook);
 
             Gtk.StackSwitcher switcher = new Gtk.StackSwitcher();
             switcher.margin_top = 10;
@@ -241,6 +243,8 @@ public class PreferencesWindow : GLib.Object {
 
         if (Deamon.stack_switcher) {
             this.stack.set_visible_child_full("2", Gtk.StackTransitionType.NONE);
+        } else {
+            this.notebook.set_current_page(1);
         }
         this.pie_list.has_focus = true;
     }

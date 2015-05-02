@@ -83,7 +83,9 @@ public class Color: GLib.Object {
     public Color.from_widget_style(Gtk.Widget widget, string style_name) {
         var ctx = widget.get_style_context();
         Gdk.RGBA color;
-        ctx.lookup_color(style_name, out color);
+        if (!ctx.lookup_color(style_name, out color)) {
+            warning("Failed to get style color for widget style \"" + style_name + "\"!");
+        }
         Color.from_gdk(color);
     }
 

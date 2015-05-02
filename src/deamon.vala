@@ -43,7 +43,7 @@ public class Deamon : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public static int main(string[] args) {
-        version = "0.6.1";
+        version = "0.6.2";
 
         Logger.init();
         Gtk.init(ref args);

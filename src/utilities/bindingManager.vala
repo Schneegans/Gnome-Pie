@@ -279,14 +279,15 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public string get_assigned_id(Trigger trigger) {
-        foreach (var binding in bindings) {
-            var first = Trigger.remove_optional(binding.trigger.name);
-            var second = Trigger.remove_optional(trigger.name);
-            if (first == second) {
-                return binding.id;
+        var second = Trigger.remove_optional(trigger.name);
+        if (second != "") {
+            foreach (var binding in bindings) {
+                var first = Trigger.remove_optional(binding.trigger.name);
+                if (first == second) {
+                    return binding.id;
+                }
             }
         }
-
         return "";
     }
 

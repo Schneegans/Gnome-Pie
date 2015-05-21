@@ -95,6 +95,7 @@ public class PiePreviewRenderer : GLib.Object {
         this.add_sign.load();
 
         this.add_sign.on_clicked.connect((pos) => {
+            message("blub");
             this.on_add_slice(pos);
         });
     }

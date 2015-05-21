@@ -200,9 +200,7 @@ public class PiePreviewAddSign : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void on_button_press(double x, double y) {
-        if (this.activity.end == 1.0) {
-            this.clicked.reset_target(0.9, 0.1);
-        }
+        this.clicked.reset_target(0.9, 0.1);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -210,10 +208,8 @@ public class PiePreviewAddSign : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void on_button_release(double x, double y) {
-        if (this.clicked.end == 0.9) {
-            this.clicked.reset_target(1.0, 0.1);
-            this.on_clicked((int)this.position);
-        }
+        this.clicked.reset_target(1.0, 0.1);
+        this.on_clicked((int)this.position);
     }
 }
 

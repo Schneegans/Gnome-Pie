@@ -267,21 +267,23 @@ public class PieOptionsWindow : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private void on_ok_button_clicked() {
-        var assigned_id = PieManager.get_assigned_id(this.trigger);
-
-        if (assigned_id != "" && assigned_id != this.id) {
-            // it's already assigned
-            var error = _("This hotkey is already assigned to the pie \"%s\"! \n\nPlease select " +
-                          "another one or cancel your selection.").printf(PieManager.get_name_of(assigned_id));
-            var dialog = new Gtk.MessageDialog((Gtk.Window)this.window.get_toplevel(), Gtk.DialogFlags.MODAL,
-                                               Gtk.MessageType.ERROR, Gtk.ButtonsType.CANCEL, error);
-            dialog.run();
-            dialog.destroy();
-        } else {
-            // a unused hot key has been chosen, great!
-            this.on_ok(this.trigger, this.name_entry.text, this.icon_name);
-            this.window.hide();
+        if (this.trigger.name != "") {
+            var assigned_id = PieManager.get_assigned_id(this.trigger);
+            
+            if (assigned_id != "" && assigned_id != this.id) {
+                // it's already assigned
+                var error = _("This hotkey is already assigned to the pie \"%s\"! \n\nPlease select " +
+                              "another one or cancel your selection.").printf(PieManager.get_name_of(assigned_id));
+                var dialog = new Gtk.MessageDialog((Gtk.Window)this.window.get_toplevel(), Gtk.DialogFlags.MODAL,
+                                                   Gtk.MessageType.ERROR, Gtk.ButtonsType.CANCEL, error);
+                dialog.run();
+                dialog.destroy();
+                return;
+            }
         }
+        // an unbound or unused hot key has been chosen, great!
+        this.on_ok(this.trigger, this.name_entry.text, this.icon_name);
+        this.window.hide();
     }
 
     /////////////////////////////////////////////////////////////////////

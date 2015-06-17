@@ -84,8 +84,8 @@ public class Indicator : GLib.Object {
                 warning("Failed to get path of executable!");
             }
 
-            this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon,
-                                 AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
+            this.indicator = new AppIndicator.Indicator("Gnome-Pie", path + "/" + icon + ".svg",
+                                 AppIndicator.IndicatorCategory.APPLICATION_STATUS);
             var menu = new Gtk.Menu();
         #else
             this.indicator = new Gtk.StatusIcon();

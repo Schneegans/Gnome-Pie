@@ -121,6 +121,18 @@ public class PieManager : GLib.Object {
     }
 
     /////////////////////////////////////////////////////////////////////
+    /// Prints the names of all pies with their IDs.
+    /////////////////////////////////////////////////////////////////////
+
+    public static void print_ids() {
+        foreach(var pie in all_pies.entries) {
+            if (pie.value.id.length == 3) {
+                message(pie.value.id + " " + pie.value.name);
+            }
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////
     /// Returns the hotkey which the Pie with the given ID is bound to.
     /////////////////////////////////////////////////////////////////////
 

@@ -23,7 +23,7 @@ namespace GnomePie {
 /// only one instance of Gnome-Pie running.
 /////////////////////////////////////////////////////////////////////////
 
-public class Deamon : GLib.Object {
+public class Deamon : GLib.Application {
 
     /////////////////////////////////////////////////////////////////////
     /// The current version of Gnome-Pie
@@ -68,6 +68,9 @@ public class Deamon : GLib.Object {
 
     private static string open_pie = null;
     private static bool reset = false;
+    private static bool print_ids = false;
+
+    private static bool handled_local_args = false;
 
     /////////////////////////////////////////////////////////////////////
     /// Available command line options.
@@ -82,62 +85,68 @@ public class Deamon : GLib.Object {
           "Uses the new GTK.HeaderBar" },
         { "stack-switcher", 's', 0, GLib.OptionArg.NONE, out stack_switcher,
           "Uses the new GTK.StackSwitcher" },
+        { "print-ids", 'p', 0, GLib.OptionArg.NONE, out print_ids,
+          "Prints all Pie names with their according IDs" },
         { null }
     };
 
     /////////////////////////////////////////////////////////////////////
-    /// C'tor of the Deamon. It checks whether it's the firts running
+    /// C'tor of the Deamon. It checks whether it's the first running
     /// instance of Gnome-Pie.
     /////////////////////////////////////////////////////////////////////
 
-    public void run(string[] args) {
+    public Deamon() {
 
-        // create unique application
-        var app = new GLib.Application("org.gnome.gnomepie", GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
+        Object(application_id: "org.gnome.gnomepie",
+               flags: GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
 
-        app.command_line.connect((cmd) => {
+        message("Welcome to Gnome-Pie " + version + "!");
+
+        // init locale support
+        Intl.bindtextdomain("gnomepie", Paths.locales);
+        Intl.textdomain("gnomepie");
+
+        // init toolkits and static stuff
+        ActionRegistry.init();
+        GroupRegistry.init();
+
+        PieManager.init();
+        Icon.init();
+
+        // launch the indicator
+        this.indicator = new Indicator();
+
+        // connect SigHandlers
+        Posix.signal(Posix.SIGINT, sig_handler);
+        Posix.signal(Posix.SIGTERM, sig_handler);
+
+        this.startup.connect(()=>{
+            // finished loading... so run the prog!
+            message("Started happily...");
+            hold();
+        });
+    }
+
+    public override bool local_command_line(ref unowned string[] args, out int exit_status) {
+        exit_status = 0;
+
+        string*[] _args = new string[args.length];
+        for (int i = 0; i < args.length; i++) {
+            _args[i] = args[i];
+        }
+        return handle_command_line(_args, false);
+    }
+
+    public override int command_line(GLib.ApplicationCommandLine cmd) {
+        if (handled_local_args) {
             string[] tmp = cmd.get_arguments();
             unowned string[] remote_args = tmp;
-            if (!handle_command_line(remote_args, true)) {
-                Gtk.main_quit();
-            }
-
-            return 0;
-        });
-
-        app.startup.connect(() => {
-
-            message("Welcome to Gnome-Pie " + version + "!");
-
-            // init locale support
-            Intl.bindtextdomain ("gnomepie", Paths.locales);
-            Intl.textdomain ("gnomepie");
-
-            if (handle_command_line(args, false)) {
-
-                // init toolkits and static stuff
-                ActionRegistry.init();
-                GroupRegistry.init();
-
-                PieManager.init();
-                Icon.init();
-
-                // launch the indicator
-                this.indicator = new Indicator();
-
-                // connect SigHandlers
-                Posix.signal(Posix.SIGINT, sig_handler);
-                Posix.signal(Posix.SIGTERM, sig_handler);
-
-                // finished loading... so run the prog!
-                message("Started happily...");
-
-                Gtk.main();
-            }
-        });
-
-        app.run(args);
+            handle_command_line(remote_args, true);
+        }
+        handled_local_args = true;
+        return 0;
     }
+
 
     /////////////////////////////////////////////////////////////////////
     /// Print a nifty message when the prog is killed.
@@ -146,16 +155,16 @@ public class Deamon : GLib.Object {
     private static void sig_handler(int sig) {
         stdout.printf("\n");
         message("Caught signal (%d), bye!".printf(sig));
-        Gtk.main_quit();
+        GLib.Application.get_default().release();
     }
 
     /////////////////////////////////////////////////////////////////////
     /// Handles command line parameters.
     /////////////////////////////////////////////////////////////////////
 
-    private bool handle_command_line(string[] args, bool show_preferences) {
-        // create command line options
-        var context = new GLib.OptionContext(" - the pie menu for linux");
+    private bool handle_command_line(string[] args, bool called_from_remote) {
+
+        var context = new GLib.OptionContext(" - Launches the pie menu for linux.");
         context.add_main_entries(options, null);
         context.add_group(Gtk.get_option_group(false));
 
@@ -163,6 +172,7 @@ public class Deamon : GLib.Object {
             context.parse(ref args);
         } catch(GLib.OptionError error) {
             warning(error.message);
+            message("Run '%s' to launch Gnome-Pie or run '%s --help' to see a full list of available command line options.\n", args[0], args[0]);
         }
 
         if (reset) {
@@ -171,17 +181,23 @@ public class Deamon : GLib.Object {
             if (GLib.FileUtils.remove(Paths.settings) == 0)
                 message("Removed file \"%s\"", Paths.settings);
 
-            return false;
+            return true;
         }
 
         if (open_pie != null && open_pie != "") {
             PieManager.open_pie(open_pie);
             open_pie = "";
-        } else if (show_preferences) {
+        } else if (called_from_remote) {
             this.indicator.show_preferences();
         }
 
-        return true;
+        if (print_ids) {
+            PieManager.print_ids();
+            print_ids = false;
+            return true;
+        }
+
+        return false;
     }
 }
 

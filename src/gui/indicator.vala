@@ -136,7 +136,9 @@ public class Indicator : GLib.Object {
 
         // quit item
         item = new Gtk.ImageMenuItem.with_mnemonic(_("_Quit"));
-        item.activate.connect(Gtk.main_quit);
+        item.activate.connect(()=>{
+            GLib.Application.get_default().release();
+        });
         item.show();
         menu.append(item);
 

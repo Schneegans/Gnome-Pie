@@ -97,6 +97,8 @@ public class Deamon : GLib.Application {
 
     public Deamon() {
 
+        GLib.Environment.set_variable("LIBOVERLAY_SCROLLBAR", "0", true);
+
         Object(application_id: "org.gnome.gnomepie",
                flags: GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
 

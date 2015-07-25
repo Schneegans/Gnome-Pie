@@ -43,7 +43,7 @@ public class Deamon : GLib.Application {
     /////////////////////////////////////////////////////////////////////
 
     public static int main(string[] args) {
-        version = "0.6.2";
+        version = "0.6.3";
 
         // disable overlay scrollbar --- hacky workaround for black /
         // transparent background

@@ -116,16 +116,20 @@ public class Deamon : GLib.Application {
         GroupRegistry.init();
 
         PieManager.init();
-        Icon.init();
 
-        // launch the indicator
-        this.indicator = new Indicator();
+        // initialize icon cache
+        Icon.init();
 
         // connect SigHandlers
         Posix.signal(Posix.SIGINT, sig_handler);
         Posix.signal(Posix.SIGTERM, sig_handler);
 
         this.startup.connect(()=>{
+
+
+            // launch the indicator
+            this.indicator = new Indicator();
+
             // finished loading... so run the prog!
             message("Started happily...");
             hold();

@@ -35,8 +35,8 @@ public class Deamon : GLib.Application {
     /// Varaibles set by the commend line parser.
     /////////////////////////////////////////////////////////////////////
 
-    public static bool header_bar = false;
-    public static bool stack_switcher = false;
+    public static bool disable_header_bar     = false;
+    public static bool disable_stack_switcher = false;
 
     /////////////////////////////////////////////////////////////////////
     /// The beginning of everything.
@@ -85,10 +85,10 @@ public class Deamon : GLib.Application {
           "Open the Pie with the given ID", "ID" },
         { "reset", 'r', 0, GLib.OptionArg.NONE, out reset,
           "Reset all options to default values" },
-        { "header-bar", 'b', 0, GLib.OptionArg.NONE, out header_bar,
-          "Uses the new GTK.HeaderBar" },
-        { "stack-switcher", 's', 0, GLib.OptionArg.NONE, out stack_switcher,
-          "Uses the new GTK.StackSwitcher" },
+        { "no-header-bar", 'b', 0, GLib.OptionArg.NONE, out disable_header_bar,
+          "Disables the usage of GTK.HeaderBar" },
+        { "no-stack-switcher", 's', 0, GLib.OptionArg.NONE, out disable_stack_switcher,
+          "Disables the usage of GTK.StackSwitcher" },
         { "print-ids", 'p', 0, GLib.OptionArg.NONE, out print_ids,
           "Prints all Pie names with their according IDs" },
         { null }

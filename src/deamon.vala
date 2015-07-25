@@ -45,6 +45,10 @@ public class Deamon : GLib.Application {
     public static int main(string[] args) {
         version = "0.6.2";
 
+        // disable overlay scrollbar --- hacky workaround for black /
+        // transparent background
+        GLib.Environment.set_variable("LIBOVERLAY_SCROLLBAR", "0", true);
+
         Logger.init();
         Gtk.init(ref args);
         Paths.init();
@@ -96,12 +100,6 @@ public class Deamon : GLib.Application {
     /////////////////////////////////////////////////////////////////////
 
     public Deamon() {
-
-        // disable overlay scrollbar --- hacky workaround for black /
-        // transparent background
-        GLib.Environment.set_variable("LIBOVERLAY_SCROLLBAR", "0", true);
-
-
         Object(application_id: "org.gnome.gnomepie",
                flags: GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
 

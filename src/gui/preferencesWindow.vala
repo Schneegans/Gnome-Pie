@@ -104,8 +104,6 @@ public class PreferencesWindow : GLib.Object {
             main_box.add(stack);
             switcher.set_stack(stack);
 
-            this.stack.get_style_context().add_class(Gtk.STYLE_CLASS_BUTTON);
-
             this.stack.add_with_properties(general_settings, "name", "1", "title", _("General Settings"), null);
             this.stack.add_with_properties(pie_settings, "name", "2", "title", _("Pie Settings"), null);
         }

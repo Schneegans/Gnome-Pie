@@ -97,7 +97,10 @@ public class Deamon : GLib.Application {
 
     public Deamon() {
 
+        // disable overlay scrollbar --- hacky workaround for black /
+        // transparent background
         GLib.Environment.set_variable("LIBOVERLAY_SCROLLBAR", "0", true);
+
 
         Object(application_id: "org.gnome.gnomepie",
                flags: GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
@@ -129,9 +132,14 @@ public class Deamon : GLib.Application {
         });
     }
 
-    public override bool local_command_line(ref unowned string[] args, out int exit_status) {
+    /////////////////////////////////////////////////////////////////////
+    /// Call handle_command_line on program launch.
+    /////////////////////////////////////////////////////////////////////
+
+    protected override bool local_command_line(ref unowned string[] args, out int exit_status) {
         exit_status = 0;
 
+        // copy command line
         string*[] _args = new string[args.length];
         for (int i = 0; i < args.length; i++) {
             _args[i] = args[i];
@@ -139,7 +147,11 @@ public class Deamon : GLib.Application {
         return handle_command_line(_args, false);
     }
 
-    public override int command_line(GLib.ApplicationCommandLine cmd) {
+    /////////////////////////////////////////////////////////////////////
+    /// Call handle_command_line when a remote instance was launched.
+    /////////////////////////////////////////////////////////////////////
+
+    protected override int command_line(GLib.ApplicationCommandLine cmd) {
         if (handled_local_args) {
             string[] tmp = cmd.get_arguments();
             unowned string[] remote_args = tmp;
@@ -148,7 +160,6 @@ public class Deamon : GLib.Application {
         handled_local_args = true;
         return 0;
     }
-
 
     /////////////////////////////////////////////////////////////////////
     /// Print a nifty message when the prog is killed.
@@ -159,6 +170,7 @@ public class Deamon : GLib.Application {
         message("Caught signal (%d), bye!".printf(sig));
         GLib.Application.get_default().release();
     }
+
 
     /////////////////////////////////////////////////////////////////////
     /// Handles command line parameters.

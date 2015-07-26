@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme name="Adwaita Big" description="Similar to Adwaita but with bigger icons" author="Simon Schneegans" email="code@simonschneegans.de">
+    <pie radius="110" maxZoom="1.1" zoomRange="0.1" transitionTime="0.2" springiness="1.5"
+          fadeInTime="0.3" fadeOutTime="0.3" fadeInZoom="0.5" fadeOutZoom="0.7" fadeInRotation="0.2" fadeOutRotation="-0.3">
+        <center radius="80" activeRadius="55">
+            <center_layer file="ring.svg"
+                          active_scale="0.8"   active_rotationMode="auto"   active_rotationSpeed="0"    active_colorize="false"    active_alpha="1.0"
+                          inactive_scale="0.8" inactive_rotationMode="auto" inactive_rotationSpeed="0" inactive_colorize="false" inactive_alpha="1.0" />
+        </center>
+        <slices radius="25">
+            <activeSlice>
+                <slice_layer type="file" file="icon.svg" scale="1.7" />
+                <slice_layer type="file" colorize="true" file="icon_highlight.svg" scale="1.7" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask_caption.svg" visibility="with_caption" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask.svg" visibility="without_caption" />
+                <slice_layer type="caption" y="22" font="sans 8" width="50" color="#333" height="20" visibility="with_caption" />
+            </activeSlice>
+            <inactiveSlice>
+                <slice_layer type="file" file="icon.svg" scale="1.7" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask_caption.svg" visibility="with_caption" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask.svg" visibility="without_caption" />
+                <slice_layer type="caption" y="22" font="sans 8" width="50" color="#333" height="20" visibility="with_caption" />
+            </inactiveSlice>
+        </slices>
+        <caption position="0" font="sans 10" width="80" height="80" color="#333"/>
+    </pie>
+</theme>
+

@@ -77,17 +77,22 @@ public class Indicator : GLib.Object {
         }
 
         #if HAVE_APPINDICATOR
-            if (gnome_shell) {
-                this.indicator = new AppIndicator.Indicator("Gnome-Pie", icon,
-                                     AppIndicator.IndicatorCategory.APPLICATION_STATUS);
-            } else {
-                string path = "";
+            string path = "";
+            try {
+                path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
+            } catch (GLib.FileError e) {
+                warning("Failed to get path of executable!");
+            }
 
-                try {
-                    path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
-                } catch (GLib.FileError e) {
-                    warning("Failed to get path of executable!");
+            if (gnome_shell) {
+                if (GLib.File.new_for_path(path).query_exists()) {
+                    this.indicator = new AppIndicator.Indicator("Gnome-Pie", path + "/" + icon + ".svg",
+                                         AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+                } else {
+                    this.indicator = new AppIndicator.Indicator("Gnome-Pie", icon,
+                                         AppIndicator.IndicatorCategory.APPLICATION_STATUS);
                 }
+            } else {
 
                 this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon,
                                      AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);

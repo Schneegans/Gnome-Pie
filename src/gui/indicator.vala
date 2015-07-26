@@ -67,13 +67,11 @@ public class Indicator : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public Indicator() {
-        string icon = "";
+        string icon = "gnome-pie-symbolic";
         var screen = (Gdk.X11.Screen)Gdk.Screen.get_default();
 
-        if (screen.get_window_manager_name() == "Mutter")
+        if (screen.get_window_manager_name() == "GNOME Shell")
             icon = "gnome-pie";
-        else
-            icon = "gnome-pie-symbolic";
 
         #if HAVE_APPINDICATOR
             string path = "";
@@ -83,9 +81,8 @@ public class Indicator : GLib.Object {
             } catch (GLib.FileError e) {
                 warning("Failed to get path of executable!");
             }
-
-            this.indicator = new AppIndicator.Indicator("Gnome-Pie", path + "/" + icon + ".svg",
-                                 AppIndicator.IndicatorCategory.APPLICATION_STATUS);
+            this.indicator = new AppIndicator.Indicator.with_path("Gnome-Pie", icon,
+                                 AppIndicator.IndicatorCategory.APPLICATION_STATUS, path);
             var menu = new Gtk.Menu();
         #else
             this.indicator = new Gtk.StatusIcon();

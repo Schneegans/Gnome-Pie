@@ -78,13 +78,14 @@ public class Indicator : GLib.Object {
 
         #if HAVE_APPINDICATOR
 
+            string path = "";
+            try {
+                path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
+            } catch (GLib.FileError e) {
+                warning("Failed to get path of executable!");
+            }
+
             if (gnome_shell) {
-                string path = "";
-                try {
-                    path = GLib.Path.get_dirname(GLib.FileUtils.read_link("/proc/self/exe"))+"/resources";
-                } catch (GLib.FileError e) {
-                    warning("Failed to get path of executable!");
-                }
 
                 if (GLib.File.new_for_path(path).query_exists()) {
                     this.indicator = new AppIndicator.Indicator("Gnome-Pie", path + "/" + icon + ".svg",

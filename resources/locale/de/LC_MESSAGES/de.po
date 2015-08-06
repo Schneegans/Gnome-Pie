@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-02 14:39+0200\n"
+"POT-Creation-Date: 2015-08-06 12:43+0200\n"
 "PO-Revision-Date: 2011-08-25 21:04+0200\n"
 "Last-Translator: Simon Schneegans <code@simonschneegans.de>\n"
 "Language-Team: German\n"
@@ -152,23 +152,23 @@ msgstr "Symbolthema"
 msgid "Custom Icon"
 msgstr "Benutzerdefiniertes Symbol"
 
-#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:76
+#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:77
 msgid "Gnome-Pie Settings"
 msgstr "Gnome-Pie - Einstellungen"
 
-#: ../ui/preferences.ui:73
+#: ../ui/preferences.ui:72
 msgid "Start Gnome-Pie on login"
 msgstr "Beim Anmelden automatisch ausführen"
 
-#: ../ui/preferences.ui:79 ../ui/preferences.ui:80
+#: ../ui/preferences.ui:78 ../ui/preferences.ui:79
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr "Wenn aktiviert, startet Gnome-Pie im Hintergrund beim Anmelden."
 
-#: ../ui/preferences.ui:92
+#: ../ui/preferences.ui:91
 msgid "Display panel icon "
 msgstr "Zeige ein Symbol im Panel"
 
-#: ../ui/preferences.ui:98 ../ui/preferences.ui:99
+#: ../ui/preferences.ui:97 ../ui/preferences.ui:98
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
@@ -176,19 +176,29 @@ msgstr ""
 "Falls nicht aktiviert, kann dieses Menü durch ein nochmaliges starten von "
 "Gnome-Pie geöffnet werden."
 
-#: ../ui/preferences.ui:119
-msgid "Activation radius"
-msgstr "Aktivierungsentfernung"
+#: ../ui/preferences.ui:110
+msgid "Select Slices by typing their names"
+msgstr "Tippe den Namen von Slices um Sie auszuwählen"
 
-#: ../ui/preferences.ui:157
+#: ../ui/preferences.ui:116 ../ui/preferences.ui:117
+msgid ""
+"If checked, you can select items in a Pie by typing their names. Otherwise "
+"you can activate them with a hotkey (which can be displayed by pressing ALT "
+"when a Pie is openened)."
+msgstr ""
+"Wenn aktiviert, kannst du Einträge wählen indem du ihre Namen tippst. Anderenfalls "
+"kannst du alle Einträge durch drücken der Zifferntasten auswählen (halte ALT "
+"gedrückt um diese Hotkeys anzuzeigen wenn ein Pie geöffnet ist)."
+
+#: ../ui/preferences.ui:136
 msgid "Behavior"
 msgstr "Verhalten"
 
-#: ../ui/preferences.ui:192
+#: ../ui/preferences.ui:171
 msgid "Display Slice labels"
 msgstr "Zeige Namen der Slices"
 
-#: ../ui/preferences.ui:198 ../ui/preferences.ui:199
+#: ../ui/preferences.ui:177 ../ui/preferences.ui:178
 msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
@@ -196,23 +206,27 @@ msgstr ""
 "Zeigt den Name jeder Slice an. Nur möglich, wenn durch das aktuelle Thema "
 "unterstützt."
 
-#: ../ui/preferences.ui:219
+#: ../ui/preferences.ui:198
 msgid "Global scale"
 msgstr "Skalierungsfaktor"
 
-#: ../ui/preferences.ui:259
+#: ../ui/preferences.ui:238
 msgid "Maximum slices per pie"
 msgstr "Maximale Zahl von Einträgen pro Pie"
 
-#: ../ui/preferences.ui:297
+#: ../ui/preferences.ui:278
+msgid "Activation radius"
+msgstr "Aktivierungsentfernung"
+
+#: ../ui/preferences.ui:316
 msgid "Appearance"
 msgstr "Erscheinungsbild"
 
-#: ../ui/preferences.ui:326 ../../src/gui/preferencesWindow.vala:107
+#: ../ui/preferences.ui:345 ../../src/gui/preferencesWindow.vala:108
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
 
-#: ../ui/preferences.ui:518
+#: ../ui/preferences.ui:537
 msgid ""
 "<b><big>This Pie is empty!</big>\n"
 "\n"
@@ -230,7 +244,7 @@ msgstr ""
 "\n"
 "Zur manuellen und fortgeschrittenen Konfiguration klicke auf das Symbol."
 
-#: ../ui/preferences.ui:539
+#: ../ui/preferences.ui:558
 msgid ""
 "<b><big>You have no Pies!</big>\n"
 "\n"
@@ -242,7 +256,7 @@ msgstr ""
 "Erstelle einen neuen! </b> Klicke dazu einfach auf das kleine Pluszeichen "
 "unter der leeren Liste auf der linken Seite."
 
-#: ../ui/preferences.ui:606 ../../src/gui/preferencesWindow.vala:108
+#: ../ui/preferences.ui:625 ../../src/gui/preferencesWindow.vala:109
 msgid "Pie Settings"
 msgstr "Pie-Einstellungen"
 
@@ -283,15 +297,15 @@ msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
 msgstr ""
 "Öffnet einen anderen Pie. Auf diese Art können Submenüs erstellt werden."
 
-#: ../../src/gui/preferencesWindow.vala:77
+#: ../../src/gui/preferencesWindow.vala:78
 msgid "bake your pies!"
 msgstr "mach schöne Kuchen!"
 
-#: ../../src/gui/preferencesWindow.vala:350
+#: ../../src/gui/preferencesWindow.vala:364
 msgid "New Pie"
 msgstr "Neuer Pie"
 
-#: ../../src/gui/preferencesWindow.vala:365
+#: ../../src/gui/preferencesWindow.vala:379
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "Soll dieser Pie wirklich mit allen Slices gelöscht werden?"
@@ -387,15 +401,15 @@ msgstr "Themen"
 msgid "By"
 msgstr "Von"
 
-#: ../../src/gui/indicator.vala:114
+#: ../../src/gui/indicator.vala:126
 msgid "_Preferences"
 msgstr "Einstellungen"
 
-#: ../../src/gui/indicator.vala:123
+#: ../../src/gui/indicator.vala:135
 msgid "_About"
 msgstr "Über"
 
-#: ../../src/gui/indicator.vala:138
+#: ../../src/gui/indicator.vala:150
 msgid "_Quit"
 msgstr "Beenden"
 
@@ -500,7 +514,8 @@ msgstr "Gruppe: Fensterliste für aktive Arbeitsfläche"
 
 #: ../../src/actionGroups/workspaceWindowListGroup.vala:37
 msgid "Shows a Slice for each of your opened windows on the current workspace."
-msgstr "Zeigt eine Slice für jedes geöffnete Fenster der aktiven Arbeitsfläche an."
+msgstr ""
+"Zeigt eine Slice für jedes geöffnete Fenster der aktiven Arbeitsfläche an."
 
 #: ../../src/actionGroups/sessionGroup.vala:35
 msgid "Group: Session Control"

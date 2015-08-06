@@ -221,7 +221,7 @@ public class PieRenderer : GLib.Object {
             }
         }
 
-        this.set_highlighted_slice(this.quickaction);
+        this.select_by_index(this.quickaction);
 
 
         ShowPieMode showpie= ShowPieMode.FULL_PIE;
@@ -500,19 +500,19 @@ public class PieRenderer : GLib.Object {
             if (this.first_slice_idx+this.visible_slice_count >= slices.size) {
                 this.visible_slice_count= slices.size - this.first_slice_idx;
             }
-            this.reset_sclice_anim();
-            this.set_highlighted_slice(-1);
+            this.reset_slice_anim();
+            this.select_by_index(-1);
             calc_key_navigation_pos();
             this.key_board_control = true;
 
         } else if (this.first_slice_idx > 0) {
             //go to first page
             this.first_slice_idx= 0;
-            this.reset_sclice_anim();
+            this.reset_slice_anim();
             //recover the original value
             this.visible_slice_count= this.original_visible_slice_count;
-            this.reset_sclice_anim();
-            this.set_highlighted_slice(-1);
+            this.reset_slice_anim();
+            this.select_by_index(-1);
             calc_key_navigation_pos();
             this.key_board_control = true;
         }
@@ -532,8 +532,8 @@ public class PieRenderer : GLib.Object {
             if (this.first_slice_idx < 0) {
                 this.first_slice_idx= 0;
             }
-            this.reset_sclice_anim();
-            this.set_highlighted_slice(-1);
+            this.reset_slice_anim();
+            this.select_by_index(-1);
             calc_key_navigation_pos();
             this.key_board_control = true;
 
@@ -547,17 +547,51 @@ public class PieRenderer : GLib.Object {
                 //last page has less slices than previous
                 this.visible_slice_count= n;
             this.first_slice_idx= slices.size - this.visible_slice_count;
-            this.reset_sclice_anim();
-            this.set_highlighted_slice(-1);
+            this.reset_slice_anim();
+            this.select_by_index(-1);
             calc_key_navigation_pos();
             this.key_board_control = true;
         }
     }
 
-    private void reset_sclice_anim() {
+    private void reset_slice_anim() {
         //reset animation values in all the new visible slices
         for (int i= 0; i < this.visible_slice_count; ++i)
             this.slices[ i+this.first_slice_idx ].reset_anim();
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Selects a slice based on a search string.
+    /////////////////////////////////////////////////////////////////////
+
+    public void select_by_string(string search) {
+        float max_similarity = 0;
+        int index = -1;
+
+        for (int i=0; i<this.visible_slice_count; ++i) {
+            float similarity = 0;
+            int cur_pos = 0;
+            var name = slices[this.first_slice_idx+i].action.name.down();
+
+            for (int j=0; j<search.length; ++j) {
+                int next_pos = name.index_of(search.substring(j, 1), cur_pos);
+
+                if (next_pos != -1) {
+                    cur_pos = next_pos;
+                    similarity += (float)(name.length-next_pos)/name.length + 2;
+                }
+            }
+
+            if (similarity > max_similarity) {
+                index = this.first_slice_idx+i;
+                max_similarity = similarity;
+            }
+        }
+
+        if (index >= 0 && index < slice_count()) {
+            key_board_control = true;
+            select_by_index(index);
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -616,7 +650,7 @@ public class PieRenderer : GLib.Object {
                     next_active_slice = -1;
                 }
 
-                this.set_highlighted_slice(next_active_slice);
+                this.select_by_index(next_active_slice);
             }
 
             center.draw(frame_time, ctx, angle, slice_track);
@@ -639,7 +673,7 @@ public class PieRenderer : GLib.Object {
     /// Called when the currently active slice changes.
     /////////////////////////////////////////////////////////////////////
 
-    public void set_highlighted_slice(int index) {
+    public void select_by_index(int index) {
         if (index != this.active_slice) {
             if (index >= this.first_slice_idx && index < this.first_slice_idx+this.visible_slice_count)
                 this.active_slice = index;
@@ -847,7 +881,7 @@ public class PieRenderer : GLib.Object {
                 pos= this.first_slice_idx;
         }
 
-        this.set_highlighted_slice(pos);
+        this.select_by_index(pos);
 
         this.key_board_control = true;
     }

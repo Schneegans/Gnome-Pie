@@ -58,6 +58,7 @@ public class Config : GLib.Object {
     public int  max_visible_slices { get; set; default = 24; }
     public bool show_indicator { get; set; default = true; }
     public bool show_captions { get; set; default = true; }
+    public bool search_by_string { get; set; default = true; }
     public bool auto_start { get; set; default = false; }
     public int showed_news { get; set; default = 0; }
     public Gee.ArrayList<Theme?> themes { get; private set; }
@@ -77,6 +78,7 @@ public class Config : GLib.Object {
                 writer.write_attribute("max_visible_slices", max_visible_slices.to_string());
                 writer.write_attribute("show_indicator", show_indicator ? "true" : "false");
                 writer.write_attribute("show_captions", show_captions ? "true" : "false");
+                writer.write_attribute("search_by_string", search_by_string ? "true" : "false");
                 writer.write_attribute("showed_news", showed_news.to_string());
             writer.end_element();
         writer.end_document();
@@ -130,6 +132,9 @@ public class Config : GLib.Object {
                             break;
                         case "show_captions":
                             show_captions = bool.parse(attr_content);
+                            break;
+                        case "search_by_string":
+                            search_by_string = bool.parse(attr_content);
                             break;
                         case "showed_news":
                             showed_news = int.parse(attr_content);

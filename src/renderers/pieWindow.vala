@@ -95,6 +95,13 @@ public class PieWindow : Gtk.Window {
     private bool has_compositing = false;
 
     /////////////////////////////////////////////////////////////////////
+    /// When a Pie is opened, pressed buttons are accumulated and
+    /// matches are searched in all slices.
+    /////////////////////////////////////////////////////////////////////
+
+    private string search_string = "";
+
+    /////////////////////////////////////////////////////////////////////
     /// C'tor, sets up the window.
     /////////////////////////////////////////////////////////////////////
 
@@ -145,7 +152,7 @@ public class PieWindow : Gtk.Window {
         this.key_press_event.connect((e) => {
             if (e.keyval != last_key) {
                 last_key = e.keyval;
-                this.handle_key_press(e.keyval, e.time);
+                this.handle_key_press(e.keyval, e.time, e.str);
             }
             return true;
         });
@@ -429,7 +436,7 @@ public class PieWindow : Gtk.Window {
     /// Do some useful stuff when keys are pressed.
     /////////////////////////////////////////////////////////////////////
 
-    private void handle_key_press(uint key, uint32 time_stamp) {
+    private void handle_key_press(uint key, uint32 time_stamp, string text) {
         if      (Gdk.keyval_name(key) == "Escape") this.cancel();
         else if (Gdk.keyval_name(key) == "Return") this.activate_slice(time_stamp);
         else if (!PieManager.get_is_turbo(this.renderer.id)) {
@@ -441,23 +448,31 @@ public class PieWindow : Gtk.Window {
             else if (Gdk.keyval_name(key) == "Page_Up") this.renderer.select_prevpage();
             else if (Gdk.keyval_name(key) == "Tab") this.renderer.select_nextpage();
             else if (Gdk.keyval_name(key) == "ISO_Left_Tab") this.renderer.select_prevpage();
-            else if (Gdk.keyval_name(key) == "Alt_L") this.renderer.show_hotkeys = true;
+            else if (Gdk.keyval_name(key) == "Alt_L" && !Config.global.search_by_string) this.renderer.show_hotkeys = true;
             else {
-                int index = -1;
 
-                if (key >= 48 && key <= 57)        index = ((int)key - 39)%10;
-                else if (key >= 97 && key <= 122)  index = (int)key - 87;
-                else if (key >= 65 && key <= 90)   index = (int)key - 55;
+                if (Config.global.search_by_string) {
+                    this.search_string += text;
+                    this.renderer.select_by_string(search_string.down());
 
-                if (index >= 0 && index < this.renderer.slice_count()) {
-                    this.renderer.key_board_control = true;
-                    this.renderer.set_highlighted_slice(index);
+                } else {
 
-                    if (this.renderer.active_slice == index) {
-                        GLib.Timeout.add((uint)(Config.global.theme.transition_time*1000.0), ()=> {
-                            this.activate_slice(time_stamp);
-                            return false;
-                        });
+                    int index = -1;
+
+                    if (key >= 48 && key <= 57)        index = ((int)key - 39)%10;
+                    else if (key >= 97 && key <= 122)  index = (int)key - 87;
+                    else if (key >= 65 && key <= 90)   index = (int)key - 55;
+
+                    if (index >= 0 && index < this.renderer.slice_count()) {
+                        this.renderer.key_board_control = true;
+                        this.renderer.select_by_index(index);
+
+                        if (this.renderer.active_slice == index) {
+                            GLib.Timeout.add((uint)(Config.global.theme.transition_time*1000.0), ()=> {
+                                this.activate_slice(time_stamp);
+                                return false;
+                            });
+                        }
                     }
                 }
             }

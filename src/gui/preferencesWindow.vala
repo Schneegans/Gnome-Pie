@@ -46,6 +46,7 @@ public class PreferencesWindow : GLib.Object {
 
     private ThemeList? theme_list = null;
     private Gtk.ToggleButton? indicator = null;
+    private Gtk.ToggleButton? search_by_string = null;
     private Gtk.ToggleButton? autostart = null;
     private Gtk.ToggleButton? captions = null;
 
@@ -159,6 +160,9 @@ public class PreferencesWindow : GLib.Object {
         this.indicator = (builder.get_object("indicator-checkbox") as Gtk.ToggleButton);
         this.indicator.toggled.connect(on_indicator_toggled);
 
+        this.search_by_string = (builder.get_object("select-by-string-checkbox") as Gtk.ToggleButton);
+        this.search_by_string.toggled.connect(on_search_by_string_toggled);
+
         this.captions = (builder.get_object("captions-checkbox") as Gtk.ToggleButton);
         this.captions.toggled.connect(on_captions_toggled);
 
@@ -234,6 +238,7 @@ public class PreferencesWindow : GLib.Object {
         this.indicator.active = Config.global.show_indicator;
         this.autostart.active = Config.global.auto_start;
         this.captions.active = Config.global.show_captions;
+        this.search_by_string.active = Config.global.search_by_string;
 
         if (Config.global.theme.has_slice_captions) {
             this.captions.sensitive = true;
@@ -309,6 +314,15 @@ public class PreferencesWindow : GLib.Object {
     private void on_captions_toggled(Gtk.ToggleButton check_box) {
         var check = check_box as Gtk.CheckButton;
         Config.global.show_captions = check.active;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Enables or disables Slice selection by typing.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_search_by_string_toggled(Gtk.ToggleButton check_box) {
+        var check = check_box as Gtk.CheckButton;
+        Config.global.search_by_string = check.active;
     }
 
     /////////////////////////////////////////////////////////////////////

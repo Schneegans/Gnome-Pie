@@ -46,6 +46,12 @@ public class SliceRenderer : GLib.Object {
     public Color color {get; private set;}
 
     /////////////////////////////////////////////////////////////////////
+    /// The Action which is rendered by this SliceRenderer.
+    /////////////////////////////////////////////////////////////////////
+
+    public Action action;
+
+    /////////////////////////////////////////////////////////////////////
     /// The two Images used, when this slice is active or not.
     /////////////////////////////////////////////////////////////////////
 
@@ -57,12 +63,6 @@ public class SliceRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private Image hotkey;
-
-    /////////////////////////////////////////////////////////////////////
-    /// The Action which is rendered by this SliceRenderer.
-    /////////////////////////////////////////////////////////////////////
-
-    private Action action;
 
     /////////////////////////////////////////////////////////////////////
     /// The PieRenderer which owns this SliceRenderer.
@@ -150,7 +150,7 @@ public class SliceRenderer : GLib.Object {
 
         this.hotkey = new RenderedText(hotkey_label, (int)Config.global.theme.slice_radius*2,
                          (int)Config.global.theme.slice_radius*2, "sans 20",
-                         Config.global.theme.caption_color, Config.global.global_scale);
+                         new Color(), Config.global.global_scale);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -284,8 +284,9 @@ public class SliceRenderer : GLib.Object {
         ctx.paint();
 
         // draw hotkeys if necassary
-        if (this.parent.show_hotkeys)
+        if (this.parent.show_hotkeys) {
             this.hotkey.paint_on(ctx, 1.0);
+        }
 
         ctx.restore();
     }

@@ -48,35 +48,41 @@ public class SliceLayer : GLib.Object {
     public string font {get; private set; default="";}
     public int width {get; private set; default=0;}
     public int height {get; private set; default=0;}
-    public int position {get; private set; default=0;}
+    public int x {get; private set; default=0;}
+    public int y {get; private set; default=0;}
     public Color color {get; private set; default=new Color();}
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members of the layer.
     /////////////////////////////////////////////////////////////////////
 
-    public SliceLayer.file(string icon_file, int icon_size, bool colorize, Visibility visibility) {
+    public SliceLayer.file(string icon_file, int icon_size, int x, int y, bool colorize, Visibility visibility) {
         this.layer_type = Type.FILE;
         this.icon_file = icon_file;
         this.colorize = colorize;
         this.icon_size = icon_size;
+        this.x = x;
+        this.y = y;
         this.visibility = visibility;
     }
 
-    public SliceLayer.icon(string icon_file, int icon_size, bool colorize, Visibility visibility) {
+    public SliceLayer.icon(string icon_file, int icon_size, int x, int y, bool colorize, Visibility visibility) {
         this.layer_type = Type.ICON;
         this.icon_file = icon_file;
         this.colorize = colorize;
         this.icon_size = icon_size;
+        this.x = x;
+        this.y = y;
         this.visibility = visibility;
     }
 
-    public SliceLayer.caption(string font, int width, int height, int position, Color color, bool colorize, Visibility visibility) {
+    public SliceLayer.caption(string font, int width, int height, int x, int y, Color color, bool colorize, Visibility visibility) {
         this.layer_type = Type.CAPTION;
         this.font = font;
         this.width = width;
         this.height = height;
-        this.position = position;
+        this.x = x;
+        this.y = y;
         this.color = color;
         this.visibility = visibility;
         this.colorize = colorize;

@@ -74,6 +74,7 @@ public class ThemedIcon : Image {
                 if (layer.layer_type == SliceLayer.Type.ICON) {
                     ctx.push_group();
 
+                    ctx.translate(layer.x, layer.y);
                     layer.image.paint_on(ctx);
 
                     ctx.set_operator(Cairo.Operator.IN);
@@ -86,6 +87,7 @@ public class ThemedIcon : Image {
                     }
 
                     icon.paint_on(ctx);
+                    ctx.translate(-layer.x, -layer.y);
 
                     ctx.pop_group_to_source();
                     ctx.paint();
@@ -93,11 +95,13 @@ public class ThemedIcon : Image {
 
                 } else if (layer.layer_type == SliceLayer.Type.CAPTION) {
                     Image text = new RenderedText(caption, layer.width, layer.height, layer.font, layer.color, Config.global.global_scale);
-                    ctx.translate(0, layer.position);
+                    ctx.translate(layer.x, layer.y);
                     text.paint_on(ctx);
-                    ctx.translate(0, -layer.position);
+                    ctx.translate(-layer.x, -layer.y);
                 } else if (layer.layer_type == SliceLayer.Type.FILE) {
+                    ctx.translate(layer.x, layer.y);
                     layer.image.paint_on(ctx);
+                    ctx.translate(-layer.x, -layer.y);
                 }
 
                 // colorize the whole layer if neccasary

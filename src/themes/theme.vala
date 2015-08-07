@@ -486,17 +486,17 @@ public class Theme : GLib.Object {
                     this.visible_slice_radius = Math.fmax(slice_radius*scale, this.visible_slice_radius);
 
                     if (slice->name.down() == "activeslice") {
-                        if (type == SliceLayer.Type.ICON)         active_slice_layers.add(new SliceLayer.icon(file, size, colorize, visibility));
+                        if (type == SliceLayer.Type.ICON)         active_slice_layers.add(new SliceLayer.icon(file, size, pos_x, pos_y, colorize, visibility));
                         else if (type == SliceLayer.Type.CAPTION) active_slice_layers.add(new SliceLayer.caption(slice_caption_font,
                                                                              slice_caption_width, slice_caption_height,
-                                                                             pos_y, slice_caption_color, colorize, visibility));
-                        else                                      active_slice_layers.add(new SliceLayer.file(file, size, colorize, visibility));
+                                                                             pos_x, pos_y, slice_caption_color, colorize, visibility));
+                        else                                      active_slice_layers.add(new SliceLayer.file(file, size, pos_x, pos_y, colorize, visibility));
                     } else {
-                        if (type == SliceLayer.Type.ICON)         inactive_slice_layers.add(new SliceLayer.icon(file, size, colorize, visibility));
+                        if (type == SliceLayer.Type.ICON)         inactive_slice_layers.add(new SliceLayer.icon(file, size, pos_x, pos_y, colorize, visibility));
                         else if (type == SliceLayer.Type.CAPTION) inactive_slice_layers.add(new SliceLayer.caption(slice_caption_font,
                                                                              slice_caption_width, slice_caption_height,
-                                                                             pos_y, slice_caption_color, colorize, visibility));
-                        else                                      inactive_slice_layers.add(new SliceLayer.file(file, size, colorize, visibility));
+                                                                             pos_x, pos_y, slice_caption_color, colorize, visibility));
+                        else                                      inactive_slice_layers.add(new SliceLayer.file(file, size, pos_x, pos_y, colorize, visibility));
                     }
 
                 } else {

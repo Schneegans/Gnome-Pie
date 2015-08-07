@@ -1,12 +1,10 @@
 Gnome-Pie
 ======
 
-**Gnome-Pie** is a circular application launcher for Linux. It is made of several pies, each consisting of multiple slices. The user presses a key stroke which opens the desired pie. By activating one of its slices, applications may be launched, key presses may be simulated or files can be opened.
-
 Feel free to visit its **homepage** at http://simmesimme.github.io/gnome-pie.html
 
-It is inspired by an addon written for the game World of Warcraft.
-(http://go-hero.net/opie/)
+**Gnome-Pie** is a circular application launcher for Linux. It is made of several pies, each consisting of multiple slices. The user presses a key stroke which opens the desired pie. By activating one of its slices, applications may be launched, key presses may be simulated or files can be opened.
+
 
 ## Installing from a PPA!
 
@@ -56,7 +54,7 @@ I really like working on Gnome-Pie — and you can help improving it! There are 
 
 ### Translate Gnome-Pie!
 
-This is really easy: [There is an easy-to-follow step-by-step-guide available](http://simmesimme.github.io/lessons/2011/11/09/translate-gnome-pie/)!
+This is really easy: [There is an how-to available](http://simmesimme.github.io/lessons/2015/08/07/translate-gnome-pie/)!
 
 ### Donate!
 

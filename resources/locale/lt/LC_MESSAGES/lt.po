@@ -2,34 +2,22 @@
 # Copyright (C) 2015 Simon Schneegans <code@simonschneegans.de>
 # This file is distributed under the same license as the gnomepie package.
 # Moo <hazap@hotmail.com>, 2015.
-#
+# Simon <code@simonschneegans.de>, 2015. #zanata
 msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-19 18:29+0300\n"
-"PO-Revision-Date: 2015-05-20 22:11+0200\n"
-"Last-Translator: Moo <hazap@hotmail.com>\n"
-"Language-Team: Lithuanian\n"
-"Language: lt\n"
+"POT-Creation-Date: 2015-08-06 12:43+0200\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
-"%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 1.7.5\n"
-
-#: ../ui/icon_select.ui:9
-msgid "Select an icon"
-msgstr "Pasirinkite piktogramą"
-
-#: ../ui/icon_select.ui:103
-msgid "Icon Theme"
-msgstr "Piktogramų Tema"
-
-#: ../ui/icon_select.ui:123
-msgid "Custom Icon"
-msgstr "Pasirinktina Piktograma"
+"PO-Revision-Date: 2015-05-20 04:11-0400\n"
+"Last-Translator: Moo <hazap@hotmail.com>\n"
+"Language-Team: Lithuanian\n"
+"Language: lt\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Zanata 3.6.2\n"
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"
@@ -92,6 +80,7 @@ msgid ""
 msgstr ""
 "Jei pažymėta, pelės rodyklė bus permesta į Pyrago vidurį. Tai leidžia "
 "greitai pasirinkti netgi tais atvejais, kai Pyragas atveriamas ekrano krašte."
+""
 
 #: ../ui/pie_options.ui:356
 msgid "Activation options"
@@ -112,101 +101,6 @@ msgstr ""
 #: ../ui/pie_options.ui:571
 msgid "Pie shape"
 msgstr "Pyrago forma"
-
-#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:76
-msgid "Gnome-Pie Settings"
-msgstr "Gnome-Pie Nustatymai"
-
-#: ../ui/preferences.ui:72
-msgid "Start Gnome-Pie on login"
-msgstr "Paleisti Gnome-Pie, įjungus kompiuterį"
-
-#: ../ui/preferences.ui:78 ../ui/preferences.ui:79
-msgid "If checked, Gnome-Pie will start silently everytime you log in."
-msgstr ""
-"Jei pažymėta, Gnome-Pie bus tyliai paleidžiama, kaskart jums prisijungus."
-
-#: ../ui/preferences.ui:91
-msgid "Display panel icon "
-msgstr "Rodyti skydelio piktogramą"
-
-#: ../ui/preferences.ui:97 ../ui/preferences.ui:98
-msgid ""
-"If not checked, you can access this menu by launching Gnome-Pie a second "
-"time."
-msgstr ""
-"Jei nepažymėta, galite pasiekti šį meniu, paleidę Gnome-Pie antrą kartą."
-
-#: ../ui/preferences.ui:118
-msgid "Activation radius"
-msgstr "Aktyvinimo spindulys"
-
-#: ../ui/preferences.ui:156
-msgid "Behavior"
-msgstr "Elgsena"
-
-#: ../ui/preferences.ui:191
-msgid "Display Slice labels"
-msgstr "Rodyti Gabaliukų pavadinimus"
-
-#: ../ui/preferences.ui:197 ../ui/preferences.ui:198
-msgid ""
-"Displays the name of each Slice next to it. Only available if supported by "
-"the theme."
-msgstr ""
-"Šalia kiekvieno Gabaliuko rodo jo pavadinimą. Prieinama tik tada, jeigu tai "
-"palaiko tema."
-
-#: ../ui/preferences.ui:218
-msgid "Global scale"
-msgstr "Visuotinė skalė"
-
-#: ../ui/preferences.ui:258
-msgid "Maximum slices per pie"
-msgstr "Daugiausia gabaliukų pyrage"
-
-#: ../ui/preferences.ui:296
-msgid "Appearance"
-msgstr "Išvaizda"
-
-#: ../ui/preferences.ui:325 ../../src/gui/preferencesWindow.vala:107
-msgid "General Settings"
-msgstr "Bendri Nustatymai"
-
-#: ../ui/preferences.ui:517
-msgid ""
-"<b><big>This Pie is empty!</big>\n"
-"\n"
-"Start adding Slices to it!</b> This can be done by dragging stuff to the "
-"plus sign below. You can try a lot! For example application launchers or "
-"folders. Even URLs from your browser are possible...\n"
-"\n"
-"For manual and advanced configuration click on the plus sign."
-msgstr ""
-"<b><big>Šis Pyragas yra tuščias!</big>\n"
-"\n"
-"Pridėkite jam Gabaliukus!</b> Tai gali būti atlikta, velkant į žemiau esantį "
-"pliuso ženklą įvairią medžiagą. Galite išbandyti daugelį dalykų! Pavyzdžiui, "
-"programų leistukus ar aplankus. Galima netgi (URL) nuorodas iš jūsų "
-"naršyklės...\n"
-"\n"
-"Rankinei ar išplėstinei konfigūracijai, spauskite pliuso ženklą."
-
-#: ../ui/preferences.ui:538
-msgid ""
-"<b><big>You have no Pies!</big>\n"
-"\n"
-"Start by creating one! </b> This can be done by clicking on the tiny little "
-"plus sign in the lower left corner."
-msgstr ""
-"<b><big>Jūs neturite Pyragų!</big>\n"
-"\n"
-"Pradėkite, kurdami pirmą pyragą! </b> Tai galite atlikti nuspaudę, "
-"apatiniame kairiajame kampe esantį, mažytį pliuso ženklą."
-
-#: ../ui/preferences.ui:605 ../../src/gui/preferencesWindow.vala:108
-msgid "Pie Settings"
-msgstr "Pyrago Nustatymai"
 
 #: ../ui/slice_select.ui:8
 msgid "Slice Options"
@@ -248,78 +142,139 @@ msgstr "Šis Gabaliukas bus vykdomas, kai nuspausite Pyrago viduryje."
 msgid "Slice options"
 msgstr "Gabaliuko parinktys"
 
-#: ../../src/actionGroups/bookmarkGroup.vala:36
-msgid "Group: Bookmarks"
-msgstr "Grupė: Žymės"
+#: ../ui/icon_select.ui:9
+msgid "Select an icon"
+msgstr "Pasirinkite piktogramą"
 
-#: ../../src/actionGroups/bookmarkGroup.vala:38
-msgid "Shows a Slice for each of your directory Bookmarks."
-msgstr "Rodo Gabaliuką kiekvienai jūsų katalogo Žymei."
+#: ../ui/icon_select.ui:103
+msgid "Icon Theme"
+msgstr "Piktogramų Tema"
 
-#: ../../src/actionGroups/clipboardGroup.vala:64
-msgid "Group: Clipboard"
-msgstr "Grupė: Iškarpinė"
+#: ../ui/icon_select.ui:123
+msgid "Custom Icon"
+msgstr "Pasirinktina Piktograma"
 
-#: ../../src/actionGroups/clipboardGroup.vala:66
-msgid "Manages your Clipboard."
-msgstr "Tvarko jūsų Iškarpinę."
+#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:77
+msgid "Gnome-Pie Settings"
+msgstr "Gnome-Pie Nustatymai"
 
-#: ../../src/actionGroups/devicesGroup.vala:35
-msgid "Group: Devices"
-msgstr "Grupė: Įrenginiai"
+#: ../ui/preferences.ui:72
+msgid "Start Gnome-Pie on login"
+msgstr "Paleisti Gnome-Pie, įjungus kompiuterį"
 
-#: ../../src/actionGroups/devicesGroup.vala:37
-msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+#: ../ui/preferences.ui:78 ../ui/preferences.ui:79
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr ""
-"Rodo Gabaliuką kiekvienam, tokiam kaip USB atmintinė, prijungtam įrenginiui."
+"Jei pažymėta, Gnome-Pie bus tyliai paleidžiama, kaskart jums prisijungus."
 
-#: ../../src/actionGroups/devicesGroup.vala:85
-msgid "Root"
-msgstr "Šaknis"
+#: ../ui/preferences.ui:91
+msgid "Display panel icon "
+msgstr "Rodyti skydelio piktogramą"
 
-#: ../../src/actionGroups/menuGroup.vala:35
-msgid "Group: Main menu"
-msgstr "Grupė: Pagrindinis meniu"
+#: ../ui/preferences.ui:97 ../ui/preferences.ui:98
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
+"Jei nepažymėta, galite pasiekti šį meniu, paleidę Gnome-Pie antrą kartą."
 
-#: ../../src/actionGroups/menuGroup.vala:37
-msgid "Displays your main menu structure."
-msgstr "Rodo jūsų pagrindinio meniu struktūrą"
+#: ../ui/preferences.ui:110
+msgid "Select Slices by typing their names"
+msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:35
-msgid "Group: Session Control"
-msgstr "Grupė: Seanso Valdymas"
+#: ../ui/preferences.ui:116 ../ui/preferences.ui:117
+msgid ""
+"If checked, you can select items in a Pie by typing their names. Otherwise "
+"you can activate them with a hotkey (which can be displayed by pressing ALT "
+"when a Pie is openened)."
+msgstr ""
 
-#: ../../src/actionGroups/sessionGroup.vala:37
-msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
-msgstr "Rodo Gabaliuką Išjungimui, Paleidimui iš naujo ir Užmigdymui."
+#: ../ui/preferences.ui:136
+msgid "Behavior"
+msgstr "Elgsena"
 
-#: ../../src/actionGroups/sessionGroup.vala:60
-msgid "Shutdown"
-msgstr "Išjungti"
+#: ../ui/preferences.ui:171
+msgid "Display Slice labels"
+msgstr "Rodyti Gabaliukų pavadinimus"
 
-#: ../../src/actionGroups/sessionGroup.vala:63
-msgid "Logout"
-msgstr "Atsijungti"
+#: ../ui/preferences.ui:177 ../ui/preferences.ui:178
+msgid ""
+"Displays the name of each Slice next to it. Only available if supported by "
+"the theme."
+msgstr ""
+"Šalia kiekvieno Gabaliuko rodo jo pavadinimą. Prieinama tik tada, jeigu tai "
+"palaiko tema."
 
-#: ../../src/actionGroups/sessionGroup.vala:66
-msgid "Reboot"
-msgstr "Paleisti iš naujo"
+#: ../ui/preferences.ui:198
+msgid "Global scale"
+msgstr "Visuotinė skalė"
 
-#: ../../src/actionGroups/windowListGroup.vala:34
-msgid "Group: Window List"
-msgstr "Grupė: Langų Sąrašas"
+#: ../ui/preferences.ui:238
+msgid "Maximum slices per pie"
+msgstr "Daugiausia gabaliukų pyrage"
 
-#: ../../src/actionGroups/windowListGroup.vala:36
-msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
-msgstr "Rodo Gabaliuką kiekvienam jūsų atvertam Langui. Beveik kaip Alt-Tab."
+#: ../ui/preferences.ui:278
+msgid "Activation radius"
+msgstr "Aktyvinimo spindulys"
 
-#: ../../src/actionGroups/workspaceWindowListGroup.vala:35
-msgid "Group: Window List for current workspace"
-msgstr "Grupė: Esamo darbalaukio Langų Sąrašas"
+#: ../ui/preferences.ui:316
+msgid "Appearance"
+msgstr "Išvaizda"
 
-#: ../../src/actionGroups/workspaceWindowListGroup.vala:37
-msgid "Shows a Slice for each of your opened windows on the current workspace."
-msgstr "Rodo Gabaliuką kiekvienam, jūsų esamame darbalaukyje, atvertam langui."
+#: ../ui/preferences.ui:345 ../../src/gui/preferencesWindow.vala:108
+msgid "General Settings"
+msgstr "Bendri Nustatymai"
+
+#: ../ui/preferences.ui:537
+msgid ""
+"<b><big>This Pie is empty!</big>\n"
+"\n"
+"Start adding Slices to it!</b> This can be done by dragging stuff to the "
+"plus sign below. You can try a lot! For example application launchers or "
+"folders. Even URLs from your browser are possible...\n"
+"\n"
+"For manual and advanced configuration click on the plus sign."
+msgstr ""
+"<b><big>Šis Pyragas yra tuščias!</big>\n"
+"\n"
+"Pridėkite jam Gabaliukus!</b> Tai gali būti atlikta, velkant į žemiau esantį "
+"pliuso ženklą įvairią medžiagą. Galite išbandyti daugelį dalykų! Pavyzdžiui, "
+"programų leistukus ar aplankus. Galima netgi (URL) nuorodas iš jūsų "
+"naršyklės...\n"
+"\n"
+"Rankinei ar išplėstinei konfigūracijai, spauskite pliuso ženklą."
+
+#: ../ui/preferences.ui:558
+msgid ""
+"<b><big>You have no Pies!</big>\n"
+"\n"
+"Start by creating one! </b> This can be done by clicking on the tiny little "
+"plus sign in the lower left corner."
+msgstr ""
+"<b><big>Jūs neturite Pyragų!</big>\n"
+"\n"
+"Pradėkite, kurdami pirmą pyragą! </b> Tai galite atlikti nuspaudę, "
+"apatiniame kairiajame kampe esantį, mažytį pliuso ženklą."
+
+#: ../ui/preferences.ui:625 ../../src/gui/preferencesWindow.vala:109
+msgid "Pie Settings"
+msgstr "Pyrago Nustatymai"
+
+#: ../../src/actions/keyAction.vala:34
+msgid "Press hotkey"
+msgstr "Spausti spartųjį klavišą"
+
+#: ../../src/actions/keyAction.vala:36
+msgid "Simulates the activation of a hotkey."
+msgstr "Imituoja sparčiojo klavišo aktyvinimą."
+
+#: ../../src/actions/uriAction.vala:34
+msgid "Open URI"
+msgstr "Atverti URI"
+
+#: ../../src/actions/uriAction.vala:36
+msgid "Opens a given location. You may use URL's or files paths."
+msgstr "Atveria nurodytą vietą. Galite naudoti URL ar failų kelius."
 
 #: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
@@ -333,29 +288,65 @@ msgstr "Vykdyti programą"
 msgid "Executes the given command."
 msgstr "Vykdo nurodytą komandą."
 
-#: ../../src/actions/keyAction.vala:34
-msgid "Press hotkey"
-msgstr "Spausti spartųjį klavišą"
-
-#: ../../src/actions/keyAction.vala:36
-msgid "Simulates the activation of a hotkey."
-msgstr "Imituoja sparčiojo klavišo aktyvinimą."
-
 #: ../../src/actions/pieAction.vala:34
 msgid "Open Pie"
 msgstr "Atverti Pyragą"
 
 #: ../../src/actions/pieAction.vala:36
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
-msgstr "Atveria kitą Gnome-Pie Pyragą. Tokiu būdu galite kurti kelis submeniu."
+msgstr ""
+"Atveria kitą Gnome-Pie Pyragą. Tokiu būdu galite kurti kelis submeniu."
 
-#: ../../src/actions/uriAction.vala:34
-msgid "Open URI"
-msgstr "Atverti URI"
+#: ../../src/gui/preferencesWindow.vala:78
+msgid "bake your pies!"
+msgstr "kepkite savo pyragus!"
 
-#: ../../src/actions/uriAction.vala:36
-msgid "Opens a given location. You may use URL's or files paths."
-msgstr "Atveria nurodytą vietą. Galite naudoti URL ar failų kelius."
+#: ../../src/gui/preferencesWindow.vala:364
+msgid "New Pie"
+msgstr "Naujas Pyragas"
+
+#: ../../src/gui/preferencesWindow.vala:379
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+"Ar tikrai norite ištrinti pasirinktą Pyragą kartu su visais jo Gabaliukais?"
+
+#: ../../src/gui/piePreview.vala:148
+msgid "Do you really want to delete this Slice?"
+msgstr "Ar tikrai norite ištrinti šį Gabaliuką?"
+
+#: ../../src/gui/sliceTypeList.vala:60
+msgid "Slice types"
+msgstr "Gabaliukų tipai"
+
+#: ../../src/gui/piePreviewRenderer.vala:419
+msgid "Click to edit"
+msgstr "Spustelėkite, norėdami redaguoti"
+
+#: ../../src/gui/piePreviewRenderer.vala:419
+#: ../../src/gui/piePreviewRenderer.vala:434
+msgid "Drag to move"
+msgstr "Vilkite, norėdami perkelti"
+
+#: ../../src/gui/piePreviewRenderer.vala:422
+msgid "Click to add a new Slice"
+msgstr "Spustelėkite, norėdami pridėti"
+
+#: ../../src/gui/piePreviewRenderer.vala:426
+msgid "Drop to add as new Slice"
+msgstr "Numeskite, norėdami pridėti"
+
+#: ../../src/gui/piePreviewRenderer.vala:429
+msgid "Drop to move Slice"
+msgstr "Numeskite, norėdami perkelti"
+
+#: ../../src/gui/piePreviewRenderer.vala:434
+msgid "Click to delete"
+msgstr "Spustelėkite, norėdami ištrinti"
+
+#: ../../src/gui/pieList.vala:77
+msgid "Pies"
+msgstr "Pyragai"
 
 #: ../../src/gui/iconSelectWindow.vala:182
 msgid "All icons"
@@ -390,29 +381,9 @@ msgstr "Įvairios"
 msgid "All supported image formats"
 msgstr "Visi palaikomi paveikslų formatai"
 
-#: ../../src/gui/indicator.vala:114
-msgid "_Preferences"
-msgstr "_Nuostatos"
-
-#: ../../src/gui/indicator.vala:123
-msgid "_About"
-msgstr "_Apie"
-
-#: ../../src/gui/indicator.vala:138
-msgid "_Quit"
-msgstr "_Baigti"
-
 #: ../../src/gui/newSliceWindow.vala:292
 msgid "Rename me!"
 msgstr "Pervadinkite mane!"
-
-#: ../../src/gui/newsWindow.vala:64
-msgid "_Close"
-msgstr "_Užverti"
-
-#: ../../src/gui/pieList.vala:77
-msgid "Pies"
-msgstr "Pyragai"
 
 #: ../../src/gui/pieOptionsWindow.vala:274
 msgid ""
@@ -424,53 +395,6 @@ msgstr ""
 "\n"
 "Prašome pasirinkti kitą arba atsisakyti savo pasirinkimo."
 
-#: ../../src/gui/piePreview.vala:148
-msgid "Do you really want to delete this Slice?"
-msgstr "Ar tikrai norite ištrinti šį Gabaliuką?"
-
-#: ../../src/gui/piePreviewRenderer.vala:419
-msgid "Click to edit"
-msgstr "Spustelėkite, norėdami redaguoti"
-
-#: ../../src/gui/piePreviewRenderer.vala:419
-#: ../../src/gui/piePreviewRenderer.vala:434
-msgid "Drag to move"
-msgstr "Vilkite, norėdami perkelti"
-
-#: ../../src/gui/piePreviewRenderer.vala:422
-msgid "Click to add a new Slice"
-msgstr "Spustelėkite, norėdami pridėti"
-
-#: ../../src/gui/piePreviewRenderer.vala:426
-msgid "Drop to add as new Slice"
-msgstr "Numeskite, norėdami pridėti"
-
-#: ../../src/gui/piePreviewRenderer.vala:429
-msgid "Drop to move Slice"
-msgstr "Numeskite, norėdami perkelti"
-
-#: ../../src/gui/piePreviewRenderer.vala:434
-msgid "Click to delete"
-msgstr "Spustelėkite, norėdami ištrinti"
-
-#: ../../src/gui/preferencesWindow.vala:77
-msgid "bake your pies!"
-msgstr "kepkite savo pyragus!"
-
-#: ../../src/gui/preferencesWindow.vala:350
-msgid "New Pie"
-msgstr "Naujas Pyragas"
-
-#: ../../src/gui/preferencesWindow.vala:365
-msgid ""
-"Do you really want to delete the selected Pie with all contained Slices?"
-msgstr ""
-"Ar tikrai norite ištrinti pasirinktą Pyragą kartu su visais jo Gabaliukais?"
-
-#: ../../src/gui/sliceTypeList.vala:60
-msgid "Slice types"
-msgstr "Gabaliukų tipai"
-
 #: ../../src/gui/themeList.vala:62
 msgid "Themes"
 msgstr "Temos"
@@ -479,9 +403,150 @@ msgstr "Temos"
 msgid "By"
 msgstr "Pagal"
 
+#: ../../src/gui/indicator.vala:126
+msgid "_Preferences"
+msgstr "_Nuostatos"
+
+#: ../../src/gui/indicator.vala:135
+msgid "_About"
+msgstr "_Apie"
+
+#: ../../src/gui/indicator.vala:150
+msgid "_Quit"
+msgstr "_Baigti"
+
+#: ../../src/gui/newsWindow.vala:64
+msgid "_Close"
+msgstr "_Užverti"
+
 #: ../../src/gui/triggerSelectButton.vala:64
 msgid "Press a hotkey ..."
 msgstr "Spauskite spartųjį klavišą ..."
+
+#: ../../src/utilities/key.vala:65 ../../src/utilities/bindingManager.vala:186
+#: ../../src/utilities/trigger.vala:195 ../../src/utilities/trigger.vala:280
+#: ../../src/utilities/trigger.vala:281
+msgid "Not bound"
+msgstr "Nesusieta"
+
+#: ../../src/utilities/trigger.vala:182
+msgid "Button %i"
+msgstr "Mygtukas %i"
+
+#: ../../src/utilities/trigger.vala:185
+msgid "LeftButton"
+msgstr "KairysisMygtukas"
+
+#: ../../src/utilities/trigger.vala:187
+msgid "RightButton"
+msgstr "DešinysisMygtukas"
+
+#: ../../src/utilities/trigger.vala:189
+msgid "MiddleButton"
+msgstr "VidurinisMygtukas"
+
+#: ../../src/utilities/trigger.vala:216
+msgid "Turbo"
+msgstr "Turbo"
+
+#: ../../src/utilities/trigger.vala:220 ../../src/utilities/trigger.vala:222
+msgid "Delayed"
+msgstr "Uždelstas"
+
+#: ../../src/utilities/trigger.vala:226 ../../src/utilities/trigger.vala:228
+msgid "Centered"
+msgstr "Centruotas"
+
+#: ../../src/utilities/trigger.vala:232 ../../src/utilities/trigger.vala:234
+msgid "Warp"
+msgstr "Permesti"
+
+#: ../../src/utilities/trigger.vala:238 ../../src/utilities/trigger.vala:240
+msgid "Auto-shaped"
+msgstr "Auto-forma"
+
+#: ../../src/utilities/trigger.vala:243 ../../src/utilities/trigger.vala:245
+msgid "Quarter pie"
+msgstr "Ketvirtis pyrago"
+
+#: ../../src/utilities/trigger.vala:249 ../../src/utilities/trigger.vala:251
+msgid "Half pie"
+msgstr "Pusė pyrago"
+
+#: ../../src/actionGroups/windowListGroup.vala:34
+msgid "Group: Window List"
+msgstr "Grupė: Langų Sąrašas"
+
+#: ../../src/actionGroups/windowListGroup.vala:36
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
+msgstr "Rodo Gabaliuką kiekvienam jūsų atvertam Langui. Beveik kaip Alt-Tab."
+
+#: ../../src/actionGroups/clipboardGroup.vala:64
+msgid "Group: Clipboard"
+msgstr "Grupė: Iškarpinė"
+
+#: ../../src/actionGroups/clipboardGroup.vala:66
+msgid "Manages your Clipboard."
+msgstr "Tvarko jūsų Iškarpinę."
+
+#: ../../src/actionGroups/devicesGroup.vala:35
+msgid "Group: Devices"
+msgstr "Grupė: Įrenginiai"
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr ""
+"Rodo Gabaliuką kiekvienam, tokiam kaip USB atmintinė, prijungtam įrenginiui."
+
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr "Šaknis"
+
+#: ../../src/actionGroups/menuGroup.vala:35
+msgid "Group: Main menu"
+msgstr "Grupė: Pagrindinis meniu"
+
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr "Rodo jūsų pagrindinio meniu struktūrą"
+
+#: ../../src/actionGroups/workspaceWindowListGroup.vala:35
+msgid "Group: Window List for current workspace"
+msgstr "Grupė: Esamo darbalaukio Langų Sąrašas"
+
+#: ../../src/actionGroups/workspaceWindowListGroup.vala:37
+msgid ""
+"Shows a Slice for each of your opened windows on the current workspace."
+msgstr ""
+"Rodo Gabaliuką kiekvienam, jūsų esamame darbalaukyje, atvertam langui."
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+msgid "Group: Session Control"
+msgstr "Grupė: Seanso Valdymas"
+
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
+msgstr "Rodo Gabaliuką Išjungimui, Paleidimui iš naujo ir Užmigdymui."
+
+#: ../../src/actionGroups/sessionGroup.vala:60
+msgid "Shutdown"
+msgstr "Išjungti"
+
+#: ../../src/actionGroups/sessionGroup.vala:63
+msgid "Logout"
+msgstr "Atsijungti"
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Reboot"
+msgstr "Paleisti iš naujo"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+msgid "Group: Bookmarks"
+msgstr "Grupė: Žymės"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
+msgstr "Rodo Gabaliuką kiekvienai jūsų katalogo Žymei."
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"
@@ -538,53 +603,3 @@ msgstr "Išdidinti"
 #: ../../src/pies/defaultConfig.vala:63
 msgid "Restore"
 msgstr "Grąžinti iš išdidinimo"
-
-#: ../../src/utilities/bindingManager.vala:186 ../../src/utilities/key.vala:65
-#: ../../src/utilities/trigger.vala:195 ../../src/utilities/trigger.vala:280
-#: ../../src/utilities/trigger.vala:281
-msgid "Not bound"
-msgstr "Nesusieta"
-
-#: ../../src/utilities/trigger.vala:182
-msgid "Button %i"
-msgstr "Mygtukas %i"
-
-#: ../../src/utilities/trigger.vala:185
-msgid "LeftButton"
-msgstr "KairysisMygtukas"
-
-#: ../../src/utilities/trigger.vala:187
-msgid "RightButton"
-msgstr "DešinysisMygtukas"
-
-#: ../../src/utilities/trigger.vala:189
-msgid "MiddleButton"
-msgstr "VidurinisMygtukas"
-
-#: ../../src/utilities/trigger.vala:216
-msgid "Turbo"
-msgstr "Turbo"
-
-#: ../../src/utilities/trigger.vala:220 ../../src/utilities/trigger.vala:222
-msgid "Delayed"
-msgstr "Uždelstas"
-
-#: ../../src/utilities/trigger.vala:226 ../../src/utilities/trigger.vala:228
-msgid "Centered"
-msgstr "Centruotas"
-
-#: ../../src/utilities/trigger.vala:232 ../../src/utilities/trigger.vala:234
-msgid "Warp"
-msgstr "Permesti"
-
-#: ../../src/utilities/trigger.vala:238 ../../src/utilities/trigger.vala:240
-msgid "Auto-shaped"
-msgstr "Auto-forma"
-
-#: ../../src/utilities/trigger.vala:243 ../../src/utilities/trigger.vala:245
-msgid "Quarter pie"
-msgstr "Ketvirtis pyrago"
-
-#: ../../src/utilities/trigger.vala:249 ../../src/utilities/trigger.vala:251
-msgid "Half pie"
-msgstr "Pusė pyrago"

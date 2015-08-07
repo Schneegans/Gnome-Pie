@@ -4,3 +4,4 @@ build/*
 gnome-pie
 *~
 gnome-pie.sublime-workspace
+resources/locale/.zanata-cache

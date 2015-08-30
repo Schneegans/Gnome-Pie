@@ -115,6 +115,43 @@ public class Theme : GLib.Object {
         return true;
     }
 
+
+    /////////////////////////////////////////////////////////////////////
+    /// Exports the theme directory to an importable archive.
+    /////////////////////////////////////////////////////////////////////
+
+    public void export(string file) {
+
+        var archive = new ArchiveWriter();
+        bool success = true;
+
+        if (!archive.open(file)) {
+            warning("Cannot open file " + file + " for writing!");
+            success = false;
+        } else if (!archive.add(this.directory)) {
+            warning("Cannot append directory " + this.directory + " to archive!");
+            success = false;
+        }
+
+        archive.close();
+
+        if (success) {
+            var messge = _("Successfully exported the theme \"%s\"!").printf(this.name);
+            var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL,
+                                               Gtk.MessageType.INFO, Gtk.ButtonsType.CLOSE, messge);
+            dialog.run();
+            dialog.destroy();
+
+        } else {
+            var messge = _("An error occured while exporting the theme \"%s\"! Please check the console output.").printf(this.name);
+            var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL,
+                                               Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE, messge);
+            dialog.run();
+            dialog.destroy();
+
+        }
+    }
+
     /////////////////////////////////////////////////////////////////////
     /// Loads all images of the theme.
     /////////////////////////////////////////////////////////////////////

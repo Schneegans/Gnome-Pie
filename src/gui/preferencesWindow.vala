@@ -154,6 +154,16 @@ public class PreferencesWindow : GLib.Object {
         scroll_area = builder.get_object("theme-scrolledwindow") as Gtk.ScrolledWindow;
         scroll_area.add(this.theme_list);
 
+        (builder.get_object("theme-help-button") as Gtk.Button).clicked.connect(() => {
+            try{
+                GLib.AppInfo.launch_default_for_uri("http://simmesimme.github.io/lessons/2015/04/26/themes-for-gnome-pie/", null);
+            } catch (Error e) {
+                warning(e.message);
+            }
+        });
+
+        (builder.get_object("theme-export-button") as Gtk.Button).clicked.connect(on_export_theme_button_clicked);
+
         this.autostart = (builder.get_object("autostart-checkbox") as Gtk.ToggleButton);
         this.autostart.toggled.connect(on_autostart_toggled);
 
@@ -290,12 +300,43 @@ public class PreferencesWindow : GLib.Object {
                 FileUtils.set_contents(Paths.autostart, autostart_entry);
                 FileUtils.chmod(Paths.autostart, 0755);
             } catch (Error e) {
-                var d = new Gtk.MessageDialog (this.window, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
+                var d = new Gtk.MessageDialog(this.window, 0, Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE,
                                            "%s", e.message);
-                d.run ();
-                d.destroy ();
+                d.run();
+                d.destroy();
             }
         }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Saves the current theme to an archive.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_export_theme_button_clicked(Gtk.Button button) {
+        var dialog = new Gtk.FileChooserDialog("Pick a file", this.window,
+                                               Gtk.FileChooserAction.SAVE,
+                                               Gtk.Stock.CANCEL,
+                                               Gtk.ResponseType.CANCEL,
+                                               Gtk.Stock.SAVE,
+                                               Gtk.ResponseType.ACCEPT);
+
+        dialog.set_do_overwrite_confirmation(true);
+        dialog.set_modal(true);
+        dialog.filter = new Gtk.FileFilter();
+        dialog.filter.add_pattern ("*.tar.gz");
+        dialog.set_current_name(Config.global.theme.name + ".tar.gz");
+
+        dialog.response.connect((d, result) => {
+            if (result == Gtk.ResponseType.ACCEPT) {
+                var file = dialog.get_filename();
+                if (!file.has_suffix(".tar.gz")) {
+                    file = file + ".tar.gz";
+                }
+                Config.global.theme.export(file);
+            }
+            dialog.destroy();
+        });
+        dialog.show();
     }
 
     /////////////////////////////////////////////////////////////////////

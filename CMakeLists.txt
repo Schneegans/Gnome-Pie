@@ -25,7 +25,6 @@ ensure_vala_version("0.22.0" MINIMUM)
 
 find_package(PkgConfig)
 
-# check whether GTK3 is supported
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 pkg_check_modules(INDICATOR3 appindicator3-0.1)
 pkg_check_modules(WNCK REQUIRED libwnck-3.0)
@@ -40,6 +39,7 @@ pkg_check_modules(GMENU3 libgnome-menu-3.0)
 
 find_library(M_LIB m)
 find_library(GTHREAD_LIB gthread-2.0)
+find_library(ARCHIVE_LIB archive)
 
 set(CFLAGS
     ${GIO_CFLAGS}
@@ -84,7 +84,8 @@ set(LIBS
 	${GMENU3_LIBRARIES}
 	${X11_LIBRARIES}
 	${WNCK_LIBRARIES}
-	${BAMF_LIBRARIES}
+    ${BAMF_LIBRARIES}
+	${ARCHIVE_LIB}
 	${M_LIB}
 	${GTHREAD_LIB}
 )
@@ -103,7 +104,7 @@ set(LIB_PATHS
 	${GMENU3_LIBRARY_DIRS}
 	${X11_LIBRARY_DIRS}
 	${WNCK_LIBRARY_DIRS}
-	${BAMF_LIBRARY_DIRS}
+    ${BAMF_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -120,7 +121,7 @@ set(INCLUDE_PATHS
 	${GMENU3_INCLUDE_DIRS}
 	${X11_INCLUDE_DIRS}
 	${BAMF_INCLUDE_DIRS}
-	${WNCK_INCLUDE_DIRS}
+    ${WNCK_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -142,6 +143,7 @@ set(VALA_PKGS
   posix
   libxml-2.0
   xtst
+  libarchive
 )
 
 if (${INDICATOR_FOUND})
@@ -193,4 +195,5 @@ message( "  GMENU3_LIBRARIES = ${GMENU3_LIBRARIES}" )
 message( "  X11_LIBRARIES = ${X11_LIBRARIES}" )
 message( "  BAMF_LIBRARIES = ${BAMF_LIBRARIES}" )
 message( "  WNCK_LIBRARIES = ${WNCK_LIBRARIES}" )
+message( "  ARCHIVE_LIBRARIES = ${ARCHIVE_LIB}" )
 message( "" )

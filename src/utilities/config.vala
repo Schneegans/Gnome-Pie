@@ -161,7 +161,9 @@ public class Config : GLib.Object {
 
         load_themes(theme_name);
 
-        if (error_occrured) save();
+        if (error_occrured) {
+            save();
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -179,8 +181,9 @@ public class Config : GLib.Object {
             while ((name = d.read_name()) != null) {
                 var theme = new Theme(Paths.global_themes + "/" + name);
 
-                if (theme.load())
+                if (theme.load()) {
                     themes.add(theme);
+                }
             }
 
             // load local themes
@@ -211,10 +214,26 @@ public class Config : GLib.Object {
                 warning("Theme \"" + current + "\" not found! Using fallback...");
             }
             theme.load_images();
+        } else {
+            error("No theme found!");
         }
-        else error("No theme found!");
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /// Returns true if a loaded theme has the given name or is in a
+    /// directory with the given name.
+    /////////////////////////////////////////////////////////////////////
+
+    public bool has_theme(string name) {
+
+        foreach (var theme in themes) {
+            if (theme.name == name || theme.directory.has_suffix(name)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 }

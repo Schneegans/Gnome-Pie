@@ -192,10 +192,12 @@ public class Deamon : GLib.Application {
         }
 
         if (reset) {
-            if (GLib.FileUtils.remove(Paths.pie_config) == 0)
+            if (GLib.FileUtils.remove(Paths.pie_config) == 0) {
                 message("Removed file \"%s\"", Paths.pie_config);
-            if (GLib.FileUtils.remove(Paths.settings) == 0)
+            }
+            if (GLib.FileUtils.remove(Paths.settings) == 0) {
                 message("Removed file \"%s\"", Paths.settings);
+            }
 
             return true;
         }

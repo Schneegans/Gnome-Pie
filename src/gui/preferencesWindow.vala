@@ -163,6 +163,7 @@ public class PreferencesWindow : GLib.Object {
         });
 
         (builder.get_object("theme-export-button") as Gtk.Button).clicked.connect(on_export_theme_button_clicked);
+        (builder.get_object("theme-import-button") as Gtk.Button).clicked.connect(on_import_theme_button_clicked);
 
         this.autostart = (builder.get_object("autostart-checkbox") as Gtk.ToggleButton);
         this.autostart.toggled.connect(on_autostart_toggled);
@@ -335,6 +336,62 @@ public class PreferencesWindow : GLib.Object {
                 Config.global.theme.export(file);
             }
             dialog.destroy();
+        });
+        dialog.show();
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Imports a new theme from an archive.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_import_theme_button_clicked(Gtk.Button button) {
+        var dialog = new Gtk.FileChooserDialog("Pick a file", this.window,
+                                               Gtk.FileChooserAction.OPEN,
+                                               Gtk.Stock.CANCEL,
+                                               Gtk.ResponseType.CANCEL,
+                                               Gtk.Stock.OPEN,
+                                               Gtk.ResponseType.ACCEPT);
+
+        dialog.set_modal(true);
+        dialog.filter = new Gtk.FileFilter();
+        dialog.filter.add_pattern ("*.tar.gz");
+
+        var result = Gtk.MessageType.INFO;
+        var message = _("Sucessfully imported new theme!");
+
+        dialog.response.connect((d, r) => {
+            if (r == Gtk.ResponseType.ACCEPT) {
+                var file = dialog.get_filename();
+
+                var a = new ThemeImporter();
+                if (a.open(file)) {
+                    if (a.is_valid_theme) {
+                        if (!Config.global.has_theme(a.theme_name)) {
+                            if (!a.extract_to(Paths.local_themes + "/" + a.theme_name)) {
+                                message = _("An error occured while importing the theme: Failed to write archive!");
+                                result = Gtk.MessageType.ERROR;
+                            }
+                        } else {
+                            message = _("An error occured while importing the theme: A theme with this name does exist already!");
+                            result = Gtk.MessageType.ERROR;
+                        }
+                    } else {
+                        message = _("An error occured while importing the theme: Not a valid theme!");
+                        result = Gtk.MessageType.ERROR;
+                    }
+                } else {
+                    message = _("An error occured while importing the theme: Failed to open archive!");
+                    result = Gtk.MessageType.ERROR;
+                }
+                a.close();
+
+                var result_dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL,
+                                                          result, Gtk.ButtonsType.CLOSE, message);
+                result_dialog.run();
+                result_dialog.destroy();
+            }
+            dialog.destroy();
+
         });
         dialog.show();
     }

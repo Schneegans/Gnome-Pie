@@ -136,19 +136,18 @@ public class Theme : GLib.Object {
         archive.close();
 
         if (success) {
-            var messge = _("Successfully exported the theme \"%s\"!").printf(this.name);
+            var message = _("Successfully exported the theme \"%s\"!").printf(this.name);
             var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL,
-                                               Gtk.MessageType.INFO, Gtk.ButtonsType.CLOSE, messge);
+                                               Gtk.MessageType.INFO, Gtk.ButtonsType.CLOSE, message);
             dialog.run();
             dialog.destroy();
 
         } else {
-            var messge = _("An error occured while exporting the theme \"%s\"! Please check the console output.").printf(this.name);
+            var message = _("An error occured while exporting the theme \"%s\"! Please check the console output.").printf(this.name);
             var dialog = new Gtk.MessageDialog(null, Gtk.DialogFlags.MODAL,
-                                               Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE, messge);
+                                               Gtk.MessageType.ERROR, Gtk.ButtonsType.CLOSE, message);
             dialog.run();
             dialog.destroy();
-
         }
     }
 

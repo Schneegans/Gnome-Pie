@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# get directory of script and cd to it
+DIR="$( cd "$( dirname "$0" )" && pwd )"
+cd $DIR
+
 # Searches trough all vala files of Gnome-Pie and generates
 # a gnomepie.pot for strings which need to be translated.
 

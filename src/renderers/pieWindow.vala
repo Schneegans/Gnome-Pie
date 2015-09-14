@@ -149,10 +149,12 @@ public class PieWindow : Gtk.Window {
 
         // remember last pressed key in order to disable key repeat
         uint last_key = 0;
+        uint32 last_time_stamp = 0;
         this.key_press_event.connect((e) => {
             if (e.keyval != last_key) {
-                last_key = e.keyval;
-                this.handle_key_press(e.keyval, e.time, e.str);
+                this.handle_key_press(e.keyval, e.time, last_time_stamp, e.str);
+                last_key        = e.keyval;
+                last_time_stamp = e.time;
             }
             return true;
         });
@@ -436,7 +438,11 @@ public class PieWindow : Gtk.Window {
     /// Do some useful stuff when keys are pressed.
     /////////////////////////////////////////////////////////////////////
 
-    private void handle_key_press(uint key, uint32 time_stamp, string text) {
+    private void handle_key_press(uint key, uint32 time_stamp, uint32 last_time_stamp, string text) {
+        if (last_time_stamp + 1000 < time_stamp) {
+            this.search_string = "";
+        }
+
         if      (Gdk.keyval_name(key) == "Escape") this.cancel();
         else if (Gdk.keyval_name(key) == "Return") this.activate_slice(time_stamp);
         else if (!PieManager.get_is_turbo(this.renderer.id)) {

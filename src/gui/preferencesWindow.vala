@@ -316,9 +316,9 @@ public class PreferencesWindow : GLib.Object {
     private void on_export_theme_button_clicked(Gtk.Button button) {
         var dialog = new Gtk.FileChooserDialog("Pick a file", this.window,
                                                Gtk.FileChooserAction.SAVE,
-                                               Gtk.Stock.CANCEL,
+                                               "_Cancel",
                                                Gtk.ResponseType.CANCEL,
-                                               Gtk.Stock.SAVE,
+                                               "_Save",
                                                Gtk.ResponseType.ACCEPT);
 
         dialog.set_do_overwrite_confirmation(true);
@@ -347,9 +347,9 @@ public class PreferencesWindow : GLib.Object {
     private void on_import_theme_button_clicked(Gtk.Button button) {
         var dialog = new Gtk.FileChooserDialog("Pick a file", this.window,
                                                Gtk.FileChooserAction.OPEN,
-                                               Gtk.Stock.CANCEL,
+                                               "_Cancel",
                                                Gtk.ResponseType.CANCEL,
-                                               Gtk.Stock.OPEN,
+                                               "_Open",
                                                Gtk.ResponseType.ACCEPT);
 
         dialog.set_modal(true);

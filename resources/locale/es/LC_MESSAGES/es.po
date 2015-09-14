@@ -177,7 +177,7 @@ msgstr ""
 
 #: ../ui/preferences.ui:110
 msgid "Select Slices by typing their names"
-msgstr ""
+msgstr "Seleccionar Rebanadas tipeando su nombre"
 
 #: ../ui/preferences.ui:116 ../ui/preferences.ui:117
 msgid ""
@@ -185,6 +185,9 @@ msgid ""
 "you can activate them with a hotkey (which can be displayed by pressing ALT "
 "when a Pie is openened)."
 msgstr ""
+"Esta opción permite seleccionar una Rebanada tipeando parte de su nombre. "
+"Si no está activada, puedes utilizar aceleradores (presiona ALT cuando el Pastel "
+"este abierto para visualizarlos)"
 
 #: ../ui/preferences.ui:136
 msgid "Behavior"

@@ -105,8 +105,7 @@ class ThemeList : Gtk.TreeView {
             data.set(current, DataPos.ICON, theme.preview_icon.to_pixbuf());
             data.set(current, DataPos.NAME, GLib.Markup.escape_text(theme.name)+"\n"
                                             + "<span font-size='x-small'>" + GLib.Markup.escape_text(theme.description)
-                                            + " - <i>"+GLib.Markup.escape_text(_("By")+" "+theme.author)
-                                            + "</i></span>");
+                                            + "</span>");
             if(theme == Config.global.theme) {
                 get_selection().select_iter(current);
             }

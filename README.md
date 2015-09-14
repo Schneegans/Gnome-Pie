@@ -16,37 +16,9 @@ sudo apt-get update
 sudo apt-get install gnome-pie
 ~~~~
 
-## Compiling and installing from source!
+## Compiling and installing from source & Usage
 
-First of all, install all dependancies:
-
-~~~~
-sudo apt-get install libgtk-3-dev libcairo2-dev libappindicator3-dev libgee-dev libxml2-dev libxtst-dev libgnome-menu-3-dev valac cmake libunique-3.0-dev libbamf3-dev libwnck-3-dev bamfdaemon
-~~~~
-
-Then build  Gnome-Pie by typing:
-
-~~~~
-./make.sh
-~~~~
-
-Launch it with
-
-~~~~
-./gnome-pie
-~~~~
-
-If you want to install it system wide use
-
-~~~~
-cd build && sudo make install
-~~~~
-
-## Usage!
-
-Now you may launch it by Pressing <ctrl><Alt>A to open up a default Pie with your default applications. There are some other Pies defined --- just open up the configuration dialog by activating the appropriate entry in the appindicator menu or by launching gnome-pie for a second time. There you may configure the Pies to suit your needs.
-
-You can open Pies not only by presing their key stroke. Alternatively you may open any Pie by invoking gnome-pie --open 123 where 123 is the ID of the desired Pie (which is displayed in the configuration dialog).
+Please refer to the [guides on Gnome-Pie's homepage](http://simmesimme.github.io/gnome-pie.html)!
 
 ## Support my work!
 

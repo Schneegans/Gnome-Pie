@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-06 12:43+0200\n"
+"POT-Creation-Date: 2015-09-14 10:34+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Language-Team: French\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Zanata 3.6.2\n"
+"X-Generator: Zanata 3.7.1\n"
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"
@@ -157,19 +157,31 @@ msgstr "Icône personnalisée"
 msgid "Gnome-Pie Settings"
 msgstr "Paramètres de Gnome-Pie"
 
-#: ../ui/preferences.ui:72
+#: ../ui/preferences.ui:68
+msgid "Import a theme from a file."
+msgstr ""
+
+#: ../ui/preferences.ui:89
+msgid "Export the selected theme for sharing."
+msgstr ""
+
+#: ../ui/preferences.ui:137
+msgid "Open a tutorial on how to create new themes for Gnome-Pie."
+msgstr ""
+
+#: ../ui/preferences.ui:206
 msgid "Start Gnome-Pie on login"
 msgstr "Lancer Gnome-Pie au démarrage"
 
-#: ../ui/preferences.ui:78 ../ui/preferences.ui:79
+#: ../ui/preferences.ui:212 ../ui/preferences.ui:213
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr "Si coché, Gnome-Pie se lancera à chaque connexion"
 
-#: ../ui/preferences.ui:91
+#: ../ui/preferences.ui:225
 msgid "Display panel icon "
 msgstr "Affiche l'icône dans la zone de notification "
 
-#: ../ui/preferences.ui:97 ../ui/preferences.ui:98
+#: ../ui/preferences.ui:231 ../ui/preferences.ui:232
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
@@ -177,26 +189,26 @@ msgstr ""
 "Si non coché, vous pouvez accéder à ce menu en lançant Gnome-Pie une seconde "
 "fois "
 
-#: ../ui/preferences.ui:110
+#: ../ui/preferences.ui:244
 msgid "Select Slices by typing their names"
 msgstr ""
 
-#: ../ui/preferences.ui:116 ../ui/preferences.ui:117
+#: ../ui/preferences.ui:250 ../ui/preferences.ui:251
 msgid ""
 "If checked, you can select items in a Pie by typing their names. Otherwise "
 "you can activate them with a hotkey (which can be displayed by pressing ALT "
 "when a Pie is openened)."
 msgstr ""
 
-#: ../ui/preferences.ui:136
+#: ../ui/preferences.ui:269
 msgid "Behavior"
 msgstr "Comportement"
 
-#: ../ui/preferences.ui:171
+#: ../ui/preferences.ui:304
 msgid "Display Slice labels"
 msgstr "Afficher le nom des Parts"
 
-#: ../ui/preferences.ui:177 ../ui/preferences.ui:178
+#: ../ui/preferences.ui:310 ../ui/preferences.ui:311
 msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
@@ -204,27 +216,27 @@ msgstr ""
 "Afficher le nom à côté de chaque Part.\n"
 "(disponbile uniquement pour les thèmes compatibles)"
 
-#: ../ui/preferences.ui:198
+#: ../ui/preferences.ui:331
 msgid "Global scale"
 msgstr "Échelle globale"
 
-#: ../ui/preferences.ui:238
-msgid "Maximum slices per pie"
-msgstr "Nombre max de parts par tarte"
-
-#: ../ui/preferences.ui:278
+#: ../ui/preferences.ui:371
 msgid "Activation radius"
 msgstr "Rayon d'activation"
 
-#: ../ui/preferences.ui:316
+#: ../ui/preferences.ui:411
+msgid "Maximum slices per pie"
+msgstr "Nombre max de parts par tarte"
+
+#: ../ui/preferences.ui:449
 msgid "Appearance"
 msgstr "Apparence"
 
-#: ../ui/preferences.ui:345 ../../src/gui/preferencesWindow.vala:108
+#: ../ui/preferences.ui:478 ../../src/gui/preferencesWindow.vala:108
 msgid "General Settings"
 msgstr "Paramètres généraux"
 
-#: ../ui/preferences.ui:537
+#: ../ui/preferences.ui:670
 msgid ""
 "<b><big>This Pie is empty!</big>\n"
 "\n"
@@ -243,7 +255,7 @@ msgstr ""
 "\n"
 "Pour un ajout manuel ou avancé, cliquez sur le signe plus."
 
-#: ../ui/preferences.ui:558
+#: ../ui/preferences.ui:691
 msgid ""
 "<b><big>You have no Pies!</big>\n"
 "\n"
@@ -255,7 +267,7 @@ msgstr ""
 "Commencez par en créer une !</b> Vous pouvez le faire en cliquant sur le "
 "petit signe plus dans le coin en bas à gauche."
 
-#: ../ui/preferences.ui:625 ../../src/gui/preferencesWindow.vala:109
+#: ../ui/preferences.ui:758 ../../src/gui/preferencesWindow.vala:109
 msgid "Pie Settings"
 msgstr "Paramètres de la tarte"
 
@@ -302,11 +314,36 @@ msgstr ""
 msgid "bake your pies!"
 msgstr "Préparez vos tartes !"
 
-#: ../../src/gui/preferencesWindow.vala:364
+#: ../../src/gui/preferencesWindow.vala:360
+msgid "Sucessfully imported new theme!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:374
+msgid "An error occured while importing the theme: Failed to extract theme!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:378
+msgid ""
+"An error occured while importing the theme: A theme with this name does "
+"already exist!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:382
+msgid ""
+"An error occured while importing the theme: Theme archive does not contain a "
+"valid theme!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:386
+msgid ""
+"An error occured while importing the theme: Failed to open theme archive!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:465
 msgid "New Pie"
 msgstr "Nouvelle Tarte"
 
-#: ../../src/gui/preferencesWindow.vala:379
+#: ../../src/gui/preferencesWindow.vala:480
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "Voulez-vous supprimer la Tarte sélectionnée et son contenu ?"
@@ -398,11 +435,11 @@ msgstr ""
 "\n"
 "Merci d'en choisir un autre ou d'annuler votre choix."
 
-#: ../../src/gui/themeList.vala:62
+#: ../../src/gui/themeList.vala:59
 msgid "Themes"
 msgstr "Thèmes"
 
-#: ../../src/gui/themeList.vala:102
+#: ../../src/gui/themeList.vala:108
 msgid "By"
 msgstr "Par"
 
@@ -475,6 +512,16 @@ msgstr "Quart de tarte"
 #: ../../src/utilities/trigger.vala:249 ../../src/utilities/trigger.vala:251
 msgid "Half pie"
 msgstr "Demie tarte"
+
+#: ../../src/themes/theme.vala:139
+msgid "Successfully exported the theme \"%s\"!"
+msgstr ""
+
+#: ../../src/themes/theme.vala:146
+msgid ""
+"An error occured while exporting the theme \"%s\"! Please check the console "
+"output."
+msgstr ""
 
 #: ../../src/actionGroups/windowListGroup.vala:34
 msgid "Group: Window List"

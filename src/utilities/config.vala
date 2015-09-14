@@ -179,19 +179,19 @@ public class Config : GLib.Object {
             // load global themes
             var d = Dir.open(Paths.global_themes);
             while ((name = d.read_name()) != null) {
-                var theme = new Theme(Paths.global_themes + "/" + name);
+                var new_theme = new Theme(Paths.global_themes + "/" + name);
 
-                if (theme.load()) {
-                    themes.add(theme);
+                if (new_theme.load()) {
+                    themes.add(new_theme);
                 }
             }
 
             // load local themes
             d = Dir.open(Paths.local_themes);
             while ((name = d.read_name()) != null) {
-                var theme = new Theme(Paths.local_themes + "/" + name);
-                if (theme.load())
-                    themes.add(theme);
+                var new_theme = new Theme(Paths.local_themes + "/" + name);
+                if (new_theme.load())
+                    themes.add(new_theme);
             }
 
         } catch (Error e) {

@@ -367,20 +367,23 @@ public class PreferencesWindow : GLib.Object {
                 if (a.open(file)) {
                     if (a.is_valid_theme) {
                         if (!Config.global.has_theme(a.theme_name)) {
-                            if (!a.extract_to(Paths.local_themes + "/" + a.theme_name)) {
-                                message = _("An error occured while importing the theme: Failed to write archive!");
+                            if (a.extract_to(Paths.local_themes + "/" + a.theme_name)) {
+                                Config.global.load_themes(a.theme_name);
+                                this.theme_list.reload();
+                            } else {
+                                message = _("An error occured while importing the theme: Failed to extract theme!");
                                 result = Gtk.MessageType.ERROR;
                             }
                         } else {
-                            message = _("An error occured while importing the theme: A theme with this name does exist already!");
+                            message = _("An error occured while importing the theme: A theme with this name does already exist!");
                             result = Gtk.MessageType.ERROR;
                         }
                     } else {
-                        message = _("An error occured while importing the theme: Not a valid theme!");
+                        message = _("An error occured while importing the theme: Theme archive does not contain a valid theme!");
                         result = Gtk.MessageType.ERROR;
                     }
                 } else {
-                    message = _("An error occured while importing the theme: Failed to open archive!");
+                    message = _("An error occured while importing the theme: Failed to open theme archive!");
                     result = Gtk.MessageType.ERROR;
                 }
                 a.close();

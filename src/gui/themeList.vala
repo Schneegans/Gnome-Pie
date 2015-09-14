@@ -51,9 +51,6 @@ class ThemeList : Gtk.TreeView {
     public ThemeList() {
         GLib.Object();
 
-        var data = new Gtk.ListStore(2, typeof(Gdk.Pixbuf),
-                                        typeof(string));
-        this.set_model(data);
         this.set_headers_visible(true);
         this.set_grid_lines(Gtk.TreeViewGridLines.NONE);
         this.set_fixed_height_mode(true);
@@ -79,7 +76,7 @@ class ThemeList : Gtk.TreeView {
             Gtk.TreeIter active;
             if (this.get_selection().get_selected(null, out active)) {
                 Timeout.add(10, () => {
-                    int index = int.parse(data.get_path(active).to_string());
+                    int index = int.parse(this.model.get_path(active).to_string());
                     Config.global.theme = Config.global.themes[index];
 
                     this.on_select_new();
@@ -91,6 +88,15 @@ class ThemeList : Gtk.TreeView {
             }
         });
 
+        reload();
+    }
+
+    public void reload() {
+
+        var data = new Gtk.ListStore(2, typeof(Gdk.Pixbuf),
+                                        typeof(string));
+        this.set_model(data);
+
         // load all themes into the list
         var themes = Config.global.themes;
         foreach(var theme in themes) {
@@ -101,8 +107,9 @@ class ThemeList : Gtk.TreeView {
                                             + "<span font-size='x-small'>" + GLib.Markup.escape_text(theme.description)
                                             + " - <i>"+GLib.Markup.escape_text(_("By")+" "+theme.author)
                                             + "</i></span>");
-            if(theme == Config.global.theme)
+            if(theme == Config.global.theme) {
                 get_selection().select_iter(current);
+            }
         }
     }
 }

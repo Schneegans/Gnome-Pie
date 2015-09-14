@@ -29,7 +29,7 @@ public class TipViewer : Gtk.Label {
 
     private const double fade_time = 0.5;
     private const double frame_rate = 20.0;
-    private const double delay = 7.0;
+    private const double base_delay = 3.0;
 
     /////////////////////////////////////////////////////////////////////
     /// False, if the playback of tips is stopped.
@@ -62,16 +62,15 @@ public class TipViewer : Gtk.Label {
     public TipViewer(string[] tips) {
         this.tips = tips;
 
-        this.alpha = new AnimatedValue.linear(1.0, 0.0, fade_time);
+        this.alpha = new AnimatedValue.linear(0.0, 1.0, fade_time);
 
         this.set_alignment (0.0f, 0.5f);
+        this.opacity = 0;
         this.wrap = true;
         this.valign = Gtk.Align.END;
         this.set_use_markup(true);
 
         this.override_font(Pango.FontDescription.from_string("8"));
-
-        this.set_random_tip();
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -81,17 +80,7 @@ public class TipViewer : Gtk.Label {
     public void start_slide_show() {
         if (!this.playing && tips.length > 1) {
             this.playing = true;
-            GLib.Timeout.add((uint)(delay*1000.0), () => {
-                this.fade_out();
-
-                GLib.Timeout.add((uint)(1000.0*fade_time), () => {
-                    this.set_random_tip();
-                    this.fade_in();
-                    return false;
-                });
-
-                return this.playing;
-            });
+            show_tip();
         }
     }
 
@@ -130,6 +119,28 @@ public class TipViewer : Gtk.Label {
             this.opacity = this.alpha.val;
 
             return (this.alpha.val != 0.0);
+        });
+    }
+
+    private void show_tip() {
+
+        this.set_random_tip();
+
+        this.fade_in();
+
+        uint delay = (uint)(base_delay*1000.0) + tips[this.index].length*30;
+
+        GLib.Timeout.add(delay, () => {
+            this.fade_out();
+
+            if (this.playing) {
+                GLib.Timeout.add((uint)(1000.0*fade_time), () => {
+                    this.show_tip();
+                    return false;
+                });
+            }
+
+            return false;
         });
     }
 

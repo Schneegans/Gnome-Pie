@@ -224,22 +224,28 @@ public class PreferencesWindow : GLib.Object {
 
         // info label
         var info_label = new TipViewer({
-            _("You can right-click in the list for adding or removing entries."),
-            _("The radiobutton at the beginning of each slice-line indicates the QuickAction of the pie."),
             _("Pies can be opened with the terminal command \"gnome-pie --open=ID\"."),
-            _("Feel free to visit Gnome-Pie's homepage at %s!").printf("<a href='http://gnome-pie.simonschneegans.de'>gnome-pie.simonschneegans.de</a>"),
-            _("You can drag'n'drop applications from your main menu to the list above."),
+            _("Feel free to visit Gnome-Pie's homepage at %s!").printf("<a href='http://simmesimme.github.io/gnome-pie.html'>gnome-pie.simonschneegans.de</a>"),
             _("If you want to give some feedback, please write an e-mail to %s!").printf("<a href='mailto:code@simonschneegans.de'>code@simonschneegans.de</a>"),
-            _("You may drag'n'drop URLs and bookmarks from your internet browser to the list above."),
-            _("Bugs can be reported at %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie'>Github</a>"),
-            _("You can drag'n'drop files and folders from your file browser to the list above.")
+            _("You can support the development of Gnome-Pie by donating via %s.").printf("<a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=X65SUVC4ZTQSC'>Paypal</a>"),
+            _("Translating Gnome-Pie to your language is easy. Translations are managed at %s.").printf("<a href='https://translate.zanata.org/zanata/iteration/view/gnome-pie/develop'>Zanata</a>"),
+            _("It's easy to create new themes for Gnome-Pie. Read the <a href='%s'>Tutorial</a> online.").printf("http://simmesimme.github.io/lessons/2015/04/26/themes-for-gnome-pie/"),
+            _("It's usually a good practive to have at most twelve slices per pie."),
+            _("You can export themes you created and share them with the community!"),
+            _("The source code of Gnome-Pie is available on %s.").printf("<a href='https://github.com/Simmesimme/Gnome-Pie'>Github</a>"),
+            _("Bugs can be reported at %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie/issues'>Github</a>"),
+            _("Suggestions can be posted on %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie/issues'>Github</a>"),
+            _("An awesome companion of Gnome-Pie is %s. It will make using your computer feel like magic!").printf("<a href='https://github.com/thjaeger/easystroke/wiki'>Easystroke</a>"),
+            _("You can drag'n'drop applications from your main menu to the pie above."),
+            _("You may drag'n'drop URLs and bookmarks from your internet browser to the pie above."),
+            _("You can drag'n'drop files and folders from your file browser to the pie above."),
+            _("You can drag'n'drop pies from the list on the left into other pies in order to create sub-pies."),
+            _("You can drag'n'drop pies from the list on the left to your desktop or dock to create a launcher for this pie.")
         });
         this.window.show.connect(info_label.start_slide_show);
         this.window.hide.connect(info_label.stop_slide_show);
 
         info_box.pack_end(info_label);
-
-
 
         this.window.hide.connect(() => {
             // save settings on close

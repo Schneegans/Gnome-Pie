@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-14 10:34+0100\n"
+"POT-Creation-Date: 2015-09-14 13:36+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -159,35 +159,23 @@ msgstr "Настроить значок"
 msgid "Gnome-Pie Settings"
 msgstr "Настройки Gnome-Pie"
 
-#: ../ui/preferences.ui:68
-msgid "Import a theme from a file."
-msgstr ""
-
-#: ../ui/preferences.ui:89
-msgid "Export the selected theme for sharing."
-msgstr ""
-
-#: ../ui/preferences.ui:137
-msgid "Open a tutorial on how to create new themes for Gnome-Pie."
-msgstr ""
-
-#: ../ui/preferences.ui:206
+#: ../ui/preferences.ui:41
 #, fuzzy
 msgid "Start Gnome-Pie on login"
 msgstr "Запускать Gnome-Pie при загрузке системы"
 
-#: ../ui/preferences.ui:212 ../ui/preferences.ui:213
+#: ../ui/preferences.ui:47 ../ui/preferences.ui:48
 #, fuzzy
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr ""
 "Если выбрана эта возможность, Gnome-Pie будет фоново запускаться после входа "
 "в систему."
 
-#: ../ui/preferences.ui:225
+#: ../ui/preferences.ui:60
 msgid "Display panel icon "
 msgstr "Показывать значок на панели "
 
-#: ../ui/preferences.ui:231 ../ui/preferences.ui:232
+#: ../ui/preferences.ui:66 ../ui/preferences.ui:67
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
@@ -195,55 +183,59 @@ msgstr ""
 "Если эта возможность не выбрана, вы можете получить доступ к этому меню "
 "запустив Gnome-Pie второй раз."
 
-#: ../ui/preferences.ui:244
+#: ../ui/preferences.ui:79
 msgid "Select Slices by typing their names"
 msgstr ""
 
-#: ../ui/preferences.ui:250 ../ui/preferences.ui:251
+#: ../ui/preferences.ui:85 ../ui/preferences.ui:86
 msgid ""
 "If checked, you can select items in a Pie by typing their names. Otherwise "
 "you can activate them with a hotkey (which can be displayed by pressing ALT "
 "when a Pie is openened)."
 msgstr ""
 
-#: ../ui/preferences.ui:269
-msgid "Behavior"
-msgstr "Поведение"
-
-#: ../ui/preferences.ui:304
+#: ../ui/preferences.ui:98
 #, fuzzy
 msgid "Display Slice labels"
 msgstr "Показывать значок на панели "
 
-#: ../ui/preferences.ui:310 ../ui/preferences.ui:311
+#: ../ui/preferences.ui:104 ../ui/preferences.ui:105
 msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
 msgstr ""
 
-#: ../ui/preferences.ui:331
+#: ../ui/preferences.ui:139
+msgid "Activation radius"
+msgstr ""
+
+#: ../ui/preferences.ui:179
 #, fuzzy
 msgid "Global scale"
 msgstr "Общий масштаб"
 
-#: ../ui/preferences.ui:371
-msgid "Activation radius"
-msgstr ""
-
-#: ../ui/preferences.ui:411
+#: ../ui/preferences.ui:219
 msgid "Maximum slices per pie"
 msgstr ""
 
-#: ../ui/preferences.ui:449
-msgid "Appearance"
+#: ../ui/preferences.ui:302
+msgid "Import a theme from a file."
 msgstr ""
 
-#: ../ui/preferences.ui:478 ../../src/gui/preferencesWindow.vala:108
+#: ../ui/preferences.ui:323
+msgid "Export the selected theme for sharing."
+msgstr ""
+
+#: ../ui/preferences.ui:371
+msgid "Open a tutorial on how to create new themes for Gnome-Pie."
+msgstr ""
+
+#: ../ui/preferences.ui:421 ../../src/gui/preferencesWindow.vala:108
 #, fuzzy
 msgid "General Settings"
 msgstr "Основные настройки"
 
-#: ../ui/preferences.ui:670
+#: ../ui/preferences.ui:613
 msgid ""
 "<b><big>This Pie is empty!</big>\n"
 "\n"
@@ -254,7 +246,7 @@ msgid ""
 "For manual and advanced configuration click on the plus sign."
 msgstr ""
 
-#: ../ui/preferences.ui:691
+#: ../ui/preferences.ui:634
 msgid ""
 "<b><big>You have no Pies!</big>\n"
 "\n"
@@ -266,7 +258,7 @@ msgstr ""
 "Начните с создания пая! </b> Выполните это щёлкнув на небольшом значке "
 "плюсав нижнем левом углу."
 
-#: ../ui/preferences.ui:758 ../../src/gui/preferencesWindow.vala:109
+#: ../ui/preferences.ui:720 ../../src/gui/preferencesWindow.vala:109
 msgid "Pie Settings"
 msgstr ""
 
@@ -313,36 +305,118 @@ msgstr ""
 msgid "bake your pies!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:360
+#: ../../src/gui/preferencesWindow.vala:227
+msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:228
+msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:229
+msgid "If you want to give some feedback, please write an e-mail to %s!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:230
+msgid "You can support the development of Gnome-Pie by donating via %s."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:231
+msgid ""
+"Translating Gnome-Pie to your language is easy. Translations are managed at "
+"%s."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:232
+msgid ""
+"It's easy to create new themes for Gnome-Pie. Read the <a href="
+"'%s'>Tutorial</a> online."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:233
+msgid "It's usually a good practive to have at most twelve slices per pie."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:234
+msgid "You can export themes you created and share them with the community!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:235
+msgid "The source code of Gnome-Pie is available on %s."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:236
+msgid "Bugs can be reported at %s!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:237
+msgid "Suggestions can be posted on %s!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:238
+msgid ""
+"An awesome companion of Gnome-Pie is %s. It will make using your computer "
+"feel like magic!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:239
+msgid "You can drag'n'drop applications from your main menu to the pie above."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:240
+msgid ""
+"You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
+"above."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:241
+msgid ""
+"You can drag'n'drop files and folders from your file browser to the pie "
+"above."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:242
+msgid ""
+"You can drag'n'drop pies from the list on the left into other pies in order "
+"to create sub-pies."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:243
+msgid ""
+"You can drag'n'drop pies from the list on the left to your desktop or dock "
+"to create a launcher for this pie."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:387
 msgid "Sucessfully imported new theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:374
+#: ../../src/gui/preferencesWindow.vala:401
 msgid "An error occured while importing the theme: Failed to extract theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:378
+#: ../../src/gui/preferencesWindow.vala:405
 msgid ""
 "An error occured while importing the theme: A theme with this name does "
 "already exist!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:382
+#: ../../src/gui/preferencesWindow.vala:409
 msgid ""
 "An error occured while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:386
+#: ../../src/gui/preferencesWindow.vala:413
 msgid ""
 "An error occured while importing the theme: Failed to open theme archive!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:465
+#: ../../src/gui/preferencesWindow.vala:492
 msgid "New Pie"
 msgstr "Новый пай"
 
-#: ../../src/gui/preferencesWindow.vala:480
+#: ../../src/gui/preferencesWindow.vala:507
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr ""
@@ -440,10 +514,6 @@ msgstr ""
 #: ../../src/gui/themeList.vala:59
 msgid "Themes"
 msgstr "Темы"
-
-#: ../../src/gui/themeList.vala:108
-msgid "By"
-msgstr "-"
 
 #: ../../src/gui/indicator.vala:126
 msgid "_Preferences"

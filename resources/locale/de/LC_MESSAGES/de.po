@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-14 10:34+0100\n"
+"POT-Creation-Date: 2015-09-14 13:36+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-14 05:47-0400\n"
+"PO-Revision-Date: 2015-09-15 08:22-0400\n"
 "Last-Translator: Simon <code@simonschneegans.de>\n"
 "Language-Team: German\n"
 "Language: de\n"
@@ -157,32 +157,19 @@ msgstr "Benutzerdefiniertes Symbol"
 msgid "Gnome-Pie Settings"
 msgstr "Gnome-Pie - Einstellungen"
 
-#: ../ui/preferences.ui:68
-msgid "Import a theme from a file."
-msgstr "Importiert ein Design."
-
-#: ../ui/preferences.ui:89
-msgid "Export the selected theme for sharing."
-msgstr "Exportiert das gewählte Design um es mit anderen zu teilen."
-
-#: ../ui/preferences.ui:137
-msgid "Open a tutorial on how to create new themes for Gnome-Pie."
-msgstr ""
-"Zeigt ein Tutorial das erklärt, wie Designs für Gnome-Pie erstellt werden."
-
-#: ../ui/preferences.ui:206
+#: ../ui/preferences.ui:41
 msgid "Start Gnome-Pie on login"
 msgstr "Beim Anmelden automatisch ausführen"
 
-#: ../ui/preferences.ui:212 ../ui/preferences.ui:213
+#: ../ui/preferences.ui:47 ../ui/preferences.ui:48
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr "Wenn aktiviert, startet Gnome-Pie im Hintergrund beim Anmelden."
 
-#: ../ui/preferences.ui:225
+#: ../ui/preferences.ui:60
 msgid "Display panel icon "
 msgstr "Zeige ein Symbol im Panel"
 
-#: ../ui/preferences.ui:231 ../ui/preferences.ui:232
+#: ../ui/preferences.ui:66 ../ui/preferences.ui:67
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
@@ -190,11 +177,11 @@ msgstr ""
 "Falls nicht aktiviert, kann dieses Menü durch ein nochmaliges starten von "
 "Gnome-Pie geöffnet werden."
 
-#: ../ui/preferences.ui:244
+#: ../ui/preferences.ui:79
 msgid "Select Slices by typing their names"
 msgstr "Tippe den Namen von Slices um Sie auszuwählen"
 
-#: ../ui/preferences.ui:250 ../ui/preferences.ui:251
+#: ../ui/preferences.ui:85 ../ui/preferences.ui:86
 msgid ""
 "If checked, you can select items in a Pie by typing their names. Otherwise "
 "you can activate them with a hotkey (which can be displayed by pressing ALT "
@@ -205,15 +192,11 @@ msgstr ""
 "auswählen (halte ALT gedrückt um diese Hotkeys anzuzeigen wenn ein Pie "
 "geöffnet ist)."
 
-#: ../ui/preferences.ui:269
-msgid "Behavior"
-msgstr "Verhalten"
-
-#: ../ui/preferences.ui:304
+#: ../ui/preferences.ui:98
 msgid "Display Slice labels"
 msgstr "Zeige Namen der Slices"
 
-#: ../ui/preferences.ui:310 ../ui/preferences.ui:311
+#: ../ui/preferences.ui:104 ../ui/preferences.ui:105
 msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
@@ -221,27 +204,36 @@ msgstr ""
 "Zeigt den Name jeder Slice an. Nur möglich, wenn durch das aktuelle Design "
 "unterstützt."
 
-#: ../ui/preferences.ui:331
-msgid "Global scale"
-msgstr "Skalierungsfaktor"
-
-#: ../ui/preferences.ui:371
+#: ../ui/preferences.ui:139
 msgid "Activation radius"
 msgstr "Aktivierungsentfernung"
 
-#: ../ui/preferences.ui:411
+#: ../ui/preferences.ui:179
+msgid "Global scale"
+msgstr "Skalierungsfaktor"
+
+#: ../ui/preferences.ui:219
 msgid "Maximum slices per pie"
 msgstr "Maximale Zahl von Einträgen pro Pie"
 
-#: ../ui/preferences.ui:449
-msgid "Appearance"
-msgstr "Erscheinungsbild"
+#: ../ui/preferences.ui:302
+msgid "Import a theme from a file."
+msgstr "Importiert ein Design."
 
-#: ../ui/preferences.ui:478 ../../src/gui/preferencesWindow.vala:108
+#: ../ui/preferences.ui:323
+msgid "Export the selected theme for sharing."
+msgstr "Exportiert das gewählte Design um es mit anderen zu teilen."
+
+#: ../ui/preferences.ui:371
+msgid "Open a tutorial on how to create new themes for Gnome-Pie."
+msgstr ""
+"Zeigt ein Tutorial das erklärt, wie Designs für Gnome-Pie erstellt werden."
+
+#: ../ui/preferences.ui:421 ../../src/gui/preferencesWindow.vala:108
 msgid "General Settings"
 msgstr "Allgemeine Einstellungen"
 
-#: ../ui/preferences.ui:670
+#: ../ui/preferences.ui:613
 msgid ""
 "<b><big>This Pie is empty!</big>\n"
 "\n"
@@ -259,7 +251,7 @@ msgstr ""
 "\n"
 "Zur manuellen und fortgeschrittenen Konfiguration klicke auf das Symbol."
 
-#: ../ui/preferences.ui:691
+#: ../ui/preferences.ui:634
 msgid ""
 "<b><big>You have no Pies!</big>\n"
 "\n"
@@ -271,7 +263,7 @@ msgstr ""
 "Erstelle einen neuen! </b> Klicke dazu einfach auf das kleine Pluszeichen "
 "unter der leeren Liste auf der linken Seite."
 
-#: ../ui/preferences.ui:758 ../../src/gui/preferencesWindow.vala:109
+#: ../ui/preferences.ui:720 ../../src/gui/preferencesWindow.vala:109
 msgid "Pie Settings"
 msgstr "Pie-Einstellungen"
 
@@ -316,17 +308,120 @@ msgstr ""
 msgid "bake your pies!"
 msgstr "mach schöne Kuchen!"
 
-#: ../../src/gui/preferencesWindow.vala:360
+#: ../../src/gui/preferencesWindow.vala:227
+msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+msgstr ""
+"Pies können mit dem Kommandozeilenbefehl \"gnome-pie --open=ID\" geöffnet "
+"werden."
+
+#: ../../src/gui/preferencesWindow.vala:228
+msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+msgstr "Besuch Gnome-Pies Homepage auf %s!"
+
+#: ../../src/gui/preferencesWindow.vala:229
+msgid "If you want to give some feedback, please write an e-mail to %s!"
+msgstr ""
+"Wenn du mir deine Meinung zu Gnome-Pie sagen willst, schick eine E-Mail an "
+"%s!"
+
+#: ../../src/gui/preferencesWindow.vala:230
+msgid "You can support the development of Gnome-Pie by donating via %s."
+msgstr ""
+"Du kannst die Entwicklung von Gnome-Pie unterstützen, indem du auf %s "
+"spendest."
+
+#: ../../src/gui/preferencesWindow.vala:231
+msgid ""
+"Translating Gnome-Pie to your language is easy. Translations are managed at "
+"%s."
+msgstr ""
+"Das Übersetzen von Gnome-Pie ist einfach. Starte eine Übersetzung in eine "
+"andere Sprache auf %s."
+
+#: ../../src/gui/preferencesWindow.vala:232
+msgid ""
+"It's easy to create new themes for Gnome-Pie. Read the <a href="
+"'%s'>Tutorial</a> online."
+msgstr ""
+"Es ist einfach, neue Designs für Gnome-Pie zu erstellen. Für mehr "
+"Informationen lies einfach das <a href='%s'>Tutorial</a>."
+
+#: ../../src/gui/preferencesWindow.vala:233
+msgid "It's usually a good practive to have at most twelve slices per pie."
+msgstr "Es macht sich gut, nicht mehr als zwölf Slices pro Pie zu haben."
+
+#: ../../src/gui/preferencesWindow.vala:234
+msgid "You can export themes you created and share them with the community!"
+msgstr ""
+"Du kannst selbsterstellte Designs exportieren und mit der Community teilen!"
+
+#: ../../src/gui/preferencesWindow.vala:235
+msgid "The source code of Gnome-Pie is available on %s."
+msgstr "Der Quellcode von Gnome-Pie ist auf %s zugänglich."
+
+#: ../../src/gui/preferencesWindow.vala:236
+msgid "Bugs can be reported at %s!"
+msgstr "Fehler können auf %s gemeldet werden!"
+
+#: ../../src/gui/preferencesWindow.vala:237
+msgid "Suggestions can be posted on %s!"
+msgstr "Verbesserungvorschläge können auf %s gemacht werden!"
+
+#: ../../src/gui/preferencesWindow.vala:238
+msgid ""
+"An awesome companion of Gnome-Pie is %s. It will make using your computer "
+"feel like magic!"
+msgstr ""
+"Eine wirklich gute Ergänzung zu Gnome-Pie ist %s. Damit fühlt sich der "
+"Umgang mit deinem Computer wie Magie an!"
+
+#: ../../src/gui/preferencesWindow.vala:239
+msgid "You can drag'n'drop applications from your main menu to the pie above."
+msgstr "Du kannst Anwendungen aus deinem Startmenü per Drag'n'Drop einfügen."
+
+#: ../../src/gui/preferencesWindow.vala:240
+msgid ""
+"You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
+"above."
+msgstr ""
+"Du kannst URLs, Links und Lesezeichen aus deinem Internetbrowser per "
+"Drag'n'Drop einfügen."
+
+#: ../../src/gui/preferencesWindow.vala:241
+msgid ""
+"You can drag'n'drop files and folders from your file browser to the pie "
+"above."
+msgstr ""
+"Du kannst Dateien und Ordner aus deinem Dateibrowser per Drag'n'Drop "
+"einfügen."
+
+#: ../../src/gui/preferencesWindow.vala:242
+msgid ""
+"You can drag'n'drop pies from the list on the left into other pies in order "
+"to create sub-pies."
+msgstr ""
+"Du kannst Pies per Drag'n'Drop in andere Pies ziehen, um Untermenüs zu "
+"erstellen."
+
+#: ../../src/gui/preferencesWindow.vala:243
+msgid ""
+"You can drag'n'drop pies from the list on the left to your desktop or dock "
+"to create a launcher for this pie."
+msgstr ""
+"Du kannst die Pies aus der linken Liste per Drag'n'Drop auf deinen Desktop "
+"oder in dein Dock ziehen, um einen Starter zu erstellen!"
+
+#: ../../src/gui/preferencesWindow.vala:387
 msgid "Sucessfully imported new theme!"
 msgstr "Das neue Design wurde erfolgreich imprtiert!"
 
-#: ../../src/gui/preferencesWindow.vala:374
+#: ../../src/gui/preferencesWindow.vala:401
 msgid "An error occured while importing the theme: Failed to extract theme!"
 msgstr ""
 "Beim Importieren ist ein Fehler aufgetreten: Das Design konnte nicht "
 "entpackt werden!"
 
-#: ../../src/gui/preferencesWindow.vala:378
+#: ../../src/gui/preferencesWindow.vala:405
 msgid ""
 "An error occured while importing the theme: A theme with this name does "
 "already exist!"
@@ -334,7 +429,7 @@ msgstr ""
 "Beim Importieren ist ein Fehler aufgetreten: Es existiert bereits ein Design "
 "mit diesem Namen!"
 
-#: ../../src/gui/preferencesWindow.vala:382
+#: ../../src/gui/preferencesWindow.vala:409
 msgid ""
 "An error occured while importing the theme: Theme archive does not contain a "
 "valid theme!"
@@ -342,18 +437,18 @@ msgstr ""
 "Beim Importieren ist ein Fehler aufgetreten: Das gwählte Archiv enthält kein "
 "valides Gnome-Pie-Design!"
 
-#: ../../src/gui/preferencesWindow.vala:386
+#: ../../src/gui/preferencesWindow.vala:413
 msgid ""
 "An error occured while importing the theme: Failed to open theme archive!"
 msgstr ""
 "Beim Importieren ist ein Fehler aufgetreten: Das Archive konnte nicht "
 "gelesen werden!"
 
-#: ../../src/gui/preferencesWindow.vala:465
+#: ../../src/gui/preferencesWindow.vala:492
 msgid "New Pie"
 msgstr "Neuer Pie"
 
-#: ../../src/gui/preferencesWindow.vala:480
+#: ../../src/gui/preferencesWindow.vala:507
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "Soll dieser Pie wirklich mit allen Slices gelöscht werden?"
@@ -445,10 +540,6 @@ msgstr ""
 #: ../../src/gui/themeList.vala:59
 msgid "Themes"
 msgstr "Designs"
-
-#: ../../src/gui/themeList.vala:108
-msgid "By"
-msgstr "Von"
 
 #: ../../src/gui/indicator.vala:126
 msgid "_Preferences"

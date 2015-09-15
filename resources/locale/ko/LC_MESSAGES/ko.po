@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-14 10:34+0100\n"
+"POT-Creation-Date: 2015-09-14 13:36+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,84 +146,75 @@ msgstr "사용자 설정 아이콘"
 msgid "Gnome-Pie Settings"
 msgstr "그놈 파이 설정"
 
-#: ../ui/preferences.ui:68
-msgid "Import a theme from a file."
-msgstr ""
-
-#: ../ui/preferences.ui:89
-msgid "Export the selected theme for sharing."
-msgstr ""
-
-#: ../ui/preferences.ui:137
-msgid "Open a tutorial on how to create new themes for Gnome-Pie."
-msgstr ""
-
-#: ../ui/preferences.ui:206
+#: ../ui/preferences.ui:41
 msgid "Start Gnome-Pie on login"
 msgstr "그놈 파이 로그인할 때 시작"
 
-#: ../ui/preferences.ui:212 ../ui/preferences.ui:213
+#: ../ui/preferences.ui:47 ../ui/preferences.ui:48
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr "선택하면 그놈 파이가 로그인할 때 조용하게 시작합니다."
 
-#: ../ui/preferences.ui:225
+#: ../ui/preferences.ui:60
 msgid "Display panel icon "
 msgstr "패널 아이콘 표시"
 
-#: ../ui/preferences.ui:231 ../ui/preferences.ui:232
+#: ../ui/preferences.ui:66 ../ui/preferences.ui:67
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
 msgstr "선택하지 않으면 그놈 파이를 두 번째 실행했을 때 이 메뉴에 접근할 수 있습니다."
 
-#: ../ui/preferences.ui:244
+#: ../ui/preferences.ui:79
 msgid "Select Slices by typing their names"
 msgstr ""
 
-#: ../ui/preferences.ui:250 ../ui/preferences.ui:251
+#: ../ui/preferences.ui:85 ../ui/preferences.ui:86
 msgid ""
 "If checked, you can select items in a Pie by typing their names. Otherwise "
 "you can activate them with a hotkey (which can be displayed by pressing ALT "
 "when a Pie is openened)."
 msgstr ""
 
-#: ../ui/preferences.ui:269
-msgid "Behavior"
-msgstr "행동"
-
-#: ../ui/preferences.ui:304
+#: ../ui/preferences.ui:98
 #, fuzzy
 msgid "Display Slice labels"
 msgstr "패널 아이콘 표시"
 
-#: ../ui/preferences.ui:310 ../ui/preferences.ui:311
+#: ../ui/preferences.ui:104 ../ui/preferences.ui:105
 msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
 msgstr ""
 
-#: ../ui/preferences.ui:331
-msgid "Global scale"
-msgstr "전체 크기 조정"
-
-#: ../ui/preferences.ui:371
+#: ../ui/preferences.ui:139
 msgid "Activation radius"
 msgstr ""
 
-#: ../ui/preferences.ui:411
+#: ../ui/preferences.ui:179
+msgid "Global scale"
+msgstr "전체 크기 조정"
+
+#: ../ui/preferences.ui:219
 msgid "Maximum slices per pie"
 msgstr ""
 
-#: ../ui/preferences.ui:449
-#, fuzzy
-msgid "Appearance"
-msgstr "모양과 동작"
+#: ../ui/preferences.ui:302
+msgid "Import a theme from a file."
+msgstr ""
 
-#: ../ui/preferences.ui:478 ../../src/gui/preferencesWindow.vala:108
+#: ../ui/preferences.ui:323
+msgid "Export the selected theme for sharing."
+msgstr ""
+
+#: ../ui/preferences.ui:371
+msgid "Open a tutorial on how to create new themes for Gnome-Pie."
+msgstr ""
+
+#: ../ui/preferences.ui:421 ../../src/gui/preferencesWindow.vala:108
 msgid "General Settings"
 msgstr "일반 설정"
 
-#: ../ui/preferences.ui:670
+#: ../ui/preferences.ui:613
 msgid ""
 "<b><big>This Pie is empty!</big>\n"
 "\n"
@@ -234,7 +225,7 @@ msgid ""
 "For manual and advanced configuration click on the plus sign."
 msgstr ""
 
-#: ../ui/preferences.ui:691
+#: ../ui/preferences.ui:634
 msgid ""
 "<b><big>You have no Pies!</big>\n"
 "\n"
@@ -245,7 +236,7 @@ msgstr ""
 "\n"
 "하나 만드는 것부터 시작하십시오! </b> 왼쪽 하단 모서리의 작은 더하기 기호를 누르면 만들 수 있습니다."
 
-#: ../ui/preferences.ui:758 ../../src/gui/preferencesWindow.vala:109
+#: ../ui/preferences.ui:720 ../../src/gui/preferencesWindow.vala:109
 msgid "Pie Settings"
 msgstr ""
 
@@ -289,36 +280,118 @@ msgstr "그놈 파이를 하나 더 엽니다. 이 방법으로 하위 메뉴를
 msgid "bake your pies!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:360
+#: ../../src/gui/preferencesWindow.vala:227
+msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:228
+msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:229
+msgid "If you want to give some feedback, please write an e-mail to %s!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:230
+msgid "You can support the development of Gnome-Pie by donating via %s."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:231
+msgid ""
+"Translating Gnome-Pie to your language is easy. Translations are managed at "
+"%s."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:232
+msgid ""
+"It's easy to create new themes for Gnome-Pie. Read the <a href="
+"'%s'>Tutorial</a> online."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:233
+msgid "It's usually a good practive to have at most twelve slices per pie."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:234
+msgid "You can export themes you created and share them with the community!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:235
+msgid "The source code of Gnome-Pie is available on %s."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:236
+msgid "Bugs can be reported at %s!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:237
+msgid "Suggestions can be posted on %s!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:238
+msgid ""
+"An awesome companion of Gnome-Pie is %s. It will make using your computer "
+"feel like magic!"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:239
+msgid "You can drag'n'drop applications from your main menu to the pie above."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:240
+msgid ""
+"You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
+"above."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:241
+msgid ""
+"You can drag'n'drop files and folders from your file browser to the pie "
+"above."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:242
+msgid ""
+"You can drag'n'drop pies from the list on the left into other pies in order "
+"to create sub-pies."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:243
+msgid ""
+"You can drag'n'drop pies from the list on the left to your desktop or dock "
+"to create a launcher for this pie."
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:387
 msgid "Sucessfully imported new theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:374
+#: ../../src/gui/preferencesWindow.vala:401
 msgid "An error occured while importing the theme: Failed to extract theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:378
+#: ../../src/gui/preferencesWindow.vala:405
 msgid ""
 "An error occured while importing the theme: A theme with this name does "
 "already exist!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:382
+#: ../../src/gui/preferencesWindow.vala:409
 msgid ""
 "An error occured while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:386
+#: ../../src/gui/preferencesWindow.vala:413
 msgid ""
 "An error occured while importing the theme: Failed to open theme archive!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:465
+#: ../../src/gui/preferencesWindow.vala:492
 msgid "New Pie"
 msgstr "새 파이"
 
-#: ../../src/gui/preferencesWindow.vala:480
+#: ../../src/gui/preferencesWindow.vala:507
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "선택한 파이와 파이 안의 모든 조각을 삭제하시겠습니까?"
@@ -409,10 +482,6 @@ msgstr "이 단축키는 이미 \"%s\" 파이에 할당했습니다!\n"
 #: ../../src/gui/themeList.vala:59
 msgid "Themes"
 msgstr "테마"
-
-#: ../../src/gui/themeList.vala:108
-msgid "By"
-msgstr "만든 사람"
 
 #: ../../src/gui/indicator.vala:126
 msgid "_Preferences"

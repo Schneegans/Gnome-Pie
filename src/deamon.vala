@@ -38,6 +38,12 @@ public class Deamon : GLib.Application {
     public static bool disable_header_bar     = false;
     public static bool disable_stack_switcher = false;
 
+
+    /////////////////////////////////////////////////////////////////////
+    /// true if init_pies() has been called already
+    /////////////////////////////////////////////////////////////////////
+    private bool initialized = false;
+
     /////////////////////////////////////////////////////////////////////
     /// The beginning of everything.
     /////////////////////////////////////////////////////////////////////
@@ -103,20 +109,9 @@ public class Deamon : GLib.Application {
         Object(application_id: "org.gnome.gnomepie",
                flags: GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
 
-        message("Welcome to Gnome-Pie " + version + "!");
-
         // init locale support
         Intl.bindtextdomain("gnomepie", Paths.locales);
         Intl.textdomain("gnomepie");
-
-        // init toolkits and static stuff
-        ActionRegistry.init();
-        GroupRegistry.init();
-
-        PieManager.init();
-
-        // initialize icon cache
-        Icon.init();
 
         // connect SigHandlers
         Posix.signal(Posix.SIGINT, sig_handler);
@@ -124,9 +119,16 @@ public class Deamon : GLib.Application {
 
         this.startup.connect(()=>{
 
+            message("Welcome to Gnome-Pie " + version + "!");
+
+            this.init_pies();
 
             // launch the indicator
             this.indicator = new Indicator();
+
+            if (open_pie != null && open_pie != "") {
+                PieManager.open_pie(open_pie);
+            }
 
             // finished loading... so run the prog!
             message("Started happily...");
@@ -173,6 +175,26 @@ public class Deamon : GLib.Application {
         GLib.Application.get_default().release();
     }
 
+    /////////////////////////////////////////////////////////////////////
+    /// Print a nifty message when the prog is killed.
+    /////////////////////////////////////////////////////////////////////
+
+    private void init_pies() {
+        if (!this.initialized) {
+
+            // init static stuff
+            ActionRegistry.init();
+            GroupRegistry.init();
+
+            // load all pies
+            PieManager.init();
+
+            // initialize icon cache
+            Icon.init();
+
+            this.initialized = true;
+        }
+    }
 
     /////////////////////////////////////////////////////////////////////
     /// Handles command line parameters.
@@ -199,22 +221,29 @@ public class Deamon : GLib.Application {
                 message("Removed file \"%s\"", Paths.settings);
             }
 
+            // do not notify the already running instance (if any)
             return true;
-        }
-
-        if (open_pie != null && open_pie != "") {
-            PieManager.open_pie(open_pie);
-            open_pie = "";
-        } else if (called_from_remote) {
-            this.indicator.show_preferences();
         }
 
         if (print_ids) {
+            this.init_pies();
             PieManager.print_ids();
             print_ids = false;
+
+            // do not notify the already running instance (if any)
             return true;
         }
 
+
+        if (called_from_remote) {
+            if (open_pie != null && open_pie != "") {
+                PieManager.open_pie(open_pie);
+            } else {
+                this.indicator.show_preferences();
+            }
+        }
+
+        // notify the already running instance (if any)
         return false;
     }
 }

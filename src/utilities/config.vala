@@ -57,7 +57,7 @@ public class Config : GLib.Object {
     public int  activation_range { get; set; default = 200; }
     public int  max_visible_slices { get; set; default = 24; }
     public bool show_indicator { get; set; default = true; }
-    public bool show_captions { get; set; default = true; }
+    public bool show_captions { get; set; default = false; }
     public bool search_by_string { get; set; default = true; }
     public bool auto_start { get; set; default = false; }
     public int showed_news { get; set; default = 0; }

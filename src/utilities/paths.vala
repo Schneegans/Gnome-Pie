@@ -108,6 +108,28 @@ public class Paths : GLib.Object {
     public static string executable { get; private set; default=""; }
 
     /////////////////////////////////////////////////////////////////////
+    /// Deletes a directory recursively from disk. Use with care :)
+    /////////////////////////////////////////////////////////////////////
+
+    public static void delete_directory(string directory) {
+        try {
+            var d = Dir.open(directory);
+            string name;
+            while ((name = d.read_name()) != null) {
+                string path = Path.build_filename(directory, name);
+                if (FileUtils.test(path, FileTest.IS_DIR)) {
+                    delete_directory(path);
+                } else {
+                    FileUtils.remove(path);
+                }
+            }
+            DirUtils.remove(directory);
+        } catch (Error e) {
+            warning (e.message);
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////
     /// Initializes all values above.
     /////////////////////////////////////////////////////////////////////
 

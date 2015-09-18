@@ -181,6 +181,7 @@ public class Theme : GLib.Object {
         }
     }
 
+
     /////////////////////////////////////////////////////////////////////
     /// Loads all images of the theme.
     /////////////////////////////////////////////////////////////////////
@@ -192,6 +193,15 @@ public class Theme : GLib.Object {
             layer.load_image();
         foreach (var layer in this.inactive_slice_layers)
             layer.load_image();
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Returns true if the theme is installed to the local themes
+    /// directory.
+    /////////////////////////////////////////////////////////////////////
+
+    public bool is_local() {
+        return this.directory.has_prefix(Paths.local_themes);
     }
 
     /////////////////////////////////////////////////////////////////////

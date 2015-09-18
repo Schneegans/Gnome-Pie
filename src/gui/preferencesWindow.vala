@@ -43,6 +43,7 @@ public class PreferencesWindow : GLib.Object {
     private Gtk.EventBox? preview_background = null;
     private Gtk.Button? remove_pie_button = null;
     private Gtk.Button? edit_pie_button = null;
+    private Gtk.Button? theme_delete_button = null;
 
     private ThemeList? theme_list = null;
     private Gtk.ToggleButton? indicator = null;
@@ -149,6 +150,11 @@ public class PreferencesWindow : GLib.Object {
             } else {
                 this.captions.sensitive = false;
             }
+            if (Config.global.theme.is_local()) {
+                this.theme_delete_button.sensitive = true;
+            } else {
+                this.theme_delete_button.sensitive = false;
+            }
         });
 
         scroll_area = builder.get_object("theme-scrolledwindow") as Gtk.ScrolledWindow;
@@ -164,6 +170,8 @@ public class PreferencesWindow : GLib.Object {
 
         (builder.get_object("theme-export-button") as Gtk.Button).clicked.connect(on_export_theme_button_clicked);
         (builder.get_object("theme-import-button") as Gtk.Button).clicked.connect(on_import_theme_button_clicked);
+        this.theme_delete_button = (builder.get_object("theme-delete-button") as Gtk.Button);
+        this.theme_delete_button.clicked.connect(on_delete_theme_button_clicked);
 
         this.autostart = (builder.get_object("autostart-checkbox") as Gtk.ToggleButton);
         this.autostart.toggled.connect(on_autostart_toggled);
@@ -282,6 +290,12 @@ public class PreferencesWindow : GLib.Object {
             this.captions.sensitive = true;
         } else {
             this.captions.sensitive = false;
+        }
+
+        if (Config.global.theme.is_local()) {
+            this.theme_delete_button.sensitive = true;
+        } else {
+            this.theme_delete_button.sensitive = false;
         }
 
         if (!Deamon.disable_stack_switcher) {
@@ -424,6 +438,28 @@ public class PreferencesWindow : GLib.Object {
 
         });
         dialog.show();
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Deleted the slected theme.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_delete_theme_button_clicked(Gtk.Button button) {
+
+        var dialog = new Gtk.MessageDialog((Gtk.Window)this.window.get_toplevel(), Gtk.DialogFlags.MODAL,
+                         Gtk.MessageType.QUESTION, Gtk.ButtonsType.YES_NO,
+                         _("Do you really want to delete the selected theme from %s?").printf(Config.global.theme.directory));
+
+        dialog.response.connect((response) => {
+            if (response == Gtk.ResponseType.YES) {
+                Paths.delete_directory(Config.global.theme.directory);
+                Config.global.load_themes("");
+                this.theme_list.reload();
+            }
+        });
+
+        dialog.run();
+        dialog.destroy();
     }
 
     /////////////////////////////////////////////////////////////////////

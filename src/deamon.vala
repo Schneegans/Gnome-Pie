@@ -87,15 +87,20 @@ public class Deamon : GLib.Application {
     /////////////////////////////////////////////////////////////////////
 
     private const GLib.OptionEntry[] options = {
-        { "open", 'o', 0, GLib.OptionArg.STRING, out open_pie,
+        { "open", 'o', 0, GLib.OptionArg.STRING,
+          out open_pie,
           "Open the Pie with the given ID", "ID" },
-        { "reset", 'r', 0, GLib.OptionArg.NONE, out reset,
+        { "reset", 'r', 0, GLib.OptionArg.NONE,
+          out reset,
           "Reset all options to default values" },
-        { "no-header-bar", 'b', 0, GLib.OptionArg.NONE, out disable_header_bar,
+        { "no-header-bar", 'b', 0, GLib.OptionArg.NONE,
+          out disable_header_bar,
           "Disables the usage of GTK.HeaderBar" },
-        { "no-stack-switcher", 's', 0, GLib.OptionArg.NONE, out disable_stack_switcher,
+        { "no-stack-switcher", 's', 0, GLib.OptionArg.NONE,
+          out disable_stack_switcher,
           "Disables the usage of GTK.StackSwitcher" },
-        { "print-ids", 'p', 0, GLib.OptionArg.NONE, out print_ids,
+        { "print-ids", 'p', 0, GLib.OptionArg.NONE,
+          out print_ids,
           "Prints all Pie names with their according IDs" },
         { null }
     };
@@ -140,7 +145,9 @@ public class Deamon : GLib.Application {
     /// Call handle_command_line on program launch.
     /////////////////////////////////////////////////////////////////////
 
-    protected override bool local_command_line(ref unowned string[] args, out int exit_status) {
+    protected override bool local_command_line(
+        ref unowned string[] args, out int exit_status) {
+
         exit_status = 0;
 
         // copy command line
@@ -210,7 +217,9 @@ public class Deamon : GLib.Application {
             context.parse(ref args);
         } catch(GLib.OptionError error) {
             warning(error.message);
-            message("Run '%s' to launch Gnome-Pie or run '%s --help' to see a full list of available command line options.\n", args[0], args[0]);
+            message("Run '%s' to launch Gnome-Pie or run '%s --help' to" +
+                    " see a full list of available command line options.\n",
+                    args[0], args[0]);
         }
 
         if (reset) {

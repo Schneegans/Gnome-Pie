@@ -87,14 +87,44 @@ public class Theme : GLib.Object {
         this.active_slice_layers.clear();
         this.inactive_slice_layers.clear();
 
+        if (!GLib.File.new_for_path(this.directory).query_exists()) {
+            return false;
+        }
+
+        string config_file = this.directory + "/theme.xml";
+
+        if (!GLib.File.new_for_path(config_file).query_exists()) {
+            try {
+                // detect whether theme is one directory deeper
+                string child;
+                bool success = false;
+
+                // load global themes
+                var d = Dir.open(this.directory);
+                while ((child = d.read_name()) != null && !success) {
+                    config_file = this.directory + "/" + child + "/theme.xml";
+                    if (GLib.File.new_for_path(config_file).query_exists()) {
+                        this.directory = this.directory + "/" + child;
+                        success = true;
+                    }
+                }
+
+                if (!success) {
+                    return false;
+                }
+            } catch (Error e) {
+                warning (e.message);
+                return false;
+            }
+        }
+
         this.preview_icon = new Icon(this.directory + "/preview.png", 36);
 
         Xml.Parser.init();
-        string path = this.directory + "/theme.xml";
 
-        Xml.Doc* themeXML = Xml.Parser.parse_file(path);
+        Xml.Doc* themeXML = Xml.Parser.parse_file(config_file);
         if (themeXML == null) {
-            warning("Failed to add theme: \"" + path + "\" not found!");
+            warning("Failed to add theme: \"" + config_file + "\" not found!");
             return false;
         }
 

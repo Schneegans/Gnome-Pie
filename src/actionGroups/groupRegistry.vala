@@ -57,6 +57,10 @@ public class GroupRegistry : GLib.Object {
         types.add(typeof(BookmarkGroup).name());
         descriptions.set(typeof(BookmarkGroup).name(), type_description);
 
+        // type_description = ClipboardGroup.register();
+        // types.add(typeof(ClipboardGroup).name());
+        // descriptions.set(typeof(ClipboardGroup).name(), type_description);
+
         type_description = DevicesGroup.register();
         types.add(typeof(DevicesGroup).name());
         descriptions.set(typeof(DevicesGroup).name(), type_description);
@@ -84,12 +88,20 @@ public class GroupRegistry : GLib.Object {
 
     public static ActionGroup? create_group(string type_id, string parent_id) {
         switch (type_id) {
-            case "bookmarks": return new BookmarkGroup(parent_id);
-            case "devices": return new DevicesGroup(parent_id);
-            case "menu": return new MenuGroup(parent_id);
-            case "session": return new SessionGroup(parent_id);
-            case "window_list": return new WindowListGroup(parent_id);
-            case "workspace_window_list": return new WorkspaceWindowListGroup(parent_id);
+            case "bookmarks":
+                return new BookmarkGroup(parent_id);
+            // case "clipboard":
+            //     return new ClipboardGroup(parent_id);
+            case "devices":
+                return new DevicesGroup(parent_id);
+            case "menu":
+                return new MenuGroup(parent_id);
+            case "session":
+                return new SessionGroup(parent_id);
+            case "window_list":
+                return new WindowListGroup(parent_id);
+            case "workspace_window_list":
+                return new WorkspaceWindowListGroup(parent_id);
         }
 
         return null;

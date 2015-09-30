@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the gnomepie package.
 # Eduardo Anabalon <lalo1412@gmail.com>, 2012.
 # Gabriel Dubatti  <gdubatti@gmail.com>, 2015.
+# Gabriel Dubatti <gdubatti@gmail.com>, 2015. #zanata
 # Simon <code@simonschneegans.de>, 2015. #zanata
 msgid ""
 msgstr ""
@@ -12,12 +13,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-01-22 01:30-0500\n"
+"PO-Revision-Date: 2015-09-19 09:48-0400\n"
 "Last-Translator: Gabriel Dubatti <gdubatti@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Zanata 3.7.1\n"
+"X-Generator: Zanata 3.7.2\n"
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"
@@ -213,15 +214,15 @@ msgstr "Máximo de Rebanadas por Pastel"
 
 #: ../ui/preferences.ui:302
 msgid "Import a theme from a file."
-msgstr ""
+msgstr "Importar un tema desde un archivo."
 
 #: ../ui/preferences.ui:323
 msgid "Export the selected theme for sharing."
-msgstr ""
+msgstr "Exportar el tema elegido para compartirlo."
 
 #: ../ui/preferences.ui:371
 msgid "Open a tutorial on how to create new themes for Gnome-Pie."
-msgstr ""
+msgstr "Abrir el tutorial acerca de como crear nuevos temas para Gnome-Pie."
 
 #: ../ui/preferences.ui:421 ../../src/gui/preferencesWindow.vala:108
 msgid "General Settings"
@@ -304,109 +305,135 @@ msgstr "cocina tus pasteles!"
 #: ../../src/gui/preferencesWindow.vala:227
 msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
 msgstr ""
+"Los Pasteles pueden ser abiertos desde la terminal utilizando el comando "
+"\"gnome-pie --open=ID\"."
 
 #: ../../src/gui/preferencesWindow.vala:228
 msgid "Feel free to visit Gnome-Pie's homepage at %s!"
-msgstr ""
+msgstr "Visite el sitio web de Gnome-Pie en %s!"
 
 #: ../../src/gui/preferencesWindow.vala:229
 msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr ""
+msgstr "Si quiere darnos su opinión, escríba un e-mail a  %s!"
 
 #: ../../src/gui/preferencesWindow.vala:230
 msgid "You can support the development of Gnome-Pie by donating via %s."
-msgstr ""
+msgstr "Puede ayudar al desarrollo de Gnome-Pie donando vía %s."
 
 #: ../../src/gui/preferencesWindow.vala:231
 msgid ""
 "Translating Gnome-Pie to your language is easy. Translations are managed at "
 "%s."
 msgstr ""
+"Es fácil traducir Gnome-Pie a su idioma. Las traducciones se realizan desde "
+"%s."
 
 #: ../../src/gui/preferencesWindow.vala:232
 msgid ""
 "It's easy to create new themes for Gnome-Pie. Read the <a href="
 "'%s'>Tutorial</a> online."
 msgstr ""
+"Es fácil crear nuevos temas para Gnome-Pie. Leer el <a href='%s'>Tutorial</"
+"a> en línea."
 
 #: ../../src/gui/preferencesWindow.vala:233
 msgid "It's usually a good practive to have at most twelve slices per pie."
 msgstr ""
+"En general es una buena práctica no utilizar más de 12 Rebanadas por Pastel."
 
 #: ../../src/gui/preferencesWindow.vala:234
 msgid "You can export themes you created and share them with the community!"
 msgstr ""
+"Puede exportar los temas que haya creado y compartirlos con la comunidad!"
 
 #: ../../src/gui/preferencesWindow.vala:235
 msgid "The source code of Gnome-Pie is available on %s."
-msgstr ""
+msgstr "El código fuente de Gnome-Pie se encuentra disponible en %s."
 
 #: ../../src/gui/preferencesWindow.vala:236
 msgid "Bugs can be reported at %s!"
-msgstr ""
+msgstr "Los errores de software pueden reportarse en %s!"
 
 #: ../../src/gui/preferencesWindow.vala:237
 msgid "Suggestions can be posted on %s!"
-msgstr ""
+msgstr "Puede enviarnos sus sugerencias utilizando %s!"
 
 #: ../../src/gui/preferencesWindow.vala:238
 msgid ""
 "An awesome companion of Gnome-Pie is %s. It will make using your computer "
 "feel like magic!"
 msgstr ""
+"Utilice %s junto con Gnome-Pie. Hará que usar su computadora sea una "
+"experiencia mágica!"
 
 #: ../../src/gui/preferencesWindow.vala:239
 msgid "You can drag'n'drop applications from your main menu to the pie above."
 msgstr ""
+"Puede arrastrar y soltar aplicaciones desde su menú principal sobre este "
+"Pastel."
 
 #: ../../src/gui/preferencesWindow.vala:240
 msgid ""
 "You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
 "above."
 msgstr ""
+"Puede arrastrar y soltar direcciones URL y marcadores desde su navegador de "
+"Internet sobre este Pastel."
 
 #: ../../src/gui/preferencesWindow.vala:241
 msgid ""
 "You can drag'n'drop files and folders from your file browser to the pie "
 "above."
 msgstr ""
+"Puede arrastrar y soltar archivos y carpetas desde su navegador de archivos "
+"sobre este Pastel."
 
 #: ../../src/gui/preferencesWindow.vala:242
 msgid ""
 "You can drag'n'drop pies from the list on the left into other pies in order "
 "to create sub-pies."
 msgstr ""
+"Puede arrastrar y soltar Pasteles de la lista de la izquierda para crear sub-"
+"pasteles."
 
 #: ../../src/gui/preferencesWindow.vala:243
 msgid ""
 "You can drag'n'drop pies from the list on the left to your desktop or dock "
 "to create a launcher for this pie."
 msgstr ""
+"Puede arrastrar y soltar Pasteles de la lista de la izquierda en su "
+"escritorio o en su lanzador de aplicaciones para crear un lanzador del "
+"Pastel."
 
 #: ../../src/gui/preferencesWindow.vala:387
 msgid "Sucessfully imported new theme!"
-msgstr ""
+msgstr "El nuevo tema fue correctamente importado!"
 
 #: ../../src/gui/preferencesWindow.vala:401
 msgid "An error occured while importing the theme: Failed to extract theme!"
-msgstr ""
+msgstr "Ocurrió un error al importar el tema: Falló la extracción del tema!"
 
 #: ../../src/gui/preferencesWindow.vala:405
 msgid ""
 "An error occured while importing the theme: A theme with this name does "
 "already exist!"
 msgstr ""
+"Ocurrió un error al importar el tema: Ya existe un tema con ese nombre!"
 
 #: ../../src/gui/preferencesWindow.vala:409
 msgid ""
 "An error occured while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
+"Ocurrió un error al importar el tema:  El archivo no contiene un tema "
+"válido!"
 
 #: ../../src/gui/preferencesWindow.vala:413
 msgid ""
 "An error occured while importing the theme: Failed to open theme archive!"
 msgstr ""
+"Ocurrió un error al importar el tema: El archivo del tema no pudo ser "
+"abierto!"
 
 #: ../../src/gui/preferencesWindow.vala:492
 msgid "New Pie"
@@ -579,13 +606,14 @@ msgstr "Medio Pastel"
 
 #: ../../src/themes/theme.vala:139
 msgid "Successfully exported the theme \"%s\"!"
-msgstr ""
+msgstr "El tema %s fue exportado correctamente!"
 
 #: ../../src/themes/theme.vala:146
 msgid ""
 "An error occured while exporting the theme \"%s\"! Please check the console "
 "output."
 msgstr ""
+"Ocurrió un error al exportar el tema %s! Por favor verifique la consola."
 
 #: ../../src/actionGroups/windowListGroup.vala:34
 msgid "Group: Window List"

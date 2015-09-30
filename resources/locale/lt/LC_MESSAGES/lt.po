@@ -2,6 +2,7 @@
 # Copyright (C) 2015 Simon Schneegans <code@simonschneegans.de>
 # This file is distributed under the same license as the gnomepie package.
 # Moo <hazap@hotmail.com>, 2015.
+# Moo <hazap@hotmail.com>, 2015. #zanata
 # Simon <code@simonschneegans.de>, 2015. #zanata
 msgid ""
 msgstr ""
@@ -11,13 +12,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-09 06:36-0400\n"
+"PO-Revision-Date: 2015-09-18 03:40-0400\n"
 "Last-Translator: Moo <hazap@hotmail.com>\n"
 "Language-Team: Lithuanian\n"
 "Language: lt\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "(n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Zanata 3.7.1\n"
+"X-Generator: Zanata 3.7.2\n"
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"
@@ -218,15 +219,16 @@ msgstr "Daugiausia gabaliukų pyrage"
 
 #: ../ui/preferences.ui:302
 msgid "Import a theme from a file."
-msgstr ""
+msgstr "Importuoti temą iš failo."
 
 #: ../ui/preferences.ui:323
 msgid "Export the selected theme for sharing."
-msgstr ""
+msgstr "Eksportuoti pasirinktą temą dalinimuisi."
 
 #: ../ui/preferences.ui:371
 msgid "Open a tutorial on how to create new themes for Gnome-Pie."
 msgstr ""
+"Atverti vadovėlį apie tai, kaip kurti naujas temas programai Gnome-Pie."
 
 #: ../ui/preferences.ui:421 ../../src/gui/preferencesWindow.vala:108
 msgid "General Settings"
@@ -311,109 +313,130 @@ msgstr "kepkite savo pyragus!"
 #: ../../src/gui/preferencesWindow.vala:227
 msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
 msgstr ""
+"Pyragai gali būti atverti, naudojant terminalo komandą \"gnome-pie --open="
+"ID\"."
 
 #: ../../src/gui/preferencesWindow.vala:228
 msgid "Feel free to visit Gnome-Pie's homepage at %s!"
 msgstr ""
+"Nesivaržykite apsilankyti Gnome-Pie internetinėje svetainėje, adresu %s!"
 
 #: ../../src/gui/preferencesWindow.vala:229
 msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr ""
+msgstr "Jeigu turite kažkokių atsiliepimų, prašome rašyti el. laišką į %s!"
 
 #: ../../src/gui/preferencesWindow.vala:230
 msgid "You can support the development of Gnome-Pie by donating via %s."
-msgstr ""
+msgstr "Jūs galite palaikyti Gnome-Pie kūrimą, aukodami per %s."
 
 #: ../../src/gui/preferencesWindow.vala:231
 msgid ""
 "Translating Gnome-Pie to your language is easy. Translations are managed at "
 "%s."
 msgstr ""
+"Išversti Gnome-Pie į savo kalbą yra lengva. Vertimai yra tvarkomi  %s "
+"sistemoje."
 
 #: ../../src/gui/preferencesWindow.vala:232
 msgid ""
 "It's easy to create new themes for Gnome-Pie. Read the <a href="
 "'%s'>Tutorial</a> online."
 msgstr ""
+"Kurti naujas temas programai Gnome-Pie yra lengva. Skaitykite <a href="
+"'%s'>Vadovėlį</a> internete."
 
 #: ../../src/gui/preferencesWindow.vala:233
 msgid "It's usually a good practive to have at most twelve slices per pie."
 msgstr ""
+"Dažniausiai, yra gera praktika viename pyrage turėti, daugiausia, dvylika "
+"gabaliukų."
 
 #: ../../src/gui/preferencesWindow.vala:234
 msgid "You can export themes you created and share them with the community!"
 msgstr ""
+"Jūs galite eksportuoti savo sukurtas temas ir dalintis jomis su bendruomene!"
 
 #: ../../src/gui/preferencesWindow.vala:235
 msgid "The source code of Gnome-Pie is available on %s."
-msgstr ""
+msgstr "Gnome-Pie pirminis kodas yra prieinamas sistemoje %s."
 
 #: ../../src/gui/preferencesWindow.vala:236
 msgid "Bugs can be reported at %s!"
-msgstr ""
+msgstr "Apie klaidas galima pranešti sistemoje %s!"
 
 #: ../../src/gui/preferencesWindow.vala:237
 msgid "Suggestions can be posted on %s!"
-msgstr ""
+msgstr "Pasiūlymus galima išsiųsti sistemoje %s!"
 
 #: ../../src/gui/preferencesWindow.vala:238
 msgid ""
 "An awesome companion of Gnome-Pie is %s. It will make using your computer "
 "feel like magic!"
 msgstr ""
+"Nuostabus Gnome-Pie draugas yra programa %s. Ji padarys jūsų naudojimąsi "
+"kompiuteriu kaip pasaką!"
 
 #: ../../src/gui/preferencesWindow.vala:239
 msgid "You can drag'n'drop applications from your main menu to the pie above."
-msgstr ""
+msgstr "Galite tempti programas iš savo meniu į aukščiau esantį pyragą."
 
 #: ../../src/gui/preferencesWindow.vala:240
 msgid ""
 "You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
 "above."
 msgstr ""
+"Galite tempti URL ir adresyno įrašus iš savo naršyklės į aukščiau esantį "
+"pyragą."
 
 #: ../../src/gui/preferencesWindow.vala:241
 msgid ""
 "You can drag'n'drop files and folders from your file browser to the pie "
 "above."
 msgstr ""
+"Galite tempti failus ir aplankus iš savo failų tvarkytuvės į aukščiau esantį "
+"pyragą."
 
 #: ../../src/gui/preferencesWindow.vala:242
 msgid ""
 "You can drag'n'drop pies from the list on the left into other pies in order "
 "to create sub-pies."
 msgstr ""
+"Galite tempti pyragus iš sąrašo kairėje į kitus pyragus, kad sukurtumėte "
+"popyragius."
 
 #: ../../src/gui/preferencesWindow.vala:243
 msgid ""
 "You can drag'n'drop pies from the list on the left to your desktop or dock "
 "to create a launcher for this pie."
 msgstr ""
+"Galite tempti pyragus iš sąrašo kairėje į savo darbalaukį ar skydelį, kad "
+"sukurtumėte šio pyrago leistuką."
 
 #: ../../src/gui/preferencesWindow.vala:387
 msgid "Sucessfully imported new theme!"
-msgstr ""
+msgstr "Nauja tema buvo sėkmingai importuota!"
 
 #: ../../src/gui/preferencesWindow.vala:401
 msgid "An error occured while importing the theme: Failed to extract theme!"
-msgstr ""
+msgstr "Importuojant temą, įvyko klaida: Nepavyko išskleisti temos!"
 
 #: ../../src/gui/preferencesWindow.vala:405
 msgid ""
 "An error occured while importing the theme: A theme with this name does "
 "already exist!"
-msgstr ""
+msgstr "Importuojant temą, įvyko klaida: Tema tokiu pavadinimu jau yra!"
 
 #: ../../src/gui/preferencesWindow.vala:409
 msgid ""
 "An error occured while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
+"Importuojant temą, įvyko klaida: Temos archyve nėra taisyklingos temos!"
 
 #: ../../src/gui/preferencesWindow.vala:413
 msgid ""
 "An error occured while importing the theme: Failed to open theme archive!"
-msgstr ""
+msgstr "Importuojant temą, įvyko klaida: Nepavyko atverti temos archyvo!"
 
 #: ../../src/gui/preferencesWindow.vala:492
 msgid "New Pie"
@@ -585,13 +608,13 @@ msgstr "Pusė pyrago"
 
 #: ../../src/themes/theme.vala:139
 msgid "Successfully exported the theme \"%s\"!"
-msgstr ""
+msgstr "\"%s\" tema buvo sėkmingai eksportuota!"
 
 #: ../../src/themes/theme.vala:146
 msgid ""
 "An error occured while exporting the theme \"%s\"! Please check the console "
 "output."
-msgstr ""
+msgstr "Eksportuojant \"%s\" temą, įvyko klaida! Prašome žiūrėti pulto išvestį."
 
 #: ../../src/actionGroups/windowListGroup.vala:34
 msgid "Group: Window List"

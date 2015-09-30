@@ -25,26 +25,67 @@ namespace GnomePie {
 public class ClipboardGroup : ActionGroup {
 
     /////////////////////////////////////////////////////////////////////
-    ///
-    /////////////////////////////////////////////////////////////////////
 
     private class ClipboardItem : GLib.Object {
 
-        public string name { get; private set; }
-        public string icon { get; private set; }
+        public string name { get; protected set; }
+        public string icon { get; protected set; }
 
-        private Gtk.SelectionData contents;
+        protected Gtk.Clipboard clipboard { get; set; }
+        protected static Key paste_key = new Key.from_string("<Control>v");
 
-        public ClipboardItem(Gtk.SelectionData contents) {
-            this.contents = contents.copy();
-            this.name = this.contents.get_text() ?? "";
-            this.icon = "edit-paste";
+        public virtual void paste() {}
+    }
+
+    /////////////////////////////////////////////////////////////////////
+
+    private class TextClipboardItem : ClipboardItem {
+
+        public TextClipboardItem(Gtk.Clipboard clipboard) {
+            GLib.Object(clipboard : clipboard,
+                        name      : clipboard.wait_for_text(),
+                        icon      : "edit-paste");
+
+            // check whether a file has been copied and search for a cool icon
+            var first_line = this.name.substring(0, this.name.index_of("\n"));
+            var file = GLib.File.new_for_path(first_line);
+
+            if (file.query_exists()) {
+                try {
+                    var info = file.query_info("standard::icon", 0);
+                    this.icon = Icon.get_icon_name(info.get_icon());
+                } catch (Error e) {
+                    warning("Failed to generate icon for ClipboardGroupItem.");
+                }
+            }
         }
 
-        public void paste() {
-            debug(name);
+        public override void paste() {
+            clipboard.set_text(name, name.length);
+            paste_key.press();
         }
     }
+
+    /////////////////////////////////////////////////////////////////////
+
+    private class ImageClipboardItem : ClipboardItem {
+
+        private Gdk.Pixbuf image { get; set; }
+
+        public ImageClipboardItem(Gtk.Clipboard clipboard) {
+            GLib.Object(clipboard : clipboard,
+                        name      : _("Image data"),
+                        icon      : "image-viewer");
+            this.image = clipboard.wait_for_image();
+        }
+
+        public override void paste() {
+            clipboard.set_image(image);
+            paste_key.press();
+        }
+    }
+
+    /////////////////////////////////////////////////////////////////////
 
     public ClipboardGroup(string parent_id) {
         GLib.Object(parent_id : parent_id);
@@ -74,6 +115,7 @@ public class ClipboardGroup : ActionGroup {
 
     private Gtk.Clipboard clipboard;
 
+    private bool ignore_next_change = false;
 
     /////////////////////////////////////////////////////////////////////
     /// The maximum remembered items of the clipboard.
@@ -90,25 +132,36 @@ public class ClipboardGroup : ActionGroup {
     }
 
     private void on_change() {
+        if (ignore_next_change) {
+            ignore_next_change = false;
+            return;
+        }
+
         if (this.clipboard.wait_is_text_available()) {
-            this.clipboard.request_contents(Gdk.Atom.intern("text/plain", false), this.add_item);
+            if (clipboard.wait_for_text() != null) {
+                add_item(new TextClipboardItem(this.clipboard));
+            }
+        } else if (this.clipboard.wait_is_image_available()) {
+            add_item(new ImageClipboardItem(this.clipboard));
         }
     }
 
-    private void add_item(Gtk.Clipboard c, Gtk.SelectionData contents) {
-        var new_item = new ClipboardItem(contents);
+    private void add_item(ClipboardItem item) {
 
-        if (this.items.size == ClipboardGroup.max_items)
+        // remove one item if there are too many
+        if (this.items.size == ClipboardGroup.max_items) {
             this.items.remove_at(0);
+        }
 
-        this.items.add(new_item);
+        this.items.add(item);
 
         // update slices
         this.delete_all();
 
-        for (int i=0; i<this.items.size; ++i) {
+        for (int i=this.items.size-1; i>=0; --i) {
             var action = new SigAction(items[i].name, items[i].icon, i.to_string());
             action.activated.connect(() => {
+                ignore_next_change = true;
                 this.items[int.parse(action.real_command)].paste();
             });
             this.add_action(action);

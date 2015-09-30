@@ -57,9 +57,9 @@ public class GroupRegistry : GLib.Object {
         types.add(typeof(BookmarkGroup).name());
         descriptions.set(typeof(BookmarkGroup).name(), type_description);
 
-        // type_description = ClipboardGroup.register();
-        // types.add(typeof(ClipboardGroup).name());
-        // descriptions.set(typeof(ClipboardGroup).name(), type_description);
+        type_description = ClipboardGroup.register();
+        types.add(typeof(ClipboardGroup).name());
+        descriptions.set(typeof(ClipboardGroup).name(), type_description);
 
         type_description = DevicesGroup.register();
         types.add(typeof(DevicesGroup).name());
@@ -90,8 +90,8 @@ public class GroupRegistry : GLib.Object {
         switch (type_id) {
             case "bookmarks":
                 return new BookmarkGroup(parent_id);
-            // case "clipboard":
-            //     return new ClipboardGroup(parent_id);
+            case "clipboard":
+                return new ClipboardGroup(parent_id);
             case "devices":
                 return new DevicesGroup(parent_id);
             case "menu":

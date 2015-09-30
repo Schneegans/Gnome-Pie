@@ -10,16 +10,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-17 17:33+0100\n"
+"POT-Creation-Date: 2015-09-30 18:32+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-18 16:13+0200\n"
-"Last-Translator: Raphael Rochet <raphael@rri.fr>\n"
+"PO-Revision-Date: 2015-09-30 01:35-0400\n"
+"Last-Translator: Simon <code@simonschneegans.de>\n"
 "Language-Team: French\n"
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 1.8.4\n"
+"X-Generator: Zanata 3.7.2\n"
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"
@@ -53,7 +53,8 @@ msgstr "Appui prolongé pour activer"
 msgid ""
 "If checked, the Pie will only open if you press this hot key a bit longer."
 msgstr ""
-"Si coché, la Tarte s'ouvrira seulement si vous maintenez le raccourci clavier"
+"Si coché, la Tarte s'ouvrira seulement si vous maintenez le raccourci "
+"clavier"
 
 #: ../ui/pie_options.ui:312
 msgid "Open Pie centered on the screen"
@@ -152,7 +153,7 @@ msgstr "Thème d'icônes"
 msgid "Custom Icon"
 msgstr "Icône personnalisée"
 
-#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:77
+#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:78
 msgid "Gnome-Pie Settings"
 msgstr "Paramètres de Gnome-Pie"
 
@@ -219,20 +220,24 @@ msgid "Import a theme from a file."
 msgstr "Importer un thème depuis un fichier."
 
 #: ../ui/preferences.ui:323
+msgid "Delete the selected theme."
+msgstr ""
+
+#: ../ui/preferences.ui:344
 msgid "Export the selected theme for sharing."
 msgstr "Exporter le thème pour le partager."
 
-#: ../ui/preferences.ui:371
+#: ../ui/preferences.ui:392
 msgid "Open a tutorial on how to create new themes for Gnome-Pie."
 msgstr ""
 "Ouvrir un didacticiel expliquant la création de nouveaux thèmes pour Gnome-"
 "Pie."
 
-#: ../ui/preferences.ui:421 ../../src/gui/preferencesWindow.vala:108
+#: ../ui/preferences.ui:442 ../../src/gui/preferencesWindow.vala:109
 msgid "General Settings"
 msgstr "Paramètres généraux"
 
-#: ../ui/preferences.ui:613
+#: ../ui/preferences.ui:634
 msgid ""
 "<b><big>This Pie is empty!</big>\n"
 "\n"
@@ -251,7 +256,7 @@ msgstr ""
 "\n"
 "Pour un ajout manuel ou avancé, cliquez sur le signe plus."
 
-#: ../ui/preferences.ui:634
+#: ../ui/preferences.ui:655
 msgid ""
 "<b><big>You have no Pies!</big>\n"
 "\n"
@@ -263,7 +268,7 @@ msgstr ""
 "Commencez par en créer une !</b> Vous pouvez le faire en cliquant sur le "
 "petit signe plus dans le coin en bas à gauche."
 
-#: ../ui/preferences.ui:720 ../../src/gui/preferencesWindow.vala:109
+#: ../ui/preferences.ui:741 ../../src/gui/preferencesWindow.vala:110
 msgid "Pie Settings"
 msgstr "Paramètres de la tarte"
 
@@ -303,31 +308,32 @@ msgstr "Ouvrir une Tarte"
 
 #: ../../src/actions/pieAction.vala:36
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
-msgstr "Ouvre une autre Part de Tarte. Vous pouvez ainsi créer des sous-menus."
+msgstr ""
+"Ouvre une autre Part de Tarte. Vous pouvez ainsi créer des sous-menus."
 
-#: ../../src/gui/preferencesWindow.vala:78
+#: ../../src/gui/preferencesWindow.vala:79
 msgid "bake your pies!"
 msgstr "Préparez vos tartes !"
 
-#: ../../src/gui/preferencesWindow.vala:227
+#: ../../src/gui/preferencesWindow.vala:235
 msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
 msgstr ""
 "Les Tartes peuvent être ouvertes avec la ligne de commande \"gnome-pie --"
 "open=ID\"."
 
-#: ../../src/gui/preferencesWindow.vala:228
+#: ../../src/gui/preferencesWindow.vala:236
 msgid "Feel free to visit Gnome-Pie's homepage at %s!"
 msgstr "N'hésitez pas  à visiter le site de Gnome-Pie sur %s !"
 
-#: ../../src/gui/preferencesWindow.vala:229
+#: ../../src/gui/preferencesWindow.vala:237
 msgid "If you want to give some feedback, please write an e-mail to %s!"
 msgstr "Si vous avez des retours, merci d'écrire un courriel à %s !"
 
-#: ../../src/gui/preferencesWindow.vala:230
+#: ../../src/gui/preferencesWindow.vala:238
 msgid "You can support the development of Gnome-Pie by donating via %s."
 msgstr "Vous pouvez aider au développement de Gnome-Pie en donnant via %s."
 
-#: ../../src/gui/preferencesWindow.vala:231
+#: ../../src/gui/preferencesWindow.vala:239
 msgid ""
 "Translating Gnome-Pie to your language is easy. Translations are managed at "
 "%s."
@@ -335,35 +341,35 @@ msgstr ""
 "Traduire Gnome-Pie dans votre langue est facile. Les traductions sont gérées "
 "par %s."
 
-#: ../../src/gui/preferencesWindow.vala:232
+#: ../../src/gui/preferencesWindow.vala:240
 msgid ""
-"It's easy to create new themes for Gnome-Pie. Read the <a "
-"href='%s'>Tutorial</a> online."
+"It's easy to create new themes for Gnome-Pie. Read the <a href="
+"'%s'>Tutorial</a> online."
 msgstr ""
-"Il est facile de créer de nouveaux thèmes pour Gnome-Pie. Lisez le <a "
-"href='%s'>Didacticiel</a> en ligne."
+"Il est facile de créer de nouveaux thèmes pour Gnome-Pie. Lisez le <a href="
+"'%s'>Didacticiel</a> en ligne."
 
-#: ../../src/gui/preferencesWindow.vala:233
-msgid "It's usually a good practive to have at most twelve slices per pie."
+#: ../../src/gui/preferencesWindow.vala:241
+msgid "It's usually a good practice to have at most twelve slices per pie."
 msgstr "Un maximum de douze Parts par Tarte est considéré comme idéal."
 
-#: ../../src/gui/preferencesWindow.vala:234
+#: ../../src/gui/preferencesWindow.vala:242
 msgid "You can export themes you created and share them with the community!"
 msgstr "Vous pouvez exporter vos thèmes et les partager avec la communauté !"
 
-#: ../../src/gui/preferencesWindow.vala:235
+#: ../../src/gui/preferencesWindow.vala:243
 msgid "The source code of Gnome-Pie is available on %s."
 msgstr "Le code source de Gnome-Pie est disponible sur %s."
 
-#: ../../src/gui/preferencesWindow.vala:236
+#: ../../src/gui/preferencesWindow.vala:244
 msgid "Bugs can be reported at %s!"
 msgstr "Les bugs peuvent être signalés à %s!"
 
-#: ../../src/gui/preferencesWindow.vala:237
+#: ../../src/gui/preferencesWindow.vala:245
 msgid "Suggestions can be posted on %s!"
 msgstr "Les suggestions peuvent être faites sur %s !"
 
-#: ../../src/gui/preferencesWindow.vala:238
+#: ../../src/gui/preferencesWindow.vala:246
 msgid ""
 "An awesome companion of Gnome-Pie is %s. It will make using your computer "
 "feel like magic!"
@@ -371,13 +377,13 @@ msgstr ""
 "Un excellent compagnon pour Gnome-Pie est %s. Vous aurez l'impression "
 "d'ajouter de la magie à votre ordinateur !"
 
-#: ../../src/gui/preferencesWindow.vala:239
+#: ../../src/gui/preferencesWindow.vala:247
 msgid "You can drag'n'drop applications from your main menu to the pie above."
 msgstr ""
 "Vous pouvez glisser-déposer des applications depuis votre menu principal "
 "vers la Tarte ci-dessus."
 
-#: ../../src/gui/preferencesWindow.vala:240
+#: ../../src/gui/preferencesWindow.vala:248
 msgid ""
 "You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
 "above."
@@ -385,7 +391,7 @@ msgstr ""
 "Vous pouvez glisser-déposer des URL et des favoris depuis votre navigateur "
 "internet vers la Tarte ci-dessus."
 
-#: ../../src/gui/preferencesWindow.vala:241
+#: ../../src/gui/preferencesWindow.vala:249
 msgid ""
 "You can drag'n'drop files and folders from your file browser to the pie "
 "above."
@@ -393,7 +399,7 @@ msgstr ""
 "Vous pouvez glisser-déposer des fichiers et dossiers depuis votre "
 "explorateur vers la Tarte ci-dessus."
 
-#: ../../src/gui/preferencesWindow.vala:242
+#: ../../src/gui/preferencesWindow.vala:250
 msgid ""
 "You can drag'n'drop pies from the list on the left into other pies in order "
 "to create sub-pies."
@@ -401,7 +407,7 @@ msgstr ""
 "Vous pouvez glisser-déposer des Tartes depuis la liste à gauche dans "
 "d'autres Tartes pour créer des sous-Tartes."
 
-#: ../../src/gui/preferencesWindow.vala:243
+#: ../../src/gui/preferencesWindow.vala:251
 msgid ""
 "You can drag'n'drop pies from the list on the left to your desktop or dock "
 "to create a launcher for this pie."
@@ -409,17 +415,17 @@ msgstr ""
 "Vous pouvez glisser-déposer des Tartes depuis la liste à gauche vers votre "
 "bureau ou votre dock pour créer un lanceur."
 
-#: ../../src/gui/preferencesWindow.vala:387
+#: ../../src/gui/preferencesWindow.vala:401
 msgid "Sucessfully imported new theme!"
 msgstr "Nouveau thème importé avec succès !"
 
-#: ../../src/gui/preferencesWindow.vala:401
+#: ../../src/gui/preferencesWindow.vala:415
 msgid "An error occured while importing the theme: Failed to extract theme!"
 msgstr ""
 "Une erreur est survenue pendant l'importation du thème : impossible "
 "d'extraire le thème !"
 
-#: ../../src/gui/preferencesWindow.vala:405
+#: ../../src/gui/preferencesWindow.vala:419
 msgid ""
 "An error occured while importing the theme: A theme with this name does "
 "already exist!"
@@ -427,7 +433,7 @@ msgstr ""
 "Une erreur est survenue pendant l'importation du thème : Un thème avec ce "
 "nom existe déjà !"
 
-#: ../../src/gui/preferencesWindow.vala:409
+#: ../../src/gui/preferencesWindow.vala:423
 msgid ""
 "An error occured while importing the theme: Theme archive does not contain a "
 "valid theme!"
@@ -435,18 +441,22 @@ msgstr ""
 "Une erreur est survenue pendant l'importation du thème : L'archive ne "
 "contient pas de thème valide !"
 
-#: ../../src/gui/preferencesWindow.vala:413
+#: ../../src/gui/preferencesWindow.vala:427
 msgid ""
 "An error occured while importing the theme: Failed to open theme archive!"
 msgstr ""
 "Une erreur est survenue pendant l'importation du thème : Impossible d'ouvrir "
 "l'archive !"
 
-#: ../../src/gui/preferencesWindow.vala:492
+#: ../../src/gui/preferencesWindow.vala:451
+msgid "Do you really want to delete the selected theme from %s?"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:528
 msgid "New Pie"
 msgstr "Nouvelle Tarte"
 
-#: ../../src/gui/preferencesWindow.vala:507
+#: ../../src/gui/preferencesWindow.vala:543
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr "Voulez-vous supprimer la Tarte sélectionnée et son contenu ?"
@@ -470,20 +480,17 @@ msgstr "Faites glisser pour déplacer"
 
 #: ../../src/gui/piePreviewRenderer.vala:422
 msgid "Click to add a new Slice"
-msgstr ""
-"Cliquez pour ajouter \n"
+msgstr "Cliquez pour ajouter \n"
 " une nouvelle Part"
 
 #: ../../src/gui/piePreviewRenderer.vala:426
 msgid "Drop to add as new Slice"
-msgstr ""
-"Déposez pour ajouter \n"
+msgstr "Déposez pour ajouter \n"
 " une nouvelle Part"
 
 #: ../../src/gui/piePreviewRenderer.vala:429
 msgid "Drop to move Slice"
-msgstr ""
-"Déposez pour \n"
+msgstr "Déposez pour \n"
 " déplacer la Part"
 
 #: ../../src/gui/piePreviewRenderer.vala:434
@@ -498,7 +505,8 @@ msgstr "Tartes"
 msgid "All icons"
 msgstr "Toutes les icônes"
 
-#: ../../src/gui/iconSelectWindow.vala:183 ../../src/pies/defaultConfig.vala:36
+#: ../../src/gui/iconSelectWindow.vala:183
+#: ../../src/pies/defaultConfig.vala:36
 msgid "Applications"
 msgstr "Applications"
 
@@ -543,6 +551,10 @@ msgstr ""
 #: ../../src/gui/themeList.vala:59
 msgid "Themes"
 msgstr "Thèmes"
+
+#: ../../src/gui/themeList.vala:108
+msgid "by"
+msgstr ""
 
 #: ../../src/gui/indicator.vala:126
 msgid "_Preferences"
@@ -614,11 +626,11 @@ msgstr "Quart de tarte"
 msgid "Half pie"
 msgstr "Demie tarte"
 
-#: ../../src/themes/theme.vala:139
+#: ../../src/themes/theme.vala:169
 msgid "Successfully exported the theme \"%s\"!"
 msgstr "Thème \"%s\" exporté avec succès !"
 
-#: ../../src/themes/theme.vala:146
+#: ../../src/themes/theme.vala:176
 msgid ""
 "An error occured while exporting the theme \"%s\"! Please check the console "
 "output."
@@ -670,7 +682,8 @@ msgid "Group: Window List for current workspace"
 msgstr "Groupe : Liste des fenêtres de l'espace de travail"
 
 #: ../../src/actionGroups/workspaceWindowListGroup.vala:37
-msgid "Shows a Slice for each of your opened windows on the current workspace."
+msgid ""
+"Shows a Slice for each of your opened windows on the current workspace."
 msgstr ""
 "Affiche une Part pour chacune des fenêtres ouvertes. Fonctionne comme Alt-"
 "Tab."

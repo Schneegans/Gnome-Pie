@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnomepie 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-17 17:33+0100\n"
+"POT-Creation-Date: 2015-09-30 18:32+0100\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -146,7 +146,7 @@ msgstr "Tema de Ícones"
 msgid "Custom Icon"
 msgstr "Outros Ícones"
 
-#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:77
+#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:78
 msgid "Gnome-Pie Settings"
 msgstr "Configurações do Gnome-Pie"
 
@@ -211,18 +211,22 @@ msgid "Import a theme from a file."
 msgstr ""
 
 #: ../ui/preferences.ui:323
+msgid "Delete the selected theme."
+msgstr ""
+
+#: ../ui/preferences.ui:344
 msgid "Export the selected theme for sharing."
 msgstr ""
 
-#: ../ui/preferences.ui:371
+#: ../ui/preferences.ui:392
 msgid "Open a tutorial on how to create new themes for Gnome-Pie."
 msgstr ""
 
-#: ../ui/preferences.ui:421 ../../src/gui/preferencesWindow.vala:108
+#: ../ui/preferences.ui:442 ../../src/gui/preferencesWindow.vala:109
 msgid "General Settings"
 msgstr "Configurações Gerais"
 
-#: ../ui/preferences.ui:613
+#: ../ui/preferences.ui:634
 msgid ""
 "<b><big>This Pie is empty!</big>\n"
 "\n"
@@ -233,7 +237,7 @@ msgid ""
 "For manual and advanced configuration click on the plus sign."
 msgstr ""
 
-#: ../ui/preferences.ui:634
+#: ../ui/preferences.ui:655
 msgid ""
 "<b><big>You have no Pies!</big>\n"
 "\n"
@@ -245,7 +249,7 @@ msgstr ""
 "Comece criando um! </b> Isto pode ser feito ao clicar no pequeno sinal de "
 "mais no canto inferior esquerdo."
 
-#: ../ui/preferences.ui:720 ../../src/gui/preferencesWindow.vala:109
+#: ../ui/preferences.ui:741 ../../src/gui/preferencesWindow.vala:110
 msgid "Pie Settings"
 msgstr ""
 
@@ -285,122 +289,126 @@ msgstr "Abrir Menu"
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
 msgstr "Abre outro Menu do Gnome-Pie. Desta forma você pode criar submenus."
 
-#: ../../src/gui/preferencesWindow.vala:78
+#: ../../src/gui/preferencesWindow.vala:79
 msgid "bake your pies!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:227
+#: ../../src/gui/preferencesWindow.vala:235
 msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:228
+#: ../../src/gui/preferencesWindow.vala:236
 msgid "Feel free to visit Gnome-Pie's homepage at %s!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:229
+#: ../../src/gui/preferencesWindow.vala:237
 msgid "If you want to give some feedback, please write an e-mail to %s!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:230
+#: ../../src/gui/preferencesWindow.vala:238
 msgid "You can support the development of Gnome-Pie by donating via %s."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:231
+#: ../../src/gui/preferencesWindow.vala:239
 msgid ""
 "Translating Gnome-Pie to your language is easy. Translations are managed at "
 "%s."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:232
+#: ../../src/gui/preferencesWindow.vala:240
 msgid ""
 "It's easy to create new themes for Gnome-Pie. Read the <a href="
 "'%s'>Tutorial</a> online."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:233
-msgid "It's usually a good practive to have at most twelve slices per pie."
+#: ../../src/gui/preferencesWindow.vala:241
+msgid "It's usually a good practice to have at most twelve slices per pie."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:234
+#: ../../src/gui/preferencesWindow.vala:242
 msgid "You can export themes you created and share them with the community!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:235
+#: ../../src/gui/preferencesWindow.vala:243
 msgid "The source code of Gnome-Pie is available on %s."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:236
+#: ../../src/gui/preferencesWindow.vala:244
 msgid "Bugs can be reported at %s!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:237
+#: ../../src/gui/preferencesWindow.vala:245
 msgid "Suggestions can be posted on %s!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:238
+#: ../../src/gui/preferencesWindow.vala:246
 msgid ""
 "An awesome companion of Gnome-Pie is %s. It will make using your computer "
 "feel like magic!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:239
+#: ../../src/gui/preferencesWindow.vala:247
 msgid "You can drag'n'drop applications from your main menu to the pie above."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:240
+#: ../../src/gui/preferencesWindow.vala:248
 msgid ""
 "You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
 "above."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:241
+#: ../../src/gui/preferencesWindow.vala:249
 msgid ""
 "You can drag'n'drop files and folders from your file browser to the pie "
 "above."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:242
+#: ../../src/gui/preferencesWindow.vala:250
 msgid ""
 "You can drag'n'drop pies from the list on the left into other pies in order "
 "to create sub-pies."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:243
+#: ../../src/gui/preferencesWindow.vala:251
 msgid ""
 "You can drag'n'drop pies from the list on the left to your desktop or dock "
 "to create a launcher for this pie."
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:387
+#: ../../src/gui/preferencesWindow.vala:401
 msgid "Sucessfully imported new theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:401
+#: ../../src/gui/preferencesWindow.vala:415
 msgid "An error occured while importing the theme: Failed to extract theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:405
+#: ../../src/gui/preferencesWindow.vala:419
 msgid ""
 "An error occured while importing the theme: A theme with this name does "
 "already exist!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:409
+#: ../../src/gui/preferencesWindow.vala:423
 msgid ""
 "An error occured while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:413
+#: ../../src/gui/preferencesWindow.vala:427
 msgid ""
 "An error occured while importing the theme: Failed to open theme archive!"
 msgstr ""
 
-#: ../../src/gui/preferencesWindow.vala:492
+#: ../../src/gui/preferencesWindow.vala:451
+msgid "Do you really want to delete the selected theme from %s?"
+msgstr ""
+
+#: ../../src/gui/preferencesWindow.vala:528
 msgid "New Pie"
 msgstr "Novo Menu"
 
-#: ../../src/gui/preferencesWindow.vala:507
+#: ../../src/gui/preferencesWindow.vala:543
 msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr ""
@@ -494,6 +502,10 @@ msgstr ""
 msgid "Themes"
 msgstr "Temas"
 
+#: ../../src/gui/themeList.vala:108
+msgid "by"
+msgstr ""
+
 #: ../../src/gui/indicator.vala:126
 msgid "_Preferences"
 msgstr ""
@@ -564,11 +576,11 @@ msgstr ""
 msgid "Half pie"
 msgstr ""
 
-#: ../../src/themes/theme.vala:139
+#: ../../src/themes/theme.vala:169
 msgid "Successfully exported the theme \"%s\"!"
 msgstr ""
 
-#: ../../src/themes/theme.vala:146
+#: ../../src/themes/theme.vala:176
 msgid ""
 "An error occured while exporting the theme \"%s\"! Please check the console "
 "output."

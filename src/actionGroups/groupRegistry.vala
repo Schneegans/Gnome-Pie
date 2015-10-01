@@ -76,10 +76,6 @@ public class GroupRegistry : GLib.Object {
         type_description = WindowListGroup.register();
         types.add(typeof(WindowListGroup).name());
         descriptions.set(typeof(WindowListGroup).name(), type_description);
-
-        type_description = WorkspaceWindowListGroup.register();
-        types.add(typeof(WorkspaceWindowListGroup).name());
-        descriptions.set(typeof(WorkspaceWindowListGroup).name(), type_description);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -91,7 +87,7 @@ public class GroupRegistry : GLib.Object {
             case "bookmarks":
                 return new BookmarkGroup(parent_id);
             case "clipboard":
-                return new ClipboardGroup(parent_id, 8);
+                return new ClipboardGroup(parent_id);
             case "devices":
                 return new DevicesGroup(parent_id);
             case "menu":
@@ -100,8 +96,11 @@ public class GroupRegistry : GLib.Object {
                 return new SessionGroup(parent_id);
             case "window_list":
                 return new WindowListGroup(parent_id);
+            // deprecated
             case "workspace_window_list":
-                return new WorkspaceWindowListGroup(parent_id);
+                var group = new WindowListGroup(parent_id);
+                group.current_workspace_only = true;
+                return group;
         }
 
         return null;

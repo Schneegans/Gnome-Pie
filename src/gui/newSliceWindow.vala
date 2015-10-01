@@ -58,11 +58,13 @@ public class NewSliceWindow : GLib.Object {
     private Gtk.Box uri_box = null;
     private Gtk.Box quickaction_box = null;
     private Gtk.Box clipboard_box = null;
+    private Gtk.Box workspace_only_box = null;
     private Gtk.Image icon = null;
     private Gtk.Entry name_entry = null;
     private Gtk.Entry command_entry = null;
     private Gtk.Entry uri_entry = null;
     private Gtk.CheckButton quickaction_checkbutton = null;
+    private Gtk.CheckButton workspace_only_checkbutton = null;
     private Gtk.Scale clipboard_slider = null;
 
     /////////////////////////////////////////////////////////////////////
@@ -118,20 +120,24 @@ public class NewSliceWindow : GLib.Object {
                 this.hotkey_box.hide();
                 this.uri_box.hide();
                 this.quickaction_box.hide();
+                this.workspace_only_box.hide();
                 this.clipboard_box.hide();
 
                 this.current_type = type;
 
                 switch (type) {
                     case "bookmarks": case "devices":
-                    case "menu": case "session": case "window_list":
-                    case "workspace_window_list":
+                    case "menu": case "session":
                         this.no_options_box.show();
                         this.set_icon(icon);
                         break;
-                    case "clipboard":
+                    case "window_list":
+                        this.workspace_only_box.show();
                         this.set_icon(icon);
+                        break;
+                    case "clipboard":
                         this.clipboard_box.show();
+                        this.set_icon(icon);
                         break;
                     case "app":
                         this.name_box.show();
@@ -193,6 +199,9 @@ public class NewSliceWindow : GLib.Object {
             this.quickaction_checkbutton = builder.get_object("quick-action-checkbutton") as Gtk.CheckButton;
             this.quickaction_box = builder.get_object("quickaction-box") as Gtk.Box;
             this.icon = builder.get_object("icon") as Gtk.Image;
+
+            this.workspace_only_checkbutton = builder.get_object("workspace-only-checkbutton") as Gtk.CheckButton;
+            this.workspace_only_box = builder.get_object("workspace-only-box") as Gtk.Box;
 
             this.clipboard_box = builder.get_object("clipboard-box") as Gtk.Box;
             this.clipboard_slider = (builder.get_object("clipboard-scale") as Gtk.Scale);
@@ -284,8 +293,14 @@ public class NewSliceWindow : GLib.Object {
 
         } else {
             type = GroupRegistry.descriptions[group.get_type().name()].id;
-            if (type == "clipboard") {
-                this.clipboard_slider.set_value((group as ClipboardGroup).max_items);
+            switch (type) {
+                case "clipboard":
+                    this.clipboard_slider.set_value((group as ClipboardGroup).max_items);
+                    break;
+                case "window_list":
+                    this.workspace_only_checkbutton.active = (group as WindowListGroup).current_workspace_only;
+                    break;
+
             }
             this.select_type(type);
         }
@@ -331,13 +346,15 @@ public class NewSliceWindow : GLib.Object {
             case "devices":     group = new DevicesGroup(this.current_id);       break;
             case "menu":        group = new MenuGroup(this.current_id);          break;
             case "session":     group = new SessionGroup(this.current_id);       break;
-            case "window_list": group = new WindowListGroup(this.current_id);    break;
             case "clipboard":
-                group = new ClipboardGroup(this.current_id,
-                                           (int)this.clipboard_slider.get_value());
+                var g = new ClipboardGroup(this.current_id);
+                g.max_items = (int)this.clipboard_slider.get_value();
+                group = g;
                 break;
-            case "workspace_window_list":
-                group = new WorkspaceWindowListGroup(this.current_id);
+            case "window_list":
+                var g = new WindowListGroup(this.current_id);
+                g.current_workspace_only = this.workspace_only_checkbutton.active;
+                group = g;
                 break;
             case "app":
                 group = new ActionGroup(this.current_id);

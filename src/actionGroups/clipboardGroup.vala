@@ -89,12 +89,12 @@ public class ClipboardGroup : ActionGroup {
     /// The maximum remembered items of the clipboard.
     /////////////////////////////////////////////////////////////////////
 
-    public int max_items {get; set;}
+    public int max_items {get; set; default=8; }
 
     /////////////////////////////////////////////////////////////////////
 
-    public ClipboardGroup(string parent_id, int max_items) {
-        GLib.Object(parent_id : parent_id, max_items : max_items);
+    public ClipboardGroup(string parent_id) {
+        GLib.Object(parent_id : parent_id);
     }
 
     /////////////////////////////////////////////////////////////////////

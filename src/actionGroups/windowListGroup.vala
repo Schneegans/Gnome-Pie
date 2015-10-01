@@ -38,6 +38,8 @@ public class WindowListGroup : ActionGroup {
         return description;
     }
 
+    public bool current_workspace_only { get; set; default=false; }
+
     /////////////////////////////////////////////////////////////////////
     /// Two members needed to avoid useless, frequent changes of the
     /// stored Actions.
@@ -65,22 +67,50 @@ public class WindowListGroup : ActionGroup {
 
         this.screen.window_opened.connect(reload);
         this.screen.window_closed.connect(reload);
+        this.screen.active_workspace_changed.connect(reload);
 
-        this.load();
+        this.update();
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// This one is called, when the ActionGroup is saved.
+    /////////////////////////////////////////////////////////////////////
+
+    public override void on_save(Xml.TextWriter writer) {
+        base.on_save(writer);
+        writer.write_attribute("current_workspace_only", this.current_workspace_only.to_string());
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// This one is called, when the ActionGroup is loaded.
+    /////////////////////////////////////////////////////////////////////
+
+    public override void on_load(Xml.Node* data) {
+        for (Xml.Attr* attribute = data->properties; attribute != null; attribute = attribute->next) {
+            string attr_name = attribute->name.down();
+            string attr_content = attribute->children->content;
+
+            if (attr_name == "current_workspace_only") {
+                this.current_workspace_only = bool.parse(attr_content);
+            }
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
     /// Loads all currently opened windows and creates actions for them.
     /////////////////////////////////////////////////////////////////////
 
-    private void load() {
+    private void update() {
         unowned GLib.List<Wnck.Window?> windows = this.screen.get_windows();
 
         var matcher = Bamf.Matcher.get_default();
 
         foreach (var window in windows) {
             if (window.get_window_type() == Wnck.WindowType.NORMAL
-                && !window.is_skip_pager() && !window.is_skip_tasklist()) {
+                && !window.is_skip_pager() && !window.is_skip_tasklist()
+                && (!current_workspace_only || (window.get_workspace() != null
+                && window.get_workspace() == this.screen.get_active_workspace()))) {
+
                 var application = window.get_application();
                 var bamf_app = matcher.get_application_for_xid((uint32)window.get_xid());
 
@@ -102,17 +132,18 @@ public class WindowListGroup : ActionGroup {
 
                     if (win.get_workspace() != null) {
                         //select the workspace
-                        if (win.get_workspace() != win.get_screen().get_active_workspace())
+                        if (win.get_workspace() != win.get_screen().get_active_workspace()) {
                             win.get_workspace().activate(time_stamp);
+                        }
 
-                        //select the viewport inside the wprkspace
+                        //select the viewport inside the workspace
                         if (!win.is_in_viewport(win.get_workspace()) ) {
                             int xp, yp, widthp, heightp, scx, scy, nx, ny, wx, wy;
                             win.get_geometry (out xp, out yp, out widthp, out heightp);
-                            scx= win.get_screen().get_width();
-                            scy= win.get_screen().get_height();
-                            wx= win.get_workspace().get_viewport_x();
-                            wy= win.get_workspace().get_viewport_y();
+                            scx = win.get_screen().get_width();
+                            scy = win.get_screen().get_height();
+                            wx = win.get_workspace().get_viewport_x();
+                            wy = win.get_workspace().get_viewport_y();
                             if (scx > 0 && scy > 0) {
                                 nx= ((wx+xp) / scx) * scx;
                                 ny= ((wy+yp) / scy) * scy;
@@ -121,8 +152,9 @@ public class WindowListGroup : ActionGroup {
                         }
                     }
 
-                    if (win.is_minimized())
+                    if (win.is_minimized()) {
                         win.unminimize(time_stamp);
+                    }
 
                     win.activate_transient(time_stamp);
                 });
@@ -147,7 +179,7 @@ public class WindowListGroup : ActionGroup {
 
                 // reload
                 this.delete_all();
-                this.load();
+                this.update();
 
                 this.changing = false;
                 return false;

@@ -445,6 +445,7 @@ public class PieWindow : Gtk.Window {
 
         if      (Gdk.keyval_name(key) == "Escape") this.cancel();
         else if (Gdk.keyval_name(key) == "Return") this.activate_slice(time_stamp);
+        else if (Gdk.keyval_name(key) == "KP_Enter") this.activate_slice(time_stamp);
         else if (!PieManager.get_is_turbo(this.renderer.id)) {
             if (Gdk.keyval_name(key) == "Up") this.renderer.select_up();
             else if (Gdk.keyval_name(key) == "Down") this.renderer.select_down();

@@ -72,7 +72,7 @@ namespace Pies {
                         }
                     } else {
                         writer.start_element("group");
-                            writer.write_attribute("type", GroupRegistry.descriptions[group.get_type().name()].id);
+                            group.on_save(writer);
                         writer.end_element();
 
                         slice_count += group.actions.size;

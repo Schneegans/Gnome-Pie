@@ -91,7 +91,7 @@ public class GroupRegistry : GLib.Object {
             case "bookmarks":
                 return new BookmarkGroup(parent_id);
             case "clipboard":
-                return new ClipboardGroup(parent_id);
+                return new ClipboardGroup(parent_id, 8);
             case "devices":
                 return new DevicesGroup(parent_id);
             case "menu":

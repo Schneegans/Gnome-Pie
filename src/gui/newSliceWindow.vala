@@ -57,11 +57,13 @@ public class NewSliceWindow : GLib.Object {
     private Gtk.Box hotkey_box = null;
     private Gtk.Box uri_box = null;
     private Gtk.Box quickaction_box = null;
+    private Gtk.Box clipboard_box = null;
     private Gtk.Image icon = null;
     private Gtk.Entry name_entry = null;
     private Gtk.Entry command_entry = null;
     private Gtk.Entry uri_entry = null;
     private Gtk.CheckButton quickaction_checkbutton = null;
+    private Gtk.Scale clipboard_slider = null;
 
     /////////////////////////////////////////////////////////////////////
     /// Two custom widgets. For Pie and hotkey selection respectively.
@@ -116,15 +118,20 @@ public class NewSliceWindow : GLib.Object {
                 this.hotkey_box.hide();
                 this.uri_box.hide();
                 this.quickaction_box.hide();
+                this.clipboard_box.hide();
 
                 this.current_type = type;
 
                 switch (type) {
-                    case "bookmarks": case "clipboard": case "devices":
+                    case "bookmarks": case "devices":
                     case "menu": case "session": case "window_list":
                     case "workspace_window_list":
                         this.no_options_box.show();
                         this.set_icon(icon);
+                        break;
+                    case "clipboard":
+                        this.set_icon(icon);
+                        this.clipboard_box.show();
                         break;
                     case "app":
                         this.name_box.show();
@@ -184,9 +191,13 @@ public class NewSliceWindow : GLib.Object {
             this.uri_entry = builder.get_object("uri-entry") as Gtk.Entry;
             this.command_entry = builder.get_object("command-entry") as Gtk.Entry;
             this.quickaction_checkbutton = builder.get_object("quick-action-checkbutton") as Gtk.CheckButton;
-
             this.quickaction_box = builder.get_object("quickaction-box") as Gtk.Box;
             this.icon = builder.get_object("icon") as Gtk.Image;
+
+            this.clipboard_box = builder.get_object("clipboard-box") as Gtk.Box;
+            this.clipboard_slider = (builder.get_object("clipboard-scale") as Gtk.Scale);
+                 clipboard_slider.set_range(2, 24);
+                 clipboard_slider.set_value(8);
 
             this.icon_button.clicked.connect(on_icon_button_clicked);
 
@@ -273,6 +284,9 @@ public class NewSliceWindow : GLib.Object {
 
         } else {
             type = GroupRegistry.descriptions[group.get_type().name()].id;
+            if (type == "clipboard") {
+                this.clipboard_slider.set_value((group as ClipboardGroup).max_items);
+            }
             this.select_type(type);
         }
     }
@@ -314,13 +328,17 @@ public class NewSliceWindow : GLib.Object {
 
         switch (this.current_type) {
             case "bookmarks":   group = new BookmarkGroup(this.current_id);      break;
-            case "clipboard":   group = new ClipboardGroup(this.current_id);     break;
             case "devices":     group = new DevicesGroup(this.current_id);       break;
             case "menu":        group = new MenuGroup(this.current_id);          break;
             case "session":     group = new SessionGroup(this.current_id);       break;
             case "window_list": group = new WindowListGroup(this.current_id);    break;
-            case "workspace_window_list": group = new WorkspaceWindowListGroup(this.current_id);    break;
-
+            case "clipboard":
+                group = new ClipboardGroup(this.current_id,
+                                           (int)this.clipboard_slider.get_value());
+                break;
+            case "workspace_window_list":
+                group = new WorkspaceWindowListGroup(this.current_id);
+                break;
             case "app":
                 group = new ActionGroup(this.current_id);
                 group.add_action(new AppAction(this.name_entry.text, this.current_icon,

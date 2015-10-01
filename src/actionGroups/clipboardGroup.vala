@@ -86,13 +86,16 @@ public class ClipboardGroup : ActionGroup {
     }
 
     /////////////////////////////////////////////////////////////////////
+    /// The maximum remembered items of the clipboard.
+    /////////////////////////////////////////////////////////////////////
 
-    public ClipboardGroup(string parent_id) {
-        GLib.Object(parent_id : parent_id);
+    public int max_items {get; set;}
+
+    /////////////////////////////////////////////////////////////////////
+
+    public ClipboardGroup(string parent_id, int max_items) {
+        GLib.Object(parent_id : parent_id, max_items : max_items);
     }
-
-    /////////////////////////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////////
 
     /////////////////////////////////////////////////////////////////////
     /// Used to register this type of ActionGroup. It sets the display
@@ -117,18 +120,36 @@ public class ClipboardGroup : ActionGroup {
 
     private bool ignore_next_change = false;
 
-    /////////////////////////////////////////////////////////////////////
-    /// The maximum remembered items of the clipboard.
-    /////////////////////////////////////////////////////////////////////
-
-    private static const int max_items = 6;
-
     private Gee.ArrayList<ClipboardItem?> items;
 
     construct {
         this.items = new Gee.ArrayList<ClipboardItem?>();
         this.clipboard = Gtk.Clipboard.get(Gdk.SELECTION_CLIPBOARD);
         this.clipboard.owner_change.connect(this.on_change);
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// This one is called, when the ActionGroup is saved.
+    /////////////////////////////////////////////////////////////////////
+
+    public override void on_save(Xml.TextWriter writer) {
+        base.on_save(writer);
+        writer.write_attribute("max_items", this.max_items.to_string());
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// This one is called, when the ActionGroup is loaded.
+    /////////////////////////////////////////////////////////////////////
+
+    public override void on_load(Xml.Node* data) {
+        for (Xml.Attr* attribute = data->properties; attribute != null; attribute = attribute->next) {
+            string attr_name = attribute->name.down();
+            string attr_content = attribute->children->content;
+
+            if (attr_name == "max_items") {
+                this.max_items = int.parse(attr_content);
+            }
+        }
     }
 
     private void on_change() {
@@ -149,7 +170,7 @@ public class ClipboardGroup : ActionGroup {
     private void add_item(ClipboardItem item) {
 
         // remove one item if there are too many
-        if (this.items.size == ClipboardGroup.max_items) {
+        if (this.items.size == this.max_items) {
             this.items.remove_at(0);
         }
 

@@ -56,6 +56,20 @@ public class ActionGroup : GLib.Object {
     public virtual void on_remove() {}
 
     /////////////////////////////////////////////////////////////////////
+    /// This one is called, when the ActionGroup is saved.
+    /////////////////////////////////////////////////////////////////////
+
+    public virtual void on_save(Xml.TextWriter writer) {
+        writer.write_attribute("type", GroupRegistry.descriptions[this.get_type().name()].id);
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// This one is called, when the ActionGroup is loaded.
+    /////////////////////////////////////////////////////////////////////
+
+    public virtual void on_load(Xml.Node* data) {}
+
+    /////////////////////////////////////////////////////////////////////
     /// Adds a new Action to the group.
     /////////////////////////////////////////////////////////////////////
 
@@ -76,8 +90,9 @@ public class ActionGroup : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void disable_quickactions() {
-        foreach (var action in actions)
+        foreach (var action in actions) {
             action.is_quickaction = false;
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -85,9 +100,11 @@ public class ActionGroup : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public bool has_quickaction() {
-        foreach (var action in actions)
-            if (action.is_quickaction)
+        foreach (var action in actions) {
+            if (action.is_quickaction) {
                 return true;
+            }
+        }
 
         return false;
     }

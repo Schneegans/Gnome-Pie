@@ -192,17 +192,14 @@ namespace Pies {
             string attr_name = attribute->name.down();
             string attr_content = attribute->children->content;
 
-            switch (attr_name) {
-                case "type":
-                    type = attr_content;
-                    break;
-                default:
-                    warning("Invalid attribute \"" + attr_name + "\" in <group> element in pies.conf!");
-                    break;
+            if (attr_name == "type") {
+                type = attr_content;
+                break;
             }
         }
 
         ActionGroup group = GroupRegistry.create_group(type, pie.id);
+        group.on_load(slice);
 
         if (group != null) pie.add_group(group);
     }

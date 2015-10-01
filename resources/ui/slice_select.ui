@@ -344,19 +344,12 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkCheckButton" id="quick-action-checkbutton">
-                                    <property name="use_action_appearance">False</property>
+                                  <object class="GtkSwitch" id="quick-action-checkbutton">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="receives_default">False</property>
-                                    <property name="has_tooltip">True</property>
-                                    <property name="tooltip_markup" translatable="yes">This Slice will be executed when you click in the middle of the Pie.</property>
-                                    <property name="tooltip_text" translatable="yes">This Slice will be executed when you click in the middle of the Pie.</property>
-                                    <property name="xalign">0</property>
-                                    <property name="draw_indicator">True</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">True</property>
+                                    <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
                                   </packing>
@@ -428,19 +421,12 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkCheckButton" id="workspace-only-checkbutton">
-                                    <property name="use_action_appearance">False</property>
+                                  <object class="GtkSwitch" id="workspace-only-checkbutton">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
-                                    <property name="receives_default">False</property>
-                                    <property name="has_tooltip">True</property>
-                                    <property name="tooltip_markup" translatable="yes">If checked, the group will contain a Slice for each window of your current workspace only.</property>
-                                    <property name="tooltip_text" translatable="yes">If checked, the group will contain a Slice for each window of your current workspace only.</property>
-                                    <property name="xalign">0</property>
-                                    <property name="draw_indicator">True</property>
                                   </object>
                                   <packing>
-                                    <property name="expand">True</property>
+                                    <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
                                   </packing>

@@ -63,8 +63,8 @@ public class NewSliceWindow : GLib.Object {
     private Gtk.Entry name_entry = null;
     private Gtk.Entry command_entry = null;
     private Gtk.Entry uri_entry = null;
-    private Gtk.CheckButton quickaction_checkbutton = null;
-    private Gtk.CheckButton workspace_only_checkbutton = null;
+    private Gtk.Switch quickaction_checkbutton = null;
+    private Gtk.Switch workspace_only_checkbutton = null;
     private Gtk.Scale clipboard_slider = null;
 
     /////////////////////////////////////////////////////////////////////
@@ -196,11 +196,11 @@ public class NewSliceWindow : GLib.Object {
             this.name_entry = builder.get_object("name-entry") as Gtk.Entry;
             this.uri_entry = builder.get_object("uri-entry") as Gtk.Entry;
             this.command_entry = builder.get_object("command-entry") as Gtk.Entry;
-            this.quickaction_checkbutton = builder.get_object("quick-action-checkbutton") as Gtk.CheckButton;
+            this.quickaction_checkbutton = builder.get_object("quick-action-checkbutton") as Gtk.Switch;
             this.quickaction_box = builder.get_object("quickaction-box") as Gtk.Box;
             this.icon = builder.get_object("icon") as Gtk.Image;
 
-            this.workspace_only_checkbutton = builder.get_object("workspace-only-checkbutton") as Gtk.CheckButton;
+            this.workspace_only_checkbutton = builder.get_object("workspace-only-checkbutton") as Gtk.Switch;
             this.workspace_only_box = builder.get_object("workspace-only-box") as Gtk.Box;
 
             this.clipboard_box = builder.get_object("clipboard-box") as Gtk.Box;

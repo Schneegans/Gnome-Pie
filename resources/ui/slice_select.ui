@@ -347,6 +347,8 @@
                                   <object class="GtkSwitch" id="quick-action-checkbutton">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+                                    <property name="halign">end</property>
+                                    <property name="valign">center</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>
@@ -424,6 +426,8 @@
                                   <object class="GtkSwitch" id="workspace-only-checkbutton">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
+                                    <property name="halign">end</property>
+                                    <property name="valign">center</property>
                                   </object>
                                   <packing>
                                     <property name="expand">False</property>

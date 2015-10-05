@@ -305,6 +305,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
                                         <property name="icon_name">list-add-symbolic</property>
+                                        <property name="use_fallback">True</property>
                                         <property name="icon_size">1</property>
                                       </object>
                                     </child>
@@ -316,16 +317,17 @@
                                   </packing>
                                 </child>
                                 <child>
-                                  <object class="GtkButton" id="theme-delete-button">
+                                  <object class="GtkButton" id="theme-reload-button">
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">False</property>
-                                    <property name="tooltip_text" translatable="yes">Delete the selected theme.</property>
+                                    <property name="tooltip_text" translatable="yes">Reload all themes.</property>
                                     <child>
-                                      <object class="GtkImage" id="delete_image">
+                                      <object class="GtkImage" id="export_image4">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="icon_name">list-remove-symbolic</property>
+                                        <property name="icon_name">view-refresh-symbolic</property>
+                                        <property name="use_fallback">True</property>
                                         <property name="icon_size">1</property>
                                       </object>
                                     </child>
@@ -334,27 +336,6 @@
                                     <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <object class="GtkButton" id="theme-export-button">
-                                    <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">False</property>
-                                    <property name="tooltip_text" translatable="yes">Export the selected theme for sharing.</property>
-                                    <child>
-                                      <object class="GtkImage" id="export_image">
-                                        <property name="visible">True</property>
-                                        <property name="can_focus">False</property>
-                                        <property name="icon_name">document-save-as-symbolic</property>
-                                        <property name="icon_size">1</property>
-                                      </object>
-                                    </child>
-                                  </object>
-                                  <packing>
-                                    <property name="expand">False</property>
-                                    <property name="fill">True</property>
-                                    <property name="position">2</property>
                                   </packing>
                                 </child>
                               </object>
@@ -367,6 +348,126 @@
                         </child>
                         <child>
                           <object class="GtkSeparatorToolItem" id="sep2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="draw">False</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="homogeneous">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkToolItem" id="add-remove-item2">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkBox" id="add-remove-box2">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkButton" id="theme-delete-button">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="tooltip_text" translatable="yes">Delete the selected theme.</property>
+                                    <child>
+                                      <object class="GtkImage" id="delete_image">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="icon_name">list-remove-symbolic</property>
+                                        <property name="use_fallback">True</property>
+                                        <property name="icon_size">1</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="theme-export-button">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="tooltip_text" translatable="yes">Export the selected theme for sharing.</property>
+                                    <child>
+                                      <object class="GtkImage" id="export_image3">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="icon_name">document-save-as-symbolic</property>
+                                        <property name="use_fallback">True</property>
+                                        <property name="icon_size">1</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">1</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="homogeneous">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparatorToolItem" id="sep4">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="draw">False</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="homogeneous">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkToolItem" id="add-remove-item4">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <child>
+                              <object class="GtkBox" id="add-remove-box4">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <child>
+                                  <object class="GtkButton" id="theme-open-button">
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">False</property>
+                                    <property name="tooltip_text" translatable="yes">Open the theme's files in your file browser.</property>
+                                    <child>
+                                      <object class="GtkImage" id="export_image5">
+                                        <property name="visible">True</property>
+                                        <property name="can_focus">False</property>
+                                        <property name="icon_name">document-open-symbolic</property>
+                                        <property name="use_fallback">True</property>
+                                        <property name="icon_size">1</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                  <packing>
+                                    <property name="expand">False</property>
+                                    <property name="fill">True</property>
+                                    <property name="position">0</property>
+                                  </packing>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="homogeneous">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkSeparatorToolItem" id="sep3">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="draw">False</property>
@@ -394,7 +495,7 @@
                                       <object class="GtkImage" id="help_image">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
-                                        <property name="icon_name">help</property>
+                                        <property name="icon_name">help-info-symbolic</property>
                                         <property name="icon_size">1</property>
                                       </object>
                                     </child>

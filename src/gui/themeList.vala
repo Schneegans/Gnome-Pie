@@ -109,6 +109,7 @@ class ThemeList : Gtk.TreeView {
                                             + "</i></span>");
             if(theme == Config.global.theme) {
                 get_selection().select_iter(current);
+                this.scroll_to_cell(get_selection().get_selected_rows(null).nth_data(0), null, true, 0.5f, 0.5f);
             }
         }
     }

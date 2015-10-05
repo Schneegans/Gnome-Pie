@@ -170,6 +170,8 @@ public class PreferencesWindow : GLib.Object {
 
         (builder.get_object("theme-export-button") as Gtk.Button).clicked.connect(on_export_theme_button_clicked);
         (builder.get_object("theme-import-button") as Gtk.Button).clicked.connect(on_import_theme_button_clicked);
+        (builder.get_object("theme-reload-button") as Gtk.Button).clicked.connect(on_reload_theme_button_clicked);
+        (builder.get_object("theme-open-button") as Gtk.Button).clicked.connect(on_open_theme_button_clicked);
         this.theme_delete_button = (builder.get_object("theme-delete-button") as Gtk.Button);
         this.theme_delete_button.clicked.connect(on_delete_theme_button_clicked);
 
@@ -460,6 +462,27 @@ public class PreferencesWindow : GLib.Object {
 
         dialog.run();
         dialog.destroy();
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Reloads all themes.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_reload_theme_button_clicked(Gtk.Button button) {
+        Config.global.load_themes(Config.global.theme.name);
+        this.theme_list.reload();
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Opens the loaction of the them in the file browser.
+    /////////////////////////////////////////////////////////////////////
+
+    private void on_open_theme_button_clicked(Gtk.Button button) {
+        try{
+            GLib.AppInfo.launch_default_for_uri("file://" + Config.global.theme.directory, null);
+        } catch (Error e) {
+            warning(e.message);
+        }
     }
 
     /////////////////////////////////////////////////////////////////////

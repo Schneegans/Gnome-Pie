@@ -17,6 +17,7 @@
                           active_alpha="0"
                           active_rotationMode="turn_to_second"   active_rotationSpeed="10"
                           inactive_rotationMode="turn_to_second" inactive_rotationSpeed="10" />
+            <center_layer file="gloss.svg" />
         </center>
         <slices radius="25">
             <activeSlice>
@@ -24,12 +25,14 @@
                 <slice_layer type="file" colorize="false" file="icon.svg" scale="1.7" />
                 <slice_layer type="icon" scale="1.4" file="icon_mask_caption.svg" visibility="with_caption" />
                 <slice_layer type="icon" scale="1.4" file="icon_mask.svg" visibility="without_caption" />
+                <slice_layer type="file" colorize="false" file="icon_gloss.svg" scale="1.7" />
                 <slice_layer type="caption" y="22" font="sans 8" width="50" color="#dcdcdc" height="20" visibility="with_caption" />
             </activeSlice>
             <inactiveSlice>
                 <slice_layer type="file" file="icon.svg" scale="1.7" />
                 <slice_layer type="icon" scale="1.4" file="icon_mask_caption.svg" visibility="with_caption" />
                 <slice_layer type="icon" scale="1.4" file="icon_mask.svg" visibility="without_caption" />
+                <slice_layer type="file" colorize="false" file="icon_gloss.svg" scale="1.7" />
                 <slice_layer type="caption" y="22" font="sans 8" width="50" color="#dcdcdc" height="20" visibility="with_caption" />
             </inactiveSlice>
         </slices>

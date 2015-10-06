@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme name="Space Clock" description="A very stylish clock" author="Simon Schneegans" email="code@simonschneegans.de">
+    <pie radius="110" maxZoom="1.2" zoomRange="0.2" transitionTime="0.3" springiness="2"
+          fadeInTime="0.3" fadeOutTime="0.5" fadeInZoom="1.2" fadeOutZoom="0.7" fadeInRotation="0.3" fadeOutRotation="-0.3">
+        <center radius="90" activeRadius="55">
+            <center_layer file="center.svg" />
+            <center_layer file="hour.svg"
+                          active_rotationMode="turn_to_hour_12"   active_rotationSpeed="5"
+                          inactive_rotationMode="turn_to_hour_12" inactive_rotationSpeed="5" />
+            <center_layer file="minute.svg"
+                          active_rotationMode="turn_to_minute"   active_rotationSpeed="5"
+                          inactive_rotationMode="turn_to_minute" inactive_rotationSpeed="5" />
+            <center_layer file="second.svg"
+                          active_rotationMode="turn_to_second"   active_rotationSpeed="5"
+                          inactive_rotationMode="turn_to_second" inactive_rotationSpeed="5" />
+             <center_layer file="pointer.svg" active_colorize="true" inactive_alpha="0.0"
+                          active_rotationMode="turn_to_active"   active_rotationSpeed="10"
+                          inactive_rotationMode="turn_to_active" inactive_rotationSpeed="10" />
+        </center>
+        <slices radius="25">
+            <activeSlice>
+                <slice_layer type="file" file="icon.svg" scale="1.7" />
+                <slice_layer type="file" colorize="true" file="icon_highlight.svg" scale="1.7" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask_caption.svg" visibility="with_caption" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask.svg" visibility="without_caption" />
+                <slice_layer type="caption" y="22" font="sans 8" width="50" color="#333" height="20" visibility="with_caption" />
+            </activeSlice>
+            <inactiveSlice>
+                <slice_layer type="file" file="icon.svg" scale="1.7" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask_caption.svg" visibility="with_caption" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask.svg" visibility="without_caption" />
+                <slice_layer type="caption" y="22" font="sans 8" width="50" color="#333" height="20" visibility="with_caption" />
+            </inactiveSlice>
+        </slices>
+        <caption position="0" font="sans 10" width="100" height="80" color="#333"/>
+    </pie>
+</theme>
+

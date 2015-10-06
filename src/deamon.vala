@@ -133,6 +133,7 @@ public class Deamon : GLib.Application {
 
             if (open_pie != null && open_pie != "") {
                 PieManager.open_pie(open_pie);
+                open_pie = "";
             }
 
             // finished loading... so run the prog!

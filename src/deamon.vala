@@ -248,6 +248,7 @@ public class Deamon : GLib.Application {
         if (called_from_remote) {
             if (open_pie != null && open_pie != "") {
                 PieManager.open_pie(open_pie);
+                open_pie = "";
             } else {
                 this.indicator.show_preferences();
             }

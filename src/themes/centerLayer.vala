@@ -26,12 +26,17 @@ public class CenterLayer : GLib.Object {
 
     /////////////////////////////////////////////////////////////////////
     /// Possible rotation modes.
-    /// AUTO:      Turns the layer continously.
-    /// TO_MOUSE:  Turns the layer always to the pointer.
-    /// TO_ACTIVE: Turns the layer to the active slice.
+    /// AUTO:       Turns the layer continously.
+    /// TO_MOUSE:   Turns the layer always to the pointer.
+    /// TO_ACTIVE:  Turns the layer to the active slice.
+    /// TO_HOUR_12: Turns the layer to the position of the current hour.
+    /// TO_HOUR_24: Turns the layer to the position of the current hour.
+    /// TO_MINUTE:  Turns the layer to the position of the current minute.
+    /// TO_SECOND:  Turns the layer to the position of the current second.
     /////////////////////////////////////////////////////////////////////
 
-    public enum RotationMode {AUTO, TO_MOUSE, TO_ACTIVE}
+    public enum RotationMode {AUTO, TO_MOUSE, TO_ACTIVE, TO_HOUR_12,
+                              TO_HOUR_24, TO_MINUTE, TO_SECOND}
 
     /////////////////////////////////////////////////////////////////////
     /// Information on the contained image.

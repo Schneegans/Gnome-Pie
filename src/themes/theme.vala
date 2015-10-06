@@ -424,6 +424,19 @@ public class Theme : GLib.Object {
                         case "turn_to_mouse":
                            active_rotation_mode = CenterLayer.RotationMode.TO_MOUSE;
                            break;
+                        case "turn_to_hour":
+                        case "turn_to_hour_12":
+                           active_rotation_mode = CenterLayer.RotationMode.TO_HOUR_12;
+                           break;
+                        case "turn_to_hour_24":
+                           active_rotation_mode = CenterLayer.RotationMode.TO_HOUR_24;
+                           break;
+                        case "turn_to_minute":
+                           active_rotation_mode = CenterLayer.RotationMode.TO_MINUTE;
+                           break;
+                        case "turn_to_second":
+                           active_rotation_mode = CenterLayer.RotationMode.TO_SECOND;
+                           break;
                         default:
                            warning("Invalid value \"" + attr_content + "\" for attribute \"" + attr_name + "\" in <center_layer> element!");
                            break;
@@ -451,6 +464,19 @@ public class Theme : GLib.Object {
                            break;
                         case "turn_to_mouse":
                            inactive_rotation_mode = CenterLayer.RotationMode.TO_MOUSE;
+                           break;
+                        case "turn_to_hour":
+                        case "turn_to_hour_12":
+                           inactive_rotation_mode = CenterLayer.RotationMode.TO_HOUR_12;
+                           break;
+                        case "turn_to_hour_24":
+                           inactive_rotation_mode = CenterLayer.RotationMode.TO_HOUR_24;
+                           break;
+                        case "turn_to_minute":
+                           inactive_rotation_mode = CenterLayer.RotationMode.TO_MINUTE;
+                           break;
+                        case "turn_to_second":
+                           inactive_rotation_mode = CenterLayer.RotationMode.TO_SECOND;
                            break;
                         default:
                            warning("Invalid value \"" + attr_content + "\" for attribute \"" + attr_name + "\" in <center_layer> element!");

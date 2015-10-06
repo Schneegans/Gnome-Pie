@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<theme name="Simple Clock" description="Goes well with the Numix icon set" author="Simon Schneegans" email="code@simonschneegans.de">
+    <pie radius="110" maxZoom="1.1" zoomRange="0.1" transitionTime="0.2" springiness="1.5"
+          fadeInTime="0.3" fadeOutTime="0.3" fadeInZoom="0.5" fadeOutZoom="0.7" fadeInRotation="0.2" fadeOutRotation="-0.3">
+        <center radius="80" activeRadius="55">
+            <center_layer file="ring.svg" />
+            <center_layer file="hour.svg"
+                          active_rotationMode="turn_to_active"   active_rotationSpeed="10"
+                          inactive_rotationMode="turn_to_hour_12" inactive_rotationSpeed="10" />
+            <center_layer file="minute.svg"
+                          active_rotationMode="turn_to_active"   active_rotationSpeed="10"
+                          inactive_rotationMode="turn_to_minute" inactive_rotationSpeed="10" />
+            <center_layer file="second.svg"
+                          active_rotationMode="turn_to_active"   active_rotationSpeed="10"
+                          inactive_rotationMode="turn_to_second" inactive_rotationSpeed="10" />
+        </center>
+        <slices radius="25">
+            <activeSlice>
+                <slice_layer type="file" file="icon.svg" scale="1.7" />
+                <slice_layer type="file" colorize="false" file="icon.svg" scale="1.7" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask_caption.svg" visibility="with_caption" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask.svg" visibility="without_caption" />
+                <slice_layer type="caption" y="22" font="sans 8" width="50" color="#dcdcdc" height="20" visibility="with_caption" />
+            </activeSlice>
+            <inactiveSlice>
+                <slice_layer type="file" file="icon.svg" scale="1.7" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask_caption.svg" visibility="with_caption" />
+                <slice_layer type="icon" scale="1.4" file="icon_mask.svg" visibility="without_caption" />
+                <slice_layer type="caption" y="22" font="sans 8" width="50" color="#dcdcdc" height="20" visibility="with_caption" />
+            </inactiveSlice>
+        </slices>
+        <caption position="0" font="sans 10" width="80" height="80" color="#dcdcdc"/>
+    </pie>
+</theme>
+

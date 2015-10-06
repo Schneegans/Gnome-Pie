@@ -107,42 +107,50 @@ public class CenterRenderer : GLib.Object {
             ctx.save();
 
             // calculate all values needed for animation/drawing
-            double active_speed = (layer.active_rotation_mode == CenterLayer.RotationMode.TO_MOUSE) ?
-                0.0 : layer.active_rotation_speed;
-            double inactive_speed = (layer.inactive_rotation_mode == CenterLayer.RotationMode.TO_MOUSE) ?
-                0.0 : layer.inactive_rotation_speed;
             double max_scale = layer.active_scale*this.activity.val
                 + layer.inactive_scale*(1.0-this.activity.val);
             double max_alpha = layer.active_alpha*this.activity.val
                 + layer.inactive_alpha*(1.0-this.activity.val);
             double colorize = ((layer.active_colorize == true) ? this.activity.val : 0.0)
                 + ((layer.inactive_colorize == true) ? 1.0 - this.activity.val : 0.0);
-            double max_rotation_speed = active_speed*this.activity.val
-                + inactive_speed*(1.0-this.activity.val);
+            double max_rotation_speed = layer.active_rotation_speed*this.activity.val
+                + layer.inactive_rotation_speed*(1.0-this.activity.val);
             CenterLayer.RotationMode rotation_mode = ((this.activity.val > 0.5) ?
                 layer.active_rotation_mode : layer.inactive_rotation_mode);
 
-            if (rotation_mode == CenterLayer.RotationMode.TO_MOUSE) {
-                double diff = angle-layer.rotation;
-                max_rotation_speed = layer.active_rotation_speed*this.activity.val
-                    + layer.inactive_rotation_speed*(1.0-this.activity.val);
-                double smoothy = fabs(diff) < 0.9 ? fabs(diff) + 0.1 : 1.0;
-                double step = max_rotation_speed*frame_time*smoothy;
+            double direction = 0;
 
-                if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
-                    layer.rotation = angle;
-                else {
-                    if ((diff > 0 && diff < PI) || diff < -PI) layer.rotation += step;
-                    else                                       layer.rotation -= step;
-                }
+            if (rotation_mode == CenterLayer.RotationMode.TO_MOUSE) {
+                direction = angle;
 
             } else if (rotation_mode == CenterLayer.RotationMode.TO_ACTIVE) {
-                max_rotation_speed *= this.activity.val;
-
                 double slice_angle = parent.total_slice_count > 0 ? 2*PI/parent.total_slice_count : 0;
-                double direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
+                direction = (int)((angle+0.5*slice_angle) / (slice_angle))*slice_angle;
+
+            } else if (rotation_mode == CenterLayer.RotationMode.TO_SECOND) {
+                var now = new DateTime.now_local();
+                direction = 2*PI*(now.get_second()+60-15)/60;
+
+            } else if (rotation_mode == CenterLayer.RotationMode.TO_MINUTE) {
+                var now = new DateTime.now_local();
+                direction = 2*PI*(now.get_minute()+60-15)/60;
+
+            } else if (rotation_mode == CenterLayer.RotationMode.TO_HOUR_24) {
+                var now = new DateTime.now_local();
+                direction = 2*PI*(now.get_hour()+24-6)/24 + 2*PI*(now.get_minute())/(60*24);
+
+            } else if (rotation_mode == CenterLayer.RotationMode.TO_HOUR_12) {
+                var now = new DateTime.now_local();
+                direction = 2*PI*(now.get_hour()+12-3)/12 + 2*PI*(now.get_minute())/(60*12);
+            }
+
+            if (rotation_mode == CenterLayer.RotationMode.AUTO) {
+                layer.rotation += max_rotation_speed*frame_time;
+            } else {
+                direction = Math.fmod(direction, 2*PI);
                 double diff = direction-layer.rotation;
-                double step = max_rotation_speed*frame_time;
+                double smoothy = fabs(diff) < 0.9 ? fabs(diff) + 0.1 : 1.0;
+                double step = max_rotation_speed*frame_time*smoothy;
 
                 if (fabs(diff) <= step || fabs(diff) >= 2.0*PI - step)
                     layer.rotation = direction;
@@ -150,8 +158,7 @@ public class CenterRenderer : GLib.Object {
                     if ((diff > 0 && diff < PI) || diff < -PI) layer.rotation += step;
                     else                                       layer.rotation -= step;
                 }
-
-            } else layer.rotation += max_rotation_speed*frame_time;
+            }
 
             layer.rotation = fmod(layer.rotation+2*PI, 2*PI);
 

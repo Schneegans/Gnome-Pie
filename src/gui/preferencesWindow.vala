@@ -72,7 +72,7 @@ public class PreferencesWindow : GLib.Object {
                     Gdk.EventMask.KEY_PRESS_MASK |
                     Gdk.EventMask.POINTER_MOTION_MASK);
 
-        if (!Deamon.disable_header_bar) {
+        if (!Daemon.disable_header_bar) {
             var headerbar = new Gtk.HeaderBar();
             headerbar.show_close_button = true;
             headerbar.title = _("Gnome-Pie Settings");
@@ -82,7 +82,7 @@ public class PreferencesWindow : GLib.Object {
 
         this.notebook = builder.get_object("notebook") as Gtk.Notebook;
 
-        if (!Deamon.disable_stack_switcher) {
+        if (!Daemon.disable_stack_switcher) {
             var main_box = builder.get_object("main-box") as Gtk.Box;
             var pie_settings = builder.get_object("pie-settings") as Gtk.Box;
             var general_settings = builder.get_object("general-settings") as Gtk.Box;
@@ -300,7 +300,7 @@ public class PreferencesWindow : GLib.Object {
             this.theme_delete_button.sensitive = false;
         }
 
-        if (!Deamon.disable_stack_switcher) {
+        if (!Daemon.disable_stack_switcher) {
             this.stack.set_visible_child_full("2", Gtk.StackTransitionType.NONE);
         } else {
             this.notebook.set_current_page(1);

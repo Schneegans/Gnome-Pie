@@ -76,7 +76,7 @@ public class AboutWindow: Gtk.AboutDialog {
             logo_icon_name: "gnome-pie",
             website: "http://simmesimme.github.io/gnome-pie.html",
             website_label: "Homepage",
-            version: Deamon.version
+            version: Daemon.version
         );
     }
 }

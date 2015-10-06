@@ -23,7 +23,7 @@ namespace GnomePie {
 /// only one instance of Gnome-Pie running.
 /////////////////////////////////////////////////////////////////////////
 
-public class Deamon : GLib.Application {
+public class Daemon : GLib.Application {
 
     /////////////////////////////////////////////////////////////////////
     /// The current version of Gnome-Pie
@@ -59,8 +59,8 @@ public class Deamon : GLib.Application {
         Gtk.init(ref args);
         Paths.init();
 
-        // create the Deamon and run it
-        var deamon = new GnomePie.Deamon();
+        // create the Daemon and run it
+        var deamon = new GnomePie.Daemon();
         deamon.run(args);
 
         return 0;
@@ -106,11 +106,11 @@ public class Deamon : GLib.Application {
     };
 
     /////////////////////////////////////////////////////////////////////
-    /// C'tor of the Deamon. It checks whether it's the first running
+    /// C'tor of the Daemon. It checks whether it's the first running
     /// instance of Gnome-Pie.
     /////////////////////////////////////////////////////////////////////
 
-    public Deamon() {
+    public Daemon() {
         Object(application_id: "org.gnome.gnomepie",
                flags: GLib.ApplicationFlags.HANDLES_COMMAND_LINE);
 

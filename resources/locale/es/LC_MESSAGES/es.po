@@ -13,12 +13,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2015-09-30 01:36-0400\n"
-"Last-Translator: Simon <code@simonschneegans.de>\n"
+"PO-Revision-Date: 2015-10-02 09:01-0400\n"
+"Last-Translator: Gabriel Dubatti <gdubatti@gmail.com>\n"
 "Language-Team: Spanish\n"
 "Language: es\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Zanata 3.7.2\n"
+"X-Generator: Zanata 3.7.3\n"
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"
@@ -218,7 +218,7 @@ msgstr "Importar un tema desde un archivo."
 
 #: ../ui/preferences.ui:323
 msgid "Delete the selected theme."
-msgstr ""
+msgstr "Borrar el tema elegido."
 
 #: ../ui/preferences.ui:344
 msgid "Export the selected theme for sharing."
@@ -441,7 +441,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:451
 msgid "Do you really want to delete the selected theme from %s?"
-msgstr ""
+msgstr "¿Realmente desea borrar el tema %s?"
 
 #: ../../src/gui/preferencesWindow.vala:528
 msgid "New Pie"
@@ -544,7 +544,7 @@ msgstr "Temas"
 
 #: ../../src/gui/themeList.vala:108
 msgid "by"
-msgstr ""
+msgstr "por"
 
 #: ../../src/gui/indicator.vala:126
 msgid "_Preferences"

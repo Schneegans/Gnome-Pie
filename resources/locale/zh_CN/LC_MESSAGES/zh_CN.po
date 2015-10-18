@@ -15,7 +15,7 @@ msgstr ""
 "Last-Translator: Administrator <tzhou@haverford.edu>\n"
 "Language-Team: Chinese (simplified)\n"
 "Language: zh-CN\n"
-"X-Generator: Zanata 3.7.2\n"
+"X-Generator: Zanata 3.7.3\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
 #: ../ui/pie_options.ui:53

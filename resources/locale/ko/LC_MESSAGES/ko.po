@@ -16,7 +16,7 @@ msgstr ""
 "Language-Team: Korean\n"
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Zanata 3.7.2\n"
+"X-Generator: Zanata 3.7.3\n"
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"

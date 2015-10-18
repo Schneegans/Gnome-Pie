@@ -30,10 +30,14 @@ public class Key : GLib.Object {
 
     private static X.Display display;
 
-    private static int shift_code;
-    private static int ctrl_code;
-    private static int alt_code;
-    private static int super_code;
+    private static int shift_l_code;
+    private static int shift_r_code;
+    private static int ctrl_l_code;
+    private static int ctrl_r_code;
+    private static int alt_l_code;
+    private static int alt_r_code;
+    private static int super_l_code;
+    private static int super_r_code;
 
     /////////////////////////////////////////////////////////////////////
     /// A human readable form of the Key's accelerator.
@@ -96,10 +100,14 @@ public class Key : GLib.Object {
     static construct {
         display = new X.Display();
 
-        shift_code = display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
-        ctrl_code =  display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
-        alt_code =   display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
-        super_code = display.keysym_to_keycode(Gdk.keyval_from_name("Super_L"));
+        shift_l_code = display.keysym_to_keycode(Gdk.keyval_from_name("Shift_L"));
+        shift_r_code = display.keysym_to_keycode(Gdk.keyval_from_name("Shift_R"));
+        ctrl_l_code =  display.keysym_to_keycode(Gdk.keyval_from_name("Control_L"));
+        ctrl_r_code =  display.keysym_to_keycode(Gdk.keyval_from_name("Control_R"));
+        alt_l_code =   display.keysym_to_keycode(Gdk.keyval_from_name("Alt_L"));
+        alt_r_code =   display.keysym_to_keycode(Gdk.keyval_from_name("Alt_R"));
+        super_l_code = display.keysym_to_keycode(Gdk.keyval_from_name("Super_L"));
+        super_r_code = display.keysym_to_keycode(Gdk.keyval_from_name("Super_R"));
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -111,8 +119,8 @@ public class Key : GLib.Object {
         Gdk.ModifierType current_modifiers = get_modifiers();
 
         // release them and press the desired ones
-        press_modifiers(current_modifiers, false);
-        press_modifiers(this.modifiers, true);
+        release_modifiers(current_modifiers);
+        press_modifiers(this.modifiers);
 
         // send events to X
         display.flush();
@@ -122,8 +130,8 @@ public class Key : GLib.Object {
         XTest.fake_key_event(display, this.key_code, false, 0);
 
         // release the pressed modifiers and re-press the keys hold down by the user
-        press_modifiers(this.modifiers, false);
-        press_modifiers(current_modifiers, true);
+        release_modifiers(this.modifiers);
+        // press_modifiers(current_modifiers);
 
         // send events to X
         display.flush();
@@ -134,27 +142,57 @@ public class Key : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private Gdk.ModifierType get_modifiers() {
-        Gdk.ModifierType modifiers;
-        Gtk.get_current_event_state(out modifiers);
-        return modifiers;
+        return (Gdk.ModifierType)Gdk.Keymap.get_default().get_modifier_state();
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Helper method which 'releases' the desired modifier keys.
+    /////////////////////////////////////////////////////////////////////
+
+    private void release_modifiers(Gdk.ModifierType modifiers) {
+        // since we do not know whether left or right version of each key
+        // is pressed, we release both...
+        if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0) {
+            XTest.fake_key_event(display, ctrl_l_code, false, 0);
+            XTest.fake_key_event(display, ctrl_r_code, false, 0);
+        }
+
+        if ((modifiers & Gdk.ModifierType.SHIFT_MASK) > 0) {
+            XTest.fake_key_event(display, shift_l_code, false, 0);
+            XTest.fake_key_event(display, shift_r_code, false, 0);
+        }
+
+        if ((modifiers & Gdk.ModifierType.MOD1_MASK) > 0) {
+            XTest.fake_key_event(display, alt_l_code, false, 0);
+            XTest.fake_key_event(display, alt_r_code, false, 0);
+        }
+
+        if ((modifiers & Gdk.ModifierType.SUPER_MASK) > 0) {
+            XTest.fake_key_event(display, super_l_code, false, 0);
+            XTest.fake_key_event(display, super_r_code, false, 0);
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
     /// Helper method which 'presses' the desired modifier keys.
     /////////////////////////////////////////////////////////////////////
 
-    private void press_modifiers(Gdk.ModifierType modifiers, bool down) {
-        if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0)
-            XTest.fake_key_event(display, ctrl_code, down, 0);
+    private void press_modifiers(Gdk.ModifierType modifiers) {
+        if ((modifiers & Gdk.ModifierType.CONTROL_MASK) > 0) {
+            XTest.fake_key_event(display, ctrl_l_code, true, 0);
+        }
 
-        if ((modifiers & Gdk.ModifierType.SHIFT_MASK) > 0)
-            XTest.fake_key_event(display, shift_code, down, 0);
+        if ((modifiers & Gdk.ModifierType.SHIFT_MASK) > 0) {
+            XTest.fake_key_event(display, shift_l_code, true, 0);
+        }
 
-        if ((modifiers & Gdk.ModifierType.MOD1_MASK) > 0)
-            XTest.fake_key_event(display, alt_code, down, 0);
+        if ((modifiers & Gdk.ModifierType.MOD1_MASK) > 0) {
+            XTest.fake_key_event(display, alt_l_code, true, 0);
+        }
 
-        if ((modifiers & Gdk.ModifierType.SUPER_MASK) > 0)
-            XTest.fake_key_event(display, super_code, down, 0);
+        if ((modifiers & Gdk.ModifierType.SUPER_MASK) > 0) {
+            XTest.fake_key_event(display, super_l_code, true, 0);
+        }
     }
 }
 

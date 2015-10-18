@@ -53,7 +53,7 @@ public class TriggerSelectButton : Gtk.ToggleButton {
                                              |Gdk.ModifierType.LOCK_MASK;
 
     /////////////////////////////////////////////////////////////////////
-    /// C'tor, constructs a new TriggerSelectWindow.
+    /// C'tor, constructs a new TriggerSelectButton.
     /////////////////////////////////////////////////////////////////////
 
     public TriggerSelectButton(bool enable_mouse) {
@@ -132,31 +132,31 @@ public class TriggerSelectButton : Gtk.ToggleButton {
 
     private bool on_button_press(Gdk.EventButton event) {
         if (this.active) {
-                Gtk.Allocation rect;
-                this.get_allocation(out rect);
-                if (event.x < 0 || event.x > rect.width
-                 || event.y < 0 || event.y > rect.height) {
+            Gtk.Allocation rect;
+            this.get_allocation(out rect);
+            if (event.x < 0 || event.x > rect.width
+             || event.y < 0 || event.y > rect.height) {
 
-                    this.cancel();
-                    return true;
-                }
-            }
-
-            if (this.active && this.enable_mouse) {
-                Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
-                var new_trigger = new Trigger.from_values((int)event.button, state, true,
-                                                          false, false, false, false, 5);
-
-                if (new_trigger.key_code != 1) this.update_trigger(new_trigger);
-                else                           this.cancel();
-
-                return true;
-            } else if (this.active) {
                 this.cancel();
                 return true;
             }
+        }
 
-            return false;
+        if (this.active && this.enable_mouse) {
+            Gdk.ModifierType state = event.state & ~ this.lock_modifiers;
+            var new_trigger = new Trigger.from_values((int)event.button, state, true,
+                                                      false, false, false, false, 5);
+
+            if (new_trigger.key_code != 1) this.update_trigger(new_trigger);
+            else                           this.cancel();
+
+            return true;
+        } else if (this.active) {
+            this.cancel();
+            return true;
+        }
+
+        return false;
     }
 }
 

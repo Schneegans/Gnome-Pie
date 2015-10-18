@@ -172,12 +172,18 @@ public class Trigger : GLib.Object {
 
             int button = this.get_mouse_button(check_string);
             if (button > 0) {
+                check_string = check_string.substring(0, check_string.index_of("button"));
+
                 this.with_mouse = true;
                 this.key_code = button;
                 this.key_sym = button;
 
                 Gtk.accelerator_parse(check_string, null, out this._modifiers);
                 this.label = Gtk.accelerator_get_label(0, this.modifiers);
+
+                if (this.label != "") {
+                    label += "+";
+                }
 
                 string button_text = _("Button %i").printf(this.key_code);
 

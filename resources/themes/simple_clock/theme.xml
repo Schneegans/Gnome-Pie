@@ -6,15 +6,15 @@
         <center radius="80" activeRadius="55">
             <center_layer file="ring.svg" />
             <center_layer file="hour.svg"
-                          active_alpha="0"
+                          active_alpha="0.2"
                           active_rotationMode="turn_to_hour_12"   active_rotationSpeed="10"
                           inactive_rotationMode="turn_to_hour_12" inactive_rotationSpeed="10" />
             <center_layer file="minute.svg"
-                          active_alpha="0"
+                          active_alpha="0.2"
                           active_rotationMode="turn_to_minute"   active_rotationSpeed="10"
                           inactive_rotationMode="turn_to_minute" inactive_rotationSpeed="10" />
             <center_layer file="second.svg"
-                          active_alpha="0"
+                          active_alpha="0.2"
                           active_rotationMode="turn_to_second"   active_rotationSpeed="10"
                           inactive_rotationMode="turn_to_second" inactive_rotationSpeed="10" />
             <center_layer file="gloss.svg" />

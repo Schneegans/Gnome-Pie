@@ -42,7 +42,7 @@ public class PieManager : GLib.Object {
     /// Stores all global hotkeys.
     /////////////////////////////////////////////////////////////////////
 
-    private static BindingManager bindings;
+    public static BindingManager bindings;
 
     /////////////////////////////////////////////////////////////////////
     /// True, if any pie has the current focus. If it is closing this

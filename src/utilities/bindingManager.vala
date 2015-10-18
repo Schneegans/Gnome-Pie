@@ -32,6 +32,12 @@ public class BindingManager : GLib.Object {
     public signal void on_press(string id);
 
     /////////////////////////////////////////////////////////////////////
+    /// Called when a previously pressed binding is released again.
+    /////////////////////////////////////////////////////////////////////
+
+    public signal void on_release(uint32 time_stamp);
+
+    /////////////////////////////////////////////////////////////////////
     /// A list storing bindings, which are invoked even if Gnome-Pie
     /// doesn't have the current focus
     /////////////////////////////////////////////////////////////////////
@@ -303,6 +309,12 @@ public class BindingManager : GLib.Object {
             mods = mods & ~ Gdk.ModifierType.SUPER_MASK;
         }
 
+        mods &= ~(Gdk.ModifierType.BUTTON1_MASK
+                | Gdk.ModifierType.BUTTON2_MASK
+                | Gdk.ModifierType.BUTTON3_MASK
+                | Gdk.ModifierType.BUTTON4_MASK
+                | Gdk.ModifierType.BUTTON5_MASK);
+
         return mods & ~lock_modifiers[7];
     }
 
@@ -319,13 +331,16 @@ public class BindingManager : GLib.Object {
             X.Event* xevent = (X.Event*) pointer;
         #endif
 
-        if(xevent->type == X.EventType.KeyPress) {
+
+        if (xevent->type == X.EventType.KeyRelease) {
+            on_release((uint32)xevent.xkey.time);
+        } else if (xevent->type == X.EventType.KeyPress) {
+
+            // remove NumLock, CapsLock and ScrollLock from key state
+            var event_mods = prepare_modifiers((Gdk.ModifierType)xevent.xkey.state);
+
             foreach(var binding in bindings) {
-
-                // remove NumLock, CapsLock and ScrollLock from key state
-                var event_mods = prepare_modifiers((Gdk.ModifierType)xevent.xkey.state);
                 var bound_mods = prepare_modifiers(binding.trigger.modifiers);
-
                 if(xevent->xkey.keycode == binding.trigger.key_code &&
                    event_mods == bound_mods) {
 
@@ -336,14 +351,14 @@ public class BindingManager : GLib.Object {
                     }
                 }
             }
-         }
-         else if(xevent->type == X.EventType.ButtonPress) {
+         } else if(xevent->type == X.EventType.ButtonRelease) {
+            on_release((uint32)xevent.xkey.time);
+         } else if(xevent->type == X.EventType.ButtonPress) {
+            // remove NumLock, CapsLock and ScrollLock from key state
+            var event_mods = prepare_modifiers((Gdk.ModifierType)xevent.xbutton.state);
+
             foreach(var binding in bindings) {
-
-                // remove NumLock, CapsLock and ScrollLock from key state
-                var event_mods = prepare_modifiers((Gdk.ModifierType)xevent.xbutton.state);
                 var bound_mods = prepare_modifiers(binding.trigger.modifiers);
-
                 if(xevent->xbutton.button == binding.trigger.key_code &&
                    event_mods == bound_mods) {
 

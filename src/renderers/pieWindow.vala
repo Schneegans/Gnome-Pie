@@ -129,7 +129,7 @@ public class PieWindow : Gtk.Window {
         //and infinte loop while processing some mouse-motion events.
         //(this was seen in Ubuntu 14.04.2 64/32-bits -Glib 2.19- and in MATE 14.04.2)
         // set up event filter
-        //this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
+        // this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
         //                Gdk.EventMask.KEY_RELEASE_MASK |
         //                Gdk.EventMask.KEY_PRESS_MASK |
         //                Gdk.EventMask.POINTER_MOTION_MASK |
@@ -167,6 +167,16 @@ public class PieWindow : Gtk.Window {
             else
                 this.handle_key_release(e.keyval);
             return true;
+        });
+
+        ulong connection_id = PieManager.bindings.on_release.connect((time_stamp) => {
+            if (PieManager.get_is_turbo(this.renderer.id)) {
+                this.activate_slice(time_stamp);
+            }
+        });
+
+        this.on_closing.connect(() => {
+            PieManager.bindings.disconnect(connection_id);
         });
 
         // notify the renderer of mouse move events

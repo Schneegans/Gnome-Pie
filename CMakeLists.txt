@@ -28,7 +28,6 @@ find_package(PkgConfig)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 pkg_check_modules(INDICATOR3 appindicator3-0.1)
 pkg_check_modules(WNCK REQUIRED libwnck-3.0)
-pkg_check_modules(BAMF REQUIRED libbamf3)
 pkg_check_modules(GIO REQUIRED gio-unix-2.0)
 pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-0.8)
@@ -36,6 +35,7 @@ pkg_check_modules(X11 REQUIRED x11)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(GMENU3 libgnome-menu-3.0)
+pkg_check_modules(BAMF libbamf3)
 
 find_library(M_LIB m)
 find_library(GTHREAD_LIB gthread-2.0)
@@ -47,12 +47,17 @@ set(CFLAGS
     ${CAIRO_CFLAGS} ${CAIRO_CFLAGS_OTHER}
     ${GEE_CFLAGS} ${CAIRO_CFLAGS_OTHER}
     ${X11_CFLAGS} ${X11_CFLAGS_OTHER}
-	-DGMENU_I_KNOW_THIS_IS_UNSTABLE
-	-DWNCK_I_KNOW_THIS_IS_UNSTABLE
+    -DGMENU_I_KNOW_THIS_IS_UNSTABLE
+    -DWNCK_I_KNOW_THIS_IS_UNSTABLE
     -DGETTEXT_PACKAGE="gnomepie"
-	-s -O3 -w
-#	-g
+    -s -O3 -w
+#   -g
 )
+
+# use bamf if available for better icon handling
+if (${BAMF_FOUND})
+    LIST(APPEND CFLAGS -DHAVE_BAMF)
+endif (${BAMF_FOUND})
 
 # fallback to gnome-menus2 if gnome-menus3 wasn't found
 if (${GMENU3_FOUND})
@@ -135,7 +140,6 @@ set(VALA_PKGS
   gtk+-3.0
   gdk-x11-3.0
   libwnck-3.0
-  libbamf3
   cairo
   gee-0.8
   x11
@@ -145,6 +149,10 @@ set(VALA_PKGS
   xtst
   libarchive
 )
+
+if (${BAMF_FOUND})
+    LIST(APPEND VALA_PKGS libbamf3)
+endif (${BAMF_FOUND})
 
 if (${INDICATOR_FOUND})
     LIST(APPEND VALA_PKGS appindicator-0.1)

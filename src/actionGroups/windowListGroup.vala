@@ -103,8 +103,6 @@ public class WindowListGroup : ActionGroup {
     private void update() {
         unowned GLib.List<Wnck.Window?> windows = this.screen.get_windows();
 
-        var matcher = Bamf.Matcher.get_default();
-
         foreach (var window in windows) {
             if (window.get_window_type() == Wnck.WindowType.NORMAL
                 && !window.is_skip_pager() && !window.is_skip_tasklist()
@@ -112,18 +110,22 @@ public class WindowListGroup : ActionGroup {
                 && window.get_workspace() == this.screen.get_active_workspace()))) {
 
                 var application = window.get_application();
-                var bamf_app = matcher.get_application_for_xid((uint32)window.get_xid());
+                var icon = application.get_icon_name().down();
+
+                #if HAVE_BAMF
+                    var matcher = Bamf.Matcher.get_default();
+                    var bamf_app = matcher.get_application_for_xid((uint32)window.get_xid());
+                    icon = bamf_app.get_icon();
+                #endif
 
                 string name = window.get_name();
 
-                if (name.length > 30)
+                if (name.length > 30) {
                     name = name.substring(0, 30) + "...";
+                }
 
-                var action = new SigAction(
-                    name,
-                    (bamf_app == null) ? application.get_icon_name().down() : bamf_app.get_icon(),
-                    "%lu".printf(window.get_xid())
-                );
+                var action = new SigAction(name, icon, "%lu".printf(window.get_xid()));
+
                 action.activated.connect((time_stamp) => {
                     Wnck.Screen.get_default().force_update();
 

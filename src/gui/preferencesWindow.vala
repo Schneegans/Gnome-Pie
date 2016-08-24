@@ -67,6 +67,7 @@ public class PreferencesWindow : GLib.Object {
         var builder = new Gtk.Builder.from_file(Paths.ui_files + "/preferences.ui");
 
         this.window = builder.get_object("window") as Gtk.Window;
+        this.window.icon_name = "gnome-pie";
         this.window.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
                     Gdk.EventMask.KEY_RELEASE_MASK |
                     Gdk.EventMask.KEY_PRESS_MASK |

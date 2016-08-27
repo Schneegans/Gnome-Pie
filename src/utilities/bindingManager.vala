@@ -332,10 +332,7 @@ public class BindingManager : GLib.Object {
         #endif
 
 
-        if (xevent->type == X.EventType.KeyRelease) {
-            on_release((uint32)xevent.xkey.time);
-        } else if (xevent->type == X.EventType.KeyPress) {
-
+        if (xevent->type == X.EventType.KeyPress) {
             // remove NumLock, CapsLock and ScrollLock from key state
             var event_mods = prepare_modifiers((Gdk.ModifierType)xevent.xkey.state);
 
@@ -351,9 +348,7 @@ public class BindingManager : GLib.Object {
                     }
                 }
             }
-         } else if(xevent->type == X.EventType.ButtonRelease) {
-            on_release((uint32)xevent.xkey.time);
-         } else if(xevent->type == X.EventType.ButtonPress) {
+        } else if(xevent->type == X.EventType.ButtonPress) {
             // remove NumLock, CapsLock and ScrollLock from key state
             var event_mods = prepare_modifiers((Gdk.ModifierType)xevent.xbutton.state);
 
@@ -369,33 +364,61 @@ public class BindingManager : GLib.Object {
                     }
                 }
             }
-         }
-         else if(xevent->type == X.EventType.ButtonRelease || xevent->type == X.EventType.KeyRelease) {
-            this.activate_delayed(null, *xevent);
-         }
+        }
+        else if(xevent->type == X.EventType.ButtonRelease || xevent->type == X.EventType.KeyRelease) {
+            on_release((uint32)xevent.xkey.time);
+            this.cancel_activate_delayed();
+        }
 
         return Gdk.FilterReturn.CONTINUE;
     }
 
     /////////////////////////////////////////////////////////////////////
     /// This method is always called when a trigger is activated which is
-    /// delayed. Therefore on_press() is only emitted, when this method
-    /// is not called again within 300 milliseconds. Else a fake event is
-    /// sent in order to simulate the actual key which has been pressed.
+    /// delayed. Therefore on_press() is only emitted, when
+    /// cancel_activate_delayed is not called again 300 milliseconds.
+    /// Else a fake event is sent in order to simulate the actual key
+    /// which has been pressed.
     /////////////////////////////////////////////////////////////////////
 
-    private void activate_delayed(Keybinding? binding , X.Event event) {
-        // increase event count, so any waiting event will realize that
-        // something happened in the meantime
-        var current_count = ++this.delayed_count;
+    private void activate_delayed(Keybinding binding, X.Event event) {
 
-        if (binding == null && this.delayed_event != null) {
+        if (this.delayed_binding == null) {
+            // the current event count is captured in the lambda below. If
+            // cancel_activate_delayed is not called within 300 milliseconds,
+            // the binding can be activated
+            var current_count = this.delayed_count;
+
+            // if the trigger has been pressed, store it and wait for any interuption
+            // within the next 300 milliseconds
+            this.delayed_event = event;
+            this.delayed_binding = binding;
+
+            Timeout.add(300, () => {
+                // if nothing has been pressed in the meantime
+                if (current_count == this.delayed_count) {
+                    this.delayed_binding = null;
+                    this.delayed_event = null;
+                    on_press(binding.id);
+                }
+                return false;
+            });
+        }
+    }
+
+    private void cancel_activate_delayed() {
+
+        if (this.delayed_event != null) {
+            // increase event count, so any waiting event will realize that
+            // something happened in the meantime
+            ++this.delayed_count;
+
             // if the trigger is released and an event is currently waiting
             // simulate that the trigger has been pressed without any inter-
             // ference of Gnome-Pie
             unowned X.Display display = Gdk.X11.get_default_xdisplay();
 
-            // unbind the trigger, else we'll capture that event again ;)
+            // unbind the trigger, else we'll capture that event again ;-)
             unbind(delayed_binding.id);
 
             if (this.delayed_binding.trigger.with_mouse) {
@@ -420,22 +443,6 @@ public class BindingManager : GLib.Object {
 
             this.delayed_binding = null;
             this.delayed_event = null;
-
-        } else if (binding != null) {
-            // if the trigger has been pressed, store it and wait for any interuption
-            // within the next 300 milliseconds
-            this.delayed_event = event;
-            this.delayed_binding = binding;
-
-            Timeout.add(300, () => {
-                // if nothing has been pressed in the meantime
-                if (current_count == this.delayed_count) {
-                    this.delayed_binding = null;
-                    this.delayed_event = null;
-                    on_press(binding.id);
-                }
-                return false;
-            });
         }
     }
 }

@@ -87,8 +87,9 @@ class PiePreview : Gtk.DrawingArea {
         this.enable_drag_source();
 
         Gtk.TargetEntry uri_dest = {"text/uri-list", 0, 0};
+        Gtk.TargetEntry text_dest = {"text/plain", 0, 0};
         Gtk.TargetEntry slice_dest = {"text/plain", Gtk.TargetFlags.SAME_WIDGET, 0};
-        Gtk.TargetEntry[] destinations = { uri_dest, slice_dest };
+        Gtk.TargetEntry[] destinations = { uri_dest, text_dest, slice_dest };
         Gtk.drag_dest_set(this, Gtk.DestDefaults.ALL, destinations, Gdk.DragAction.COPY | Gdk.DragAction.MOVE | Gdk.DragAction.LINK);
 
         this.drag_begin.connect(this.on_start_drag);
@@ -348,6 +349,16 @@ class PiePreview : Gtk.DrawingArea {
         var pie = PieManager.all_pies[this.current_id];
         int position = this.renderer.get_active_slice();
         this.renderer.set_dnd_mode(false);
+
+        var text = selection_data.get_text();
+        if (text != null && GLib.Uri.parse_scheme(text) != null) {
+            pie.add_action(ActionRegistry.new_for_uri(text), position);
+            this.renderer.add_group(pie.action_groups[position], position);
+
+            if (this.renderer.slices.size == 1)
+                this.on_first_slice_added();
+        }
+
 
         foreach (var uri in selection_data.get_uris()) {
             pie.add_action(ActionRegistry.new_for_uri(uri), position);

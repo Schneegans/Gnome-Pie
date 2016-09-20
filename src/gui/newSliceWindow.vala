@@ -61,7 +61,7 @@ public class NewSliceWindow : GLib.Object {
     private Gtk.Box workspace_only_box = null;
     private Gtk.Image icon = null;
     private Gtk.Entry name_entry = null;
-    private Gtk.Entry command_entry = null;
+    private CommandComboList command_list = null;
     private Gtk.Entry uri_entry = null;
     private Gtk.Switch quickaction_checkbutton = null;
     private Gtk.Switch workspace_only_checkbutton = null;
@@ -195,10 +195,17 @@ public class NewSliceWindow : GLib.Object {
 
             this.name_entry = builder.get_object("name-entry") as Gtk.Entry;
             this.uri_entry = builder.get_object("uri-entry") as Gtk.Entry;
-            this.command_entry = builder.get_object("command-entry") as Gtk.Entry;
             this.quickaction_checkbutton = builder.get_object("quick-action-checkbutton") as Gtk.Switch;
             this.quickaction_box = builder.get_object("quickaction-box") as Gtk.Box;
             this.icon = builder.get_object("icon") as Gtk.Image;
+
+            this.command_list = new CommandComboList();
+            this.command_list.on_select.connect((name, command, icon) => {
+                this.set_icon(icon);
+                this.name_entry.text = name;
+            });
+
+            this.command_box.pack_start(this.command_list, true, true);
 
             this.workspace_only_checkbutton = builder.get_object("workspace-only-checkbutton") as Gtk.Switch;
             this.workspace_only_box = builder.get_object("workspace-only-box") as Gtk.Box;
@@ -275,7 +282,7 @@ public class NewSliceWindow : GLib.Object {
             switch (type) {
                 case "app":
                     this.current_custom_icon = action.icon;
-                    this.command_entry.text = action.real_command;
+                    this.command_list.text = action.real_command;
                     break;
                 case "key":
                     this.current_custom_icon = action.icon;
@@ -319,7 +326,7 @@ public class NewSliceWindow : GLib.Object {
         this.key_select.set_trigger(new Trigger());
         this.pie_select.select_first();
         this.name_entry.text = _("Rename me!");
-        this.command_entry.text = "";
+        this.command_list.text = "";
         this.uri_entry.text = "";
     }
 
@@ -359,7 +366,7 @@ public class NewSliceWindow : GLib.Object {
             case "app":
                 group = new ActionGroup(this.current_id);
                 group.add_action(new AppAction(this.name_entry.text, this.current_icon,
-                                               this.command_entry.text,
+                                               this.command_list.text,
                                                this.quickaction_checkbutton.active));
                 break;
             case "key":

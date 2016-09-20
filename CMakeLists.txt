@@ -35,7 +35,6 @@ pkg_check_modules(X11 REQUIRED x11)
 pkg_check_modules(XML REQUIRED libxml-2.0)
 pkg_check_modules(XTST REQUIRED xtst)
 pkg_check_modules(GMENU3 libgnome-menu-3.0)
-pkg_check_modules(BAMF libbamf3)
 
 find_library(M_LIB m)
 find_library(GTHREAD_LIB gthread-2.0)
@@ -53,11 +52,6 @@ set(CFLAGS
     -s -O3 -w
 #   -g
 )
-
-# use bamf if available for better icon handling
-if (${BAMF_FOUND})
-    LIST(APPEND CFLAGS -DHAVE_BAMF)
-endif (${BAMF_FOUND})
 
 # fallback to gnome-menus2 if gnome-menus3 wasn't found
 if (${GMENU3_FOUND})
@@ -89,7 +83,6 @@ set(LIBS
 	${GMENU3_LIBRARIES}
 	${X11_LIBRARIES}
 	${WNCK_LIBRARIES}
-    ${BAMF_LIBRARIES}
 	${ARCHIVE_LIB}
 	${M_LIB}
 	${GTHREAD_LIB}
@@ -109,7 +102,6 @@ set(LIB_PATHS
 	${GMENU3_LIBRARY_DIRS}
 	${X11_LIBRARY_DIRS}
 	${WNCK_LIBRARY_DIRS}
-    ${BAMF_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -125,8 +117,7 @@ set(INCLUDE_PATHS
 	${GMENU_INCLUDE_DIRS}
 	${GMENU3_INCLUDE_DIRS}
 	${X11_INCLUDE_DIRS}
-	${BAMF_INCLUDE_DIRS}
-    ${WNCK_INCLUDE_DIRS}
+  ${WNCK_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -149,10 +140,6 @@ set(VALA_PKGS
   xtst
   libarchive
 )
-
-if (${BAMF_FOUND})
-    LIST(APPEND VALA_PKGS libbamf3)
-endif (${BAMF_FOUND})
 
 if (${INDICATOR_FOUND})
     LIST(APPEND VALA_PKGS appindicator-0.1)
@@ -201,7 +188,6 @@ message( "  XTST_LIBRARIES = ${XTST_LIBRARIES}" )
 message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )
 message( "  GMENU3_LIBRARIES = ${GMENU3_LIBRARIES}" )
 message( "  X11_LIBRARIES = ${X11_LIBRARIES}" )
-message( "  BAMF_LIBRARIES = ${BAMF_LIBRARIES}" )
 message( "  WNCK_LIBRARIES = ${WNCK_LIBRARIES}" )
 message( "  ARCHIVE_LIBRARIES = ${ARCHIVE_LIB}" )
 message( "" )

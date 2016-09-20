@@ -111,14 +111,7 @@ public class WindowListGroup : ActionGroup {
 
                 var application = window.get_application();
                 var icon = application.get_icon_name().down();
-
-                #if HAVE_BAMF
-                    var matcher = Bamf.Matcher.get_default();
-                    var bamf_app = matcher.get_application_for_xid((uint32)window.get_xid());
-                    icon = bamf_app.get_icon();
-                #endif
-
-                string name = window.get_name();
+                var name = window.get_name();
 
                 if (name.length > 30) {
                     name = name.substring(0, 30) + "...";

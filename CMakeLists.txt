@@ -28,6 +28,7 @@ find_package(PkgConfig)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 pkg_check_modules(INDICATOR3 appindicator3-0.1)
 pkg_check_modules(WNCK REQUIRED libwnck-3.0)
+pkg_check_modules(BAMF REQUIRED libbamf3)
 pkg_check_modules(GIO REQUIRED gio-unix-2.0)
 pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-0.8)
@@ -83,6 +84,7 @@ set(LIBS
 	${GMENU3_LIBRARIES}
 	${X11_LIBRARIES}
 	${WNCK_LIBRARIES}
+  ${BAMF_LIBRARIES}
 	${ARCHIVE_LIB}
 	${M_LIB}
 	${GTHREAD_LIB}
@@ -102,6 +104,7 @@ set(LIB_PATHS
 	${GMENU3_LIBRARY_DIRS}
 	${X11_LIBRARY_DIRS}
 	${WNCK_LIBRARY_DIRS}
+  ${BAMF_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -118,6 +121,7 @@ set(INCLUDE_PATHS
 	${GMENU3_INCLUDE_DIRS}
 	${X11_INCLUDE_DIRS}
   ${WNCK_INCLUDE_DIRS}
+  ${BAMF_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -131,6 +135,7 @@ set(VALA_PKGS
   gtk+-3.0
   gdk-x11-3.0
   libwnck-3.0
+  libbamf3
   cairo
   gee-0.8
   x11
@@ -189,5 +194,6 @@ message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )
 message( "  GMENU3_LIBRARIES = ${GMENU3_LIBRARIES}" )
 message( "  X11_LIBRARIES = ${X11_LIBRARIES}" )
 message( "  WNCK_LIBRARIES = ${WNCK_LIBRARIES}" )
+message( "  BAMF_LIBRARIES = ${BAMF_LIBRARIES}" )
 message( "  ARCHIVE_LIBRARIES = ${ARCHIVE_LIB}" )
 message( "" )

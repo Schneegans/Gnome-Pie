@@ -41,14 +41,18 @@ public class WindowListGroup : ActionGroup {
     public bool current_workspace_only { get; set; default=false; }
 
     /////////////////////////////////////////////////////////////////////
-    /// Two members needed to avoid useless, frequent changes of the
-    /// stored Actions.
+    /// Cached icon names loaded from .desktop files.
     /////////////////////////////////////////////////////////////////////
 
-    private bool changing = false;
-    private bool changed_again = false;
+    private static Gee.HashMap<string, string> cached_icon_name { private get; private set; }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Instances of libs Wnck and Bamf, to control the list of
+    /// opened windows.
+    /////////////////////////////////////////////////////////////////////
 
     private Wnck.Screen screen;
+    private Bamf.Matcher bamf_matcher;
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
@@ -64,16 +68,23 @@ public class WindowListGroup : ActionGroup {
 
     construct {
         this.screen = Wnck.Screen.get_default();
+        this.bamf_matcher = Bamf.Matcher.get_default();
 
-        this.screen.window_opened.connect(reload);
-        this.screen.window_closed.connect(reload);
-        this.screen.active_workspace_changed.connect(reload);
+        WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
 
-        this.update();
+        Gtk.IconTheme.get_default().changed.connect_after(() => {
+            WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
+            this.load_all_windows();
+        });
+
+        this.screen.window_opened.connect_after(window_opened);
+        this.screen.window_closed.connect_after(window_closed);
+        this.screen.active_workspace_changed.connect_after(load_all_windows);
+        this.load_all_windows();
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// This one is called, when the ActionGroup is saved.
+    /// This one is called when the ActionGroup is saved.
     /////////////////////////////////////////////////////////////////////
 
     public override void on_save(Xml.TextWriter writer) {
@@ -82,7 +93,7 @@ public class WindowListGroup : ActionGroup {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// This one is called, when the ActionGroup is loaded.
+    /// This one is called when the ActionGroup is loaded.
     /////////////////////////////////////////////////////////////////////
 
     public override void on_load(Xml.Node* data) {
@@ -97,91 +108,125 @@ public class WindowListGroup : ActionGroup {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Loads all currently opened windows and creates actions for them.
+    /// This one is called when a new window is opened.
     /////////////////////////////////////////////////////////////////////
 
-    private void update() {
-        unowned GLib.List<Wnck.Window?> windows = this.screen.get_windows();
-
-        foreach (var window in windows) {
-            if (window.get_window_type() == Wnck.WindowType.NORMAL
-                && !window.is_skip_pager() && !window.is_skip_tasklist()
-                && (!current_workspace_only || (window.get_workspace() != null
-                && window.get_workspace() == this.screen.get_active_workspace()))) {
-
-                var application = window.get_application();
-                var icon = application.get_icon_name().down();
-                var name = window.get_name();
-
-                if (name.length > 30) {
-                    name = name.substring(0, 30) + "...";
-                }
-
-                var action = new SigAction(name, icon, "%lu".printf(window.get_xid()));
-
-                action.activated.connect((time_stamp) => {
-                    Wnck.Screen.get_default().force_update();
-
-                    var xid = (X.Window)uint64.parse(action.real_command);
-                    var win = Wnck.Window.get(xid);
-
-                    if (win.get_workspace() != null) {
-                        //select the workspace
-                        if (win.get_workspace() != win.get_screen().get_active_workspace()) {
-                            win.get_workspace().activate(time_stamp);
-                        }
-
-                        //select the viewport inside the workspace
-                        if (!win.is_in_viewport(win.get_workspace()) ) {
-                            int xp, yp, widthp, heightp, scx, scy, nx, ny, wx, wy;
-                            win.get_geometry (out xp, out yp, out widthp, out heightp);
-                            scx = win.get_screen().get_width();
-                            scy = win.get_screen().get_height();
-                            wx = win.get_workspace().get_viewport_x();
-                            wy = win.get_workspace().get_viewport_y();
-                            if (scx > 0 && scy > 0) {
-                                nx= ((wx+xp) / scx) * scx;
-                                ny= ((wy+yp) / scy) * scy;
-                                win.get_screen().move_viewport(nx, ny);
-                            }
-                        }
-                    }
-
-                    if (win.is_minimized()) {
-                        win.unminimize(time_stamp);
-                    }
-
-                    win.activate_transient(time_stamp);
-                });
-                this.add_action(action);
-            }
-        }
+    private void window_opened(Wnck.Window window) {
+        load_window(window);
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Reloads all running applications.
+    /// This one is called when a window is closed.
     /////////////////////////////////////////////////////////////////////
 
-    private void reload() {
-        // avoid too frequent changes...
-        if (!this.changing) {
-            this.changing = true;
-            Timeout.add(500, () => {
-                if (this.changed_again) {
-                    this.changed_again = false;
-                    return true;
+    private void window_closed(Wnck.Window window) {
+        foreach (Action action in actions)
+            if (window.get_xid() == uint64.parse(action.real_command)) {
+                actions.remove(action);
+                break;
+            }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Loads all currently opened windows.
+    /////////////////////////////////////////////////////////////////////
+
+    private void load_all_windows() {
+        this.delete_all();
+
+        foreach (var window in this.screen.get_windows())
+            load_window(window);
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Loads a currently opened windows and create a Action for them.
+    /////////////////////////////////////////////////////////////////////
+
+    private void load_window(Wnck.Window window) {
+        if (!window.is_skip_pager() && !window.is_skip_tasklist()
+            && (!current_workspace_only || (window.get_workspace() != null
+            && window.get_workspace() == this.screen.get_active_workspace()))) {
+
+            var name = window.get_name();
+            var icon_name = get_icon_name(window);
+            var xid = "%lu".printf(window.get_xid());
+
+            if (name.length > 30) {
+                name = name.substring(0, 30) + "...";
+            }
+
+            var action = new SigAction(name, icon_name, xid);
+            this.add_action(action);
+
+            window.name_changed.connect(() => {
+                action.name = window.get_name();
+            });
+
+            action.activated.connect((time_stamp) => {
+                if (window.get_workspace() != null) {
+                    //select the workspace
+                    if (window.get_workspace() != window.get_screen().get_active_workspace()) {
+                        window.get_workspace().activate(time_stamp);
+                    }
+
+                    //select the viewport inside the workspace
+                    /*if (!window.is_in_viewport(window.get_workspace()) ) {
+                        int xp, yp, widthp, heightp, scx, scy, nx, ny, wx, wy;
+                        window.get_geometry (out xp, out yp, out widthp, out heightp);
+                        scx = window.get_screen().get_width();
+                        scy = window.get_screen().get_height();
+                        wx = window.get_workspace().get_viewport_x();
+                        wy = window.get_workspace().get_viewport_y();
+                        if (scx > 0 && scy > 0) {
+                            nx= ((wx+xp) / scx) * scx;
+                            ny= ((wy+yp) / scy) * scy;
+                            window.get_screen().move_viewport(nx, ny);
+                        }
+                    }*/
                 }
 
-                // reload
-                this.delete_all();
-                this.update();
+                if (window.is_minimized()) {
+                    window.unminimize(time_stamp);
+                }
 
-                this.changing = false;
-                return false;
+                window.activate_transient(time_stamp);
             });
-        } else {
-            this.changed_again = true;
         }
+    }
+
+    private string get_icon_name(Wnck.Window window) {
+        var xid = (uint32) window.get_xid();
+        string desktop_file = null;
+        string icon_name = null;
+        Bamf.Application app = this.bamf_matcher.get_application_for_xid(xid);
+
+        if (app != null)
+            desktop_file = app.get_desktop_file();
+
+        if (desktop_file != null) {
+            if (WindowListGroup.cached_icon_name.has_key(desktop_file))
+                icon_name = WindowListGroup.cached_icon_name.get(desktop_file);
+            else {
+                try {
+                    var file = new KeyFile();
+                    file.load_from_file(desktop_file, 0);
+
+                    if (file.has_key(KeyFileDesktop.GROUP, KeyFileDesktop.KEY_ICON)) {
+                        icon_name = file.get_locale_string(KeyFileDesktop.GROUP, KeyFileDesktop.KEY_ICON);
+                        WindowListGroup.cached_icon_name.set(desktop_file, icon_name);
+                    }
+                } catch (GLib.KeyFileError e) {
+                    error ("%s", e.message);
+                } catch (GLib.FileError e) {
+                    error ("%s", e.message);
+                }
+            }
+        }
+
+        if (icon_name == null)
+            icon_name = Icon.get_icon_name(window.get_icon_name());
+
+        return icon_name;
     }
 }
 

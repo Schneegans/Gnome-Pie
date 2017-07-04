@@ -47,12 +47,10 @@ public class WindowListGroup : ActionGroup {
     private static Gee.HashMap<string, string> cached_icon_name { private get; private set; }
 
     /////////////////////////////////////////////////////////////////////
-    /// Instances of libs Wnck and Bamf, to control the list of
-    /// opened windows.
+    /// Wnck's Screen object, to control the list of opened windows.
     /////////////////////////////////////////////////////////////////////
 
     private Wnck.Screen screen;
-    private Bamf.Matcher bamf_matcher;
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
@@ -60,27 +58,6 @@ public class WindowListGroup : ActionGroup {
 
     public WindowListGroup(string parent_id) {
         GLib.Object(parent_id : parent_id);
-    }
-
-    /////////////////////////////////////////////////////////////////////
-    /// Loads all windows.
-    /////////////////////////////////////////////////////////////////////
-
-    construct {
-        this.screen = Wnck.Screen.get_default();
-        this.bamf_matcher = Bamf.Matcher.get_default();
-
-        WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
-
-        Gtk.IconTheme.get_default().changed.connect_after(() => {
-            WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
-            this.load_all_windows();
-        });
-
-        this.screen.window_opened.connect_after(window_opened);
-        this.screen.window_closed.connect_after(window_closed);
-        this.screen.active_workspace_changed.connect_after(load_all_windows);
-        this.load_all_windows();
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -102,50 +79,55 @@ public class WindowListGroup : ActionGroup {
             string attr_content = attribute->children->content;
 
             if (attr_name == "current_workspace_only") {
-                this.current_workspace_only = bool.parse(attr_content);
+                current_workspace_only = bool.parse(attr_content);
             }
         }
+
+        screen = Wnck.Screen.get_default();
+        WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
+
+        Gtk.IconTheme.get_default().changed.connect(() => {
+            WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
+            create_actions_for_all_windows();
+        });
+
+        screen.active_workspace_changed.connect(create_actions_for_all_windows);
+        screen.window_opened.connect(create_action);
+        screen.window_closed.connect(remove_action);
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// This one is called when a new window is opened.
+    /// Remove a Action for a given window
     /////////////////////////////////////////////////////////////////////
 
-    private void window_opened(Wnck.Window window) {
-        load_window(window);
+    private void remove_action(Wnck.Window window) {
+        if (!window.is_skip_pager() && !window.is_skip_tasklist())
+            foreach (Action action in actions)
+                if (window.get_xid() == uint64.parse(action.real_command)) {
+                    actions.remove(action);
+                    break;
+                }
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// This one is called when a window is closed.
+    /// Create Action's for all currently opened windows.
     /////////////////////////////////////////////////////////////////////
 
-    private void window_closed(Wnck.Window window) {
-        foreach (Action action in actions)
-            if (window.get_xid() == uint64.parse(action.real_command)) {
-                actions.remove(action);
-                break;
-            }
+    private void create_actions_for_all_windows() {
+        delete_all();
+
+        foreach (var window in screen.get_windows())
+            create_action(window);
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Loads all currently opened windows.
+    /// Create a Action for a given opened window
     /////////////////////////////////////////////////////////////////////
 
-    private void load_all_windows() {
-        this.delete_all();
-
-        foreach (var window in this.screen.get_windows())
-            load_window(window);
-    }
-
-    /////////////////////////////////////////////////////////////////////
-    /// Loads a currently opened windows and create a Action for them.
-    /////////////////////////////////////////////////////////////////////
-
-    private void load_window(Wnck.Window window) {
+    private void create_action(Wnck.Window window) {
         if (!window.is_skip_pager() && !window.is_skip_tasklist()
             && (!current_workspace_only || (window.get_workspace() != null
-            && window.get_workspace() == this.screen.get_active_workspace()))) {
+            && window.get_workspace() == screen.get_active_workspace()))) {
 
             var name = window.get_name();
             var icon_name = get_icon_name(window);
@@ -168,21 +150,6 @@ public class WindowListGroup : ActionGroup {
                     if (window.get_workspace() != window.get_screen().get_active_workspace()) {
                         window.get_workspace().activate(time_stamp);
                     }
-
-                    //select the viewport inside the workspace
-                    /*if (!window.is_in_viewport(window.get_workspace()) ) {
-                        int xp, yp, widthp, heightp, scx, scy, nx, ny, wx, wy;
-                        window.get_geometry (out xp, out yp, out widthp, out heightp);
-                        scx = window.get_screen().get_width();
-                        scy = window.get_screen().get_height();
-                        wx = window.get_workspace().get_viewport_x();
-                        wy = window.get_workspace().get_viewport_y();
-                        if (scx > 0 && scy > 0) {
-                            nx= ((wx+xp) / scx) * scx;
-                            ny= ((wy+yp) / scy) * scy;
-                            window.get_screen().move_viewport(nx, ny);
-                        }
-                    }*/
                 }
 
                 if (window.is_minimized()) {
@@ -195,33 +162,38 @@ public class WindowListGroup : ActionGroup {
     }
 
     private string get_icon_name(Wnck.Window window) {
-        var xid = (uint32) window.get_xid();
-        string desktop_file = null;
         string icon_name = null;
-        Bamf.Application app = this.bamf_matcher.get_application_for_xid(xid);
 
-        if (app != null)
-            desktop_file = app.get_desktop_file();
+        #if HAVE_BAMF
+            var xid = (uint32) window.get_xid();
+            Bamf.Matcher bamf_matcher = Bamf.Matcher.get_default();
+            Bamf.Application app = bamf_matcher.get_application_for_xid(xid);
+            string desktop_file = null;
 
-        if (desktop_file != null) {
-            if (WindowListGroup.cached_icon_name.has_key(desktop_file))
-                icon_name = WindowListGroup.cached_icon_name.get(desktop_file);
-            else {
-                try {
-                    var file = new KeyFile();
-                    file.load_from_file(desktop_file, 0);
+            if (app != null)
+                desktop_file = app.get_desktop_file();
 
-                    if (file.has_key(KeyFileDesktop.GROUP, KeyFileDesktop.KEY_ICON)) {
-                        icon_name = file.get_locale_string(KeyFileDesktop.GROUP, KeyFileDesktop.KEY_ICON);
-                        WindowListGroup.cached_icon_name.set(desktop_file, icon_name);
+            if (desktop_file != null) {
+                if (WindowListGroup.cached_icon_name.has_key(desktop_file))
+                    icon_name = WindowListGroup.cached_icon_name.get(desktop_file);
+                else {
+                    try {
+                        var file = new KeyFile();
+                        file.load_from_file(desktop_file, 0);
+
+                        if (file.has_key(KeyFileDesktop.GROUP, KeyFileDesktop.KEY_ICON)) {
+                            icon_name = file.get_locale_string(KeyFileDesktop.GROUP, KeyFileDesktop.KEY_ICON);
+                            WindowListGroup.cached_icon_name.set(desktop_file, icon_name);
+                        }
+                    } catch (GLib.KeyFileError e) {
+                        error("%s", e.message);
+                    } catch (GLib.FileError e) {
+                        error("%s", e.message);
                     }
-                } catch (GLib.KeyFileError e) {
-                    error ("%s", e.message);
-                } catch (GLib.FileError e) {
-                    error ("%s", e.message);
                 }
             }
-        }
+        #endif
+
 
         if (icon_name == null)
             icon_name = Icon.get_icon_name(window.get_icon_name());

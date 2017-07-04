@@ -28,7 +28,7 @@ find_package(PkgConfig)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 pkg_check_modules(INDICATOR3 appindicator3-0.1)
 pkg_check_modules(WNCK REQUIRED libwnck-3.0)
-pkg_check_modules(BAMF REQUIRED libbamf3)
+pkg_check_modules(BAMF libbamf3)
 pkg_check_modules(GIO REQUIRED gio-unix-2.0)
 pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-0.8)
@@ -68,6 +68,10 @@ endif (${INDICATOR_FOUND})
 if (${INDICATOR3_FOUND})
     LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
 endif (${INDICATOR3_FOUND})
+
+if (${BAMF_FOUND})
+    LIST(APPEND CFLAGS -DHAVE_BAMF)
+endif (${BAMF_FOUND})
 
 add_definitions(${CFLAGS})
 
@@ -135,7 +139,6 @@ set(VALA_PKGS
   gtk+-3.0
   gdk-x11-3.0
   libwnck-3.0
-  libbamf3
   cairo
   gee-0.8
   x11
@@ -159,6 +162,10 @@ if (${GMENU3_FOUND})
 else (${GMENU3_FOUND})
     LIST(APPEND VALA_PKGS libgnome-menu)
 endif (${GMENU3_FOUND})
+
+if (${BAMF_FOUND})
+    LIST(APPEND VALA_PKGS libbamf3)
+endif (${BAMF_FOUND})
 
 add_subdirectory(src)
 
@@ -194,6 +201,5 @@ message( "  GMENU_LIBRARIES = ${GMENU_LIBRARIES}" )
 message( "  GMENU3_LIBRARIES = ${GMENU3_LIBRARIES}" )
 message( "  X11_LIBRARIES = ${X11_LIBRARIES}" )
 message( "  WNCK_LIBRARIES = ${WNCK_LIBRARIES}" )
-message( "  BAMF_LIBRARIES = ${BAMF_LIBRARIES}" )
 message( "  ARCHIVE_LIBRARIES = ${ARCHIVE_LIB}" )
 message( "" )

@@ -53,7 +53,7 @@ public class ClipboardGroup : ActionGroup {
             if (file.query_exists()) {
                 try {
                     var info = file.query_info("standard::icon", 0);
-                    this.icon = Icon.get_icon_name(info.get_icon());
+                    this.icon = Icon.get_icon_name(info.get_icon().to_string());
                 } catch (Error e) {
                     warning("Failed to generate icon for ClipboardGroupItem.");
                 }

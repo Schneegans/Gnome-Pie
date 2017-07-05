@@ -55,6 +55,8 @@ public class Daemon : GLib.Application {
         // transparent background
         GLib.Environment.set_variable("LIBOVERLAY_SCROLLBAR", "0", true);
 
+        Wnck.set_client_type(Wnck.ClientType.PAGER);
+
         Logger.init();
         Gtk.init(ref args);
         Paths.init();

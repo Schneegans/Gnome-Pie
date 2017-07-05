@@ -28,6 +28,7 @@ find_package(PkgConfig)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 pkg_check_modules(INDICATOR3 appindicator3-0.1)
 pkg_check_modules(WNCK REQUIRED libwnck-3.0)
+pkg_check_modules(BAMF libbamf3)
 pkg_check_modules(GIO REQUIRED gio-unix-2.0)
 pkg_check_modules(CAIRO REQUIRED cairo)
 pkg_check_modules(GEE REQUIRED gee-0.8)
@@ -68,6 +69,10 @@ if (${INDICATOR3_FOUND})
     LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
 endif (${INDICATOR3_FOUND})
 
+if (${BAMF_FOUND})
+    LIST(APPEND CFLAGS -DHAVE_BAMF)
+endif (${BAMF_FOUND})
+
 add_definitions(${CFLAGS})
 
 set(LIBS
@@ -83,6 +88,7 @@ set(LIBS
 	${GMENU3_LIBRARIES}
 	${X11_LIBRARIES}
 	${WNCK_LIBRARIES}
+  ${BAMF_LIBRARIES}
 	${ARCHIVE_LIB}
 	${M_LIB}
 	${GTHREAD_LIB}
@@ -102,6 +108,7 @@ set(LIB_PATHS
 	${GMENU3_LIBRARY_DIRS}
 	${X11_LIBRARY_DIRS}
 	${WNCK_LIBRARY_DIRS}
+  ${BAMF_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
@@ -118,6 +125,7 @@ set(INCLUDE_PATHS
 	${GMENU3_INCLUDE_DIRS}
 	${X11_INCLUDE_DIRS}
   ${WNCK_INCLUDE_DIRS}
+  ${BAMF_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -154,6 +162,10 @@ if (${GMENU3_FOUND})
 else (${GMENU3_FOUND})
     LIST(APPEND VALA_PKGS libgnome-menu)
 endif (${GMENU3_FOUND})
+
+if (${BAMF_FOUND})
+    LIST(APPEND VALA_PKGS libbamf3)
+endif (${BAMF_FOUND})
 
 add_subdirectory(src)
 

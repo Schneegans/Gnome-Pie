@@ -72,11 +72,11 @@ public class PiePreviewSliceRenderer : GLib.Object {
     /// Some constants determining the look and behaviour of this Slice.
     /////////////////////////////////////////////////////////////////////
 
-    private static const double pie_radius = 126;
-    private static const double radius = 24;
-    private static const double delete_x = 13;
-    private static const double delete_y = -13;
-    private static const double click_cancel_treshold = 5;
+    private const double pie_radius = 126;
+    private const double radius = 24;
+    private const double delete_x = 13;
+    private const double delete_y = -13;
+    private const double click_cancel_treshold = 5;
 
     /////////////////////////////////////////////////////////////////////
     /// Storing the position where a mouse click was executed. Useful for

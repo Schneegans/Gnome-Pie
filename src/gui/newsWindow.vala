@@ -23,7 +23,7 @@ namespace GnomePie {
 
 public class NewsWindow: Gtk.Dialog {
 
-    public static const int news_count = 2;
+    public const int news_count = 2;
 
     /////////////////////////////////////////////////////////////////////
     ///

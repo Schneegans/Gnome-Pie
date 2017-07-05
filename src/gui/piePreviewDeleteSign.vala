@@ -42,9 +42,9 @@ public class PiePreviewDeleteSign : GLib.Object {
     /// Some constants determining the look and behaviour of this Slice.
     /////////////////////////////////////////////////////////////////////
 
-    private static const int radius = 18;
-    private static const double globale_scale = 0.8;
-    private static const double click_cancel_treshold = 5;
+    private const int radius = 18;
+    private const double globale_scale = 0.8;
+    private const double click_cancel_treshold = 5;
 
     /////////////////////////////////////////////////////////////////////
     /// True, when the add sign is currently visible.

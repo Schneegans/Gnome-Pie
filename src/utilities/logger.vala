@@ -29,33 +29,33 @@ public class Logger {
     /// If these are set to false, the according messages are not shown
     /////////////////////////////////////////////////////////////////////
 
-    private static const bool display_debug = true;
-    private static const bool display_warning = true;
-    private static const bool display_error = true;
-    private static const bool display_message = true;
+    private const bool display_debug = true;
+    private const bool display_warning = true;
+    private const bool display_error = true;
+    private const bool display_message = true;
 
     /////////////////////////////////////////////////////////////////////
     /// If these are set to false, the according messages are not logged
     /////////////////////////////////////////////////////////////////////
 
-    private static const bool log_debug = false;
-    private static const bool log_warning = true;
-    private static const bool log_error = true;
-    private static const bool log_message = true;
+    private const bool log_debug = false;
+    private const bool log_warning = true;
+    private const bool log_error = true;
+    private const bool log_message = true;
 
     /////////////////////////////////////////////////////////////////////
     /// If true, a time stamp is shown in each message.
     /////////////////////////////////////////////////////////////////////
 
-    private static const bool display_time = false;
-    private static const bool log_time = true;
+    private const bool display_time = false;
+    private const bool log_time = true;
 
     /////////////////////////////////////////////////////////////////////
     /// If true, the origin of the message is shown. In form file:line
     /////////////////////////////////////////////////////////////////////
 
-    private static const bool display_file = false;
-    private static const bool log_file = false;
+    private const bool display_file = false;
+    private const bool log_file = false;
 
     /////////////////////////////////////////////////////////////////////
     /// A regex, used to format the standard message.
@@ -67,7 +67,7 @@ public class Logger {
     /// Limit log and statistics size to roughly 1 MB.
     /////////////////////////////////////////////////////////////////////
 
-    private static const int max_log_length = 1000000;
+    private const int max_log_length = 1000000;
 
     private static int log_length;
 

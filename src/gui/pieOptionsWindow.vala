@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////
-// Copyright (c) 2011-2016 by Simon Schneegans
+// Copyright (c) 2011-2017 by Simon Schneegans
 //
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by

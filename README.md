@@ -34,7 +34,7 @@ If you can’t afford the time to do the stuff mentioned above, but still want t
 
 ## License
 
-Copyright (C) 2011-2016 Simon Schneegans <code@simonschneegans.de>
+Copyright (C) 2011-2017 Simon Schneegans <code@simonschneegans.de>
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 

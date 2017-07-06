@@ -12,13 +12,13 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-01-14 08:15-0500\n"
-"Last-Translator: Eugene Roskin <pams@imail.ru>\n"
+"PO-Revision-Date: 2017-03-29 09:50+0500\n"
+"Last-Translator: ashed craysy@gmail.com\n"
 "Language-Team: Russian\n"
 "Language: ru\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Zanata 3.7.3\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 1.5.4\n"
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"
@@ -26,7 +26,7 @@ msgstr "Настройки активации"
 
 #: ../ui/pie_options.ui:153
 msgid "Unamed Pie"
-msgstr ""
+msgstr "Безымянный пай"
 
 #: ../ui/pie_options.ui:216
 msgid "ID:"
@@ -43,7 +43,7 @@ msgstr "Турбо-режим"
 #: ../ui/pie_options.ui:280 ../ui/pie_options.ui:281
 msgid "If checked, the Pie will close when you release the chosen hot key."
 msgstr ""
-"Если выбрана эта возможность, пай закроется после того, как вы отпустите  "
+"Если выбрана эта возможность, пай закроется после того, как вы отпустите "
 "клавиши быстрого доступа"
 
 #: ../ui/pie_options.ui:293
@@ -62,56 +62,55 @@ msgid "Open Pie centered on the screen"
 msgstr "Открыть пай по центру экрана"
 
 #: ../ui/pie_options.ui:318 ../ui/pie_options.ui:319
-#, fuzzy
 msgid ""
 "If checked, the Pie will open in the middle of your screen. Else it will pop "
 "up at your pointer."
 msgstr ""
-"Если выбрана эта возможность, пай откроется в центре вашего экрана.А также "
+"Если выбрана эта возможность, пай откроется в центре вашего экрана. А также "
 "может открываться чуть выше вашего курсора."
 
 #: ../ui/pie_options.ui:331
 msgid "Warp mouse pointer to center of Pie"
-msgstr ""
+msgstr "Деформировать указатель мыши к центру Пая"
 
 #: ../ui/pie_options.ui:337 ../ui/pie_options.ui:338
 msgid ""
 "If checked, the mouse pointer will be warped to the center of the Pie. This "
 "allows for quick selections even if the Pie is opened at the screen's "
 "boundary."
-msgstr ""
+msgstr "Если отмечено"
 
 #: ../ui/pie_options.ui:356
-#, fuzzy
 msgid "Activation options"
-msgstr "<b>Параметры активации</b>"
+msgstr "Параметры активации"
 
 #: ../ui/pie_options.ui:547
 msgid "Automatically select the best pie shape"
-msgstr ""
+msgstr "Автоматически выбирать лучшую форму пая"
 
 #: ../ui/pie_options.ui:551
 msgid ""
 "If checked, the shape will be automatically selected to minimize mouse "
 "travelling."
 msgstr ""
+"Если отмечено, форма будет автоматически выбрана для минимизации перемещения "
+"мыши."
 
 #: ../ui/pie_options.ui:571
 msgid "Pie shape"
-msgstr ""
+msgstr "Форма пая"
 
 #: ../ui/slice_select.ui:8
-#, fuzzy
 msgid "Slice Options"
-msgstr "Параметры порции"
+msgstr "Параметры Фрагмента"
 
 #: ../ui/slice_select.ui:140
 msgid "There are no options for this Slice type."
-msgstr "Отсутствуют параметры для этого типа порции"
+msgstr "Отсутствуют параметры для этого типа фрагмента"
 
 #: ../ui/slice_select.ui:166
 msgid "Name of the Slice "
-msgstr "Название порции"
+msgstr "Название фрагмента"
 
 #: ../ui/slice_select.ui:204
 msgid "URI to open"
@@ -119,7 +118,7 @@ msgstr "URI для открытия"
 
 #: ../ui/slice_select.ui:242
 msgid "Command to execute"
-msgstr "Командая для выполнения"
+msgstr "Команда для выполнения"
 
 #: ../ui/slice_select.ui:280
 msgid "Hotkey to press"
@@ -135,12 +134,11 @@ msgstr "Это быстрое действие"
 
 #: ../ui/slice_select.ui:353 ../ui/slice_select.ui:354
 msgid "This Slice will be executed when you click in the middle of the Pie."
-msgstr "Эта порция будет выполнена, после нажатия в центре пая"
+msgstr "Эта фрагмент будет выполнен, после нажатия в центре пая"
 
 #: ../ui/slice_select.ui:386
-#, fuzzy
 msgid "Slice options"
-msgstr "Параметры порции"
+msgstr "Параметры фрагмента"
 
 #: ../ui/icon_select.ui:9
 msgid "Select an icon"
@@ -155,17 +153,14 @@ msgid "Custom Icon"
 msgstr "Настроить значок"
 
 #: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:78
-#, fuzzy
 msgid "Gnome-Pie Settings"
 msgstr "Настройки Gnome-Pie"
 
 #: ../ui/preferences.ui:41
-#, fuzzy
 msgid "Start Gnome-Pie on login"
 msgstr "Запускать Gnome-Pie при загрузке системы"
 
 #: ../ui/preferences.ui:47 ../ui/preferences.ui:48
-#, fuzzy
 msgid "If checked, Gnome-Pie will start silently everytime you log in."
 msgstr ""
 "Если выбрана эта возможность, Gnome-Pie будет фоново запускаться после входа "
@@ -185,7 +180,7 @@ msgstr ""
 
 #: ../ui/preferences.ui:79
 msgid "Select Slices by typing their names"
-msgstr ""
+msgstr "Выберите фрагменты, введя их имена"
 
 #: ../ui/preferences.ui:85 ../ui/preferences.ui:86
 msgid ""
@@ -193,9 +188,11 @@ msgid ""
 "you can activate them with a hotkey (which can be displayed by pressing ALT "
 "when a Pie is openened)."
 msgstr ""
+"Если отмечено, вы можете выбрать элементы в Пае, введя их имена. Иначе вы "
+"можете активировать их горячей клавишей (которая может отображаться при "
+"нажатии клавиши ALT при открытии Пая)."
 
 #: ../ui/preferences.ui:98
-#, fuzzy
 msgid "Display Slice labels"
 msgstr "Показывать значок на панели "
 
@@ -204,38 +201,38 @@ msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
 msgstr ""
+"Отображать имя каждого фрагмента рядом с ним. Доступно только если "
+"поддерживается темой."
 
 #: ../ui/preferences.ui:139
 msgid "Activation radius"
-msgstr ""
+msgstr "Радиус активации"
 
 #: ../ui/preferences.ui:179
-#, fuzzy
 msgid "Global scale"
 msgstr "Общий масштаб"
 
 #: ../ui/preferences.ui:219
 msgid "Maximum slices per pie"
-msgstr ""
+msgstr "Максимум фрагментов на Пай"
 
 #: ../ui/preferences.ui:302
 msgid "Import a theme from a file."
-msgstr ""
+msgstr "Импорт темы из файла."
 
 #: ../ui/preferences.ui:323
 msgid "Delete the selected theme."
-msgstr ""
+msgstr "Удалить выделенную тему."
 
 #: ../ui/preferences.ui:344
 msgid "Export the selected theme for sharing."
-msgstr ""
+msgstr "Поделиться выделенной темой."
 
 #: ../ui/preferences.ui:392
 msgid "Open a tutorial on how to create new themes for Gnome-Pie."
-msgstr ""
+msgstr "Открыть учебник о создании новых тем для Gnome-Pie."
 
 #: ../ui/preferences.ui:442 ../../src/gui/preferencesWindow.vala:109
-#, fuzzy
 msgid "General Settings"
 msgstr "Основные настройки"
 
@@ -249,6 +246,14 @@ msgid ""
 "\n"
 "For manual and advanced configuration click on the plus sign."
 msgstr ""
+"Этот Пай пуст!\n"
+"\n"
+"Начните добавлять фрагменты! Это можно сделать, перетащив что-либо на "
+"знак плюса ниже. Вы можете попробовать много всякого! Например, ярлыки "
+"запуска приложений или папки приложений. Даже URL-адреса из вашего "
+"браузера...\n"
+"\n"
+"Для ручной и расширенной конфигурации нажмите на знак плюса."
 
 #: ../ui/preferences.ui:655
 msgid ""
@@ -257,14 +262,14 @@ msgid ""
 "Start by creating one! </b> This can be done by clicking on the tiny little "
 "plus sign in the lower left corner."
 msgstr ""
-"<b><big>Отсутствуют паи!</big>\n"
+"Отсутствуют паи!\n"
 "\n"
-"Начните с создания пая! </b> Выполните это щёлкнув на небольшом значке "
+"Начните с создания пая! Выполните это щёлкнув на небольшом значке "
 "плюсав нижнем левом углу."
 
 #: ../ui/preferences.ui:741 ../../src/gui/preferencesWindow.vala:110
 msgid "Pie Settings"
-msgstr ""
+msgstr "Настройки Пая"
 
 #: ../../src/actions/keyAction.vala:34
 msgid "Press hotkey"
@@ -276,13 +281,11 @@ msgstr "Имитирует активацию сочетания клавиш б
 
 #: ../../src/actions/uriAction.vala:34
 msgid "Open URI"
-msgstr "Открытие URI"
+msgstr "Открыть URI"
 
 #: ../../src/actions/uriAction.vala:36
 msgid "Opens a given location. You may use URL's or files paths."
-msgstr ""
-"Открывает заданный адрес. Вы можете использовать адресные ссылки или адреса "
-"файлов."
+msgstr "Открыть заданный адрес. Можно использовать URL или пути к файлам."
 
 #: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
@@ -294,131 +297,145 @@ msgstr "Запустить приложение"
 
 #: ../../src/actions/appAction.vala:36
 msgid "Executes the given command."
-msgstr "Выполняет заданную команду."
+msgstr "Выполнить заданную команду."
 
 #: ../../src/actions/pieAction.vala:34
 msgid "Open Pie"
-msgstr "Открытие пая"
+msgstr "Открыть пай"
 
 #: ../../src/actions/pieAction.vala:36
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
-msgstr ""
-"Oткрывает ещё один пай Gnome-Pie. Таким образом вы можете создавать подменю."
+msgstr "Открыть ещё один пай Gnome-Pie. Таким образом можно создать подменю."
 
 #: ../../src/gui/preferencesWindow.vala:79
 msgid "bake your pies!"
-msgstr ""
+msgstr "выпекайте паи!"
 
 #: ../../src/gui/preferencesWindow.vala:235
 msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
-msgstr ""
+msgstr "Паи можно открыть с помощью команды терминала \"gnome-pie --open=ID\"."
 
 #: ../../src/gui/preferencesWindow.vala:236
 msgid "Feel free to visit Gnome-Pie's homepage at %s!"
-msgstr ""
+msgstr "Посетите страницу Gnome-Pie %s!"
 
 #: ../../src/gui/preferencesWindow.vala:237
 msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr ""
+msgstr "Если вы хотите дать обратную связь, напишите письмо по адресу %s!"
 
 #: ../../src/gui/preferencesWindow.vala:238
 msgid "You can support the development of Gnome-Pie by donating via %s."
-msgstr ""
+msgstr "Вы можете поддержать развитие Gnome-Pie, пожертвовав через %s."
 
 #: ../../src/gui/preferencesWindow.vala:239
 msgid ""
 "Translating Gnome-Pie to your language is easy. Translations are managed at "
 "%s."
-msgstr ""
+msgstr "Перевод Gnome-Пая на ваш язык легок. Переводы управляются на %s."
 
 #: ../../src/gui/preferencesWindow.vala:240
 msgid ""
 "It's easy to create new themes for Gnome-Pie. Read the <a href="
 "'%s'>Tutorial</a> online."
 msgstr ""
+"Легко создавать новые темы для Gnome-Pie. Прочтите Учебник "
+"онлайн."
 
 #: ../../src/gui/preferencesWindow.vala:241
 msgid "It's usually a good practice to have at most twelve slices per pie."
 msgstr ""
+"Обычно хорошая практика состоит в том, чтобы иметь не более двенадцати "
+"фрагментов на Пай."
 
 #: ../../src/gui/preferencesWindow.vala:242
 msgid "You can export themes you created and share them with the community!"
-msgstr ""
+msgstr "Вы можете экспортировать созданные темы и делиться ими с сообществом!"
 
 #: ../../src/gui/preferencesWindow.vala:243
 msgid "The source code of Gnome-Pie is available on %s."
-msgstr ""
+msgstr "Исходный код Gnome-Pie доступен на %s."
 
 #: ../../src/gui/preferencesWindow.vala:244
 msgid "Bugs can be reported at %s!"
-msgstr ""
+msgstr "Об ошибках можно сообщить по адресу %s!"
 
 #: ../../src/gui/preferencesWindow.vala:245
 msgid "Suggestions can be posted on %s!"
-msgstr ""
+msgstr "Предложения можно размещать на %s!"
 
 #: ../../src/gui/preferencesWindow.vala:246
 msgid ""
 "An awesome companion of Gnome-Pie is %s. It will make using your computer "
 "feel like magic!"
 msgstr ""
+"Удивительный спутник Gnome-Pie - это %s. Сделайте использование вашего "
+"компьютера волшебным!"
 
 #: ../../src/gui/preferencesWindow.vala:247
 msgid "You can drag'n'drop applications from your main menu to the pie above."
 msgstr ""
+"Вы можете перетащить приложения из своего главного меню в указанный выше Пай."
 
 #: ../../src/gui/preferencesWindow.vala:248
 msgid ""
 "You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
 "above."
 msgstr ""
+"Вы можете перетащить URL-адреса и закладки из своего интернет-браузера в "
+"указанный выше Пай."
 
 #: ../../src/gui/preferencesWindow.vala:249
 msgid ""
 "You can drag'n'drop files and folders from your file browser to the pie "
 "above."
 msgstr ""
+"Вы можете перетащить файлы и папки из браузера файлов в указанный выше Пай."
 
 #: ../../src/gui/preferencesWindow.vala:250
 msgid ""
 "You can drag'n'drop pies from the list on the left into other pies in order "
 "to create sub-pies."
 msgstr ""
+"Вы можете перетаскивать Паи из списка слева в другие Паи, чтобы создать "
+"субПаи."
 
 #: ../../src/gui/preferencesWindow.vala:251
 msgid ""
 "You can drag'n'drop pies from the list on the left to your desktop or dock "
 "to create a launcher for this pie."
 msgstr ""
+"Вы можете перетаскивать Паи из списка слева на свой рабочий стол или док, "
+"чтобы создать ярлык запуска для этого Пая."
 
 #: ../../src/gui/preferencesWindow.vala:401
 msgid "Sucessfully imported new theme!"
-msgstr ""
+msgstr "Успешно импортирована новая тема!"
 
 #: ../../src/gui/preferencesWindow.vala:415
 msgid "An error occured while importing the theme: Failed to extract theme!"
-msgstr ""
+msgstr "При импорте темы произошла ошибка: Не удалось извлечь тему!"
 
 #: ../../src/gui/preferencesWindow.vala:419
 msgid ""
 "An error occured while importing the theme: A theme with this name does "
 "already exist!"
-msgstr ""
+msgstr "При импорте темы произошла ошибка: тема с этим именем уже существует!"
 
 #: ../../src/gui/preferencesWindow.vala:423
 msgid ""
 "An error occured while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
+"При импорте темы произошла ошибка: в архиве темы нет действительной темы!"
 
 #: ../../src/gui/preferencesWindow.vala:427
 msgid ""
 "An error occured while importing the theme: Failed to open theme archive!"
-msgstr ""
+msgstr "При импорте темы произошла ошибка: Не удалось открыть тему!"
 
 #: ../../src/gui/preferencesWindow.vala:451
 msgid "Do you really want to delete the selected theme from %s?"
-msgstr ""
+msgstr "Вы действительно хотите удалить выбранную тему из %s?"
 
 #: ../../src/gui/preferencesWindow.vala:528
 msgid "New Pie"
@@ -429,48 +446,44 @@ msgid ""
 "Do you really want to delete the selected Pie with all contained Slices?"
 msgstr ""
 "Вы действительно хотите удалить выделенный пай, со всеми содержащимися в нём "
-"порциями?"
+"фрагментами?"
 
 #: ../../src/gui/piePreview.vala:148
-#, fuzzy
 msgid "Do you really want to delete this Slice?"
-msgstr "Вы действительно хотите удалить эту порцию?"
+msgstr "Вы действительно хотите удалить этот фрагмент?"
 
 #: ../../src/gui/sliceTypeList.vala:60
-#, fuzzy
 msgid "Slice types"
-msgstr "Типы порций"
+msgstr "Типы фрагментов"
 
 #: ../../src/gui/piePreviewRenderer.vala:419
 msgid "Click to edit"
-msgstr "Щёлкните для выполнения изменений"
+msgstr "Щелчок для правки"
 
 #: ../../src/gui/piePreviewRenderer.vala:419
 #: ../../src/gui/piePreviewRenderer.vala:434
 msgid "Drag to move"
-msgstr "Перетаскивайте для выполнения перемещения"
+msgstr "Перемещайте таская"
 
 #: ../../src/gui/piePreviewRenderer.vala:422
-#, fuzzy
 msgid "Click to add a new Slice"
-msgstr "Щёлкните для добавления новой порции"
+msgstr "Щелчок - доб-ть нов. фрагмент"
 
 #: ../../src/gui/piePreviewRenderer.vala:426
-#, fuzzy
 msgid "Drop to add as new Slice"
-msgstr "Перетаскивайте для выполнения добавления в качастве новой порции"
+msgstr "Перетащить - добавить как новый фрагмент"
 
 #: ../../src/gui/piePreviewRenderer.vala:429
 msgid "Drop to move Slice"
-msgstr "Перетаскивайте для выполнения перемещения порции"
+msgstr "Перетащить - переместить фрагмент"
 
 #: ../../src/gui/piePreviewRenderer.vala:434
 msgid "Click to delete"
-msgstr "Щёлкните для выполнения удаления"
+msgstr "Щелчок - удалить"
 
 #: ../../src/gui/pieList.vala:77
 msgid "Pies"
-msgstr ""
+msgstr "Паи"
 
 #: ../../src/gui/iconSelectWindow.vala:182
 msgid "All icons"
@@ -499,7 +512,7 @@ msgstr "Эмоции"
 
 #: ../../src/gui/iconSelectWindow.vala:188
 msgid "Miscellaneous"
-msgstr "Дополнительно"
+msgstr "Прочее"
 
 #: ../../src/gui/iconSelectWindow.vala:261
 msgid "All supported image formats"
@@ -517,7 +530,7 @@ msgid ""
 msgstr ""
 "Эта клавиша быстрого доступа уже назначена паю \"%s\"! \n"
 "\n"
-"Пожалуйста, выберите другую или выполните отмену выбора."
+"Пожалуйста, выберите другую или отмените выбор."
 
 #: ../../src/gui/themeList.vala:59
 msgid "Themes"
@@ -525,28 +538,27 @@ msgstr "Темы"
 
 #: ../../src/gui/themeList.vala:108
 msgid "by"
-msgstr ""
+msgstr "от"
 
 #: ../../src/gui/indicator.vala:126
 msgid "_Preferences"
-msgstr ""
+msgstr "Настройки"
 
 #: ../../src/gui/indicator.vala:135
 msgid "_About"
-msgstr ""
+msgstr "О программе"
 
 #: ../../src/gui/indicator.vala:150
 msgid "_Quit"
-msgstr ""
+msgstr "Выход"
 
 #: ../../src/gui/newsWindow.vala:64
 msgid "_Close"
-msgstr ""
+msgstr "Закрыть"
 
 #: ../../src/gui/triggerSelectButton.vala:64
-#, fuzzy
 msgid "Press a hotkey ..."
-msgstr "Нажмите сочетание клавиш быстрого доступа"
+msgstr "Нажмите горячие клавиши"
 
 #: ../../src/utilities/key.vala:65 ../../src/utilities/bindingManager.vala:186
 #: ../../src/utilities/trigger.vala:195 ../../src/utilities/trigger.vala:280
@@ -584,42 +596,40 @@ msgstr "По центру"
 
 #: ../../src/utilities/trigger.vala:232 ../../src/utilities/trigger.vala:234
 msgid "Warp"
-msgstr ""
+msgstr "Деформация"
 
 #: ../../src/utilities/trigger.vala:238 ../../src/utilities/trigger.vala:240
 msgid "Auto-shaped"
-msgstr ""
+msgstr "Автоформа"
 
 #: ../../src/utilities/trigger.vala:243 ../../src/utilities/trigger.vala:245
 msgid "Quarter pie"
-msgstr ""
+msgstr "Четверть Пая"
 
 #: ../../src/utilities/trigger.vala:249 ../../src/utilities/trigger.vala:251
 msgid "Half pie"
-msgstr ""
+msgstr "Половина Пая"
 
 #: ../../src/themes/theme.vala:169
 msgid "Successfully exported the theme \"%s\"!"
-msgstr ""
+msgstr "Тема экспортирована успешно \"%s\"!"
 
 #: ../../src/themes/theme.vala:176
 msgid ""
 "An error occured while exporting the theme \"%s\"! Please check the console "
 "output."
-msgstr ""
+msgstr "При экспорте темы произошла ошибка \"%s\"! Проверьте вывод консоли."
 
 #: ../../src/actionGroups/windowListGroup.vala:34
-#, fuzzy
 msgid "Group: Window List"
 msgstr "Группа: Список окон"
 
 #: ../../src/actionGroups/windowListGroup.vala:36
 msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
 msgstr ""
-"Показывает порцию для каждого из открытых окон. Как это делает Alt-Tab."
+"Показать фрагмент для каждого из открытых окон. Как это делает Alt-Tab."
 
 #: ../../src/actionGroups/clipboardGroup.vala:64
-#, fuzzy
 msgid "Group: Clipboard"
 msgstr "Группа: Буфер обмена"
 
@@ -628,20 +638,18 @@ msgid "Manages your Clipboard."
 msgstr "Управляет вашим буфером обмена."
 
 #: ../../src/actionGroups/devicesGroup.vala:35
-#, fuzzy
 msgid "Group: Devices"
 msgstr "Группа: Устройства"
 
 #: ../../src/actionGroups/devicesGroup.vala:37
 msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
-msgstr "Показывает порцию подключённых устройств, например USB-накопителя."
+msgstr "Показать фрагмент для подключённых устройств, например USB-накопителя."
 
 #: ../../src/actionGroups/devicesGroup.vala:85
 msgid "Root"
 msgstr "Файловая система"
 
 #: ../../src/actionGroups/menuGroup.vala:35
-#, fuzzy
 msgid "Group: Main menu"
 msgstr "Группа: Основное меню"
 
@@ -651,22 +659,23 @@ msgstr "Отображает структуру вашего основного 
 
 #: ../../src/actionGroups/workspaceWindowListGroup.vala:35
 msgid "Group: Window List for current workspace"
-msgstr ""
+msgstr "Группа: Список окон для текущего рабочего пространства"
 
 #: ../../src/actionGroups/workspaceWindowListGroup.vala:37
 msgid ""
 "Shows a Slice for each of your opened windows on the current workspace."
 msgstr ""
+"Показать фрагмент для каждого из открытых окон в текущем рабочем "
+"пространстве."
 
 #: ../../src/actionGroups/sessionGroup.vala:35
-#, fuzzy
 msgid "Group: Session Control"
 msgstr "Группа: Управление сеансом"
 
 #: ../../src/actionGroups/sessionGroup.vala:37
 msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
 msgstr ""
-"Показывает порцию для операций выключения, перезагрузки и спящего режима."
+"Показывает фрагмент для операций выключения, перезагрузки и спящего режима."
 
 #: ../../src/actionGroups/sessionGroup.vala:60
 msgid "Shutdown"
@@ -681,13 +690,12 @@ msgid "Reboot"
 msgstr "Перезагрузить"
 
 #: ../../src/actionGroups/bookmarkGroup.vala:36
-#, fuzzy
 msgid "Group: Bookmarks"
 msgstr "Группа: Закладки"
 
 #: ../../src/actionGroups/bookmarkGroup.vala:38
 msgid "Shows a Slice for each of your directory Bookmarks."
-msgstr "Показывает порцию содержащую закладки папок."
+msgstr "Показать фрагмент, содержащий закладки папок."
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"

@@ -135,7 +135,8 @@ public class MenuGroup : ActionGroup {
                     // get icon
                     var icon = item.get_directory().get_icon();
 
-                    var sub_menu = PieManager.create_dynamic_pie(item.get_directory().get_name(), Icon.get_icon_name(icon));
+                    var sub_menu = PieManager.create_dynamic_pie(item.get_directory().get_name(),
+                      Icon.get_icon_name(icon.to_string()));
                     var group = new MenuGroup.sub_menu(sub_menu.id);
                     group.add_action(new PieAction(parent_id, true));
                     group.load_contents(item.get_directory(), sub_menu.id);

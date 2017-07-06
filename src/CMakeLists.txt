@@ -16,6 +16,10 @@ if (${GMENU3_FOUND})
     LIST(APPEND DEFINES --define HAVE_GMENU_3)
 endif (${GMENU3_FOUND})
 
+if (${BAMF_FOUND})
+    LIST(APPEND DEFINES --define HAVE_BAMF)
+endif (${BAMF_FOUND})
+
 # use valac to compile sources to c files
 vala_precompile(
     VALA_C

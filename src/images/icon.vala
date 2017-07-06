@@ -78,9 +78,9 @@ public class Icon : Image {
     /// Returns the icon name for a given GLib.Icon.
     /////////////////////////////////////////////////////////////////////
 
-    public static string get_icon_name(GLib.Icon? icon) {
+    public static string get_icon_name(string? icon) {
         if (icon != null) {
-            var icon_names = icon.to_string().split(" ");
+            var icon_names = icon.down().split(" ");
 
             foreach (var icon_name in icon_names) {
                 if (Gtk.IconTheme.get_default().has_icon(icon_name)) {
@@ -115,7 +115,7 @@ public class Icon : Image {
         if (result == "") {
             warning("Icon \"" + icon_name + "\" not found! Using default icon...");
 
-            string[] default_icons = {"application-default-icon", "stock_unknown"};
+            string[] default_icons = {"application-default-icon", "image-missing"};
             foreach (var icon in default_icons) {
                 file = icon_theme.lookup_icon(icon, size, 0);
                 if (file != null) {

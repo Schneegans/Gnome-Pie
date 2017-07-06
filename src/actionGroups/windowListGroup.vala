@@ -192,11 +192,10 @@ public class WindowListGroup : ActionGroup {
                     }
                 }
             }
+        #else
+            var application = window.get_application();
+            icon_name = Icon.get_icon_name(application.get_icon_name().down());
         #endif
-
-
-        if (icon_name == null)
-            icon_name = Icon.get_icon_name(window.get_icon_name());
 
         return icon_name;
     }

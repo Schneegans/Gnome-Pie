@@ -162,7 +162,7 @@ public class WindowListGroup : ActionGroup {
     }
 
     private string get_icon_name(Wnck.Window window) {
-        string icon_name = null;
+        string icon_name = "";
 
         #if HAVE_BAMF
             var xid = (uint32) window.get_xid();

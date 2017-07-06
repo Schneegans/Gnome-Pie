@@ -115,7 +115,7 @@ public class Icon : Image {
         if (result == "") {
             warning("Icon \"" + icon_name + "\" not found! Using default icon...");
 
-            string[] default_icons = {"application-default-icon", "stock_unknown"};
+            string[] default_icons = {"application-default-icon", "image-missing"};
             foreach (var icon in default_icons) {
                 file = icon_theme.lookup_icon(icon, size, 0);
                 if (file != null) {

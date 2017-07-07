@@ -175,28 +175,6 @@ public class PieRenderer : GLib.Object {
         set_show_mode(ShowPieMode.FULL_PIE);
     }
 
-
-    private void get_mouse_and_screen(out int mousex, out int mousey, out int screenx, out int screeny) {
-        // get the mouse position and screen resolution
-        double x = 0.0;
-        double y = 0.0;
-
-        var display = Gdk.Display.get_default();
-        var manager = display.get_device_manager();
-        GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
-
-        foreach(var device in list) {
-            if (device.input_source != Gdk.InputSource.KEYBOARD) {
-                Gdk.Screen screen;
-                device.get_position( out screen, out x, out y );
-            }
-        }
-        mousex= (int) x;
-        mousey= (int) y;
-        screenx= Gdk.Screen.width();
-        screeny= Gdk.Screen.height();
-    }
-
     /////////////////////////////////////////////////////////////////////
     /// Loads a Pie. All members are initialized accordingly.
     /////////////////////////////////////////////////////////////////////
@@ -239,12 +217,14 @@ public class PieRenderer : GLib.Object {
                  + Config.global.theme.visible_slice_radius)*2*Config.global.theme.max_zoom);
         }
 
-
-
-
         // get mouse position and screen resolution
-        int mouse_x, mouse_y, screen_x, screen_y;
-        get_mouse_and_screen( out mouse_x, out mouse_y, out screen_x, out screen_y );
+        int mouse_x, mouse_y;
+        var seat = Gdk.Display.get_default().get_default_seat();
+        seat.get_pointer().get_position(null, out mouse_x, out mouse_y);
+
+        var monitor = Gdk.Display.get_default().get_monitor_at_point(mouse_x, mouse_y).get_geometry();
+        int screen_x = monitor.width;
+        int screen_y = monitor.height;
 
         //reduce the window size if needed to get closer to the actual mouse position
         int reduce_szx= 1;

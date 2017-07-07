@@ -69,8 +69,6 @@ public class TipViewer : Gtk.Label {
         this.wrap = true;
         this.valign = Gtk.Align.END;
         this.set_use_markup(true);
-
-        this.override_font(Pango.FontDescription.from_string("8"));
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -155,7 +153,7 @@ public class TipViewer : Gtk.Label {
                 next_index = GLib.Random.int_range(0, tips.length);
             } while (next_index == this.index);
             this.index = next_index;
-            this.label = tips[this.index];
+            this.label = "<small>" + tips[this.index] + "</small>";
         }
     }
 }

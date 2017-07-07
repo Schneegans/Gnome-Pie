@@ -170,10 +170,7 @@ class PiePreview : Gtk.DrawingArea {
     /////////////////////////////////////////////////////////////////////
 
     public void set_pie(string id) {
-        var style = this.get_style_context();
-
         this.current_id = id;
-        this.override_background_color(Gtk.StateFlags.NORMAL, style.get_background_color(Gtk.StateFlags.NORMAL));
         this.renderer.load_pie(PieManager.all_pies[id]);
 
         if (id == this.drag_start_id) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
-  <requires lib="gtk+" version="3.8"/>
+  <requires lib="gtk+" version="3.16"/>
   <object class="GtkDialog" id="window">
     <property name="can_focus">False</property>
     <property name="border_width">5</property>
@@ -24,7 +24,6 @@
             <child>
               <object class="GtkButton" id="cancel-button">
                 <property name="label">gtk-close</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -39,7 +38,6 @@
             <child>
               <object class="GtkButton" id="ok-button">
                 <property name="label">gtk-ok</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -102,7 +100,6 @@
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkButton" id="icon-button">
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">True</property>
@@ -138,7 +135,6 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="label" translatable="yes">There are no options for this Slice type.</property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -163,8 +159,8 @@
                                   <object class="GtkLabel" id="label11">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
                                     <property name="label" translatable="yes">URI to open</property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -201,8 +197,8 @@
                                   <object class="GtkLabel" id="label12">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
                                     <property name="label" translatable="yes">Command to execute</property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -230,8 +226,8 @@
                                   <object class="GtkLabel" id="label13">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
                                     <property name="label" translatable="yes">Hotkey to press</property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -259,8 +255,8 @@
                                   <object class="GtkLabel" id="label14">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
                                     <property name="label" translatable="yes">Pie to open</property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -288,8 +284,8 @@
                                   <object class="GtkLabel" id="label10">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
                                     <property name="label" translatable="yes">Name of the Slice </property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -326,8 +322,8 @@
                                   <object class="GtkLabel" id="label15">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
                                     <property name="label" translatable="yes">Is Quick Action</property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -365,8 +361,8 @@
                                   <object class="GtkLabel" id="label3">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
                                     <property name="label" translatable="yes">Clipboard history length</property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>
@@ -405,8 +401,8 @@
                                   <object class="GtkLabel" id="label4">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
+                                    <property name="halign">start</property>
                                     <property name="label" translatable="yes">Current workspace only</property>
-                                    <property name="xalign">0</property>
                                   </object>
                                   <packing>
                                     <property name="expand">True</property>

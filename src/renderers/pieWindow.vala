@@ -186,8 +186,26 @@ public class PieWindow : Gtk.Window {
         });
 
         this.show.connect_after(() => {
-            Gtk.grab_add(this);
-            FocusGrabber.grab(this.get_window(), true, true, false);
+            int i = 0;
+            Timeout.add(100, () => {
+                // abort after 100 ttempts
+                if (++i >= 100) return false;
+
+                // try again if window is not yet viewable
+                if (!this.get_window().is_viewable()) return true;
+
+                var seat = Gdk.Display.get_default().get_default_seat();
+                var caps = Gdk.SeatCapabilities.POINTER | Gdk.SeatCapabilities.KEYBOARD;
+                var result = seat.grab(this.get_window(), caps, true, null, null, null);
+
+                // for some reason GDK hides the window if the grab fails...
+                if (result != Gdk.GrabStatus.SUCCESS) {
+                    this.get_window().show();
+                }
+
+                // continue trying to grab if it failed!
+                return result != Gdk.GrabStatus.SUCCESS;
+            });
         });
 
         this.scroll_event.connect((e) => {
@@ -226,15 +244,14 @@ public class PieWindow : Gtk.Window {
             this.back_sz_x++;
             this.back_sz_y++;
 
-            int screenx= Gdk.Screen.width();
-            int screeny= Gdk.Screen.height();
+            var monitor = Gdk.Display.get_default().get_monitor_at_point(this.back_x, this.back_y).get_geometry();
 
             //allow some window movement from the screen borders
             //(some panels moves the window after it was realized)
             int dx = this.panel_sz - this.back_x;
             if (dx > 0)
                 this.back_sz_x += dx;
-            dx = this.panel_sz - (screenx - this.back_x - this.back_sz_x +1);
+            dx = this.panel_sz - (monitor.width - this.back_x - this.back_sz_x +1);
             if (dx > 0) {
                 this.back_sz_x += dx;
                 this.back_x  -= dx;
@@ -243,7 +260,7 @@ public class PieWindow : Gtk.Window {
             int dy = this.panel_sz - this.back_y;
             if (dy > 0)
                 this.back_sz_y += dy;
-            dy = this.panel_sz - (screeny - this.back_y - this.back_sz_y +1);
+            dy = this.panel_sz - (monitor.height - this.back_y - this.back_sz_y +1);
             if (dy > 0) {
                 this.back_sz_y += dy;
                 this.back_y  -= dy;
@@ -264,10 +281,10 @@ public class PieWindow : Gtk.Window {
                 this.back_sz_y += this.back_y;
                 this.back_y = 0;
             }
-            if (this.back_x + this.back_sz_x > screenx)
-                this.back_sz_x = screenx - this.back_x;
-            if (this.back_y + this.back_sz_y > screeny)
-                this.back_sz_y = screeny - this.back_y;
+            if (this.back_x + this.back_sz_x > monitor.width)
+                this.back_sz_x = monitor.width - this.back_x;
+            if (this.back_y + this.back_sz_y > monitor.height)
+                this.back_sz_y = monitor.height - this.back_y;
             this.background = new Image.capture_screen(this.back_x, this.back_y, this.back_sz_x, this.back_sz_y);
         }
 
@@ -314,20 +331,8 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
 
     private void get_mouse_position(out int mx, out int my) {
-        // get the mouse position
-        mx = 0;
-        my = 0;
-        Gdk.ModifierType mask;
-
-        var display = Gdk.Display.get_default();
-        var manager = display.get_device_manager();
-        GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
-
-        foreach(var device in list) {
-            if (device.input_source != Gdk.InputSource.KEYBOARD) {
-                this.get_window().get_device_position(device, out mx, out my, out mask);
-            }
-        }
+        var seat = Gdk.Display.get_default().get_default_seat();
+        seat.get_pointer().get_position(null, out mx, out my);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -335,14 +340,8 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
 
     private void set_mouse_position(int mx, int my) {
-        var display = Gdk.Display.get_default();
-        var manager = display.get_device_manager();
-        GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
-        foreach(var device in list) {
-            if (device.input_source != Gdk.InputSource.KEYBOARD) {
-                device.warp(Gdk.Screen.get_default(), mx, my);
-            }
-        }
+        var seat = Gdk.Display.get_default().get_default_seat();
+        seat.get_pointer().warp(this.screen, mx, my);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -350,6 +349,9 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
 
     private bool draw_window(Cairo.Context ctx) {
+        int x, y;
+        this.get_position(out x, out y);
+
         // paint the background image if there is no compositing
         if (this.has_compositing) {
             ctx.set_operator (Cairo.Operator.CLEAR);
@@ -358,8 +360,6 @@ public class PieWindow : Gtk.Window {
         } else {
             //correct the background position if the window was moved
             //since the background image was captured
-            int x, y;
-            this.get_position(out x, out y);
             int dx = this.back_x - x;
             int dy = this.back_y - y;
             ctx.save();
@@ -382,8 +382,8 @@ public class PieWindow : Gtk.Window {
         this.timer.reset();
 
         // render the Pie
-        this.renderer.draw(frame_time, ctx, mouse_x - (int)this.renderer.center_x,
-                                            mouse_y - (int)this.renderer.center_y);
+        this.renderer.draw(frame_time, ctx, mouse_x - this.renderer.center_x - x,
+                                            mouse_y - this.renderer.center_y - y);
 
         return true;
     }
@@ -396,8 +396,8 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            Gtk.grab_remove(this);
-            FocusGrabber.ungrab();
+            var seat = Gdk.Display.get_default().get_default_seat();
+            seat.ungrab();
 
             GLib.Timeout.add(10, () => {
                 this.renderer.activate(time_stamp);
@@ -421,8 +421,8 @@ public class PieWindow : Gtk.Window {
         if (!this.closing) {
             this.closing = true;
             this.on_closing();
-            Gtk.grab_remove(this);
-            FocusGrabber.ungrab();
+            var seat = Gdk.Display.get_default().get_default_seat();
+            seat.ungrab();
             this.renderer.cancel();
 
             GLib.Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {

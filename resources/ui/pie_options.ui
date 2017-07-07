@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
-  <requires lib="gtk+" version="3.8"/>
+  <requires lib="gtk+" version="3.16"/>
   <object class="GtkImage" id="shape1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape1.svg</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
   </object>
   <object class="GtkImage" id="shape2">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape2.svg</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
   </object>
   <object class="GtkImage" id="shape3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape3.svg</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
   </object>
   <object class="GtkImage" id="shape4">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape4.svg</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
   </object>
   <object class="GtkImage" id="shape5">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape5.svg</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
   </object>
   <object class="GtkImage" id="shape6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape6.svg</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
   </object>
   <object class="GtkImage" id="shape7">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape7.svg</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
   </object>
   <object class="GtkImage" id="shape8">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape8.svg</property>
+    <property name="pixbuf">shapes/shape9.svg</property>
   </object>
   <object class="GtkImage" id="shape9">
     <property name="visible">True</property>
@@ -70,7 +70,6 @@
             <child>
               <object class="GtkButton" id="cancel-button">
                 <property name="label">gtk-cancel</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -86,7 +85,6 @@
             <child>
               <object class="GtkButton" id="ok-button">
                 <property name="label">gtk-ok</property>
-                <property name="use_action_appearance">False</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -118,11 +116,10 @@
                 <property name="can_focus">False</property>
                 <child>
                   <object class="GtkButton" id="icon-button">
-                    <property name="use_action_appearance">False</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
                     <property name="focus_on_click">False</property>
+                    <property name="receives_default">True</property>
                     <child>
                       <object class="GtkImage" id="icon">
                         <property name="visible">True</property>
@@ -180,20 +177,6 @@
                     <property name="position">1</property>
                   </packing>
                 </child>
-                <child>
-                  <object class="GtkLabel" id="id-label">
-                    <property name="visible">True</property>
-                    <property name="sensitive">False</property>
-                    <property name="can_focus">False</property>
-                    <property name="xalign">0</property>
-                    <property name="yalign">0.11999999731779099</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">False</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -211,8 +194,8 @@
                     <property name="visible">True</property>
                     <property name="sensitive">False</property>
                     <property name="can_focus">False</property>
+                    <property name="halign">start</property>
                     <property name="hexpand">True</property>
-                    <property name="xalign">0</property>
                     <property name="label" translatable="yes">ID:</property>
                     <property name="ellipsize">middle</property>
                     <attributes>
@@ -230,7 +213,7 @@
                   <object class="GtkLabel" id="label1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="xalign">1</property>
+                    <property name="halign">end</property>
                     <property name="label" translatable="yes">It's possible to bind mouse buttons as well!</property>
                     <attributes>
                       <attribute name="weight" value="light"/>
@@ -272,14 +255,13 @@
                         <child>
                           <object class="GtkCheckButton" id="turbo-check">
                             <property name="label" translatable="yes">Turbo mode</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_markup" translatable="yes">If checked, the Pie will close when you release the chosen hot key.</property>
                             <property name="tooltip_text" translatable="yes">If checked, the Pie will close when you release the chosen hot key.</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -291,14 +273,13 @@
                         <child>
                           <object class="GtkCheckButton" id="delay-check">
                             <property name="label" translatable="yes">Long press for activation</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_markup" translatable="yes">If checked, the Pie will only open if you press this hot key a bit longer.</property>
                             <property name="tooltip_text" translatable="yes">If checked, the Pie will only open if you press this hot key a bit longer.</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -310,14 +291,13 @@
                         <child>
                           <object class="GtkCheckButton" id="center-check">
                             <property name="label" translatable="yes">Open Pie centered on the screen</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_markup" translatable="yes">If checked, the Pie will open in the middle of your screen. Else it will pop up at your pointer.</property>
                             <property name="tooltip_text" translatable="yes">If checked, the Pie will open in the middle of your screen. Else it will pop up at your pointer.</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -329,14 +309,13 @@
                         <child>
                           <object class="GtkCheckButton" id="warp-check">
                             <property name="label" translatable="yes">Warp mouse pointer to center of Pie</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_markup" translatable="yes">If checked, the mouse pointer will be warped to the center of the Pie. This allows for quick selections even if the Pie is opened at the screen's boundary.</property>
                             <property name="tooltip_text" translatable="yes">If checked, the mouse pointer will be warped to the center of the Pie. This allows for quick selections even if the Pie is opened at the screen's boundary.</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -398,7 +377,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape1</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                               </object>
@@ -413,7 +391,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape2</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rshape1</property>
@@ -429,7 +406,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape3</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rshape1</property>
@@ -445,7 +421,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape4</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rshape1</property>
@@ -461,7 +436,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape5</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rshape1</property>
@@ -477,7 +451,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape6</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rshape1</property>
@@ -493,7 +466,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape7</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rshape1</property>
@@ -509,7 +481,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape8</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rshape1</property>
@@ -525,7 +496,6 @@
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
                                 <property name="image">shape9</property>
-                                <property name="xalign">0</property>
                                 <property name="always_show_image">True</property>
                                 <property name="draw_indicator">True</property>
                                 <property name="group">rshape1</property>
@@ -549,7 +519,6 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="tooltip_text" translatable="yes">If checked, the shape will be automatically selected to minimize mouse travelling.</property>
-                            <property name="xalign">0</property>
                             <property name="active">True</property>
                             <property name="draw_indicator">True</property>
                             <property name="group">rshape1</property>

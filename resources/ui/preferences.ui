@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.20.0 -->
 <interface>
-  <requires lib="gtk+" version="3.8"/>
+  <requires lib="gtk+" version="3.16"/>
   <object class="GtkWindow" id="window">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Gnome-Pie Settings</property>
@@ -39,14 +39,13 @@
                         <child>
                           <object class="GtkCheckButton" id="autostart-checkbox">
                             <property name="label" translatable="yes">Start Gnome-Pie on login</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_markup" translatable="yes">If checked, Gnome-Pie will start silently everytime you log in.</property>
                             <property name="tooltip_text" translatable="yes">If checked, Gnome-Pie will start silently everytime you log in.</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -58,14 +57,13 @@
                         <child>
                           <object class="GtkCheckButton" id="indicator-checkbox">
                             <property name="label" translatable="yes">Display panel icon </property>
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_markup" translatable="yes">If not checked, you can access this menu by launching Gnome-Pie a second time.</property>
                             <property name="tooltip_text" translatable="yes">If not checked, you can access this menu by launching Gnome-Pie a second time.</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -77,14 +75,13 @@
                         <child>
                           <object class="GtkCheckButton" id="select-by-string-checkbox">
                             <property name="label" translatable="yes">Select Slices by typing their names</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_markup" translatable="yes">If checked, you can select items in a Pie by typing their names. Otherwise you can activate them with a hotkey (which can be displayed by pressing ALT when a Pie is openened).</property>
                             <property name="tooltip_text" translatable="yes">If checked, you can select items in a Pie by typing their names. Otherwise you can activate them with a hotkey (which can be displayed by pressing ALT when a Pie is openened).</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -96,14 +93,13 @@
                         <child>
                           <object class="GtkCheckButton" id="captions-checkbox">
                             <property name="label" translatable="yes">Display Slice labels</property>
-                            <property name="use_action_appearance">False</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="has_tooltip">True</property>
                             <property name="tooltip_markup" translatable="yes">Displays the name of each Slice next to it. Only available if supported by the theme.</property>
                             <property name="tooltip_text" translatable="yes">Displays the name of each Slice next to it. Only available if supported by the theme.</property>
-                            <property name="xalign">0</property>
+                            <property name="halign">start</property>
                             <property name="draw_indicator">True</property>
                           </object>
                           <packing>
@@ -725,13 +721,14 @@
                                   <object class="GtkBox" id="pie-edit-box">
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
-                                    <property name="border_width">2</property>
                                     <property name="orientation">vertical</property>
                                     <child>
                                       <object class="GtkLabel" id="no-slice-label">
                                         <property name="can_focus">False</property>
-                                        <property name="xpad">6</property>
-                                        <property name="ypad">6</property>
+                                        <property name="margin_left">6</property>
+                                        <property name="margin_right">6</property>
+                                        <property name="margin_top">6</property>
+                                        <property name="margin_bottom">6</property>
                                         <property name="label" translatable="yes">&lt;b&gt;&lt;big&gt;This Pie is empty!&lt;/big&gt;
 
 Start adding Slices to it!&lt;/b&gt; This can be done by dragging stuff to the plus sign below. You can try a lot! For example application launchers or folders. Even URLs from your browser are possible...
@@ -751,8 +748,10 @@ For manual and advanced configuration click on the plus sign.</property>
                                     <child>
                                       <object class="GtkLabel" id="no-pie-label">
                                         <property name="can_focus">False</property>
-                                        <property name="xpad">6</property>
-                                        <property name="ypad">6</property>
+                                        <property name="margin_left">6</property>
+                                        <property name="margin_right">6</property>
+                                        <property name="margin_top">6</property>
+                                        <property name="margin_bottom">6</property>
                                         <property name="label" translatable="yes">&lt;b&gt;&lt;big&gt;You have no Pies!&lt;/big&gt;
 
 Start by creating one! &lt;/b&gt; This can be done by clicking on the tiny little plus sign in the lower left corner.</property>
@@ -775,6 +774,9 @@ Start by creating one! &lt;/b&gt; This can be done by clicking on the tiny littl
                                         <child>
                                           <placeholder/>
                                         </child>
+                                        <style>
+                                          <class name="view"/>
+                                        </style>
                                       </object>
                                       <packing>
                                         <property name="expand">True</property>
@@ -801,6 +803,9 @@ Start by creating one! &lt;/b&gt; This can be done by clicking on the tiny littl
                                         <property name="position">3</property>
                                       </packing>
                                     </child>
+                                    <style>
+                                      <class name="view"/>
+                                    </style>
                                   </object>
                                 </child>
                               </object>

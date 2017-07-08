@@ -46,6 +46,8 @@ public class PieOptionsWindow : GLib.Object {
     private Gtk.Button? icon_button = null;
     private Gtk.Image? icon = null;
     private Gtk.Label? pie_id = null;
+    private Gtk.Label? hint = null;
+    private Gtk.Frame? optionsFrame = null;
 
     private IconSelectWindow? icon_window = null;
 
@@ -141,6 +143,10 @@ public class PieOptionsWindow : GLib.Object {
             this.icon_button = builder.get_object("icon-button") as Gtk.Button;
             this.icon_button.clicked.connect(on_icon_button_clicked);
 
+            this.hint = builder.get_object("hint") as Gtk.Label;
+
+            this.optionsFrame = builder.get_object("optionsFrame") as Gtk.Frame;
+
             this.window.delete_event.connect(this.window.hide_on_delete);
 
         } catch (GLib.Error e) {
@@ -163,6 +169,10 @@ public class PieOptionsWindow : GLib.Object {
 
     public void show() {
         this.window.show_all();
+
+        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
+            this.optionsFrame.visible = false;
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -187,6 +197,15 @@ public class PieOptionsWindow : GLib.Object {
         this.pie_id.label = "Pie-ID: " + id;
         this.trigger_button.set_trigger(trigger);
         this.set_icon(pie.icon);
+
+        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
+            this.trigger_button.set_sensitive(false);
+
+            this.hint.set_line_wrap(true);
+            this.hint.set_max_width_chars(40);
+            this.hint.set_justify(Gtk.Justification.RIGHT);
+            this.hint.set_label(_("Keybindings and some other options are not supported on Wayland. However, you can use the terminial command \"gnome-pie --open %s\" to open this pie. Create a global hotkey in your system settings which executes this command!").printf(id));
+        }
     }
 
     /////////////////////////////////////////////////////////////////////

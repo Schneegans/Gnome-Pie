@@ -29,7 +29,12 @@ public class WindowListGroup : ActionGroup {
     /// the pies.conf file for this kind of ActionGroups.
     /////////////////////////////////////////////////////////////////////
 
-    public static GroupRegistry.TypeDescription register() {
+    public static GroupRegistry.TypeDescription? register() {
+	if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
+            warning("The WindowList slice group is not supported on Wayland.");
+            return null;
+        }
+
         var description = new GroupRegistry.TypeDescription();
         description.name = _("Group: Window List");
         description.icon = "preferences-system-windows";
@@ -94,6 +99,7 @@ public class WindowListGroup : ActionGroup {
         screen.active_workspace_changed.connect(create_actions_for_all_windows);
         screen.window_opened.connect(create_action);
         screen.window_closed.connect(remove_action);
+
     }
 
     /////////////////////////////////////////////////////////////////////

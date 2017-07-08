@@ -54,28 +54,40 @@ public class GroupRegistry : GLib.Object {
         TypeDescription type_description;
 
         type_description = BookmarkGroup.register();
-        types.add(typeof(BookmarkGroup).name());
-        descriptions.set(typeof(BookmarkGroup).name(), type_description);
+        if (type_description != null) {
+            types.add(typeof(BookmarkGroup).name());
+            descriptions.set(typeof(BookmarkGroup).name(), type_description);
+        }
 
         type_description = ClipboardGroup.register();
-        types.add(typeof(ClipboardGroup).name());
-        descriptions.set(typeof(ClipboardGroup).name(), type_description);
+        if (type_description != null) {
+            types.add(typeof(ClipboardGroup).name());
+            descriptions.set(typeof(ClipboardGroup).name(), type_description);
+        }
 
         type_description = DevicesGroup.register();
-        types.add(typeof(DevicesGroup).name());
-        descriptions.set(typeof(DevicesGroup).name(), type_description);
+        if (type_description != null) {
+            types.add(typeof(DevicesGroup).name());
+            descriptions.set(typeof(DevicesGroup).name(), type_description);
+        }
 
         type_description = MenuGroup.register();
-        types.add(typeof(MenuGroup).name());
-        descriptions.set(typeof(MenuGroup).name(), type_description);
+        if (type_description != null) {
+            types.add(typeof(MenuGroup).name());
+            descriptions.set(typeof(MenuGroup).name(), type_description);
+        }
 
         type_description = SessionGroup.register();
-        types.add(typeof(SessionGroup).name());
-        descriptions.set(typeof(SessionGroup).name(), type_description);
+        if (type_description != null) {
+            types.add(typeof(SessionGroup).name());
+            descriptions.set(typeof(SessionGroup).name(), type_description);
+        }
 
         type_description = WindowListGroup.register();
-        types.add(typeof(WindowListGroup).name());
-        descriptions.set(typeof(WindowListGroup).name(), type_description);
+        if (type_description != null) {
+            types.add(typeof(WindowListGroup).name());
+            descriptions.set(typeof(WindowListGroup).name(), type_description);
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -83,6 +95,8 @@ public class GroupRegistry : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public static ActionGroup? create_group(string type_id, string parent_id) {
+        bool wayland = GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland";
+
         switch (type_id) {
             case "bookmarks":
                 return new BookmarkGroup(parent_id);
@@ -95,9 +109,11 @@ public class GroupRegistry : GLib.Object {
             case "session":
                 return new SessionGroup(parent_id);
             case "window_list":
+                if (wayland) return null;
                 return new WindowListGroup(parent_id);
             // deprecated
             case "workspace_window_list":
+		if (wayland) return null;
                 var group = new WindowListGroup(parent_id);
                 group.current_workspace_only = true;
                 return group;

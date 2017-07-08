@@ -102,6 +102,12 @@ public class PieWindow : Gtk.Window {
     private string search_string = "";
 
     /////////////////////////////////////////////////////////////////////
+    /// Used to identify wayland sessions.
+    /////////////////////////////////////////////////////////////////////
+
+    private bool wayland = GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland";
+
+    /////////////////////////////////////////////////////////////////////
     /// C'tor, sets up the window.
     /////////////////////////////////////////////////////////////////////
 
@@ -112,7 +118,7 @@ public class PieWindow : Gtk.Window {
         this.set_skip_taskbar_hint(true);
         this.set_skip_pager_hint(true);
         this.set_keep_above(true);
-        this.set_type_hint(Gdk.WindowTypeHint.POPUP_MENU);
+        this.set_type_hint(Gdk.WindowTypeHint.DOCK);
         this.set_decorated(false);
         this.set_resizable(false);
         this.icon_name = "gnome-pie";
@@ -227,8 +233,16 @@ public class PieWindow : Gtk.Window {
 
     public void load_pie(Pie pie) {
         this.renderer.load_pie(pie);
-        this.set_window_position(pie);
-        this.set_size_request(renderer.size_w, renderer.size_h);
+
+        if (wayland) {
+            // wayland does not support client side window placement
+            // therefore we will make a fullscreen window
+            var monitor = Gdk.Display.get_default().get_monitor_at_point(this.back_x, this.back_y).get_geometry();
+            this.set_size_request(monitor.width, monitor.height);
+        } else {
+            this.set_window_position(pie);
+            this.set_size_request(renderer.size_w, renderer.size_h);
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -370,9 +384,6 @@ public class PieWindow : Gtk.Window {
             ctx.restore();
         }
 
-        // align the context to the center of the PieWindow
-        ctx.translate(this.renderer.center_x, this.renderer.center_y);
-
         // get the mouse position
         int mouse_x, mouse_y;
         get_mouse_position( out mouse_x, out mouse_y );
@@ -381,9 +392,21 @@ public class PieWindow : Gtk.Window {
         double frame_time = this.timer.elapsed();
         this.timer.reset();
 
+        // on wayland we have a fullscreen window and since we
+        // do not get the pointer location until the mouse moved
+        // we can only display the pie centered...
+        if (this.wayland) {
+            var monitor = Gdk.Display.get_default().get_monitor_at_point(this.back_x, this.back_y).get_geometry();
+            x = monitor.width / 2;
+            y = monitor.height / 2;
+            ctx.translate(x, y);
+        } else {
+            // align the context to the center of the PieWindow
+            ctx.translate(this.renderer.center_x, this.renderer.center_y);
+        }
+
         // render the Pie
-        this.renderer.draw(frame_time, ctx, mouse_x - this.renderer.center_x - x,
-                                            mouse_y - this.renderer.center_y - y);
+        this.renderer.draw(frame_time, ctx, mouse_x - x, mouse_y - y);
 
         return true;
     }

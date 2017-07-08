@@ -112,12 +112,7 @@ public class BindingManager : GLib.Object {
     public void bind(Trigger trigger, string id) {
         
         // global key grabbing is impossible on wayland
-        if (wayland) {
-            warning("Key bindings are not supported on Wayland. You can still open pies with the -o command line option.");
-            return;
-        }
-
-        if (trigger.key_code != 0) {
+        if (!wayland && trigger.key_code != 0) {
             unowned X.Display display = Gdk.X11.get_default_xdisplay();
             X.ID xid = Gdk.X11.get_default_root_xwindow();
 
@@ -154,15 +149,10 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void unbind(string id) {
-        // global key grabbing is impossible on wayland
-        if (wayland) {
-            return;
-        }
-
         foreach (var binding in bindings) {
             if (id == binding.id) {
-                if (binding.trigger.key_code == 0) {
-                    //no key_code: just remove the bindind from the list
+                if (binding.trigger.key_code == 0 || wayland) {
+                    //no key_code or wayland: just remove the bindind from the list
                     bindings.remove(binding);
                     return;
                 }

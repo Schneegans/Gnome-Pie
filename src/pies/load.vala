@@ -199,9 +199,11 @@ namespace Pies {
         }
 
         ActionGroup group = GroupRegistry.create_group(type, pie.id);
-        group.on_load(slice);
 
-        if (group != null) pie.add_group(group);
+        if (group != null) {
+            group.on_load(slice);
+            pie.add_group(group);
+        }
     }
 }
 

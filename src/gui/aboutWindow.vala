@@ -33,7 +33,8 @@ public class AboutWindow: Gtk.AboutDialog {
             "Simon Schneegans <code@simonschneegans.de>",
             "Gabriel Dubatti <gdubatti@gmail.com>",
             "Francesco Piccinno <stack.box@gmail.com>",
-            "György Balló <ballogyor@gmail.com>"
+            "György Balló <ballogyor@gmail.com>",
+            "Tiago de Oliveira Corrêa <tcorreabr@gmail.com>"
         };
         string[] artists = {
             "Simon Schneegans <code@simonschneegans.de>"
@@ -50,6 +51,7 @@ public class AboutWindow: Gtk.AboutDialog {
             "Raphaël Rochet <raphael@rri.fr> (FR)",
             "Alex Maxime <cad.maxime@gmail.com> (FR)",
             "Eugene Roskin <pams@imail.ru> (RU)",
+            "Ashed <craysy@gmail.com> (RU)",
             "Ting Zhou <tzhou@haverford.edu> (ZH-CN)",
             "Martin Dinov <martindinov@yahoo.com> (BG)"
         };

@@ -73,6 +73,12 @@ public class BindingManager : GLib.Object {
     private Keybinding? delayed_binding = null;
 
     /////////////////////////////////////////////////////////////////////
+    /// Used to identify wayland sessions.
+    /////////////////////////////////////////////////////////////////////
+
+    private bool wayland = GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland";
+
+    /////////////////////////////////////////////////////////////////////
     /// Helper class to store keybinding
     /////////////////////////////////////////////////////////////////////
 
@@ -104,6 +110,13 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void bind(Trigger trigger, string id) {
+        
+        // global key grabbing is impossible on wayland
+        if (wayland) {
+            warning("Key bindings are not supported on Wayland. You can still open pies with the -o command line option.");
+            return;
+        }
+
         if (trigger.key_code != 0) {
             unowned X.Display display = Gdk.X11.get_default_xdisplay();
             X.ID xid = Gdk.X11.get_default_root_xwindow();
@@ -141,6 +154,11 @@ public class BindingManager : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void unbind(string id) {
+        // global key grabbing is impossible on wayland
+        if (wayland) {
+            return;
+        }
+
         foreach (var binding in bindings) {
             if (id == binding.id) {
                 if (binding.trigger.key_code == 0) {

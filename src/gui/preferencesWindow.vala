@@ -163,7 +163,7 @@ public class PreferencesWindow : GLib.Object {
 
         (builder.get_object("theme-help-button") as Gtk.Button).clicked.connect(() => {
             try{
-                GLib.AppInfo.launch_default_for_uri("http://simmesimme.github.io/lessons/2015/04/26/themes-for-gnome-pie/", null);
+                GLib.AppInfo.launch_default_for_uri("http://simmesimme.github.io/lessons/2015/04/26/themes-for-gnome-pie", null);
             } catch (Error e) {
                 warning(e.message);
             }

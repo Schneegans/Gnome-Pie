@@ -30,7 +30,7 @@ public class WindowListGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
 
     public static GroupRegistry.TypeDescription? register() {
-	if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
+        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
             warning("The WindowList slice group is not supported on Wayland.");
             return null;
         }
@@ -63,6 +63,18 @@ public class WindowListGroup : ActionGroup {
 
     public WindowListGroup(string parent_id) {
         GLib.Object(parent_id : parent_id);
+
+        screen = Wnck.Screen.get_default();
+        WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
+
+        Gtk.IconTheme.get_default().changed.connect(() => {
+            WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
+            create_actions_for_all_windows();
+        });
+
+        screen.active_workspace_changed.connect(create_actions_for_all_windows);
+        screen.window_opened.connect(create_action);
+        screen.window_closed.connect(remove_action);
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -87,19 +99,6 @@ public class WindowListGroup : ActionGroup {
                 current_workspace_only = bool.parse(attr_content);
             }
         }
-
-        screen = Wnck.Screen.get_default();
-        WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
-
-        Gtk.IconTheme.get_default().changed.connect(() => {
-            WindowListGroup.cached_icon_name = new Gee.HashMap<string, string>();
-            create_actions_for_all_windows();
-        });
-
-        screen.active_workspace_changed.connect(create_actions_for_all_windows);
-        screen.window_opened.connect(create_action);
-        screen.window_closed.connect(remove_action);
-
     }
 
     /////////////////////////////////////////////////////////////////////

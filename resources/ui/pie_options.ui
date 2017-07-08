@@ -5,42 +5,42 @@
   <object class="GtkImage" id="shape1">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape9.svg</property>
+    <property name="pixbuf">shapes/shape1.svg</property>
   </object>
   <object class="GtkImage" id="shape2">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape9.svg</property>
+    <property name="pixbuf">shapes/shape2.svg</property>
   </object>
   <object class="GtkImage" id="shape3">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape9.svg</property>
+    <property name="pixbuf">shapes/shape3.svg</property>
   </object>
   <object class="GtkImage" id="shape4">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape9.svg</property>
+    <property name="pixbuf">shapes/shape4.svg</property>
   </object>
   <object class="GtkImage" id="shape5">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape9.svg</property>
+    <property name="pixbuf">shapes/shape5.svg</property>
   </object>
   <object class="GtkImage" id="shape6">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape9.svg</property>
+    <property name="pixbuf">shapes/shape6.svg</property>
   </object>
   <object class="GtkImage" id="shape7">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape9.svg</property>
+    <property name="pixbuf">shapes/shape7.svg</property>
   </object>
   <object class="GtkImage" id="shape8">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="pixbuf">shapes/shape9.svg</property>
+    <property name="pixbuf">shapes/shape8.svg</property>
   </object>
   <object class="GtkImage" id="shape9">
     <property name="visible">True</property>

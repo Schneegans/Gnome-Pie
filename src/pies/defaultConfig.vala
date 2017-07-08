@@ -63,8 +63,10 @@ namespace Pies {
             window.add_action(new KeyAction(_("Restore"), "view-restore", "<Alt>F5"));
 
         // add a pie with window list group
-        var alt_tab = PieManager.create_persistent_pie("Alt Tab", "preferences-system-windows", new Trigger.from_string("<Control><Alt>T"));
+        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") != "wayland") {
+            var alt_tab = PieManager.create_persistent_pie("Alt Tab", "preferences-system-windows", new Trigger.from_string("<Control><Alt>T"));
             alt_tab.add_group(new WindowListGroup(alt_tab.id));
+        }
 
         // save the configuration to file
         Pies.save();

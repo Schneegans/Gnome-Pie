@@ -188,8 +188,9 @@ public class CenterRenderer : GLib.Object {
         // draw caption
         if (Config.global.theme.caption && caption != null && this.activity.val > 0) {
             ctx.save();
-            ctx.identity_matrix();
-            ctx.translate(this.parent.center_x, (int)(Config.global.theme.caption_position) + this.parent.center_y);
+            double x, y;
+            ctx.get_current_point(out x, out y);
+            ctx.move_to(GLib.Math.floor(x), GLib.Math.floor(y));
             caption.paint_on(ctx, this.activity.val*this.alpha.val);
             ctx.restore();
         }

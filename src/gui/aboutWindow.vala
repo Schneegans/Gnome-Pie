@@ -73,7 +73,7 @@ public class AboutWindow: Gtk.AboutDialog {
             artists : artists,
             authors : devs,
             translator_credits : translator_string,
-            copyright : "Copyright (C) 2011-2015 Simon Schneegans <code@simonschneegans.de>",
+            copyright : "Copyright (C) 2011-2017 Simon Schneegans <code@simonschneegans.de>",
             program_name: "Gnome-Pie",
             logo_icon_name: "gnome-pie",
             website: "http://simmesimme.github.io/gnome-pie.html",

@@ -529,15 +529,17 @@ public class PreferencesWindow : GLib.Object {
         } else {
             var pie = PieManager.all_pies[selected_id];
 
-            this.preview.set_pie(id);
-            this.preview_box.show();
+            if (pie != null) {
+                this.preview.set_pie(id);
+                this.preview_box.show();
 
-            if (pie.action_groups.size == 0) {
-                this.no_slice_label.show();
+                if (pie.action_groups.size == 0) {
+                    this.no_slice_label.show();
+                }
+
+                this.remove_pie_button.sensitive = true;
+                this.edit_pie_button.sensitive = true;
             }
-
-            this.remove_pie_button.sensitive = true;
-            this.edit_pie_button.sensitive = true;
         }
     }
 

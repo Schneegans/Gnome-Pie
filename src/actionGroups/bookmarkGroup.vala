@@ -65,18 +65,35 @@ public class BookmarkGroup : ActionGroup {
     construct {
         this.load();
 
-        // add monitor
-        var bookmark_file = GLib.File.new_for_path(
-            GLib.Environment.get_home_dir()).get_child(".gtk-bookmarks");
+        var bookmarks_file = get_bookmarks_file();
 
-        if (bookmark_file.query_exists()) {
+        // add monitor
+        if (bookmarks_file != null) {
             try {
-                var monitor = bookmark_file.monitor(GLib.FileMonitorFlags.NONE);
+                var monitor = bookmarks_file.monitor(GLib.FileMonitorFlags.NONE);
                 monitor.changed.connect(this.reload);
             } catch (GLib.Error e) {
                 warning(e.message);
             }
         }
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    /// Returns either ~/.gtk-bookmarks or ~/.config/gtk-3.0/bookmarks
+    /////////////////////////////////////////////////////////////////////
+
+    private GLib.File? get_bookmarks_file() {
+        var bookmarks_file = GLib.File.new_for_path(
+            GLib.Environment.get_home_dir()).get_child(".gtk-bookmarks");
+
+        if (bookmarks_file.query_exists()) return bookmarks_file;
+            
+        bookmarks_file = GLib.File.new_for_path(
+            GLib.Environment.get_home_dir()).get_child(".config/gtk-3.0/bookmarks");
+
+        if (bookmarks_file.query_exists()) return bookmarks_file;
+
+        return null;
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -88,17 +105,16 @@ public class BookmarkGroup : ActionGroup {
         // add home folder
         this.add_action(ActionRegistry.new_for_uri("file://" + GLib.Environment.get_home_dir()));
 
-        // add .gtk-bookmarks
-        var bookmark_file = GLib.File.new_for_path(
-            GLib.Environment.get_home_dir()).get_child(".gtk-bookmarks");
+        // add bookmarks
+        var bookmarks_file = get_bookmarks_file();
 
-        if (!bookmark_file.query_exists()) {
-            warning("Failed to find file \".gtk-bookmarks\"!");
+        if (bookmarks_file == null) {
+            warning("Failed to find bookmarks file!");
             return;
         }
 
         try {
-            var dis = new DataInputStream(bookmark_file.read());
+            var dis = new DataInputStream(bookmarks_file.read());
             string line;
             while ((line = dis.read_line(null)) != null) {
                 var parts = line.split(" ");

@@ -106,7 +106,6 @@ public class IconSelectWindow : GLib.Object {
 
     private class ListEntry {
         public string name;
-        public IconContext context;
         public Gdk.Pixbuf pixbuf;
     }
 
@@ -119,20 +118,6 @@ public class IconSelectWindow : GLib.Object {
     private GLib.AsyncQueue<ListEntry?> load_queue;
 
     /////////////////////////////////////////////////////////////////////
-    /// Possible icon types.
-    /////////////////////////////////////////////////////////////////////
-
-    private enum IconContext {
-        ALL,
-        APPS,
-        ACTIONS,
-        PLACES,
-        FILES,
-        EMOTES,
-        OTHER
-    }
-
-    /////////////////////////////////////////////////////////////////////
     /// C'tor, creates a new IconSelectWindow.
     /////////////////////////////////////////////////////////////////////
 
@@ -141,9 +126,8 @@ public class IconSelectWindow : GLib.Object {
             this.load_queue = new GLib.AsyncQueue<ListEntry?>();
 
             if (IconSelectWindow.icon_list == null) {
-                IconSelectWindow.icon_list = new Gtk.ListStore(3, typeof(string), // icon name
-                                                      typeof(IconContext), // icon type
-                                                      typeof(Gdk.Pixbuf)); // the icon itself
+                IconSelectWindow.icon_list = new Gtk.ListStore(2, typeof(string), // icon name
+                                                                  typeof(Gdk.Pixbuf)); // the icon itself
 
                 // disable sorting until all icons are loaded
                 // else loading becomes horribly slow
@@ -175,26 +159,6 @@ public class IconSelectWindow : GLib.Object {
             (builder.get_object("ok-button") as Gtk.Button).clicked.connect(on_ok_button_clicked);
             (builder.get_object("cancel-button") as Gtk.Button).clicked.connect(on_cancel_button_clicked);
 
-            var combo_box = builder.get_object("combo-box") as Gtk.Box;
-
-            // context combo
-            var context_combo = new Gtk.ComboBoxText();
-            context_combo.append_text(_("All icons"));
-            context_combo.append_text(_("Applications"));
-            context_combo.append_text(_("Actions"));
-            context_combo.append_text(_("Places"));
-            context_combo.append_text(_("File types"));
-            context_combo.append_text(_("Emotes"));
-            context_combo.append_text(_("Miscellaneous"));
-
-            context_combo.set_active(0);
-
-            context_combo.changed.connect(() => {
-                this.icon_list_filtered.refilter();
-            });
-
-            combo_box.pack_start(context_combo, false, false);
-
             // string filter entry
             var filter = builder.get_object("filter-entry") as Gtk.Entry;
 
@@ -202,21 +166,16 @@ public class IconSelectWindow : GLib.Object {
                 // and whose name contains the text entered in the entry
                 this.icon_list_filtered.set_visible_func((model, iter) => {
                     string name = "";
-                    IconContext context = IconContext.ALL;
                     model.get(iter, 0, out name);
-                    model.get(iter, 1, out context);
-
                     if (name == null) return false;
-
-                    return (context_combo.get_active() == context ||
-                            context_combo.get_active() == IconContext.ALL) &&
-                            name.down().contains(filter.text.down());
+                    return name.down().contains(filter.text.down());
                 });
 
                 // clear when the users clicks on the "clear" icon
                 filter.icon_release.connect((pos, event) => {
-                    if (pos == Gtk.EntryIconPosition.SECONDARY)
+                    if (pos == Gtk.EntryIconPosition.SECONDARY) {
                         filter.text = "";
+                    }
                 });
 
                 // refilter on input
@@ -231,7 +190,7 @@ public class IconSelectWindow : GLib.Object {
                 this.icon_view = new Gtk.IconView.with_model(this.icon_list_filtered);
                     this.icon_view.item_width = 32;
                     this.icon_view.item_padding = 2;
-                    this.icon_view.pixbuf_column = 2;
+                    this.icon_view.pixbuf_column = 1;
                     this.icon_view.tooltip_column = 0;
 
                     // set active_icon if selection changes
@@ -376,8 +335,7 @@ public class IconSelectWindow : GLib.Object {
                     Gtk.TreeIter current;
                     IconSelectWindow.icon_list.append(out current);
                     IconSelectWindow.icon_list.set(current, 0, new_entry.name,
-                                                1, new_entry.context,
-                                                2, new_entry.pixbuf);
+                                                1, new_entry.pixbuf);
                 }
 
                 // enable sorting of the icon_view if loading finished
@@ -397,44 +355,20 @@ public class IconSelectWindow : GLib.Object {
 
     private async void load_all() {
         var icon_theme = Gtk.IconTheme.get_default();
+        foreach (var icon in icon_theme.list_icons(null)) {
+            Idle.add(load_all.callback);
+            yield;
 
-        foreach (var context in icon_theme.list_contexts()) {
-            if (!disabled_contexts.contains(context)) {
-                foreach (var icon in icon_theme.list_icons(context)) {
+            try {
+                // create a new entry for the queue
+                var new_entry = new ListEntry();
+                new_entry.name = icon;
+                new_entry.pixbuf = icon_theme.load_icon(icon, 32, Gtk.IconLookupFlags.FORCE_SIZE);
 
-                    IconContext icon_context = IconContext.OTHER;
-                    switch(context) {
-                        case "Apps": case "Applications":
-                            icon_context = IconContext.APPS; break;
-                        case "Emotes":
-                            icon_context = IconContext.EMOTES; break;
-                        case "Places": case "Devices":
-                            icon_context = IconContext.PLACES; break;
-                        case "Mimetypes":
-                            icon_context = IconContext.FILES; break;
-                        case "Actions":
-                            icon_context = IconContext.ACTIONS; break;
-                        default: break;
-                    }
+                this.load_queue.push(new_entry);
 
-                    Idle.add(load_all.callback);
-                    yield;
-
-                    try {
-                        // create a new entry for the queue
-                        var new_entry = new ListEntry();
-                        new_entry.name = icon;
-                        new_entry.context = icon_context;
-                        new_entry.pixbuf = icon_theme.load_icon(icon, 32, 0);
-
-                        // some icons have only weird sizes... do not include them
-                        if (new_entry.pixbuf.width == 32)
-                            this.load_queue.push(new_entry);
-
-                    } catch (GLib.Error e) {
-                        warning("Failed to load image " + icon);
-                    }
-                }
+            } catch (GLib.Error e) {
+                warning("Failed to load image " + icon);
             }
         }
 
@@ -442,8 +376,9 @@ public class IconSelectWindow : GLib.Object {
         IconSelectWindow.loading = false;
 
         // hide the spinner
-        if (spinner != null)
+        if (spinner != null) {
             spinner.visible = false;
+        }
     }
 }
 

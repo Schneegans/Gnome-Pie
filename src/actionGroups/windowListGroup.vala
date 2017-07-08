@@ -196,10 +196,13 @@ public class WindowListGroup : ActionGroup {
                         error("%s", e.message);
                     }
                 }
+            } else {
+                var application = window.get_application();
+                icon_name = application.get_icon_name().down();
             }
         #else
             var application = window.get_application();
-            icon_name = Icon.get_icon_name(application.get_icon_name().down());
+            icon_name = application.get_icon_name().down();
         #endif
 
         return icon_name;

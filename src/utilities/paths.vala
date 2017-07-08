@@ -150,9 +150,7 @@ public class Paths : GLib.Object {
             Gtk.IconTheme.get_default().append_search_path(path);
         }
 
-        Gtk.IconTheme.get_default().append_search_path("/usr/share/pixmaps/");
-        Gtk.IconTheme.get_default().append_search_path("/usr/share/icons/hicolor/scalable/apps");
-        Gtk.IconTheme.get_default().append_search_path("/usr/local/share/icons/hicolor/scalable/apps");
+        Gtk.IconTheme.get_default().append_search_path(GLib.Environment.get_home_dir() + ".icons");
 
         // get global paths
         var default_dir = GLib.File.new_for_path("/usr/share/gnome-pie/");

@@ -90,7 +90,7 @@ public class DevicesGroup : ActionGroup {
             var icon = mount.get_icon();
 
             this.add_action(new UriAction(mount.get_name(),
-              Icon.get_icon_name(icon.to_string()), mount.get_root().get_uri()));
+              icon.to_string(), mount.get_root().get_uri()));
         }
     }
 

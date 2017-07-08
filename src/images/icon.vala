@@ -75,60 +75,43 @@ public class Icon : Image {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Returns the icon name for a given GLib.Icon.
-    /////////////////////////////////////////////////////////////////////
-
-    public static string get_icon_name(string? icon) {
-        if (icon != null) {
-            var icon_names = icon.down().split(" ");
-
-            foreach (var icon_name in icon_names) {
-                if (Gtk.IconTheme.get_default().has_icon(icon_name)) {
-                    return icon_name;
-                }
-            }
-        }
-
-        return "";
-    }
-
-    /////////////////////////////////////////////////////////////////////
     /// Returns the filename for a given system icon.
     /////////////////////////////////////////////////////////////////////
 
     public static string get_icon_file(string icon_name, int size) {
-        string result = "";
-
         if (icon_name.contains("/")) {
             var file = GLib.File.new_for_path(icon_name);
-            if(file.query_exists())
+            if(file.query_exists()) {
                 return icon_name;
-
-            warning("Icon \"" + icon_name + "\" not found! Using default icon...");
+            }
         }
-
 
         var icon_theme = Gtk.IconTheme.get_default();
         var file = icon_theme.lookup_icon(icon_name, size, 0);
-        if (file != null) result = file.get_filename();
-
-        if (result == "") {
-            warning("Icon \"" + icon_name + "\" not found! Using default icon...");
-
-            string[] default_icons = {"application-default-icon", "image-missing"};
-            foreach (var icon in default_icons) {
-                file = icon_theme.lookup_icon(icon, size, 0);
-                if (file != null) {
-                    result = file.get_filename();
-                    break;
-                }
-            }
-
-            if (result == "")
-                warning("No default icon found! Will be ugly...");
+        if (file != null) {
+            return file.get_filename();
         }
 
-        return result;
+        try {
+            file = icon_theme.lookup_by_gicon(GLib.Icon.new_for_string(icon_name), size, 0);
+            if (file != null) {
+                return file.get_filename();
+            }
+        } catch(GLib.Error e) {}
+
+        warning("Icon \"" + icon_name + "\" not found! Using default icon...");
+
+        string[] default_icons = {"image-missing", "application-default-icon"};
+        foreach (var icon in default_icons) {
+            file = icon_theme.lookup_icon(icon, size, 0);
+            if (file != null) {
+                return file.get_filename();
+            }
+        }
+
+        warning("No default icon found! Will be ugly...");
+
+        return "";
     }
 }
 

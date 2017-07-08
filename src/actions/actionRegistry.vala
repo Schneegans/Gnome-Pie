@@ -138,7 +138,7 @@ public class ActionRegistry : GLib.Object {
 
                     // search for an appropriate icon
                     var icon = info.get_icon();
-                    final_icon = Icon.get_icon_name(icon.to_string());
+                    final_icon = icon.to_string();
 
                 } catch (GLib.Error e) {
                     warning(e.message);
@@ -146,9 +146,6 @@ public class ActionRegistry : GLib.Object {
 
                 break;
         }
-
-        if (!Gtk.IconTheme.get_default().has_icon(final_icon))
-                final_icon = "stock_unknown";
 
         if (name != null)
             final_name = name;
@@ -164,7 +161,7 @@ public class ActionRegistry : GLib.Object {
         // get icon
         var icon = info.get_icon();
 
-        return new AppAction(info.get_display_name(), Icon.get_icon_name(icon.to_string()),
+        return new AppAction(info.get_display_name(), icon.to_string(),
           info.get_commandline());
     }
 

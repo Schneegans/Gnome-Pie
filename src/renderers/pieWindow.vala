@@ -402,6 +402,8 @@ public class PieWindow : Gtk.Window {
             ctx.translate(x, y);
         } else {
             // align the context to the center of the PieWindow
+            x += this.renderer.center_x;
+            y += this.renderer.center_y;
             ctx.translate(this.renderer.center_x, this.renderer.center_y);
         }
 

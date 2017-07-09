@@ -41,12 +41,10 @@ public class BookmarkGroup : ActionGroup {
     }
 
     /////////////////////////////////////////////////////////////////////
-    /// Two members needed to avoid useless, frequent changes of the
-    /// stored Actions.
+    /// Used to track changes in the bookmarks file.
     /////////////////////////////////////////////////////////////////////
 
-    private bool changing = false;
-    private bool changed_again = false;
+    private GLib.FileMonitor monitor = null;
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, initializes all members.
@@ -70,8 +68,14 @@ public class BookmarkGroup : ActionGroup {
         // add monitor
         if (bookmarks_file != null) {
             try {
-                var monitor = bookmarks_file.monitor(GLib.FileMonitorFlags.NONE);
-                monitor.changed.connect(this.reload);
+                this.monitor = bookmarks_file.monitor(GLib.FileMonitorFlags.NONE);
+                this.monitor.set_rate_limit(500);
+                this.monitor.changed.connect((file, other, type) => {
+                    if(type == GLib.FileMonitorEvent.CHANGES_DONE_HINT) {
+                        this.delete_all();
+                        this.load();
+                    }
+                });
             } catch (GLib.Error e) {
                 warning(e.message);
             }
@@ -135,33 +139,6 @@ public class BookmarkGroup : ActionGroup {
         this.add_action(ActionRegistry.new_for_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP)));
     }
 
-    /////////////////////////////////////////////////////////////////////
-    /// Reloads all Bookmarks. Is called when the user's gtk-bookmarks
-    /// file changes.
-    /////////////////////////////////////////////////////////////////////
-
-    private void reload() {
-        // avoid too frequent changes...
-        if (!this.changing) {
-            this.changing = true;
-            Timeout.add(200, () => {
-                if (this.changed_again) {
-                    this.changed_again = false;
-                    return true;
-                }
-
-                // reload
-                message("Bookmarks changed...");
-                this.delete_all();
-                this.load();
-
-                this.changing = false;
-                return false;
-            });
-        } else {
-            this.changed_again = true;
-        }
-    }
 }
 
 }

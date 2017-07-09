@@ -420,20 +420,28 @@ public class PieWindow : Gtk.Window {
         double frame_time = this.timer.elapsed();
         this.timer.reset();
 
+        int center_x = this.renderer.center_x;
+        int center_y = this.renderer.center_y;
+
         // on wayland we have a fullscreen window and since we
         // do not get the pointer location until the mouse moved
         // we can only display the pie centered...
         if (this.wayland) {
-            var screen = Gdk.Screen.get_default().get_root_window();
-            x = screen.get_width() / 2;
-            y = screen.get_height() / 2;
-            ctx.translate(x, y);
-        } else {
-            // align the context to the center of the PieWindow
-            x += this.renderer.center_x;
-            y += this.renderer.center_y;
-            ctx.translate(this.renderer.center_x, this.renderer.center_y);
+            #if HAVE_GTK_3_22
+                var monitor = Gdk.Display.get_default().get_monitor_at_point(mouse_x, mouse_y).get_geometry();
+                center_x = monitor.width / 2;
+                center_y = monitor.height / 2;
+            #else
+                var screen = Gdk.Screen.get_default().get_root_window();
+                center_x = screen.get_width() / 2;
+                center_y = screen.get_height() / 2;
+            #endif
         }
+
+        // align the context to the center of the PieWindow
+        x += center_x;
+        y += center_y;
+        ctx.translate(center_x, center_y);
 
         // render the Pie
         this.renderer.draw(frame_time, ctx, mouse_x - x, mouse_y - y);

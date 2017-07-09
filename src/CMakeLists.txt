@@ -5,21 +5,6 @@
 # determine source and header files
 file(GLOB VALA_SRC RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.vala */*.vala)
 
-if (${INDICATOR_FOUND})
-  LIST(APPEND DEFINES --define HAVE_APPINDICATOR)
-endif(${INDICATOR_FOUND})
-if (${INDICATOR3_FOUND})
-  LIST(APPEND DEFINES --define HAVE_APPINDICATOR)
-endif(${INDICATOR3_FOUND})
-
-if (${GMENU3_FOUND})
-    LIST(APPEND DEFINES --define HAVE_GMENU_3)
-endif (${GMENU3_FOUND})
-
-if (${BAMF_FOUND})
-    LIST(APPEND DEFINES --define HAVE_BAMF)
-endif (${BAMF_FOUND})
-
 # use valac to compile sources to c files
 vala_precompile(
     VALA_C
@@ -28,7 +13,7 @@ vala_precompile(
         ${VALA_PKGS}
     OPTIONS
         --thread
-        ${DEFINES}
+        ${VALA_DEFINES}
 )
 
 # compile c-sources

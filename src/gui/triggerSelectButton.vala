@@ -63,9 +63,7 @@ public class TriggerSelectButton : Gtk.ToggleButton {
             if (this.active) {
                 this.set_label(_("Press a hotkey ..."));
                 Gtk.grab_add(this);
-                var seat = Gdk.Display.get_default().get_default_seat();
-                var caps = Gdk.SeatCapabilities.KEYBOARD | Gdk.SeatCapabilities.POINTER;
-                seat.grab(this.get_window(), caps, true, null, null, null);
+                FocusGrabber.grab(this.get_window(), true, true, true);
             }
         });
 
@@ -91,8 +89,7 @@ public class TriggerSelectButton : Gtk.ToggleButton {
         this.set_label(trigger.label);
         this.set_active(false);
         Gtk.grab_remove(this);
-        var seat = Gdk.Display.get_default().get_default_seat();
-        seat.ungrab();
+        FocusGrabber.ungrab();
     }
 
     /////////////////////////////////////////////////////////////////////

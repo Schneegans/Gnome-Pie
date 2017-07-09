@@ -51,12 +51,26 @@ set(CFLAGS
     -DWNCK_I_KNOW_THIS_IS_UNSTABLE
     -DGETTEXT_PACKAGE="gnomepie"
     -s -O3 -w
-#   -g
 )
+
+if (GTK3_VERSION VERSION_LESS 3.20)
+    message(GTK version ${GTK3_VERSION} is older than 3.20. Some features will not be available.)
+else()
+    LIST(APPEND CFLAGS -DHAVE_GTK_3_20)
+    LIST(APPEND VALA_DEFINES --define HAVE_GTK_3_20)
+endif()
+
+if (GTK3_VERSION VERSION_LESS 3.22)
+    message(GTK version ${GTK3_VERSION} is older than 3.22. Some features will not be available.)
+else()
+    LIST(APPEND CFLAGS -DHAVE_GTK_3_22)
+    LIST(APPEND VALA_DEFINES --define HAVE_GTK_3_22)
+endif()
 
 # fallback to gnome-menus2 if gnome-menus3 wasn't found
 if (${GMENU3_FOUND})
     LIST(APPEND CFLAGS -DHAVE_GMENU_3)
+    LIST(APPEND VALA_DEFINES --define HAVE_GMENU_3)
 else (${GMENU3_FOUND})
     pkg_check_modules(GMENU REQUIRED libgnome-menu)
 endif (${GMENU3_FOUND})
@@ -64,68 +78,71 @@ endif (${GMENU3_FOUND})
 # notify application of presence of libappindicator
 if (${INDICATOR_FOUND})
     LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
+    LIST(APPEND VALA_DEFINES --define HAVE_APPINDICATOR)
 endif (${INDICATOR_FOUND})
 if (${INDICATOR3_FOUND})
     LIST(APPEND CFLAGS -DHAVE_APPINDICATOR)
+    LIST(APPEND VALA_DEFINES --define HAVE_APPINDICATOR)
 endif (${INDICATOR3_FOUND})
 
 if (${BAMF_FOUND})
     LIST(APPEND CFLAGS -DHAVE_BAMF)
+    LIST(APPEND VALA_DEFINES --define HAVE_BAMF)
 endif (${BAMF_FOUND})
 
 add_definitions(${CFLAGS})
 
 set(LIBS
     ${GIO_LIBRARIES}
-	${GTK3_LIBRARIES}
-	${CAIRO_LIBRARIES}
-	${GEE_LIBRARIES}
-	${INDICATOR_LIBRARIES}
-	${INDICATOR3_LIBRARIES}
-	${XML_LIBRARIES}
-	${XTST_LIBRARIES}
-	${GMENU_LIBRARIES}
-	${GMENU3_LIBRARIES}
-	${X11_LIBRARIES}
-	${WNCK_LIBRARIES}
-  ${BAMF_LIBRARIES}
-	${ARCHIVE_LIB}
-	${M_LIB}
-	${GTHREAD_LIB}
+    ${GTK3_LIBRARIES}
+    ${CAIRO_LIBRARIES}
+    ${GEE_LIBRARIES}
+    ${INDICATOR_LIBRARIES}
+    ${INDICATOR3_LIBRARIES}
+    ${XML_LIBRARIES}
+    ${XTST_LIBRARIES}
+    ${GMENU_LIBRARIES}
+    ${GMENU3_LIBRARIES}
+    ${X11_LIBRARIES}
+    ${WNCK_LIBRARIES}
+    ${BAMF_LIBRARIES}
+    ${ARCHIVE_LIB}
+    ${M_LIB}
+    ${GTHREAD_LIB}
 )
 link_libraries(${LIBS})
 
 set(LIB_PATHS
     ${GIO_LIBRARY_DIRS}
-	${GTK3_LIBRARY_DIRS}
-	${CAIRO_LIBRARY_DIRS}
-	${GEE_LIBRARY_DIRS}
-	${INDICATOR_LIBRARY_DIRS}
-	${INDICATOR3_LIBRARY_DIRS}
-	${XML_LIBRARY_DIRS}
-	${XTST_LIBRARY_DIRS}
-	${GMENU_LIBRARY_DIRS}
-	${GMENU3_LIBRARY_DIRS}
-	${X11_LIBRARY_DIRS}
-	${WNCK_LIBRARY_DIRS}
-  ${BAMF_LIBRARY_DIRS}
+    ${GTK3_LIBRARY_DIRS}
+    ${CAIRO_LIBRARY_DIRS}
+    ${GEE_LIBRARY_DIRS}
+    ${INDICATOR_LIBRARY_DIRS}
+    ${INDICATOR3_LIBRARY_DIRS}
+    ${XML_LIBRARY_DIRS}
+    ${XTST_LIBRARY_DIRS}
+    ${GMENU_LIBRARY_DIRS}
+    ${GMENU3_LIBRARY_DIRS}
+    ${X11_LIBRARY_DIRS}
+    ${WNCK_LIBRARY_DIRS}
+    ${BAMF_LIBRARY_DIRS}
 )
 link_directories(${LIB_PATHS})
 
 set(INCLUDE_PATHS
     ${GIO_INCLUDE_DIRS}
-	${GTK3_INCLUDE_DIRS}
-	${CAIRO_INCLUDE_DIRS}
-	${GEE_INCLUDE_DIRS}
-	${INDICATOR_INCLUDE_DIRS}
-	${INDICATOR3_INCLUDE_DIRS}
-	${XML_INCLUDE_DIRS}
-	${XTST_INCLUDE_DIRS}
-	${GMENU_INCLUDE_DIRS}
-	${GMENU3_INCLUDE_DIRS}
-	${X11_INCLUDE_DIRS}
-  ${WNCK_INCLUDE_DIRS}
-  ${BAMF_INCLUDE_DIRS}
+    ${GTK3_INCLUDE_DIRS}
+    ${CAIRO_INCLUDE_DIRS}
+    ${GEE_INCLUDE_DIRS}
+    ${INDICATOR_INCLUDE_DIRS}
+    ${INDICATOR3_INCLUDE_DIRS}
+    ${XML_INCLUDE_DIRS}
+    ${XTST_INCLUDE_DIRS}
+    ${GMENU_INCLUDE_DIRS}
+    ${GMENU3_INCLUDE_DIRS}
+    ${X11_INCLUDE_DIRS}
+    ${WNCK_INCLUDE_DIRS}
+    ${BAMF_INCLUDE_DIRS}
 )
 include_directories(${INCLUDE_PATHS})
 
@@ -136,17 +153,17 @@ include_directories(${INCLUDE_PATHS})
 set(EXECUTABLE_OUTPUT_PATH ${gnomepie_SOURCE_DIR})
 
 set(VALA_PKGS
-  gtk+-3.0
-  gdk-x11-3.0
-  libwnck-3.0
-  cairo
-  gee-0.8
-  x11
-  gio-unix-2.0
-  posix
-  libxml-2.0
-  xtst
-  libarchive
+    gtk+-3.0
+    gdk-x11-3.0
+    libwnck-3.0
+    cairo
+    gee-0.8
+    x11
+    gio-unix-2.0
+    posix
+    libxml-2.0
+    xtst
+    libarchive
 )
 
 if (${INDICATOR_FOUND})

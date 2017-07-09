@@ -219,12 +219,38 @@ public class PieRenderer : GLib.Object {
 
         // get mouse position and screen resolution
         int mouse_x, mouse_y;
-        var seat = Gdk.Display.get_default().get_default_seat();
-        seat.get_pointer().get_position(null, out mouse_x, out mouse_y);
 
-        var screen = Gdk.Screen.get_default().get_root_window();
-        int screen_x = screen.get_width();
-        int screen_y = screen.get_height();
+        #if HAVE_GTK_3_20
+            var seat = Gdk.Display.get_default().get_default_seat();
+            seat.get_pointer().get_position(null, out mouse_x, out mouse_y);
+        #else
+            double x = 0.0;
+            double y = 0.0;
+
+            var display = Gdk.Display.get_default();
+            var manager = display.get_device_manager();
+            GLib.List<weak Gdk.Device?> list = manager.list_devices(Gdk.DeviceType.MASTER);
+
+            foreach(var device in list) {
+                if (device.input_source != Gdk.InputSource.KEYBOARD) {
+                    Gdk.Screen screen;
+                    device.get_position( out screen, out x, out y );
+                }
+            }
+            
+            mouse_x = (int) x;
+            mouse_y = (int) y;
+        #endif
+
+        #if HAVE_GTK_3_22
+            var monitor = Gdk.Display.get_default().get_monitor_at_point(mouse_x, mouse_y).get_geometry();
+            int monitor_x = monitor.width;
+            int monitor_y = monitor.height;
+        #else
+            var screen = Gdk.Screen.get_default().get_root_window();
+            int monitor_x = screen.get_width();
+            int monitor_y = screen.get_height();
+        #endif
 
         //reduce the window size if needed to get closer to the actual mouse position
         int reduce_szx= 1;
@@ -235,24 +261,24 @@ public class PieRenderer : GLib.Object {
             if (mouse_x < sz/2) {
                 if (mouse_y < sz/2)
                     showpie= ShowPieMode.CPIE_TOP_LEFT;         //show 1/4 pie
-                else if (screen_y > 0 && screen_y-mouse_y < sz/2)
+                else if (monitor_y > 0 && monitor_y-mouse_y < sz/2)
                     showpie= ShowPieMode.CPIE_BOT_LEFT;         //show 1/4 pie
                 else
                     showpie= ShowPieMode.HPIE_LEFT;             //show 1/2 pie
 
             } else if (mouse_y < sz/2) {
-                if (screen_x > 0 && screen_x-mouse_x < sz/2)
+                if (monitor_x > 0 && monitor_x-mouse_x < sz/2)
                     showpie= ShowPieMode.CPIE_TOP_RIGHT;        //show 1/4 pie
                 else
                     showpie= ShowPieMode.HPIE_TOP;              //show 1/2 pie
 
-            } else if (screen_x > 0 && screen_x-mouse_x < sz/2) {
-                if (screen_y > 0 && screen_y-mouse_y < sz/2)
+            } else if (monitor_x > 0 && monitor_x-mouse_x < sz/2) {
+                if (monitor_y > 0 && monitor_y-mouse_y < sz/2)
                     showpie= ShowPieMode.CPIE_BOT_RIGHT;        //show 1/4 pie
                 else
                     showpie= ShowPieMode.HPIE_RIGHT;            //show 1/2 pie
 
-            } else if (screen_y > 0 && screen_y-mouse_y < sz/2)
+            } else if (monitor_y > 0 && monitor_y-mouse_y < sz/2)
                 showpie= ShowPieMode.HPIE_BOTTOM;               //show 1/2 pie
 
 
@@ -268,26 +294,26 @@ public class PieRenderer : GLib.Object {
             switch( PieManager.get_shape_number(pie.id) ) {
             case 1:
                 showpie= ShowPieMode.CPIE_BOT_RIGHT;
-                if (screen_x-mouse_x > sz/2)
+                if (monitor_x-mouse_x > sz/2)
                     reduce_szx= 0; //keep full width
-                if (screen_y-mouse_y > sz/2)
+                if (monitor_y-mouse_y > sz/2)
                     reduce_szy= 0; //keep full height
                 break;
             case 2:
                 showpie= ShowPieMode.HPIE_RIGHT;
-                if (screen_x-mouse_x > sz/2)
+                if (monitor_x-mouse_x > sz/2)
                     reduce_szx= 0; //keep full width
                 break;
             case 3:
                 showpie= ShowPieMode.CPIE_TOP_RIGHT;
-                if (screen_x-mouse_x > sz/2)
+                if (monitor_x-mouse_x > sz/2)
                     reduce_szx= 0; //keep full width
                 if (mouse_y > sz/2)
                     reduce_szy= 0; //keep full height
                 break;
             case 4:
                 showpie= ShowPieMode.HPIE_BOTTOM;
-                if (screen_y-mouse_y > sz/2)
+                if (monitor_y-mouse_y > sz/2)
                     reduce_szy= 0; //keep full height
                 break;
             case 6:
@@ -299,7 +325,7 @@ public class PieRenderer : GLib.Object {
                 showpie= ShowPieMode.CPIE_BOT_LEFT;
                 if (mouse_x > sz/2)
                     reduce_szx= 0; //keep full width
-                if (screen_y-mouse_y > sz/2)
+                if (monitor_y-mouse_y > sz/2)
                     reduce_szy= 0; //keep full height
                 break;
             case 8:

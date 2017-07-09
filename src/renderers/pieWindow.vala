@@ -237,8 +237,8 @@ public class PieWindow : Gtk.Window {
         if (wayland) {
             // wayland does not support client side window placement
             // therefore we will make a fullscreen window
-            var monitor = Gdk.Display.get_default().get_monitor_at_point(this.back_x, this.back_y).get_geometry();
-            this.set_size_request(monitor.width, monitor.height);
+            var screen = Gdk.Screen.get_default().get_root_window();
+            this.set_size_request(screen.get_width(), screen.get_height());
         } else {
             this.set_window_position(pie);
             this.set_size_request(renderer.size_w, renderer.size_h);
@@ -258,14 +258,14 @@ public class PieWindow : Gtk.Window {
             this.back_sz_x++;
             this.back_sz_y++;
 
-            var monitor = Gdk.Display.get_default().get_monitor_at_point(this.back_x, this.back_y).get_geometry();
+            var screen = Gdk.Screen.get_default().get_root_window();
 
             //allow some window movement from the screen borders
             //(some panels moves the window after it was realized)
             int dx = this.panel_sz - this.back_x;
             if (dx > 0)
                 this.back_sz_x += dx;
-            dx = this.panel_sz - (monitor.width - this.back_x - this.back_sz_x +1);
+            dx = this.panel_sz - (screen.get_width() - this.back_x - this.back_sz_x +1);
             if (dx > 0) {
                 this.back_sz_x += dx;
                 this.back_x  -= dx;
@@ -274,7 +274,7 @@ public class PieWindow : Gtk.Window {
             int dy = this.panel_sz - this.back_y;
             if (dy > 0)
                 this.back_sz_y += dy;
-            dy = this.panel_sz - (monitor.height - this.back_y - this.back_sz_y +1);
+            dy = this.panel_sz - (screen.get_height() - this.back_y - this.back_sz_y +1);
             if (dy > 0) {
                 this.back_sz_y += dy;
                 this.back_y  -= dy;
@@ -295,10 +295,10 @@ public class PieWindow : Gtk.Window {
                 this.back_sz_y += this.back_y;
                 this.back_y = 0;
             }
-            if (this.back_x + this.back_sz_x > monitor.width)
-                this.back_sz_x = monitor.width - this.back_x;
-            if (this.back_y + this.back_sz_y > monitor.height)
-                this.back_sz_y = monitor.height - this.back_y;
+            if (this.back_x + this.back_sz_x > screen.get_width())
+                this.back_sz_x = screen.get_width() - this.back_x;
+            if (this.back_y + this.back_sz_y > screen.get_height())
+                this.back_sz_y = screen.get_height() - this.back_y;
             this.background = new Image.capture_screen(this.back_x, this.back_y, this.back_sz_x, this.back_sz_y);
         }
 
@@ -396,9 +396,9 @@ public class PieWindow : Gtk.Window {
         // do not get the pointer location until the mouse moved
         // we can only display the pie centered...
         if (this.wayland) {
-            var monitor = Gdk.Display.get_default().get_monitor_at_point(this.back_x, this.back_y).get_geometry();
-            x = monitor.width / 2;
-            y = monitor.height / 2;
+            var screen = Gdk.Screen.get_default().get_root_window();
+            x = screen.get_width() / 2;
+            y = screen.get_height() / 2;
             ctx.translate(x, y);
         } else {
             // align the context to the center of the PieWindow

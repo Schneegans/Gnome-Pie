@@ -222,9 +222,9 @@ public class PieRenderer : GLib.Object {
         var seat = Gdk.Display.get_default().get_default_seat();
         seat.get_pointer().get_position(null, out mouse_x, out mouse_y);
 
-        var monitor = Gdk.Display.get_default().get_monitor_at_point(mouse_x, mouse_y).get_geometry();
-        int screen_x = monitor.width;
-        int screen_y = monitor.height;
+        var screen = Gdk.Screen.get_default().get_root_window();
+        int screen_x = screen.get_width();
+        int screen_y = screen.get_height();
 
         //reduce the window size if needed to get closer to the actual mouse position
         int reduce_szx= 1;

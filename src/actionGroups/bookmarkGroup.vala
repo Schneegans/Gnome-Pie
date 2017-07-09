@@ -121,10 +121,15 @@ public class BookmarkGroup : ActionGroup {
             var dis = new DataInputStream(bookmarks_file.read());
             string line;
             while ((line = dis.read_line(null)) != null) {
-                var parts = line.split(" ");
 
-                string uri = parts[0];
-                string name = parts[1];
+                string uri = line;
+                string name = null;
+
+                int first_space = line.index_of(" ");
+                if (first_space > 0) {
+                    uri = line.slice(0, first_space);
+                    name = line.slice(first_space+1, line.length);
+                }
 
                 this.add_action(ActionRegistry.new_for_uri(uri, name));
             }
@@ -138,7 +143,6 @@ public class BookmarkGroup : ActionGroup {
         // add desktop
         this.add_action(ActionRegistry.new_for_uri("file://" + GLib.Environment.get_user_special_dir(GLib.UserDirectory.DESKTOP)));
     }
-
 }
 
 }

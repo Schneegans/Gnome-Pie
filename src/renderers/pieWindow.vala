@@ -192,7 +192,7 @@ public class PieWindow : Gtk.Window {
         });
 
         this.show.connect_after(() => {
-            FocusGrabber.grab(this.get_window(), true, true, false);
+            FocusGrabber.grab(this.get_window());
         });
 
         this.scroll_event.connect((e) => {

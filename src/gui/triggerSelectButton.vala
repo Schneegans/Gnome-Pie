@@ -63,7 +63,7 @@ public class TriggerSelectButton : Gtk.ToggleButton {
             if (this.active) {
                 this.set_label(_("Press a hotkey ..."));
                 Gtk.grab_add(this);
-                FocusGrabber.grab(this.get_window(), true, true, true);
+                FocusGrabber.grab(this.get_window());
             }
         });
 

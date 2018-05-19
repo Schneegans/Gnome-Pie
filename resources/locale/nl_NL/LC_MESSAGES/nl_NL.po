@@ -1,0 +1,766 @@
+# Dutch translations for gnomepie package
+# Nederlandse vertalingen voor het pakket gnomepie.
+# Copyright (C) 2018 Simon Schneegans <code@simonschneegans.de>
+# This file is distributed under the same license as the gnomepie package.
+# Heimen Stoffels <vistausss@outlook.com>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnomepie 0.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-05-19 12:10+0200\n"
+"PO-Revision-Date: 2018-05-19 13:47+0200\n"
+"Last-Translator: Heimen Stoffels <vistausss@outlook.com>\n"
+"Language-Team: Dutch\n"
+"Language: nl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#: ../ui/icon_select.ui:9
+msgid "Select an icon"
+msgstr "Selecteer een pictogram"
+
+#: ../ui/icon_select.ui:89
+msgid "Icon Theme"
+msgstr "Pictogramthema"
+
+#: ../ui/icon_select.ui:109
+msgid "Custom Icon"
+msgstr "Aangepast pictogram"
+
+#: ../ui/slice_select.ui:8
+msgid "Slice Options"
+msgstr "Segmentopties"
+
+#: ../ui/slice_select.ui:137
+msgid "There are no options for this Slice type."
+msgstr "Er zijn geen opties voor dit segmenttype."
+
+#: ../ui/slice_select.ui:163
+msgid "URI to open"
+msgstr "Te openen URI"
+
+#: ../ui/slice_select.ui:201
+msgid "Command to execute"
+msgstr "Uit te voeren opdracht"
+
+#: ../ui/slice_select.ui:230
+msgid "Hotkey to press"
+msgstr "Te gebruiken sneltoets"
+
+#: ../ui/slice_select.ui:259
+msgid "Pie to open"
+msgstr "Te openen cirkel"
+
+#: ../ui/slice_select.ui:288
+msgid "Name of the Slice "
+msgstr "Naam van het segment "
+
+#: ../ui/slice_select.ui:326
+msgid "Is Quick Action"
+msgstr "Is een snelle actie"
+
+#: ../ui/slice_select.ui:365
+msgid "Clipboard history length"
+msgstr "Lengte van klembordgeschiedenis"
+
+#: ../ui/slice_select.ui:405
+msgid "Current workspace only"
+msgstr "Alleen huidige werkblad"
+
+#: ../ui/slice_select.ui:448
+msgid "Slice options"
+msgstr "Segmentopties"
+
+#: ../ui/pie_options.ui:53
+msgid "Activation Settings"
+msgstr "Activatie-instellingen"
+
+#: ../ui/pie_options.ui:150
+msgid "Unamed Pie"
+msgstr "Naamloze cirkel"
+
+#: ../ui/pie_options.ui:199
+msgid "ID:"
+msgstr "ID:"
+
+#: ../ui/pie_options.ui:217
+msgid "It's possible to bind mouse buttons as well!"
+msgstr "Het is ook mogelijk om muisknoppen toe te wijzen!"
+
+#: ../ui/pie_options.ui:257
+msgid "Turbo mode"
+msgstr "Turbomodus"
+
+#: ../ui/pie_options.ui:262 ../ui/pie_options.ui:263
+msgid "If checked, the Pie will close when you release the chosen hot key."
+msgstr ""
+"Als dit wordt ingeschakeld, dan zal de cirkel sluiten na het loslaten van de "
+"gekozen sneltoets."
+
+#: ../ui/pie_options.ui:275
+msgid "Long press for activation"
+msgstr "Lang indrukken om te activeren"
+
+#: ../ui/pie_options.ui:280 ../ui/pie_options.ui:281
+msgid ""
+"If checked, the Pie will only open if you press this hot key a bit longer."
+msgstr ""
+"Als dit wordt ingeschakeld, dan zal de cirkel openen als je deze sneltoets "
+"iets langer ingedrukt houdt."
+
+#: ../ui/pie_options.ui:293
+msgid "Open Pie centered on the screen"
+msgstr "Cirkel gecentreerd op scherm openen"
+
+#: ../ui/pie_options.ui:298 ../ui/pie_options.ui:299
+msgid ""
+"If checked, the Pie will open in the middle of your screen. Else it will pop "
+"up at your pointer."
+msgstr ""
+"Als dit wordt ingeschakeld, dan zal de cirkel openen op het midden van het "
+"scherm i.p.v. op de locatie van je cursor."
+
+#: ../ui/pie_options.ui:311
+msgid "Warp mouse pointer to center of Pie"
+msgstr "Cursor automatisch op midden van cirkel plaatsen"
+
+#: ../ui/pie_options.ui:316 ../ui/pie_options.ui:317
+msgid ""
+"If checked, the mouse pointer will be warped to the center of the Pie. This "
+"allows for quick selections even if the Pie is opened at the screen's "
+"boundary."
+msgstr ""
+"Als dit wordt ingeschakeld, dan zal de cursor automatisch op het midden van "
+"de cirkel worden geplaatst. Dit zorgt voor snellere selecties, zelfs als de "
+"cirkel geopend wordt ter hoogte van de schermrand."
+
+#: ../ui/pie_options.ui:335
+msgid "Activation options"
+msgstr "Activatie-opties"
+
+#: ../ui/pie_options.ui:517
+msgid "Automatically select the best pie shape"
+msgstr "Automatisch beste cirkelvorm kiezen"
+
+#: ../ui/pie_options.ui:521
+msgid ""
+"If checked, the shape will be automatically selected to minimize mouse "
+"travelling."
+msgstr ""
+"Als dit wordt ingeschakeld, dan zal de vorm automatisch worden gekozen om de "
+"cursor zo min mogelijk te hoeven verplaatsen."
+
+#: ../ui/pie_options.ui:540
+msgid "Pie shape"
+msgstr "Cirkelvorm"
+
+#: ../ui/preferences.ui:7 ../../src/gui/preferencesWindow.vala:79
+msgid "Gnome-Pie Settings"
+msgstr "Gnome-Pie-instellingen"
+
+#: ../ui/preferences.ui:41
+msgid "Start Gnome-Pie on login"
+msgstr "Gnome-Pie automatisch opstarten"
+
+#: ../ui/preferences.ui:46 ../ui/preferences.ui:47
+msgid "If checked, Gnome-Pie will start silently everytime you log in."
+msgstr ""
+"Als dit wordt ingeschakeld, dan zal Gnome-Pie automatisch opstarten als je "
+"de computer opstart."
+
+#: ../ui/preferences.ui:59
+msgid "Display panel icon "
+msgstr "Systeemvakpictogram tonen "
+
+#: ../ui/preferences.ui:64 ../ui/preferences.ui:65
+msgid ""
+"If not checked, you can access this menu by launching Gnome-Pie a second "
+"time."
+msgstr ""
+"Als dit niet wordt ingeschakeld, dan kun je dit menu oproepen door Gnome-Pie "
+"voor de tweede keer te starten."
+
+#: ../ui/preferences.ui:77
+msgid "Select Slices by typing their names"
+msgstr "Segmenten selecteren door hun resp. naam te typen"
+
+#: ../ui/preferences.ui:82 ../ui/preferences.ui:83
+msgid ""
+"If checked, you can select items in a Pie by typing their names. Otherwise "
+"you can activate them with a hotkey (which can be displayed by pressing ALT "
+"when a Pie is openened)."
+msgstr ""
+"Als dit wordt ingeschakeld, dan kun je items selecteren door de "
+"respectievelijke naam te typen. Als dit niet wordt ingeschakeld, dan kun je "
+"ze activeren met een sneltoets (welke kan worden getoond door op ALT te "
+"drukken in een geopend segment)."
+
+#: ../ui/preferences.ui:95
+msgid "Display Slice labels"
+msgstr "Segmentlabels tonen"
+
+#: ../ui/preferences.ui:100 ../ui/preferences.ui:101
+msgid ""
+"Displays the name of each Slice next to it. Only available if supported by "
+"the theme."
+msgstr ""
+"Toont de naam van elk segment naast het pictogram. Alleen beschikbaar als "
+"het gekozen thema dit ondersteunt."
+
+#: ../ui/preferences.ui:135
+msgid "Activation radius"
+msgstr "Activatieradius"
+
+#: ../ui/preferences.ui:175
+msgid "Global scale"
+msgstr "Globale schaal"
+
+#: ../ui/preferences.ui:215
+msgid "Maximum slices per pie"
+msgstr "Maximum aantal segmenten per cirkel"
+
+#: ../ui/preferences.ui:298
+msgid "Import a theme from a file."
+msgstr "Importeer een thema vanuit een bestand."
+
+#: ../ui/preferences.ui:320
+msgid "Reload all themes."
+msgstr "Herlaad alle thema's."
+
+#: ../ui/preferences.ui:369
+msgid "Delete the selected theme."
+msgstr "Verwijder het geselecteerde thema."
+
+#: ../ui/preferences.ui:391
+msgid "Export the selected theme for sharing."
+msgstr "Exporteer het geselecteerde thema zodat het kan worden gedeeld."
+
+#: ../ui/preferences.ui:440
+msgid "Open the theme's files in your file browser."
+msgstr "Open de themabestanden in je bestandsbeheerder."
+
+#: ../ui/preferences.ui:489
+msgid "Open a tutorial on how to create new themes for Gnome-Pie."
+msgstr ""
+"Start de rondleiding, zodat je kunt zien hoe je thema's kunt creëren voor "
+"Gnome-Pie."
+
+#: ../ui/preferences.ui:539 ../../src/gui/preferencesWindow.vala:110
+msgid "General Settings"
+msgstr "Algemene instellingen"
+
+#: ../ui/preferences.ui:732
+msgid ""
+"<b><big>This Pie is empty!</big>\n"
+"\n"
+"Start adding Slices to it!</b> This can be done by dragging stuff to the "
+"plus sign below. You can try a lot! For example application launchers or "
+"folders. Even URLs from your browser are possible...\n"
+"\n"
+"For manual and advanced configuration click on the plus sign."
+msgstr ""
+"<b><big>Deze cirkel is leeg!</big>\n"
+"\n"
+"Voeg er segmenten aan toe!</b> Dit kan door dingen te verslepen naar het "
+"plus-teken hieronder. Je kunt van alles proberen, bijv. applicatiestarters "
+"of mappen. Zelfs URL's vanuit je webbrowser zijn mogelijk...\n"
+"\n"
+"Klik op het plus-teken voor handmatige en geavanceerde configuratie."
+
+#: ../ui/preferences.ui:755
+msgid ""
+"<b><big>You have no Pies!</big>\n"
+"\n"
+"Start by creating one! </b> This can be done by clicking on the tiny little "
+"plus sign in the lower left corner."
+msgstr ""
+"<b><big>Je hebt geen cirkels!</big>\n"
+"\n"
+"Creëer er één! </b> Dit kan je doen door te klikken op het kleine plus-teken "
+"in de hoek linksonder."
+
+#: ../ui/preferences.ui:847 ../../src/gui/preferencesWindow.vala:111
+msgid "Pie Settings"
+msgstr "Cirkelinstellingen"
+
+#: ../../src/actionGroups/sessionGroup.vala:35
+msgid "Group: Session Control"
+msgstr "Groep: sessiebeheer"
+
+#: ../../src/actionGroups/sessionGroup.vala:37
+msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
+msgstr "Toont een segment voor Afsluiten, Herstarten en Slaapstand."
+
+#: ../../src/actionGroups/sessionGroup.vala:60
+msgid "Shutdown"
+msgstr "Afsluiten"
+
+#: ../../src/actionGroups/sessionGroup.vala:63
+msgid "Logout"
+msgstr "Afmelden"
+
+#: ../../src/actionGroups/sessionGroup.vala:66
+msgid "Reboot"
+msgstr "Herstarten"
+
+#: ../../src/actionGroups/menuGroup.vala:35
+msgid "Group: Main menu"
+msgstr "Groep: hoofdmenu"
+
+#: ../../src/actionGroups/menuGroup.vala:37
+msgid "Displays your main menu structure."
+msgstr "Toon de structuur van je hoofdmenu."
+
+#: ../../src/actionGroups/windowListGroup.vala:39
+msgid "Group: Window List"
+msgstr "Groep: vensterlijst"
+
+#: ../../src/actionGroups/windowListGroup.vala:41
+msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
+msgstr ""
+"Toont een segment met alle geopende vensters, vergelijkbaar met Alt-Tab."
+
+#: ../../src/actionGroups/bookmarkGroup.vala:36
+msgid "Group: Bookmarks"
+msgstr "Groep: bladwijzers"
+
+#: ../../src/actionGroups/bookmarkGroup.vala:38
+msgid "Shows a Slice for each of your directory Bookmarks."
+msgstr "Toont een segment met al je favoriete mappen."
+
+#: ../../src/actionGroups/devicesGroup.vala:35
+msgid "Group: Devices"
+msgstr "Groep: apparaten"
+
+#: ../../src/actionGroups/devicesGroup.vala:37
+msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
+msgstr ""
+"Toont een segment met alle aangekoppelde apparaten, zoals bijv. USB-schijven."
+
+#: ../../src/actionGroups/devicesGroup.vala:85
+msgid "Root"
+msgstr "Computer"
+
+#: ../../src/actionGroups/clipboardGroup.vala:77
+msgid "Image data"
+msgstr "Afbeeldingsgegevens"
+
+#: ../../src/actionGroups/clipboardGroup.vala:108
+msgid "Group: Clipboard"
+msgstr "Groep: klembord"
+
+#: ../../src/actionGroups/clipboardGroup.vala:110
+msgid "Manages your Clipboard."
+msgstr "Beheert je klembord."
+
+#: ../../src/actions/uriAction.vala:34
+msgid "Open URI"
+msgstr "URI openen"
+
+#: ../../src/actions/uriAction.vala:36
+msgid "Opens a given location. You may use URL's or files paths."
+msgstr "Opent een opgegeven locatie. Je kunt URL's opgeven of bestandspaden."
+
+#: ../../src/actions/keyAction.vala:34
+msgid "Press hotkey"
+msgstr "Druk op een sneltoets"
+
+#: ../../src/actions/keyAction.vala:36
+msgid "Simulates the activation of a hotkey."
+msgstr "Simuleert de activatie van een sneltoets."
+
+#: ../../src/actions/appAction.vala:34
+msgid "Launch application"
+msgstr "Applicatie starten"
+
+#: ../../src/actions/appAction.vala:36
+msgid "Executes the given command."
+msgstr "Voert de opgegeven opdracht uit."
+
+#: ../../src/actions/pieAction.vala:34
+msgid "Open Pie"
+msgstr "Cirkel openen"
+
+#: ../../src/actions/pieAction.vala:36
+msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
+msgstr ""
+"Opent een andere cirkel van Gnome-Pie. Je kunt op deze manier submenu's "
+"creëren."
+
+#: ../../src/actions/actionRegistry.vala:119
+msgid "Trash"
+msgstr "Prullenbak"
+
+#: ../../src/gui/newsWindow.vala:64
+msgid "_Close"
+msgstr "Sl_uiten"
+
+#: ../../src/gui/preferencesWindow.vala:80
+msgid "bake your pies!"
+msgstr "creëer je cirkels!"
+
+#: ../../src/gui/preferencesWindow.vala:238
+msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
+msgstr ""
+"Cirkels kunnen worden geopend met de terminalopdracht \"gnome-pie --open=ID"
+"\"."
+
+#: ../../src/gui/preferencesWindow.vala:239
+msgid "Feel free to visit Gnome-Pie's homepage at %s!"
+msgstr "Bezoek ook eens de Gnome-Pie-website op %s!"
+
+#: ../../src/gui/preferencesWindow.vala:240
+msgid "If you want to give some feedback, please write an e-mail to %s!"
+msgstr "Als je feedback wilt geven, verstuur dan een e-mail naar %s!"
+
+#: ../../src/gui/preferencesWindow.vala:241
+msgid "You can support the development of Gnome-Pie by donating via %s."
+msgstr "Je kunt de ontwikkeling van Gnome-Pie steunen door te doneren via %s."
+
+#: ../../src/gui/preferencesWindow.vala:242
+msgid ""
+"Translating Gnome-Pie to your language is easy. Translations are managed at "
+"%s."
+msgstr ""
+"Het vertalen van Gnome-Pie naar je eigen taal is eenvoudig. Vertalingen "
+"worden beheerd op %s."
+
+#: ../../src/gui/preferencesWindow.vala:243
+msgid ""
+"It's easy to create new themes for Gnome-Pie. Read the <a "
+"href='%s'>Tutorial</a> online."
+msgstr ""
+"Het is eenvoudig om nieuwe thema's te creëren voor Gnome-Pie. Volg de online "
+"<a href='%s'>Handleiding</a>."
+
+#: ../../src/gui/preferencesWindow.vala:244
+msgid "It's usually a good practice to have at most twelve slices per pie."
+msgstr ""
+"Het is meestal het beste als je maximaal twaalf segmenten per cirkel hebt."
+
+#: ../../src/gui/preferencesWindow.vala:245
+msgid "You can export themes you created and share them with the community!"
+msgstr ""
+"Je kunt door jouw gecreëerde thema's exporteren en deze delen met de "
+"gemeenschap!"
+
+#: ../../src/gui/preferencesWindow.vala:246
+msgid "The source code of Gnome-Pie is available on %s."
+msgstr "De broncode van Gnome-Pie is beschikbaar op %s."
+
+#: ../../src/gui/preferencesWindow.vala:247
+msgid "Bugs can be reported at %s!"
+msgstr "Fouten (bugs) kunnen worden gerapporteerd op %s!"
+
+#: ../../src/gui/preferencesWindow.vala:248
+msgid "Suggestions can be posted on %s!"
+msgstr "Suggesties kunnen worden gegeven op %s!"
+
+#: ../../src/gui/preferencesWindow.vala:249
+msgid ""
+"An awesome companion of Gnome-Pie is %s. It will make using your computer "
+"feel like magic!"
+msgstr ""
+"Een fantastische hulpje van Gnome-Pie is %s. Het zal je computer veranderen "
+"in een magisch iets!"
+
+#: ../../src/gui/preferencesWindow.vala:250
+msgid "You can drag'n'drop applications from your main menu to the pie above."
+msgstr ""
+"Je kunt applicaties verslepen van je hoofdmenu naar de cirkel hierboven."
+
+#: ../../src/gui/preferencesWindow.vala:251
+msgid ""
+"You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
+"above."
+msgstr ""
+"Je kunt URL's en bladwijzers verslepen van je webbrowser naar de cirkel "
+"hierboven."
+
+#: ../../src/gui/preferencesWindow.vala:252
+msgid ""
+"You can drag'n'drop files and folders from your file browser to the pie "
+"above."
+msgstr ""
+"Je kunt bestanden en mappen verslepen van je bestandsbeheerder naar de "
+"cirkel hierboven."
+
+#: ../../src/gui/preferencesWindow.vala:253
+msgid ""
+"You can drag'n'drop pies from the list on the left into other pies in order "
+"to create sub-pies."
+msgstr ""
+"Je kunt cirkels verslepen van de lijst aan de linkerkant naar andere cirkels "
+"om subcirkels te creëren."
+
+#: ../../src/gui/preferencesWindow.vala:254
+msgid ""
+"You can drag'n'drop pies from the list on the left to your desktop or dock "
+"to create a launcher for this pie."
+msgstr ""
+"Je kunt cirkels verslepen van de lijst aan de linkerkant naar je bureaublad "
+"of dock om een starter te creëren voor deze cirkel."
+
+#: ../../src/gui/preferencesWindow.vala:401
+msgid "Sucessfully imported new theme!"
+msgstr "Het nieuwe thema is succesvol geïmporteerd!"
+
+#: ../../src/gui/preferencesWindow.vala:415
+msgid "An error occured while importing the theme: Failed to extract theme!"
+msgstr ""
+"Er is een fout opgetreden tijdens het importeren van het thema: het thema "
+"kan niet worden uitgepakt!"
+
+#: ../../src/gui/preferencesWindow.vala:419
+msgid ""
+"An error occured while importing the theme: A theme with this name does "
+"already exist!"
+msgstr ""
+"Er is een fout opgetreden tijdens het uitpakken van het thema: er bestaat al "
+"een thema met deze naam!"
+
+#: ../../src/gui/preferencesWindow.vala:423
+msgid ""
+"An error occured while importing the theme: Theme archive does not contain a "
+"valid theme!"
+msgstr ""
+"Er is een fout opgetreden tijdens het uitpakken van het thema: het thema-"
+"archief bevat geen geldig thema!"
+
+#: ../../src/gui/preferencesWindow.vala:427
+msgid ""
+"An error occured while importing the theme: Failed to open theme archive!"
+msgstr ""
+"Er is een fout opgetreden tijdens het uitpakken van het thema: het thema-"
+"archief kan niet worden geopend!"
+
+#: ../../src/gui/preferencesWindow.vala:451
+msgid "Do you really want to delete the selected theme from %s?"
+msgstr "Weet je zeker dat je het geselecteerde thema wilt verwijderen uit %s?"
+
+#: ../../src/gui/preferencesWindow.vala:551
+msgid "New Pie"
+msgstr "Nieuwe cirkel"
+
+#: ../../src/gui/preferencesWindow.vala:566
+msgid ""
+"Do you really want to delete the selected Pie with all contained Slices?"
+msgstr ""
+"Weet je zeker dat je de geselecteerde cirkel met al zijn segmenten wilt "
+"verwijderen?"
+
+#: ../../src/gui/newSliceWindow.vala:328
+msgid "Rename me!"
+msgstr "Wijzig mijn naam!"
+
+#: ../../src/gui/triggerSelectButton.vala:64
+msgid "Press a hotkey ..."
+msgstr "Druk op een sneltoets ..."
+
+#: ../../src/gui/piePreviewRenderer.vala:419
+msgid "Click to edit"
+msgstr "Klik om te bewerken"
+
+#: ../../src/gui/piePreviewRenderer.vala:419
+#: ../../src/gui/piePreviewRenderer.vala:434
+msgid "Drag to move"
+msgstr "Versleep om te verplaatsen"
+
+#: ../../src/gui/piePreviewRenderer.vala:422
+msgid "Click to add a new Slice"
+msgstr "Klik om een nieuw segment toe te voegen"
+
+#: ../../src/gui/piePreviewRenderer.vala:426
+msgid "Drop to add as new Slice"
+msgstr "Laat los om toe te voegen als nieuw segment"
+
+#: ../../src/gui/piePreviewRenderer.vala:429
+msgid "Drop to move Slice"
+msgstr "Laat los om segment te verplaatsen"
+
+#: ../../src/gui/piePreviewRenderer.vala:434
+msgid "Click to delete"
+msgstr "Klik om te verwijderen"
+
+#: ../../src/gui/indicator.vala:109
+msgid "_Preferences"
+msgstr "_Voorkeuren"
+
+#: ../../src/gui/indicator.vala:118
+msgid "_About"
+msgstr "_Over"
+
+#: ../../src/gui/indicator.vala:133
+msgid "_Quit"
+msgstr "_Afsluiten"
+
+#: ../../src/gui/piePreview.vala:149
+msgid "Do you really want to delete this Slice?"
+msgstr "Weet je zeker dat je dit segment wilt verwijderen?"
+
+#: ../../src/gui/pieList.vala:77
+msgid "Pies"
+msgstr "Cirkels"
+
+#: ../../src/gui/themeList.vala:59
+msgid "Themes"
+msgstr "Thema's"
+
+#: ../../src/gui/themeList.vala:108
+msgid "by"
+msgstr "door"
+
+#: ../../src/gui/sliceTypeList.vala:60
+msgid "Slice types"
+msgstr "Segmenttypes"
+
+#: ../../src/gui/pieOptionsWindow.vala:207
+msgid ""
+"Keybindings and some other options are not supported on Wayland. However, "
+"you can use the terminial command \"gnome-pie --open %s\" to open this pie. "
+"Create a global hotkey in your system settings which executes this command!"
+msgstr ""
+"Sneltoetsen en sommige andere opties worden niet ondersteund op Wayland. Je "
+"kunt de terminalopdracht \"gnome-pie --open %s\" gebruiken om deze cirkel te "
+"openen. Creëer een globale sneltoets in de systeeminstellingen om deze "
+"opdracht uit te voeren!"
+
+#: ../../src/gui/pieOptionsWindow.vala:293
+msgid ""
+"This hotkey is already assigned to the pie \"%s\"! \n"
+"\n"
+"Please select another one or cancel your selection."
+msgstr ""
+"Deze sneltoets is al toegewezen aan de cirkel \"%s\"!\n"
+"\n"
+"Selecteer een andere of stop de selectie."
+
+#: ../../src/gui/iconSelectWindow.vala:220
+msgid "All supported image formats"
+msgstr "Alle ondersteunde afbeeldingsformaten"
+
+#: ../../src/utilities/trigger.vala:188
+msgid "Button %i"
+msgstr "Knop %i"
+
+#: ../../src/utilities/trigger.vala:191
+msgid "LeftButton"
+msgstr "LinkerKnop"
+
+#: ../../src/utilities/trigger.vala:193
+msgid "RightButton"
+msgstr "RechterKnop"
+
+#: ../../src/utilities/trigger.vala:195
+msgid "MiddleButton"
+msgstr "MiddelsteKnop"
+
+#: ../../src/utilities/trigger.vala:201 ../../src/utilities/trigger.vala:286
+#: ../../src/utilities/trigger.vala:287
+#: ../../src/utilities/bindingManager.vala:200 ../../src/utilities/key.vala:69
+msgid "Not bound"
+msgstr "Niet toegewezen"
+
+#: ../../src/utilities/trigger.vala:222
+msgid "Turbo"
+msgstr "Turbo"
+
+#: ../../src/utilities/trigger.vala:226 ../../src/utilities/trigger.vala:228
+msgid "Delayed"
+msgstr "Vertraagd"
+
+#: ../../src/utilities/trigger.vala:232 ../../src/utilities/trigger.vala:234
+msgid "Centered"
+msgstr "Gecentreerd"
+
+#: ../../src/utilities/trigger.vala:238 ../../src/utilities/trigger.vala:240
+msgid "Warp"
+msgstr "Centreren"
+
+#: ../../src/utilities/trigger.vala:244 ../../src/utilities/trigger.vala:246
+msgid "Auto-shaped"
+msgstr "Automatische vorm"
+
+#: ../../src/utilities/trigger.vala:249 ../../src/utilities/trigger.vala:251
+msgid "Quarter pie"
+msgstr "Kwartcirkel"
+
+#: ../../src/utilities/trigger.vala:255 ../../src/utilities/trigger.vala:257
+msgid "Half pie"
+msgstr "Halve cirkel"
+
+#: ../../src/themes/theme.vala:169
+msgid "Successfully exported the theme \"%s\"!"
+msgstr "Het thema \"%s\" is succesvol geëxporteerd!"
+
+#: ../../src/themes/theme.vala:176
+msgid ""
+"An error occured while exporting the theme \"%s\"! Please check the console "
+"output."
+msgstr ""
+"Er is een fout opgetreden tijdens het exporteren van het thema \"%s\"! "
+"Controleer de terminaluitvoer."
+
+#: ../../src/pies/defaultConfig.vala:29
+msgid "Multimedia"
+msgstr "Multimedia"
+
+#: ../../src/pies/defaultConfig.vala:30
+msgid "Next Track"
+msgstr "Volgende nummer"
+
+#: ../../src/pies/defaultConfig.vala:31
+msgid "Stop"
+msgstr "Stoppen"
+
+#: ../../src/pies/defaultConfig.vala:32
+msgid "Previous Track"
+msgstr "Vorige nummer"
+
+#: ../../src/pies/defaultConfig.vala:33
+msgid "Play/Pause"
+msgstr "Afspelen/Pauzeren"
+
+#: ../../src/pies/defaultConfig.vala:36
+msgid "Applications"
+msgstr "Applicaties"
+
+#: ../../src/pies/defaultConfig.vala:45
+msgid "Bookmarks"
+msgstr "Bladwijzers"
+
+#: ../../src/pies/defaultConfig.vala:50
+msgid "Session"
+msgstr "Sessie"
+
+#: ../../src/pies/defaultConfig.vala:54
+msgid "Main Menu"
+msgstr "Hoofdmenu"
+
+#: ../../src/pies/defaultConfig.vala:58
+msgid "Window"
+msgstr "Venster"
+
+#: ../../src/pies/defaultConfig.vala:59
+msgid "Scale"
+msgstr "Schaal"
+
+#: ../../src/pies/defaultConfig.vala:60
+msgid "Minimize"
+msgstr "Minimaliseren"
+
+#: ../../src/pies/defaultConfig.vala:61
+msgid "Close"
+msgstr "Sluiten"
+
+#: ../../src/pies/defaultConfig.vala:62
+msgid "Maximize"
+msgstr "Maximaliseren"
+
+#: ../../src/pies/defaultConfig.vala:63
+msgid "Restore"
+msgstr "Herstellen"

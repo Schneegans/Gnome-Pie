@@ -84,9 +84,13 @@ public class ArchiveReader : GLib.Object {
             if (entry.size() > 0) {
                 while (true) {
                     size_t offset, size;
-                    void *buff;
+                    uint8[] buff;
 
+#if VALA_0_42
+                    r = this.archive.read_data_block(out buff, out offset);
+#else
                     r = this.archive.read_data_block(out buff, out size, out offset);
+#endif
                     if (r == Archive.Result.EOF) {
                         break;
                     }
@@ -96,7 +100,11 @@ public class ArchiveReader : GLib.Object {
                         return false;
                     }
 
+#if VALA_0_42
+                    this.writer.write_data_block(buff, offset);
+#else
                     this.writer.write_data_block(buff, size, offset);
+#endif
                 }
             }
 

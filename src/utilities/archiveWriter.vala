@@ -112,13 +112,17 @@ public class ArchiveWriter : GLib.Object {
         if (this.archive.write_header(entry) == Archive.Result.OK) {
             try {
                 var reader = File.new_for_path(path).read();
-                uint8 buffer[4096];
+                uint8[] buffer = new uint8[4096];
 
-                var len = reader.read(buffer);
+                buffer.length = (int) reader.read(buffer);
 
-                while(len > 0) {
-                    this.archive.write_data(buffer, len);
-                    len = reader.read(buffer);
+                while(buffer.length > 0) {
+#if VALA_0_42
+                    this.archive.write_data(buffer);
+#else
+                    this.archive.write_data(buffer, buffer.length);
+#endif
+                    buffer.length = (int) reader.read(buffer);
                 }
 
                 this.archive.finish_entry();

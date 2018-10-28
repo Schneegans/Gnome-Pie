@@ -39,13 +39,6 @@ public class Paths : GLib.Object {
     public static string log { get; private set; default=""; }
 
     /////////////////////////////////////////////////////////////////////
-    /// The statistics file,
-    /// usually ~/.config/gnome-pie/gnome-pie.stats.
-    /////////////////////////////////////////////////////////////////////
-
-    public static string stats { get; private set; default=""; }
-
-    /////////////////////////////////////////////////////////////////////
     /// The settings file,
     /// usually ~/.config/gnome-pie/gnome-pie.conf.
     /////////////////////////////////////////////////////////////////////
@@ -232,19 +225,10 @@ public class Paths : GLib.Object {
         pie_config = config_file.get_path();
         settings = config_dir.get_path() + "/gnome-pie.conf";
         log = config_dir.get_path() + "/gnome-pie.log";
-        stats = config_dir.get_path() + "/gnome-pie.stats";
 
         if (!GLib.File.new_for_path(log).query_exists()) {
             try {
                 FileUtils.set_contents(log, "");
-            } catch (GLib.FileError e) {
-                error(e.message);
-            }
-        }
-
-        if (!GLib.File.new_for_path(stats).query_exists()) {
-            try {
-                FileUtils.set_contents(stats, "");
             } catch (GLib.FileError e) {
                 error(e.message);
             }
@@ -263,9 +247,6 @@ public class Paths : GLib.Object {
 
         if (!GLib.File.new_for_path(log).query_exists())
             warning("Failed to find log file \"gnome-pie.log\"!");
-
-        if (!GLib.File.new_for_path(stats).query_exists())
-            warning("Failed to find statistics file \"gnome-pie.stats\"!");
 
         if (!GLib.File.new_for_path(local_themes).query_exists())
             warning("Failed to find local themes directory!");

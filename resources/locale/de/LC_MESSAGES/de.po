@@ -416,18 +416,18 @@ msgstr ""
 "oder in dein Dock ziehen, um einen Starter zu erstellen!"
 
 #: ../../src/gui/preferencesWindow.vala:401
-msgid "Sucessfully imported new theme!"
+msgid "Successfully imported new theme!"
 msgstr "Das neue Design wurde erfolgreich imprtiert!"
 
 #: ../../src/gui/preferencesWindow.vala:415
-msgid "An error occured while importing the theme: Failed to extract theme!"
+msgid "An error occurred while importing the theme: Failed to extract theme!"
 msgstr ""
 "Beim Importieren ist ein Fehler aufgetreten: Das Design konnte nicht "
 "entpackt werden!"
 
 #: ../../src/gui/preferencesWindow.vala:419
 msgid ""
-"An error occured while importing the theme: A theme with this name does "
+"An error occurred while importing the theme: A theme with this name does "
 "already exist!"
 msgstr ""
 "Beim Importieren ist ein Fehler aufgetreten: Es existiert bereits ein Design "
@@ -435,7 +435,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:423
 msgid ""
-"An error occured while importing the theme: Theme archive does not contain a "
+"An error occurred while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 "Beim Importieren ist ein Fehler aufgetreten: Das gwählte Archiv enthält kein "
@@ -443,7 +443,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:427
 msgid ""
-"An error occured while importing the theme: Failed to open theme archive!"
+"An error occurred while importing the theme: Failed to open theme archive!"
 msgstr ""
 "Beim Importieren ist ein Fehler aufgetreten: Das Archive konnte nicht "
 "gelesen werden!"
@@ -629,7 +629,7 @@ msgstr "Das Design \"%s\" wurde erfolgreich importiert!"
 
 #: ../../src/themes/theme.vala:176
 msgid ""
-"An error occured while exporting the theme \"%s\"! Please check the console "
+"An error occurred while exporting the theme \"%s\"! Please check the console "
 "output."
 msgstr ""
 "Beim Exportieren des Designs \"%s\" ist ein Fehler aufgetreten! Weitere "

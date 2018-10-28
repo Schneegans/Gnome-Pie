@@ -506,18 +506,18 @@ msgstr ""
 "of dock om een starter te creëren voor deze cirkel."
 
 #: ../../src/gui/preferencesWindow.vala:401
-msgid "Sucessfully imported new theme!"
+msgid "Successfully imported new theme!"
 msgstr "Het nieuwe thema is succesvol geïmporteerd!"
 
 #: ../../src/gui/preferencesWindow.vala:415
-msgid "An error occured while importing the theme: Failed to extract theme!"
+msgid "An error occurred while importing the theme: Failed to extract theme!"
 msgstr ""
 "Er is een fout opgetreden tijdens het importeren van het thema: het thema "
 "kan niet worden uitgepakt!"
 
 #: ../../src/gui/preferencesWindow.vala:419
 msgid ""
-"An error occured while importing the theme: A theme with this name does "
+"An error occurred while importing the theme: A theme with this name does "
 "already exist!"
 msgstr ""
 "Er is een fout opgetreden tijdens het uitpakken van het thema: er bestaat al "
@@ -525,7 +525,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:423
 msgid ""
-"An error occured while importing the theme: Theme archive does not contain a "
+"An error occurred while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 "Er is een fout opgetreden tijdens het uitpakken van het thema: het thema-"
@@ -533,7 +533,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:427
 msgid ""
-"An error occured while importing the theme: Failed to open theme archive!"
+"An error occurred while importing the theme: Failed to open theme archive!"
 msgstr ""
 "Er is een fout opgetreden tijdens het uitpakken van het thema: het thema-"
 "archief kan niet worden geopend!"

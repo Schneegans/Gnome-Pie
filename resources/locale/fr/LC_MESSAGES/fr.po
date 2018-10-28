@@ -416,18 +416,18 @@ msgstr ""
 "bureau ou votre dock pour créer un lanceur."
 
 #: ../../src/gui/preferencesWindow.vala:401
-msgid "Sucessfully imported new theme!"
+msgid "Successfully imported new theme!"
 msgstr "Nouveau thème importé avec succès !"
 
 #: ../../src/gui/preferencesWindow.vala:415
-msgid "An error occured while importing the theme: Failed to extract theme!"
+msgid "An error occurred while importing the theme: Failed to extract theme!"
 msgstr ""
 "Une erreur est survenue pendant l'importation du thème : impossible "
 "d'extraire le thème !"
 
 #: ../../src/gui/preferencesWindow.vala:419
 msgid ""
-"An error occured while importing the theme: A theme with this name does "
+"An error occurred while importing the theme: A theme with this name does "
 "already exist!"
 msgstr ""
 "Une erreur est survenue pendant l'importation du thème : Un thème avec ce "
@@ -435,7 +435,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:423
 msgid ""
-"An error occured while importing the theme: Theme archive does not contain a "
+"An error occurred while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 "Une erreur est survenue pendant l'importation du thème : L'archive ne "
@@ -443,7 +443,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:427
 msgid ""
-"An error occured while importing the theme: Failed to open theme archive!"
+"An error occurred while importing the theme: Failed to open theme archive!"
 msgstr ""
 "Une erreur est survenue pendant l'importation du thème : Impossible d'ouvrir "
 "l'archive !"
@@ -632,7 +632,7 @@ msgstr "Thème \"%s\" exporté avec succès !"
 
 #: ../../src/themes/theme.vala:176
 msgid ""
-"An error occured while exporting the theme \"%s\"! Please check the console "
+"An error occurred while exporting the theme \"%s\"! Please check the console "
 "output."
 msgstr ""
 "Une erreur est survenue pendant l'importation du thème \"%s\" : Plus "

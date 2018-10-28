@@ -410,23 +410,23 @@ msgstr ""
 "Pastel."
 
 #: ../../src/gui/preferencesWindow.vala:401
-msgid "Sucessfully imported new theme!"
+msgid "Successfully imported new theme!"
 msgstr "El nuevo tema fue correctamente importado!"
 
 #: ../../src/gui/preferencesWindow.vala:415
-msgid "An error occured while importing the theme: Failed to extract theme!"
+msgid "An error occurred while importing the theme: Failed to extract theme!"
 msgstr "Ocurrió un error al importar el tema: Falló la extracción del tema!"
 
 #: ../../src/gui/preferencesWindow.vala:419
 msgid ""
-"An error occured while importing the theme: A theme with this name does "
+"An error occurred while importing the theme: A theme with this name does "
 "already exist!"
 msgstr ""
 "Ocurrió un error al importar el tema: Ya existe un tema con ese nombre!"
 
 #: ../../src/gui/preferencesWindow.vala:423
 msgid ""
-"An error occured while importing the theme: Theme archive does not contain a "
+"An error occurred while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 "Ocurrió un error al importar el tema:  El archivo no contiene un tema "
@@ -434,7 +434,7 @@ msgstr ""
 
 #: ../../src/gui/preferencesWindow.vala:427
 msgid ""
-"An error occured while importing the theme: Failed to open theme archive!"
+"An error occurred while importing the theme: Failed to open theme archive!"
 msgstr ""
 "Ocurrió un error al importar el tema: El archivo del tema no pudo ser "
 "abierto!"
@@ -622,7 +622,7 @@ msgstr "El tema %s fue exportado correctamente!"
 
 #: ../../src/themes/theme.vala:176
 msgid ""
-"An error occured while exporting the theme \"%s\"! Please check the console "
+"An error occurred while exporting the theme \"%s\"! Please check the console "
 "output."
 msgstr ""
 "Ocurrió un error al exportar el tema %s! Por favor verifique la consola."

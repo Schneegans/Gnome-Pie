@@ -398,7 +398,7 @@ public class PreferencesWindow : GLib.Object {
         dialog.filter.add_pattern ("*.tar.gz");
 
         var result = Gtk.MessageType.INFO;
-        var message = _("Sucessfully imported new theme!");
+        var message = _("Successfully imported new theme!");
 
         dialog.response.connect((d, r) => {
             if (r == Gtk.ResponseType.ACCEPT) {
@@ -412,19 +412,19 @@ public class PreferencesWindow : GLib.Object {
                                 Config.global.load_themes(a.theme_name);
                                 this.theme_list.reload();
                             } else {
-                                message = _("An error occured while importing the theme: Failed to extract theme!");
+                                message = _("An error occurred while importing the theme: Failed to extract theme!");
                                 result = Gtk.MessageType.ERROR;
                             }
                         } else {
-                            message = _("An error occured while importing the theme: A theme with this name does already exist!");
+                            message = _("An error occurred while importing the theme: A theme with this name does already exist!");
                             result = Gtk.MessageType.ERROR;
                         }
                     } else {
-                        message = _("An error occured while importing the theme: Theme archive does not contain a valid theme!");
+                        message = _("An error occurred while importing the theme: Theme archive does not contain a valid theme!");
                         result = Gtk.MessageType.ERROR;
                     }
                 } else {
-                    message = _("An error occured while importing the theme: Failed to open theme archive!");
+                    message = _("An error occurred while importing the theme: Failed to open theme archive!");
                     result = Gtk.MessageType.ERROR;
                 }
                 a.close();

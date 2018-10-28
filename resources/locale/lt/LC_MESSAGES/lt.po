@@ -417,29 +417,29 @@ msgstr ""
 "sukurtumėte šio pyrago leistuką."
 
 #: ../../src/gui/preferencesWindow.vala:401
-msgid "Sucessfully imported new theme!"
+msgid "Successfully imported new theme!"
 msgstr "Nauja tema buvo sėkmingai importuota!"
 
 #: ../../src/gui/preferencesWindow.vala:415
-msgid "An error occured while importing the theme: Failed to extract theme!"
+msgid "An error occurred while importing the theme: Failed to extract theme!"
 msgstr "Importuojant temą, įvyko klaida: Nepavyko išskleisti temos!"
 
 #: ../../src/gui/preferencesWindow.vala:419
 msgid ""
-"An error occured while importing the theme: A theme with this name does "
+"An error occurred while importing the theme: A theme with this name does "
 "already exist!"
 msgstr "Importuojant temą, įvyko klaida: Tema tokiu pavadinimu jau yra!"
 
 #: ../../src/gui/preferencesWindow.vala:423
 msgid ""
-"An error occured while importing the theme: Theme archive does not contain a "
+"An error occurred while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 "Importuojant temą, įvyko klaida: Temos archyve nėra taisyklingos temos!"
 
 #: ../../src/gui/preferencesWindow.vala:427
 msgid ""
-"An error occured while importing the theme: Failed to open theme archive!"
+"An error occurred while importing the theme: Failed to open theme archive!"
 msgstr "Importuojant temą, įvyko klaida: Nepavyko atverti temos archyvo!"
 
 #: ../../src/gui/preferencesWindow.vala:451
@@ -624,7 +624,7 @@ msgstr "\"%s\" tema buvo sėkmingai eksportuota!"
 
 #: ../../src/themes/theme.vala:176
 msgid ""
-"An error occured while exporting the theme \"%s\"! Please check the console "
+"An error occurred while exporting the theme \"%s\"! Please check the console "
 "output."
 msgstr "Eksportuojant \"%s\" temą, įvyko klaida! Prašome žiūrėti pulto išvestį."
 

@@ -408,29 +408,29 @@ msgstr ""
 "чтобы создать ярлык запуска для этого Пая."
 
 #: ../../src/gui/preferencesWindow.vala:401
-msgid "Sucessfully imported new theme!"
+msgid "Successfully imported new theme!"
 msgstr "Успешно импортирована новая тема!"
 
 #: ../../src/gui/preferencesWindow.vala:415
-msgid "An error occured while importing the theme: Failed to extract theme!"
+msgid "An error occurred while importing the theme: Failed to extract theme!"
 msgstr "При импорте темы произошла ошибка: Не удалось извлечь тему!"
 
 #: ../../src/gui/preferencesWindow.vala:419
 msgid ""
-"An error occured while importing the theme: A theme with this name does "
+"An error occurred while importing the theme: A theme with this name does "
 "already exist!"
 msgstr "При импорте темы произошла ошибка: тема с этим именем уже существует!"
 
 #: ../../src/gui/preferencesWindow.vala:423
 msgid ""
-"An error occured while importing the theme: Theme archive does not contain a "
+"An error occurred while importing the theme: Theme archive does not contain a "
 "valid theme!"
 msgstr ""
 "При импорте темы произошла ошибка: в архиве темы нет действительной темы!"
 
 #: ../../src/gui/preferencesWindow.vala:427
 msgid ""
-"An error occured while importing the theme: Failed to open theme archive!"
+"An error occurred while importing the theme: Failed to open theme archive!"
 msgstr "При импорте темы произошла ошибка: Не удалось открыть тему!"
 
 #: ../../src/gui/preferencesWindow.vala:451
@@ -616,7 +616,7 @@ msgstr "Тема экспортирована успешно \"%s\"!"
 
 #: ../../src/themes/theme.vala:176
 msgid ""
-"An error occured while exporting the theme \"%s\"! Please check the console "
+"An error occurred while exporting the theme \"%s\"! Please check the console "
 "output."
 msgstr "При экспорте темы произошла ошибка \"%s\"! Проверьте вывод консоли."
 

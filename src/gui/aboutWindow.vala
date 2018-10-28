@@ -59,7 +59,8 @@ public class AboutWindow: Gtk.AboutDialog {
             "Eugene Roskin <pams@imail.ru> (RU)",
             "Ashed <craysy@gmail.com> (RU)",
             "Ting Zhou <tzhou@haverford.edu> (ZH-CN)",
-            "Martin Dinov <martindinov@yahoo.com> (BG)"
+            "Martin Dinov <martindinov@yahoo.com> (BG)",
+            "Heimen Stoffels <vistausss@outlook.com> (NL-NL)"
         };
 
         // sort translators
@@ -79,7 +80,7 @@ public class AboutWindow: Gtk.AboutDialog {
             artists : artists,
             authors : devs,
             translator_credits : translator_string,
-            copyright : "Copyright (C) 2011-2017 Simon Schneegans <code@simonschneegans.de>",
+            copyright : "Copyright 2011-2018 Simon Schneegans <code@simonschneegans.de>",
             program_name: "Gnome-Pie",
             logo_icon_name: "gnome-pie",
             website: "http://simmesimme.github.io/gnome-pie.html",

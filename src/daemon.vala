@@ -121,8 +121,13 @@ public class Daemon : GLib.Application {
         Intl.textdomain("gnomepie");
 
         // connect SigHandlers
+#if VALA_0_40
+        Posix.signal(Posix.Signal.INT, sig_handler);
+        Posix.signal(Posix.Signal.TERM, sig_handler);
+#else
         Posix.signal(Posix.SIGINT, sig_handler);
         Posix.signal(Posix.SIGTERM, sig_handler);
+#endif
 
         this.startup.connect(()=>{
 

@@ -74,10 +74,12 @@ public class PiePreviewCenter : GLib.Object {
         if (text != this.current_text) {
 
             var style = parent.parent.get_style_context();
+            Pango.FontDescription font;
+            style.get(Gtk.StateFlags.NORMAL, "font", out font);
 
             this.old_text = this.text;
             this.text = new RenderedText.with_markup(
-                            text, 180, 180, style.get_font(Gtk.StateFlags.NORMAL).get_family()+" 10",
+                            text, 180, 180, font.get_family()+" 10",
                             new Color.from_gdk(style.get_color(Gtk.StateFlags.NORMAL)), 1.0);
             this.current_text = text;
 

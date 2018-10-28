@@ -106,7 +106,7 @@ public class Indicator : GLib.Object {
         this.prefs = new PreferencesWindow();
 
         // preferences item
-        var item = new Gtk.ImageMenuItem.with_mnemonic(_("_Preferences"));
+        var item = new Gtk.MenuItem.with_mnemonic(_("_Preferences"));
         item.activate.connect(() => {
             this.prefs.show();
         });
@@ -115,7 +115,7 @@ public class Indicator : GLib.Object {
         menu.append(item);
 
         // about item
-        item = new Gtk.ImageMenuItem.with_mnemonic(_("_About"));
+        item = new Gtk.MenuItem.with_mnemonic(_("_About"));
         item.show();
         item.activate.connect(() => {
             var about = new AboutWindow();
@@ -130,7 +130,7 @@ public class Indicator : GLib.Object {
         menu.append(sepa);
 
         // quit item
-        item = new Gtk.ImageMenuItem.with_mnemonic(_("_Quit"));
+        item = new Gtk.MenuItem.with_mnemonic(_("_Quit"));
         item.activate.connect(()=>{
             GLib.Application.get_default().release();
         });

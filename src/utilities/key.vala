@@ -142,7 +142,8 @@ public class Key : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     private Gdk.ModifierType get_modifiers() {
-        return (Gdk.ModifierType)Gdk.Keymap.get_default().get_modifier_state();
+        return (Gdk.ModifierType)Gdk.Keymap.get_for_display(
+                Gdk.Display.get_default()).get_modifier_state();
     }
 
     /////////////////////////////////////////////////////////////////////

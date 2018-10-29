@@ -137,16 +137,6 @@ public class PieWindow : Gtk.Window {
             this.has_compositing = true;
         }
 
-        //add_events() call was removed because it causes that gnome-pie sometimes enter
-        //and infinte loop while processing some mouse-motion events.
-        //(this was seen in Ubuntu 14.04.2 64/32-bits -Glib 2.19- and in MATE 14.04.2)
-        // set up event filter
-        // this.add_events(Gdk.EventMask.BUTTON_RELEASE_MASK |
-        //                Gdk.EventMask.KEY_RELEASE_MASK |
-        //                Gdk.EventMask.KEY_PRESS_MASK |
-        //                Gdk.EventMask.POINTER_MOTION_MASK |
-        //                Gdk.EventMask.SCROLL_MASK );
-
         // activate on left click
         this.button_release_event.connect ((e) => {
             if (e.button == 1 || PieManager.get_is_turbo(this.renderer.id)) this.activate_slice(e.time);
@@ -189,6 +179,11 @@ public class PieWindow : Gtk.Window {
 
         this.on_closing.connect(() => {
             PieManager.bindings.disconnect(connection_id);
+        });
+
+        this.focus_out_event.connect((w, e) => {
+            this.cancel();
+            return true;
         });
 
         // notify the renderer of mouse move events
@@ -264,8 +259,8 @@ public class PieWindow : Gtk.Window {
                 int monitor_y = screen.get_height();
             #endif
 
-            //allow some window movement from the screen borders
-            //(some panels moves the window after it was realized)
+            // allow some window movement from the screen borders
+            // (some panels moves the window after it was realized)
             int dx = this.panel_sz - this.back_x;
             if (dx > 0)
                 this.back_sz_x += dx;
@@ -284,13 +279,13 @@ public class PieWindow : Gtk.Window {
                 this.back_y  -= dy;
             }
 
-            //also tolerate some mouse movement
+            // also tolerate some mouse movement
             this.back_x -= this.mouse_move;
             this.back_sz_x += this.mouse_move*2;
             this.back_y -= this.mouse_move;
             this.back_sz_y += this.mouse_move*2;
 
-            //make sure we don't go outside the screen
+            // make sure we don't go outside the screen
             if (this.back_x < 0) {
                 this.back_sz_x += this.back_x;
                 this.back_x = 0;
@@ -338,7 +333,7 @@ public class PieWindow : Gtk.Window {
     /////////////////////////////////////////////////////////////////////
 
     public void get_center_pos(out int out_x, out int out_y) {
-        int x=0, y=0; //width=0, height=0;
+        int x = 0, y = 0;
         this.get_position(out x, out y);
         out_x = x + renderer.center_x;
         out_y = y + renderer.center_y;

@@ -434,19 +434,20 @@ public class PieRenderer : GLib.Object {
     /// Activates the currently active slice.
     /////////////////////////////////////////////////////////////////////
 
-    public void activate(uint32 time_stamp) {
+    public void activate(uint32 time_stamp, bool fade_out) {
         if (this.active_slice >= this.first_slice_idx
             && this.active_slice < this.first_slice_idx+this.visible_slice_count) {
             slices[active_slice].activate(time_stamp);
         }
 
-        //foreach (var slice in this.slices)
-        //    slice.fade_out();
-        for (int i= 0; i < this.visible_slice_count; ++i) {
-            this.slices[ i+this.first_slice_idx ].fade_out();
-        }
+        if (fade_out)
+        {
+            for (int i= 0; i < this.visible_slice_count; ++i) {
+                this.slices[ i+this.first_slice_idx ].fade_out();
+            }
 
-        center.fade_out();
+            center.fade_out();
+        }
     }
 
     /////////////////////////////////////////////////////////////////////
@@ -454,8 +455,6 @@ public class PieRenderer : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public void cancel() {
-        //foreach (var slice in this.slices)
-        //    slice.fade_out();
         for (int i= 0; i < this.visible_slice_count; ++i) {
             this.slices[ i+this.first_slice_idx ].fade_out();
         }

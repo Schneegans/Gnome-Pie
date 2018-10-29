@@ -147,7 +147,7 @@ public class Key : GLib.Object {
     /// Helper method returning currently hold down modifier keys.
     /////////////////////////////////////////////////////////////////////
 
-    private Gdk.ModifierType get_modifiers() {
+    public static Gdk.ModifierType get_modifiers() {
         return (Gdk.ModifierType)Gdk.Keymap.get_for_display(
                 Gdk.Display.get_default()).get_modifier_state();
     }

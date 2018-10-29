@@ -461,21 +461,33 @@ public class PieWindow : Gtk.Window {
 
     private void activate_slice(uint32 time_stamp) {
         if (!this.closing) {
-            this.closing = true;
-            this.on_closing();
-            FocusGrabber.ungrab();
+
+            bool should_close = true;
+
+            // do not close when ctrl or shift is held down
+            if ((Key.get_modifiers() &
+                    (Gdk.ModifierType.CONTROL_MASK | Gdk.ModifierType.SHIFT_MASK)) > 0 &&
+                !PieManager.get_is_turbo(this.renderer.id)) {
+                should_close = false;
+            }
 
             GLib.Timeout.add(10, () => {
-                this.renderer.activate(time_stamp);
+                this.renderer.activate(time_stamp, should_close);
                 return false;
             });
 
-            GLib.Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
-                this.closed = true;
-                this.on_closed();
-                this.destroy();
-                return false;
-            });
+            if (should_close) {
+                this.closing = true;
+                this.on_closing();
+                FocusGrabber.ungrab();
+
+                GLib.Timeout.add((uint)(Config.global.theme.fade_out_time*1000), () => {
+                    this.closed = true;
+                    this.on_closed();
+                    this.destroy();
+                    return false;
+                });
+            }
         }
     }
 

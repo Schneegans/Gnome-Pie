@@ -189,7 +189,10 @@ public class BindingManager : GLib.Object {
         }
 
         bindings.remove_all(remove_bindings);
-        display.flush();
+
+        if (!wayland) {
+            display.flush();
+        }
     }
 
     /////////////////////////////////////////////////////////////////////

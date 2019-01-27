@@ -1,7 +1,7 @@
 # Italian translations for gnomepie package.
 # Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>
 # This file is distributed under the same license as the gnomepie package.
-# Riccardo Traverso <gr3yfox.fw@gmail.com>, 2011.
+# albano battistella & Artyom Zorin, 2019.
 # Simon <code@simonschneegans.de>, 2015. #zanata
 msgid ""
 msgstr ""

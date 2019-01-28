@@ -1,7 +1,7 @@
 # Italian translations for gnomepie package.
 # Copyright (C) 2011 Simon Schneegans <simon.schneegans@uni-weimar.de>
 # This file is distributed under the same license as the gnomepie package.
-# Riccardo Traverso <gr3yfox.fw@gmail.com>, 2011.
+# albano battistella & Artyom Zorin, 2019.
 # Simon <code@simonschneegans.de>, 2015. #zanata
 msgid ""
 msgstr ""
@@ -11,8 +11,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2011-11-08 06:52-0500\n"
-"Last-Translator: Riccardo Traverso <gr3yfox.fw@gmail.com>\n"
+"PO-Revision-Date: 2019-1-02 06:52-0500\n"
+"Last-Translator: albano battistella & Artyom Zorin\n"
 "Language-Team: Italian\n"
 "Language: it\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -21,19 +21,19 @@ msgstr ""
 
 #: ../ui/pie_options.ui:53
 msgid "Activation Settings"
-msgstr ""
+msgstr "Impostazioni di attivazione""
 
 #: ../ui/pie_options.ui:153
 msgid "Unamed Pie"
-msgstr ""
+msgstr "Torta senza nome"
 
 #: ../ui/pie_options.ui:216
 msgid "ID:"
-msgstr ""
+msgstr "ID"
 
 #: ../ui/pie_options.ui:234
 msgid "It's possible to bind mouse buttons as well!"
-msgstr ""
+msgstr "È possibile associare i pulsanti del mouse!"
 
 #: ../ui/pie_options.ui:274
 msgid "Turbo mode"
@@ -41,9 +41,7 @@ msgstr "Modalità turbo"
 
 #: ../ui/pie_options.ui:280 ../ui/pie_options.ui:281
 msgid "If checked, the Pie will close when you release the chosen hot key."
-msgstr ""
-"Se selezionato, la Torta si chiuderà al rilascio della combinazione di tasti "
-"assegnata."
+msgstr "Se selezionato, la torta si chiuderà quando si rilascia il tasto di scelta rapida selezionato."
 
 #: ../ui/pie_options.ui:293
 msgid "Long press for activation"
@@ -58,7 +56,7 @@ msgstr ""
 
 #: ../ui/pie_options.ui:312
 msgid "Open Pie centered on the screen"
-msgstr ""
+msgstr "Apri Torta al centro dello schermo"
 
 #: ../ui/pie_options.ui:318 ../ui/pie_options.ui:319
 #, fuzzy
@@ -71,32 +69,35 @@ msgstr ""
 
 #: ../ui/pie_options.ui:331
 msgid "Warp mouse pointer to center of Pie"
-msgstr ""
+msgstr "Puntatore del mouse Warp al centro della torta"
 
 #: ../ui/pie_options.ui:337 ../ui/pie_options.ui:338
 msgid ""
 "If checked, the mouse pointer will be warped to the center of the Pie. This "
 "allows for quick selections even if the Pie is opened at the screen's "
 "boundary."
-msgstr ""
+msgstr "Se selezionato, il puntatore del mouse sarà deformato al centro della Torta. Questo "
+"consente selezioni rapide anche se la torta è aperta sullo schermo"
+"limitazioni."
 
 #: ../ui/pie_options.ui:356
 msgid "Activation options"
-msgstr ""
+msgstr "Opzioni di attivazione"
 
 #: ../ui/pie_options.ui:547
 msgid "Automatically select the best pie shape"
-msgstr ""
+msgstr "Seleziona automaticamente la migliore forma di torta"
 
 #: ../ui/pie_options.ui:551
 msgid ""
 "If checked, the shape will be automatically selected to minimize mouse "
 "travelling."
-msgstr ""
+msgstr "Se selezionato, la forma verrà automaticamente selezionata per ridurre al minimo il mouse "
+"in viaggio"
 
 #: ../ui/pie_options.ui:571
 msgid "Pie shape"
-msgstr ""
+msgstr "Forma di torta"
 
 #: ../ui/slice_select.ui:8
 #, fuzzy
@@ -105,35 +106,35 @@ msgstr "Applicazioni"
 
 #: ../ui/slice_select.ui:140
 msgid "There are no options for this Slice type."
-msgstr ""
+msgstr "Non ci sono opzioni per questo tipo di fetta."
 
 #: ../ui/slice_select.ui:166
 msgid "Name of the Slice "
-msgstr ""
+msgstr "Nome della fetta"
 
 #: ../ui/slice_select.ui:204
 msgid "URI to open"
-msgstr ""
+msgstr "URI da aprire"
 
 #: ../ui/slice_select.ui:242
 msgid "Command to execute"
-msgstr ""
+msgstr "Comando da eseguire"
 
 #: ../ui/slice_select.ui:280
 msgid "Hotkey to press"
-msgstr ""
+msgstr "Tasto di scelta rapida"
 
 #: ../ui/slice_select.ui:309
 msgid "Pie to open"
-msgstr ""
+msgstr "Torta da aprire"
 
 #: ../ui/slice_select.ui:338
 msgid "Is Quick Action"
-msgstr ""
+msgstr "Azione rapida"
 
 #: ../ui/slice_select.ui:353 ../ui/slice_select.ui:354
 msgid "This Slice will be executed when you click in the middle of the Pie."
-msgstr ""
+msgstr "Questa fetta verrà eseguita quando si fa clic nel mezzo della torta."
 
 #: ../ui/slice_select.ui:386
 #, fuzzy
@@ -142,7 +143,7 @@ msgstr "Applicazioni"
 
 #: ../ui/icon_select.ui:9
 msgid "Select an icon"
-msgstr ""
+msgstr "Seleziona un'icona"
 
 #: ../ui/icon_select.ui:103
 msgid "Icon Theme"
@@ -169,38 +170,42 @@ msgstr "Se selezionato, Gnome-Pie si avvierà all'accesso."
 
 #: ../ui/preferences.ui:60
 msgid "Display panel icon "
-msgstr ""
+msgstr "Icona del pannello di visualizzazione"
 
 #: ../ui/preferences.ui:66 ../ui/preferences.ui:67
 msgid ""
 "If not checked, you can access this menu by launching Gnome-Pie a second "
 "time."
-msgstr ""
+msgstr "Se non selezionato, puoi accedere a questo menu lanciando Gnome-Pie in un secondo "
+"tempo."
 
 #: ../ui/preferences.ui:79
 msgid "Select Slices by typing their names"
-msgstr ""
+msgstr "Seleziona le fette digitandone i nomi"
 
 #: ../ui/preferences.ui:85 ../ui/preferences.ui:86
 msgid ""
 "If checked, you can select items in a Pie by typing their names. Otherwise "
 "you can activate them with a hotkey (which can be displayed by pressing ALT "
 "when a Pie is openened)."
-msgstr ""
+msgstr "Se selezionato, puoi selezionare gli elementi in una torta digitandone i nomi. Altrimenti "
+"puoi attivarli con un tasto di scelta rapida (che può essere visualizzato premendo ALT"
+"quando una torta è aperta)."
 
 #: ../ui/preferences.ui:98
 msgid "Display Slice labels"
-msgstr ""
+msgstr "Visualizza etichette delle sezioni"
 
 #: ../ui/preferences.ui:104 ../ui/preferences.ui:105
 msgid ""
 "Displays the name of each Slice next to it. Only available if supported by "
 "the theme."
-msgstr ""
+msgstr "Visualizza il nome di ciascuna fetta accanto ad essa. Disponibile solo se supportato da "
+"il tema."
 
 #: ../ui/preferences.ui:139
 msgid "Activation radius"
-msgstr ""
+msgstr "Raggio di attivazione"
 
 #: ../ui/preferences.ui:179
 #, fuzzy
@@ -209,23 +214,23 @@ msgstr "Scala globale"
 
 #: ../ui/preferences.ui:219
 msgid "Maximum slices per pie"
-msgstr ""
+msgstr "Fette massime per torta"
 
 #: ../ui/preferences.ui:302
 msgid "Import a theme from a file."
-msgstr ""
+msgstr "Importa un tema da un file."
 
 #: ../ui/preferences.ui:323
 msgid "Delete the selected theme."
-msgstr ""
+msgstr "Delete the selected theme."
 
 #: ../ui/preferences.ui:344
 msgid "Export the selected theme for sharing."
-msgstr ""
+msgstr "Esporta il tema selezionato per la condivisione."
 
 #: ../ui/preferences.ui:392
 msgid "Open a tutorial on how to create new themes for Gnome-Pie."
-msgstr ""
+msgstr "Apri un tutorial su come creare nuovi temi per Gnome-Pie."
 
 #: ../ui/preferences.ui:442 ../../src/gui/preferencesWindow.vala:109
 #, fuzzy
@@ -241,7 +246,11 @@ msgid ""
 "folders. Even URLs from your browser are possible...\n"
 "\n"
 "For manual and advanced configuration click on the plus sign."
-msgstr ""
+msgstr "Inizia ad aggiungere fette! </ B> Questo può essere fatto trascinando roba nella "
+"più il segno sotto. Puoi provare molto! Ad esempio, i lanciatori di applicazioni o"
+"cartelle. Sono possibili anche gli URL del tuo browser ... \ n"
+"\ N"
+"Per la configurazione manuale e avanzata fare clic sul segno più."
 
 #: ../ui/preferences.ui:655
 msgid ""
@@ -249,11 +258,12 @@ msgid ""
 "\n"
 "Start by creating one! </b> This can be done by clicking on the tiny little "
 "plus sign in the lower left corner."
-msgstr ""
+msgstr "Inizia creandone uno! </ b> Puoi farlo cliccando sul piccolo "
+"segno più nell'angolo in basso a sinistra."
 
 #: ../ui/preferences.ui:741 ../../src/gui/preferencesWindow.vala:110
 msgid "Pie Settings"
-msgstr ""
+msgstr "Impostazioni della torta"
 
 #: ../../src/actions/keyAction.vala:34
 msgid "Press hotkey"
@@ -261,7 +271,7 @@ msgstr "Pressione di tasti"
 
 #: ../../src/actions/keyAction.vala:36
 msgid "Simulates the activation of a hotkey."
-msgstr ""
+msgstr "Simula l'attivazione di un tasto di scelta rapida."
 
 #: ../../src/actions/uriAction.vala:34
 msgid "Open URI"
@@ -269,7 +279,7 @@ msgstr "Apri URI"
 
 #: ../../src/actions/uriAction.vala:36
 msgid "Opens a given location. You may use URL's or files paths."
-msgstr ""
+msgstr "Apre una determinata posizione. È possibile utilizzare URL o percorsi di file."
 
 #: ../../src/actions/actionRegistry.vala:119
 msgid "Trash"
@@ -281,7 +291,7 @@ msgstr "Lancia applicazione"
 
 #: ../../src/actions/appAction.vala:36
 msgid "Executes the given command."
-msgstr ""
+msgstr "Esegue il comando dato."
 
 #: ../../src/actions/pieAction.vala:34
 msgid "Open Pie"
@@ -289,122 +299,130 @@ msgstr "Apri una Torta"
 
 #: ../../src/actions/pieAction.vala:36
 msgid "Opens another Pie of Gnome-Pie. You may create sub menus this way."
-msgstr ""
+msgstr "Apre un'altra torta di Gnome-Pie. È possibile creare sotto-menu in questo modo."
 
 #: ../../src/gui/preferencesWindow.vala:79
 msgid "bake your pies!"
-msgstr ""
+msgstr "fai le tue torte!"
 
 #: ../../src/gui/preferencesWindow.vala:235
 msgid "Pies can be opened with the terminal command \"gnome-pie --open=ID\"."
-msgstr ""
+msgstr "Le torte possono essere aperte con il comando terminale \"gnome-pie --open = ID \"."
 
 #: ../../src/gui/preferencesWindow.vala:236
 msgid "Feel free to visit Gnome-Pie's homepage at %s!"
-msgstr ""
+msgstr "Sentiti libero di visitare la homepage di Gnome-Pie su% s!"
 
 #: ../../src/gui/preferencesWindow.vala:237
 msgid "If you want to give some feedback, please write an e-mail to %s!"
-msgstr ""
+msgstr "Se vuoi dare un feedback, scrivi un'e-mail a% s!"
 
 #: ../../src/gui/preferencesWindow.vala:238
 msgid "You can support the development of Gnome-Pie by donating via %s."
-msgstr ""
+msgstr "Puoi supportare lo sviluppo di Gnome-Pie donando tramite% s."
 
 #: ../../src/gui/preferencesWindow.vala:239
 msgid ""
 "Translating Gnome-Pie to your language is easy. Translations are managed at "
 "%s."
-msgstr ""
+msgstr "Tradurre Gnome-Pie nella tua lingua è facile. Le traduzioni sono gestite a"
 
 #: ../../src/gui/preferencesWindow.vala:240
 msgid ""
 "It's easy to create new themes for Gnome-Pie. Read the <a href="
 "'%s'>Tutorial</a> online."
-msgstr ""
+msgstr "È facile creare nuovi temi per Gnome-Pie. Leggi <a href = "
+"'% s'> Tutorial </a> online."
 
 #: ../../src/gui/preferencesWindow.vala:241
 msgid "It's usually a good practice to have at most twelve slices per pie."
-msgstr ""
+msgstr "Di solito è una buona pratica avere al massimo dodici fette per torta."
 
 #: ../../src/gui/preferencesWindow.vala:242
 msgid "You can export themes you created and share them with the community!"
-msgstr ""
+msgstr "Puoi esportare temi che hai creato e condividerli con la community!"
 
 #: ../../src/gui/preferencesWindow.vala:243
 msgid "The source code of Gnome-Pie is available on %s."
-msgstr ""
+msgstr "Il codice sorgente di Gnome-Pie è disponibile su% s."
 
 #: ../../src/gui/preferencesWindow.vala:244
 msgid "Bugs can be reported at %s!"
-msgstr ""
+msgstr "I bug possono essere segnalati a% s!"
 
 #: ../../src/gui/preferencesWindow.vala:245
 msgid "Suggestions can be posted on %s!"
-msgstr ""
+msgstr "I suggerimenti possono essere pubblicati su% s!"
 
 #: ../../src/gui/preferencesWindow.vala:246
 msgid ""
 "An awesome companion of Gnome-Pie is %s. It will make using your computer "
 "feel like magic!"
-msgstr ""
+msgstr "Un fantastico compagno di Gnome-Pie è% s. Farà uso del tuo computer "
+"sentirsi magici!"
 
 #: ../../src/gui/preferencesWindow.vala:247
 msgid "You can drag'n'drop applications from your main menu to the pie above."
-msgstr ""
+msgstr "Puoi trascinare le applicazioni dal menu principale alla torta in alto."
 
 #: ../../src/gui/preferencesWindow.vala:248
 msgid ""
 "You may drag'n'drop URLs and bookmarks from your internet browser to the pie "
 "above."
-msgstr ""
+msgstr "Puoi trascinare URL e segnalibri dal browser Internet alla torta "
+"sopra."
 
 #: ../../src/gui/preferencesWindow.vala:249
 msgid ""
 "You can drag'n'drop files and folders from your file browser to the pie "
 "above."
-msgstr ""
+msgstr "Puoi trascinare i file e le cartelle dal tuo file browser alla torta "
+"sopra."
 
 #: ../../src/gui/preferencesWindow.vala:250
 msgid ""
 "You can drag'n'drop pies from the list on the left into other pies in order "
 "to create sub-pies."
-msgstr ""
+msgstr "Puoi trascinare le torte dall'elenco a sinistra in altre torte in ordine "
+"creare sotto-torte."
 
 #: ../../src/gui/preferencesWindow.vala:251
 msgid ""
 "You can drag'n'drop pies from the list on the left to your desktop or dock "
 "to create a launcher for this pie."
-msgstr ""
+msgstr "Puoi trascinare e rilasciare le torte dall'elenco a sinistra sul desktop o sul dock "
+"per creare un launcher per questa torta."
 
 #: ../../src/gui/preferencesWindow.vala:401
 msgid "Successfully imported new theme!"
-msgstr ""
+msgstr "Nuovo tema importato con successo!"
 
 #: ../../src/gui/preferencesWindow.vala:415
 msgid "An error occurred while importing the theme: Failed to extract theme!"
-msgstr ""
+msgstr "Si è verificato un errore durante l'importazione del tema: Impossibile estrarre il tema!"
 
 #: ../../src/gui/preferencesWindow.vala:419
 msgid ""
 "An error occurred while importing the theme: A theme with this name does "
 "already exist!"
-msgstr ""
+msgstr "Si è verificato un errore durante l'importazione del tema: un tema con questo nome "
+"esiste già!"
 
 #: ../../src/gui/preferencesWindow.vala:423
 msgid ""
 "An error occurred while importing the theme: Theme archive does not contain a "
 "valid theme!"
-msgstr ""
+msgstr "Si è verificato un errore durante l'importazione del tema: L'archivio dei temi non contiene un "
+"tema valido!"
 
 #: ../../src/gui/preferencesWindow.vala:427
 msgid ""
 "An error occurred while importing the theme: Failed to open theme archive!"
-msgstr ""
+msgstr "Si è verificato un errore durante l'importazione del tema: Impossibile aprire l'archivio dei temi!"
 
 #: ../../src/gui/preferencesWindow.vala:451
 msgid "Do you really want to delete the selected theme from %s?"
-msgstr ""
+msgstr "Vuoi davvero eliminare il tema selezionato da% s?"
 
 #: ../../src/gui/preferencesWindow.vala:528
 msgid "New Pie"
@@ -428,12 +446,12 @@ msgstr "Tipi di file"
 
 #: ../../src/gui/piePreviewRenderer.vala:419
 msgid "Click to edit"
-msgstr ""
+msgstr "Clicca per modificare"
 
 #: ../../src/gui/piePreviewRenderer.vala:419
 #: ../../src/gui/piePreviewRenderer.vala:434
 msgid "Drag to move"
-msgstr ""
+msgstr "Trascina per spostare"
 
 #: ../../src/gui/piePreviewRenderer.vala:422
 #, fuzzy
@@ -447,15 +465,15 @@ msgstr "Aggiungi nuova Fetta"
 
 #: ../../src/gui/piePreviewRenderer.vala:429
 msgid "Drop to move Slice"
-msgstr ""
+msgstr "Trascina per muovere fetta"
 
 #: ../../src/gui/piePreviewRenderer.vala:434
 msgid "Click to delete"
-msgstr ""
+msgstr "Clicca per cancellare"
 
 #: ../../src/gui/pieList.vala:77
 msgid "Pies"
-msgstr ""
+msgstr "Torte"
 
 #: ../../src/gui/iconSelectWindow.vala:182
 msgid "All icons"
@@ -492,7 +510,7 @@ msgstr "Tutti i formati immagine supportati"
 
 #: ../../src/gui/newSliceWindow.vala:292
 msgid "Rename me!"
-msgstr ""
+msgstr "Rinomina!"
 
 #: ../../src/gui/pieOptionsWindow.vala:274
 msgid ""
@@ -514,19 +532,19 @@ msgstr ""
 
 #: ../../src/gui/indicator.vala:126
 msgid "_Preferences"
-msgstr ""
+msgstr "_Preferenze"
 
 #: ../../src/gui/indicator.vala:135
 msgid "_About"
-msgstr ""
+msgstr "_Inoformazioni su"
 
 #: ../../src/gui/indicator.vala:150
 msgid "_Quit"
-msgstr ""
+msgstr _Abbandona"
 
 #: ../../src/gui/newsWindow.vala:64
 msgid "_Close"
-msgstr ""
+msgstr "Chiudi"
 
 #: ../../src/gui/triggerSelectButton.vala:64
 #, fuzzy
@@ -565,33 +583,34 @@ msgstr "Ritardato"
 
 #: ../../src/utilities/trigger.vala:226 ../../src/utilities/trigger.vala:228
 msgid "Centered"
-msgstr ""
+msgstr "centrato"
 
 #: ../../src/utilities/trigger.vala:232 ../../src/utilities/trigger.vala:234
 msgid "Warp"
-msgstr ""
+msgstr "Deforma"
 
 #: ../../src/utilities/trigger.vala:238 ../../src/utilities/trigger.vala:240
 msgid "Auto-shaped"
-msgstr ""
+msgstr "Modello-automatico"
 
 #: ../../src/utilities/trigger.vala:243 ../../src/utilities/trigger.vala:245
 msgid "Quarter pie"
-msgstr ""
+msgstr "Quarto di torta"
 
 #: ../../src/utilities/trigger.vala:249 ../../src/utilities/trigger.vala:251
 msgid "Half pie"
-msgstr ""
+msgstr "Mezza torta"
 
 #: ../../src/themes/theme.vala:169
 msgid "Successfully exported the theme \"%s\"!"
-msgstr ""
+msgstr "Esportato correttamente il tema \ "% s \"!"
 
 #: ../../src/themes/theme.vala:176
 msgid ""
 "An error occurred while exporting the theme \"%s\"! Please check the console "
 "output."
-msgstr ""
+msgstr "Si è verificato un errore durante l'esportazione del tema \ "% s \"! Si prega di controllare la console "
+"Uscita."
 
 #: ../../src/actionGroups/windowListGroup.vala:34
 #, fuzzy
@@ -600,7 +619,7 @@ msgstr "Elenco delle finestre"
 
 #: ../../src/actionGroups/windowListGroup.vala:36
 msgid "Shows a Slice for each of your opened Windows. Almost like Alt-Tab."
-msgstr ""
+msgstr "Mostra una sezione per ciascuno delle tue Finestre aperte. Di solito usando Alt-Tab."
 
 #: ../../src/actionGroups/clipboardGroup.vala:64
 #, fuzzy
@@ -609,7 +628,7 @@ msgstr "Appunti"
 
 #: ../../src/actionGroups/clipboardGroup.vala:66
 msgid "Manages your Clipboard."
-msgstr ""
+msgstr "Gestisce i tuoi appunti."
 
 #: ../../src/actionGroups/devicesGroup.vala:35
 #, fuzzy
@@ -618,7 +637,7 @@ msgstr "Dispositivi"
 
 #: ../../src/actionGroups/devicesGroup.vala:37
 msgid "Shows a Slice for each plugged in devices, like USB-Sticks."
-msgstr ""
+msgstr "Mostra una sezione per ogni dispositivo collegato, come le chiavette USB."
 
 #: ../../src/actionGroups/devicesGroup.vala:85
 msgid "Root"
@@ -631,16 +650,16 @@ msgstr "Menu principale"
 
 #: ../../src/actionGroups/menuGroup.vala:37
 msgid "Displays your main menu structure."
-msgstr ""
+msgstr "Mostra la struttura del menu principale."
 
 #: ../../src/actionGroups/workspaceWindowListGroup.vala:35
 msgid "Group: Window List for current workspace"
-msgstr ""
+msgstr "Gruppo: Elenco finestre per lo spazio di lavoro corrente"
 
 #: ../../src/actionGroups/workspaceWindowListGroup.vala:37
 msgid ""
 "Shows a Slice for each of your opened windows on the current workspace."
-msgstr ""
+msgstr "Mostra una sezione per ciascuna delle finestre aperte nell'area di lavoro corrente."
 
 #: ../../src/actionGroups/sessionGroup.vala:35
 #, fuzzy
@@ -649,7 +668,7 @@ msgstr "Controllo della sessione"
 
 #: ../../src/actionGroups/sessionGroup.vala:37
 msgid "Shows a Slice for Shutdown, Reboot, and Hibernate."
-msgstr ""
+msgstr "Mostra una sezione per l'arresto, il riavvio e l'ibernazione."
 
 #: ../../src/actionGroups/sessionGroup.vala:60
 msgid "Shutdown"
@@ -670,7 +689,7 @@ msgstr "Segnalibri"
 
 #: ../../src/actionGroups/bookmarkGroup.vala:38
 msgid "Shows a Slice for each of your directory Bookmarks."
-msgstr ""
+msgstr "Mostra una sezione per ciascun segnalibro della directory."
 
 #: ../../src/pies/defaultConfig.vala:29
 msgid "Multimedia"

@@ -182,7 +182,9 @@ public class PieWindow : Gtk.Window {
         });
 
         this.focus_out_event.connect((w, e) => {
-            this.cancel();
+            if (this.is_active) {
+                this.cancel();
+            }
             return true;
         });
 

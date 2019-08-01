@@ -34,7 +34,7 @@ If you can’t afford the time to do the stuff mentioned above, but still want t
 
 ## License
 
-Copyright 2011-2018 Simon Schneegans <code@simonschneegans.de>
+Copyright 2011-2019 Simon Schneegans <code@simonschneegans.de>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

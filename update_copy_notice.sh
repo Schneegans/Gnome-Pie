@@ -3,7 +3,7 @@
 shopt -s globstar
 
 text="/////////////////////////////////////////////////////////////////////////
-// Copyright 2011-2018 Simon Schneegans
+// Copyright 2011-2019 Simon Schneegans
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the

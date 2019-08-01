@@ -124,7 +124,7 @@ public class PieWindow : Gtk.Window {
         this.set_skip_taskbar_hint(true);
         this.set_skip_pager_hint(true);
         this.set_keep_above(true);
-        this.set_type_hint(Gdk.WindowTypeHint.DOCK);
+        this.set_type_hint(Gdk.WindowTypeHint.DIALOG);
         this.set_decorated(false);
         this.set_resizable(false);
         this.icon_name = "gnome-pie";

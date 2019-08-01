@@ -3,7 +3,7 @@
 build/*
 gnome-pie
 *~
-gnome-pie.sublime-workspace
+*.sublime*
 resources/locale/.zanata-cache
 resources/locale/*/*/gnomepie.mo
 resources/locale/gnomepie.pot

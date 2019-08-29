@@ -36,7 +36,7 @@ public class WindowListGroup : ActionGroup {
     /////////////////////////////////////////////////////////////////////
 
     public static GroupRegistry.TypeDescription? register() {
-        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
+        if (GLib.Environment.get_variable("GNOME_PIE_DISPLAY_SERVER") == "wayland") {
             warning("The WindowList slice group is not supported on Wayland.");
             return null;
         }

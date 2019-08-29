@@ -57,6 +57,34 @@ public class Daemon : GLib.Application {
     public static int main(string[] args) {
         version = "0.7.2";
 
+        // determine which display server to run on
+        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
+            // check available GDK backends
+            Posix.system("GDK_BACKEND=help gnome-pie-gdk-backends --display=:fake > /tmp/gp.gdk.check 2>&1");
+            Posix.system("if [ \"$(head -n 1 /tmp/gp.gdk.check | grep -c x11)\" = 1 ]; then echo \"available\" > /tmp/gp.gdk.x11; fi;");
+            File file_x11 = File.new_for_path ("/tmp/gp.gdk.x11");
+            bool tmp_x11 = file_x11.query_exists ();
+            if (tmp_x11 == true) {
+                // 'x11' GDK backend is available, let's use it so we can run with full support
+                GLib.Environment.set_variable("GDK_BACKEND", "x11", true);
+                GLib.Environment.set_variable("GNOME_PIE_DISPLAY_SERVER", "x11", true);
+                Posix.system("export GNOME_PIE_DISPLAY_SERVER=x11");
+            }
+            else {
+                // 'x11' GDK backend is NOT available, fallback to run on Wayland with limited support
+                GLib.Environment.set_variable("GDK_BACKEND", "wayland", true);
+                GLib.Environment.set_variable("GNOME_PIE_DISPLAY_SERVER", "wayland", true);
+                Posix.system("export GNOME_PIE_DISPLAY_SERVER=wayland");
+            }
+            // remove temporary files
+            Posix.system("[ -f /tmp/gp.gdk.check ] && rm -f /tmp/gp.gdk.check");
+            Posix.system("[ -f /tmp/gp.gdk.x11 ] && rm -f /tmp/gp.gdk.x11");
+        }
+        else {
+            GLib.Environment.set_variable("GNOME_PIE_DISPLAY_SERVER", "x11", true);
+            Posix.system("export GNOME_PIE_DISPLAY_SERVER=x11");
+        }
+
         // disable overlay scrollbar --- hacky workaround for black /
         // transparent background
         GLib.Environment.set_variable("LIBOVERLAY_SCROLLBAR", "0", true);
@@ -138,6 +166,13 @@ public class Daemon : GLib.Application {
         this.startup.connect(()=>{
 
             message("Welcome to Gnome-Pie " + version + "!");
+
+            if (GLib.Environment.get_variable("GNOME_PIE_DISPLAY_SERVER") != "wayland") {
+                message("Using X11/Xwayland display server - running with full support.");
+            }
+            else {
+                warning("Using Wayland display server - running with limited support.");
+            }
 
             this.init_pies();
 

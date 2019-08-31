@@ -111,7 +111,7 @@ public class PieWindow : Gtk.Window {
     /// Used to identify wayland sessions.
     /////////////////////////////////////////////////////////////////////
 
-    private bool wayland = GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland";
+    private bool wayland = GLib.Environment.get_variable("GNOME_PIE_DISPLAY_SERVER") == "wayland";
 
     /////////////////////////////////////////////////////////////////////
     /// C'tor, sets up the window.

@@ -101,7 +101,7 @@ public class GroupRegistry : GLib.Object {
     /////////////////////////////////////////////////////////////////////
 
     public static ActionGroup? create_group(string type_id, string parent_id) {
-        bool wayland = GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland";
+        bool wayland = GLib.Environment.get_variable("GNOME_PIE_DISPLAY_SERVER") == "wayland";
 
         switch (type_id) {
             case "bookmarks":

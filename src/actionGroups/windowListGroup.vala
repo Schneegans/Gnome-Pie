@@ -176,6 +176,9 @@ public class WindowListGroup : ActionGroup {
         string icon_name = "";
 
         #if HAVE_BAMF
+
+        // bamf is not supported on wayland
+        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "x11") {
             var xid = (uint32) window.get_xid();
             Bamf.Matcher bamf_matcher = Bamf.Matcher.get_default();
             Bamf.Application app = bamf_matcher.get_application_for_xid(xid);
@@ -202,14 +205,14 @@ public class WindowListGroup : ActionGroup {
                         error("%s", e.message);
                     }
                 }
-            } else {
-                var application = window.get_application();
-                icon_name = application.get_icon_name().down();
             }
-        #else
+        }
+        #endif
+
+        if (icon_name == "") {
             var application = window.get_application();
             icon_name = application.get_icon_name().down();
-        #endif
+        }
 
         return icon_name;
     }

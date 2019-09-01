@@ -1,0 +1,20 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-16.04]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build locales
+      run: resources/locale/compile-po.sh
+    - name: Build application
+      run: |
+        mkdir build
+        cd build; cmake ..; make -j8 && ( cd .. )

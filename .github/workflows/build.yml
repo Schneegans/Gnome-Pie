@@ -1,0 +1,20 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-18.04, ubuntu-16.04]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Download dependencies
+      run: sudo apt-get update -q; sudo apt-get install libgtk-3-dev libcairo2-dev libappindicator3-dev libgee-0.8-dev libxml2-dev libxtst-dev libgnome-menu-3-dev valac libwnck-3-dev libarchive-dev libbamf3-dev
+    - name: Build locales
+      run: resources/locale/compile-po.sh
+    - name: Build application
+      run: mkdir build; cd build; cmake ..; make -j2

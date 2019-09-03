@@ -1,7 +1,7 @@
 Gnome-Pie
 ======
 
-Feel free to visit its **homepage** at http://simmesimme.github.io/gnome-pie.html
+Feel free to visit its **homepage** at http://schneegans.github.io/gnome-pie.html
 
 **Gnome-Pie** is a circular application launcher for Linux. It is made of several pies, each consisting of multiple slices. The user presses a key stroke which opens the desired pie. By activating one of its slices, applications may be launched, key presses may be simulated or files can be opened.
 
@@ -18,7 +18,7 @@ sudo apt-get install gnome-pie
 
 ## Compiling and installing from source & Usage
 
-Please refer to the [guides on Gnome-Pie's homepage](http://simmesimme.github.io/gnome-pie.html)!
+Please refer to the [guides on Gnome-Pie's homepage](http://schneegans.github.io/gnome-pie.html)!
 
 ## Support my work!
 
@@ -26,7 +26,7 @@ I really like working on Gnome-Pie — and you can help improving it! There are 
 
 ### Translate Gnome-Pie!
 
-This is really easy: [There is an how-to available](http://simmesimme.github.io/lessons/2015/08/07/translate-gnome-pie/)!
+This is really easy: [There is an how-to available](http://schneegans.github.io/news/2015/08/07/translate-gnome-pie/)!
 
 ### Donate!
 

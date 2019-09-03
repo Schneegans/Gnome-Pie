@@ -169,7 +169,7 @@ public class PreferencesWindow : GLib.Object {
 
         (builder.get_object("theme-help-button") as Gtk.Button).clicked.connect(() => {
             try{
-                GLib.AppInfo.launch_default_for_uri("http://simmesimme.github.io/lessons/2015/04/26/themes-for-gnome-pie", null);
+                GLib.AppInfo.launch_default_for_uri("http://schneegans.github.io/lessons/2015/04/26/themes-for-gnome-pie", null);
             } catch (Error e) {
                 warning(e.message);
             }
@@ -242,16 +242,16 @@ public class PreferencesWindow : GLib.Object {
         // info label
         var info_label = new TipViewer({
             _("Pies can be opened with the terminal command \"gnome-pie --open=ID\"."),
-            _("Feel free to visit Gnome-Pie's homepage at %s!").printf("<a href='http://simmesimme.github.io/gnome-pie.html'>gnome-pie.simonschneegans.de</a>"),
+            _("Feel free to visit Gnome-Pie's homepage at %s!").printf("<a href='http://schneegans.github.io/gnome-pie.html'>gnome-pie.simonschneegans.de</a>"),
             _("If you want to give some feedback, please write an e-mail to %s!").printf("<a href='mailto:code@simonschneegans.de'>code@simonschneegans.de</a>"),
             _("You can support the development of Gnome-Pie by donating via %s.").printf("<a href='https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=X65SUVC4ZTQSC'>Paypal</a>"),
             _("Translating Gnome-Pie to your language is easy. Translations are managed at %s.").printf("<a href='https://translate.zanata.org/zanata/iteration/view/gnome-pie/develop'>Zanata</a>"),
-            _("It's easy to create new themes for Gnome-Pie. Read the <a href='%s'>Tutorial</a> online.").printf("http://simmesimme.github.io/lessons/2015/04/26/themes-for-gnome-pie/"),
+            _("It's easy to create new themes for Gnome-Pie. Read the <a href='%s'>Tutorial</a> online.").printf("http://schneegans.github.io/lessons/2015/04/26/themes-for-gnome-pie/"),
             _("It's usually a good practice to have at most twelve slices per pie."),
             _("You can export themes you created and share them with the community!"),
-            _("The source code of Gnome-Pie is available on %s.").printf("<a href='https://github.com/Simmesimme/Gnome-Pie'>Github</a>"),
-            _("Bugs can be reported at %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie/issues'>Github</a>"),
-            _("Suggestions can be posted on %s!").printf("<a href='https://github.com/Simmesimme/Gnome-Pie/issues'>Github</a>"),
+            _("The source code of Gnome-Pie is available on %s.").printf("<a href='https://github.com/schneegans/Gnome-Pie'>Github</a>"),
+            _("Bugs can be reported at %s!").printf("<a href='https://github.com/schneegans/gnome-pie/issues'>Github</a>"),
+            _("Suggestions can be posted on %s!").printf("<a href='https://github.com/schneegans/gnome-pie/issues'>Github</a>"),
             _("An awesome companion of Gnome-Pie is %s. It will make using your computer feel like magic!").printf("<a href='https://github.com/thjaeger/easystroke/wiki'>Easystroke</a>"),
             _("You can drag'n'drop applications from your main menu to the pie above."),
             _("You may drag'n'drop URLs and bookmarks from your internet browser to the pie above."),

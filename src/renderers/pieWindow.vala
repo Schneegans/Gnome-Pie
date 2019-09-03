@@ -60,8 +60,8 @@ public class PieWindow : Gtk.Window {
     private int back_sz_y;
 
     /////////////////////////////////////////////////////////////////////
-    /// Some panels moves the window after it was realized.
-    /// This value set the maximum allowed panel height or width.
+    /// Some panels move the window after it was realized.
+    /// This value sets the maximum allowed panel height or width.
     /// (how many pixels the window could be moved in every direction
     ///  from the screen borders towards the center)
     /////////////////////////////////////////////////////////////////////
@@ -69,7 +69,7 @@ public class PieWindow : Gtk.Window {
     private int panel_sz = 64;
 
     /////////////////////////////////////////////////////////////////////
-    /// This value set the maximum allowed mouse movement in pixels
+    /// This value sets the maximum allowed mouse movement in pixels
     /// from the capture to the show point in every direction.
     /////////////////////////////////////////////////////////////////////
 
@@ -128,7 +128,8 @@ public class PieWindow : Gtk.Window {
         this.set_decorated(false);
         this.set_resizable(false);
         this.icon_name = "gnome-pie";
-        this.set_accept_focus(false);
+        this.set_accept_focus(true);
+        this.set_focus_on_map(true);
         this.app_paintable = true;
 
         // check for compositing
@@ -262,7 +263,7 @@ public class PieWindow : Gtk.Window {
             #endif
 
             // allow some window movement from the screen borders
-            // (some panels moves the window after it was realized)
+            // (some panels move the window after it was realized)
             int dx = this.panel_sz - this.back_x;
             if (dx > 0)
                 this.back_sz_x += dx;

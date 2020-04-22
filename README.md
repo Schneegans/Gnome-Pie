@@ -26,7 +26,7 @@ I really like working on Gnome-Pie — and you can help improving it! There are 
 
 ### Translate Gnome-Pie!
 
-This is really easy: [There is an how-to available](http://schneegans.github.io/news/2015/08/07/translate-gnome-pie/)!
+This is really easy: [There is an how-to available](http://schneegans.github.io/news/2015/08/07/translate-gnome-pie)!
 
 ### Donate!
 

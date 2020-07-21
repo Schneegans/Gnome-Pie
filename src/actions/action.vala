@@ -69,7 +69,7 @@ public abstract class Action : GLib.Object {
     /// C'tor, initializes all members.
     /////////////////////////////////////////////////////////////////////
 
-    public Action(string name, string icon, bool is_quickaction) {
+    private Action(string name, string icon, bool is_quickaction) {
         GLib.Object(name : name, icon : icon, is_quickaction : is_quickaction);
     }
 

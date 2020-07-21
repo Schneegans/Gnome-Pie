@@ -68,16 +68,6 @@ public class Daemon : GLib.Application {
 
         Logger.init();
         Gtk.init(ref args);
-        var display = Gdk.Display.get_default();
-        if (display is Gdk.X11.Display) {
-            // 'x11' GDK backend is available, running with full support
-            GLib.Environment.set_variable("GNOME_PIE_DISPLAY_SERVER", "x11", true);
-        }
-        else {
-            // 'x11' GDK backend is NOT available, fallback to run on Wayland with limited support
-            GLib.Environment.set_variable("GDK_BACKEND", "wayland", true);
-            GLib.Environment.set_variable("GNOME_PIE_DISPLAY_SERVER", "wayland", true);
-        }
         Paths.init();
 
         // create the Daemon and run it
@@ -152,11 +142,8 @@ public class Daemon : GLib.Application {
 
             message("Welcome to Gnome-Pie " + version + "!");
 
-            if (GLib.Environment.get_variable("GNOME_PIE_DISPLAY_SERVER") != "wayland") {
-                message("Using X11/Xwayland display server - running with full support.");
-            }
-            else {
-                warning("Using Wayland display server - running with limited support.");
+            if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
+                warning("Running on Wayland - running with limited options.");
             }
 
             this.init_pies();

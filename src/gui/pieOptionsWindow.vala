@@ -176,7 +176,7 @@ public class PieOptionsWindow : GLib.Object {
     public void show() {
         this.window.show_all();
 
-        if (GLib.Environment.get_variable("GNOME_PIE_DISPLAY_SERVER") == "wayland") {
+        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
             this.optionsFrame.visible = false;
         }
     }
@@ -204,7 +204,7 @@ public class PieOptionsWindow : GLib.Object {
         this.trigger_button.set_trigger(trigger);
         this.set_icon(pie.icon);
 
-        if (GLib.Environment.get_variable("GNOME_PIE_DISPLAY_SERVER") == "wayland") {
+        if (GLib.Environment.get_variable("XDG_SESSION_TYPE") == "wayland") {
             this.trigger_button.set_sensitive(false);
 
             this.hint.set_line_wrap(true);

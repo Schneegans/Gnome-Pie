@@ -1,10 +1,11 @@
 Gnome-Pie
 ======
 
-Feel free to visit its **homepage** at http://simmesimme.github.io/gnome-pie.html
+⚠️ _At this point, I will only provide very basic support for Gnome-Pie. If you are on a GNOME Shell based distro, you may want to try my successor project, [**Fly-Pie**](https://github.com/Schneegans/Fly-Pie). You can read some [background information here](http://schneegans.github.io/news/2020/08/13/flypie)._
 
 **Gnome-Pie** is a circular application launcher for Linux. It is made of several pies, each consisting of multiple slices. The user presses a key stroke which opens the desired pie. By activating one of its slices, applications may be launched, key presses may be simulated or files can be opened.
 
+Feel free to visit its **homepage** at http://simmesimme.github.io/gnome-pie.html
 
 ## Installing from a PPA!
 

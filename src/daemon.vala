@@ -55,7 +55,7 @@ public class Daemon : GLib.Application {
     /////////////////////////////////////////////////////////////////////
 
     public static int main(string[] args) {
-        version = "0.7.2";
+        version = "0.7.3";
 
         // disable overlay scrollbar --- hacky workaround for black /
         // transparent background

@@ -89,12 +89,13 @@ public class ArchiveReader : GLib.Object {
 
             if (entry.size() > 0) {
                 while (true) {
-                    size_t offset, size;
 
 #if VALA_0_42
+                    size_t offset;
                     uint8[] buff;
                     r = this.archive.read_data_block(out buff, out offset);
 #else
+                    size_t offset, size;
                     void* buff;
                     r = this.archive.read_data_block(out buff, out size, out offset);
 #endif

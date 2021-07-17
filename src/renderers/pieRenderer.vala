@@ -378,7 +378,7 @@ public class PieRenderer : GLib.Object {
                 szy = 2; //half height, center to the bottom
                 break;
 
-            //cuarter pie
+            //quarter pie
             case ShowPieMode.CPIE_TOP_LEFT:
                 szx = 0; //half width, center to the left
                 szy = 0; //half height, center to the top
@@ -395,6 +395,8 @@ public class PieRenderer : GLib.Object {
                 szx = 2; //half width, center to the right
                 szy = 2; //half height, center to the bottom
                 break;
+
+            default: break;
         }
         if (reduce_szx == 0)
             szx = 1;    //don't reduce width

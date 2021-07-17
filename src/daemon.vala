@@ -57,9 +57,6 @@ public class Daemon : GLib.Application {
     public static int main(string[] args) {
         version = "0.7.2";
 
-        // try using X11/Xwayland display server by default
-        GLib.Environment.set_variable("GDK_BACKEND", "x11", true);
-
         // disable overlay scrollbar --- hacky workaround for black /
         // transparent background
         GLib.Environment.set_variable("LIBOVERLAY_SCROLLBAR", "0", true);

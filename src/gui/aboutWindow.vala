@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////////////////
-// Copyright 2011-2019 Simon Schneegans
+// Copyright 2011-2021 Simon Schneegans
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -81,7 +81,7 @@ public class AboutWindow: Gtk.AboutDialog {
             artists : artists,
             authors : devs,
             translator_credits : translator_string,
-            copyright : "Copyright 2011-2019 Simon Schneegans <code@simonschneegans.de>",
+            copyright : "Copyright 2011-2021 Simon Schneegans <code@simonschneegans.de>",
             program_name: "Gnome-Pie",
             logo_icon_name: "gnome-pie",
             website: "http://schneegans.github.io/gnome-pie.html",
